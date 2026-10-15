@@ -11,7 +11,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | Fase | Status |
 |---|---|
 | 0. PLAN.md | ✅ af |
-| 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ gebouwd, lokaal getest (5 formaten + offline). **Wacht op**: GitHub-repo + online zetten, test op de telefoon |
+| 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ gebouwd en online (versie 0.1.0, https://woutvb073.github.io/trainersapp/), getest op 5 formaten + offline. **Wacht op test** op de telefoon |
 | 2. 3D-animaties (Three.js) | ⏳ |
 | 3. Training maken | ⏳ |
 | 4. Bibliotheek vullen (batches per categorie) | ⏳ (doorlopend vanaf fase 2/3) |
@@ -185,7 +185,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - Animatie maken in de editor; delen met andere trainers; eventueel product.
 
 ## Besluiten fase 1
-- Zelfde opzet als eerdere apps (Vite + React + TS, vite-plugin-pwa, GitHub Actions). Repository-voorstel: `WoutvB073/trainersapp`.
+- Zelfde opzet als eerdere apps (Vite + React + TS, vite-plugin-pwa, GitHub Actions). Openbare repository `WoutvB073/trainersapp`, GitHub Pages via GitHub Actions.
 - Routes: `#/` → `#/veld` | `#/keepers` → `#/veld/<categorie>` (of `alle`) → `#/oefening/<id>`. Lege categorieën tonen "Nog leeg".
 - Animatiespeler: start automatisch (niet bij "verminder beweging"), tik op het veld = pauze/afspelen,
   knoppen Opnieuw / Afspelen-Pauze / Herhalen (aan/uit, standaard aan) / snelheid 0,5×–2×, schuifbalk om door te spoelen.
