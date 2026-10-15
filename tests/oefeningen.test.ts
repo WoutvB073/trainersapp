@@ -7,7 +7,7 @@ import type { ObjectSoort } from '../src/model/types';
 const MAP_SOORT: Record<string, string> = { veld: 'veld', keepers: 'keeper' };
 const SOORTEN: ObjectSoort[] = [
   'speler', 'keeper', 'trainer', 'bal', 'goal', 'klein-goal', 'pion', 'hoedje', 'paaltje', 'ladder',
-  'horde', 'ring', 'zone', 'muurtje', 'rebounder', 'keepersmat', 'stok', 'tekst',
+  'horde', 'ring', 'zone', 'muurtje', 'rebounder', 'keepersmat', 'stok', 'tekst', 'net', 'bank', 'kooi',
 ];
 
 describe('oefeningen (databestanden)', () => {
@@ -136,6 +136,39 @@ describe('keeper blijft in zijn doelgebied (tenzij uitkomen mag)', () => {
         }
       }
       expect(fouten.slice(0, 3)).toEqual([]);
+    });
+  }
+});
+
+describe('bal gaat altijd over het net', () => {
+  for (const o of OEFENINGEN) {
+    const netten = o.tekening.objecten.filter((x) => x.soort === 'net');
+    if (!netten.length) continue;
+    it(`${o.id}`, () => {
+      const tl = maakTijdlijn(o.tekening);
+      const fouten: string[] = [];
+      for (const n of netten) {
+        const h = ((n.hoek ?? 0) * Math.PI) / 180;
+        const half = (n.breedte ?? 6) / 2;
+        const a: [number, number] = [n.x - Math.cos(h) * half, n.y - Math.sin(h) * half];
+        const b: [number, number] = [n.x + Math.cos(h) * half, n.y + Math.sin(h) * half];
+        for (const lijst of tl.balEvents.values()) {
+          for (const e of lijst) {
+            if (e.soort !== 'vlucht') continue;
+            // Snijpunt van de balbaan met het net (beide als lijnstuk).
+            const r = [e.naar[0] - e.van[0], e.naar[1] - e.van[1]];
+            const s = [b[0] - a[0], b[1] - a[1]];
+            const noemer = r[0]! * s[1]! - r[1]! * s[0]!;
+            if (Math.abs(noemer) < 1e-9) continue;
+            const f = ((a[0] - e.van[0]) * s[1]! - (a[1] - e.van[1]) * s[0]!) / noemer;
+            const g = ((a[0] - e.van[0]) * r[1]! - (a[1] - e.van[1]) * r[0]!) / noemer;
+            if (f <= 0 || f >= 1 || g < 0 || g > 1) continue;
+            const hoogte = e.top * 4 * f * (1 - f) + e.h0 + (e.h1 - e.h0) * f;
+            if (hoogte < (n.hoogte ?? 1) + 0.1) fouten.push(`bal op ${hoogte.toFixed(2)} m door het net (${n.id}) op t=${e.t0.toFixed(2)}`);
+          }
+        }
+      }
+      expect(fouten).toEqual([]);
     });
   }
 });

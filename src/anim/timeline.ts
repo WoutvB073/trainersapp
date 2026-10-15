@@ -185,6 +185,8 @@ export interface ObjectStand {
   gezet: number;
   /** Personen: 0–1, springt (kopbal). */
   sprong: number;
+  /** Personen: 0–1, benen gespreid omdat er een bal tussendoor gaat (panna). */
+  spreid: number;
 }
 
 /** Een bal die net in een goal is gegaan: het net bolt op die plek even uit. */
@@ -901,7 +903,7 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
       eind = Math.max(eind, t1);
       continue;
     }
-    if (a.type === 'druk' || a.type === 'dek' || a.type === 'verover') continue; // na de andere bewegingen
+    if (a.type === 'druk' || a.type === 'dek' || a.type === 'verover' || a.type === 'panna') continue; // later
     if (a.type === 'aansluiten') {
       const rs = a.rij ? tl.rijen.get(a.rij) : a.bij ? rijVan(tl, a.bij, t0, true) : undefined;
       if (!rs) throw new TekeningFout(`Aansluiten: geen rij gevonden voor "${o.id}" (${a.rij ?? a.bij ?? 'geen rij of bij'})`);
@@ -959,8 +961,10 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
     const manier = a.manier ?? 'sprint';
     const doelOp = (t: number): Punt => {
       if (a.type === 'dek') {
-        const p = positie(tl, a.tussen[0], t);
-        const q = positie(tl, a.tussen[1], t);
+        const plek = (x: string | Punt): Punt => (typeof x === 'string' ? positie(tl, x, t) : x);
+        const p = plek(a.tussen[0]);
+        const q = plek(a.tussen[1]);
+        if (a.afstand !== undefined) return lerp(p, q, Math.min(1, a.afstand / (afstand(p, q) || 1)));
         return lerp(p, q, a.fractie ?? 0.5);
       }
       const doelwit = a.op ?? houderDichtbij(tl, van, t0);
@@ -972,7 +976,12 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
     };
     // Twee keer schatten: waar is het doel als hij er aankomt?
     let naar = doelOp(t0 + 1);
-    const duur = a.duur ?? Math.max(MIN_DUUR, afstand(van, naar) / SNELHEID[manier]);
+    let duur = a.duur ?? Math.max(MIN_DUUR, afstand(van, naar) / SNELHEID[manier]);
+    // Loopt zijn tegenstander nog door? Dan schuift hij mee tot die stilstaat (en loopt er niet tegenaan).
+    if (a.duur === undefined) {
+      const wie = a.type === 'dek' ? a.tussen.filter((x): x is string => typeof x === 'string') : [a.op ?? houderDichtbij(tl, van, t0)];
+      for (const id of wie) if (id) duur = Math.max(duur, stilVanaf(tl, id, t0) - t0);
+    }
     naar = doelOp(t0 + duur);
     verlaatRij(tl, o.id, t0);
     eind = Math.max(eind, beweeg(tl, o, { pad: [van, naar], t0, duur, manier, spoor: 'loop' }));
@@ -986,6 +995,10 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
       const bal = balVan(tl, a.van, t0);
       if (!bal) throw new TekeningFout(`Verover: "${a.van}" heeft geen bal`);
       eind = Math.max(eind, vlucht(tl, bal, balPunt(tl, bal, t0), t0, o.id, { type: 'pass' }, a.van, 1, a.duur ?? 0.3));
+      continue;
+    }
+    if (a.type === 'panna') {
+      eind = Math.max(eind, panna(tl, persoon(a.wie, a), persoon(a.door, a), T + (a.start ?? 0), a.verder ?? 2.5, a.kant ?? 'links'));
       continue;
     }
     if (!isBalActie(a)) continue;
@@ -1028,7 +1041,7 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
 
   // Op een rebounder of muurtje: de bal kaatst terug.
   const muur = typeof a.naar === 'string' ? tl.objecten.get(a.naar) : undefined;
-  if (muur && (muur.soort === 'rebounder' || muur.soort === 'muurtje')) {
+  if (muur && (muur.soort === 'rebounder' || muur.soort === 'muurtje' || muur.soort === 'bank')) {
     const m: Punt = [muur.x, muur.y];
     const d = afstand(start, m) || 1;
     const kaats: Punt = [m[0] + ((start[0] - m[0]) / d) * 0.3, m[1] + ((start[1] - m[1]) / d) * 0.3];
@@ -1042,6 +1055,28 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
   }
 
   if (a.onderschept) return onderschepping(tl, a, bal, start, t0, opties, kijkNaar);
+  // Stuit: eerst op het stuitpunt, dan met een kleinere boog verder.
+  if (a.stuitOp) {
+    kijkNaar(a.stuitOp);
+    const top = balTop(a, start, a.stuitOp);
+    const tS = vlucht(tl, bal, start, t0, a.stuitOp, { ...opties, eindHoogte: 0 }, a.van);
+    return vlucht(tl, bal, a.stuitOp, tS, a.naar, { type: 'pass', hoogte: Math.max(0.3, top * 0.45), eindHoogte: a.eindHoogte }, a.van, 1.1);
+  }
+  // Tegen de lat of paal: de bal springt terug het veld in.
+  if (a.raakt && typeof a.naar !== 'string') {
+    const hoog = a.raakt === 'lat' ? 2.4 : 0.8;
+    kijkNaar(a.naar);
+    const tR = vlucht(tl, bal, start, t0, a.naar, { ...opties, eindHoogte: hoog }, a.van, 1, a.duur);
+    let g: Goal | undefined;
+    for (const o of tl.objecten.values()) {
+      const goal = goalVan(tl, o.id);
+      if (goal && (!g || afstand(goal.midden, a.naar) < afstand(g.midden, a.naar))) g = goal;
+    }
+    const n = g?.n ?? [0, 1];
+    const terug: Punt = a.terugNaar ?? [a.naar[0] + n[0] * 7, a.naar[1] + n[1] * 7];
+    vlucht(tl, bal, a.naar, tR + 0.01, terug, { type: 'pass', hoogte: a.raakt === 'lat' ? 1.2 : 0.4, h0: hoog }, a.van, 1.3);
+    return tR;
+  }
   if (a.afloop && typeof a.naar !== 'string') {
     const t = keeperReactie(tl, a, bal, start, t0, a.naar, opties);
     if (t !== undefined) {
@@ -1231,6 +1266,71 @@ function keeperReactie(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: 
   return tV;
 }
 
+/** Vanaf wanneer staat deze persoon stil (gezocht tot 10 s na t)? */
+function stilVanaf(tl: Tijdlijn, id: string, t: number): number {
+  let vorig = positie(tl, id, t);
+  let stil = t;
+  for (let u = t + 0.1; u <= t + 10; u += 0.1) {
+    const p = positie(tl, id, u);
+    if (afstand(p, vorig) > 0.02) stil = u;
+    else if (u - stil > 0.5) break;
+    vorig = p;
+  }
+  return stil;
+}
+
+/** Panna: bal tussen de benen van `door` door, en zelf om hem heen lopen om de bal weer op te pakken. */
+function panna(tl: Tijdlijn, wie: VeldObject, door: VeldObject, t0: number, verder: number, kant: 'links' | 'rechts'): number {
+  const bal = balVan(tl, wie.id, t0) ?? losseBalBij(tl, positie(tl, wie.id, t0), t0);
+  if (!bal) throw new TekeningFout(`Panna: "${wie.id}" heeft geen bal`);
+  const start = balPunt(tl, bal, t0);
+  const d = positie(tl, door.id, t0 + 0.3);
+  const lengte = afstand(start, d) || 1;
+  const r: Punt = [(d[0] - start[0]) / lengte, (d[1] - start[1]) / lengte];
+  const naar: Punt = [d[0] + r[0] * verder, d[1] + r[1] * verder];
+  const opzij: Punt = kant === 'links' ? [r[1], -r[0]] : [-r[1], r[0]];
+  voegToe(tl.kijk, wie.id, { t: t0, hoek: graden(start, naar) }, (e) => e.t);
+  const t1 = vlucht(tl, bal, start, t0, naar, { type: 'pass', hoogte: 'grond' }, wie.id);
+  // Om de tegenstander heen (op 1,8 m) naar de bal.
+  const p = positie(tl, wie.id, t0);
+  const tLoop = beweeg(tl, wie, {
+    pad: [
+      p,
+      [d[0] + opzij[0] * 1.8 - r[0] * 0.6, d[1] + opzij[1] * 1.8 - r[1] * 0.6],
+      [d[0] + opzij[0] * 1.8 + r[0] * 0.9, d[1] + opzij[1] * 1.8 + r[1] * 0.9],
+      [naar[0] + opzij[0] * 0.4, naar[1] + opzij[1] * 0.4],
+    ],
+    t0: t0 + 0.1,
+    manier: 'sprint',
+    spoor: 'loop',
+  });
+  // Klaar als de aanvaller weer bij de bal is.
+  return Math.max(t1, tLoop);
+}
+
+/** Gaat er net een bal over de grond tussen de benen van deze persoon door? (0–1) */
+function spreidOp(tl: Tijdlijn, id: string, t: number): number {
+  const p = positie(tl, id, t);
+  let w = 0;
+  for (const lijst of tl.balEvents.values()) {
+    for (const e of lijst) {
+      if (e.soort !== 'vlucht' || e.top > 0.6 || e.passeerder === id || e.daarna === id) continue;
+      if (t < e.t0 - 0.4 || t > e.t1 + 0.4) continue;
+      const lengte = afstand(e.van, e.naar);
+      if (lengte < 0.5) continue;
+      const u: Punt = [(e.naar[0] - e.van[0]) / lengte, (e.naar[1] - e.van[1]) / lengte];
+      const proj = ((p[0] - e.van[0]) * u[0] + (p[1] - e.van[1]) * u[1]) / lengte;
+      if (proj < 0.05 || proj > 0.95) continue;
+      const dwars = Math.abs((p[0] - e.van[0]) * u[1] - (p[1] - e.van[1]) * u[0]);
+      if (dwars > 0.45) continue;
+      // Tijdstip waarop de bal hier is (omgekeerde van de bal-ease).
+      const tijd = e.t0 + (e.t1 - e.t0) * ((1.25 - Math.sqrt(1.5625 - proj)) / 0.5);
+      w = Math.max(w, 1 - Math.abs(t - tijd) / 0.35);
+    }
+  }
+  return klem(w);
+}
+
 /** Ballen die in een goal zijn beland: het net bolt even uit. */
 function netInslagen(tl: Tijdlijn, t: number): NetInslag[] {
   const uit: NetInslag[] = [];
@@ -1242,7 +1342,8 @@ function netInslagen(tl: Tijdlijn, t: number): NetInslag[] {
       for (const e of lijst) {
         if (e.soort !== 'vlucht' || e.daarna || t < e.t1 || t > e.t1 + 0.9) continue;
         const { lx, ly } = tovGoal(g, e.naar);
-        if (Math.abs(lx) > g.breedte / 2 + 0.1 || ly > 0.05 || ly < -(g.diepte + 0.3)) continue;
+        // Achter de doellijn (op de lijn = tegen de lat of paal: geen doelpunt).
+        if (Math.abs(lx) > g.breedte / 2 + 0.1 || ly > -0.05 || ly < -(g.diepte + 0.3)) continue;
         const sterkte = Math.sin((Math.PI * (t - e.t1)) / 0.9);
         if (!beste || sterkte > beste.sterkte) beste = { id: o.id, x: e.naar[0], y: e.naar[1], sterkte };
       }
@@ -1289,7 +1390,7 @@ export function rondeDuur(tl: Tijdlijn): number {
 
 export function standOp(tl: Tijdlijn, t: number): Stand {
   const objecten = new Map<string, ObjectStand>();
-  const rust = { hoek: 0, houding: 'staan' as const, liggen: 0, duikHoek: 0, hoogte: 0, houder: null, snelheid: 0, fase: 0, gezet: 0, sprong: 0 };
+  const rust = { hoek: 0, houding: 'staan' as const, liggen: 0, duikHoek: 0, hoogte: 0, houder: null, snelheid: 0, fase: 0, gezet: 0, sprong: 0, spreid: 0 };
   for (const o of tl.objecten.values()) {
     if (o.soort === 'bal') {
       objecten.set(o.id, { ...rust, ...balStand(tl, o.id, t) });
@@ -1319,6 +1420,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         team: teamOp(tl, o.id, t),
         gezet: gezet(tl, o, t),
         sprong: sprongOp(tl, o.id, t),
+        spreid: spreidOp(tl, o.id, t),
       });
     } else {
       objecten.set(o.id, { ...rust, x: o.x, y: o.y, hoek: o.hoek ?? 0 });

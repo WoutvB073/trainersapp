@@ -154,7 +154,7 @@ function herhaalUV(geo: PlaneGeometry, breedte: number, hoogte: number, cel: num
 function goal(o: VeldObject, netTex: Texture, materialen: Material[]): Group {
   const groot = o.soort === 'goal';
   const B = o.breedte ?? (groot ? 7.32 : 3);
-  const H = groot ? 2.44 : 1;
+  const H = o.hoogte ?? (groot ? 2.44 : 1);
   const D = o.lengte ?? (groot ? 2 : 1.2);
   const r = groot ? 0.06 : 0.04;
   const g = new Group();
@@ -288,6 +288,61 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
       ring.position.y = 0.022;
       const g = new Group();
       g.add(ring);
+      return opGrond(g);
+    }
+    case 'net': {
+      // Twee paaltjes met een net/lint; de bovenkant op de ingestelde hoogte.
+      const g = new Group();
+      const w = o.breedte ?? 6;
+      const h = o.hoogte ?? 1;
+      const paal = kleur('#2b2b2b');
+      for (const x of [-w / 2, w / 2]) {
+        const p = new Mesh(new CylinderGeometry(0.03, 0.03, h + 0.05, 8), paal);
+        p.position.set(x, (h + 0.05) / 2, 0);
+        g.add(p);
+      }
+      const doekHoogte = Math.min(h, 0.6);
+      const doek = new Mesh(herhaalUV(new PlaneGeometry(w, doekHoogte), w, doekHoogte, 0.12), new MeshBasicMaterial({ map: netTex, transparent: true, side: DoubleSide, opacity: 0.85, depthWrite: false }));
+      doek.position.set(0, h - doekHoogte / 2, 0);
+      const band = new Mesh(new BoxGeometry(w, 0.05, 0.02), kleur('#ffffff'));
+      band.position.set(0, h - 0.025, 0);
+      g.add(doek, band);
+      return opGrond(g);
+    }
+    case 'bank': {
+      const g = new Group();
+      const w = o.breedte ?? 2.5;
+      const hout = kleur('#b07a45');
+      const zit = new Mesh(new BoxGeometry(w, 0.05, 0.3), hout);
+      zit.position.y = 0.42;
+      const balk = new Mesh(new BoxGeometry(w - 0.2, 0.08, 0.06), hout);
+      balk.position.y = 0.2;
+      g.add(zit, balk);
+      for (const x of [-w / 2 + 0.15, w / 2 - 0.15]) {
+        const poot = new Mesh(new BoxGeometry(0.05, 0.42, 0.28), hout);
+        poot.position.set(x, 0.21, 0);
+        g.add(poot);
+      }
+      return opGrond(g);
+    }
+    case 'kooi': {
+      // Pannakooi: vier lage boardingwanden (0,5 m).
+      const g = new Group();
+      const w = o.breedte ?? 7;
+      const l = o.lengte ?? 5;
+      const wand = kleur('#2f5d8c');
+      const h = 0.5;
+      const wanden: [number, number, number, number][] = [
+        [w, 0.06, 0, -l / 2],
+        [w, 0.06, 0, l / 2],
+        [0.06, l, -w / 2, 0],
+        [0.06, l, w / 2, 0],
+      ];
+      for (const [bw, bl, x, z] of wanden) {
+        const m = new Mesh(new BoxGeometry(bw, h, bl), wand);
+        m.position.set(x, h / 2, z);
+        g.add(m);
+      }
       return opGrond(g);
     }
     case 'muurtje': {
@@ -574,6 +629,8 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   }
 
   // Benen en armen.
+  // Panna: benen spreiden als er een bal tussendoor gaat.
+  if (s.spreid > 0) p.spreid = [p.spreid[0] - s.spreid * 0.4, p.spreid[1] + s.spreid * 0.4];
   for (const [i, b] of f.benen.entries()) b.rotation.set(p.benen[i]!, 0, p.spreid[i]!);
   for (const [i, a] of f.armen.entries()) {
     if (keeper && l > 0) {

@@ -105,7 +105,7 @@ export function tekenScene(
   tekenLijnen(b, tekening, k);
 
   const objecten = tekening.objecten;
-  const onder: VeldObject['soort'][] = ['zone', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'muurtje', 'rebounder', 'klein-goal', 'goal'];
+  const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'rebounder', 'klein-goal', 'goal', 'net'];
   for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o, stand.net.find((n) => n.id === o.id));
 
   for (const l of tekening.lijnen ?? []) tekenPolylijn(b, l.soort, l.punten, k, true);
@@ -444,6 +444,55 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
           c.fill();
           c.stroke();
         }
+      });
+      break;
+    }
+    case 'net': {
+      // Voetvolleynet / lint: twee paaltjes met een band ertussen (van boven gezien).
+      const w = (o.breedte ?? 6) * s;
+      metDraaiing(b, o, (c) => {
+        c.strokeStyle = 'rgba(255,255,255,0.55)';
+        c.lineWidth = maat(b, 0.18, 4);
+        c.beginPath();
+        c.moveTo(-w / 2, 0);
+        c.lineTo(w / 2, 0);
+        c.stroke();
+        c.strokeStyle = '#ffffff';
+        c.lineWidth = maat(b, 0.05, 1.5);
+        c.setLineDash([3 * b.dpr, 2 * b.dpr]);
+        c.stroke();
+        c.setLineDash([]);
+        c.fillStyle = '#2b2b2b';
+        for (const x of [-w / 2, w / 2]) {
+          c.beginPath();
+          c.arc(x, 0, maat(b, 0.1, 3), 0, Math.PI * 2);
+          c.fill();
+        }
+      });
+      break;
+    }
+    case 'bank': {
+      const w = (o.breedte ?? 2.5) * s;
+      const d = maat(b, 0.32, 5);
+      metDraaiing(b, o, (c) => {
+        c.fillStyle = o.kleur ?? '#b07a45';
+        c.strokeStyle = 'rgba(0,0,0,0.45)';
+        c.lineWidth = Math.max(1, lijn * 0.5);
+        c.fillRect(-w / 2, -d / 2, w, d);
+        c.strokeRect(-w / 2, -d / 2, w, d);
+      });
+      break;
+    }
+    case 'kooi': {
+      // Pannakooi: lage boarding rond het vak.
+      const w = (o.breedte ?? 7) * s;
+      const h = (o.lengte ?? 5) * s;
+      metDraaiing(b, o, (c) => {
+        c.fillStyle = 'rgba(255,255,255,0.08)';
+        c.fillRect(-w / 2, -h / 2, w, h);
+        c.strokeStyle = o.kleur ?? '#2f5d8c';
+        c.lineWidth = maat(b, 0.16, 4);
+        c.strokeRect(-w / 2, -h / 2, w, h);
       });
       break;
     }

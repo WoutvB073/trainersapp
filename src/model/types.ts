@@ -41,7 +41,12 @@ export type ObjectSoort =
   | 'rebounder'
   | 'keepersmat'
   | 'stok'
-  | 'tekst';
+  | 'tekst'
+  /** Voetvolleynet of lint tussen twee paaltjes (breedte = lengte van het net, hoogte instelbaar). */
+  | 'net'
+  | 'bank'
+  /** Pannakooi: lage boarding rond een klein vak (breedte × lengte). */
+  | 'kooi';
 
 /** Personen kunnen bewegen en een bal hebben. */
 export const PERSONEN: readonly ObjectSoort[] = ['speler', 'keeper', 'trainer'];
@@ -73,7 +78,7 @@ export interface VeldObject {
   /** Zone, ladder, muurtje, mat, stok: afmetingen in meters. */
   breedte?: number;
   lengte?: number;
-  /** Horde (laag 0,15 / hoog 0,3 m) en paaltje: hoogte in meters. */
+  /** Hoogte in meters: horde (laag 0,15 / hoog 0,3), paaltje, net (standaard 1), goal (standaard 2,44; jeugdgoal 2). */
   hoogte?: number;
   tekst?: string;
   /** Optionele eigen kleur (zone/vak, hoedje, pion, ring, ladder, horde). Een zone wordt een doorzichtig gekleurd vlak. */
@@ -115,7 +120,7 @@ export interface BalActie extends ActieBasis {
    * dan kaatst de bal terug naar `terug` (standaard de passeerder zelf).
    */
   naar: string | Punt;
-  /** Bij een pass op een rebounder/muurtje: naar wie (of waar) de bal terugkaatst. */
+  /** Bij een pass op een rebounder, muurtje of bank: naar wie (of waar) de bal terugkaatst. */
   terug?: string | Punt;
   /**
    * Afloop van een schot op een goal met een keeper (`verdedigt`): `goal` (keeper duikt maar is te laat),
@@ -132,6 +137,11 @@ export interface BalActie extends ActieBasis {
   snelheid?: number;
   /** Id van een verdediger die deze pass onderschept (hij loopt naar de passlijn en krijgt de bal). */
   onderschept?: string;
+  /** De bal stuit eerst op dit punt en gaat dan verder naar `naar` (voetvolley, voetbaltennis). */
+  stuitOp?: Punt;
+  /** Schot tegen de lat of paal: `naar` is het punt op de doellijn; de bal springt terug naar `terugNaar`. */
+  raakt?: 'lat' | 'paal';
+  terugNaar?: Punt;
   /** Welke bal (standaard de bal die `van` heeft). */
   bal?: string;
   /** Hoogte van de bal (optioneel, zie BalHoogte). */
@@ -223,9 +233,24 @@ export interface DrukActie extends ActieBasis {
 export interface DekActie extends ActieBasis {
   type: 'dek';
   wie: string;
-  tussen: [string, string];
+  /** Twee spelers, of een speler en een punt (bv. mandekking: tussen tegenstander en het midden van je eigen goal). */
+  tussen: [string | Punt, string | Punt];
   fractie?: number;
+  /** In plaats van `fractie`: zoveel meter vanaf de eerste (bv. 1,8 m vóór zijn tegenstander). */
+  afstand?: number;
   manier?: Manier;
+}
+
+/**
+ * Panna: speel de bal tussen de benen van `door` door en loop om hem heen om de bal achter hem weer op te pakken.
+ * `verder` = hoe ver achter de tegenstander de bal stopt (standaard 2,5 m).
+ */
+export interface PannaActie extends ActieBasis {
+  type: 'panna';
+  wie: string;
+  door: string;
+  verder?: number;
+  kant?: 'links' | 'rechts';
 }
 
 /** Bal afpakken: de verdediger tikt de bal van `van` af en heeft hem daarna zelf. */
@@ -242,7 +267,17 @@ export interface TeamActie extends ActieBasis {
   team: Team;
 }
 
-export type Actie = BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | DrukActie | DekActie | VeroverActie;
+export type Actie =
+  | BalActie
+  | BeweegActie
+  | PersoonActie
+  | AansluitActie
+  | TeamActie
+  | SchijnActie
+  | DrukActie
+  | DekActie
+  | VeroverActie
+  | PannaActie;
 
 export interface AnimatieStap {
   acties: Actie[];

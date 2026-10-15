@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.5.0)
+## Status (15-10-2026, versie 0.6.0)
 
 | Fase | Status |
 |---|---|
@@ -15,7 +15,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken (9) + Positiespel (9) – **wacht op test** op de telefoon. Volgende batches: Partijvormen, Spelletjes, Keepers |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen (9) + Spelletjes (9) – **wacht op test** op de telefoon. Daarmee zijn alle veldcategorieën gevuld. Volgende batches: Keepers |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -115,7 +115,9 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - `speler` (+ `team`: `"A" | "B" | "C"` (C = extra hesjeskleur), `nummer`), `keeper` (+ `nummer`), `trainer`
   - `bal` (+ optioneel `bij`: id van wie de bal aan het begin heeft)
   - `goal` (groot), `klein-goal`, `pion`, `hoedje`, `paaltje`, `ladder`, `horde`, `ring`, `zone`, `muurtje`,
-    `rebounder`, `keepersmat`, `stok`, `tekst`
+    `rebounder`, `keepersmat`, `stok`, `tekst`, `net` (voetvolleynet/lint tussen twee paaltjes, `breedte` = lengte van
+    het net, `hoogte` standaard 1 m), `bank`, `kooi` (pannakooi: lage boarding, `breedte` × `lengte`)
+  - `goal` met `breedte` en `hoogte` = jeugdgoal (bv. 5 × 2 m)
   - optioneel: `hoek` (graden; bij goals 0 = opening naar beneden; ladder/horde/stok met `hoek: 90` liggen dwars
     op een baan langs x), `breedte`/`lengte` (zone, ladder (standaard 4 m), muurtje, mat, stok), `hoogte` (horde:
     laag 0,15 / hoog 0,3 m; paaltje), `kleur` (zone wordt een doorzichtig gekleurd vlak; ook hoedje, pion, ring),
@@ -142,7 +144,10 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   (welke bal, standaard de bal van de passeerder), `hoogte` (zie hieronder). Bal "naar een speler" komt aan waar die
   speler op dat moment is. Wie nog op de bal wacht, passt of dribbelt pas als hij hem heeft.
   Pass naar iemand die loopt (pass in de loop): de bal komt vóór zijn voet aan, in zijn looprichting.
-  `naar` mag ook een `rebounder` of `muurtje` zijn: de bal kaatst terug naar `terug` (standaard de passeerder).
+  `naar` mag ook een `rebounder`, `muurtje` of `bank` zijn: de bal kaatst terug naar `terug` (standaard de passeerder).
+  `stuitOp: [x, y]` = de bal stuit daar eerst en gaat met een kleinere boog verder (voetvolley, voetbaltennis).
+  `raakt: "lat" | "paal"` (met `naar` = punt op de doellijn) = tegen de lat of paal, de bal springt terug naar
+  `terugNaar` (latje-trap); geen doelpunt, het net bolt niet uit.
   `naar` = de passeerder zelf met een `hoogte` = hooghouden (bal recht omhoog en terug aan de voet).
   Met `bal` kun je ook de bal van een ander wegtikken (bv. "Koning van het vak").
 - **Balsnelheid** volgt uit de afstand: korte pass ± 9 m/s, lange grondpass tot 18 m/s, schot 14–25 m/s; een bal
@@ -162,12 +167,15 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   (volley, kopbal, doorspelen), `eindHoogte` = hoogte waarop de bal aankomt (volley ± 0,6 m, kopbal ± 2 m; de speler
   springt bij een kopbal).
 - **Verdedigen:** `{ "type": "druk", "wie", "op"?, "afstand"? }` (naar de balbezitter tot op 1,7 m),
-  `{ "type": "dek", "wie", "tussen": [a, b], "fractie"? }` (passlijn dichtlopen), pass met `onderschept: "<id>"`
+  `{ "type": "dek", "wie", "tussen": [a, b], "fractie"? | "afstand"? }` (passlijn dichtlopen; `a`/`b` mag ook een punt
+  zijn: `tussen: ["a3", [34, 0]], "afstand": 2` = mandekking, 2 m goalside van a3). Druk en dek schuiven mee tot de
+  tegenstander stilstaat, zodat een verdediger niet stilstaat waar zijn tegenstander naartoe loopt; pass met `onderschept: "<id>"`
   (verdediger loopt in de lijn en krijgt de bal), `{ "type": "verover", "wie", "van" }` (bal afpakken). Rollen ruilen met
   `team`. **Jokers:** `team: "J"` (eigen kleur, paars).
 - **Overige acties:** `{ "type": "aansluiten", "wie", "rij" | "bij" }`, `{ "type": "team", "wie", "team": "C" }`
   (ander hesje, bv. tikker) en `{ "type": "schijn", "wie", "kant": "links" | "rechts" }` (schijnbeweging: lijf gaat
-  opzij en terug, de bal blijft liggen).
+  opzij en terug, de bal blijft liggen) en `{ "type": "panna", "wie", "door", "verder"?, "kant"? }` (bal tussen de
+  benen van `door` door, die zijn benen spreidt, en zelf om hem heen naar de bal).
 - **Bal aan de voet:** 40 cm voor de speler; bij dribbelen gaat hij bij elke aanraking iets verder voor de voet uit.
   Bij elke nieuwe kijkrichting draait de speler in 0,3 s (de bal draait om hem heen mee, springt niet). Een ontvanger
   draait zich al naar de bal terwijl die onderweg is.
@@ -315,6 +323,21 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - Extra test: een keeper komt nooit buiten zijn doelgebied (5,5 × 18,32 m, met een halve meter speling), behalve met
   `uitkomen`.
 - Gekleurde zones: volle rand in de kleur zelf (de vulling mengt met het gras, rood oogt anders bruin).
+
+## Besluiten fase 4 – batch 4 (Partijvormen en Spelletjes)
+- 18 oefeningen. Partijvormen 9: 1 tegen 1 op twee doeltjes, 2 tegen 1 naar doel (keeper), 2 tegen 2 winnaar blijft,
+  3 tegen 2 met omschakeling (keeper), 3 tegen 3 op vier doeltjes, 4 tegen 4 met keepers, 5 tegen 5 met keepers (flank
+  telt dubbel), 3 tegen 3 + kaatsers (alleen scoren na een kaats), lijnvoetbal 4 tegen 4.
+  Spelletjes 9: voetbaltennis 2 tegen 2, voetvolley 1 tegen 1 over het lint, latje-trap, pannavoetbal in de kooi, koning
+  van het veld (doorschuiven), opruimen over de bank (JO7–9), bankjesvoetbal (JO7–9), piratenspel (JO7–9), voetgolf.
+- Partijvormen tonen één kort, herkenbaar stuk spel (opbouw, aanval en doelpunt of omschakeling); de rest dekt, schuift
+  of loopt vrij. Geen score in de animatie.
+- 1 tegen 1, voetvolley en bankjesvoetbal liggen dwars (doelen links en rechts): zo staan de spelers in de Schuin-camera
+  naast elkaar in plaats van achter elkaar.
+- Aantallen (met dubbele categorieën): Warming-up 17, Techniek 17, Loopcoördinatie 11, Pass en trap 18, Afwerken 14,
+  Positiespel 10, Partijvormen 14, Spelletjes 11 – totaal 73 veldoefeningen. "Keeper nodig" bij 13 oefeningen
+  (9 afwerkvormen + 2 tegen 1, 3 tegen 2, 4 tegen 4 en 5 tegen 5).
+- Extra test: de bal gaat altijd over het net (hoogte bij het net ≥ nethoogte + 0,1 m).
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.
