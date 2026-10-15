@@ -1,5 +1,6 @@
-import type { LijnSoort, Punt, Tekening, Uitsnede, VeldObject } from '../model/types';
-import type { ObjectStand, Stand } from './timeline';
+import type { LijnSoort, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
+import { HORDE } from '../model/types';
+import { PASJES, PASLENGTE, type ObjectStand, type Stand } from './timeline';
 
 /** Kleuren komen uit CSS-variabelen, zodat clubkleuren (fase 6) ook de animatie kleuren. */
 export interface Kleuren {
@@ -106,7 +107,10 @@ export function tekenScene(
   for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o);
 
   for (const l of tekening.lijnen ?? []) tekenPolylijn(b, l.soort, l.punten, k, true);
-  for (const s of stand.sporen) tekenPolylijn(b, s.soort, [s.van, s.tot], k, s.klaar);
+  for (const s of stand.sporen) {
+    if (s.soort === 'loop' && s.manier && PASJES.includes(s.manier)) tekenPasjes(b, s.punten, k, s.klaar, PASLENGTE[s.manier] ?? 0.45);
+    else tekenPolylijn(b, s.soort, s.punten, k, s.klaar);
+  }
 
   for (const o of objecten) {
     if (o.soort !== 'speler' && o.soort !== 'keeper' && o.soort !== 'trainer') continue;
@@ -129,7 +133,7 @@ export function tekenScene(
 }
 
 /** Platte dingen die in 3D gewoon op het gras liggen (geen eigen 3D-vorm). */
-export const PLAT: readonly VeldObject['soort'][] = ['zone', 'keepersmat', 'ladder', 'stok', 'ring'];
+export const PLAT: readonly VeldObject['soort'][] = ['zone', 'keepersmat'];
 
 /**
  * Gras, veldlijnen en platte materialen voor de 3D-grasmat (textuur). `gebied` = welk stuk veld (meters)
@@ -145,10 +149,21 @@ export function tekenGrasmat(ctx: CanvasRenderingContext2D, breedtePx: number, h
 }
 
 /** Kleur van een persoon (team, keeper, trainer). */
-export function persoonKleur(o: VeldObject, k: Kleuren): string {
+export function persoonKleur(o: VeldObject, k: Kleuren, team: Team | undefined = o.team): string {
   if (o.soort === 'keeper') return k.keeper;
   if (o.soort === 'trainer') return k.trainer;
-  return o.team === 'B' ? k.teamB : o.team === 'C' ? k.teamC : k.teamA;
+  return team === 'B' ? k.teamB : team === 'C' ? k.teamC : k.teamA;
+}
+
+/** Kleur met doorzichtigheid (voor een gekleurde zone). Werkt met #rgb, #rrggbb en rgb(…). */
+export function doorzichtig(kleur: string, alpha: number): string {
+  const h = kleur.trim();
+  if (h.startsWith('#')) {
+    const v = h.length === 4 ? h.slice(1).split('').map((c) => c + c).join('') : h.slice(1, 7);
+    const n = parseInt(v, 16);
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
+  }
+  return h;
 }
 
 // ---------- veld ----------
@@ -337,9 +352,10 @@ function tekenMateriaal(b: Beeld, o: VeldObject) {
       const w = (o.breedte ?? 10) * s;
       const h = (o.lengte ?? 10) * s;
       metDraaiing(b, o, (c) => {
-        c.fillStyle = o.kleur ?? 'rgba(255,255,255,0.12)';
+        // Gekleurd vak: doorzichtig vlak met een rand in dezelfde kleur.
+        c.fillStyle = o.kleur ? doorzichtig(o.kleur, 0.45) : 'rgba(255,255,255,0.12)';
         c.fillRect(-w / 2, -h / 2, w, h);
-        c.strokeStyle = 'rgba(255,255,255,0.8)';
+        c.strokeStyle = o.kleur ? doorzichtig(o.kleur, 0.95) : 'rgba(255,255,255,0.8)';
         c.lineWidth = maat(b, 0.08, 1.2);
         c.setLineDash([6 * b.dpr, 4 * b.dpr]);
         c.strokeRect(-w / 2, -h / 2, w, h);
@@ -364,9 +380,11 @@ function tekenMateriaal(b: Beeld, o: VeldObject) {
     }
     case 'horde': {
       const w = (o.breedte ?? 0.8) * s;
+      // Hoge horde (vanaf 25 cm): dikkere lat, zodat laag en hoog ook van boven te onderscheiden zijn.
+      const hoog = (o.hoogte ?? HORDE.laag) >= 0.25;
       metDraaiing(b, o, (c) => {
-        c.strokeStyle = o.kleur ?? '#ff7a1a';
-        c.lineWidth = maat(b, 0.08, 2.5);
+        c.strokeStyle = o.kleur ?? (hoog ? '#e8590c' : '#ff922b');
+        c.lineWidth = maat(b, hoog ? 0.13 : 0.08, hoog ? 3.5 : 2.5);
         c.lineCap = 'round';
         c.beginPath();
         c.moveTo(-w / 2, 0);
@@ -501,13 +519,64 @@ function tekenPolylijn(b: Beeld, soort: LijnSoort, punten: Punt[], k: Kleuren, p
 
 // ---------- personen, bal, tekst ----------
 
+/** Losse pasjes (voetenwerk, hordes, kniehef, sprongen): om en om links en rechts van de lijn. */
+function tekenPasjes(b: Beeld, punten: Punt[], k: Kleuren, pijl: boolean, paslengte: number) {
+  if (punten.length < 2) return;
+  const { ctx } = b;
+  const p = punten.map((q) => px(b, q));
+  const stap = Math.max(paslengte * b.schaal, 5 * b.dpr);
+  const opzij = Math.max(0.13 * b.schaal, 2.2 * b.dpr);
+  const r = Math.max(0.07 * b.schaal, 1.6 * b.dpr);
+  ctx.save();
+  ctx.fillStyle = k.spoorLoop;
+  ctx.globalAlpha = 0.95;
+  let tot = stap / 2;
+  let n = 0;
+  for (let i = 1; i < p.length; i++) {
+    const [a, c] = [p[i - 1]!, p[i]!];
+    const len = Math.hypot(c[0] - a[0], c[1] - a[1]);
+    if (len < 0.01) continue;
+    const [ux, uy] = [(c[0] - a[0]) / len, (c[1] - a[1]) / len];
+    while (tot <= len) {
+      const kant = n % 2 === 0 ? 1 : -1;
+      const x = a[0] + ux * tot - uy * opzij * kant;
+      const y = a[1] + uy * tot + ux * opzij * kant;
+      ctx.beginPath();
+      ctx.ellipse(x, y, r * 1.4, r, Math.atan2(uy, ux), 0, Math.PI * 2);
+      ctx.fill();
+      tot += stap;
+      n++;
+    }
+    tot -= len;
+  }
+  ctx.restore();
+  // Pijlpunt aan het eind, zoals bij de andere lijnen.
+  if (pijl) tekenPolylijn(b, 'loop', [lerpPunt(punten.at(-2)!, punten.at(-1)!, 0.97), punten.at(-1)!], k, true);
+}
+
+const lerpPunt = (a: Punt, c: Punt, u: number): Punt => [a[0] + (c[0] - a[0]) * u, a[1] + (c[1] - a[1]) * u];
+
 function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
   const { ctx } = b;
   const c = px(b, [s.x, s.y]);
   const r = maat(b, 0.75, 10);
-  const kleur = persoonKleur(o, k);
+  const kleur = persoonKleur(o, k, s.team);
   ctx.save();
   ctx.translate(c[0], c[1]);
+
+  // Kleine pasjes zichtbaar maken: twee voetjes die om en om naar voren gaan.
+  if (s.manier && PASJES.includes(s.manier) && s.snelheid > 0.3 && s.houding === 'staan') {
+    const h = (s.hoek * Math.PI) / 180;
+    const [fx, fy] = [Math.cos(h), Math.sin(h)];
+    const sw = Math.sin(s.fase);
+    ctx.fillStyle = 'rgba(20,20,20,0.75)';
+    for (const kant of [1, -1]) {
+      const voor = sw * kant * r * 0.75;
+      ctx.beginPath();
+      ctx.ellipse(fx * voor - fy * kant * r * 0.5, fy * voor + fx * kant * r * 0.5, r * 0.32, r * 0.22, h, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
 
   // Schaduw
   ctx.fillStyle = 'rgba(0,0,0,0.22)';

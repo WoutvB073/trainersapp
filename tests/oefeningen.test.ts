@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { BESTANDEN, OEFENINGEN } from '../src/data/oefeningen';
 import { CATEGORIEEN } from '../src/data/categorieen';
-import { maakTijdlijn } from '../src/anim/timeline';
+import { maakTijdlijn, standOp } from '../src/anim/timeline';
 import type { ObjectSoort } from '../src/model/types';
 
 const MAP_SOORT: Record<string, string> = { veld: 'veld', keepers: 'keeper' };
@@ -37,6 +37,8 @@ describe('oefeningen (databestanden)', () => {
           for (const c of o.categorieen) expect(geldig).toContain(c);
           expect(o.naam.length).toBeGreaterThan(2);
           expect(o.uitleg.length).toBeGreaterThan(10);
+          expect(o.organisatie?.length ?? 0).toBeGreaterThan(10);
+          expect(o.coachpunten.length).toBeLessThanOrEqual(5);
           expect(Number.isInteger(o.spelersNodig) && o.spelersNodig >= 0).toBe(true);
           expect(Number.isInteger(o.keepersNodig) && o.keepersNodig >= 0).toBe(true);
           expect(o.benodigdheden.length).toBeGreaterThan(0);
@@ -58,6 +60,34 @@ describe('oefeningen (databestanden)', () => {
           expect(aantal('keeper')).toBeGreaterThanOrEqual(Math.min(1, o.keepersNodig));
         });
       }
+    });
+  }
+});
+
+describe('animaties: niet door elkaar of door materiaal heen', () => {
+  const VAST = ['pion', 'paaltje', 'hoedje'];
+  for (const o of OEFENINGEN) {
+    it(`${o.id}: poppetjes houden afstand`, () => {
+      const tl = maakTijdlijn(o.tekening);
+      const personen = o.tekening.objecten.filter((x) => x.soort === 'speler' || x.soort === 'keeper' || x.soort === 'trainer').map((x) => x.id);
+      const materiaal = o.tekening.objecten.filter((x) => VAST.includes(x.soort));
+      const problemen: string[] = [];
+      for (let t = 0; t <= tl.duur; t += 0.05) {
+        const s = standOp(tl, t);
+        for (let i = 0; i < personen.length; i++) {
+          const a = s.objecten.get(personen[i]!)!;
+          for (let j = i + 1; j < personen.length; j++) {
+            const b = s.objecten.get(personen[j]!)!;
+            const d = Math.hypot(a.x - b.x, a.y - b.y);
+            if (d < 1.5) problemen.push(`${personen[i]}–${personen[j]} ${d.toFixed(2)} m op t=${t.toFixed(2)}`);
+          }
+          for (const m of materiaal) {
+            const d = Math.hypot(a.x - m.x, a.y - m.y);
+            if (d < 0.5) problemen.push(`${personen[i]} door ${m.id} (${d.toFixed(2)} m) op t=${t.toFixed(2)}`);
+          }
+        }
+      }
+      expect(problemen.slice(0, 5)).toEqual([]);
     });
   }
 });

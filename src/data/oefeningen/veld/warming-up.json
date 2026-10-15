@@ -1,0 +1,548 @@
+[
+  {
+    "id": "veld-wu-tikkertje-hesjes",
+    "soort": "veld",
+    "naam": "Tikkertje met hesje",
+    "categorieen": ["warming-up"],
+    "uitleg": "De tikker houdt een hesje in de hand en probeert iemand te tikken. Wie getikt wordt, krijgt het hesje en is meteen de nieuwe tikker. Wie buiten het vak loopt, is ook getikt. Speel blokjes van 1 à 2 minuten.",
+    "organisatie": "Vak van 20 × 20 m met 4 pionnen. Eén tikker (bij meer dan 10 spelers twee) met een hesje in de hand; de rest verspreid in het vak.",
+    "benodigdheden": ["4 pionnen", "1–2 hesjes"],
+    "spelersNodig": 6,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Kijk om je heen en zoek de open ruimte op",
+      "Kleine pasjes bij het wenden, daarna versnellen",
+      "Tikker: snijd de ruimte af in plaats van achter iemand aan te rennen"
+    ],
+    "variaties": {
+      "makkelijker": ["Groter vak (25 × 25 m)", "Tikker mag alleen huppelen of zijwaarts lopen"],
+      "moeilijker": ["Kleiner vak (15 × 15 m)", "Twee tikkers tegelijk", "Iedereen dribbelt met een bal; de tikker tikt door je bal uit het vak te spelen"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 22, "lengte": 22 },
+      "camera": "boven",
+      "objecten": [
+        { "id": "z1", "soort": "zone", "x": 11, "y": 11, "breedte": 20, "lengte": 20 },
+        { "id": "p1", "soort": "pion", "x": 1, "y": 1 },
+        { "id": "p2", "soort": "pion", "x": 21, "y": 1 },
+        { "id": "p3", "soort": "pion", "x": 1, "y": 21 },
+        { "id": "p4", "soort": "pion", "x": 21, "y": 21 },
+        { "id": "c1", "soort": "speler", "team": "C", "nummer": 1, "x": 10, "y": 11 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 5, "y": 5 },
+        { "id": "a3", "soort": "speler", "team": "A", "nummer": 3, "x": 16, "y": 5 },
+        { "id": "a4", "soort": "speler", "team": "A", "nummer": 4, "x": 14, "y": 14 },
+        { "id": "a5", "soort": "speler", "team": "A", "nummer": 5, "x": 6, "y": 16 },
+        { "id": "a6", "soort": "speler", "team": "A", "nummer": 6, "x": 11, "y": 5 }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            { "type": "loop", "wie": "c1", "via": [[13, 14]], "naar": [15.9, 17.4], "manier": "sprint", "duur": 2.6 },
+            { "type": "loop", "wie": "a4", "via": [[16.5, 15.5]], "naar": [17.2, 18.6], "duur": 2.6 },
+            { "type": "loop", "wie": "a2", "via": [[3.5, 8]], "naar": [4, 12], "duur": 2.6 },
+            { "type": "loop", "wie": "a3", "via": [[18.5, 6]], "naar": [18, 9.5], "duur": 2.6 },
+            { "type": "loop", "wie": "a5", "via": [[8, 18.5]], "naar": [11, 19], "duur": 2.6 },
+            { "type": "loop", "wie": "a6", "via": [[9, 3.5]], "naar": [6.5, 3], "duur": 2.6 }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": [
+            { "type": "team", "wie": "a4", "team": "C" },
+            { "type": "team", "wie": "c1", "team": "A" }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a4", "via": [[14.5, 18]], "naar": [10.5, 17.3], "manier": "sprint", "duur": 2.4 },
+            { "type": "loop", "wie": "a5", "via": [[8.5, 17.5]], "naar": [6, 14], "duur": 2.4 },
+            { "type": "loop", "wie": "c1", "via": [[15.6, 14.8]], "naar": [17.8, 12.5], "duur": 2.4 },
+            { "type": "loop", "wie": "a2", "naar": [4.5, 7.5], "duur": 2.4 },
+            { "type": "loop", "wie": "a3", "via": [[16, 8]], "naar": [13, 8], "duur": 2.4 },
+            { "type": "loop", "wie": "a6", "naar": [9.5, 6.5], "duur": 2.4 }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-passen-en-volgen",
+    "soort": "veld",
+    "naam": "Passen en volgen",
+    "categorieen": ["warming-up", "pass-en-trap"],
+    "uitleg": "De voorste speler passt naar de voorste van de rij tegenover en sprint achter zijn bal aan. Hij sluit achteraan in die rij aan. De ontvanger neemt aan en passt terug naar de overkant. Zo draait iedereen door.",
+    "organisatie": "Twee rijen tegenover elkaar op 10 m afstand, elk bij een pion. Begin met de bal bij één rij. Bij meer dan 8 spelers: twee groepen naast elkaar.",
+    "benodigdheden": ["2 pionnen", "1 bal per groep"],
+    "spelersNodig": 4,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Pass met de binnenkant, standbeen naast de bal",
+      "Na de pass direct de eerste meters versnellen",
+      "Aannemen met het lichaam open, in de richting van de volgende pass",
+      "Vraag de bal: roep de naam van de passer"
+    ],
+    "variaties": {
+      "makkelijker": ["Afstand 6–8 m", "Eerst aannemen, dan passen (twee balcontacten)"],
+      "moeilijker": ["In één keer doorspelen", "Alleen het zwakke been", "Tweede bal erbij vanaf de andere rij"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 20, "lengte": 10 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "p1", "soort": "pion", "x": 5.5, "y": 5.8 },
+        { "id": "p2", "soort": "pion", "x": 14.5, "y": 5.8 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 0, "y": 0 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 0, "y": 0 },
+        { "id": "a3", "soort": "speler", "team": "A", "nummer": 3, "x": 0, "y": 0 },
+        { "id": "a4", "soort": "speler", "team": "A", "nummer": 4, "x": 0, "y": 0 },
+        { "id": "b1", "soort": "bal", "x": 5, "y": 5, "bij": "a1" }
+      ],
+      "rijen": [
+        { "id": "links", "x": 5, "y": 5, "richting": 180, "spelers": ["a1", "a2"] },
+        { "id": "rechts", "x": 15, "y": 5, "richting": 0, "spelers": ["a3", "a4"] }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": ["a1", "a3", "a2", "a4", "a3"],
+            "tussen": 1.4,
+            "stappen": [
+              {
+                "acties": [
+                  { "type": "pass", "van": "@", "naar": "@volgende" },
+                  { "type": "aansluiten", "wie": "@", "bij": "@volgende", "manier": "sprint", "start": 0.2 }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-loopscholing",
+    "soort": "veld",
+    "naam": "Loopscholing in de rij",
+    "categorieen": ["warming-up", "loopcoordinatie"],
+    "uitleg": "De spelers gaan om de beurt naar de overkant met een loopvorm: huppelen, zijwaarts, knieheffen of achteruit. Terug joggen ze rustig langs de baan en sluiten ze achteraan aan. Na elke ronde een andere loopvorm.",
+    "organisatie": "Baan van 12 m tussen twee pionnen. De spelers staan in een rij achter de startpion. De volgende vertrekt als de voorganger ± 4 m weg is.",
+    "benodigdheden": ["2 pionnen"],
+    "spelersNodig": 1,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Op de voorvoet, niet op de hakken",
+      "Armen actief meebewegen (90° in de elleboog)",
+      "Romp rechtop, heupen hoog",
+      "Terug rustig joggen: dat is herstel"
+    ],
+    "variaties": {
+      "makkelijker": ["Baan van 8 m", "Alleen huppelen en joggen"],
+      "moeilijker": ["Na 6 m de loopvorm overgaan in een sprint", "Achteruit met over de schouder kijken", "Zijwaarts met de armen kruisend boven het hoofd"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 20, "lengte": 9 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "p1", "soort": "pion", "x": 5.6, "y": 5.2 },
+        { "id": "p2", "soort": "pion", "x": 17.6, "y": 5.2 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 0, "y": 0 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 0, "y": 0 },
+        { "id": "a3", "soort": "speler", "team": "A", "nummer": 3, "x": 0, "y": 0 },
+        { "id": "a4", "soort": "speler", "team": "A", "nummer": 4, "x": 0, "y": 0 }
+      ],
+      "rijen": [{ "id": "r1", "x": 5, "y": 4.5, "richting": 180, "spelers": ["a1", "a2", "a3", "a4"] }],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": ["a1", "a2", "a3", "a4"],
+            "tussen": 2.0,
+            "waarden": { "manier": ["huppel", "achteruit", "zijwaarts", "kniehef"] },
+            "stappen": [
+              { "acties": [{ "type": "loop", "wie": "@", "naar": [17, 4.5], "manier": "@manier" }] },
+              { "acties": [{ "type": "aansluiten", "wie": "@", "rij": "r1" }] }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-rondo-4-1",
+    "soort": "veld",
+    "naam": "Rondo 4 tegen 1",
+    "categorieen": ["warming-up", "positiespel"],
+    "uitleg": "Vier spelers op de lijnen van het vak houden de bal rond; de speler in het midden probeert de bal te onderscheppen. Wie de bal verliest of buiten het vak speelt, gaat erin. Lukt een pass door het midden (tussen de lijnen), dan telt die dubbel.",
+    "organisatie": "Vak van 8 × 8 m. Op elke zijde één speler, één speler in het midden met een hesje. Wissel elke 60–90 seconden de middenman als niemand de bal verliest.",
+    "benodigdheden": ["4 pionnen", "1 bal", "1 hesje"],
+    "spelersNodig": 5,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Open staan: aannemen met de verste voet, zodat je beide kanten op kunt",
+      "Beweeg langs je lijn om aanspeelbaar te blijven",
+      "Pass op de juiste voet van je medespeler",
+      "Middenman: zet druk en sluit met je lichaam een passlijn af"
+    ],
+    "variaties": {
+      "makkelijker": ["5 tegen 1", "Groter vak (10 × 10 m)", "Middenman mag alleen onderscheppen, niet duelleren"],
+      "moeilijker": ["Maximaal twee balcontacten", "Kleiner vak (6 × 6 m)", "4 tegen 2 in een vak van 10 × 10 m"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 12, "lengte": 12 },
+      "camera": "boven",
+      "objecten": [
+        { "id": "z1", "soort": "zone", "x": 6, "y": 6, "breedte": 8, "lengte": 8 },
+        { "id": "p1", "soort": "pion", "x": 2, "y": 2 },
+        { "id": "p2", "soort": "pion", "x": 10, "y": 2 },
+        { "id": "p3", "soort": "pion", "x": 2, "y": 10 },
+        { "id": "p4", "soort": "pion", "x": 10, "y": 10 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 6, "y": 2, "kijkrichting": 90 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 10, "y": 6, "kijkrichting": 180 },
+        { "id": "a3", "soort": "speler", "team": "A", "nummer": 3, "x": 6, "y": 10, "kijkrichting": -90 },
+        { "id": "a4", "soort": "speler", "team": "A", "nummer": 4, "x": 2, "y": 6, "kijkrichting": 0 },
+        { "id": "m1", "soort": "speler", "team": "B", "nummer": 5, "x": 6, "y": 6 },
+        { "id": "b1", "soort": "bal", "x": 6, "y": 2.5, "bij": "a1" }
+      ],
+      "animatie": [
+        {
+          "duur": 1.1,
+          "acties": [
+            { "type": "loop", "wie": "a2", "naar": [10, 5.2], "manier": "zijwaarts", "kijk": 180, "duur": 0.45 },
+            { "type": "pass", "van": "a1", "naar": "a2" },
+            { "type": "loop", "wie": "m1", "naar": [8, 4.6], "start": 0.2, "duur": 0.85 }
+          ]
+        },
+        {
+          "duur": 1.1,
+          "acties": [
+            { "type": "loop", "wie": "a3", "naar": [6.9, 10], "manier": "zijwaarts", "kijk": -90, "duur": 0.45 },
+            { "type": "pass", "van": "a2", "naar": "a3" },
+            { "type": "loop", "wie": "m1", "naar": [7.3, 8.1], "start": 0.2, "duur": 0.85 }
+          ]
+        },
+        {
+          "duur": 1.1,
+          "acties": [
+            { "type": "loop", "wie": "a4", "naar": [2, 6.7], "manier": "zijwaarts", "kijk": 0, "duur": 0.45 },
+            { "type": "pass", "van": "a3", "naar": "a4" },
+            { "type": "loop", "wie": "m1", "naar": [4.2, 7.8], "start": 0.2, "duur": 0.85 }
+          ]
+        },
+        {
+          "duur": 1.2,
+          "acties": [
+            { "type": "pass", "van": "a4", "naar": "a2" },
+            { "type": "loop", "wie": "m1", "naar": [7.3, 5.9], "start": 0.35, "duur": 0.85 }
+          ]
+        },
+        {
+          "duur": 1.1,
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [6.8, 2], "manier": "zijwaarts", "kijk": 90, "duur": 0.45 },
+            { "type": "pass", "van": "a2", "naar": "a1" },
+            { "type": "loop", "wie": "m1", "naar": [7.2, 3.8], "start": 0.2, "duur": 0.85 }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-dribbelen-opdrachten",
+    "soort": "veld",
+    "naam": "Dribbelen met opdrachten",
+    "categorieen": ["warming-up", "techniek"],
+    "uitleg": "Iedereen dribbelt met een eigen bal door het vak. Op een signaal van de trainer voer je een opdracht uit: \"draai\" (bal meenemen in de andere richting), \"stop\" (voetzool op de bal) of \"wissel\" (bal laten liggen en een andere bal pakken).",
+    "organisatie": "Vak van 15 × 15 m. Elke speler heeft een bal. De trainer staat aan de zijkant en geeft de signalen.",
+    "benodigdheden": ["4 pionnen", "1 bal per speler"],
+    "spelersNodig": 1,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Bal dicht bij de voet: bij elke stap of elke tweede stap contact",
+      "Kijk op tussen de balcontacten, niet alleen naar de bal",
+      "Gebruik binnen- en buitenkant, links én rechts",
+      "Na de draai meteen versnellen"
+    ],
+    "variaties": {
+      "makkelijker": ["Groter vak", "Alleen stop en start"],
+      "moeilijker": ["Kleiner vak (10 × 10 m)", "Alleen het zwakke been", "Kleuren als opdracht (rood = kap, blauw = schaar)", "De trainer probeert ballen weg te tikken"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 18, "lengte": 20 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "z1", "soort": "zone", "x": 9, "y": 9, "breedte": 15, "lengte": 15 },
+        { "id": "p1", "soort": "pion", "x": 1.5, "y": 1.5 },
+        { "id": "p2", "soort": "pion", "x": 16.5, "y": 1.5 },
+        { "id": "p3", "soort": "pion", "x": 1.5, "y": 16.5 },
+        { "id": "p4", "soort": "pion", "x": 16.5, "y": 16.5 },
+        { "id": "t1", "soort": "trainer", "x": 9, "y": 18.4 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 4.5, "y": 4.5, "kijkrichting": 0 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 13, "y": 4.5, "kijkrichting": 90 },
+        { "id": "a3", "soort": "speler", "team": "A", "nummer": 3, "x": 4.5, "y": 13, "kijkrichting": -90 },
+        { "id": "a4", "soort": "speler", "team": "A", "nummer": 4, "x": 13, "y": 13, "kijkrichting": 180 },
+        { "id": "b1", "soort": "bal", "x": 5, "y": 4.5, "bij": "a1" },
+        { "id": "b2", "soort": "bal", "x": 13, "y": 5, "bij": "a2" },
+        { "id": "b3", "soort": "bal", "x": 4.5, "y": 12.5, "bij": "a3" },
+        { "id": "b4", "soort": "bal", "x": 12.5, "y": 13, "bij": "a4" }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            { "type": "dribbel", "wie": "a1", "via": [[6.5, 3.4]], "naar": [9, 5.5], "duur": 2.8 },
+            { "type": "dribbel", "wie": "a2", "via": [[15, 6.5]], "naar": [14, 10], "duur": 2.8 },
+            { "type": "dribbel", "wie": "a3", "via": [[3, 11]], "naar": [4, 7.6], "duur": 2.8 },
+            { "type": "dribbel", "wie": "a4", "via": [[11.5, 15]], "naar": [8.5, 14], "duur": 2.8 }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "dribbel", "wie": "a1", "naar": [7, 7.3], "duur": 1.6 },
+            { "type": "dribbel", "wie": "a2", "naar": [12.5, 7.5], "duur": 1.6 },
+            { "type": "dribbel", "wie": "a3", "naar": [6, 10.5], "duur": 1.6 },
+            { "type": "dribbel", "wie": "a4", "naar": [11, 12.3], "duur": 1.6 }
+          ]
+        },
+        { "duur": 0.8, "acties": [] }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-schatrovers",
+    "soort": "veld",
+    "naam": "Schatrovers",
+    "categorieen": ["warming-up"],
+    "uitleg": "Op het startsein rennen beide teams naar het middenvak en dribbelen ze steeds één bal naar hun eigen vak. Is het midden leeg, dan mag je een bal uit het vak van de tegenstander roven. Na 1 minuut telt welk team de meeste ballen heeft.",
+    "organisatie": "Middenvak van 4 × 4 m met 5 of meer ballen. Twee thuisvakken van 3 × 6 m op 8 m links en rechts van het midden. Twee teams van 2–5 spelers, elk bij hun eigen vak.",
+    "benodigdheden": ["12 hoedjes of pionnen", "5+ ballen", "hesjes voor één team"],
+    "spelersNodig": 4,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Snel kiezen: welke bal pak ik?",
+      "Korte dribbel met veel balcontact, kijk op",
+      "Overleg met je team: wie gaat roven en wie haalt uit het midden?"
+    ],
+    "variaties": {
+      "makkelijker": ["Meer ballen in het midden", "Niet roven bij de tegenstander"],
+      "moeilijker": ["Eén speler per team mag het eigen vak verdedigen", "Dribbelen alleen met het zwakke been", "Grotere afstand tot de thuisvakken"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 24, "lengte": 14 },
+      "camera": "boven",
+      "objecten": [
+        { "id": "zA", "soort": "zone", "x": 2.5, "y": 7, "breedte": 3, "lengte": 6, "kleur": "#e03131" },
+        { "id": "zB", "soort": "zone", "x": 21.5, "y": 7, "breedte": 3, "lengte": 6, "kleur": "#1c64d8" },
+        { "id": "zM", "soort": "zone", "x": 12, "y": 7, "breedte": 4, "lengte": 4 },
+        { "id": "m1", "soort": "bal", "x": 11, "y": 6 },
+        { "id": "m2", "soort": "bal", "x": 13, "y": 6 },
+        { "id": "m3", "soort": "bal", "x": 11, "y": 8 },
+        { "id": "m4", "soort": "bal", "x": 13, "y": 8 },
+        { "id": "m5", "soort": "bal", "x": 12, "y": 7 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 5, "y": 5.5, "kijkrichting": 0 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 5, "y": 8.5, "kijkrichting": 0 },
+        { "id": "b1", "soort": "speler", "team": "B", "nummer": 1, "x": 19, "y": 5.5, "kijkrichting": 180 },
+        { "id": "b2", "soort": "speler", "team": "B", "nummer": 2, "x": 19, "y": 8.5, "kijkrichting": 180 }
+      ],
+      "animatie": [
+        { "duur": 0.4, "acties": [] },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [10.4, 5.8], "manier": "sprint" },
+            { "type": "loop", "wie": "a2", "naar": [10.4, 8.2], "manier": "sprint" },
+            { "type": "loop", "wie": "b1", "naar": [13.6, 5.8], "manier": "sprint" },
+            { "type": "loop", "wie": "b2", "naar": [13.6, 8.2], "manier": "sprint" }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "dribbel", "wie": "a1", "naar": [3.6, 5.8] },
+            { "type": "dribbel", "wie": "a2", "naar": [3.6, 8.2] },
+            { "type": "dribbel", "wie": "b1", "naar": [20.4, 5.8] },
+            { "type": "dribbel", "wie": "b2", "naar": [20.4, 8.2] }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "pass", "van": "a1", "naar": [2.4, 5.6], "duur": 0.4 },
+            { "type": "pass", "van": "a2", "naar": [2.4, 8.4], "duur": 0.4 },
+            { "type": "pass", "van": "b1", "naar": [21.6, 5.6], "duur": 0.4 },
+            { "type": "pass", "van": "b2", "naar": [21.6, 8.4], "duur": 0.4 }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [11.3, 7], "manier": "sprint" },
+            { "type": "loop", "wie": "b1", "naar": [12.9, 7.4], "manier": "sprint", "start": 0.25 }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "dribbel", "wie": "a1", "naar": [4.4, 6.6] },
+            { "type": "loop", "wie": "b1", "via": [[16, 6]], "naar": [19, 5.5] }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-spiegelen",
+    "soort": "veld",
+    "naam": "Spiegelen in tweetallen",
+    "categorieen": ["warming-up", "loopcoordinatie"],
+    "uitleg": "Twee spelers staan tegenover elkaar, elk tussen twee hoedjes. De voorganger beweegt zijwaarts, naar voren of achteruit; de volger doet hem zo snel mogelijk na als spiegelbeeld. Na 20 seconden wisselen.",
+    "organisatie": "Per tweetal twee lijnen van 8 m (hoedjes aan de uiteinden) op 4 m van elkaar. Beide spelers beginnen in het midden van hun lijn.",
+    "benodigdheden": ["4 hoedjes per tweetal"],
+    "spelersNodig": 2,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Laag zwaartepunt, op de voorvoet",
+      "Zijwaarts: voeten niet kruisen",
+      "Volger: kijk naar de heup van je partner, niet naar het hoofd"
+    ],
+    "variaties": {
+      "makkelijker": ["Alleen zijwaarts, rustig tempo", "Kortere lijnen (5 m)"],
+      "moeilijker": ["Voorganger mag schijnbewegingen maken", "Wie het eerst bij het hoedje is, scoort een punt", "Met een bal aan de voet"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 16, "lengte": 12 },
+      "camera": "boven",
+      "objecten": [
+        { "id": "h1", "soort": "hoedje", "x": 4, "y": 4 },
+        { "id": "h2", "soort": "hoedje", "x": 12, "y": 4 },
+        { "id": "h3", "soort": "hoedje", "x": 4, "y": 8 },
+        { "id": "h4", "soort": "hoedje", "x": 12, "y": 8 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 8, "y": 4, "kijkrichting": 90 },
+        { "id": "b1", "soort": "speler", "team": "B", "nummer": 2, "x": 8, "y": 8, "kijkrichting": -90 }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [5, 4], "manier": "zijwaarts", "kijk": 90, "duur": 1.1 },
+            { "type": "loop", "wie": "b1", "naar": [5.3, 8], "manier": "zijwaarts", "kijk": -90, "start": 0.25, "duur": 1.0 }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [10.8, 4], "manier": "zijwaarts", "kijk": 90, "duur": 1.9 },
+            { "type": "loop", "wie": "b1", "naar": [10.5, 8], "manier": "zijwaarts", "kijk": -90, "start": 0.3, "duur": 1.8 }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [10.8, 5], "manier": "sprint", "kijk": 90, "duur": 0.5 },
+            { "type": "loop", "wie": "b1", "naar": [10.5, 7], "manier": "sprint", "kijk": -90, "start": 0.2, "duur": 0.5 }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [10.8, 4], "manier": "achteruit", "duur": 0.7 },
+            { "type": "loop", "wie": "b1", "naar": [10.5, 8], "manier": "achteruit", "start": 0.2, "duur": 0.7 }
+          ]
+        },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [7.5, 4], "manier": "zijwaarts", "kijk": 90, "duur": 1.2 },
+            { "type": "loop", "wie": "b1", "naar": [7.8, 8], "manier": "zijwaarts", "kijk": -90, "start": 0.25, "duur": 1.1 }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-lopend-passen",
+    "soort": "veld",
+    "naam": "Al lopend passen in tweetallen",
+    "categorieen": ["warming-up", "pass-en-trap"],
+    "uitleg": "Twee spelers joggen naast elkaar naar de overkant en passen de bal ondertussen naar elkaar. Speel de bal steeds vóór je partner, zodat hij hem in de loop kan meenemen. Aan de overkant omdraaien en terug.",
+    "organisatie": "Baan van 25 m lang; de spelers lopen op 6 m van elkaar. Pionnen aan begin en eind van beide lijnen. Meerdere tweetallen naast elkaar kan prima.",
+    "benodigdheden": ["4 pionnen per tweetal", "1 bal per tweetal"],
+    "spelersNodig": 2,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Speel de bal vóór je partner, in zijn looprichting",
+      "Aanname naar voren meenemen, niet stilstaan",
+      "Rustig tempo: het is een warming-up"
+    ],
+    "variaties": {
+      "makkelijker": ["Afstand 4 m, wandelend tempo", "Aannemen, dan passen"],
+      "moeilijker": ["In één keer doorspelen", "Passen met de buitenkant", "Afstand 10 m of een opgegooide bal met de wreef terugspelen"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 31, "lengte": 13 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "p1", "soort": "pion", "x": 2, "y": 3.5 },
+        { "id": "p2", "soort": "pion", "x": 2, "y": 9.5 },
+        { "id": "p3", "soort": "pion", "x": 28.5, "y": 3.5 },
+        { "id": "p4", "soort": "pion", "x": 28.5, "y": 9.5 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 3, "y": 3.5, "kijkrichting": 0 },
+        { "id": "a2", "soort": "speler", "team": "B", "nummer": 2, "x": 3, "y": 9.5, "kijkrichting": 0 },
+        { "id": "b1", "soort": "bal", "x": 3.5, "y": 3.5, "bij": "a1" }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [27.5, 3.5], "duur": 7 },
+            { "type": "loop", "wie": "a2", "naar": [27.5, 9.5], "duur": 7 },
+            { "type": "pass", "van": "a1", "naar": "a2", "start": 0.6 },
+            { "type": "pass", "van": "a2", "naar": "a1", "start": 2.1 },
+            { "type": "pass", "van": "a1", "naar": "a2", "start": 3.6 },
+            { "type": "pass", "van": "a2", "naar": "a1", "start": 5.1 }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-overlopertje",
+    "soort": "veld",
+    "naam": "Overlopertje",
+    "categorieen": ["warming-up"],
+    "uitleg": "Alle spelers staan op de beginlijn, de tikker in het midden. Op het signaal rent iedereen naar de overkant zonder getikt te worden. Wie getikt wordt, wordt ook tikker. Ga door tot er één speler over is: die is de winnaar.",
+    "organisatie": "Vak van 20 × 16 m. Lopers op de ene korte lijn, één tikker (met hesje) in het midden. Na elke oversteek wachten tot iedereen klaarstaat.",
+    "benodigdheden": ["4 pionnen", "hesjes voor de tikkers"],
+    "spelersNodig": 6,
+    "keepersNodig": 0,
+    "coachpunten": [
+      "Kijk vooruit en zoek de gaten tussen de tikkers",
+      "Versnel en verander van richting op het goede moment",
+      "Tikkers: werk samen en sluit samen de ruimte af"
+    ],
+    "variaties": {
+      "makkelijker": ["Breder vak", "Tikkers mogen alleen zijwaarts bewegen"],
+      "moeilijker": ["Lopers dribbelen met een bal; tikken = bal uit het vak spelen", "Smaller vak", "Tikkers houden elkaars hand vast (kettingtik)"]
+    },
+    "tekening": {
+      "veld": { "type": "leeg", "breedte": 22, "lengte": 18 },
+      "camera": "boven",
+      "objecten": [
+        { "id": "z1", "soort": "zone", "x": 11, "y": 9, "breedte": 20, "lengte": 16 },
+        { "id": "p1", "soort": "pion", "x": 1, "y": 1 },
+        { "id": "p2", "soort": "pion", "x": 21, "y": 1 },
+        { "id": "p3", "soort": "pion", "x": 1, "y": 17 },
+        { "id": "p4", "soort": "pion", "x": 21, "y": 17 },
+        { "id": "c1", "soort": "speler", "team": "C", "nummer": 1, "x": 11, "y": 9, "kijkrichting": 180 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 2, "x": 2, "y": 3, "kijkrichting": 0 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 3, "x": 2, "y": 6, "kijkrichting": 0 },
+        { "id": "a3", "soort": "speler", "team": "A", "nummer": 4, "x": 2, "y": 9, "kijkrichting": 0 },
+        { "id": "a4", "soort": "speler", "team": "A", "nummer": 5, "x": 2, "y": 12, "kijkrichting": 0 },
+        { "id": "a5", "soort": "speler", "team": "A", "nummer": 6, "x": 2, "y": 15, "kijkrichting": 0 }
+      ],
+      "animatie": [
+        { "duur": 0.4, "acties": [] },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "via": [[9, 2.5]], "naar": [20, 4], "duur": 4.0 },
+            { "type": "loop", "wie": "a2", "via": [[9, 5]], "naar": [20, 7.5], "duur": 4.2 },
+            { "type": "loop", "wie": "a3", "via": [[7, 10]], "naar": [12.4, 10.3], "manier": "sprint", "duur": 2.3 },
+            { "type": "loop", "wie": "a4", "via": [[10, 13.5]], "naar": [20, 12], "duur": 4.1 },
+            { "type": "loop", "wie": "a5", "via": [[9, 16]], "naar": [20, 15.5], "duur": 3.9 },
+            { "type": "loop", "wie": "c1", "naar": [13.6, 9.2], "manier": "sprint", "duur": 2.3 },
+            { "type": "team", "wie": "a3", "team": "C", "start": 2.3 },
+            { "type": "loop", "wie": "c1", "naar": [11, 6.5], "start": 2.6, "duur": 1.6 },
+            { "type": "loop", "wie": "a3", "naar": [11, 11.5], "start": 2.6, "duur": 1.6 }
+          ]
+        },
+        { "duur": 0.6, "acties": [] }
+      ]
+    }
+  }
+]

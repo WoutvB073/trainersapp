@@ -6,16 +6,16 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.2.0)
+## Status (15-10-2026, versie 0.3.0)
 
 | Fase | Status |
 |---|---|
 | 0. PLAN.md | ✅ af |
 | 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ online (0.1.0), getest op de telefoon door de gebruiker |
-| 1b. Installatiescherm (zoals IntervalFit) | ✅ gebouwd en online (0.2.0). **Wacht op test** op de telefoon |
-| 2. 3D-animaties (Three.js) | ✅ gebouwd en online (0.2.0). **Wacht op test** op de telefoon |
+| 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
+| 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | ⏳ (doorlopend vanaf fase 2/3) |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Veld → Warming-up (9) en Loopcoördinatie (9), plus bouwstenen. **Wacht op test** op de telefoon. Volgende batches: Techniek, Pass en trap, Afwerken, Positiespel, Partijvormen, Spelletjes, Keepers |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -94,6 +94,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   "naam": "Kaatsen en afwerken",
   "categorieen": ["afwerken", "pass-en-trap"],
   "uitleg": "Korte uitleg …",
+  "organisatie": "Vakgrootte, afstanden, waar staan de spelers …",
   "benodigdheden": ["1 goal", "4 pionnen", "Ballen"],
   "spelersNodig": 2,                     // veldspelers (minimaal)
   "keepersNodig": 1,
@@ -115,8 +116,15 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - `bal` (+ optioneel `bij`: id van wie de bal aan het begin heeft)
   - `goal` (groot), `klein-goal`, `pion`, `hoedje`, `paaltje`, `ladder`, `horde`, `ring`, `zone`, `muurtje`,
     `rebounder`, `keepersmat`, `stok`, `tekst`
-  - optioneel: `hoek` (graden; bij goals 0 = opening naar beneden), `breedte`/`lengte` (zone, ladder, muurtje,
-    mat), `tekst`, `kijkrichting` (graden).
+  - optioneel: `hoek` (graden; bij goals 0 = opening naar beneden; ladder/horde/stok met `hoek: 90` liggen dwars
+    op een baan langs x), `breedte`/`lengte` (zone, ladder (standaard 4 m), muurtje, mat, stok), `hoogte` (horde:
+    laag 0,15 / hoog 0,3 m; paaltje), `kleur` (zone wordt een doorzichtig gekleurd vlak; ook hoedje, pion, ring),
+    `tekst`, `kijkrichting` (graden).
+- `camera` (optioneel): beginstand van de 3D-camera, `"boven"`, `"schuin"` (standaard) of `"achter"`.
+- `rijen` (optioneel): wachtende spelers `{ id, x, y, richting, afstand?, spelers: [...] }`. Plek 0 (voorste) op x, y; de
+  rij loopt in `richting` naar achteren, `afstand` standaard 1,6 m. Wie vertrekt, laat de rest automatisch
+  doorschuiven; `aansluiten` zet iemand achteraan (buitenom, zonder door de rij of baan te lopen). De posities van
+  rijspelers volgen uit de rij.
 - `lijnen`: vaste lijnen (editor-tekeningen): `{ "soort": "bal" | "loop" | "dribbel", "punten": [[x, y], …] }`.
 - `animatie`: lijst **stappen**; acties binnen een stap lopen tegelijk:
   ```jsonc
@@ -132,15 +140,26 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   ```
   Per actie optioneel: `start` (s na begin van de stap), `duur` (s), `hoog: true` (bal door de lucht), `bal`
   (welke bal, standaard de bal van de passeerder), `hoogte` (zie hieronder). Bal "naar een speler" komt aan waar die
-  speler op dat moment is.
+  speler op dat moment is. Wie nog op de bal wacht, passt of dribbelt pas als hij hem heeft.
+- **Bewegen** (`loop`/`dribbel`): `via` (tussenpunten, bv. slalom/zigzag), `om` + `kant` + `straal` (draai om een
+  pion), `manier` (loopwijze: `jog` standaard, `sprint`, `wandel`, `huppel`, `kniehef`, `sprong`, `zijwaarts`,
+  `achteruit`, `voetenwerk`, `hordes`), `kijk` (vaste kijkrichting, bv. zijwaarts met de neus naar de trainer),
+  `spoor: false` (geen lijn). Bij `voetenwerk`, `hordes`, `kniehef` en `sprong` toont het spoor losse pasjes en
+  zie je de pasjes ook aan het poppetje (2D: voetjes, 3D: benen/veren).
+- **Overige acties:** `{ "type": "aansluiten", "wie", "rij" | "bij" }` en `{ "type": "team", "wie", "team": "C" }`
+  (ander hesje, bv. tikker).
+- **Herhalen:** `{ "herhaal": { "spelers": [...], "stappen": [...], "tussen"?: s, "rondes"?: n, "waarden"?: {...} } }` –
+  iedere speler doorloopt dezelfde stappen (`@` = die speler, `@volgende`/`@vorige` = buren in de lijst,
+  `@<naam>` = waarde uit `waarden`, bv. per speler een andere loopwijze). Met `tussen` overlappen de spelers.
+- **Tegelijk:** `{ "tegelijk": [[...stappen team A...], [...stappen team B...]] }` – reeksen naast elkaar (estafette).
 - **Balhoogte** (optioneel per pass/schot, `hoogte`): `"grond"` (rolt over het gras; standaard bij een pass),
   `"laag"` (boog tot ± 1 m; standaard bij een schot, ook voor worpen), `"halfhoog"` (± 2,5 m), `"hoog"` (lob/voorzet,
   hoogte volgt uit de afstand, max. 7 m) of een getal (hoogste punt in meters). Het oude `hoog: true` blijft werken
   (= `"hoog"`). Bestaande oefeningen zonder `hoogte` werken dus gewoon.
 - De tijdlijn (`src/anim/timeline.ts`) rekent dit om naar posities per tijdstip + sporen; de 2D-renderer
   (`src/anim/render2d.ts`) en de 3D-renderer (`src/anim/render3d.ts`) tekenen allebei uit diezelfde stand.
-  De stand bevat ook: wie de bal heeft, de vlucht (van wie naar wie, voortgang, hoogte), en hoe ver een keeper
-  ligt (`liggen` 0–1, geleidelijk bij duiken en opstaan).
+  De stand bevat ook: wie de bal heeft, de vlucht (van wie naar wie, voortgang, hoogte), hoe ver een keeper
+  ligt (`liggen` 0–1), loopwijze, snelheid en pasfase, en het team (hesje).
 
 ## Techniek
 
@@ -236,6 +255,21 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   eerste ± 70 beelden). Te traag wordt onthouden (`trainersapp.3dTraag`); zelf op 3D tikken probeert het opnieuw.
 - Gemeten (laptop met Intel UHD, telefoonformaat 412×915 @ 2,6×): ± 56 beelden/s, ook met 4× tragere processor.
 - Oefenlijst blijft 2D-plaatjes; de editor (fase 5) wordt 2D.
+
+## Besluiten fase 4 – batch 1 (Warming-up en Loopcoördinatie)
+- 18 oefeningen: Warming-up 9 (+ 3 loopcoördinatievormen die ook warming-up zijn = 12 in de lijst), Loopcoördinatie 9
+  (+ 2 warming-upvormen = 11). spelersNodig wisselt van 1 tot 6.
+- Nieuw veld `organisatie` (verplicht voor alle oefeningen; getoond als eigen blok op de detailpagina).
+- Startcamera per oefening: Boven bij vakspelen (tikspelen, rondo, schatrovers, spiegelen), anders Schuin.
+  Schuin past nu altijd de hele breedte in beeld (lange banen). Het 3D-beeld is iets lager bij lange smalle opstellingen.
+- Rijen: 1,6 m tussen wachtende spelers (in 2D raken de poppetjes elkaar anders); terugkomende spelers lopen op 1,7 m
+  langs de rij; doorschuiven begint 0,6 s nadat de voorste vertrekt.
+- Automatische controle (`npm test`): in elke animatie blijven personen ≥ 1,5 m van elkaar en ≥ 0,5 m van pionnen,
+  paaltjes en hoedjes (ladders, hordes, ringen en stokken mag je wél door/over).
+- Screenshots per oefening: `node tools/e2e/oefeningen.mjs` (3D op 35% en 65%, 2D op 65%; controleert ook de
+  aantallen per categorie en het label "Keeper nodig").
+- 3D: ladder, horde (laag/hoog), ring en stok zijn nu echte 3D-vormen (liggen op het gras); zone/vak in een kleur.
+- Bugfix: wisselen naar 2D gaf ten onrechte de melding "3D viel weg".
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

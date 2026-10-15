@@ -29,14 +29,16 @@ import {
   Sprite,
   SpriteMaterial,
   SRGBColorSpace,
+  TorusGeometry,
   Texture,
   TubeGeometry,
   Vector3,
   WebGLRenderer,
 } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import type { Punt, Tekening, Uitsnede, VeldObject } from '../model/types';
-import { boog, standOp, type ObjectStand, type Spoor, type Tijdlijn } from './timeline';
+import type { CameraStand, Manier, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
+import { HORDE } from '../model/types';
+import { boog, PASJES, PASLENGTE, standOp, type ObjectStand, type Spoor, type Tijdlijn } from './timeline';
 import { leesKleuren, persoonKleur, PLAT, tekenGrasmat, uitsnede, veldMaten, type Kleuren } from './render2d';
 import type { Weergave } from './weergave';
 
@@ -45,7 +47,7 @@ import type { Weergave } from './weergave';
  * Assen: x = breedte, z = lengte (de y van het datamodel), y = omhoog. Alle maten in meters.
  */
 
-export type CameraStand = 'boven' | 'schuin' | 'achter';
+export type { CameraStand };
 
 export interface Weergave3D extends Weergave {
   camera(stand: CameraStand, direct?: boolean): void;
@@ -223,8 +225,9 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
       return opGrond(new Mesh(new CylinderGeometry(0.06, 0.21, 0.07, 22, 1, true), kleur('#ffd23f')), 0.035);
     case 'paaltje': {
       const g = new Group();
-      const paal = new Mesh(new CylinderGeometry(0.025, 0.025, 1.5, 8), kleur('#ffd23f'));
-      paal.position.y = 0.75;
+      const h = o.hoogte ?? 1.5;
+      const paal = new Mesh(new CylinderGeometry(0.025, 0.025, h, 8), kleur('#ffd23f'));
+      paal.position.y = h / 2;
       const voet = new Mesh(new CylinderGeometry(0.12, 0.14, 0.05, 14), kleur('#2b2b2b'));
       voet.position.y = 0.025;
       g.add(paal, voet);
@@ -233,17 +236,54 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
     case 'horde': {
       const g = new Group();
       const w = o.breedte ?? 0.8;
-      const m = kleur('#ff7a1a');
-      const lat = new Mesh(new BoxGeometry(w, 0.04, 0.04), m);
-      lat.position.y = 0.3;
+      const h = o.hoogte ?? HORDE.laag;
+      const m = kleur(h >= 0.25 ? '#e8590c' : '#ff922b');
+      const lat = new Mesh(new BoxGeometry(w, 0.035, 0.035), m);
+      lat.position.y = h;
       g.add(lat);
       for (const x of [-w / 2, w / 2]) {
-        const poot = new Mesh(new BoxGeometry(0.04, 0.3, 0.04), m);
-        poot.position.set(x, 0.15, 0);
+        const poot = new Mesh(new BoxGeometry(0.035, h, 0.035), m);
+        poot.position.set(x, h / 2, 0);
         const voet = new Mesh(new BoxGeometry(0.04, 0.03, 0.35), m);
         voet.position.set(x, 0.015, 0);
         g.add(poot, voet);
       }
+      return opGrond(g);
+    }
+    case 'ladder': {
+      // Plat op het gras: twee zijlatten en sporten om de 45 cm.
+      const g = new Group();
+      const L = o.lengte ?? 4;
+      const W = o.breedte ?? 0.5;
+      const m = kleur('#ffd23f');
+      for (const x of [-W / 2, W / 2]) {
+        const zij = new Mesh(new BoxGeometry(0.035, 0.018, L), m);
+        zij.position.set(x, 0.009, 0);
+        g.add(zij);
+      }
+      const n = Math.max(1, Math.round(L / 0.45));
+      const sport = new BoxGeometry(W, 0.016, 0.03);
+      for (let i = 0; i <= n; i++) {
+        const sp = new Mesh(sport, m);
+        sp.position.set(0, 0.008, -L / 2 + (L * i) / n);
+        g.add(sp);
+      }
+      return opGrond(g);
+    }
+    case 'stok': {
+      const stok = new Mesh(new CylinderGeometry(0.018, 0.018, o.lengte ?? 1.5, 8), kleur('#f5f5f5'));
+      stok.rotation.z = Math.PI / 2;
+      stok.position.y = 0.018;
+      const g = new Group();
+      g.add(stok);
+      return opGrond(g);
+    }
+    case 'ring': {
+      const ring = new Mesh(new TorusGeometry(0.35, 0.022, 6, 36), kleur('#3fa9f5'));
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = 0.022;
+      const g = new Group();
+      g.add(ring);
       return opGrond(g);
     }
     case 'muurtje': {
@@ -297,6 +337,11 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
 
 interface Figuur {
   o: VeldObject;
+  shirt: MeshLambertMaterial;
+  kous: MeshLambertMaterial;
+  badge?: Sprite;
+  label: string;
+  team?: Team;
   wortel: Group;
   benen: [Group, Group];
   armen: [Group, Group];
@@ -356,6 +401,7 @@ function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Materi
   wortel.add(broek, romp, hoofd);
 
   const label = o.soort === 'trainer' ? 'T' : o.nummer !== undefined ? String(o.nummer) : '';
+  let badge: Sprite | undefined;
   if (label) {
     // Rugnummer op het shirt …
     const rugTex = nummerTextuur(label, null);
@@ -368,7 +414,7 @@ function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Materi
     const badgeTex = nummerTextuur(label, kleur);
     // Vaste grootte op het scherm (ook leesbaar als de camera ver weg staat).
     const badgeMat = new SpriteMaterial({ map: badgeTex, depthTest: false, transparent: true, sizeAttenuation: false });
-    const badge = new Sprite(badgeMat);
+    badge = new Sprite(badgeMat);
     badge.scale.set(0.058, 0.058, 1);
     badge.position.y = 2.3;
     badge.renderOrder = 10;
@@ -380,7 +426,7 @@ function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Materi
   const schaduw = new Mesh(d.schaduw, d.schaduwMat);
   schaduw.rotation.x = -Math.PI / 2;
   schaduw.position.y = 0.012;
-  return { o, wortel, benen, armen, schaduw, hoek: 0, fase: 0 };
+  return { o, shirt, kous, badge, label, team: o.team, wortel, benen, armen, schaduw, hoek: 0, fase: 0 };
 }
 
 /** Kortste weg tussen twee hoeken (radialen). */
@@ -392,6 +438,89 @@ function hoekVerschil(a: number, b: number) {
 }
 
 const Y_AS = new Vector3(0, 1, 0);
+const X_AS = new Vector3(1, 0, 0);
+
+/** Snelheid waarbij de beweging "vol" is (voor de grootte van de pas). */
+const VOL: Record<Manier, number> = {
+  jog: 4,
+  sprint: 6,
+  wandel: 1.4,
+  huppel: 2.8,
+  kniehef: 1.8,
+  sprong: 2.2,
+  zijwaarts: 2.2,
+  achteruit: 2.4,
+  voetenwerk: 1.8,
+  hordes: 2.4,
+};
+
+interface Pose {
+  benen: [number, number];
+  spreid: [number, number];
+  armen: [number, number];
+  armenOpzij: number;
+  veer: number;
+  voorover: number;
+}
+
+/** Houding van benen, armen en lijf per loopwijze. Negatieve rotatie = naar voren. */
+export function pose(manier: Manier | undefined, snelheid: number, fase: number, liggen = 0): Pose {
+  const k = manier ? klem(snelheid / (VOL[manier] * 0.7)) * (1 - liggen) : 0;
+  const sin = Math.sin(fase);
+  const op = Math.max(0, sin); // linkerbeen naar voren/omhoog
+  const neer = Math.max(0, -sin); // rechterbeen
+  const p: Pose = { benen: [0, 0], spreid: [0, 0], armen: [0, 0], armenOpzij: 0.08, veer: 0, voorover: 0 };
+  if (!manier || k === 0) return p;
+  const loop = (amp: number, arm: number) => {
+    p.benen = [sin * amp * k, -sin * amp * k];
+    p.armen = [-sin * arm * k, sin * arm * k];
+  };
+  switch (manier) {
+    case 'sprint':
+      loop(1.0, 1.0);
+      p.voorover = 0.2 * k;
+      break;
+    case 'wandel':
+      loop(0.35, 0.25);
+      break;
+    case 'achteruit':
+      loop(0.5, 0.4);
+      p.voorover = -0.08 * k;
+      break;
+    case 'voetenwerk':
+      loop(0.5, 0.55);
+      p.veer = Math.abs(sin) * 0.04 * k;
+      p.voorover = 0.12 * k;
+      break;
+    case 'kniehef':
+    case 'hordes':
+      // Knie om en om hoog optillen.
+      p.benen = [-op * 1.35 * k, -neer * 1.35 * k];
+      p.armen = [neer * -0.9 * k, op * -0.9 * k];
+      p.veer = Math.abs(sin) * (manier === 'hordes' ? 0.14 : 0.06) * k;
+      break;
+    case 'huppel':
+      p.benen = [(-op * 1.1 + neer * 0.3) * k, (-neer * 1.1 + op * 0.3) * k];
+      p.armen = [-neer * 1.3 * k, -op * 1.3 * k];
+      p.veer = Math.abs(sin) * 0.22 * k;
+      break;
+    case 'sprong':
+      // Beide benen tegelijk, armen zwaaien mee omhoog.
+      p.benen = [-Math.abs(sin) * 0.55 * k, -Math.abs(sin) * 0.55 * k];
+      p.armen = [-Math.abs(sin) * 1.4 * k, -Math.abs(sin) * 1.4 * k];
+      p.veer = Math.abs(sin) * 0.3 * k;
+      break;
+    case 'zijwaarts':
+      // Benen spreiden en sluiten.
+      p.spreid = [-op * 0.45 * k, op * 0.45 * k];
+      p.armenOpzij = 0.08 + op * 0.35 * k;
+      p.veer = Math.abs(sin) * 0.07 * k;
+      break;
+    default:
+      loop(0.75, 0.6);
+  }
+  return p;
+}
 
 /** Zet het poppetje in de stand van dit moment (lopen, duiken, opstaan, bal vasthouden). */
 function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: boolean, heeftBal: boolean) {
@@ -400,23 +529,18 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   const doel = Math.PI / 2 - (s.hoek * Math.PI) / 180;
   f.hoek = sprong ? doel : f.hoek + hoekVerschil(f.hoek, doel) * klem(dtEcht * 10);
 
-  // Snelheid uit de verplaatsing sinds het vorige beeld (in animatietijd).
-  let snelheid = 0;
-  if (f.vorige && !sprong) {
-    const dt = t - f.vorige.t;
-    const d = Math.hypot(s.x - f.vorige.x, s.y - f.vorige.y);
-    if (dt > 0.0001 && dt < 0.3) snelheid = d / dt;
-    f.fase += d * 4.2;
-  }
-  f.vorige = { x: s.x, y: s.y, t };
+  // Snelheid en pas komen uit de tijdlijn (ook bij doorspoelen precies goed).
+  void t;
 
   // Duiken: het lijf kantelt naar de duikkant en gaat naar de grond (voeten schuiven iets mee).
   const l = s.liggen;
   const dh = (s.duikHoek * Math.PI) / 180;
   const dx = Math.cos(dh);
   const dz = Math.sin(dh);
-  f.wortel.position.set(s.x - dx * 1.45 * l, l * 0.2, s.y - dz * 1.45 * l);
+  const p = pose(s.manier, s.snelheid, s.fase, l);
+  f.wortel.position.set(s.x - dx * 1.45 * l, l * 0.2 + p.veer, s.y - dz * 1.45 * l);
   const draai = new Quaternion().setFromAxisAngle(Y_AS, f.hoek);
+  if (p.voorover) draai.multiply(new Quaternion().setFromAxisAngle(X_AS, p.voorover));
   if (l > 0) {
     const kantel = new Quaternion().setFromAxisAngle(new Vector3(dz, 0, -dx), l * 1.5);
     f.wortel.quaternion.copy(kantel.multiply(draai));
@@ -425,17 +549,14 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   }
 
   // Benen en armen.
-  const zwaai = Math.min(0.75, snelheid * 0.16) * (1 - l);
-  const sin = Math.sin(f.fase);
-  f.benen[0].rotation.x = sin * zwaai;
-  f.benen[1].rotation.x = -sin * zwaai;
+  for (const [i, b] of f.benen.entries()) b.rotation.set(p.benen[i]!, 0, p.spreid[i]!);
   for (const [i, a] of f.armen.entries()) {
     if (keeper && l > 0) {
       a.rotation.set(-l * 2.9, 0, 0); // armen gestrekt boven het hoofd, naar de bal
     } else if (keeper && heeftBal) {
       a.rotation.set(-1.2, 0, i === 0 ? -0.25 : 0.25); // bal voor de borst
     } else {
-      a.rotation.set((i === 0 ? -sin : sin) * zwaai * 0.8, 0, i === 0 ? -0.08 : 0.08);
+      a.rotation.set(p.armen[i]!, 0, (i === 0 ? -1 : 1) * p.armenOpzij);
     }
   }
 
@@ -484,23 +605,40 @@ function lint(punten: Punt[], breedte: number): BufferGeometry {
   return g;
 }
 
-/** Losse streepjes (looplijn). */
-function streepjes(van: Punt, naar: Punt, breedte: number): BufferGeometry {
-  const len = Math.hypot(naar[0] - van[0], naar[1] - van[1]);
-  const ux = (naar[0] - van[0]) / (len || 1);
-  const uz = (naar[1] - van[1]) / (len || 1);
-  const nx = -uz * (breedte / 2);
-  const nz = ux * (breedte / 2);
+/** Een pad om langs te lopen: punt en richting (eenheidsvector) op afstand d. */
+function langs(pad: Punt[]) {
+  const lengtes = [0];
+  for (let i = 1; i < pad.length; i++) lengtes.push(lengtes[i - 1]! + Math.hypot(pad[i]![0] - pad[i - 1]![0], pad[i]![1] - pad[i - 1]![1]));
+  const totaal = lengtes[lengtes.length - 1]!;
+  const op = (d: number): { p: Punt; u: Punt } => {
+    d = klem(d, 0, totaal);
+    let i = 1;
+    while (i < pad.length - 1 && lengtes[i]! < d) i++;
+    const a = pad[i - 1]!;
+    const b = pad[i]!;
+    const stuk = lengtes[i]! - lengtes[i - 1]! || 1;
+    const f = (d - lengtes[i - 1]!) / stuk;
+    return { p: [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f], u: [(b[0] - a[0]) / stuk, (b[1] - a[1]) / stuk] };
+  };
+  return { totaal, op };
+}
+
+/** Losse rechthoekjes langs een pad (streepjes of pasjes), in volgorde. */
+function stukjes(pad: Punt[], stap: number, maak: (d: number, n: number) => { midden: Punt; u: Punt; lang: number; breed: number } | null): BufferGeometry {
+  const { totaal } = langs(pad);
   const pos: number[] = [];
   const idx: number[] = [];
-  const streep = 0.45;
-  const gat = 0.35;
-  for (let s = 0, k = 0; s < len; s += streep + gat, k += 4) {
-    const e = Math.min(len, s + streep);
-    const a: Punt = [van[0] + ux * s, van[1] + uz * s];
-    const b: Punt = [van[0] + ux * e, van[1] + uz * e];
-    pos.push(a[0] + nx, SPOOR_Y, a[1] + nz, a[0] - nx, SPOOR_Y, a[1] - nz, b[0] + nx, SPOOR_Y, b[1] + nz, b[0] - nx, SPOOR_Y, b[1] - nz);
+  let k = 0;
+  for (let d = stap / 2, n = 0; d < totaal; d += stap, n++) {
+    const s = maak(d, n);
+    if (!s) continue;
+    const [ux, uz] = s.u;
+    const [lx, lz] = [ux * (s.lang / 2), uz * (s.lang / 2)];
+    const [bx, bz] = [-uz * (s.breed / 2), ux * (s.breed / 2)];
+    const [mx, mz] = s.midden;
+    pos.push(mx - lx + bx, SPOOR_Y, mz - lz + bz, mx - lx - bx, SPOOR_Y, mz - lz - bz, mx + lx + bx, SPOOR_Y, mz + lz + bz, mx + lx - bx, SPOOR_Y, mz + lz - bz);
     idx.push(k, k + 1, k + 2, k + 1, k + 3, k + 2);
+    k += 4;
   }
   const g = new BufferGeometry();
   g.setAttribute('position', new Float32BufferAttribute(pos, 3));
@@ -508,20 +646,45 @@ function streepjes(van: Punt, naar: Punt, breedte: number): BufferGeometry {
   return g;
 }
 
-/** Golflijn (dribbel): zijwaarts golvend, aan begin en eind naar nul. */
-function golfPunten(van: Punt, naar: Punt): Punt[] {
-  const len = Math.hypot(naar[0] - van[0], naar[1] - van[1]);
-  const ux = (naar[0] - van[0]) / (len || 1);
-  const uz = (naar[1] - van[1]) / (len || 1);
+/** Looplijn: streepjes langs het pad. */
+function streepjes(pad: Punt[], breedte: number): BufferGeometry {
+  const { op } = langs(pad);
+  return stukjes(pad, 0.8, (d) => {
+    const { p, u } = op(d);
+    return { midden: p, u, lang: 0.45, breed: breedte };
+  });
+}
+
+/** Pasjes: om en om links en rechts van het pad. */
+function pasjes(pad: Punt[], paslengte: number): BufferGeometry {
+  const { op } = langs(pad);
+  return stukjes(pad, paslengte, (d, n) => {
+    const { p, u } = op(d);
+    const kant = n % 2 === 0 ? 1 : -1;
+    return { midden: [p[0] - u[1] * 0.13 * kant, p[1] + u[0] * 0.13 * kant], u, lang: 0.2, breed: 0.11 };
+  });
+}
+
+/** Punten om de 8 cm langs het pad (voor een vloeiend lint). */
+function fijn(pad: Punt[]): Punt[] {
+  const { totaal, op } = langs(pad);
+  const n = Math.max(1, Math.ceil(totaal / 0.08));
+  return Array.from({ length: n + 1 }, (_, i) => op((totaal * i) / n).p);
+}
+
+/** Golflijn (dribbel) langs het pad: zijwaarts golvend, aan begin en eind naar nul. */
+function golfPunten(pad: Punt[]): Punt[] {
+  const { totaal, op } = langs(pad);
   const golf = 1.3;
   const amp = 0.28;
-  const n = Math.max(2, Math.ceil(len / 0.08));
+  const n = Math.max(2, Math.ceil(totaal / 0.08));
   const punten: Punt[] = [];
   for (let i = 0; i <= n; i++) {
-    const d = (len * i) / n;
-    const demp = Math.min(1, d / golf, (len - d) / (golf * 0.5));
+    const d = (totaal * i) / n;
+    const { p, u } = op(d);
+    const demp = Math.min(1, d / golf, (totaal - d) / (golf * 0.5));
     const w = Math.sin((d / golf) * Math.PI * 2) * amp * Math.max(0, demp);
-    punten.push([van[0] + ux * d - uz * w, van[1] + uz * d + ux * w]);
+    punten.push([p[0] - u[1] * w, p[1] + u[0] * w]);
   }
   return punten;
 }
@@ -550,18 +713,21 @@ function maakSpoor(s: Spoor, kleur: string, pijl: BufferGeometry, materialen: Ma
     const radiaal = 6;
     geo = new TubeGeometry(new CatmullRomCurve3(punten), n, 0.045, radiaal, false);
     stuk = radiaal * 6;
+  } else if (s.soort === 'loop' && s.manier && PASJES.includes(s.manier)) {
+    geo = pasjes(s.pad, PASLENGTE[s.manier] ?? 0.45);
   } else if (s.soort === 'loop') {
-    geo = streepjes(s.van, s.naar, SPOOR_BREED * 0.9);
+    geo = streepjes(s.pad, SPOOR_BREED * 0.9);
   } else if (s.soort === 'dribbel') {
-    geo = lint(golfPunten(s.van, s.naar), SPOOR_BREED * 0.8);
+    geo = lint(golfPunten(s.pad), SPOOR_BREED * 0.8);
   } else {
-    geo = lint([s.van, s.naar], SPOOR_BREED);
+    geo = lint(fijn(s.pad), SPOOR_BREED);
   }
   const mesh = new Mesh(geo, mat);
   mesh.renderOrder = 1;
   const p = new Mesh(pijl, mat);
   p.position.set(s.naar[0], 0, s.naar[1]);
-  p.rotation.y = -Math.atan2(s.naar[1] - s.van[1], s.naar[0] - s.van[0]);
+  const voor = s.pad[s.pad.length - 2] ?? s.van;
+  p.rotation.y = -Math.atan2(s.naar[1] - voor[1], s.naar[0] - voor[0]);
   return { mesh, pijl: p, stuk, totaal: geo.index!.count };
 }
 
@@ -575,13 +741,16 @@ interface CameraDoel {
 function cameraDoelen(t: Tekening, u: Uitsnede, aspect: number, fov: number): Record<CameraStand, CameraDoel> {
   const c = v3(u.x + u.breedte / 2, 0, u.y + u.lengte / 2);
   const tan = Math.tan((fov * Math.PI) / 360);
-  const passend = Math.max(u.lengte / 2 / tan, u.breedte / 2 / (tan * aspect)) * 1.04;
+  const passendLengte = (u.lengte / 2 / tan) * 1.04;
+  const passendBreedte = (u.breedte / 2 / (tan * aspect)) * 1.04;
+  const passend = Math.max(passendLengte, passendBreedte);
 
   const boven: CameraDoel = { positie: c.clone().add(v3(0, passend, passend * 0.002)), doel: c.clone() };
 
   // Schuin: ± 60° vanaf recht boven en dichterbij dan bovenaanzicht (de verre kant wordt toch kleiner).
   const hoek = 1.05;
-  const afstand = passend * 0.74;
+  // De breedte moet er helemaal op (lange banen); in de diepte mag hij dichterbij.
+  const afstand = Math.max(passendLengte * 0.74, passendBreedte * 0.98);
   const schuinDoel = c.clone().add(v3(0, 0, -u.lengte * 0.06));
   const schuin: CameraDoel = {
     positie: schuinDoel.clone().add(v3(0, Math.cos(hoek) * afstand, Math.sin(hoek) * afstand)),
@@ -714,7 +883,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   controls.maxPolarAngle = 1.36; // nooit onder het gras
   controls.minDistance = 4;
   let doelen = cameraDoelen(tekening, u, 1, camera.fov);
-  let stand: CameraStand = 'schuin';
+  let stand: CameraStand = tekening.camera ?? 'schuin';
   let zelfVerplaatst = false;
   let overgang: { van: CameraDoel; naar: CameraDoel; start: number; duur: number } | null = null;
 
@@ -761,10 +930,31 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       opties.opInteractie?.();
     }
   });
+  let opgeruimd = false;
   canvas.addEventListener('webglcontextlost', (e) => {
     e.preventDefault();
-    opties.opFout?.();
+    // Bij zelf opruimen (wisselen naar 2D, andere oefening) is dit geen fout.
+    if (!opgeruimd) opties.opFout?.();
   });
+
+  // Ander hesje (tikspel): shirt, kousen en nummerbadge in de nieuwe kleur.
+  const badges = new Map<string, Texture>();
+  const wisselHesje = (f: Figuur, team: Team | undefined) => {
+    f.team = team;
+    const kleur = persoonKleur(f.o, kleuren, team);
+    f.shirt.color.set(kleur);
+    f.kous.color.set(kleur).multiplyScalar(0.55);
+    if (f.badge && f.label) {
+      const sleutel = `${f.label}|${kleur}`;
+      let tex = badges.get(sleutel);
+      if (!tex) {
+        tex = nummerTextuur(f.label, kleur);
+        badges.set(sleutel, tex);
+        texturen.push(tex);
+      }
+      (f.badge.material as SpriteMaterial).map = tex;
+    }
+  };
 
   // ---------- stand tekenen ----------
   let vorigeT = 0;
@@ -782,7 +972,9 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     for (const [, b] of s.objecten) if (b.houder) balBij.add(b.houder);
     for (const [id, f] of figuren) {
       const st = s.objecten.get(id);
-      if (st) poseer(f, st, t, dtEcht, sprong, balBij.has(id));
+      if (!st) continue;
+      if (st.team !== f.team) wisselHesje(f, st.team);
+      poseer(f, st, t, dtEcht, sprong, balBij.has(id));
     }
 
     for (const [id, b] of ballen) {
@@ -828,7 +1020,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     render();
   };
 
-  plaats(doelen.schuin);
+  plaats(doelen[stand]);
   zetGrenzen();
   renderer.compile(scene, camera);
 
@@ -862,6 +1054,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       vraagTekenen();
     },
     opruimen() {
+      opgeruimd = true;
       cancelAnimationFrame(tekenenGevraagd);
       controls.dispose();
       scene.traverse((o) => {

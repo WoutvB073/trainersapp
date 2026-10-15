@@ -59,7 +59,7 @@ export function AnimatieSpeler({ tekening }: { tekening: Tekening }) {
   const [snelheid, setSnelheid] = useState<number>(1);
   const [modus, setModus] = useState<Modus>(startModus);
   const [klaar3d, setKlaar3d] = useState(false);
-  const [camera, setCamera] = useState<CameraStand>('schuin');
+  const [camera, setCamera] = useState<CameraStand>(tekening.camera ?? 'schuin');
   const [melding, setMelding] = useState<string | null>(null);
   const [uitleg, setUitleg] = useState(false);
 
@@ -82,7 +82,7 @@ export function AnimatieSpeler({ tekening }: { tekening: Tekening }) {
     const breedte = vak.clientWidth;
     const max = Math.max(220, window.innerHeight * (window.innerWidth >= 900 ? 0.72 : 0.58));
     let hoogte = breedte * (u.lengte / u.breedte);
-    if (modus === '3d') hoogte = Math.max(hoogte, breedte * 0.75);
+    if (modus === '3d') hoogte = Math.max(hoogte, breedte * 0.62);
     w.maat(breedte, Math.min(hoogte, max), Math.min(window.devicePixelRatio || 1, 2.5));
     teken(true);
   }, [tekening, modus, teken]);
@@ -115,7 +115,7 @@ export function AnimatieSpeler({ tekening }: { tekening: Tekening }) {
               opFout: () => naar2D('3D viel weg; je ziet nu de 2D-weergave.'),
             });
             zet(w);
-            setCamera('schuin');
+            setCamera(tekening.camera ?? 'schuin');
             setKlaar3d(true);
             if (lees(UITLEG) !== '1') setUitleg(true);
           } catch {

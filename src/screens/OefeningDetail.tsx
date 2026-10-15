@@ -70,6 +70,13 @@ export function OefeningDetail({ id }: { id: string }) {
             <p>{oefening.uitleg}</p>
           </section>
 
+          {oefening.organisatie && (
+            <section className="blok">
+              <h3>Organisatie</h3>
+              <p>{oefening.organisatie}</p>
+            </section>
+          )}
+
           <section className="blok blok-twee">
             <div>
               <h3>Benodigdheden</h3>
