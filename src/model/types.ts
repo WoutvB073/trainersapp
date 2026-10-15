@@ -77,6 +77,8 @@ export interface VeldObject {
   verdedigt?: string;
   /** Keeper mag buiten het doelgebied komen (bv. 1 tegen keeper). */
   uitkomen?: boolean;
+  /** Bal: een reactiebal (stuit alle kanten op) of tennisbal (klein). */
+  variant?: 'reactiebal' | 'tennisbal';
   /** Keeper: begint in kniezit of hurkzit (tot hij beweegt of duikt). */
   houding?: Zithouding;
   /** Zone, ladder, muurtje, mat, stok: afmetingen in meters. */
@@ -123,12 +125,18 @@ export interface BalActie extends ActieBasis {
   type: 'pass' | 'schot';
   van: string;
   /**
-   * Id van een persoon (bal komt aan waar die persoon dan is), een punt, of een rebounder/muurtje:
-   * dan kaatst de bal terug naar `terug` (standaard de passeerder zelf).
+   * Id van een persoon (bal komt aan waar die persoon dan is), een punt, of een rebounder/muurtje/pop:
+   * dan kaatst de bal terug naar `terug` (standaard de passeerder zelf). Een persoon met `terug` = die raakt de bal
+   * en die verandert van richting (bv. een tweede keeper die de bal aantikt).
    */
   naar: string | Punt;
-  /** Bij een pass op een rebounder, muurtje of bank: naar wie (of waar) de bal terugkaatst. */
+  /**
+   * Bij een pass op een rebounder, muurtje, bank, pop of persoon: naar wie (of waar) de bal daarna gaat. Is dat een keeper
+   * en staat er `duikNaar`, dan duikt hij naar de afgeketste bal.
+   */
   terug?: string | Punt;
+  /** Hoogte van de bal na het afketsen (standaard over de grond). */
+  terugHoogte?: BalHoogte;
   /**
    * Afloop van een schot op een goal met een keeper (`verdedigt`): `goal` (keeper duikt maar is te laat),
    * `vangt`, `stompt` (bal weggestompt, ligt daarna los) of `naast`. `naar` is dan het punt waar het schot heen gaat.
@@ -159,6 +167,14 @@ export interface BalActie extends ActieBasis {
    */
   uitkomen?: string;
   vangHoogte?: number;
+  /**
+   * 1 op 1: de keeper blokt het schot met zijn lichaam (`blokSoort`: `ster` = spreidsprong/stervorm, `knie` = knieblok);
+   * de bal kaatst af naar `afloopNaar`.
+   */
+  blokt?: string;
+  blokSoort?: 'ster' | 'knie';
+  /** Bij `afloop: "vangt"`: de keeper houdt de bal vast (bv. keepersoorlog: hij gooit hem zelf terug). */
+  vasthouden?: boolean;
   stompNaar?: Punt;
   vuisten?: 1 | 2;
   /** Hoogte (m) waarop de bal aankomt: bv. 0,6 voor een volley, 2 voor een kopbal. */
@@ -304,6 +320,15 @@ export interface PannaActie extends ActieBasis {
   kant?: 'links' | 'rechts';
 }
 
+/**
+ * Plukken: de keeper duikt laag naar de bal aan de voet van `van` (of naar de dichtstbijzijnde losse bal) en pakt hem.
+ */
+export interface PlukActie extends ActieBasis {
+  type: 'pluk';
+  wie: string;
+  van?: string;
+}
+
 /** Bal afpakken: de verdediger tikt de bal van `van` af en heeft hem daarna zelf. */
 export interface VeroverActie extends ActieBasis {
   type: 'verover';
@@ -329,7 +354,8 @@ export type Actie =
   | DekActie
   | VeroverActie
   | PannaActie
-  | ZitActie;
+  | ZitActie
+  | PlukActie;
 
 export interface AnimatieStap {
   acties: Actie[];

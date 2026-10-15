@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.8.0)
+## Status (15-10-2026, versie 0.9.0)
 
 | Fase | Status |
 |---|---|
@@ -15,7 +15,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 deel 1 (0.8.0): Voorzetten (6) + Passing (7) – **wacht op test** op de telefoon. Nog te doen, deel 2 (0.9.0): bouwstenen 1 op 1 (uitlopen en afremmen, spreidsprong/stervorm, knieblok, plukken) en reactie (bal via pop/rebounder/keeper van richting, reactiebal/tennisbal, zicht ontnomen), oefeningen 1 op 1, Reactie en Spelletjes |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten (6), Passing (7), 1 op 1 (6), Reactie (7), Spelletjes (6) – **wacht op test** op de telefoon. Daarmee zijn alle veld- en keepercategorieën gevuld (fase 4 klaar na akkoord). |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -192,6 +192,15 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - *Passing:* `worp` ook `"zwaai"` (zijwaartse zwaaiworp), `"dropkick"` (halfvolley) en `"voet"` (een keeper speelt met de
     voet: een terugspeelbal neemt hij dan met de voet aan, zonder vanghouding). Doeltrap = `worp: "trap"` op een losse bal na
     een aanloop.
+  - *1 op 1:* uitlopen en afremmen = `loop` (sprint) gevolgd door `voetenwerk`. Schot met `blokt: "<keeper>"` en
+    `blokSoort: "ster" | "knie"` (spreidsprong/stervorm of knieblok): de bal komt tegen het lichaam en kaatst af naar
+    `afloopNaar`. `{ "type": "pluk", "wie", "van"? }`: laag en zijwaarts duiken naar de bal aan de voet van `van` (of de
+    dichtstbijzijnde losse bal), dwars voor de bal, en hem pakken.
+  - *Reactie:* `naar` = pop, rebounder of een persoon met `terug` = de bal verandert daar van richting (`terugHoogte`); is
+    `terug` een keeper en staat er `duikNaar`, dan duikt hij naar de afgeketste bal. `stuitOp` + `duikNaar` = duiken na
+    een stuit. Bal met `variant: "reactiebal" | "tennisbal"` (eigen kleur en vorm). Zicht ontnomen = poppen tussen
+    schutter en keeper.
+  - *Keepersoorlog:* `afloop: "vangt"` met `vasthouden: true` = de keeper houdt de bal (gooit hem zelf terug).
   - *Kniezit/hurkzit:* keeper met `houding: "kniezit" | "hurkzit"` begint zo; `{ "type": "zitten", "wie", "houding" }`
     zet hem er (weer) in. Opstaan, lopen of duiken haalt hem eruit.
   - *Voetenwerk:* loopwijze `kruispas`; een keeper die `zijwaarts` of met `kruispas` gaat, blijft dezelfde kant op kijken.
@@ -392,6 +401,18 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   totaal 38 keeperoefeningen.
 - Keepers die rouleren krijgen geen `verdedigt` (anders loopt de keeper vanzelf terug naar zijn doel); hun positie in
   het doel staat dan in de animatie.
+
+## Besluiten fase 4 – keepers batch 2 deel 2 (1 op 1, Reactie en Spelletjes)
+- 19 oefeningen. 1 op 1 (6): uitlopen en afremmen, spreidsprong, knieblok (2 keepers, wisselen), plukken, steekpass
+  (2 keepers), hoek verkleinen bij een aanvaller van opzij. Reactie (7): via de pop, rebounder, tweede keeper tikt de bal
+  (2 keepers), reactiebal in tweetallen, zicht ontnomen, opvolgende reddingen, reflexen van korte afstand (2 keepers).
+  Spelletjes (6): keepersoorlog, keepersvolleybal, lummelen (3 keepers), valbal, duik op de losse bal (JO7–JO11), mikken in
+  de hoepel (JO7–JO9).
+- 1 op 1 recht van voren: startcamera "Achter goal" (keeper van achteren, aanvaller komt op hem af); in Schuin staat de
+  aanvaller anders precies vóór de keeper.
+- Plukken: de keeper duikt zijwaarts en ligt dwars voor de bal (niet op zijn buik naar voren).
+- Aantallen keepers (met dubbele categorieën): Warming-up 9, Laag duiken 11, Hoog duiken 7, Bal verwerken 11,
+  Voorzetten 6, Passing 8, 1 op 1 6, Reactie 9, Spelletjes 6 – totaal 57 keeperoefeningen.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

@@ -1,5 +1,6 @@
 import {
   BoxGeometry,
+  IcosahedronGeometry,
   BufferGeometry,
   CanvasTexture,
   CapsuleGeometry,
@@ -652,6 +653,22 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
     p.benen = [p.benen[0] + knie * 1.35, p.benen[1] + knie * 1.35];
     p.voorover += knie * 0.08;
   }
+  // Blokken: spreidsprong (stervorm: armen en benen wijd) of knieblok (één knie op de grond, ander been opzij).
+  const bl = keeper && s.blok ? s.blok : undefined;
+  const blokK = bl ? Math.sin(Math.PI * Math.min(1, bl.u / 0.66) * 0.5) * (bl.u > 0.85 ? 1 - (bl.u - 0.85) / 0.15 : 1) : 0;
+  if (bl && blokK > 0) {
+    if (bl.soort === 'ster') {
+      f.wortel.position.y += 0.12 * blokK;
+      p.spreid = [p.spreid[0] - 0.7 * blokK, p.spreid[1] + 0.7 * blokK];
+      p.benen = [p.benen[0] * (1 - blokK), p.benen[1] * (1 - blokK)];
+      p.voorover += 0.1 * blokK;
+    } else {
+      f.wortel.position.y -= 0.42 * blokK;
+      p.benen = [p.benen[0] + 1.4 * blokK, p.benen[1] - 0.2 * blokK];
+      p.spreid = [p.spreid[0], p.spreid[1] + 1.0 * blokK];
+      p.voorover += 0.15 * blokK;
+    }
+  }
   if (hurk > 0) {
     p.benen = [p.benen[0] - hurk * 0.75, p.benen[1] - hurk * 0.75];
     p.spreid = [p.spreid[0] - hurk * 0.35, p.spreid[1] + hurk * 0.35];
@@ -746,6 +763,12 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
         rx = wa;
         rz = kant(i) * (w.soort === 'volley' || w.soort === 'trap' ? p.armenOpzij : 0.1);
       }
+    }
+    if (bl && blokK > 0) {
+      const doelX = bl.soort === 'ster' ? -0.2 : -0.5;
+      const doelZ = kant(i) * (bl.soort === 'ster' ? 1.35 : 0.9);
+      rx += (doelX - rx) * blokK;
+      rz += (doelZ - rz) * blokK;
     }
     // Stompen: gestrekte arm(en) naar de bal, met twee vuisten tegen elkaar of één vuist.
     const st = s.stomp;
@@ -1086,7 +1109,16 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const ballen = new Map<string, { mesh: Mesh; schaduw: Mesh; vorige?: Vector3 }>();
   for (const o of tekening.objecten) {
     if (o.soort !== 'bal') continue;
-    const mesh = new Mesh(balGeo, balMat);
+    // Reactiebal (geel, bobbelig) of tennisbal (klein, geelgroen): eigen kleur en maat.
+    let mesh: Mesh;
+    if (o.variant) {
+      const m = new MeshLambertMaterial({ color: o.variant === 'tennisbal' ? '#d4e83a' : '#ffd23f' });
+      materialen.push(m);
+      mesh = new Mesh(o.variant === 'reactiebal' ? new IcosahedronGeometry(BAL_R * 0.8, 0) : balGeo, m);
+      if (o.variant === 'tennisbal') mesh.scale.setScalar(0.55);
+    } else {
+      mesh = new Mesh(balGeo, balMat);
+    }
     const schaduw = new Mesh(new CircleGeometry(BAL_R * 1.1, 16), gedeeld.schaduwMat);
     schaduw.rotation.x = -Math.PI / 2;
     ballen.set(o.id, { mesh, schaduw });

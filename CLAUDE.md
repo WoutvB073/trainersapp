@@ -37,7 +37,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `@volgende` in een herhaling is cyclisch: de lijst moet precies de volgorde van passeerders zijn (simuleer de rijen even op papier).
 - Na `JSON.stringify` herschrijven van een databestand kloppen `sed`-zoekopdrachten niet meer (andere opmaak): wijzig data met een klein node-script.
 - Overlap in 3D (Schuin) ontstaat als spelers achter elkaar in de kijkrichting staan: zet rijen/duels liever naast elkaar.
-- Een oefening draaien (kwartslag) kan met een klein node-script: (x, y) → (y, breedte − x), hoeken −90, zone breedte/lengte wisselen.
+- Een oefening draaien (kwartslag) kan met een klein node-script: (x, y) → (y, breedte − x), hoeken −90, zone breedte/lengte wisselen. Vergeet geen punt-velden in acties (`naar`, `via`, `stuitOp`, `terug`, `terugNaar`, `afloopNaar`, `duikNaar`, `stompNaar`).
+- Keepers die rouleren: geen `verdedigt` geven (dan loopt de keeper na zijn actie vanzelf terug naar zijn doel).
 - Bash-heredoc met `cat > bestand` zonder heredoc erachter blijft hangen op invoer: schrijf scripts met Write.
 - Keeper: duik en bal op elkaar afstemmen met `duikNaar` op de pass (niet met losse `start`-tijden): een worp schuift vanzelf op (oppakken + uithalen), waardoor losse tijden niet meer kloppen.
 - Nieuwe oefening: `npm test` controleert ook of de bal alleen via een pass/schot van speler wisselt, en afstanden (personen ≥ 1,5 m, niet door pionnen/paaltjes/hoedjes); daarna `oefeningen.mjs` en de bladen bekijken.

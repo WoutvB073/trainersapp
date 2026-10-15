@@ -133,7 +133,7 @@ export function tekenScene(
   for (const o of objecten) {
     if (o.soort !== 'bal') continue;
     const s = stand.objecten.get(o.id);
-    if (s) tekenBal(b, s, personen);
+    if (s) tekenBal(b, s, personen, o.variant);
   }
   for (const o of objecten) if (o.soort === 'tekst') tekenTekst(b, o);
 }
@@ -714,7 +714,9 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
     if (keeper) {
       // Handschoenen voor het lijf (basishouding); bij het vangen naar voren en bij elkaar.
       const v = Math.max(s.vang, s.stomp ? Math.sin(Math.PI * s.stomp.u) : 0);
-      const breed = (0.75 - 0.45 * v) * (s.vangHoogte >= 1.6 && v > 0 ? 0.8 : 1);
+      // Blokken: handen wijd opzij (stervorm of knieblok).
+      const blok = s.blok ? Math.sin(Math.PI * Math.min(1, s.blok.u)) : 0;
+      const breed = Math.max((0.75 - 0.45 * v) * (s.vangHoogte >= 1.6 && v > 0 ? 0.8 : 1), 0.75 + 0.85 * blok);
       const ver = r * (1.0 + 0.4 * v);
       for (const k of [-1, 1]) handschoen(ctx, Math.cos(h + k * breed) * ver, Math.sin(h + k * breed) * ver, r, b);
     }
@@ -749,7 +751,7 @@ function handschoen(ctx: CanvasRenderingContext2D, x: number, y: number, r: numb
   ctx.restore();
 }
 
-function tekenBal(b: Beeld, s: ObjectStand, personen: Punt[]) {
+function tekenBal(b: Beeld, s: ObjectStand, personen: Punt[], variant?: VeldObject['variant']) {
   const { ctx } = b;
   let c = px(b, [s.x, s.y]);
   const r = maat(b, 0.3, 4.5) * (1 + s.hoogte * 0.09);
@@ -771,7 +773,7 @@ function tekenBal(b: Beeld, s: ObjectStand, personen: Punt[]) {
     ctx.arc(c[0] + d, c[1] + d, maat(b, 0.3, 4.5), 0, Math.PI * 2);
     ctx.fill();
   }
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = variant === 'tennisbal' ? '#d4e83a' : variant === 'reactiebal' ? '#ffd23f' : '#ffffff';
   ctx.strokeStyle = '#1b1b1b';
   ctx.lineWidth = Math.max(1.2 * b.dpr, r * 0.22);
   ctx.beginPath();

@@ -1,0 +1,886 @@
+[
+  {
+    "id": "keeper-sp-keepersoorlog",
+    "soort": "keeper",
+    "naam": "Keepersoorlog",
+    "categorieen": ["spelletjes", "bal-verwerken"],
+    "uitleg": "Twee keepers staan elk in een doel, 18 m van elkaar. Om de beurt proberen ze te scoren bij de ander: gooien of trappen uit de handen, vanuit hun eigen doelgebied. Wie de bal vangt, mag meteen terug. Wie het eerst 5 doelpunten heeft, wint.",
+    "organisatie": "Twee (jeugd)doelen tegenover elkaar op 18 m. Schieten vanaf maximaal 4 m voor het eigen doel. Gooien, volley en dropkick tellen; een gevangen bal mag direct teruggespeeld worden.",
+    "benodigdheden": [
+      "2 (jeugd)doelen",
+      "Ballen",
+      "Hoedjes voor de schietlijn"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "coachpunten": [
+      "Na je eigen worp meteen terug in basishouding: de bal kan direct terugkomen",
+      "Vangen waar het kan, anders wegstompen of tippen",
+      "Kies slim: laag in de hoek is vaak lastiger dan hard en hoog"
+    ],
+    "variaties": {
+      "makkelijker": ["Kleinere doelen of grotere afstand", "Alleen gooien"],
+      "moeilijker": [
+        "Kortere afstand (14 m)",
+        "Bal moet binnen 3 seconden terug",
+        "Met twee ballen tegelijk"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 24,
+        "lengte": 22
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 12,
+          "y": 1,
+          "breedte": 5,
+          "hoogte": 2
+        },
+        {
+          "id": "g2",
+          "soort": "goal",
+          "x": 12,
+          "y": 21,
+          "hoek": 180,
+          "breedte": 5,
+          "hoogte": 2
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 12,
+          "y": 2.5,
+          "nummer": 1,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "x": 12,
+          "y": 19.5,
+          "nummer": 2,
+          "verdedigt": "g2"
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 12,
+          "y": 19.15,
+          "bij": "k2"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "k2",
+              "naar": [13.7, 1.3],
+              "worp": "bovenhands",
+              "hoogte": "laag",
+              "afloop": "vangt",
+              "vasthouden": true
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "k1",
+              "naar": [10.2, 20.7],
+              "worp": "volley",
+              "hoogte": 1.6,
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 1.6,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-sp-keepersvolleybal",
+    "soort": "keeper",
+    "naam": "Keepersvolleybal over het net",
+    "categorieen": ["spelletjes"],
+    "uitleg": "Twee keepers spelen volleybal met de handen over een net van 2 m. Je gooit de bal over het net in het vak van de ander; die moet hem vangen voordat hij de grond raakt (duiken mag). Valt de bal in het vak, dan is het een punt.",
+    "organisatie": "Vak van 8 × 14 m met in het midden een net of lint op 2 m. Gooien vanaf de plek waar je de bal vangt. Spelen tot 11 punten.",
+    "benodigdheden": [
+      "Net of lint op 2 m met 2 palen",
+      "4 hoedjes",
+      "1 bal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "coachpunten": [
+      "Gooi naar de lege plek in het vak van de ander",
+      "Na je worp meteen terug naar het midden van je vak",
+      "Duik naar voren, naar de bal toe"
+    ],
+    "variaties": {
+      "makkelijker": ["Bal mag één keer stuiten", "Kleiner vak"],
+      "moeilijker": [
+        "Twee tegen twee",
+        "Alleen onderhands gooien",
+        "Vangen met één hand telt dubbel"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 6,
+          "y": 8,
+          "breedte": 8,
+          "lengte": 14
+        },
+        {
+          "id": "n1",
+          "soort": "net",
+          "x": 6,
+          "y": 8,
+          "breedte": 9,
+          "hoogte": 2
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 6,
+          "y": 4.5,
+          "nummer": 1
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "x": 6,
+          "y": 11.5,
+          "nummer": 2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 6,
+          "y": 4.85,
+          "bij": "k1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "k2",
+              "worp": "bovenhands",
+              "hoogte": 4,
+              "duikNaar": [4.3, 11.8],
+              "duikHoogte": 0.7
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k2"
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [5.4, 11.4],
+              "start": 0.4,
+              "duur": 0.6,
+              "kijk": -90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": "k1",
+              "worp": "bovenhands",
+              "hoogte": 3.8,
+              "eindHoogte": 1.8
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": [9.2, 14.2],
+              "worp": "bovenhands",
+              "hoogte": 4
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [7.8, 12.8],
+              "manier": "sprint",
+              "start": 0.7
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-sp-lummelen",
+    "soort": "keeper",
+    "naam": "Lummelen voor keepers",
+    "categorieen": ["spelletjes", "warming-up"],
+    "uitleg": "Twee keepers gooien de bal naar elkaar; de keeper in het midden probeert hem te onderscheppen door te springen of te duiken. Wie de bal kwijtraakt, gaat in het midden. Een spel met werpen, vangen, springen en reageren.",
+    "organisatie": "Vak van 10 × 6 m. Werpers op de korte zijden, de middenkeeper ertussen. Alleen gooien (onderhands of bovenhands), geen trappen. Bal onderschept = wisselen.",
+    "benodigdheden": ["4 hoedjes", "1 bal"],
+    "spelersNodig": 0,
+    "keepersNodig": 3,
+    "coachpunten": [
+      "Werpers: schijnworp maken en de bal snel en zuiver laten gaan",
+      "Middenkeeper: afzetten op één been en op het hoogste punt de bal pakken",
+      "Vangen met twee handen, ook in de sprong"
+    ],
+    "variaties": {
+      "makkelijker": ["Groter vak", "Middenkeeper mag alleen springen, niet lopen"],
+      "moeilijker": [
+        "Twee middenkeepers",
+        "Werpers mogen niet lopen",
+        "Alleen rollende ballen: middenkeeper moet duiken"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 14,
+        "lengte": 9
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 7,
+          "y": 4.5,
+          "breedte": 10,
+          "lengte": 6
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 2.5,
+          "y": 4.5,
+          "nummer": 1,
+          "kijkrichting": 0
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "x": 11.5,
+          "y": 4.5,
+          "nummer": 2,
+          "kijkrichting": 180
+        },
+        {
+          "id": "k3",
+          "soort": "keeper",
+          "x": 7,
+          "y": 4.5,
+          "nummer": 3,
+          "kijkrichting": 180
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 2.85,
+          "y": 4.5,
+          "bij": "k1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "k2",
+              "worp": "bovenhands",
+              "hoogte": 4
+            },
+            {
+              "type": "springen",
+              "wie": "k3",
+              "start": 0.55
+            }
+          ]
+        },
+        {
+          "duur": 0.3,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 2.2,
+              "eindHoogte": 1.2
+            }
+          ]
+        },
+        {
+          "duur": 0.3,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "k3",
+              "worp": "onderhands",
+              "hoogte": 1.6,
+              "eindHoogte": 1.9
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k3",
+              "via": [
+                [5, 2.4]
+              ],
+              "naar": [2.5, 4.5]
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "via": [
+                [4.6, 6.6]
+              ],
+              "naar": [7, 4.5],
+              "start": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k3",
+              "naar": "k2",
+              "worp": "bovenhands",
+              "hoogte": 4
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-sp-valbal",
+    "soort": "keeper",
+    "naam": "Valbal: vangen voor de tweede stuit",
+    "categorieen": ["spelletjes", "reactie"],
+    "uitleg": "De trainer houdt de bal met gestrekte armen op schouderhoogte en laat hem onverwacht vallen. De keeper staat 3 m verderop en moet de bal pakken voordat hij voor de tweede keer de grond raakt: snel starten en duiken.",
+    "organisatie": "Keeper op 3 m van de trainer, in basishouding. De trainer laat de bal links of rechts naast zich vallen. Lukt het, dan een stap verder weg. Wie haalt de grootste afstand?",
+    "benodigdheden": ["1 bal"],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "coachpunten": [
+      "Kijk naar de bal, niet naar het gezicht van de trainer",
+      "Eerste pas klein en snel, dan duiken",
+      "Bal vastklemmen tegen de grond"
+    ],
+    "variaties": {
+      "makkelijker": ["Kortere afstand (2 m)", "Trainer laat de bal recht voor zich vallen"],
+      "moeilijker": [
+        "Trainer houdt twee ballen vast en laat er één vallen",
+        "Keeper staat met zijn rug naar de trainer en draait op een roep",
+        "Afstand 4 m of meer"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 10
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 3.6,
+          "y": 5,
+          "kijkrichting": 0,
+          "hoek": -90
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 6.8,
+          "y": 5,
+          "nummer": 1,
+          "kijkrichting": 180
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 4,
+          "y": 5,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.05,
+              "stuitOp": [4.2, 3.9],
+              "duikNaar": [5.6, 3.6]
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [6.8, 5],
+              "start": 0.4,
+              "duur": 0.7,
+              "kijk": 180
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.05,
+              "stuitOp": [4.2, 6.1],
+              "duikNaar": [5.6, 6.4]
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-sp-duik-op-de-bal",
+    "soort": "keeper",
+    "naam": "Duik op de losse bal",
+    "categorieen": ["spelletjes", "laag-duiken"],
+    "uitleg": "Twee jonge keepers zitten op hun knieën tegenover elkaar. De trainer rolt een bal tussen hen in. Wie de bal het eerst te pakken heeft (duiken mag), krijgt een punt. Leuk spel om de jongste keepers te leren duiken zonder bang te zijn.",
+    "organisatie": "Keepers in kniezit op 8 m van elkaar, trainer aan de zijkant op 4 m van de lijn tussen hen in. Bal steeds iets dichter bij de een of de ander. Voor JO7–JO11; op zacht gras of een mat.",
+    "benodigdheden": ["Ballen", "Eventueel 2 matten"],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "coachpunten": [
+      "Handen eerst naar de bal, hoofd achter de armen",
+      "Landen op je zij, niet op je buik",
+      "Bal vastklemmen: pas als hij vastzit, heb je hem"
+    ],
+    "variaties": {
+      "makkelijker": ["Bal rustig rollen", "Op een mat of zacht gras"],
+      "moeilijker": [
+        "Vanuit hurkzit of stand",
+        "Trainer gooit de bal (met stuit)",
+        "Op een roep pas starten"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 16,
+        "lengte": 11
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 4,
+          "y": 5,
+          "nummer": 1,
+          "kijkrichting": 0,
+          "houding": "kniezit"
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "x": 12,
+          "y": 5,
+          "nummer": 2,
+          "kijkrichting": 180,
+          "houding": "kniezit"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 8,
+          "y": 1.2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 8,
+          "y": 1.6,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": [7.4, 5.3],
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pluk",
+              "wie": "k1"
+            },
+            {
+              "type": "duik",
+              "wie": "k2",
+              "naar": [10.7, 5.2],
+              "start": 0.1
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            },
+            {
+              "type": "opstaan",
+              "wie": "k2"
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [4, 5],
+              "start": 0.4,
+              "kijk": 0
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [12, 5],
+              "start": 0.4,
+              "kijk": 180
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "zitten",
+              "wie": "k1",
+              "houding": "kniezit"
+            },
+            {
+              "type": "zitten",
+              "wie": "k2",
+              "houding": "kniezit"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-sp-mikken-in-de-hoepel",
+    "soort": "keeper",
+    "naam": "Mikken in de hoepel",
+    "categorieen": ["spelletjes", "passing"],
+    "uitleg": "Om de beurt gooien twee jonge keepers hun bal in een hoepel: dichtbij onderhands met een boogje, verder weg bovenhands. In de hoepel is een punt; wie heeft er na 10 worpen de meeste? Zo oefenen ze spelenderwijs de uitworp.",
+    "organisatie": "Vier hoepels op 4 tot 8 m van de gooilijn. Twee keepers met elk een bal. Na de worp de bal zelf ophalen en terug naar de lijn.",
+    "benodigdheden": [
+      "4 hoepels of ringen",
+      "2 hoedjes",
+      "2 ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "coachpunten": [
+      "Onderhands: stap in met het andere been en laat de bal laag los",
+      "Bovenhands: arm gestrekt achter het hoofd, dan zwiepen",
+      "Kijk naar de hoepel, niet naar de bal"
+    ],
+    "variaties": {
+      "makkelijker": ["Hoepels dichterbij", "Grotere hoepels of een zone"],
+      "moeilijker": [
+        "Hoepels verder weg (10–15 m)",
+        "Rollend door een poortje",
+        "Hoepel die door de trainer wordt verplaatst"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 14,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "r1",
+          "soort": "ring",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "id": "r2",
+          "soort": "ring",
+          "x": 9,
+          "y": 6
+        },
+        {
+          "id": "r3",
+          "soort": "ring",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "id": "r4",
+          "soort": "ring",
+          "x": 10,
+          "y": 2.6
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 5,
+          "y": 10.6
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 9,
+          "y": 10.6
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 5,
+          "y": 10,
+          "nummer": 1,
+          "kijkrichting": -90
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "x": 9,
+          "y": 10,
+          "nummer": 2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 5,
+          "y": 9.65,
+          "bij": "k1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 9,
+          "y": 9.65,
+          "bij": "k2"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": [5, 6],
+              "worp": "onderhands",
+              "hoogte": 1.6
+            }
+          ]
+        },
+        {
+          "duur": 0.3,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": [10, 2.6],
+              "worp": "bovenhands",
+              "hoogte": 3
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [5.6, 6.5]
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [10.4, 3.2],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pak",
+              "wie": "k1"
+            },
+            {
+              "type": "pak",
+              "wie": "k2"
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
+  }
+]
