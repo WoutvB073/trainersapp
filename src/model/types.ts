@@ -46,7 +46,8 @@ export type ObjectSoort =
 /** Personen kunnen bewegen en een bal hebben. */
 export const PERSONEN: readonly ObjectSoort[] = ['speler', 'keeper', 'trainer'];
 
-export type Team = 'A' | 'B' | 'C';
+/** A/B = teams, C = extra hesjeskleur, J = joker (neutrale speler, speelt altijd met de balbezitter mee). */
+export type Team = 'A' | 'B' | 'C' | 'J';
 
 export interface VeldObject {
   id: string;
@@ -62,6 +63,13 @@ export interface VeldObject {
   hoek?: number;
   /** Personen: kijkrichting in graden (0 = rechts, 90 = omlaag). */
   kijkrichting?: number;
+  /**
+   * Keeper: id van het goal dat hij verdedigt. Hij beweegt dan vanzelf mee met de bal (tussen bal en midden
+   * van het goal), zet zich bij een schot en reageert op schoten met `afloop`.
+   */
+  verdedigt?: string;
+  /** Keeper mag buiten het doelgebied komen (bv. 1 tegen keeper). */
+  uitkomen?: boolean;
   /** Zone, ladder, muurtje, mat, stok: afmetingen in meters. */
   breedte?: number;
   lengte?: number;
@@ -109,6 +117,21 @@ export interface BalActie extends ActieBasis {
   naar: string | Punt;
   /** Bij een pass op een rebounder/muurtje: naar wie (of waar) de bal terugkaatst. */
   terug?: string | Punt;
+  /**
+   * Afloop van een schot op een goal met een keeper (`verdedigt`): `goal` (keeper duikt maar is te laat),
+   * `vangt`, `stompt` (bal weggestompt, ligt daarna los) of `naast`. `naar` is dan het punt waar het schot heen gaat.
+   */
+  afloop?: 'goal' | 'vangt' | 'stompt' | 'naast';
+  /** Bij stompt: waar de bal heen gaat; bij vangt: waar de keeper hem daarna heen rolt. */
+  afloopNaar?: Punt;
+  /** Hoogte (m) waarop de bal aankomt: bv. 0,6 voor een volley, 2 voor een kopbal. */
+  eindHoogte?: number;
+  /** In één keer (volley, kopbal, direct doorspelen): geen aanname. */
+  direct?: boolean;
+  /** Eigen balsnelheid in m/s (bv. 24 voor een hard schot). */
+  snelheid?: number;
+  /** Id van een verdediger die deze pass onderschept (hij loopt naar de passlijn en krijgt de bal). */
+  onderschept?: string;
   /** Welke bal (standaard de bal die `van` heeft). */
   bal?: string;
   /** Hoogte van de bal (optioneel, zie BalHoogte). */
@@ -187,6 +210,31 @@ export interface SchijnActie extends ActieBasis {
   kant?: 'links' | 'rechts';
 }
 
+/** Druk zetten: loop naar de balbezitter (of `op`) tot op `afstand` m (standaard 1,7). */
+export interface DrukActie extends ActieBasis {
+  type: 'druk';
+  wie: string;
+  op?: string;
+  afstand?: number;
+  manier?: Manier;
+}
+
+/** Passlijn dichtlopen: ga tussen twee spelers in staan (`fractie` 0–1 vanaf de eerste, standaard 0,5). */
+export interface DekActie extends ActieBasis {
+  type: 'dek';
+  wie: string;
+  tussen: [string, string];
+  fractie?: number;
+  manier?: Manier;
+}
+
+/** Bal afpakken: de verdediger tikt de bal van `van` af en heeft hem daarna zelf. */
+export interface VeroverActie extends ActieBasis {
+  type: 'verover';
+  wie: string;
+  van: string;
+}
+
 /** Ander hesje/team, bv. bij tikspelen: wie getikt is wordt tikker. */
 export interface TeamActie extends ActieBasis {
   type: 'team';
@@ -194,7 +242,7 @@ export interface TeamActie extends ActieBasis {
   team: Team;
 }
 
-export type Actie = BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie;
+export type Actie = BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | DrukActie | DekActie | VeroverActie;
 
 export interface AnimatieStap {
   acties: Actie[];
@@ -218,7 +266,7 @@ export interface HerhaalStap {
      * Per speler een andere waarde: `{ "manier": ["huppel", "zijwaarts"] }` vult `"@manier"` in de stappen in
      * met de waarde voor speler 1, 2, … (de lijst wordt herhaald als hij korter is).
      */
-    waarden?: Record<string, (string | number)[]>;
+    waarden?: Record<string, Waarde[]>;
   };
 }
 
@@ -228,6 +276,9 @@ export interface TegelijkStap {
 }
 
 export type Stap = AnimatieStap | HerhaalStap | TegelijkStap;
+
+/** Invulwaarde in een herhaling: tekst, getal, punt of lijst punten (bv. een route). */
+export type Waarde = string | number | boolean | Punt | Punt[];
 
 /**
  * Een rij wachtende spelers. Plek 0 = voorste (op x, y); de rij loopt in `richting` (graden) naar achteren,

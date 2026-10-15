@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.4.0)
+## Status (15-10-2026, versie 0.5.0)
 
 | Fase | Status |
 |---|---|
@@ -15,7 +15,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek (9) + Pass en trap (9) – **wacht op test** op de telefoon. Volgende batches: Afwerken, Positiespel, Partijvormen, Spelletjes, Keepers |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken (9) + Positiespel (9) – **wacht op test** op de telefoon. Volgende batches: Partijvormen, Spelletjes, Keepers |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -152,6 +152,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   `achteruit`, `voetenwerk`, `hordes`), `kijk` (vaste kijkrichting, bv. zijwaarts met de neus naar de trainer),
   `spoor: false` (geen lijn). Bij `voetenwerk`, `hordes`, `kniehef` en `sprong` toont het spoor losse pasjes en
   zie je de pasjes ook aan het poppetje (2D: voetjes, 3D: benen/veren).
+- **Keeper die meebeweegt:** keeper met `verdedigt: "<goal-id>"` staat vanzelf tussen bal en midden van het goal
+  (1–2,6 m uit zijn doel, iets vertraagd), kijkt naar de bal en zet zich vlak voor een schot. Na een duik staat hij vanzelf
+  op. `uitkomen: true` = hij mag buiten het doelgebied (1 tegen keeper) en blijft na een actie even staan.
+- **Schot met afloop** (`afloop`, met `naar` = punt waar het schot heen gaat): `goal` (keeper duikt maar is te laat; bal
+  blijft in het net liggen en het net bolt uit), `vangt` (bal in de handen, keeper rolt hem daarna weg, `afloopNaar`),
+  `stompt` (bal wordt weggestompt naar `afloopNaar` en ligt los: rebound), `naast`. Een liggende keeper reageert niet meer.
+- **Schotsoorten:** `hoogte: "grond"` = plaatsen/laag, `snelheid` (m/s) = hard schot, `direct: true` = in één keer
+  (volley, kopbal, doorspelen), `eindHoogte` = hoogte waarop de bal aankomt (volley ± 0,6 m, kopbal ± 2 m; de speler
+  springt bij een kopbal).
+- **Verdedigen:** `{ "type": "druk", "wie", "op"?, "afstand"? }` (naar de balbezitter tot op 1,7 m),
+  `{ "type": "dek", "wie", "tussen": [a, b], "fractie"? }` (passlijn dichtlopen), pass met `onderschept: "<id>"`
+  (verdediger loopt in de lijn en krijgt de bal), `{ "type": "verover", "wie", "van" }` (bal afpakken). Rollen ruilen met
+  `team`. **Jokers:** `team: "J"` (eigen kleur, paars).
 - **Overige acties:** `{ "type": "aansluiten", "wie", "rij" | "bij" }`, `{ "type": "team", "wie", "team": "C" }`
   (ander hesje, bv. tikker) en `{ "type": "schijn", "wie", "kant": "links" | "rechts" }` (schijnbeweging: lijf gaat
   opzij en terug, de bal blijft liggen).
@@ -290,6 +303,18 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - Extra test: een bal wisselt nooit van speler zonder pass of schot (in elke oefening, elke 0,02 s gecontroleerd).
 - Pass-en-volg in een vorm (driehoek, rijen): de volgorde van passeerders moet rond kloppen (`@volgende` is cyclisch);
   bij de driehoek met 4 spelers is dat a1-a2-a3-a4 met `rondes: 2`.
+
+## Besluiten fase 4 – batch 3 (Afwerken en Positiespel)
+- 18 oefeningen. Afwerken 9 (dribbel door de poort, pass in de loop, voorzet laag en hoog, rebound, 1 tegen keeper,
+  achtervolger, kaats en afstandsschot, duel 1 tegen 1 (twee teams), snelle schutter op kleine doeltjes zonder keeper).
+  Positiespel 9 (rondo 3:1, 4:2, 5:2 met middenman, 4:4+2 jokers, 5:5+2 jokers met inspelen door de trainer, eindzonespel,
+  overtal 3:2 naar doelpoortjes, omschakelen tussen twee vakken, door de linies).
+- "Kaatsen en afwerken" gebruikt nu ook de meebewegende keeper.
+- Aantallen (met dubbele categorieën): Warming-up 17, Techniek 12, Loopcoördinatie 11, Pass en trap 15, Afwerken 10,
+  Positiespel 10, Partijvormen 3, Spelletjes 2 – totaal 55 veldoefeningen. "Keeper nodig" bij de 9 afwerkvormen met keeper.
+- Extra test: een keeper komt nooit buiten zijn doelgebied (5,5 × 18,32 m, met een halve meter speling), behalve met
+  `uitkomen`.
+- Gekleurde zones: volle rand in de kleur zelf (de vulling mengt met het gras, rood oogt anders bruin).
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

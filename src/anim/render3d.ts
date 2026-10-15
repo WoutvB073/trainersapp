@@ -38,7 +38,7 @@ import {
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { CameraStand, Manier, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
-import { boog, PASJES, PASLENGTE, standOp, type ObjectStand, type Spoor, type Tijdlijn } from './timeline';
+import { boog, PASJES, PASLENGTE, standOp, type NetInslag, type ObjectStand, type Spoor, type Tijdlijn } from './timeline';
 import { leesKleuren, persoonKleur, PLAT, tekenGrasmat, uitsnede, veldMaten, type Kleuren } from './render2d';
 import type { Weergave } from './weergave';
 
@@ -187,16 +187,20 @@ function goal(o: VeldObject, netTex: Texture, materialen: Material[]): Group {
   }
   staaf(v3(-B / 2, 0, -D), v3(B / 2, 0, -D));
   const cel = 0.18;
-  const vlak = (w: number, h: number, pos: Vector3, rot: [number, number, number]) => {
-    const m = new Mesh(herhaalUV(new PlaneGeometry(w, h), w, h, cel), net);
+  const vlak = (w: number, h: number, pos: Vector3, rot: [number, number, number], delen: [number, number] = [1, 1]) => {
+    const m = new Mesh(herhaalUV(new PlaneGeometry(w, h, ...delen), w, h, cel), net);
     m.position.copy(pos);
     m.rotation.set(...rot);
     m.renderOrder = 2;
     g.add(m);
+    return m;
   };
-  // Achternet (schuin), zijnetten en dak.
+  // Achternet (schuin, in stukjes zodat het kan uitbollen), zijnetten en dak.
   const schuin = Math.hypot(D * 0.5, H * 0.85);
-  vlak(B, schuin, v3(0, H * 0.425, -D * 0.75), [-Math.atan2(D * 0.5, H * 0.85), 0, 0]);
+  const achter = vlak(B, schuin, v3(0, H * 0.425, -D * 0.75), [-Math.atan2(D * 0.5, H * 0.85), 0, 0], [24, 8]);
+  g.userData.achterNet = achter;
+  g.userData.basis = Float32Array.from(achter.geometry.attributes.position!.array as ArrayLike<number>);
+  g.userData.hoogte = schuin;
   vlak(B, D * 0.5, v3(0, H * 0.925, -D * 0.25), [Math.PI / 2 - Math.atan2(H * 0.15, D * 0.5), 0, 0]);
   for (const x of [-B / 2, B / 2]) vlak(D, H * 0.9, v3(x, H * 0.45, -D / 2), [0, Math.PI / 2, 0]);
   g.position.set(o.x, 0, o.y);
@@ -545,7 +549,21 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   const dx = Math.cos(dh);
   const dz = Math.sin(dh);
   const p = pose(s.manier, s.snelheid, s.fase, l);
-  f.wortel.position.set(s.x - dx * 1.45 * l, l * 0.2 + p.veer, s.y - dz * 1.45 * l);
+  // Keeper zet zich (door de knieën, armen uit); kopbal: springen.
+  const zet = s.gezet * (1 - l);
+  const spring = Math.sin(s.sprong * Math.PI * 0.5);
+  f.wortel.position.set(s.x - dx * 1.45 * l, l * 0.2 + p.veer - zet * 0.13 + spring * 0.45, s.y - dz * 1.45 * l);
+  if (zet > 0) {
+    p.spreid = [p.spreid[0] - zet * 0.22, p.spreid[1] + zet * 0.22];
+    p.armen = [p.armen[0] - zet * 0.6, p.armen[1] - zet * 0.6];
+    p.armenOpzij = Math.max(p.armenOpzij, zet * 0.55);
+    p.voorover += zet * 0.15;
+  }
+  if (spring > 0) {
+    p.armen = [-spring * 1.6, -spring * 1.6];
+    p.armenOpzij = Math.max(p.armenOpzij, spring * 0.5);
+    p.benen = [p.benen[0] + spring * 0.35, p.benen[1] + spring * 0.35];
+  }
   const draai = new Quaternion().setFromAxisAngle(Y_AS, f.hoek);
   if (p.voorover) draai.multiply(new Quaternion().setFromAxisAngle(X_AS, p.voorover));
   if (l > 0) {
@@ -823,14 +841,43 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   materialen.push(grasMat, ver.material as Material);
   texturen.push(grasTex);
 
-  // Materiaal.
+  // Materiaal (goals onthouden, zodat het net kan uitbollen).
   const netTex = netTextuur();
   texturen.push(netTex);
+  const goals = new Map<string, Group>();
   for (const o of tekening.objecten) {
     if (PLAT.includes(o.soort)) continue;
     const m = materiaal(o, netTex, materialen);
-    if (m) scene.add(m);
+    if (!m) continue;
+    scene.add(m);
+    if (m instanceof Group && m.userData.achterNet) goals.set(o.id, m);
   }
+  const bollen = new Set<string>();
+  /** Bal in het net: achternet bolt naar achteren uit rond de plek van de bal. */
+  const bolNet = (inslagen: NetInslag[]) => {
+    for (const [id, g] of goals) {
+      const inslag = inslagen.find((n) => n.id === id);
+      if (!inslag && !bollen.has(id)) continue;
+      const net = g.userData.achterNet as Mesh;
+      const basis = g.userData.basis as Float32Array;
+      const pos = net.geometry.attributes.position!;
+      const half = (g.userData.hoogte as number) / 2;
+      if (!inslag) {
+        (pos.array as Float32Array).set(basis);
+        bollen.delete(id);
+      } else {
+        const lx = g.worldToLocal(new Vector3(inslag.x, 0, inslag.y)).x;
+        for (let i = 0; i < pos.count; i++) {
+          const x = basis[i * 3]!;
+          const y = basis[i * 3 + 1]!;
+          const w = Math.exp(-((x - lx) ** 2) / 1.1) * (1 - Math.abs(y) / (half * 1.05));
+          pos.setZ(i, basis[i * 3 + 2]! - inslag.sterkte * 0.55 * w);
+        }
+        bollen.add(id);
+      }
+      pos.needsUpdate = true;
+    }
+  };
 
   // Poppetjes.
   const gedeeld: Gedeeld = {
@@ -1015,6 +1062,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       b.schaduw.scale.setScalar(k);
     }
 
+    bolNet(s.net);
     for (const sm of sporen) sm.mesh.visible = sm.pijl.visible = false;
     for (const sp of s.sporen) {
       const sm = sporen[sp.index];

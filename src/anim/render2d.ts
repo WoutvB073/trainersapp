@@ -1,6 +1,6 @@
 import type { LijnSoort, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
-import { PASJES, PASLENGTE, type ObjectStand, type Stand } from './timeline';
+import { PASJES, PASLENGTE, type NetInslag, type ObjectStand, type Stand } from './timeline';
 
 /** Kleuren komen uit CSS-variabelen, zodat clubkleuren (fase 6) ook de animatie kleuren. */
 export interface Kleuren {
@@ -10,6 +10,7 @@ export interface Kleuren {
   teamA: string;
   teamB: string;
   teamC: string;
+  joker: string;
   keeper: string;
   trainer: string;
   rugnummer: string;
@@ -25,6 +26,7 @@ const VAR: Record<keyof Kleuren, string> = {
   teamA: '--team-a',
   teamB: '--team-b',
   teamC: '--team-c',
+  joker: '--joker',
   keeper: '--keeper',
   trainer: '--trainer',
   rugnummer: '--rugnummer',
@@ -104,7 +106,7 @@ export function tekenScene(
 
   const objecten = tekening.objecten;
   const onder: VeldObject['soort'][] = ['zone', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'muurtje', 'rebounder', 'klein-goal', 'goal'];
-  for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o);
+  for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o, stand.net.find((n) => n.id === o.id));
 
   for (const l of tekening.lijnen ?? []) tekenPolylijn(b, l.soort, l.punten, k, true);
   for (const s of stand.sporen) {
@@ -152,7 +154,7 @@ export function tekenGrasmat(ctx: CanvasRenderingContext2D, breedtePx: number, h
 export function persoonKleur(o: VeldObject, k: Kleuren, team: Team | undefined = o.team): string {
   if (o.soort === 'keeper') return k.keeper;
   if (o.soort === 'trainer') return k.trainer;
-  return team === 'B' ? k.teamB : team === 'C' ? k.teamC : k.teamA;
+  return team === 'B' ? k.teamB : team === 'C' ? k.teamC : team === 'J' ? k.joker : k.teamA;
 }
 
 /** Kleur met doorzichtigheid (voor een gekleurde zone). Werkt met #rgb, #rrggbb en rgb(…). */
@@ -260,7 +262,7 @@ function metDraaiing(b: Beeld, o: VeldObject, teken: (ctx: CanvasRenderingContex
   ctx.restore();
 }
 
-function tekenMateriaal(b: Beeld, o: VeldObject) {
+function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
   const { ctx } = b;
   const s = b.schaal;
   const lijn = maat(b, 0.1, 1.2);
@@ -295,6 +297,23 @@ function tekenMateriaal(b: Beeld, o: VeldObject) {
         c.moveTo(-w / 2, 0);
         c.lineTo(w / 2, 0);
         c.stroke();
+        // Bal in het net: de achterkant bolt even uit op de plek van de bal.
+        if (inslag && inslag.sterkte > 0.02) {
+          const h = ((o.hoek ?? 0) * Math.PI) / 180;
+          const lx = ((inslag.x - o.x) * Math.cos(h) + (inslag.y - o.y) * Math.sin(h)) * s;
+          const bol = inslag.sterkte * 0.7 * s;
+          const breed = 1.1 * s;
+          c.beginPath();
+          c.moveTo(-w / 2, -d);
+          for (let x = -w / 2; x <= w / 2; x += Math.max(2, w / 40)) c.lineTo(x, -d - bol * Math.exp(-((x - lx) ** 2) / (breed * breed)));
+          c.lineTo(w / 2, -d);
+          c.closePath();
+          c.fillStyle = 'rgba(255,255,255,0.35)';
+          c.fill();
+          c.strokeStyle = '#ffffff';
+          c.lineWidth = maat(b, 0.08, 1.2);
+          c.stroke();
+        }
       });
       break;
     }
@@ -353,11 +372,12 @@ function tekenMateriaal(b: Beeld, o: VeldObject) {
       const h = (o.lengte ?? 10) * s;
       metDraaiing(b, o, (c) => {
         // Gekleurd vak: doorzichtig vlak met een rand in dezelfde kleur.
-        c.fillStyle = o.kleur ? doorzichtig(o.kleur, 0.45) : 'rgba(255,255,255,0.12)';
+        c.fillStyle = o.kleur ? doorzichtig(o.kleur, 0.32) : 'rgba(255,255,255,0.12)';
         c.fillRect(-w / 2, -h / 2, w, h);
         c.strokeStyle = o.kleur ? doorzichtig(o.kleur, 0.95) : 'rgba(255,255,255,0.8)';
-        c.lineWidth = maat(b, 0.08, 1.2);
-        c.setLineDash([6 * b.dpr, 4 * b.dpr]);
+        // Gekleurd vak: volle rand in de kleur zelf (de vulling mengt met het gras).
+        c.lineWidth = o.kleur ? maat(b, 0.18, 2.2) : maat(b, 0.08, 1.2);
+        if (!o.kleur) c.setLineDash([6 * b.dpr, 4 * b.dpr]);
         c.strokeRect(-w / 2, -h / 2, w, h);
       });
       break;

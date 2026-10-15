@@ -113,3 +113,29 @@ describe('bal wisselt alleen van speler via een pass of schot', () => {
     });
   }
 });
+
+describe('keeper blijft in zijn doelgebied (tenzij uitkomen mag)', () => {
+  for (const o of OEFENINGEN) {
+    const keepers = o.tekening.objecten.filter((x) => x.soort === 'keeper' && !x.uitkomen);
+    const goals = o.tekening.objecten.filter((x) => x.soort === 'goal' || x.soort === 'klein-goal');
+    if (!keepers.length || !goals.length) continue;
+    it(`${o.id}`, () => {
+      const tl = maakTijdlijn(o.tekening);
+      const fouten: string[] = [];
+      for (const k of keepers) {
+        const g = goals.find((x) => x.id === k.verdedigt) ?? goals.reduce((a, b) => (Math.hypot(b.x - k.x, b.y - k.y) < Math.hypot(a.x - k.x, a.y - k.y) ? b : a));
+        const h = ((g.hoek ?? 0) * Math.PI) / 180;
+        for (let t = 0; t <= tl.duur + 1; t += 0.05) {
+          const s = standOp(tl, t).objecten.get(k.id)!;
+          const rx = s.x - g.x;
+          const ry = s.y - g.y;
+          const lx = rx * Math.cos(h) + ry * Math.sin(h);
+          const ly = -rx * Math.sin(h) + ry * Math.cos(h);
+          // Doelgebied (5,5 m × 18,32 m) met een halve meter speling; even achter de lijn mag bij een duik.
+          if (Math.abs(lx) > 9.16 + 0.5 || ly > 5.5 + 0.5 || ly < -0.8) fouten.push(`${k.id} op (${s.x.toFixed(1)}, ${s.y.toFixed(1)}) t=${t.toFixed(2)}`);
+        }
+      }
+      expect(fouten.slice(0, 3)).toEqual([]);
+    });
+  }
+});
