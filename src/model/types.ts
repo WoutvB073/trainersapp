@@ -84,6 +84,16 @@ interface ActieBasis {
   duur?: number;
 }
 
+/**
+ * Hoe hoog de bal door de lucht gaat (hoogste punt van de boog):
+ * - `grond`: rollend over het gras (0 m) – standaard bij een pass
+ * - `laag`: lage boog (± 1 m), bv. een laag schot of een worp naar de keeper – standaard bij een schot
+ * - `halfhoog`: ± 2,5 m
+ * - `hoog`: lob/voorzet, hoogte hangt af van de afstand (max. 7 m)
+ * - een getal: hoogste punt in meters
+ */
+export type BalHoogte = 'grond' | 'laag' | 'halfhoog' | 'hoog' | number;
+
 export interface BalActie extends ActieBasis {
   type: 'pass' | 'schot';
   van: string;
@@ -91,7 +101,9 @@ export interface BalActie extends ActieBasis {
   naar: string | Punt;
   /** Welke bal (standaard de bal die `van` heeft). */
   bal?: string;
-  /** Bal door de lucht. */
+  /** Hoogte van de bal (optioneel, zie BalHoogte). */
+  hoogte?: BalHoogte;
+  /** Verouderd: `hoog: true` = `hoogte: 'hoog'`. Blijft werken voor oude tekeningen. */
   hoog?: boolean;
 }
 

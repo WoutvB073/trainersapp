@@ -62,7 +62,8 @@ function Tegel({ soort }: { soort: Soort }) {
   );
 }
 
-export function Start() {
+/** `opInstalleren`: alleen op de computer in de browser (terug naar de installatie-uitleg). */
+export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
   return (
     <div className="pagina pagina-start">
       <header className="start-kop">
@@ -78,6 +79,12 @@ export function Start() {
           <Tegel soort="veld" />
           <Tegel soort="keeper" />
         </div>
+        {opInstalleren && (
+          <button className="link-knop" onClick={opInstalleren}>
+            <Icoon naam="computer" maat={18} />
+            {APP_NAAM} als app installeren
+          </button>
+        )}
         <p className="voetnoot">Versie {VERSIE}</p>
       </main>
     </div>

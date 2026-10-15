@@ -1,0 +1,301 @@
+/* Installatiescherm ("poort"): telefoon eerst, compact op kleine schermen. */
+
+.poort {
+  --rand-x: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+  min-height: 100dvh;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: calc(env(safe-area-inset-top) + 28px) var(--rand-x) calc(env(safe-area-inset-bottom) + 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Ruimte voor de wijzende pijl, zodat die de stappen niet bedekt. */
+.poort-pijl-onder-midden,
+.poort-pijl-onder-rechts {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 110px);
+}
+
+.poort-pijl-boven-rechts {
+  padding-top: calc(env(safe-area-inset-top) + 92px);
+}
+
+.poort-kop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.poort-logo {
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgb(16 40 26 / 0.22);
+  margin-bottom: 6px;
+}
+
+.poort-titel {
+  font-family: var(--font-kop);
+  font-weight: 700;
+  font-size: 2.2rem;
+}
+
+.poort-lead {
+  margin: 0;
+  color: var(--tekst-2);
+  font-size: 1.05rem;
+  max-width: 30ch;
+}
+
+.poort-gelukt {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--primair);
+  color: var(--op-primair);
+}
+
+.poort-kaart {
+  padding: 18px 16px;
+  border-radius: var(--radius);
+  background: var(--kaart);
+  box-shadow: var(--schaduw);
+}
+
+.poort-kaart-titel {
+  font-family: var(--font-kop);
+  font-weight: 700;
+  font-size: 1.45rem;
+  margin-bottom: 12px;
+}
+
+.poort-intro {
+  margin: 0 0 12px;
+}
+
+.poort-stappen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.poort-stap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.poort-stap-nr {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primair);
+  color: var(--op-primair);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.poort-stap-icoon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--primair-licht);
+  color: var(--primair-donker);
+}
+
+.poort-stap-tekst {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.poort-knop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--primair);
+  color: var(--op-primair);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.poort-knop:active {
+  transform: scale(0.98);
+}
+
+.poort-knop-tweede {
+  border: 2px solid var(--primair);
+  background: var(--kaart);
+  color: var(--primair);
+}
+
+.poort-kopieer {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.poort-link {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--rand);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--tekst-2);
+}
+
+.poort-tip {
+  margin: 12px 0 0;
+  font-size: 0.875rem;
+  color: var(--tekst-2);
+}
+
+.poort-zelf {
+  margin-top: 14px;
+}
+
+.poort-zelf summary {
+  cursor: pointer;
+  color: var(--primair);
+  font-weight: 650;
+  margin-bottom: 10px;
+}
+
+.poort-browser {
+  display: grid;
+  gap: 8px;
+}
+
+.poort-voet {
+  margin: 0;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--tekst-2);
+}
+
+/* Wijzende pijl naar de knop in de browserbalk */
+.poort-pijl {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  pointer-events: none;
+  padding: 18px max(14px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 4px) max(14px, env(safe-area-inset-left));
+}
+
+.poort-pijl--onder-midden,
+.poort-pijl--onder-rechts {
+  bottom: 0;
+  background: linear-gradient(to top, var(--achtergrond) 55%, transparent);
+}
+
+.poort-pijl--onder-midden {
+  justify-content: center;
+}
+
+.poort-pijl--onder-rechts {
+  justify-content: flex-end;
+}
+
+.poort-pijl--boven-rechts {
+  top: 0;
+  justify-content: flex-end;
+  padding-top: calc(env(safe-area-inset-top) + 4px);
+  padding-bottom: 18px;
+  background: linear-gradient(to bottom, var(--achtergrond) 55%, transparent);
+}
+
+.poort-pijl-binnen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--primair);
+  animation: poort-stuiter 1.3s ease-in-out infinite;
+}
+
+.poort-pijl--boven-rechts .poort-pijl-binnen {
+  flex-direction: column-reverse;
+  animation-name: poort-stuiter-op;
+}
+
+.poort-pijl--boven-rechts svg {
+  rotate: 180deg;
+}
+
+.poort-pijl-label {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--primair);
+  color: var(--op-primair);
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+@keyframes poort-stuiter {
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes poort-stuiter-op {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Kleine schermen: compacter, zodat de stappen direct in beeld zijn. */
+@media (max-height: 700px) {
+  .poort {
+    padding-top: calc(env(safe-area-inset-top) + 16px);
+    gap: 12px;
+  }
+  .poort-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+  }
+  .poort-titel {
+    font-size: 1.8rem;
+  }
+  .poort-lead {
+    font-size: 0.95rem;
+  }
+  .poort-stap-icoon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (min-width: 900px) {
+  .poort {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poort-pijl-binnen {
+    animation: none;
+  }
+}

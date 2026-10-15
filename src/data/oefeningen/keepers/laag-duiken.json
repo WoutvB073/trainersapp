@@ -44,7 +44,7 @@
       "animatie": [
         {
           "acties": [
-            { "type": "pass", "van": "t1", "naar": "k1", "duur": 0.7 },
+            { "type": "pass", "van": "t1", "naar": "k1", "duur": 0.7, "hoogte": "laag" },
             { "type": "duik", "wie": "k1", "naar": [32.1, 1.8], "start": 0.2, "duur": 0.5 }
           ]
         },
@@ -59,7 +59,7 @@
         { "duur": 0.5, "acties": [] },
         {
           "acties": [
-            { "type": "pass", "van": "t1", "naar": "k1", "duur": 0.7 },
+            { "type": "pass", "van": "t1", "naar": "k1", "duur": 0.7, "hoogte": "laag" },
             { "type": "duik", "wie": "k1", "naar": [35.9, 1.8], "start": 0.2, "duur": 0.5 }
           ]
         },

@@ -6,13 +6,14 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026)
+## Status (15-10-2026, versie 0.2.0)
 
 | Fase | Status |
 |---|---|
 | 0. PLAN.md | ✅ af |
-| 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ gebouwd en online (versie 0.1.0, https://woutvb073.github.io/trainersapp/), getest op 5 formaten + offline. **Wacht op test** op de telefoon |
-| 2. 3D-animaties (Three.js) | ⏳ |
+| 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ online (0.1.0), getest op de telefoon door de gebruiker |
+| 1b. Installatiescherm (zoals IntervalFit) | ✅ gebouwd en online (0.2.0). **Wacht op test** op de telefoon |
+| 2. 3D-animaties (Three.js) | ✅ gebouwd en online (0.2.0). **Wacht op test** op de telefoon |
 | 3. Training maken | ⏳ |
 | 4. Bibliotheek vullen (batches per categorie) | ⏳ (doorlopend vanaf fase 2/3) |
 | 5. Editor | ⏳ |
@@ -130,9 +131,16 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   ], "duur": 1.2 }                                             // duur optioneel (anders uit afstand/snelheid)
   ```
   Per actie optioneel: `start` (s na begin van de stap), `duur` (s), `hoog: true` (bal door de lucht), `bal`
-  (welke bal, standaard de bal van de passeerder). Bal "naar een speler" komt aan waar die speler op dat moment is.
+  (welke bal, standaard de bal van de passeerder), `hoogte` (zie hieronder). Bal "naar een speler" komt aan waar die
+  speler op dat moment is.
+- **Balhoogte** (optioneel per pass/schot, `hoogte`): `"grond"` (rolt over het gras; standaard bij een pass),
+  `"laag"` (boog tot ± 1 m; standaard bij een schot, ook voor worpen), `"halfhoog"` (± 2,5 m), `"hoog"` (lob/voorzet,
+  hoogte volgt uit de afstand, max. 7 m) of een getal (hoogste punt in meters). Het oude `hoog: true` blijft werken
+  (= `"hoog"`). Bestaande oefeningen zonder `hoogte` werken dus gewoon.
 - De tijdlijn (`src/anim/timeline.ts`) rekent dit om naar posities per tijdstip + sporen; de 2D-renderer
-  (`src/anim/render2d.ts`) tekent dat. De 3D-renderer gebruikt straks dezelfde tijdlijn.
+  (`src/anim/render2d.ts`) en de 3D-renderer (`src/anim/render3d.ts`) tekenen allebei uit diezelfde stand.
+  De stand bevat ook: wie de bal heeft, de vlucht (van wie naar wie, voortgang, hoogte), en hoe ver een keeper
+  ligt (`liggen` 0–1, geleidelijk bij duiken en opstaan).
 
 ## Techniek
 
@@ -193,6 +201,41 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   looplijn geel gestippeld, dribbellijn wit golvend; legenda onder de animatie.
 - Oefenlijst: kaart met stilstaand plaatje (eindstand met alle lijnen), korte uitleg, labels spelers/keepers/"Keeper nodig".
 - Telefoon: animatie van rand tot rand; vanaf 900 px breed: animatie links (blijft staan), tekst rechts.
+
+## Besluiten fase 1b – Installatiescherm
+- Werkt zoals bij IntervalFit: `kiesScherm` (`src/engine/platform.ts`, getest) beslist.
+  - Geïnstalleerd (beginscherm/app-venster, `display-mode: standalone` of `navigator.standalone`): altijd de app.
+  - Telefoon/tablet in een gewone browser: **alleen** het installatiescherm.
+  - Computer in de browser: installatie-uitleg + knop **Gewoon in de browser gebruiken** (onthouden in
+    `localStorage` `trainersapp.browserGekozen`). Op het startscherm staat dan "TrainersApp als app installeren" om terug te gaan.
+- Uitleg per toestel (`src/screens/installeren/stappen.tsx`): iPhone/iPad Safari (deelknop → Zet op beginscherm; Safari 26:
+  ••• → Deel → Zet op beginscherm → Open als webapp), iPhone met andere browser (kopieer link → open in Safari),
+  ingebouwde browsers (WhatsApp e.d.: openen in Safari/Chrome), Android Chrome (knop **Installeren** via de
+  installatieprompt, anders ⋮ → App installeren), andere Android-browsers (menu of via Chrome), computer Chrome/Edge
+  (icoon in de adresbalk of knop Installeren), Safari op de Mac (Archief → Voeg toe aan Dock), Firefox (kan niet; Chrome/Edge of browser).
+- Wijzende pijl "Begin hier" naar de knop in de browserbalk (iPhone onder, iPad/Android boven).
+
+## Besluiten fase 2 – 3D
+- Three.js (r181) in een eigen bestand (`render3d`, ± 145 kB gzip) dat pas op de detailpagina laadt; staat wel in de
+  offline-cache. Eén tijdlijn voor 2D en 3D: `AnimatieSpeler` (bediening) + `Weergave` (2D of 3D, `src/anim/weergave.ts`).
+- Detailpagina: **3D standaard**, knop 3D/2D rechtsboven in het beeld (keuze geldt zolang de app open is).
+  Cameraknoppen linksboven: **Boven**, **Schuin** (standaard, ± 60°), **Achter goal**; vloeiende overgang (0,75 s).
+- Draaien (vegen/slepen) en zoomen (knijpen/scrollen) met OrbitControls: niet onder het gras (max. ± 78° vanaf boven),
+  niet verder dan 2,2× de afstand van het bovenaanzicht, niet schuiven. Eerste keer een korte uitleg ("Veeg om te draaien …").
+- Tikken = pauze/afspelen, maar niet na slepen (> 8 px beweging).
+- Gras + lijnen + platte materialen (zone, ladder, mat, stok, ring) als textuur, getekend met dezelfde code als 2D.
+  Goals met net, pionnen, hoedjes, paaltjes, hordes, muurtje, rebounder en tekst als 3D-vormen.
+- Poppetjes: shirt in team-/keeper-/trainerkleur, rugnummer op het shirt + nummerbadge boven het hoofd (altijd even groot
+  op het scherm, ook leesbaar van boven). Lopen met zwaaiende armen/benen; kijkrichting draait vloeiend.
+- Duiken: het lijf kantelt naar de duikkant tot op de grond, armen gestrekt naar de bal; opstaan gaat geleidelijk terug.
+  Keeper houdt een gevangen bal voor de borst.
+- Bal: rolt (draait mee) bij grondpasses; boog bij schoten/worpen/hoge ballen; schaduw op het gras.
+- Sporen liggen als platte linten op het gras (pass doorgetrokken, lopen gestreept, dribbel golvend), een hoge bal als boog;
+  ze groeien mee met de beweging; pijlpunt aan het eind.
+- Terugvallen op 2D: als WebGL niet start of wegvalt, of als het toestel te traag is (mediaan > 45 ms per beeld tijdens de
+  eerste ± 70 beelden). Te traag wordt onthouden (`trainersapp.3dTraag`); zelf op 3D tikken probeert het opnieuw.
+- Gemeten (laptop met Intel UHD, telefoonformaat 412×915 @ 2,6×): ± 56 beelden/s, ook met 4× tragere processor.
+- Oefenlijst blijft 2D-plaatjes; de editor (fase 5) wordt 2D.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

@@ -128,6 +128,29 @@ export function tekenScene(
   for (const o of objecten) if (o.soort === 'tekst') tekenTekst(b, o);
 }
 
+/** Platte dingen die in 3D gewoon op het gras liggen (geen eigen 3D-vorm). */
+export const PLAT: readonly VeldObject['soort'][] = ['zone', 'keepersmat', 'ladder', 'stok', 'ring'];
+
+/**
+ * Gras, veldlijnen en platte materialen voor de 3D-grasmat (textuur). `gebied` = welk stuk veld (meters)
+ * op het canvas komt; het canvas wordt helemaal gevuld.
+ */
+export function tekenGrasmat(ctx: CanvasRenderingContext2D, breedtePx: number, hoogtePx: number, tekening: Tekening, gebied: Uitsnede, kleuren: Kleuren): void {
+  const schaal = breedtePx / gebied.breedte;
+  // dpr heel klein: in een textuur gelden de echte maten in meters, geen minimale pixelmaten.
+  const b: Beeld = { ctx, schaal, ox: -gebied.x * schaal, oy: -gebied.y * schaal, dpr: 0.01 };
+  tekenGras(b, breedtePx, hoogtePx, kleuren);
+  tekenLijnen(b, tekening, kleuren);
+  for (const soort of PLAT) for (const o of tekening.objecten) if (o.soort === soort) tekenMateriaal(b, o);
+}
+
+/** Kleur van een persoon (team, keeper, trainer). */
+export function persoonKleur(o: VeldObject, k: Kleuren): string {
+  if (o.soort === 'keeper') return k.keeper;
+  if (o.soort === 'trainer') return k.trainer;
+  return o.team === 'B' ? k.teamB : o.team === 'C' ? k.teamC : k.teamA;
+}
+
 // ---------- veld ----------
 
 function tekenGras(b: Beeld, w: number, h: number, k: Kleuren) {
@@ -477,12 +500,6 @@ function tekenPolylijn(b: Beeld, soort: LijnSoort, punten: Punt[], k: Kleuren, p
 }
 
 // ---------- personen, bal, tekst ----------
-
-function persoonKleur(o: VeldObject, k: Kleuren) {
-  if (o.soort === 'keeper') return k.keeper;
-  if (o.soort === 'trainer') return k.trainer;
-  return o.team === 'B' ? k.teamB : o.team === 'C' ? k.teamC : k.teamA;
-}
 
 function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
   const { ctx } = b;

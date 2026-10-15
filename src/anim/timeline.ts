@@ -3,19 +3,23 @@ import { PERSONEN } from '../model/types';
 
 /**
  * Tijdlijn: rekent de animatiestappen van een tekening om naar bewegingen met begin- en eindtijd.
- * `standOp(tijdlijn, t)` geeft daarna voor elk moment de posities en de sporen.
- * Puur rekenwerk (geen DOM), zodat de 2D- en straks de 3D-renderer dezelfde tijdlijn gebruiken.
+ * `standOp(tijdlijn, t)` geeft daarna voor elk moment de posities, houdingen, balhoogte en sporen.
+ * Puur rekenwerk (geen DOM): de 2D- én de 3D-renderer gebruiken allebei deze tijdlijn.
  */
 
 // Snelheden in m/s voor bewegingen zonder eigen duur.
 const SNELHEID = { loop: 4.5, dribbel: 3.5, pass: 11, schot: 17, hoog: 10 } as const;
 const DUUR_DUIK = 0.5;
 const DUUR_OPSTAAN = 0.5;
+/** Opstaan als een liggende keeper zonder "opstaan" gaat lopen. */
+const DUUR_OPKRABBELEN = 0.3;
 const MIN_DUUR = 0.35;
 /** Rust aan het eind voordat de animatie opnieuw begint. */
 export const NA_AFLOOP = 1.2;
 /** Afstand waarbinnen een speler een losse bal kan oppakken. */
 const PAK_AFSTAND = 2.5;
+/** Hoogste punt van de boog per hoogte-woord (meters). */
+const BOOG = { grond: 0, laag: 1, halfhoog: 2.5 } as const;
 
 type Ease = 'mens' | 'duik' | 'bal';
 
@@ -30,10 +34,22 @@ interface Beweging {
 type BalEvent =
   | { soort: 'vast'; t0: number; houder: string }
   | { soort: 'los'; t0: number; punt: Punt }
-  | { soort: 'vlucht'; t0: number; t1: number; van: Punt; naar: Punt; hoog: boolean; daarna: string | null };
+  | {
+      soort: 'vlucht';
+      t0: number;
+      t1: number;
+      van: Punt;
+      naar: Punt;
+      /** Hoogste punt van de boog (0 = over de grond). */
+      top: number;
+      passeerder: string;
+      daarna: string | null;
+    };
 
+/** Gaan liggen (duik) of opstaan, geleidelijk tussen t en t1. */
 interface HoudingEvent {
   t: number;
+  t1: number;
   houding: 'staan' | 'duik';
   /** Duikrichting in graden. */
   hoek?: number;
@@ -46,6 +62,8 @@ export interface Spoor {
   t0: number;
   t1: number;
   ease: Ease;
+  /** Hoogste punt van de boog (alleen bal; 0 = over de grond). */
+  top: number;
   /** Object dat dit spoor maakt. */
   id: string;
 }
@@ -65,22 +83,35 @@ export interface Tijdlijn {
 export interface ObjectStand {
   x: number;
   y: number;
-  /** Kijkrichting in graden (personen). */
+  /** Kijkrichting in graden (personen; 0 = +x, 90 = +y). */
   hoek: number;
+  /** "duik" zodra de persoon meer dan half ligt. */
   houding: 'staan' | 'duik';
+  /** 0 = staat, 1 = ligt (na een duik); loopt geleidelijk tijdens duiken en opstaan. */
+  liggen: number;
   /** Duikrichting in graden. */
   duikHoek: number;
-  /** Hoogte boven de grond in meters (bal). */
+  /** Hoogte van de boog boven de lijn tussen begin- en eindpunt (bal, meters). */
   hoogte: number;
+  /** Bal: wie hem nu heeft (null = los of in de lucht). */
+  houder: string | null;
+  /** Bal in de lucht/onderweg: van wie, naar wie (null = naar een punt) en voortgang 0–1. */
+  vlucht?: { van: string; naar: string | null; u: number; top: number };
 }
 
 export interface SpoorStand {
+  /** Index in `tijdlijn.sporen`. */
+  index: number;
   soort: LijnSoort;
   van: Punt;
   /** Huidige punt (punt van het spoor). */
   tot: Punt;
   /** Eindpunt van de hele lijn. */
   naar: Punt;
+  /** Welk deel van de lijn al getekend is (0–1). */
+  fractie: number;
+  /** Hoogste punt van de boog (bal). */
+  top: number;
   klaar: boolean;
 }
 
@@ -97,11 +128,25 @@ const graden = (a: Punt, b: Punt) => (Math.atan2(b[1] - a[1], b[0] - a[0]) * 180
 const richting = (hoek: number): Punt => [Math.cos((hoek * Math.PI) / 180), Math.sin((hoek * Math.PI) / 180)];
 const klem = (u: number) => Math.min(1, Math.max(0, u));
 
-function ease(soort: Ease, u: number): number {
+export function ease(soort: Ease, u: number): number {
   u = klem(u);
   if (soort === 'mens') return 0.5 - Math.cos(Math.PI * u) / 2;
   if (soort === 'duik') return 1 - (1 - u) * (1 - u);
   return u * (1.25 - 0.25 * u);
+}
+
+/** Hoogte boven de grond op voortgang u (0–1) van een boog met hoogste punt `top`. */
+export const boog = (top: number, u: number) => top * 4 * u * (1 - u);
+
+/**
+ * Hoogste punt van de boog voor een pass/schot (meters).
+ * Standaard: pass over de grond, schot met een lage boog. `hoog: true` (oud) = `hoogte: 'hoog'`.
+ */
+export function balTop(a: Pick<BalActie, 'type' | 'hoogte' | 'hoog'>, start: Punt, doel: Punt): number {
+  const h = a.hoogte ?? (a.hoog ? 'hoog' : a.type === 'schot' ? 'laag' : 'grond');
+  if (typeof h === 'number') return Math.max(0, h);
+  if (h === 'hoog') return Math.min(7, 1 + afstand(start, doel) * 0.22);
+  return BOOG[h];
 }
 
 const isBalActie = (a: Actie): a is BalActie => a.type === 'pass' || a.type === 'schot';
@@ -139,17 +184,35 @@ function kijkHoek(tl: Tijdlijn, id: string, t: number): number {
   return o ? standaardKijk(o) : 0;
 }
 
-function houding(tl: Tijdlijn, id: string, t: number): HoudingEvent {
-  return laatste(tl.houdingen.get(id), t, (x) => x.t) ?? { t: 0, houding: 'staan' };
+/** Hoe ver ligt deze persoon (0–1) en in welke richting is hij gedoken. */
+function ligging(tl: Tijdlijn, id: string, t: number): { liggen: number; hoek: number } {
+  const lijst = tl.houdingen.get(id);
+  let liggen = 0;
+  let hoek = 0;
+  for (const e of lijst ?? []) {
+    if (e.t > t) break;
+    const u = e.t1 > e.t ? klem((t - e.t) / (e.t1 - e.t)) : 1;
+    if (e.houding === 'duik') {
+      liggen = ease('duik', u);
+      hoek = e.hoek ?? 0;
+    } else {
+      // Opstaan vanuit de huidige ligging.
+      liggen = liggen * (1 - ease('mens', u));
+    }
+  }
+  return { liggen, hoek };
 }
+
+const ligt = (tl: Tijdlijn, id: string, t: number) => ligging(tl, id, t).liggen > 0.5;
 
 /** Waar een bal zit als deze persoon hem heeft. */
 function balBijPersoon(tl: Tijdlijn, id: string, t: number): Punt {
   const o = tl.objecten.get(id)!;
   const p = positie(tl, id, t);
-  const h = houding(tl, id, t);
-  const r = richting(h.houding === 'duik' ? (h.hoek ?? 0) : kijkHoek(tl, id, t));
-  const d = h.houding === 'duik' ? 0.55 : balAfstand(o);
+  const l = ligging(tl, id, t);
+  const duik = l.liggen > 0.5;
+  const r = richting(duik ? l.hoek : kijkHoek(tl, id, t));
+  const d = duik ? 0.55 : balAfstand(o);
   return [p[0] + r[0] * d, p[1] + r[1] * d];
 }
 
@@ -157,22 +220,28 @@ function balEvent(tl: Tijdlijn, balId: string, t: number): BalEvent | undefined 
   return laatste(tl.balEvents.get(balId), t, (x) => x.t0);
 }
 
-function balPositie(tl: Tijdlijn, balId: string, t: number): { p: Punt; hoogte: number } {
+function balStand(tl: Tijdlijn, balId: string, t: number): Pick<ObjectStand, 'x' | 'y' | 'hoogte' | 'houder' | 'vlucht'> {
   const e = balEvent(tl, balId, t);
+  const plek = (p: Punt, houder: string | null = null) => ({ x: p[0], y: p[1], hoogte: 0, houder });
   if (!e) {
     const o = tl.objecten.get(balId)!;
-    return { p: [o.x, o.y], hoogte: 0 };
+    return plek([o.x, o.y]);
   }
-  if (e.soort === 'vast') return { p: balBijPersoon(tl, e.houder, t), hoogte: 0 };
-  if (e.soort === 'los') return { p: e.punt, hoogte: 0 };
+  if (e.soort === 'vast') return plek(balBijPersoon(tl, e.houder, t), e.houder);
+  if (e.soort === 'los') return plek(e.punt);
   if (t < e.t1) {
     const u = (t - e.t0) / (e.t1 - e.t0);
-    const top = e.hoog ? Math.min(7, 1 + afstand(e.van, e.naar) * 0.22) : 0;
-    return { p: lerp(e.van, e.naar, ease('bal', u)), hoogte: top * 4 * u * (1 - u) };
+    const p = lerp(e.van, e.naar, ease('bal', u));
+    return { x: p[0], y: p[1], hoogte: boog(e.top, ease('bal', u)), houder: null, vlucht: { van: e.passeerder, naar: e.daarna, u, top: e.top } };
   }
-  if (e.daarna) return { p: balBijPersoon(tl, e.daarna, t), hoogte: 0 };
-  return { p: e.naar, hoogte: 0 };
+  if (e.daarna) return plek(balBijPersoon(tl, e.daarna, t), e.daarna);
+  return plek(e.naar);
 }
+
+const balPunt = (tl: Tijdlijn, balId: string, t: number): Punt => {
+  const s = balStand(tl, balId, t);
+  return [s.x, s.y];
+};
 
 /** Wie heeft deze bal op tijdstip t (null = los of in de lucht). */
 function houderVan(tl: Tijdlijn, balId: string, t: number): string | null {
@@ -199,7 +268,7 @@ function losseBalBij(tl: Tijdlijn, punt: Punt, t: number): string | undefined {
     if (houderVan(tl, b, t) !== null) continue;
     const e = balEvent(tl, b, t);
     if (e?.soort === 'vlucht' && t < e.t1) continue;
-    const d = afstand(balPositie(tl, b, t).p, punt);
+    const d = afstand(balPunt(tl, b, t), punt);
     if (d <= min) {
       min = d;
       beste = b;
@@ -246,6 +315,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     if (!isPersoon(o)) throw new TekeningFout(`Actie ${actie.type}: "${id}" is geen speler, keeper of trainer`);
     return o!;
   };
+  const houding = (id: string, e: HoudingEvent) => voegToe(tl.houdingen, id, e, (x) => x.t);
 
   let T = 0;
   for (const stap of tekening.animatie ?? []) {
@@ -266,7 +336,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
       }
       if (a.type === 'opstaan') {
         const t1 = t0 + (a.duur ?? DUUR_OPSTAAN);
-        voegToe(tl.houdingen, o.id, { t: t1, houding: 'staan' }, (e) => e.t);
+        houding(o.id, { t: t0, t1, houding: 'staan' });
         eind = Math.max(eind, t1);
         continue;
       }
@@ -284,15 +354,16 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
       }
       const hoek = graden(van, m.naar);
       if (m.type === 'duik') {
-        voegToe(tl.houdingen, o.id, { t: t0, houding: 'duik', hoek }, (e) => e.t);
+        houding(o.id, { t: t0, t1, houding: 'duik', hoek });
       } else {
-        if (houding(tl, o.id, t0).houding === 'duik') voegToe(tl.houdingen, o.id, { t: t0, houding: 'staan' }, (e) => e.t);
+        // Wie ligt en gaat lopen, krabbelt eerst snel op.
+        if (ligging(tl, o.id, t0).liggen > 0) houding(o.id, { t: t0, t1: t0 + DUUR_OPKRABBELEN, houding: 'staan' });
         // Een keeper blijft het veld in kijken als hij verschuift; veldspelers kijken waar ze heen gaan.
         if (o.soort !== 'keeper' && dist > 0.01) voegToe(tl.kijk, o.id, { t: t0, hoek }, (e) => e.t);
       }
       const e: Ease = m.type === 'duik' ? 'duik' : 'mens';
       voegToe(tl.bewegingen, o.id, { van, naar: m.naar, t0, t1, ease: e }, (b) => b.t0);
-      if (dist > 0.01) tl.sporen.push({ soort: m.type === 'dribbel' ? 'dribbel' : 'loop', van, naar: m.naar, t0, t1, ease: e, id: o.id });
+      if (dist > 0.01) tl.sporen.push({ soort: m.type === 'dribbel' ? 'dribbel' : 'loop', van, naar: m.naar, t0, t1, ease: e, top: 0, id: o.id });
       eind = Math.max(eind, t1);
     }
 
@@ -316,8 +387,9 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
   const bal = a.bal ?? balVan(tl, a.van, t0) ?? losseBalBij(tl, positie(tl, a.van, t0), t0);
   if (!bal) throw new TekeningFout(`${a.type}: "${a.van}" heeft geen bal`);
 
-  const start = balPositie(tl, bal, t0).p;
-  const snelheid = a.hoog ? SNELHEID.hoog : SNELHEID[a.type];
+  const start = balPunt(tl, bal, t0);
+  // Snelheid: hoge ballen gaan langzamer dan een strakke pass of een schot.
+  const snelheid = (doel: Punt) => (balTop(a, start, doel) > 2 ? SNELHEID.hoog : SNELHEID[a.type]);
   let doel: Punt;
   let ontvanger: string | null = null;
   let t1: number;
@@ -327,12 +399,15 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
     if (!isPersoon(o)) throw new TekeningFout(`${a.type}: "${a.naar}" is geen speler, keeper of trainer`);
     ontvanger = a.naar;
     // Waar is de ontvanger als de bal aankomt? Twee keer schatten is ruim voldoende.
-    t1 = t0 + (a.duur ?? Math.max(MIN_DUUR, afstand(start, positie(tl, ontvanger, t0)) / snelheid));
-    if (a.duur === undefined) t1 = t0 + Math.max(MIN_DUUR, afstand(start, positie(tl, ontvanger, t1)) / snelheid);
+    const schat = (t: number) => {
+      const p = positie(tl, ontvanger!, t);
+      return t0 + Math.max(MIN_DUUR, afstand(start, p) / snelheid(p));
+    };
+    t1 = a.duur !== undefined ? t0 + a.duur : schat(schat(t0));
     const p = positie(tl, ontvanger, t1);
-    const h = houding(tl, ontvanger, t1);
-    if (h.houding === 'duik') {
-      const r = richting(h.hoek ?? 0);
+    const l = ligging(tl, ontvanger, t1);
+    if (l.liggen > 0.5) {
+      const r = richting(l.hoek);
       doel = [p[0] + r[0] * 0.55, p[1] + r[1] * 0.55];
     } else {
       const d = afstand(p, start) || 1;
@@ -342,14 +417,15 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
     }
   } else {
     doel = a.naar;
-    t1 = t0 + (a.duur ?? Math.max(MIN_DUUR, afstand(start, doel) / snelheid));
+    t1 = t0 + (a.duur ?? Math.max(MIN_DUUR, afstand(start, doel) / snelheid(doel)));
   }
 
-  if (van!.soort !== 'keeper' || houding(tl, a.van, t0).houding !== 'duik') {
+  if (van!.soort !== 'keeper' || !ligt(tl, a.van, t0)) {
     voegToe(tl.kijk, a.van, { t: t0, hoek: graden(start, doel) }, (e) => e.t);
   }
-  voegToe(tl.balEvents, bal, { soort: 'vlucht', t0, t1, van: start, naar: doel, hoog: !!a.hoog, daarna: ontvanger }, (e) => e.t0);
-  tl.sporen.push({ soort: 'bal', van: start, naar: doel, t0, t1, ease: 'bal', id: bal });
+  const top = balTop(a, start, doel);
+  voegToe(tl.balEvents, bal, { soort: 'vlucht', t0, t1, van: start, naar: doel, top, passeerder: a.van, daarna: ontvanger }, (e) => e.t0);
+  tl.sporen.push({ soort: 'bal', van: start, naar: doel, t0, t1, ease: 'bal', top, id: bal });
   return t1;
 }
 
@@ -360,23 +436,32 @@ export function rondeDuur(tl: Tijdlijn): number {
 
 export function standOp(tl: Tijdlijn, t: number): Stand {
   const objecten = new Map<string, ObjectStand>();
+  const rust = { hoek: 0, houding: 'staan' as const, liggen: 0, duikHoek: 0, hoogte: 0, houder: null };
   for (const o of tl.objecten.values()) {
     if (o.soort === 'bal') {
-      const { p, hoogte } = balPositie(tl, o.id, t);
-      objecten.set(o.id, { x: p[0], y: p[1], hoek: 0, houding: 'staan', duikHoek: 0, hoogte });
+      objecten.set(o.id, { ...rust, ...balStand(tl, o.id, t) });
     } else if (isPersoon(o)) {
       const p = positie(tl, o.id, t);
-      const h = houding(tl, o.id, t);
-      objecten.set(o.id, { x: p[0], y: p[1], hoek: kijkHoek(tl, o.id, t), houding: h.houding, duikHoek: h.hoek ?? 0, hoogte: 0 });
+      const l = ligging(tl, o.id, t);
+      objecten.set(o.id, {
+        ...rust,
+        x: p[0],
+        y: p[1],
+        hoek: kijkHoek(tl, o.id, t),
+        houding: l.liggen > 0.5 ? 'duik' : 'staan',
+        liggen: l.liggen,
+        duikHoek: l.hoek,
+      });
     } else {
-      objecten.set(o.id, { x: o.x, y: o.y, hoek: o.hoek ?? 0, houding: 'staan', duikHoek: 0, hoogte: 0 });
+      objecten.set(o.id, { ...rust, x: o.x, y: o.y, hoek: o.hoek ?? 0 });
     }
   }
   const sporen: SpoorStand[] = [];
-  for (const s of tl.sporen) {
-    if (t < s.t0) continue;
+  tl.sporen.forEach((s, index) => {
+    if (t < s.t0) return;
     const u = (t - s.t0) / (s.t1 - s.t0);
-    sporen.push({ soort: s.soort, van: s.van, naar: s.naar, tot: lerp(s.van, s.naar, ease(s.ease, u)), klaar: u >= 1 });
-  }
+    const fractie = ease(s.ease, u);
+    sporen.push({ index, soort: s.soort, van: s.van, naar: s.naar, tot: lerp(s.van, s.naar, fractie), fractie, top: s.top, klaar: u >= 1 });
+  });
   return { objecten, sporen };
 }

@@ -115,3 +115,79 @@ describe('tijdlijn', () => {
     expect(tl.duur).toBe(2);
   });
 });
+
+describe('balhoogte', () => {
+  const metPass = (extra: Record<string, unknown>, type: 'pass' | 'schot' = 'pass') =>
+    maakTijdlijn(basis([{ acties: [{ type, van: 'a1', naar: 'a2', duur: 2, ...extra } as never] }]));
+  // Halverwege de boog: de bal-ease bereikt 0,5 bij u ≈ 0,4384.
+  const midden = 2 * 0.43845;
+  const hoogte = (tl: ReturnType<typeof maakTijdlijn>, t: number) => standOp(tl, t).objecten.get('b1')!.hoogte;
+
+  it('pass gaat standaard over de grond', () => {
+    const tl = metPass({});
+    expect(hoogte(tl, 1)).toBe(0);
+    expect(tl.sporen[0]!.top).toBe(0);
+  });
+
+  it('schot krijgt standaard een lage boog', () => {
+    const tl = metPass({}, 'schot');
+    expect(hoogte(tl, midden)).toBeCloseTo(1, 2);
+    expect(tl.sporen[0]!.top).toBe(1);
+  });
+
+  it('schot over de grond kan ook', () => {
+    expect(hoogte(metPass({ hoogte: 'grond' }, 'schot'), 1)).toBe(0);
+  });
+
+  it('woorden en getallen geven het hoogste punt van de boog', () => {
+    expect(hoogte(metPass({ hoogte: 'laag' }), midden)).toBeCloseTo(1, 2);
+    expect(hoogte(metPass({ hoogte: 'halfhoog' }), midden)).toBeCloseTo(2.5, 2);
+    expect(hoogte(metPass({ hoogte: 3.2 }), midden)).toBeCloseTo(3.2, 2);
+    // Hoog hangt af van de afstand (15 m → 1 + 15 × 0,22 = 4,3 m, min. de balafstanden).
+    const hoog = hoogte(metPass({ hoogte: 'hoog' }), midden);
+    expect(hoog).toBeGreaterThan(3.5);
+    expect(hoog).toBeLessThanOrEqual(7);
+  });
+
+  it('oude tekeningen met hoog: true werken nog', () => {
+    const oud = hoogte(metPass({ hoog: true }), midden);
+    expect(oud).toBeCloseTo(hoogte(metPass({ hoogte: 'hoog' }), midden), 5);
+  });
+
+  it('begint en eindigt op de grond, en de stand vertelt van wie naar wie', () => {
+    const tl = metPass({ hoogte: 'halfhoog' });
+    expect(hoogte(tl, 0.001)).toBeLessThan(0.02);
+    expect(hoogte(tl, 2)).toBe(0);
+    const s = standOp(tl, 1).objecten.get('b1')!;
+    expect(s.vlucht).toMatchObject({ van: 'a1', naar: 'a2', top: 2.5 });
+    expect(s.houder).toBeNull();
+    expect(standOp(tl, 2.5).objecten.get('b1')!.houder).toBe('a2');
+    // Vóór een latere pass heeft de passeerder hem.
+    const later = maakTijdlijn(basis([{ acties: [{ type: 'pass', van: 'a1', naar: 'a2', start: 1 }] }]));
+    expect(standOp(later, 0.5).objecten.get('b1')!.houder).toBe('a1');
+  });
+
+  it('negatieve hoogte telt als grond', () => {
+    expect(hoogte(metPass({ hoogte: -2 }), midden)).toBe(0);
+  });
+});
+
+describe('duiken en opstaan (geleidelijk)', () => {
+  it('liggen loopt van 0 naar 1 en bij opstaan weer naar 0', () => {
+    const tl = maakTijdlijn(
+      basis([
+        { acties: [{ type: 'duik', wie: 'k1', naar: [13, 2], duur: 0.5 }] },
+        { acties: [{ type: 'opstaan', wie: 'k1', duur: 0.5 }] },
+      ]),
+    );
+    const l = (t: number) => standOp(tl, t).objecten.get('k1')!.liggen;
+    expect(l(0)).toBe(0);
+    expect(l(0.25)).toBeGreaterThan(0.3);
+    expect(l(0.25)).toBeLessThan(1);
+    expect(l(0.5)).toBe(1);
+    expect(l(0.75)).toBeGreaterThan(0);
+    expect(l(0.75)).toBeLessThan(1);
+    expect(l(1.0)).toBe(0);
+    expect(standOp(tl, 0.75).objecten.get('k1')!.duikHoek).toBeCloseTo(180);
+  });
+});

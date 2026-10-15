@@ -13,7 +13,22 @@ const PADEN = {
   materiaal: 'M12 3l7.5 16h-15zM8 13h8',
   makkelijker: 'M12 5v14M5 12l7 7 7-7',
   moeilijker: 'M12 19V5M5 12l7-7 7 7',
+  deel: 'M8.5 9.5H6.5v10.5h11V9.5h-2M12 3v12M8.5 6.5L12 3l3.5 3.5',
+  plusVierkant: 'M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM12 8.5v7M8.5 12h7',
+  meer: 'M5.5 12h.01M12 12h.01M18.5 12h.01',
+  puntjes: 'M12 5.5v.01M12 12v.01M12 18.5v.01',
+  kompas: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15.5 8.5l-2 5-5 2 2-5z',
+  kopieer: 'M9 9h11v11H9zM5 15H4V4h11v1',
+  download: 'M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14',
+  huis: 'M4 11l8-7 8 7M6.5 9.5V20h11V9.5',
+  schakelaar: 'M7.5 7h9a5 5 0 0 1 0 10h-9a5 5 0 0 1 0-10zM16.5 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
+  computer: 'M3 4h18v12H3zM8 20h8M12 16v4M12 7v5.5M9.5 10L12 12.5l2.5-2.5',
+  browser: 'M3 5h18v14H3zM3 9h18M6 7h.01M8.5 7h.01',
+  plus: 'M12 5v14M5 12h14',
 } as const;
+
+/** Stippen hebben een dikkere lijn nodig om zichtbaar te zijn. */
+const DIK: readonly string[] = ['meer', 'puntjes'];
 
 export type IcoonNaam = keyof typeof PADEN;
 
@@ -27,7 +42,7 @@ export function Icoon({ naam, maat = 22, className }: { naam: IcoonNaam; maat?: 
       viewBox="0 0 24 24"
       fill={vol ? 'currentColor' : 'none'}
       stroke={vol ? 'none' : 'currentColor'}
-      strokeWidth={2}
+      strokeWidth={DIK.includes(naam) ? 3.4 : 2}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"

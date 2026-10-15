@@ -9,6 +9,8 @@ const BASE = '/trainersapp/';
 
 export default defineConfig({
   base: BASE,
+  // Three.js (3D) staat in een eigen bestand dat pas op de detailpagina laadt; ± 560 kB is daar prima.
+  build: { chunkSizeWarningLimit: 700 },
   plugins: [
     react(),
     VitePWA({

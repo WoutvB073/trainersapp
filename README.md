@@ -13,7 +13,11 @@ na de eerste keer openen ook zonder internet. Visie, datamodel en fasering: **[P
 **iPhone:** open de link in **Safari** → deel-icoon (vierkantje met pijl) → **Zet op beginscherm** → **Voeg toe**.
 Open de app daarna altijd via het icoon.
 
-**Android:** open de link in **Chrome** → **⋮** → **App installeren** (of *Toevoegen aan startscherm*).
+**Android:** open de link in **Chrome** → knop **Installeren** (of **⋮** → **App installeren**).
+
+**Laptop:** Chrome/Edge → installatie-icoon in de adresbalk, of kies **Gewoon in de browser gebruiken**.
+
+In een gewone browser op telefoon of tablet toont de app alleen deze installatie-uitleg; de app zelf opent vanaf het icoon.
 
 ## 2. Online zetten (GitHub Pages)
 
@@ -46,7 +50,9 @@ npm run dev        # ontwikkelserver: http://localhost:5173/trainersapp/
 npm test           # unit-tests (tijdlijn + controle van alle oefeningen)
 npm run build      # productieversie in dist/ (incl. iconen en service worker)
 npm run preview    # productieversie bekijken (offline/installeren testen)
-node tools/e2e/schermen.mjs   # screenshots op 5 formaten + offline-test (preview moet draaien, poort 4184)
+node tools/e2e/schermen.mjs      # alle schermen op 5 formaten + offline-test (preview moet draaien, poort 4184)
+node tools/e2e/installeren.mjs   # installatiescherm per toestel
+node tools/e2e/drie-d.mjs        # 3D-momenten, camerastanden en beeldsnelheid
 ```
 
 Op je telefoon testen zonder te deployen: `npm run dev -- --host` en open het getoonde netwerkadres
