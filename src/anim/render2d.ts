@@ -12,6 +12,8 @@ export interface Kleuren {
   teamC: string;
   joker: string;
   keeper: string;
+  keeper2: string;
+  keeper3: string;
   trainer: string;
   rugnummer: string;
   spoorBal: string;
@@ -28,6 +30,8 @@ const VAR: Record<keyof Kleuren, string> = {
   teamC: '--team-c',
   joker: '--joker',
   keeper: '--keeper',
+  keeper2: '--keeper-2',
+  keeper3: '--keeper-3',
   trainer: '--trainer',
   rugnummer: '--rugnummer',
   spoorBal: '--spoor-bal',
@@ -137,6 +141,9 @@ export function tekenScene(
 /** Platte dingen die in 3D gewoon op het gras liggen (geen eigen 3D-vorm). */
 export const PLAT: readonly VeldObject['soort'][] = ['zone', 'keepersmat'];
 
+/** Keepersmat met een hoogte vanaf 0,1 m = landingskussen (in 3D een echt kussen). */
+export const isKussen = (o: VeldObject) => o.soort === 'keepersmat' && (o.hoogte ?? 0) >= 0.1;
+
 /**
  * Gras, veldlijnen en platte materialen voor de 3D-grasmat (textuur). `gebied` = welk stuk veld (meters)
  * op het canvas komt; het canvas wordt helemaal gevuld.
@@ -147,12 +154,13 @@ export function tekenGrasmat(ctx: CanvasRenderingContext2D, breedtePx: number, h
   const b: Beeld = { ctx, schaal, ox: -gebied.x * schaal, oy: -gebied.y * schaal, dpr: 0.01 };
   tekenGras(b, breedtePx, hoogtePx, kleuren);
   tekenLijnen(b, tekening, kleuren);
-  for (const soort of PLAT) for (const o of tekening.objecten) if (o.soort === soort) tekenMateriaal(b, o);
+  for (const soort of PLAT) for (const o of tekening.objecten) if (o.soort === soort && !isKussen(o)) tekenMateriaal(b, o);
 }
 
 /** Kleur van een persoon (team, keeper, trainer). */
 export function persoonKleur(o: VeldObject, k: Kleuren, team: Team | undefined = o.team): string {
-  if (o.soort === 'keeper') return k.keeper;
+  // Meerdere keepers: elk nummer een eigen tint (1 standaard, 2 donkerder, 3 lichter).
+  if (o.soort === 'keeper') return o.nummer === 2 ? k.keeper2 : o.nummer === 3 ? k.keeper3 : k.keeper;
   if (o.soort === 'trainer') return k.trainer;
   return team === 'B' ? k.teamB : team === 'C' ? k.teamC : team === 'J' ? k.joker : k.teamA;
 }
@@ -515,6 +523,13 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
         c.fillStyle = o.kleur ?? '#2f6fd6';
         c.globalAlpha = 0.85;
         c.fillRect(-w / 2, -h / 2, w, h);
+        if (isKussen(o)) {
+          // Landingskussen: dikke rand, zodat je ziet dat het een kussen is.
+          c.globalAlpha = 1;
+          c.strokeStyle = 'rgba(10,30,70,0.7)';
+          c.lineWidth = maat(b, 0.12, 2.5);
+          c.strokeRect(-w / 2, -h / 2, w, h);
+        }
       });
       break;
     }
@@ -628,7 +643,8 @@ const lerpPunt = (a: Punt, c: Punt, u: number): Punt => [a[0] + (c[0] - a[0]) * 
 function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
   const { ctx } = b;
   const c = px(b, [s.x, s.y]);
-  const r = maat(b, 0.75, 10);
+  // In kniezit of hurkzit iets kleiner (lager bij de grond).
+  const r = maat(b, 0.75, 10) * (1 - 0.15 * s.zit);
   const kleur = persoonKleur(o, k, s.team);
   ctx.save();
   ctx.translate(c[0], c[1]);
@@ -647,11 +663,13 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
     }
   }
 
-  // Schaduw
+  // Schaduw (verder weg als hij in de lucht hangt: hoge duik of sprong)
+  const lucht = s.zweef + s.sprong * 0.45;
   ctx.fillStyle = 'rgba(0,0,0,0.22)';
   ctx.beginPath();
-  ctx.ellipse(r * 0.12, r * 0.18, r * (s.houding === 'duik' ? 1.7 : 1.02), r * 1.02, s.houding === 'duik' ? (s.duikHoek * Math.PI) / 180 : 0, 0, Math.PI * 2);
+  ctx.ellipse(r * (0.12 + lucht * 0.6), r * (0.18 + lucht * 0.6), r * (s.houding === 'duik' ? 1.7 : 1.02), r * 1.02, s.houding === 'duik' ? (s.duikHoek * Math.PI) / 180 : 0, 0, Math.PI * 2);
   ctx.fill();
+  const keeper = o.soort === 'keeper';
 
   ctx.fillStyle = kleur;
   ctx.strokeStyle = '#ffffff';
@@ -664,6 +682,8 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
     ctx.roundRect(-r * 1.55, -r * 0.82, r * 3.1, r * 1.64, r * 0.82);
     ctx.fill();
     ctx.stroke();
+    // Handschoenen gestrekt naar de bal.
+    if (keeper) for (const y of [-0.38, 0.38]) handschoen(ctx, r * 1.75, r * y, r, b);
     ctx.restore();
   } else {
     // Kijkrichting: klein puntje aan de rand.
@@ -678,6 +698,13 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
     ctx.arc(0, 0, r, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
+    if (keeper) {
+      // Handschoenen voor het lijf (basishouding); bij het vangen naar voren en bij elkaar.
+      const v = s.vang;
+      const breed = (0.75 - 0.45 * v) * (s.vangHoogte >= 1.6 && v > 0 ? 0.8 : 1);
+      const ver = r * (1.0 + 0.4 * v);
+      for (const k of [-1, 1]) handschoen(ctx, Math.cos(h + k * breed) * ver, Math.sin(h + k * breed) * ver, r, b);
+    }
   }
 
   const label = o.soort === 'trainer' ? 'T' : o.nummer !== undefined ? String(o.nummer) : '';
@@ -693,6 +720,19 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
     ctx.strokeText(label, 0, r * 0.06);
     ctx.fillText(label, 0, r * 0.06);
   }
+  ctx.restore();
+}
+
+/** Keepershandschoen: klein wit rondje met een donker randje. */
+function handschoen(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, b: Beeld) {
+  ctx.save();
+  ctx.fillStyle = '#f4f4f4';
+  ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+  ctx.lineWidth = Math.max(1, b.dpr * 0.9);
+  ctx.beginPath();
+  ctx.arc(x, y, r * 0.3, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
   ctx.restore();
 }
 

@@ -75,10 +75,15 @@ export interface VeldObject {
   verdedigt?: string;
   /** Keeper mag buiten het doelgebied komen (bv. 1 tegen keeper). */
   uitkomen?: boolean;
+  /** Keeper: begint in kniezit of hurkzit (tot hij beweegt of duikt). */
+  houding?: Zithouding;
   /** Zone, ladder, muurtje, mat, stok: afmetingen in meters. */
   breedte?: number;
   lengte?: number;
-  /** Hoogte in meters: horde (laag 0,15 / hoog 0,3), paaltje, net (standaard 1), goal (standaard 2,44; jeugdgoal 2). */
+  /**
+   * Hoogte in meters: horde (laag 0,15 / hoog 0,3), paaltje, net (standaard 1), goal (standaard 2,44; jeugdgoal 2),
+   * keepersmat (vanaf 0,1 = landingskussen: een dik kussen waar de keeper op landt).
+   */
   hoogte?: number;
   tekst?: string;
   /** Optionele eigen kleur (zone/vak, hoedje, pion, ring, ladder, horde). Een zone wordt een doorzichtig gekleurd vlak. */
@@ -126,9 +131,24 @@ export interface BalActie extends ActieBasis {
    * Afloop van een schot op een goal met een keeper (`verdedigt`): `goal` (keeper duikt maar is te laat),
    * `vangt`, `stompt` (bal weggestompt, ligt daarna los) of `naast`. `naar` is dan het punt waar het schot heen gaat.
    */
-  afloop?: 'goal' | 'vangt' | 'stompt' | 'naast';
-  /** Bij stompt: waar de bal heen gaat; bij vangt: waar de keeper hem daarna heen rolt. */
+  afloop?: 'goal' | 'vangt' | 'stompt' | 'naast' | 'tipt';
+  /**
+   * Bij stompt: waar de bal heen gaat; bij vangt: waar de keeper hem daarna heen rolt; bij tipt: waar de getipte bal
+   * landt. `tipt` = over de lat (hoge bal) of om de paal (bal bij de paal); geef met `eindHoogte` de hoogte bij het doel.
+   */
   afloopNaar?: Punt;
+  /**
+   * Aanspelen uit de handen: `onderhands` (rollend met `hoogte: "grond"`, anders met een boogje), `bovenhands`,
+   * `volley` (bal uit de handen laten vallen en trappen) of `trap` (bal eerst neerleggen, dan van de grond).
+   * Zonder `worp` speelt een veldspeler of trainer met de voet; een keeper rolt de bal onderhands weg.
+   */
+  worp?: 'onderhands' | 'bovenhands' | 'volley' | 'trap';
+  /**
+   * Bal naar een keeper die ervoor duikt: de keeper duikt naar dit punt en pakt de bal precies aan het eind van
+   * zijn duik (de duik wordt vanzelf op de bal afgestemd). `duikHoogte` = hoogte van de handen (hoge duik).
+   */
+  duikNaar?: Punt;
+  duikHoogte?: number;
   /** Hoogte (m) waarop de bal aankomt: bv. 0,6 voor een volley, 2 voor een kopbal. */
   eindHoogte?: number;
   /** In één keer (volley, kopbal, direct doorspelen): geen aanname. */
@@ -156,6 +176,8 @@ export interface BalActie extends ActieBasis {
  * - `huppel` (skippen), `kniehef`, `sprong` (hinkelen/springen, bv. door ringen)
  * - `zijwaarts` (kijkt 90° naast de looprichting, of `kijk`), `achteruit` (kijkt tegen de looprichting in)
  * - `voetenwerk` (kleine snelle pasjes, bv. door een ladder), `hordes` (over lage hordes)
+ * - `kruispas` (keeper: zijwaarts met gekruiste passen). Een keeper die `zijwaarts` of met `kruispas` gaat, blijft
+ *   (zonder `kijk`) dezelfde kant op kijken.
  * Bij voetenwerk, hordes, kniehef en sprong toont het spoor losse pasjes.
  */
 export type Manier =
@@ -169,6 +191,8 @@ export type Manier =
   | 'achteruit'
   | 'voetenwerk'
   | 'hordes'
+  /** Keeper: zijwaarts met kruispassen (het achterste been kruist voor langs). */
+  | 'kruispas'
   /** Intern: schijnbeweging (zie SchijnActie). */
   | 'schijn';
 
@@ -189,6 +213,20 @@ export interface BeweegActie extends ActieBasis {
   kijk?: number;
   /** false = geen lijn achterlaten. */
   spoor?: boolean;
+  /**
+   * Duik: hoogte (m) van de handen bij de bal. Vanaf ± 0,8 m is het een hoge duik: de keeper zet af, hangt
+   * horizontaal in de lucht en landt daarna op zijn zij (op een landingskussen als dat er ligt).
+   */
+  hoogte?: number;
+}
+
+export type Zithouding = 'kniezit' | 'hurkzit';
+
+/** Keeper gaat (weer) in kniezit of hurkzit zitten, bv. na een duik voor de volgende bal. */
+export interface ZitActie extends ActieBasis {
+  type: 'zitten';
+  wie: string;
+  houding: Zithouding;
 }
 
 export interface PersoonActie extends ActieBasis {
@@ -277,7 +315,8 @@ export type Actie =
   | DrukActie
   | DekActie
   | VeroverActie
-  | PannaActie;
+  | PannaActie
+  | ZitActie;
 
 export interface AnimatieStap {
   acties: Actie[];

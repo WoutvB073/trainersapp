@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.6.0)
+## Status (15-10-2026, versie 0.7.0)
 
 | Fase | Status |
 |---|---|
@@ -15,7 +15,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen (9) + Spelletjes (9) – **wacht op test** op de telefoon. Daarmee zijn alle veldcategorieën gevuld. Volgende batches: Keepers |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – **wacht op test** op de telefoon. Volgende keeperbatch: Voorzetten, Passing, 1 op 1, Reactie, Spelletjes |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -115,7 +115,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - `speler` (+ `team`: `"A" | "B" | "C"` (C = extra hesjeskleur), `nummer`), `keeper` (+ `nummer`), `trainer`
   - `bal` (+ optioneel `bij`: id van wie de bal aan het begin heeft)
   - `goal` (groot), `klein-goal`, `pion`, `hoedje`, `paaltje`, `ladder`, `horde`, `ring`, `zone`, `muurtje`,
-    `rebounder`, `keepersmat`, `stok`, `tekst`, `net` (voetvolleynet/lint tussen twee paaltjes, `breedte` = lengte van
+    `rebounder`, `keepersmat` (met `hoogte` vanaf 0,1 m = landingskussen), `stok`, `tekst`, `net` (voetvolleynet/lint tussen twee paaltjes, `breedte` = lengte van
     het net, `hoogte` standaard 1 m), `bank`, `kooi` (pannakooi: lage boarding, `breedte` × `lengte`)
   - `goal` met `breedte` en `hoogte` = jeugdgoal (bv. 5 × 2 m)
   - optioneel: `hoek` (graden; bij goals 0 = opening naar beneden; ladder/horde/stok met `hoek: 90` liggen dwars
@@ -148,7 +148,8 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   `stuitOp: [x, y]` = de bal stuit daar eerst en gaat met een kleinere boog verder (voetvolley, voetbaltennis).
   `raakt: "lat" | "paal"` (met `naar` = punt op de doellijn) = tegen de lat of paal, de bal springt terug naar
   `terugNaar` (latje-trap); geen doelpunt, het net bolt niet uit.
-  `naar` = de passeerder zelf met een `hoogte` = hooghouden (bal recht omhoog en terug aan de voet).
+  `naar` = de passeerder zelf met een `hoogte` = hooghouden (bal recht omhoog en terug aan de voet; een keeper gooit hem
+  zo op en vangt hem weer).
   Met `bal` kun je ook de bal van een ander wegtikken (bv. "Koning van het vak").
 - **Balsnelheid** volgt uit de afstand: korte pass ± 9 m/s, lange grondpass tot 18 m/s, schot 14–25 m/s; een bal
   door de lucht duurt minstens zo lang als de boog natuurkundig nodig heeft (lange bal van 30 m ± 2,4 s).
@@ -166,6 +167,26 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Schotsoorten:** `hoogte: "grond"` = plaatsen/laag, `snelheid` (m/s) = hard schot, `direct: true` = in één keer
   (volley, kopbal, doorspelen), `eindHoogte` = hoogte waarop de bal aankomt (volley ± 0,6 m, kopbal ± 2 m; de speler
   springt bij een kopbal).
+- **Keepertechniek:**
+  - *Bal in de handen:* een keeper houdt de bal voor de borst (tenzij hij hem daarna trapt of ermee dribbelt); een
+    trainer of speler neemt de bal in de handen als hij hem daarna gooit. De tijdlijn geeft de echte balhoogte, ook in de handen.
+  - *Aanspelen:* `worp: "onderhands"` (rollend met `hoogte: "grond"`, anders met een boogje), `"bovenhands"`, `"volley"`
+    (uit de handen laten vallen en trappen) of `"trap"` (eerst neerleggen). Zonder `worp` rolt een keeper de bal
+    onderhands weg. Vóór het loslaten haalt hij uit (worpbeweging); aan het begin van de animatie of vlak na een vang
+    schuift de worp vanzelf iets op, zodat het oppakken en uithalen te zien is.
+  - *Vangen:* de bal komt bij een keeper aan op `eindHoogte` (anders: door de lucht op borsthoogte, over de grond laag).
+    De houding volgt uit die hoogte: ≥ 1,6 m W-greep boven het hoofd (boven ± 2,1 m in de sprong), borst, buik
+    (kommetje), grond (schepvangen). Daarna gaat de bal naar de borst.
+  - *Duiken:* `duik` met `hoogte` (handen bij de bal; vanaf ± 0,8 m een hoge duik: horizontaal in de lucht, afzet met het
+    been aan de duikkant, landen op de zij of op een landingskussen). Makkelijkst: een pass/schot naar de keeper met
+    `duikNaar: [x, y]` (en `duikHoogte`): de duik wordt dan vanzelf op de bal afgestemd.
+  - *Tippen:* schot met `afloop: "tipt"` en `eindHoogte` op een keeper met `verdedigt`: centraal en hoog = over de lat
+    (springen, arm gestrekt), bij de paal = om de paal (hoge duik). De bal gaat over of naast het goal (geen doelpunt).
+  - *Kniezit/hurkzit:* keeper met `houding: "kniezit" | "hurkzit"` begint zo; `{ "type": "zitten", "wie", "houding" }`
+    zet hem er (weer) in. Opstaan, lopen of duiken haalt hem eruit.
+  - *Voetenwerk:* loopwijze `kruispas`; een keeper die `zijwaarts` of met `kruispas` gaat, blijft dezelfde kant op kijken.
+  - Een keeper staat altijd licht in basishouding (door de knieën, handen voor het lijf), ook meteen na het opstaan.
+    Meerdere keepers: elk nummer een eigen tint (1 standaard, 2 donkerder, 3 lichter); in 2D handschoenen.
 - **Verdedigen:** `{ "type": "druk", "wie", "op"?, "afstand"? }` (naar de balbezitter tot op 1,7 m),
   `{ "type": "dek", "wie", "tussen": [a, b], "fractie"? | "afstand"? }` (passlijn dichtlopen; `a`/`b` mag ook een punt
   zijn: `tussen: ["a3", [34, 0]], "afstand": 2` = mandekking, 2 m goalside van a3). Druk en dek schuiven mee tot de
@@ -338,6 +359,18 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   Positiespel 10, Partijvormen 14, Spelletjes 11 – totaal 73 veldoefeningen. "Keeper nodig" bij 13 oefeningen
   (9 afwerkvormen + 2 tegen 1, 3 tegen 2, 4 tegen 4 en 5 tegen 5).
 - Extra test: de bal gaat altijd over het net (hoogte bij het net ≥ nethoogte + 0,1 m).
+
+## Besluiten fase 4 – keepers batch 1 (Warming-up, Bal verwerken, Laag duiken, Hoog duiken)
+- 24 nieuwe keeperoefeningen + "Laag duiken vanuit kniezit" vernieuwd (trainer gooit onderhands, keeper zit echt in
+  kniezit en gaat na elke duik weer zitten). spelersNodig = 0, keepersNodig 1, 2 of 3. Bij meer keepers wisselen de
+  rollen in de animatie (tweetallen en driehoek gooien naar elkaar; bij aangeven lopen de keepers van plek).
+- Aantallen (met dubbele categorieën): Warming-up 7, Bal verwerken 9, Laag duiken 7, Hoog duiken 6, Reactie 1 –
+  totaal 25 keeperoefeningen.
+- De aangever (trainer of tweede keeper) staat bij oefeningen in het doel 1,8 m opzij, zodat hij de keeper in de
+  Schuin-camera niet afdekt.
+- De keepercheck (binnen het doelgebied) geldt in keeperoefeningen alleen voor de keeper met `verdedigt`: extra keepers
+  mogen buiten het doel aangeven.
+- Nieuw hulpscript `tools/e2e/keeper-momenten.mjs`: 3D-close-ups van worpen, duiken, vangen en tippen.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

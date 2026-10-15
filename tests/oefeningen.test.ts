@@ -116,7 +116,8 @@ describe('bal wisselt alleen van speler via een pass of schot', () => {
 
 describe('keeper blijft in zijn doelgebied (tenzij uitkomen mag)', () => {
   for (const o of OEFENINGEN) {
-    const keepers = o.tekening.objecten.filter((x) => x.soort === 'keeper' && !x.uitkomen);
+    // In keepersoefeningen mogen extra keepers buiten het doel aangeven; daar geldt het voor de keeper die het goal verdedigt.
+    const keepers = o.tekening.objecten.filter((x) => x.soort === 'keeper' && !x.uitkomen && (o.soort === 'veld' || x.verdedigt));
     const goals = o.tekening.objecten.filter((x) => x.soort === 'goal' || x.soort === 'klein-goal');
     if (!keepers.length || !goals.length) continue;
     it(`${o.id}`, () => {

@@ -39,7 +39,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { CameraStand, Manier, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
 import { boog, PASJES, PASLENGTE, standOp, type NetInslag, type ObjectStand, type Spoor, type Tijdlijn } from './timeline';
-import { leesKleuren, persoonKleur, PLAT, tekenGrasmat, uitsnede, veldMaten, type Kleuren } from './render2d';
+import { isKussen, leesKleuren, persoonKleur, PLAT, tekenGrasmat, uitsnede, veldMaten, type Kleuren } from './render2d';
 import type { Weergave } from './weergave';
 
 /**
@@ -345,6 +345,12 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
       }
       return opGrond(g);
     }
+    case 'keepersmat': {
+      // Landingskussen: dik blauw kussen.
+      const h = o.hoogte ?? 0.2;
+      const m = new Mesh(new BoxGeometry(o.breedte ?? 2, h, o.lengte ?? 1), kleur('#2f6fd6'));
+      return opGrond(m, h / 2);
+    }
     case 'muurtje': {
       const g = new Group();
       const n = Math.max(2, Math.round((o.breedte ?? 2.4) / 0.6));
@@ -511,6 +517,7 @@ const VOL: Record<Manier, number> = {
   achteruit: 2.4,
   voetenwerk: 1.8,
   hordes: 2.4,
+  kruispas: 2.4,
   schijn: 1,
 };
 
@@ -576,6 +583,13 @@ export function pose(manier: Manier | undefined, snelheid: number, fase: number,
       p.benen = [-Math.abs(sin) * 0.4 * k, 0];
       p.armenOpzij = 0.08 + Math.abs(sin) * 0.5 * k;
       break;
+    case 'kruispas':
+      // Het ene been kruist voor het andere langs (beide benen draaien dezelfde kant op).
+      p.spreid = [sin * 0.38 * k, sin * 0.38 * k];
+      p.benen = [-op * 0.25 * k, -neer * 0.25 * k];
+      p.armenOpzij = 0.3 * k;
+      p.veer = Math.abs(sin) * 0.05 * k;
+      break;
     case 'zijwaarts':
       // Benen spreiden en sluiten.
       p.spreid = [-op * 0.45 * k, op * 0.45 * k];
@@ -588,8 +602,8 @@ export function pose(manier: Manier | undefined, snelheid: number, fase: number,
   return p;
 }
 
-/** Zet het poppetje in de stand van dit moment (lopen, duiken, opstaan, bal vasthouden). */
-function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: boolean, heeftBal: boolean) {
+/** Zet het poppetje in de stand van dit moment (lopen, duiken, opstaan, vangen, gooien, bal vasthouden). */
+function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: boolean, balInHanden: boolean) {
   const keeper = f.o.soort === 'keeper';
   // Kijkrichting vloeiend draaien (de tijdlijn wisselt in één keer).
   const doel = Math.PI / 2 - (s.hoek * Math.PI) / 180;
@@ -604,21 +618,89 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   const dx = Math.cos(dh);
   const dz = Math.sin(dh);
   const p = pose(s.manier, s.snelheid, s.fase, l);
-  // Keeper zet zich (door de knieën, armen uit); kopbal: springen.
-  const zet = s.gezet * (1 - l);
+  const kant = (i: number) => (i === 0 ? -1 : 1);
+
+  // Keeper: altijd licht in basishouding (door de knieën, handen voor het lijf), ook meteen na het opstaan.
+  let zet = s.gezet;
+  if (keeper && !balInHanden && !s.worp) {
+    const rustig = !s.manier || s.snelheid < 1.5 || s.manier === 'zijwaarts' || s.manier === 'kruispas' || s.manier === 'voetenwerk';
+    if (rustig) zet = Math.max(zet, 0.45);
+  }
+  zet *= 1 - l;
+  // Vangen: lage bal = door de knieën en voorover (schepvangen, kommetje).
+  const vang = keeper ? s.vang * klem(1 - l * 3) : 0;
+  const diep = vang * klem((0.9 - s.vangHoogte) / 0.75);
   const spring = Math.sin(s.sprong * Math.PI * 0.5);
-  f.wortel.position.set(s.x - dx * 1.45 * l, l * 0.2 + p.veer - zet * 0.13 + spring * 0.45, s.y - dz * 1.45 * l);
+  // Kniezit (op de knieën, onderbenen naar achteren) of hurkzit (diep door de knieën, benen breed).
+  const knie = s.zitSoort === 'kniezit' ? s.zit : 0;
+  const hurk = s.zitSoort === 'hurkzit' ? s.zit : 0;
+  f.wortel.position.set(
+    s.x - dx * 1.45 * l,
+    l * 0.2 + s.zweef + p.veer - zet * 0.13 - diep * 0.3 + spring * 0.45 - knie * 0.47 - hurk * 0.4,
+    s.y - dz * 1.45 * l,
+  );
+  if (knie > 0) {
+    p.benen = [p.benen[0] + knie * 1.35, p.benen[1] + knie * 1.35];
+    p.voorover += knie * 0.08;
+  }
+  if (hurk > 0) {
+    p.benen = [p.benen[0] - hurk * 0.75, p.benen[1] - hurk * 0.75];
+    p.spreid = [p.spreid[0] - hurk * 0.35, p.spreid[1] + hurk * 0.35];
+    p.voorover += hurk * 0.35;
+  }
   if (zet > 0) {
     p.spreid = [p.spreid[0] - zet * 0.22, p.spreid[1] + zet * 0.22];
     p.armen = [p.armen[0] - zet * 0.6, p.armen[1] - zet * 0.6];
     p.armenOpzij = Math.max(p.armenOpzij, zet * 0.55);
     p.voorover += zet * 0.15;
   }
+  if (diep > 0) {
+    p.spreid = [p.spreid[0] - diep * 0.3, p.spreid[1] + diep * 0.3];
+    p.voorover += diep * 0.75;
+  }
   if (spring > 0) {
-    p.armen = [-spring * 1.6, -spring * 1.6];
-    p.armenOpzij = Math.max(p.armenOpzij, spring * 0.5);
+    // Een keeper reikt met gestrekte armen boven zijn hoofd (vangen of tippen).
+    const arm = keeper ? -2.9 : -1.6;
+    p.armen = [spring * arm, spring * arm];
+    p.armenOpzij = Math.max(p.armenOpzij, spring * (keeper ? 0.15 : 0.5));
     p.benen = [p.benen[0] + spring * 0.35, p.benen[1] + spring * 0.35];
   }
+
+  // Worp of trap: rechterarm (index 0) haalt uit en zwaait door; bij een volley of trap het rechterbeen.
+  const w = s.worp;
+  let armR: number | undefined;
+  let armL: number | undefined;
+  if (w) {
+    const u = w.u;
+    const los = 0.58;
+    if (w.soort === 'onderhands') {
+      armR = u < los ? 0.9 * Math.sin((u / los) * Math.PI * 0.5) : 0.9 - 2.3 * glad((u - los) / (1 - los));
+      armL = -0.6;
+      p.voorover += 0.35 * Math.sin(klem(u) * Math.PI);
+    } else if (w.soort === 'bovenhands') {
+      armR = u < los ? -1.2 - 2.4 * glad(u / los) : -3.6 + 2.6 * glad((u - los) / (1 - los));
+      armL = -1.4;
+    } else {
+      // Volley of trap: de bal valt uit de handen, het been zwaait door de bal.
+      armR = armL = u < 0.45 ? -1.2 : -0.5;
+      p.armenOpzij = Math.max(p.armenOpzij, u < 0.45 ? 0.1 : 0.6);
+      const been = u < los ? 0.7 * glad(u / los) : 0.7 - 2.1 * glad((u - los) / (1 - los));
+      p.benen = [been, p.benen[1]];
+      p.voorover -= 0.12 * Math.sin(klem(u) * Math.PI);
+    }
+  }
+
+  // Hoge duik: afzetten met het been aan de duikkant, de andere knie gaat omhoog.
+  if (keeper && l > 0 && l < 0.8) {
+    const hk = (s.hoek * Math.PI) / 180;
+    const naarLinks = Math.sin(hk - dh) > 0; // lokaal +x = links
+    const q = Math.sin(Math.PI * klem(l / 0.8));
+    const knie = naarLinks ? 0 : 1;
+    p.benen = [p.benen[0], p.benen[1]];
+    p.benen[knie] = -1.2 * q;
+    p.benen[1 - knie] = 0.25 * q;
+  }
+
   const draai = new Quaternion().setFromAxisAngle(Y_AS, f.hoek);
   if (p.voorover) draai.multiply(new Quaternion().setFromAxisAngle(X_AS, p.voorover));
   if (l > 0) {
@@ -633,25 +715,37 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   if (s.spreid > 0) p.spreid = [p.spreid[0] - s.spreid * 0.4, p.spreid[1] + s.spreid * 0.4];
   for (const [i, b] of f.benen.entries()) b.rotation.set(p.benen[i]!, 0, p.spreid[i]!);
   for (const [i, a] of f.armen.entries()) {
+    let rx = p.armen[i]!;
+    let rz = kant(i) * p.armenOpzij;
     if (keeper && l > 0) {
-      a.rotation.set(-l * 2.9, 0, 0); // armen gestrekt boven het hoofd, naar de bal
-    } else if (keeper && heeftBal) {
-      a.rotation.set(-1.2, 0, i === 0 ? -0.25 : 0.25); // bal voor de borst
-    } else {
-      a.rotation.set(p.armen[i]!, 0, (i === 0 ? -1 : 1) * p.armenOpzij);
+      rx = -l * 2.9; // armen gestrekt boven het hoofd, naar de bal
+      rz = 0;
+    } else if (balInHanden && !w) {
+      rx = -1.2; // bal voor de borst
+      rz = kant(i) * -0.25;
     }
+    if (w) {
+      const wa = i === 0 ? armR : armL;
+      if (wa !== undefined) {
+        rx = wa;
+        rz = kant(i) * (w.soort === 'volley' || w.soort === 'trap' ? p.armenOpzij : 0.1);
+      }
+    }
+    if (vang > 0) {
+      // Handen naar de bal: hoog = W-greep boven het hoofd, borst = armen naar voren, laag = handen omlaag.
+      const h = s.vangHoogte;
+      const doelX = h >= 1.6 ? -2.75 : h >= 0.9 ? -Math.acos(klem((1.5 - h) / 0.6, -1, 1)) - 0.35 : -0.75;
+      const doelZ = kant(i) * (h >= 1.6 ? -0.15 : -0.3);
+      rx += (doelX - rx) * vang;
+      rz += (doelZ - rz) * vang;
+    }
+    a.rotation.set(rx, 0, rz);
   }
 
-  // Schaduw: rond als hij staat, langgerekt als hij ligt.
+  // Schaduw: rond als hij staat, langgerekt als hij ligt; blijft op het gras als hij in de lucht hangt.
   f.schaduw.position.set(s.x - dx * 0.5 * l, 0.012, s.y - dz * 0.5 * l);
   f.schaduw.rotation.z = -dh;
-  f.schaduw.scale.set(1 + l * 1.7, 1, 1);
-}
-
-/** Hoogte van een bal die deze persoon vasthoudt. */
-function houdHoogte(f: Figuur | undefined, s: ObjectStand | undefined): number {
-  if (!f || !s || f.o.soort !== 'keeper') return BAL_R;
-  return 1.12 + (0.3 - 1.12) * s.liggen;
+  f.schaduw.scale.set((1 + l * 1.7) * (1 - klem(s.zweef / 3)), 1 - klem(s.zweef / 3), 1);
 }
 
 // ---------- sporen ----------
@@ -903,7 +997,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   texturen.push(netTex);
   const goals = new Map<string, Group>();
   for (const o of tekening.objecten) {
-    if (PLAT.includes(o.soort)) continue;
+    if (PLAT.includes(o.soort) && !isKussen(o)) continue;
     const m = materiaal(o, netTex, materialen);
     if (!m) continue;
     scene.add(m);
@@ -1009,6 +1103,21 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     camera.lookAt(d.doel);
     controls.update();
   };
+  // Alleen voor de browsertests (vlag in localStorage): camera dichtbij op een punt richten, bv. een keeper.
+  let testVlag = false;
+  try {
+    testVlag = localStorage.getItem('trainersapp.testCamera') === '1';
+  } catch {
+    /* geen opslag */
+  }
+  if (testVlag) {
+    (window as unknown as { __camera3d?: unknown }).__camera3d = (x: number, y: number, afstand: number) => {
+      const richting = camera.position.clone().sub(controls.target).normalize();
+      const doel = v3(x, 0.9, y);
+      plaats({ positie: doel.clone().add(richting.multiplyScalar(afstand)), doel });
+      zelfVerplaatst = true;
+    };
+  }
 
   let tekenenGevraagd = 0;
   const render = () => renderer.render(scene, camera);
@@ -1079,28 +1188,21 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     vorigeT = t;
     const s = standOp(tijdlijn, t);
 
-    const balBij = new Set<string>();
-    for (const [, b] of s.objecten) if (b.houder) balBij.add(b.houder);
+    // Wie houdt een bal in zijn handen (keeper, of iemand die gaat gooien)?
+    const inHanden = new Set<string>();
+    for (const [, b] of s.objecten) if (b.houder && b.hoogte > 0.4) inHanden.add(b.houder);
     for (const [id, f] of figuren) {
       const st = s.objecten.get(id);
       if (!st) continue;
       if (st.team !== f.team) wisselHesje(f, st.team);
-      poseer(f, st, t, dtEcht, sprong, balBij.has(id));
+      poseer(f, st, t, dtEcht, sprong, inHanden.has(id));
     }
 
     for (const [id, b] of ballen) {
       const st = s.objecten.get(id);
       if (!st) continue;
-      let h = BAL_R;
-      if (st.houder) h = houdHoogte(figuren.get(st.houder), s.objecten.get(st.houder));
-      else if (st.vlucht) {
-        const { van, naar, u: v, top } = st.vlucht;
-        const h0 = houdHoogte(figuren.get(van), s.objecten.get(van));
-        const h1 = naar ? houdHoogte(figuren.get(naar), s.objecten.get(naar)) : BAL_R;
-        // Grondpass: uit de handen snel naar het gras, aan het eind pas omhoog naar de handen.
-        const basis = top > 0.05 ? h0 + (h1 - h0) * v : BAL_R + (h0 - BAL_R) * klem(1 - v / 0.25) + (h1 - BAL_R) * klem((v - 0.85) / 0.15);
-        h = Math.max(BAL_R, basis + st.hoogte);
-      }
+      // De tijdlijn geeft de hoogte (ook in de handen); vlak bij de grond ligt de bal op zijn straal.
+      const h = st.hoogte + BAL_R * klem(1 - st.hoogte);
       const p = v3(st.x, h, st.y);
       // Rollen: draaien om de as dwars op de beweging.
       if (b.vorige && !sprong) {
