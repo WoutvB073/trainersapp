@@ -1,0 +1,68 @@
+[
+  {
+    "id": "veld-kaatsen-en-afwerken",
+    "soort": "veld",
+    "naam": "Kaatsen en afwerken",
+    "categorieen": ["afwerken", "pass-en-trap"],
+    "uitleg": "Speler 9 speelt in op de kaatser (10), sprint langs hem en krijgt de bal diep terug. Na een korte dribbel richting de zestien schiet hij op doel. Daarna doorwisselen: de schutter wordt kaatser, de kaatser sluit achteraan in de rij.",
+    "benodigdheden": ["1 goal", "2 pionnen", "Ballen (1 per speler)"],
+    "spelersNodig": 2,
+    "keepersNodig": 1,
+    "coachpunten": [
+      "Inspelen op het voorste been van de kaatser: stevig en over de grond",
+      "Kaatser staat open en legt de bal in één keer in de loop terug",
+      "Na de pass direct versnellen (pass en ga)",
+      "Eerste aanname richting doel; kijk voor het schot even naar de keeper",
+      "Laag in de hoek afronden, met de binnenkant voor precisie"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Kaatser mag de bal eerst aannemen",
+        "Afstand tot het goal verkleinen",
+        "Zonder keeper of op een klein goal"
+      ],
+      "moeilijker": [
+        "Direct op doel schieten na de kaats (geen dribbel)",
+        "Verdediger die vanaf de zijkant mag storen",
+        "Afronden met het zwakke been",
+        "Binnen 4 seconden na de kaats scoren"
+      ]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 11, "y": -3, "breedte": 46, "lengte": 37 },
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "p1", "soort": "pion", "x": 41, "y": 31 },
+        { "id": "p2", "soort": "pion", "x": 33, "y": 22 },
+        { "id": "k1", "soort": "keeper", "x": 34, "y": 1.2, "nummer": 1 },
+        { "id": "a1", "soort": "speler", "team": "A", "nummer": 9, "x": 40, "y": 30 },
+        { "id": "a2", "soort": "speler", "team": "A", "nummer": 10, "x": 34, "y": 21 },
+        { "id": "b1", "soort": "bal", "x": 40, "y": 29.4, "bij": "a1" }
+      ],
+      "animatie": [
+        { "acties": [{ "type": "pass", "van": "a1", "naar": "a2" }] },
+        {
+          "acties": [
+            { "type": "loop", "wie": "a1", "naar": [37, 19.5] },
+            { "type": "pass", "van": "a2", "naar": "a1", "start": 1.95 }
+          ]
+        },
+        { "acties": [{ "type": "dribbel", "wie": "a1", "naar": [35.5, 13.5] }] },
+        {
+          "acties": [
+            { "type": "schot", "van": "a1", "naar": [31.1, -0.8] },
+            { "type": "duik", "wie": "k1", "naar": [32.9, 1.0], "start": 0.2, "duur": 0.45 }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": [
+            { "type": "opstaan", "wie": "k1", "start": 0.3 },
+            { "type": "loop", "wie": "k1", "naar": [34, 1.2], "start": 0.8, "duur": 0.8 }
+          ]
+        }
+      ]
+    }
+  }
+]

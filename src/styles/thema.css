@@ -1,0 +1,49 @@
+/*
+ * Kleurthema's. Alles in de app (ook de animatie) haalt kleuren uit deze variabelen.
+ * Fase 6 ("Clubkleuren") voegt hier extra [data-theme="…"]-blokken toe.
+ */
+:root,
+[data-theme='standaard'] {
+  color-scheme: only light;
+
+  --primair: #0f6b3a;
+  --primair-donker: #0a5229;
+  --primair-licht: #e3f2e8;
+  --op-primair: #ffffff;
+  --accent: #e8590c;
+  --accent-licht: #fff0e6;
+
+  --achtergrond: #f4f7f5;
+  --kaart: #ffffff;
+  --tekst: #15211b;
+  --tekst-2: #4f5e56;
+  --rand: #dbe3de;
+
+  --makkelijker: #1c7c54;
+  --makkelijker-licht: #e5f5ec;
+  --moeilijker: #c2410c;
+  --moeilijker-licht: #fdeee4;
+
+  /* Veld en animatie */
+  --gras-1: #2e8b47;
+  --gras-2: #2a8242;
+  --veldlijn: #ffffff;
+  --team-a: #e03131;
+  --team-b: #1c64d8;
+  --team-c: #f2b705;
+  --keeper: #11a3b8;
+  --trainer: #1f2a33;
+  --rugnummer: #ffffff;
+  --spoor-bal: #ffffff;
+  --spoor-loop: #ffe066;
+  --spoor-dribbel: #ffffff;
+  /* Legenda staat op een lichte achtergrond */
+  --legenda-bal: #15211b;
+  --legenda-loop: #c79100;
+  --legenda-dribbel: #15211b;
+
+  --schaduw: 0 1px 2px rgb(16 40 26 / 0.06), 0 4px 14px rgb(16 40 26 / 0.07);
+  --radius: 14px;
+  --font: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-kop: 'Barlow Condensed', 'Inter Variable', system-ui, sans-serif;
+}

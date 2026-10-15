@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Volledig gevuld vierkant; inhoud binnen de veilige zone (± 80%). -->
+  <rect width="512" height="512" fill="#0f6b3a"/>
+  <rect y="0" width="512" height="64" fill="#12773f"/>
+  <rect y="128" width="512" height="64" fill="#12773f"/>
+  <rect y="256" width="512" height="64" fill="#12773f"/>
+  <rect y="384" width="512" height="64" fill="#12773f"/>
+  <!-- Strafschopgebied + goal -->
+  <g fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" opacity="0.9">
+    <path d="M136 96 V196 H376 V96"/>
+    <path d="M204 96 V132 H308 V96"/>
+    <path d="M206 196 A 56 56 0 0 0 306 196"/>
+  </g>
+  <rect x="222" y="80" width="68" height="16" rx="4" fill="#ffffff"/>
+  <!-- Looplijn (stippel) en ballijn -->
+  <path d="M150 400 C 170 330, 220 300, 250 260" fill="none" stroke="#ffd23f" stroke-width="12" stroke-linecap="round" stroke-dasharray="4 26"/>
+  <path d="M268 240 L 252 150" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+  <path d="M232 168 L 251 138 L 272 166" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Speler met nummer -->
+  <circle cx="300" cy="320" r="58" fill="#ff7a1a" stroke="#ffffff" stroke-width="10"/>
+  <text x="300" y="342" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" fill="#ffffff" text-anchor="middle">9</text>
+  <!-- Bal -->
+  <circle cx="262" cy="254" r="22" fill="#ffffff" stroke="#1b1b1b" stroke-width="6"/>
+</svg>

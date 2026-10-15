@@ -1,0 +1,77 @@
+[
+  {
+    "id": "keeper-laag-duiken-kniezit",
+    "soort": "keeper",
+    "naam": "Laag duiken vanuit kniezit",
+    "categorieen": ["laag-duiken", "warming-up"],
+    "uitleg": "De keeper zit op de knieën tussen twee hoedjes. De trainer (of een tweede keeper) gooit of schiet de bal laag naast de keeper. De keeper duikt, vangt de bal, staat op en rolt hem terug. Afwisselend links en rechts.",
+    "benodigdheden": ["Goal (of 2 paaltjes)", "2 hoedjes", "3–5 ballen"],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "coachpunten": [
+      "Duik schuin naar voren, naar de bal toe (niet achteruit)",
+      "Onderste hand achter de bal, bovenste hand er bovenop",
+      "Bal vastklemmen tegen de grond",
+      "Landen op de zijkant: heup, bovenbeen en schouder, niet op de elleboog",
+      "Ogen op de bal tot hij vastzit"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bal rollen in plaats van schieten",
+        "Kortere afstand en dichter bij het lichaam",
+        "Vanuit zit beginnen, benen gespreid"
+      ],
+      "moeilijker": [
+        "Vanuit stand (basishouding) duiken",
+        "Bal harder of verder van het lichaam",
+        "Direct na het opstaan een tweede bal aan de andere kant",
+        "Trainer kiest zelf de kant: keeper moet reageren"
+      ]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 24, "y": -3, "breedte": 20, "lengte": 14 },
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "h1", "soort": "hoedje", "x": 31, "y": 1.7 },
+        { "id": "h2", "soort": "hoedje", "x": 37, "y": 1.7 },
+        { "id": "k1", "soort": "keeper", "x": 34, "y": 1.7, "nummer": 1 },
+        { "id": "t1", "soort": "trainer", "x": 34, "y": 8 },
+        { "id": "b1", "soort": "bal", "x": 34, "y": 7.45, "bij": "t1" },
+        { "id": "b2", "soort": "bal", "x": 35.4, "y": 8.9 },
+        { "id": "b3", "soort": "bal", "x": 35.9, "y": 8.3 }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            { "type": "pass", "van": "t1", "naar": "k1", "duur": 0.7 },
+            { "type": "duik", "wie": "k1", "naar": [32.1, 1.8], "start": 0.2, "duur": 0.5 }
+          ]
+        },
+        { "duur": 0.6, "acties": [] },
+        {
+          "acties": [
+            { "type": "opstaan", "wie": "k1" },
+            { "type": "loop", "wie": "k1", "naar": [34, 1.7], "start": 0.4, "duur": 0.7 }
+          ]
+        },
+        { "acties": [{ "type": "pass", "van": "k1", "naar": "t1" }] },
+        { "duur": 0.5, "acties": [] },
+        {
+          "acties": [
+            { "type": "pass", "van": "t1", "naar": "k1", "duur": 0.7 },
+            { "type": "duik", "wie": "k1", "naar": [35.9, 1.8], "start": 0.2, "duur": 0.5 }
+          ]
+        },
+        { "duur": 0.6, "acties": [] },
+        {
+          "acties": [
+            { "type": "opstaan", "wie": "k1" },
+            { "type": "loop", "wie": "k1", "naar": [34, 1.7], "start": 0.4, "duur": 0.7 }
+          ]
+        },
+        { "acties": [{ "type": "pass", "van": "k1", "naar": "t1" }] }
+      ]
+    }
+  }
+]
