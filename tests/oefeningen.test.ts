@@ -91,3 +91,25 @@ describe('animaties: niet door elkaar of door materiaal heen', () => {
     });
   }
 });
+
+describe('bal wisselt alleen van speler via een pass of schot', () => {
+  for (const o of OEFENINGEN) {
+    it(`${o.id}`, () => {
+      const tl = maakTijdlijn(o.tekening);
+      const ballen = o.tekening.objecten.filter((x) => x.soort === 'bal').map((x) => x.id);
+      const vorige = new Map<string, string | null>();
+      const fouten: string[] = [];
+      for (let t = 0; t <= tl.duur + 0.5; t += 0.02) {
+        const s = standOp(tl, t);
+        for (const b of ballen) {
+          const h = s.objecten.get(b)!.houder;
+          const v = vorige.get(b);
+          // Van de ene speler direct naar de andere, zonder dat de bal los of onderweg was: niet goed.
+          if (v && h && v !== h) fouten.push(`${b}: ${v} → ${h} op t=${t.toFixed(2)}`);
+          vorige.set(b, h);
+        }
+      }
+      expect(fouten).toEqual([]);
+    });
+  }
+});

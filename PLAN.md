@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.3.0)
+## Status (15-10-2026, versie 0.4.0)
 
 | Fase | Status |
 |---|---|
@@ -15,7 +15,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Veld → Warming-up (9) en Loopcoördinatie (9), plus bouwstenen. **Wacht op test** op de telefoon. Volgende batches: Techniek, Pass en trap, Afwerken, Positiespel, Partijvormen, Spelletjes, Keepers |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek (9) + Pass en trap (9) – **wacht op test** op de telefoon. Volgende batches: Afwerken, Positiespel, Partijvormen, Spelletjes, Keepers |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -141,13 +141,23 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   Per actie optioneel: `start` (s na begin van de stap), `duur` (s), `hoog: true` (bal door de lucht), `bal`
   (welke bal, standaard de bal van de passeerder), `hoogte` (zie hieronder). Bal "naar een speler" komt aan waar die
   speler op dat moment is. Wie nog op de bal wacht, passt of dribbelt pas als hij hem heeft.
+  Pass naar iemand die loopt (pass in de loop): de bal komt vóór zijn voet aan, in zijn looprichting.
+  `naar` mag ook een `rebounder` of `muurtje` zijn: de bal kaatst terug naar `terug` (standaard de passeerder).
+  `naar` = de passeerder zelf met een `hoogte` = hooghouden (bal recht omhoog en terug aan de voet).
+  Met `bal` kun je ook de bal van een ander wegtikken (bv. "Koning van het vak").
+- **Balsnelheid** volgt uit de afstand: korte pass ± 9 m/s, lange grondpass tot 18 m/s, schot 14–25 m/s; een bal
+  door de lucht duurt minstens zo lang als de boog natuurkundig nodig heeft (lange bal van 30 m ± 2,4 s).
 - **Bewegen** (`loop`/`dribbel`): `via` (tussenpunten, bv. slalom/zigzag), `om` + `kant` + `straal` (draai om een
   pion), `manier` (loopwijze: `jog` standaard, `sprint`, `wandel`, `huppel`, `kniehef`, `sprong`, `zijwaarts`,
   `achteruit`, `voetenwerk`, `hordes`), `kijk` (vaste kijkrichting, bv. zijwaarts met de neus naar de trainer),
   `spoor: false` (geen lijn). Bij `voetenwerk`, `hordes`, `kniehef` en `sprong` toont het spoor losse pasjes en
   zie je de pasjes ook aan het poppetje (2D: voetjes, 3D: benen/veren).
-- **Overige acties:** `{ "type": "aansluiten", "wie", "rij" | "bij" }` en `{ "type": "team", "wie", "team": "C" }`
-  (ander hesje, bv. tikker).
+- **Overige acties:** `{ "type": "aansluiten", "wie", "rij" | "bij" }`, `{ "type": "team", "wie", "team": "C" }`
+  (ander hesje, bv. tikker) en `{ "type": "schijn", "wie", "kant": "links" | "rechts" }` (schijnbeweging: lijf gaat
+  opzij en terug, de bal blijft liggen).
+- **Bal aan de voet:** 40 cm voor de speler; bij dribbelen gaat hij bij elke aanraking iets verder voor de voet uit.
+  Bij elke nieuwe kijkrichting draait de speler in 0,3 s (de bal draait om hem heen mee, springt niet). Een ontvanger
+  draait zich al naar de bal terwijl die onderweg is.
 - **Herhalen:** `{ "herhaal": { "spelers": [...], "stappen": [...], "tussen"?: s, "rondes"?: n, "waarden"?: {...} } }` –
   iedere speler doorloopt dezelfde stappen (`@` = die speler, `@volgende`/`@vorige` = buren in de lijst,
   `@<naam>` = waarde uit `waarden`, bv. per speler een andere loopwijze). Met `tussen` overlappen de spelers.
@@ -270,6 +280,16 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   aantallen per categorie en het label "Keeper nodig").
 - 3D: ladder, horde (laag/hoog), ring en stok zijn nu echte 3D-vormen (liggen op het gras); zone/vak in een kleur.
 - Bugfix: wisselen naar 2D gaf ten onrechte de melding "3D viel weg".
+
+## Besluiten fase 4 – batch 2 (Techniek en Pass en trap)
+- 18 oefeningen: Techniek 9 (balgevoel, aannemen en meenemen, kappen en draaien, schijnbeweging, poortjesdribbel,
+  hooghouden, aannemen uit de lucht, indraaien, koning van het vak) en Pass en trap 9 (driehoek, derde man, Y-vorm,
+  rebounder, pass in de loop, lange bal, poortjesspel, pionnen omschieten, vierhoek met twee ballen).
+- Aantallen in de lijst (met dubbele categorieën): Warming-up 16, Techniek 11, Loopcoördinatie 11, Pass en trap 14,
+  Afwerken 1, Positiespel 1, Spelletjes 1 – totaal 37 veldoefeningen.
+- Extra test: een bal wisselt nooit van speler zonder pass of schot (in elke oefening, elke 0,02 s gecontroleerd).
+- Pass-en-volg in een vorm (driehoek, rijen): de volgorde van passeerders moet rond kloppen (`@volgende` is cyclisch);
+  bij de driehoek met 4 spelers is dat a1-a2-a3-a4 met `rondes: 2`.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

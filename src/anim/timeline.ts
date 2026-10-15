@@ -34,8 +34,9 @@ const SNELHEID: Record<Manier, number> = {
   achteruit: 2.8,
   voetenwerk: 2.2,
   hordes: 2.8,
+  schijn: 1.5,
 };
-const BAL_SNELHEID = { pass: 11, schot: 17, hoog: 10 } as const;
+const ZWAARTEKRACHT = 9.81;
 const DRIBBEL = 3.5;
 /** Paslengte (m) bij de loopwijzen met losse pasjes: ladder één voet per vak, hordes één pas per 80 cm. */
 export const PASLENGTE: Partial<Record<Manier, number>> = { voetenwerk: 0.45, hordes: 0.8, kniehef: 0.35, sprong: 0.9 };
@@ -51,7 +52,10 @@ export const RITME: Record<Manier, number> = {
   achteruit: 6,
   voetenwerk: Math.PI / 0.45,
   hordes: Math.PI / 0.8,
+  schijn: 6,
 };
+/** Hoe lang een draai (nieuwe kijkrichting) duurt: de bal aan de voet draait mee, springt niet. */
+const DRAAI = 0.3;
 /** Kijkrichting t.o.v. de looprichting. */
 const KIJK_VERSCHIL: Partial<Record<Manier, number>> = { zijwaarts: -90, achteruit: 180 };
 /** Loopwijzen waarbij het spoor losse pasjes toont. */
@@ -298,8 +302,20 @@ function standaardKijk(o: VeldObject): number {
   return o.soort === 'keeper' ? 90 : -90;
 }
 
-/** Afstand van de bal tot het midden van de persoon als die hem heeft. */
-const balAfstand = (o: VeldObject) => (o.soort === 'keeper' ? 0.35 : 0.55);
+/** Afstand van de bal tot het midden van de persoon als die hem heeft (aan de voet, niet ervoor). */
+const balAfstand = (o: VeldObject) => (o.soort === 'keeper' ? 0.35 : 0.4);
+
+/**
+ * Duur van een balvlucht. Over de grond: korte pass rond 9 m/s, lange pass tot 18 m/s (schot sneller).
+ * Door de lucht: minstens de tijd die een bal nodig heeft om zo hoog te komen en weer te landen.
+ */
+export function vluchtDuur(type: 'pass' | 'schot', top: number, afstandM: number): number {
+  const v = type === 'schot' ? Math.min(25, 14 + 0.25 * afstandM) : Math.min(18, 8 + 0.35 * afstandM);
+  const lucht = top > 0.05 ? 2 * Math.sqrt((2 * top) / ZWAARTEKRACHT) : 0;
+  return Math.max(MIN_DUUR, afstandM / v, lucht);
+}
+
+const hoekVerschil = (a: number, b: number) => ((((b - a) % 360) + 540) % 360) - 180;
 
 // ---------- opvragen op tijdstip ----------
 
@@ -328,7 +344,16 @@ function actief(tl: Tijdlijn, id: string, t: number): Beweging | undefined {
   return b && t < b.t1 ? b : undefined;
 }
 
+/** Kijkrichting, met een korte draai bij elke verandering (zodat ook de bal aan de voet meedraait). */
 function kijkHoek(tl: Tijdlijn, id: string, t: number): number {
+  const nu = kijkRuw(tl, id, t);
+  const e = laatste(tl.kijk.get(id), t, (x) => x.t);
+  if (!e || t - e.t >= DRAAI) return nu;
+  const voor = kijkRuw(tl, id, e.t - 1e-6);
+  return voor + hoekVerschil(voor, nu) * ease('mens', (t - e.t) / DRAAI);
+}
+
+function kijkRuw(tl: Tijdlijn, id: string, t: number): number {
   const k = laatste(tl.kijk.get(id), t, (x) => x.t);
   if (k) {
     if ('hoek' in k) return k.hoek;
@@ -363,11 +388,16 @@ const ligt = (tl: Tijdlijn, id: string, t: number) => ligging(tl, id, t).liggen 
 /** Waar een bal zit als deze persoon hem heeft. */
 function balBijPersoon(tl: Tijdlijn, id: string, t: number): Punt {
   const o = tl.objecten.get(id)!;
+  const b = actief(tl, id, t);
+  // Schijnbeweging: het lijf gaat opzij, de bal blijft liggen.
+  if (b?.manier === 'schijn') return balBijPersoon(tl, id, b.t0 - 1e-6);
   const p = positie(tl, id, t);
   const l = ligging(tl, id, t);
   const duik = l.liggen > 0.5;
   const r = richting(duik ? l.hoek : kijkHoek(tl, id, t));
-  const d = duik ? 0.55 : balAfstand(o);
+  let d = duik ? 0.55 : balAfstand(o);
+  // Dribbelen: de bal gaat bij elke balaanraking een stukje voor de voet uit en komt weer terug.
+  if (b && !duik && o.soort !== 'keeper') d += 0.12 * (0.5 - 0.5 * Math.cos(voortgang(b, t) * RITME[b.manier]));
   return [p[0] + r[0] * d, p[1] + r[1] * d];
 }
 
@@ -728,6 +758,21 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
       eind = Math.max(eind, t1);
       continue;
     }
+    if (a.type === 'schijn') {
+      const p = positie(tl, o.id, t0);
+      const kijk = kijkHoek(tl, o.id, t0);
+      const opzij = richting(kijk + (a.kant === 'rechts' ? 90 : -90));
+      const t1 = beweeg(tl, o, {
+        pad: [p, [p[0] + opzij[0] * 0.45, p[1] + opzij[1] * 0.45], p],
+        t0,
+        duur: a.duur ?? 0.7,
+        manier: 'schijn',
+        kijk,
+        spoor: false,
+      });
+      eind = Math.max(eind, t1);
+      continue;
+    }
     if (a.type === 'aansluiten') {
       const rs = a.rij ? tl.rijen.get(a.rij) : a.bij ? rijVan(tl, a.bij, t0, true) : undefined;
       if (!rs) throw new TekeningFout(`Aansluiten: geen rij gevonden voor "${o.id}" (${a.rij ?? a.bij ?? 'geen rij of bij'})`);
@@ -798,46 +843,97 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
   if (!bal) throw new TekeningFout(`${a.type}: "${a.van}" heeft geen bal`);
 
   const start = balPunt(tl, bal, t0);
-  // Snelheid: hoge ballen gaan langzamer dan een strakke pass of een schot.
-  const snelheid = (doel: Punt) => (balTop(a, start, doel) > 2 ? BAL_SNELHEID.hoog : BAL_SNELHEID[a.type]);
+  const kijkNaar = (doel: Punt) => {
+    if (afstand(start, doel) < 0.2) return; // bal omhoog (hooghouden): blijft kijken waar hij keek
+    if (!actief(tl, a.van, t0) && (van!.soort !== 'keeper' || !ligt(tl, a.van, t0))) {
+      voegToe(tl.kijk, a.van, { t: t0, hoek: graden(start, doel) }, (e) => e.t);
+    }
+  };
+
+  // Op een rebounder of muurtje: de bal kaatst terug.
+  const muur = typeof a.naar === 'string' ? tl.objecten.get(a.naar) : undefined;
+  if (muur && (muur.soort === 'rebounder' || muur.soort === 'muurtje')) {
+    const m: Punt = [muur.x, muur.y];
+    const d = afstand(start, m) || 1;
+    const kaats: Punt = [m[0] + ((start[0] - m[0]) / d) * 0.3, m[1] + ((start[1] - m[1]) / d) * 0.3];
+    const top = balTop(a, start, kaats);
+    const t1 = t0 + vluchtDuur(a.type, top, afstand(start, kaats));
+    kijkNaar(kaats);
+    voegToe(tl.balEvents, bal, { soort: 'vlucht', t0, t1, van: start, naar: kaats, top, passeerder: a.van, daarna: null }, (e) => e.t0);
+    tl.sporen.push({ soort: 'bal', pad: [start, kaats], van: start, naar: kaats, t0, t1, ease: 'bal', top, id: bal });
+    // Terug iets langzamer (de rebounder neemt snelheid weg).
+    return vlucht(tl, bal, kaats, t1 + 0.03, a.terug ?? a.van, { type: 'pass', hoogte: 'grond' }, a.van, 1.2);
+  }
+
+  if (typeof a.naar !== 'string') kijkNaar(a.naar);
+  const t1 = vlucht(tl, bal, start, t0, a.naar, a, a.van, 1, a.duur);
+  if (typeof a.naar === 'string') {
+    const e = tl.balEvents.get(bal)!.find((x) => x.soort === 'vlucht' && x.t0 === t0);
+    if (e && e.soort === 'vlucht') kijkNaar(e.naar);
+  }
+  return t1;
+}
+
+/**
+ * Een bal van `start` naar een persoon (komt aan waar die dan is) of naar een punt.
+ * `trager` rekt de standaardduur op (bv. na een rebounder). Geeft de aankomsttijd terug.
+ */
+function vlucht(
+  tl: Tijdlijn,
+  bal: string,
+  start: Punt,
+  t0: number,
+  naar: string | Punt,
+  a: Pick<BalActie, 'type' | 'hoogte' | 'hoog'>,
+  passeerder: string,
+  trager = 1,
+  duur?: number,
+): number {
   let doel: Punt;
   let ontvanger: string | null = null;
   let t1: number;
+  const tijd = (doel: Punt) => vluchtDuur(a.type, balTop(a, start, doel), afstand(start, doel)) * trager;
 
-  if (typeof a.naar === 'string') {
-    const o = tl.objecten.get(a.naar);
-    if (!isPersoon(o)) throw new TekeningFout(`${a.type}: "${a.naar}" is geen speler, keeper of trainer`);
-    ontvanger = a.naar;
+  if (typeof naar === 'string') {
+    const o = tl.objecten.get(naar);
+    if (!isPersoon(o)) throw new TekeningFout(`${a.type}: "${naar}" is geen speler, keeper of trainer`);
+    ontvanger = naar;
     // Waar is de ontvanger als de bal aankomt? Twee keer schatten is ruim voldoende.
-    const schat = (t: number) => {
-      const p = positie(tl, ontvanger!, t);
-      return t0 + Math.max(MIN_DUUR, afstand(start, p) / snelheid(p));
-    };
-    t1 = a.duur !== undefined ? t0 + a.duur : schat(schat(t0));
-    const p = positie(tl, ontvanger, t1);
-    const l = ligging(tl, ontvanger, t1);
+    const schat = (t: number) => t0 + tijd(positie(tl, naar, t));
+    t1 = duur !== undefined ? t0 + duur : schat(schat(t0));
+    const p = positie(tl, naar, t1);
+    const l = ligging(tl, naar, t1);
     if (l.liggen > 0.5) {
       const r = richting(l.hoek);
       doel = [p[0] + r[0] * 0.55, p[1] + r[1] * 0.55];
     } else {
-      const d = afstand(p, start) || 1;
-      const r: Punt = [(start[0] - p[0]) / d, (start[1] - p[1]) / d];
-      doel = [p[0] + r[0] * balAfstand(o!), p[1] + r[1] * balAfstand(o!)];
-      // Ontvanger draait zich naar de bal (behalve als hij nog loopt: dan na aankomst).
-      const bezig = actief(tl, ontvanger, t1);
-      voegToe(tl.kijk, ontvanger, { t: bezig ? bezig.t1 : t1, hoek: graden(p, start) }, (e) => e.t);
+      const d = afstand(p, start);
+      if (d < 0.5) {
+        // Bal naar jezelf (hooghouden): hij komt terug waar hij was.
+        doel = start;
+      } else {
+        const bezig = actief(tl, naar, t1);
+        if (bezig) {
+          // Pass in de loop: de bal komt voor zijn voet aan, in zijn looprichting.
+          const r = richting(kijkHoek(tl, naar, t1));
+          doel = [p[0] + r[0] * balAfstand(o!), p[1] + r[1] * balAfstand(o!)];
+        } else {
+          // Stilstaand: hij draait zich al naar de bal terwijl die onderweg is, en neemt hem aan de voet aan.
+          const r: Punt = [(start[0] - p[0]) / d, (start[1] - p[1]) / d];
+          doel = [p[0] + r[0] * balAfstand(o!), p[1] + r[1] * balAfstand(o!)];
+          voegToe(tl.kijk, naar, { t: Math.max(t0, t1 - DRAAI), hoek: graden(p, start) }, (e) => e.t);
+        }
+      }
     }
   } else {
-    doel = a.naar;
-    t1 = t0 + (a.duur ?? Math.max(MIN_DUUR, afstand(start, doel) / snelheid(doel)));
+    doel = naar;
+    t1 = t0 + (duur ?? tijd(doel));
   }
 
-  if (!actief(tl, a.van, t0) && (van!.soort !== 'keeper' || !ligt(tl, a.van, t0))) {
-    voegToe(tl.kijk, a.van, { t: t0, hoek: graden(start, doel) }, (e) => e.t);
-  }
   const top = balTop(a, start, doel);
-  voegToe(tl.balEvents, bal, { soort: 'vlucht', t0, t1, van: start, naar: doel, top, passeerder: a.van, daarna: ontvanger }, (e) => e.t0);
-  tl.sporen.push({ soort: 'bal', pad: [start, doel], van: start, naar: doel, t0, t1, ease: 'bal', top, id: bal });
+  voegToe(tl.balEvents, bal, { soort: 'vlucht', t0, t1, van: start, naar: doel, top, passeerder, daarna: ontvanger }, (e) => e.t0);
+  // Een bal recht omhoog (hooghouden) laat geen lijn achter.
+  if (afstand(start, doel) >= 0.2) tl.sporen.push({ soort: 'bal', pad: [start, doel], van: start, naar: doel, t0, t1, ease: 'bal', top, id: bal });
   return t1;
 }
 

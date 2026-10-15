@@ -452,6 +452,7 @@ const VOL: Record<Manier, number> = {
   achteruit: 2.4,
   voetenwerk: 1.8,
   hordes: 2.4,
+  schijn: 1,
 };
 
 interface Pose {
@@ -509,6 +510,12 @@ export function pose(manier: Manier | undefined, snelheid: number, fase: number,
       p.benen = [-Math.abs(sin) * 0.55 * k, -Math.abs(sin) * 0.55 * k];
       p.armen = [-Math.abs(sin) * 1.4 * k, -Math.abs(sin) * 1.4 * k];
       p.veer = Math.abs(sin) * 0.3 * k;
+      break;
+    case 'schijn':
+      // Been zwaait om de bal heen, lijf en armen gaan mee opzij.
+      p.spreid = [-Math.abs(sin) * 0.55 * k, 0];
+      p.benen = [-Math.abs(sin) * 0.4 * k, 0];
+      p.armenOpzij = 0.08 + Math.abs(sin) * 0.5 * k;
       break;
     case 'zijwaarts':
       // Benen spreiden en sluiten.

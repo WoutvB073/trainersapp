@@ -102,8 +102,13 @@ export type BalHoogte = 'grond' | 'laag' | 'halfhoog' | 'hoog' | number;
 export interface BalActie extends ActieBasis {
   type: 'pass' | 'schot';
   van: string;
-  /** Id van een persoon (bal komt aan waar die persoon dan is) of een punt. */
+  /**
+   * Id van een persoon (bal komt aan waar die persoon dan is), een punt, of een rebounder/muurtje:
+   * dan kaatst de bal terug naar `terug` (standaard de passeerder zelf).
+   */
   naar: string | Punt;
+  /** Bij een pass op een rebounder/muurtje: naar wie (of waar) de bal terugkaatst. */
+  terug?: string | Punt;
   /** Welke bal (standaard de bal die `van` heeft). */
   bal?: string;
   /** Hoogte van de bal (optioneel, zie BalHoogte). */
@@ -120,7 +125,19 @@ export interface BalActie extends ActieBasis {
  * - `voetenwerk` (kleine snelle pasjes, bv. door een ladder), `hordes` (over lage hordes)
  * Bij voetenwerk, hordes, kniehef en sprong toont het spoor losse pasjes.
  */
-export type Manier = 'jog' | 'sprint' | 'wandel' | 'huppel' | 'kniehef' | 'sprong' | 'zijwaarts' | 'achteruit' | 'voetenwerk' | 'hordes';
+export type Manier =
+  | 'jog'
+  | 'sprint'
+  | 'wandel'
+  | 'huppel'
+  | 'kniehef'
+  | 'sprong'
+  | 'zijwaarts'
+  | 'achteruit'
+  | 'voetenwerk'
+  | 'hordes'
+  /** Intern: schijnbeweging (zie SchijnActie). */
+  | 'schijn';
 
 export interface BeweegActie extends ActieBasis {
   type: 'loop' | 'dribbel' | 'duik';
@@ -160,6 +177,16 @@ export interface AansluitActie extends ActieBasis {
   spoor?: boolean;
 }
 
+/**
+ * Schijnbeweging: het lijf gaat even opzij (± 0,45 m) en terug, de bal blijft liggen.
+ * Daarna meestal een dribbel naar de andere kant. `kant` is t.o.v. de kijkrichting (standaard links).
+ */
+export interface SchijnActie extends ActieBasis {
+  type: 'schijn';
+  wie: string;
+  kant?: 'links' | 'rechts';
+}
+
 /** Ander hesje/team, bv. bij tikspelen: wie getikt is wordt tikker. */
 export interface TeamActie extends ActieBasis {
   type: 'team';
@@ -167,7 +194,7 @@ export interface TeamActie extends ActieBasis {
   team: Team;
 }
 
-export type Actie = BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie;
+export type Actie = BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie;
 
 export interface AnimatieStap {
   acties: Actie[];
