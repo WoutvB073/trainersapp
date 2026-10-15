@@ -109,7 +109,7 @@ export function tekenScene(
   tekenLijnen(b, tekening, k);
 
   const objecten = tekening.objecten;
-  const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'rebounder', 'klein-goal', 'goal', 'net'];
+  const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'pop', 'rebounder', 'klein-goal', 'goal', 'net'];
   for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o, stand.net.find((n) => n.id === o.id));
 
   for (const l of tekening.lijnen ?? []) tekenPolylijn(b, l.soort, l.punten, k, true);
@@ -516,6 +516,19 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
       });
       break;
     }
+    case 'pop': {
+      // Pop/dummy van boven: oranje ovaal met donkere rand.
+      metDraaiing(b, o, (c) => {
+        c.fillStyle = o.kleur ?? '#e98b2a';
+        c.strokeStyle = 'rgba(0,0,0,0.55)';
+        c.lineWidth = maat(b, 0.05, 1.5);
+        c.beginPath();
+        c.ellipse(0, 0, 0.3 * s, 0.2 * s, 0, 0, Math.PI * 2);
+        c.fill();
+        c.stroke();
+      });
+      break;
+    }
     case 'keepersmat': {
       const w = (o.breedte ?? 2) * s;
       const h = (o.lengte ?? 1) * s;
@@ -700,7 +713,7 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
     ctx.stroke();
     if (keeper) {
       // Handschoenen voor het lijf (basishouding); bij het vangen naar voren en bij elkaar.
-      const v = s.vang;
+      const v = Math.max(s.vang, s.stomp ? Math.sin(Math.PI * s.stomp.u) : 0);
       const breed = (0.75 - 0.45 * v) * (s.vangHoogte >= 1.6 && v > 0 ? 0.8 : 1);
       const ver = r * (1.0 + 0.4 * v);
       for (const k of [-1, 1]) handschoen(ctx, Math.cos(h + k * breed) * ver, Math.sin(h + k * breed) * ver, r, b);

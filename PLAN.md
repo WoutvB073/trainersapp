@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.7.0)
+## Status (15-10-2026, versie 0.8.0)
 
 | Fase | Status |
 |---|---|
@@ -15,7 +15,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – **wacht op test** op de telefoon. Volgende keeperbatch: Voorzetten, Passing, 1 op 1, Reactie, Spelletjes |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 deel 1 (0.8.0): Voorzetten (6) + Passing (7) – **wacht op test** op de telefoon. Nog te doen, deel 2 (0.9.0): bouwstenen 1 op 1 (uitlopen en afremmen, spreidsprong/stervorm, knieblok, plukken) en reactie (bal via pop/rebounder/keeper van richting, reactiebal/tennisbal, zicht ontnomen), oefeningen 1 op 1, Reactie en Spelletjes |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -115,7 +115,8 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - `speler` (+ `team`: `"A" | "B" | "C"` (C = extra hesjeskleur), `nummer`), `keeper` (+ `nummer`), `trainer`
   - `bal` (+ optioneel `bij`: id van wie de bal aan het begin heeft)
   - `goal` (groot), `klein-goal`, `pion`, `hoedje`, `paaltje`, `ladder`, `horde`, `ring`, `zone`, `muurtje`,
-    `rebounder`, `keepersmat` (met `hoogte` vanaf 0,1 m = landingskussen), `stok`, `tekst`, `net` (voetvolleynet/lint tussen twee paaltjes, `breedte` = lengte van
+    `rebounder`, `keepersmat` (met `hoogte` vanaf 0,1 m = landingskussen), `stok`, `tekst`, `pop` (losse dummy; de bal kan
+    ertegen kaatsen zoals bij een rebounder), `net` (voetvolleynet/lint tussen twee paaltjes, `breedte` = lengte van
     het net, `hoogte` standaard 1 m), `bank`, `kooi` (pannakooi: lage boarding, `breedte` × `lengte`)
   - `goal` met `breedte` en `hoogte` = jeugdgoal (bv. 5 × 2 m)
   - optioneel: `hoek` (graden; bij goals 0 = opening naar beneden; ladder/horde/stok met `hoek: 90` liggen dwars
@@ -182,6 +183,15 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
     `duikNaar: [x, y]` (en `duikHoogte`): de duik wordt dan vanzelf op de bal afgestemd.
   - *Tippen:* schot met `afloop: "tipt"` en `eindHoogte` op een keeper met `verdedigt`: centraal en hoog = over de lat
     (springen, arm gestrekt), bij de paal = om de paal (hoge duik). De bal gaat over of naast het goal (geen doelpunt).
+  - *Voorzetten:* een keeper met `verdedigt` kiest zelf positie bij een bal op de flank: bij de achterlijn de eerste paal,
+    van verder weg meer naar het midden en iets uit het doel. Pass/schot met `uitkomen: "<keeper>"`: de keeper schat de
+    bal in, sprint naar de plek waar de bal op ± 2,5 m (`vangHoogte`) naar beneden komt, zet af op één been (knie omhoog)
+    en vangt op het hoogste punt; met `stompNaar` (en `vuisten`: 1 of 2) stompt hij de bal weg. Hindernissen: `pop`,
+    of een tweede keeper met `{ "type": "springen", "wie" }` (springt mee). Mag de keeper verder uitkomen dan het
+    doelgebied, zet dan `uitkomen: true` op de keeper zelf.
+  - *Passing:* `worp` ook `"zwaai"` (zijwaartse zwaaiworp), `"dropkick"` (halfvolley) en `"voet"` (een keeper speelt met de
+    voet: een terugspeelbal neemt hij dan met de voet aan, zonder vanghouding). Doeltrap = `worp: "trap"` op een losse bal na
+    een aanloop.
   - *Kniezit/hurkzit:* keeper met `houding: "kniezit" | "hurkzit"` begint zo; `{ "type": "zitten", "wie", "houding" }`
     zet hem er (weer) in. Opstaan, lopen of duiken haalt hem eruit.
   - *Voetenwerk:* loopwijze `kruispas`; een keeper die `zijwaarts` of met `kruispas` gaat, blijft dezelfde kant op kijken.
@@ -371,6 +381,17 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - De keepercheck (binnen het doelgebied) geldt in keeperoefeningen alleen voor de keeper met `verdedigt`: extra keepers
   mogen buiten het doel aangeven.
 - Nieuw hulpscript `tools/e2e/keeper-momenten.mjs`: 3D-close-ups van worpen, duiken, vangen en tippen.
+
+## Besluiten fase 4 – keepers batch 2 deel 1 (Voorzetten en Passing)
+- 13 oefeningen. Voorzetten 6: meeschuiven met de bal (positie), uitkomen en vangen op het hoogste punt, voorzetten van
+  beide kanten (3 keepers, doordraaien), wegstompen tussen poppen (1 en 2 vuisten), uitkomen met een tegenstander
+  (2 keepers, wisselen), voorzetten van verschillende afstanden. Passing 7: terugspeelbal aannemen en wegspelen,
+  terugspeelbal onder druk, uittrap uit de handen (volley en dropkick, 2 keepers), doeltrap naar de flank, uitworpen
+  (rollen, zwaaien, bovenhands), kort of lang kiezen (3 keepers), vangen en snel uitgooien in de loop (2 keepers).
+- Aantallen keepers: Warming-up 7, Laag duiken 7, Hoog duiken 6, Bal verwerken 10, Voorzetten 6, Passing 7, Reactie 1 –
+  totaal 38 keeperoefeningen.
+- Keepers die rouleren krijgen geen `verdedigt` (anders loopt de keeper vanzelf terug naar zijn doel); hun positie in
+  het doel staat dan in de animatie.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

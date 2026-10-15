@@ -7,7 +7,7 @@ import type { ObjectSoort } from '../src/model/types';
 const MAP_SOORT: Record<string, string> = { veld: 'veld', keepers: 'keeper' };
 const SOORTEN: ObjectSoort[] = [
   'speler', 'keeper', 'trainer', 'bal', 'goal', 'klein-goal', 'pion', 'hoedje', 'paaltje', 'ladder',
-  'horde', 'ring', 'zone', 'muurtje', 'rebounder', 'keepersmat', 'stok', 'tekst', 'net', 'bank', 'kooi',
+  'horde', 'ring', 'zone', 'muurtje', 'rebounder', 'keepersmat', 'stok', 'tekst', 'net', 'bank', 'kooi', 'pop',
 ];
 
 describe('oefeningen (databestanden)', () => {
@@ -65,7 +65,7 @@ describe('oefeningen (databestanden)', () => {
 });
 
 describe('animaties: niet door elkaar of door materiaal heen', () => {
-  const VAST = ['pion', 'paaltje', 'hoedje'];
+  const VAST = ['pion', 'paaltje', 'hoedje', 'pop'];
   for (const o of OEFENINGEN) {
     it(`${o.id}: poppetjes houden afstand`, () => {
       const tl = maakTijdlijn(o.tekening);

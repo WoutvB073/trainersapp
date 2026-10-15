@@ -31,6 +31,7 @@ function momenten(o) {
     }
   }
   for (const x of tl.loslaten) if (x.soort !== 'voet') m.push({ t: x.t - 0.12, tekst: `worp ${x.soort}`, wie: x.wie });
+  for (const x of tl.stompen ?? []) m.push({ t: x.t, tekst: `stompt (${x.vuisten} vuist${x.vuisten === 2 ? 'en' : ''})`, wie: x.wie });
   m.sort((a, b) => a.t - b.t);
   return m.slice(0, 8).map((x) => {
     const p = standOp(tl, x.t).objecten.get(x.wie);

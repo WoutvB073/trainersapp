@@ -46,7 +46,9 @@ export type ObjectSoort =
   | 'net'
   | 'bank'
   /** Pannakooi: lage boarding rond een klein vak (breedte × lengte). */
-  | 'kooi';
+  | 'kooi'
+  /** Losse pop/dummy (± 1,8 m): hindernis in de zestien of om de bal van richting te laten veranderen. */
+  | 'pop';
 
 /** Personen kunnen bewegen en een bal hebben. */
 export const PERSONEN: readonly ObjectSoort[] = ['speler', 'keeper', 'trainer'];
@@ -139,16 +141,26 @@ export interface BalActie extends ActieBasis {
   afloopNaar?: Punt;
   /**
    * Aanspelen uit de handen: `onderhands` (rollend met `hoogte: "grond"`, anders met een boogje), `bovenhands`,
-   * `volley` (bal uit de handen laten vallen en trappen) of `trap` (bal eerst neerleggen, dan van de grond).
+   * `zwaai` (zijwaartse zwaaiworp, vlak en ver), `volley` (bal uit de handen laten vallen en trappen), `dropkick`
+   * (halfvolley: trappen op het moment dat de bal de grond raakt) of `trap` (van de grond: bal neerleggen of een losse
+   * bal, zoals een doeltrap). `voet` = een keeper speelt met de voet (terugspeelbal aannemen en wegspelen).
    * Zonder `worp` speelt een veldspeler of trainer met de voet; een keeper rolt de bal onderhands weg.
    */
-  worp?: 'onderhands' | 'bovenhands' | 'volley' | 'trap';
+  worp?: 'onderhands' | 'bovenhands' | 'zwaai' | 'volley' | 'dropkick' | 'trap' | 'voet';
   /**
    * Bal naar een keeper die ervoor duikt: de keeper duikt naar dit punt en pakt de bal precies aan het eind van
    * zijn duik (de duik wordt vanzelf op de bal afgestemd). `duikHoogte` = hoogte van de handen (hoge duik).
    */
   duikNaar?: Punt;
   duikHoogte?: number;
+  /**
+   * Voorzet: deze keeper komt uit, loopt naar de bal en vangt hem in de sprong op het hoogste punt (± 2,5 m, of
+   * `vangHoogte`). Met `stompNaar` stompt hij de bal weg (`vuisten`: 1 of 2, standaard 2).
+   */
+  uitkomen?: string;
+  vangHoogte?: number;
+  stompNaar?: Punt;
+  vuisten?: 1 | 2;
   /** Hoogte (m) waarop de bal aankomt: bv. 0,6 voor een volley, 2 voor een kopbal. */
   eindHoogte?: number;
   /** In één keer (volley, kopbal, direct doorspelen): geen aanname. */
@@ -229,8 +241,9 @@ export interface ZitActie extends ActieBasis {
   houding: Zithouding;
 }
 
+/** opstaan, pak (dichtstbijzijnde losse bal) of springen (bv. een tegenstander die meespringt bij een voorzet). */
 export interface PersoonActie extends ActieBasis {
-  type: 'opstaan' | 'pak';
+  type: 'opstaan' | 'pak' | 'springen';
   wie: string;
   bal?: string;
 }

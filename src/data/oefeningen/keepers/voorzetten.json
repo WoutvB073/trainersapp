@@ -1,0 +1,292 @@
+[
+  {
+    "id": "keeper-vz-positie-meeschuiven",
+    "soort": "keeper",
+    "naam": "Positie kiezen: meeschuiven met de bal",
+    "categorieen": ["voorzetten"],
+    "uitleg": "De trainer dribbelt over de flank van ver weg naar de achterlijn. De keeper schuift mee: zolang de bal ver weg is staat hij meer naar het midden en iets uit het doel, bij de achterlijn sluit hij de eerste paal af. Aan het eind komt een lage, strakke voorzet die hij voor de eerste paal onderschept.",
+    "organisatie": "Keeper in het doel, trainer met bal op de flank op 20 m van de achterlijn. De trainer dribbelt rustig naar de achterlijn en geeft dan een lage voorzet richting eerste paal. Daarna van de andere kant.",
+    "benodigdheden": ["Goal", "Ballen", "Hoedjes voor de flank"],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "coachpunten": [
+      "Bal ver weg: één à twee meter uit het doel en meer naar het midden",
+      "Bal bij de achterlijn: eerste paal dicht, maar niet tegen de paal aan plakken",
+      "Lage voorzet: naar de bal toe stappen en hem vóór de spits pakken"
+    ],
+    "variaties": {
+      "makkelijker": ["Trainer staat stil op drie plekken in plaats van te dribbelen", "Voorzet met de hand gooien"],
+      "moeilijker": ["Trainer kiest zelf: lage voorzet, hoge voorzet of schot", "Een speler (of tweede keeper) loopt in bij de eerste paal", "Voorzet harder en strakker"]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 22, "y": -3, "breedte": 38, "lengte": 28 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "k1", "soort": "keeper", "x": 34, "y": 1.5, "nummer": 1, "verdedigt": "g1" },
+        { "id": "t1", "soort": "trainer", "x": 54, "y": 20, "kijkrichting": -90 },
+        { "id": "b1", "soort": "bal", "x": 53.6, "y": 19.8, "bij": "t1" }
+      ],
+      "animatie": [
+        { "duur": 0.6, "acties": [] },
+        { "acties": [{ "type": "dribbel", "wie": "t1", "via": [[55, 13]], "naar": [55, 5.5] }] },
+        { "duur": 0.5, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [37.5, 3.2], "hoogte": 1.5, "uitkomen": "k1" }] },
+        { "duur": 0.6, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "k1", "naar": "t1", "worp": "bovenhands", "hoogte": "halfhoog" }] },
+        { "duur": 1, "acties": [] }
+      ]
+    }
+  },
+  {
+    "id": "keeper-vz-uitkomen-vangen",
+    "soort": "keeper",
+    "naam": "Uitkomen en vangen op het hoogste punt",
+    "categorieen": ["voorzetten"],
+    "uitleg": "De trainer geeft hoge voorzetten vanaf de flank: eerst op de rand van het doelgebied, dan richting de penaltystip. De keeper schat de bal in, loopt uit, zet af op één been met de andere knie omhoog en vangt de bal op het hoogste punt.",
+    "organisatie": "Keeper in het doel, trainer op de flank op 10–12 m van de achterlijn met een paar ballen. Na elke vang gooit de keeper de bal terug en gaat hij terug naar zijn plek.",
+    "benodigdheden": ["Goal", "Ballen"],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "coachpunten": [
+      "Eerst kijken, dan gaan: pas vertrekken als je weet waar de bal komt",
+      "Afzetten op één been, de andere knie omhoog ter bescherming",
+      "Vangen met gestrekte armen vóór het hoofd en de bal direct naar de borst halen",
+      "Roepen: 'keeper!' zodat iedereen weet dat jij gaat"
+    ],
+    "variaties": {
+      "makkelijker": ["Voorzet met de hand gooien", "Kortere afstand, bal in het doelgebied"],
+      "moeilijker": ["Voorzetten verder van het doel (tot de penaltystip)", "Draaiende voorzetten (naar of van het doel af)", "Tweede keeper of trainer springt mee"]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 22, "y": -3, "breedte": 36, "lengte": 20 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "k1", "soort": "keeper", "x": 34, "y": 1.5, "nummer": 1, "verdedigt": "g1", "uitkomen": true },
+        { "id": "t1", "soort": "trainer", "x": 53, "y": 10, "kijkrichting": 180 },
+        { "id": "b1", "soort": "bal", "x": 52.6, "y": 10, "bij": "t1" },
+        { "id": "b2", "soort": "bal", "x": 53.8, "y": 11.4 }
+      ],
+      "animatie": [
+        { "duur": 0.6, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [35.5, 6], "hoogte": "hoog", "uitkomen": "k1" }] },
+        { "duur": 0.8, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "k1", "naar": [50, 14], "worp": "bovenhands", "hoogte": "halfhoog" }] },
+        { "duur": 1.4, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [33.5, 9.5], "hoogte": "hoog", "uitkomen": "k1" }] },
+        { "duur": 1, "acties": [] }
+      ]
+    }
+  },
+  {
+    "id": "keeper-vz-beide-kanten",
+    "soort": "keeper",
+    "naam": "Voorzetten van beide kanten",
+    "categorieen": ["voorzetten"],
+    "uitleg": "Twee keepers geven om de beurt een voorzet (trap uit de handen) vanaf links en rechts. De keeper in het doel schuift steeds naar de eerste paal van de kant waar de bal is, komt uit en vangt. Na twee voorzetten draaien de keepers door.",
+    "organisatie": "Aangevers op de flanken, 20 m van het midden van het doel en 9 m van de achterlijn. Na twee ballen doordraaien: keeper in het doel wordt aangever rechts, aangever rechts gaat in het doel.",
+    "benodigdheden": ["Goal", "2 ballen", "2 hoedjes"],
+    "spelersNodig": 0,
+    "keepersNodig": 3,
+    "coachpunten": [
+      "Na elke bal je positie aanpassen aan de kant van de nieuwe voorzet",
+      "Lichaam open naar het veld: schuin staan, zodat je de bal en het doel ziet",
+      "Uitkomen en vangen op het hoogste punt, met de knie omhoog"
+    ],
+    "variaties": {
+      "makkelijker": ["Gooien in plaats van trappen", "Steeds van dezelfde kant"],
+      "moeilijker": ["Aangevers kiezen zelf: hoog naar de tweede paal of laag naar de eerste", "Na de vang direct uitgooien naar de andere aangever", "Snel na elkaar: eerste bal van links, meteen daarna van rechts"]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 11, "y": -3, "breedte": 46, "lengte": 18 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "k1", "soort": "keeper", "x": 34, "y": 1.5, "nummer": 1 },
+        { "id": "k2", "soort": "keeper", "x": 14, "y": 9, "nummer": 2, "kijkrichting": -15 },
+        { "id": "k3", "soort": "keeper", "x": 54, "y": 9, "nummer": 3, "kijkrichting": 195 },
+        { "id": "b1", "soort": "bal", "x": 14.35, "y": 9, "bij": "k2" },
+        { "id": "b2", "soort": "bal", "x": 53.65, "y": 9, "bij": "k3" }
+      ],
+      "animatie": [
+        { "acties": [{ "type": "loop", "wie": "k1", "naar": [31.8, 1.2], "manier": "zijwaarts", "kijk": 150 }] },
+        { "acties": [{ "type": "pass", "van": "k2", "naar": [34.6, 5.5], "worp": "volley", "hoogte": "hoog", "uitkomen": "k1" }] },
+        { "duur": 0.6, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "k1", "naar": "k2", "worp": "bovenhands", "hoogte": "halfhoog" }] },
+        { "acties": [{ "type": "loop", "wie": "k1", "naar": [36.2, 1.2], "kijk": 25 }] },
+        { "acties": [{ "type": "pass", "van": "k3", "naar": [33.4, 5.5], "worp": "volley", "hoogte": "hoog", "uitkomen": "k1" }] },
+        { "duur": 0.6, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "k1", "naar": "k3", "worp": "bovenhands", "hoogte": "halfhoog" }] },
+        { "duur": 0.4, "acties": [] },
+        {
+          "acties": [
+            { "type": "loop", "wie": "k3", "via": [[50, 2.5]], "naar": [34, 1.5] },
+            { "type": "loop", "wie": "k1", "naar": [54, 9], "start": 1.2 }
+          ]
+        },
+        { "duur": 0.6, "acties": [] }
+      ]
+    }
+  },
+  {
+    "id": "keeper-vz-stompen-tussen-poppen",
+    "soort": "keeper",
+    "naam": "Wegstompen tussen de poppen",
+    "categorieen": ["voorzetten"],
+    "uitleg": "In het doelgebied staan drie poppen als tegenstanders. De trainer geeft hoge voorzetten in de drukte. Kan de keeper de bal niet veilig vangen, dan stompt hij hem weg: met twee vuisten terug in de richting waar de bal vandaan kwam, met één vuist door in de richting van de bal (verre kant).",
+    "organisatie": "Drie poppen in en rond het doelgebied. Trainer op de flank op 12 m van de achterlijn. Afwisselend een voorzet op de eerste paal en een voorzet die voor het doel langs draait.",
+    "benodigdheden": ["Goal", "3 poppen of dummies", "Ballen"],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "coachpunten": [
+      "Twee vuisten: vuisten tegen elkaar, armen gestrekt, de bal hoog en ver terug wegstompen",
+      "Eén vuist: de bal in zijn vlucht doorstompen naar de verre kant",
+      "Ook bij stompen: afzetten op één been met de knie omhoog en het hoogste punt zoeken"
+    ],
+    "variaties": {
+      "makkelijker": ["Zonder poppen, eerst alleen techniek", "Bal met de hand voorgooien"],
+      "moeilijker": ["Poppen dichter bij de keeper", "Een tweede keeper springt mee", "Trainer roept 'vang' of 'stomp' terwijl de bal onderweg is"]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 20, "y": -3, "breedte": 36, "lengte": 24 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "p1", "soort": "pop", "x": 38.4, "y": 4 },
+        { "id": "p2", "soort": "pop", "x": 32.2, "y": 6.6 },
+        { "id": "p3", "soort": "pop", "x": 37.6, "y": 8.4 },
+        { "id": "k1", "soort": "keeper", "x": 34, "y": 1.5, "nummer": 1, "verdedigt": "g1", "uitkomen": true },
+        { "id": "t1", "soort": "trainer", "x": 52, "y": 12, "kijkrichting": 180 },
+        { "id": "b1", "soort": "bal", "x": 51.6, "y": 12, "bij": "t1" },
+        { "id": "b2", "soort": "bal", "x": 52.8, "y": 13.3 }
+      ],
+      "animatie": [
+        { "duur": 0.6, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [35.4, 5.4], "hoogte": "hoog", "uitkomen": "k1", "stompNaar": [44, 19], "vuisten": 2 }] },
+        { "duur": 1.8, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [32.6, 3.6], "hoogte": "hoog", "uitkomen": "k1", "stompNaar": [24, 12], "vuisten": 1 }] },
+        { "duur": 1.6, "acties": [] }
+      ]
+    }
+  },
+  {
+    "id": "keeper-vz-met-tegenstander",
+    "soort": "keeper",
+    "naam": "Uitkomen met een tegenstander",
+    "categorieen": ["voorzetten"],
+    "uitleg": "Keeper 2 staat als tegenstander in de zestien en springt mee met de voorzet. Keeper 1 komt uit, gaat er vóór en vangt de bal in de sprong, met de knie omhoog. Daarna wisselen ze: keeper 1 wordt tegenstander, keeper 2 gaat in het doel.",
+    "organisatie": "Trainer op de flank op 10 m van de achterlijn. Tegenstander bij de rand van het doelgebied. Na elke voorzet wisselen de keepers van rol. Tegenstander springt mee maar duwt niet.",
+    "benodigdheden": ["Goal", "Ballen", "Eventueel een stootkussen voor de tegenstander"],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "coachpunten": [
+      "Ga er vóór: de kortste weg naar de bal is tussen de tegenstander en de bal door",
+      "Knie omhoog aan de kant van de tegenstander",
+      "Na de vang de bal stevig tegen de borst en sluiten (niet direct weer uitgooien in de drukte)"
+    ],
+    "variaties": {
+      "makkelijker": ["Tegenstander springt niet mee, staat alleen in de weg", "Bal met de hand voorgooien"],
+      "moeilijker": ["Tegenstander met stootkussen", "Twee tegenstanders", "Voorzet verder weg, keeper moet verder uitkomen"]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 22, "y": -3, "breedte": 36, "lengte": 18 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "k1", "soort": "keeper", "x": 36.4, "y": 1.1, "nummer": 1 },
+        { "id": "k2", "soort": "keeper", "x": 33.6, "y": 7.3, "nummer": 2, "kijkrichting": 0 },
+        { "id": "t1", "soort": "trainer", "x": 53, "y": 10, "kijkrichting": 180 },
+        { "id": "b1", "soort": "bal", "x": 52.6, "y": 10, "bij": "t1" },
+        { "id": "b2", "soort": "bal", "x": 53.8, "y": 11.4 }
+      ],
+      "animatie": [
+        { "duur": 0.6, "acties": [] },
+        {
+          "acties": [
+            { "type": "pass", "van": "t1", "naar": [35.2, 5.4], "hoogte": "hoog", "uitkomen": "k1" },
+            { "type": "springen", "wie": "k2", "start": 1.05 }
+          ]
+        },
+        { "duur": 0.6, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "k1", "naar": "t1", "worp": "bovenhands", "hoogte": "halfhoog" }] },
+        { "duur": 0.3, "acties": [] },
+        {
+          "acties": [
+            { "type": "loop", "wie": "k2", "via": [[31.4, 4]], "naar": [36.4, 1.1] },
+            { "type": "loop", "wie": "k1", "naar": [33.6, 7.3], "start": 0.8, "kijk": 0 }
+          ]
+        },
+        { "duur": 0.5, "acties": [] },
+        {
+          "acties": [
+            { "type": "pass", "van": "t1", "naar": [35.2, 5.4], "hoogte": "hoog", "uitkomen": "k2" },
+            { "type": "springen", "wie": "k1", "start": 1.05 }
+          ]
+        },
+        { "duur": 1, "acties": [] }
+      ]
+    }
+  },
+  {
+    "id": "keeper-vz-verschillende-afstanden",
+    "soort": "keeper",
+    "naam": "Voorzetten van verschillende afstanden",
+    "categorieen": ["voorzetten"],
+    "uitleg": "De trainer geeft voorzetten vanaf drie plekken op de flank: bij de achterlijn (laag en strak), ter hoogte van de zestien en van ver (hoog). De keeper past steeds zijn positie aan: eerste paal bij een korte voorzet, meer naar het midden en uit het doel bij een verre voorzet.",
+    "organisatie": "Drie ballen op de flank: bij de achterlijn, op 16 m en op 28 m. De trainer loopt van bal naar bal. De keeper rolt elke gevangen bal achter de achterlijn naast het doel.",
+    "benodigdheden": ["Goal", "3 ballen (of meer)", "Hoedjes voor de plekken"],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "coachpunten": [
+      "Hoe verder de voorzet, hoe verder je uit het doel en hoe meer naar het midden",
+      "Bij de achterlijn: eerste paal dicht, lage bal onderscheppen",
+      "Verre voorzet: wachten tot je de vlucht kunt inschatten, dan pas versnellen"
+    ],
+    "variaties": {
+      "makkelijker": ["Alleen van twee plekken", "Gooien in plaats van trappen"],
+      "moeilijker": ["Trainer kiest de volgorde", "Ook vanaf de andere flank", "Spits (tweede keeper) loopt in op de eerste of tweede paal"]
+    },
+    "tekening": {
+      "veld": { "type": "half" },
+      "weergave": { "x": 18, "y": -3, "breedte": 40, "lengte": 34 },
+      "camera": "schuin",
+      "objecten": [
+        { "id": "g1", "soort": "goal", "x": 34, "y": 0 },
+        { "id": "k1", "soort": "keeper", "x": 34, "y": 1.5, "nummer": 1, "verdedigt": "g1", "uitkomen": true },
+        { "id": "t1", "soort": "trainer", "x": 55.4, "y": 5.2, "kijkrichting": 180 },
+        { "id": "b1", "soort": "bal", "x": 54.6, "y": 4.6 },
+        { "id": "b2", "soort": "bal", "x": 53, "y": 15.4 },
+        { "id": "b3", "soort": "bal", "x": 50.4, "y": 27.6 }
+      ],
+      "animatie": [
+        { "duur": 0.8, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [37.2, 2.8], "hoogte": 1.5, "uitkomen": "k1" }] },
+        { "duur": 0.6, "acties": [] },
+        {
+          "acties": [
+            { "type": "pass", "van": "k1", "naar": [42, -1.5], "worp": "onderhands", "hoogte": "grond" },
+            { "type": "loop", "wie": "t1", "naar": [53.6, 16], "start": 0.6 }
+          ]
+        },
+        { "duur": 1, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [35, 7], "hoogte": "hoog", "uitkomen": "k1" }] },
+        { "duur": 0.6, "acties": [] },
+        {
+          "acties": [
+            { "type": "pass", "van": "k1", "naar": [26, -1.5], "worp": "onderhands", "hoogte": "grond" },
+            { "type": "loop", "wie": "t1", "naar": [51, 28.4], "start": 0.6 }
+          ]
+        },
+        { "duur": 1.2, "acties": [] },
+        { "acties": [{ "type": "pass", "van": "t1", "naar": [34, 9.5], "hoogte": "hoog", "uitkomen": "k1" }] },
+        { "duur": 1, "acties": [] }
+      ]
+    }
+  }
+]

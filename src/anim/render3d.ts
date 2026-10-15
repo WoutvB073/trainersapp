@@ -345,6 +345,15 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
       }
       return opGrond(g);
     }
+    case 'pop': {
+      // Pop/dummy: één figuur zoals in een muurtje, in een opvallende kleur.
+      const g = new Group();
+      const pop = new Mesh(new CapsuleGeometry(0.22, 1.35, 4, 10), kleur('#e98b2a'));
+      pop.position.y = 0.9;
+      pop.scale.z = 0.6;
+      g.add(pop);
+      return opGrond(g);
+    }
     case 'keepersmat': {
       // Landingskussen: dik blauw kussen.
       const h = o.hoogte ?? 0.2;
@@ -663,13 +672,16 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
     const arm = keeper ? -2.9 : -1.6;
     p.armen = [spring * arm, spring * arm];
     p.armenOpzij = Math.max(p.armenOpzij, spring * (keeper ? 0.15 : 0.5));
-    p.benen = [p.benen[0] + spring * 0.35, p.benen[1] + spring * 0.35];
+    // Keeper: afzetten op één been, de andere knie omhoog ter bescherming.
+    p.benen = keeper ? [p.benen[0] - spring * 1.3, p.benen[1] + spring * 0.2] : [p.benen[0] + spring * 0.35, p.benen[1] + spring * 0.35];
   }
 
   // Worp of trap: rechterarm (index 0) haalt uit en zwaait door; bij een volley of trap het rechterbeen.
   const w = s.worp;
   let armR: number | undefined;
   let armL: number | undefined;
+  /** Zwaaiworp: rechterarm horizontaal opzij, draait van achteren naar voren (rotatie om de lengteas). */
+  let zwaai: number | undefined;
   if (w) {
     const u = w.u;
     const los = 0.58;
@@ -680,6 +692,10 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
     } else if (w.soort === 'bovenhands') {
       armR = u < los ? -1.2 - 2.4 * glad(u / los) : -3.6 + 2.6 * glad((u - los) / (1 - los));
       armL = -1.4;
+    } else if (w.soort === 'zwaai') {
+      zwaai = u < los ? -1.3 * glad(u / los) : -1.3 + 2.8 * glad((u - los) / (1 - los));
+      armL = -1.2;
+      p.voorover += 0.15 * Math.sin(klem(u) * Math.PI);
     } else {
       // Volley of trap: de bal valt uit de handen, het been zwaait door de bal.
       armR = armL = u < 0.45 ? -1.2 : -0.5;
@@ -731,6 +747,14 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
         rz = kant(i) * (w.soort === 'volley' || w.soort === 'trap' ? p.armenOpzij : 0.1);
       }
     }
+    // Stompen: gestrekte arm(en) naar de bal, met twee vuisten tegen elkaar of één vuist.
+    const st = s.stomp;
+    if (st) {
+      const k = Math.sin(Math.PI * klem(st.u));
+      const doel = st.vuisten === 2 || i === 0 ? -2.75 : -1.1;
+      rx += (doel - rx) * k;
+      rz += (kant(i) * (st.vuisten === 2 ? -0.12 : 0.15) - rz) * k;
+    }
     if (vang > 0) {
       // Handen naar de bal: hoog = W-greep boven het hoofd, borst = armen naar voren, laag = handen omlaag.
       const h = s.vangHoogte;
@@ -739,7 +763,8 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
       rx += (doelX - rx) * vang;
       rz += (doelZ - rz) * vang;
     }
-    a.rotation.set(rx, 0, rz);
+    if (zwaai !== undefined && i === 0) a.rotation.set(0, zwaai, -1.35);
+    else a.rotation.set(rx, 0, rz);
   }
 
   // Schaduw: rond als hij staat, langgerekt als hij ligt; blijft op het gras als hij in de lucht hangt.
