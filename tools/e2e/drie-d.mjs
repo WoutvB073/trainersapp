@@ -124,9 +124,10 @@ async function meet(cpu) {
   await alsGeinstalleerd(p);
   await p.setUserAgent(UA.android);
   await p.setViewport({ width: 412, height: 915, deviceScaleFactor: 2.6, isMobile: true, hasTouch: true });
+  await detail(p, 'veld-kaatsen-en-afwerken');
+  // Pas na het laden vertragen: het gaat om het afspelen.
   const cdp = await p.createCDPSession();
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
-  await detail(p, 'veld-kaatsen-en-afwerken');
   const r = await p.evaluate(
     () =>
       new Promise((klaar) => {
