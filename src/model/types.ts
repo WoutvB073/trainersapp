@@ -102,6 +102,11 @@ export type LijnSoort = 'bal' | 'loop' | 'dribbel';
 export interface Lijn {
   soort: LijnSoort;
   punten: Punt[];
+  /** Editor: buigpunt. De lijn loopt dan als een vloeiende boog van het eerste naar het laatste punt, door dit punt. */
+  bocht?: Punt;
+  /** Editor: begin of eind vast aan een object (bv. een speler); de lijn beweegt mee als dat object verschuift. */
+  van?: string;
+  naar?: string;
 }
 
 interface ActieBasis {
@@ -447,4 +452,15 @@ export interface Oefening {
   coachpunten: string[];
   variaties: { makkelijker: string[]; moeilijker: string[] };
   tekening: Tekening;
+  /** Eigen oefening (gemaakt in de editor of gekopieerd), badge "Eigen". */
+  eigen?: boolean;
+}
+
+/** Eigen oefening: hetzelfde formaat, met tijden en (bij een kopie) de ingebouwde oefening waar hij van komt. */
+export interface EigenOefening extends Oefening {
+  eigen: true;
+  gemaakt: number;
+  gewijzigd: number;
+  /** Id van de ingebouwde oefening waarvan dit een kopie is. */
+  bron?: string;
 }

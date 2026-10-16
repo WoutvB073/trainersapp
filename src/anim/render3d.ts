@@ -40,6 +40,7 @@ import {
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { CameraStand, Manier, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
+import { lijnPunten } from '../model/lijn';
 import { boog, PASJES, PASLENGTE, standOp, type NetInslag, type ObjectStand, type Spoor, type Tijdlijn } from './timeline';
 import { isKussen, leesKleuren, persoonKleur, PLAT, tekenGrasmat, uitsnede, veldMaten, type Kleuren } from './render2d';
 import type { Weergave } from './weergave';
@@ -1165,6 +1166,20 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     scene.add(sm.mesh, sm.pijl);
     return sm;
   });
+
+  // Getekende lijnen (editor): altijd helemaal zichtbaar, op de plek van het begin van de oefening.
+  const begin = standOp(tijdlijn, 0);
+  const plek = (id: string): Punt | undefined => {
+    const o = begin.objecten.get(id);
+    return o ? [o.x, o.y] : undefined;
+  };
+  for (const l of tekening.lijnen ?? []) {
+    const pad = lijnPunten(l, plek);
+    if (pad.length < 2) continue;
+    const s: Spoor = { soort: l.soort, pad, van: pad[0]!, naar: pad[pad.length - 1]!, t0: 0, t1: 0, ease: 'bal', top: 0, id: 'lijn' };
+    const sm = maakSpoor(s, spoorKleur[l.soort], pijl, materialen);
+    scene.add(sm.mesh, sm.pijl);
+  }
 
   // Camera + draaien/zoomen.
   const camera = new PerspectiveCamera(40, 1, 0.3, 3000);

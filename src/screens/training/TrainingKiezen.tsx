@@ -4,7 +4,7 @@ import { Icoon } from '../../components/Icoon';
 import { Labels, meervoud } from '../../components/Labels';
 import { Miniatuur } from '../../components/Miniatuur';
 import { CATEGORIEEN, SOORT_NAAM } from '../../data/categorieen';
-import { OEFENINGEN } from '../../data/oefeningen';
+import { alleOefeningen } from '../../data/oefeningen';
 import { ga, terug } from '../../router';
 import { trainingen, useTraining } from '../../training/opslag';
 import { kiesbaar } from '../../training/training';
@@ -43,8 +43,8 @@ export function TrainingKiezen({ id }: { id: string }) {
     setCategorie(c);
     onthoud(soort, c);
   };
-  const lijst = kiesbaar(OEFENINGEN, soort, categorie, t.spelers, t.keepers);
-  const telling = (c?: string) => kiesbaar(OEFENINGEN, soort, c, t.spelers, t.keepers).length;
+  const lijst = kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers);
+  const telling = (c?: string) => kiesbaar(alleOefeningen(), soort, c, t.spelers, t.keepers).length;
   // Altijd de nieuwste versie uit de opslag (ook bij snel achter elkaar tikken).
   const wissel = (oid: string) => {
     const nu = trainingen.haal(id) ?? t;

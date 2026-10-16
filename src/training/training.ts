@@ -1,4 +1,6 @@
 import type { Oefening, Soort } from '../model/types';
+import { maakId } from '../model/id';
+import { geldigeEigen, isEigenId } from '../eigen/eigen';
 
 /**
  * Een training: aantallen, optioneel naam en datum, en de gekozen oefeningen (id's) in volgorde.
@@ -37,7 +39,7 @@ export function verplaats<T>(lijst: readonly T[], van: number, naar: number): T[
   return uit;
 }
 
-export const maakId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+export { maakId };
 
 export function nieuweTraining(nu = Date.now(), id = maakId()): Training {
   return { id, naam: '', spelers: 12, keepers: 1, oefeningen: [], gemaakt: nu, gewijzigd: nu };
@@ -70,6 +72,8 @@ export interface GedeeldeTraining {
   spelers: number;
   keepers: number;
   oefeningen: string[];
+  /** Eigen oefeningen die in de training zitten: die gaan in hun geheel mee in de link. */
+  eigen?: Oefening[];
 }
 
 function naarBase64Url(tekst: string): string {
@@ -85,15 +89,22 @@ function uitBase64Url(code: string): string {
   return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
 }
 
-/** Compacte code voor in de link. Oefening-id's zonder het voorvoegsel "veld-"/"keeper-" waar dat kan. */
-export function naarCode(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'oefeningen'>): string {
+/**
+ * Compacte code voor in de link. Oefening-id's zonder het voorvoegsel "veld-"/"keeper-" waar dat kan. Eigen oefeningen
+ * (`eigen`, klaargemaakt met `voorDelen`) gaan er in hun geheel in, zodat de ontvanger ze ook heeft.
+ */
+export function naarCode(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'oefeningen'>, eigen: Oefening[] = []): string {
   const o = t.oefeningen.map((id) => id.replace(/^veld-/, 'v:').replace(/^keeper-/, 'k:'));
-  return naarBase64Url(JSON.stringify({ v: 1, n: t.naam, d: t.datum, s: t.spelers, k: t.keepers, o }));
+  const e = eigen.filter((x) => t.oefeningen.includes(x.id));
+  return naarBase64Url(JSON.stringify({ v: 1, n: t.naam, d: t.datum, s: t.spelers, k: t.keepers, o, ...(e.length ? { e } : {}) }));
 }
+
+/** Eigen oefeningen die in een training zitten (voor in de link). */
+export const eigenIds = (t: Pick<Training, 'oefeningen'>) => t.oefeningen.filter(isEigenId);
 
 export function uitCode(code: string): GedeeldeTraining | null {
   try {
-    const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; s?: unknown; k?: unknown; o?: unknown };
+    const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; s?: unknown; k?: unknown; o?: unknown; e?: unknown };
     if (x.v !== 1 || !Array.isArray(x.o)) return null;
     const getal = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(0, Math.min(MAX_AANTAL, Math.round(v))) : 0);
     return {
@@ -102,6 +113,7 @@ export function uitCode(code: string): GedeeldeTraining | null {
       spelers: getal(x.s),
       keepers: getal(x.k),
       oefeningen: x.o.filter((id): id is string => typeof id === 'string').map((id) => id.replace(/^v:/, 'veld-').replace(/^k:/, 'keeper-')),
+      ...(Array.isArray(x.e) && x.e.some(geldigeEigen) ? { eigen: x.e.filter(geldigeEigen).map((o) => ({ ...o, eigen: true })) } : {}),
     };
   } catch {
     return null;

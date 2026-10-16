@@ -1,5 +1,6 @@
 import type { LijnSoort, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
+import { lijnPunten } from '../model/lijn';
 import { PASJES, PASLENGTE, type NetInslag, type ObjectStand, type Stand } from './timeline';
 
 /** Kleuren komen uit CSS-variabelen, zodat clubkleuren (fase 6) ook de animatie kleuren. */
@@ -112,7 +113,11 @@ export function tekenScene(
   const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'pop', 'rebounder', 'klein-goal', 'goal', 'net'];
   for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o, stand.net.find((n) => n.id === o.id));
 
-  for (const l of tekening.lijnen ?? []) tekenPolylijn(b, l.soort, l.punten, k, true);
+  const plek = (id: string): Punt | undefined => {
+    const o = stand.objecten.get(id);
+    return o ? [o.x, o.y] : undefined;
+  };
+  for (const l of tekening.lijnen ?? []) tekenPolylijn(b, l.soort, lijnPunten(l, plek), k, true);
   for (const s of stand.sporen) {
     if (s.soort === 'loop' && s.manier && PASJES.includes(s.manier)) tekenPasjes(b, s.punten, k, s.klaar, PASLENGTE[s.manier] ?? 0.45);
     else tekenPolylijn(b, s.soort, s.punten, k, s.klaar);
