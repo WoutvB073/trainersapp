@@ -23,7 +23,7 @@ const plat = (s: string) =>
   s
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .trim();
 
 /** Past deze oefening bij de filters? `aantallen` uit kan je meegeven (bv. bij Training maken: die van de training). */
