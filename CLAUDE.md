@@ -40,8 +40,18 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `update.mjs <oude-build> [nieuwe-build]` — update van een geïnstalleerde app (eigen server op poort 4190).
 - `keeper-momenten.mjs [url] [filter]` — 3D-close-ups op de sleutelmomenten (worp, duik, vang, tip); rekent de momenten zelf uit met de tijdlijn (via jiti). Camera op de keeper via het testhaakje `window.__camera3d` (alleen met `trainersapp.testCamera=1`).
 - `oefeningen.mjs [url] [filter]` — per oefening 3D/2D-screenshots (`blad-oef-<map>-<categorie>.png`), aantallen per categorie, "Keeper nodig".
+- `online.mjs [url]` — account, eerste keer samenvoegen, teams (code, delen, rollen) met twee testaccounts tegen de
+  Firebase-emulator (`npm run emulator` moet draaien; zet `trainersapp.emulator=1`). Blad: `blad-online.png`.
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
   Chrome draait met de echte videokaart (`--use-angle=d3d11`); `trainersapp.3dAltijd=1` zet de 2D-terugval uit in tests.
+
+## Online (Firebase, fase 7)
+- `src/online/` (lui geladen): `config.ts` (webconfig; `null` = online verborgen), `firebase.ts`, `sync.ts`,
+  `samenvoegen.ts` (puur), `teamsOnline.ts`, `online.ts` (regisseur). Zonder Firebase: `src/engine/account.ts`, `teams.ts`.
+- `npm run emulator` / `npm run test:online` (tests in `tests/online/`, Java 21 in `C:\Users\woutv\tools\java` via
+  `tools/firebase.mjs`). Regels: `firestore.rules`.
+- **Testgegevens alleen neutraal:** test1@example.com, test2@example.com …, namen "Testtrainer 1/2". Nooit echte namen of
+  adressen. Na testen tegen het echte project: testaccounts en hun data verwijderen.
 
 ## Valkuilen
 - Vitest onthoudt `import.meta.glob`: na een **nieuw** databestand eerst `rm -rf node_modules/.vitest-cache`, anders ziet `npm test` het bestand niet.
@@ -63,5 +73,9 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
   in de preview-pane een laptopformaat gebruiken of "Gewoon in de browser gebruiken" kiezen.
 - De ingebouwde browser-pane maakt na scrollen vaak lege/verkeerde screenshots → `tools/e2e/schermen.mjs` (puppeteer).
 - Preview + service worker: na een nieuwe build eerst de service worker afmelden of `?r=…` gebruiken, anders zie je de oude versie.
+- Firestore in e2e: `waitUntil: 'networkidle0'` wordt nooit rustig → `domcontentloaded` + wachten op elementen.
+- Firestore-listeners niet starten/stoppen binnen een snapshot-callback (gaat mis bij wachtende schrijfacties) → `later()`;
+  "geen lid/team weg" alleen besluiten op snapshots van de server (niet `fromCache`).
+- Objecten uit Firestore hebben andere veldvolgorde: vergelijken via een vaste vorm, anders blijft sync eindeloos schrijven.
 - Een bal "bij" een speler ligt rekenkundig 0,55 m voor de speler; de 2D-renderer duwt hem visueel naar de rand
   van het poppetje (niet over het rugnummer).

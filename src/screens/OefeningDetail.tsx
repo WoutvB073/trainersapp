@@ -7,6 +7,7 @@ import { Icoon } from '../components/Icoon';
 import { aantalTekst, Labels } from '../components/Labels';
 import { NietGevonden } from './NietGevonden';
 import { Hartje } from '../components/Filters';
+import { DeelMetTeam, TeamItemActies } from './online/Teams';
 import { ga, terug, vervang } from '../router';
 import { eigenOefeningen, useEigenOefeningen } from '../eigen/opslag';
 import { inBibliotheek, kopieerNaarEigen } from '../eigen/eigen';
@@ -54,6 +55,7 @@ function Acties({ oefening }: { oefening: Oefening }) {
           <Icoon naam="kopieer" maat={18} />
           Kopiëren naar eigen oefeningen
         </button>
+        <TeamItemActies oefening={oefening} />
       </div>
     );
   }
@@ -90,6 +92,7 @@ function Acties({ oefening }: { oefening: Oefening }) {
         <Icoon naam="prullenbak" maat={18} />
         Verwijderen
       </button>
+      <DeelMetTeam soort="oefening" id={o.id} naam={o.naam} />
     </div>
   );
 }

@@ -17,6 +17,8 @@ import { EigenOefeningen, NieuweOefening } from './screens/eigen/EigenOefeningen
 import { Tekenen } from './screens/eigen/Tekenen';
 import { Gegevens } from './screens/eigen/Gegevens';
 import { Instellingen } from './screens/Instellingen';
+import { Account, SamenvoegenVraag } from './screens/online/Account';
+import { Teams, TeamScherm, TeamTrainingScherm } from './screens/online/Teams';
 import { browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen } from './engine/platform';
 
 function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => void }) {
@@ -53,6 +55,14 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <Gegevens key={route.id} id={route.id} />;
     case 'instellingen':
       return <Instellingen />;
+    case 'account':
+      return <Account />;
+    case 'teams':
+      return <Teams />;
+    case 'team':
+      return <TeamScherm key={route.id} id={route.id} />;
+    case 'teamtraining':
+      return <TeamTrainingScherm key={route.id + route.item} id={route.id} item={route.item} />;
     default:
       return <NietGevonden />;
   }
@@ -95,6 +105,7 @@ function AppSchermen({ opInstalleren }: { opInstalleren?: () => void }) {
   return (
     <>
       <Scherm route={route} opInstalleren={opInstalleren} />
+      <SamenvoegenVraag />
       {nieuweVersie && (
         <div className="melding" role="status">
           <span>Er is een nieuwe versie</span>

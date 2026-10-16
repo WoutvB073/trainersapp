@@ -13,6 +13,10 @@ import { useSyncExternalStore } from 'react';
  *   #/t/:code                Gedeelde training (link)
  *   #/eigen                  Eigen oefeningen
  *   #/instellingen           Instellingen (clubkleuren, licht/donker)
+ *   #/account                Inloggen, account maken, account beheren
+ *   #/teams                  Mijn teams (maken, joinen)
+ *   #/team/:id               Team: code, gedeelde oefeningen en trainingen, leden
+ *   #/team/:id/training/:item  Gedeelde training bekijken en kopiëren
  *   #/eigen/nieuw            Nieuwe oefening: veld kiezen
  *   #/eigen/:id/tekenen      Editor (tekenen)
  *   #/eigen/:id/gegevens     Naam, categorieën, uitleg …
@@ -29,6 +33,10 @@ export type Route =
   | { naam: 'gedeeld'; code: string }
   | { naam: 'eigen' }
   | { naam: 'instellingen' }
+  | { naam: 'account' }
+  | { naam: 'teams' }
+  | { naam: 'team'; id: string }
+  | { naam: 'teamtraining'; id: string; item: string }
   | { naam: 'eigen-nieuw' }
   | { naam: 'tekenen'; id: string }
   | { naam: 'gegevens'; id: string }
@@ -48,6 +56,10 @@ export function leesHash(hash: string): Route {
   if (a === 't' && b) return { naam: 'gedeeld', code: b };
   if (a === 'eigen' && !b) return { naam: 'eigen' };
   if (a === 'instellingen' && !b) return { naam: 'instellingen' };
+  if (a === 'account' && !b) return { naam: 'account' };
+  if (a === 'teams' && !b) return { naam: 'teams' };
+  if (a === 'team' && b && !c) return { naam: 'team', id: b };
+  if (a === 'team' && b && c === 'training' && d) return { naam: 'teamtraining', id: b, item: d };
   if (a === 'eigen' && b === 'nieuw') return { naam: 'eigen-nieuw' };
   if (a === 'eigen' && b && c === 'tekenen') return { naam: 'tekenen', id: b };
   if (a === 'eigen' && b && c === 'gegevens') return { naam: 'gegevens', id: b };

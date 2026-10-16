@@ -88,8 +88,8 @@ export function lokaleOpslag() {
   };
 }
 
-export function synchroniseer(v: Verbinding & { uid: string }, opslag: ReturnType<typeof lokaleOpslag>) {
-  const s = new Synchronisatie(v.db, v.uid, opslag.doelen);
+export function synchroniseer(v: Verbinding & { uid: string }, opslag: ReturnType<typeof lokaleOpslag>, opStatus?: (s: string) => void) {
+  const s = new Synchronisatie(v.db, v.uid, opslag.doelen, opStatus);
   s.start();
   return s;
 }

@@ -5,6 +5,7 @@ import { Icoon } from '../components/Icoon';
 import { ga } from '../router';
 import { useTrainingen } from '../training/opslag';
 import { useEigenOefeningen } from '../eigen/opslag';
+import { SyncIcoon } from './online/Account';
 import { maakTraining } from './training/MijnTrainingen';
 import type { Soort } from '../model/types';
 
@@ -138,6 +139,7 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
           <h1 className="start-titel">{APP_NAAM}</h1>
           <p className="start-sub">Oefeningen voor veld en keepers</p>
         </div>
+        <SyncIcoon />
         <button className="icoon-knop start-instellingen" aria-label="Instellingen" title="Instellingen" onClick={() => ga('/instellingen')}>
           <Icoon naam="instellingen" maat={26} />
         </button>

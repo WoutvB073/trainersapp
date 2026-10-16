@@ -4,6 +4,7 @@ import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalList
 import { CSS } from '@dnd-kit/utilities';
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
+import { DeelMetTeam } from '../online/Teams';
 import { Labels, meervoud } from '../../components/Labels';
 import { Miniatuur } from '../../components/Miniatuur';
 import { vindOefening } from '../../data/oefeningen';
@@ -149,6 +150,9 @@ export function TrainingBewerk({ id }: { id: string }) {
         </div>
 
         <Klaarzetten oefeningen={oefeningen} />
+        <div className="team-delen">
+          <DeelMetTeam soort="training" id={t.id} naam={trainingNaam(t)} />
+        </div>
 
         <div className="knoppenrij">
           <button className="knop" disabled={t.oefeningen.length === 0} onClick={() => void deel(t).then((m) => m && toon(m))}>

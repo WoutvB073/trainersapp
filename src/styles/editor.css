@@ -1138,3 +1138,219 @@ html.editor-open body {
   margin: 0;
   padding: 4px 0;
 }
+
+/* ---------- account en teams ---------- */
+
+.sync-regel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  color: var(--tekst-2);
+  font-size: 0.85rem;
+}
+
+.sync-regel.sync-wacht,
+.sync-regel.sync-offline,
+.sync-regel.sync-fout {
+  color: var(--waarschuwing);
+}
+
+.sync-icoon {
+  position: relative;
+  color: inherit;
+}
+
+.sync-icoon.let-op::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffb020;
+  box-shadow: 0 0 0 2px var(--primair);
+}
+
+.start-kop .start-instellingen {
+  margin-left: 0;
+}
+
+.start-kop .sync-icoon {
+  margin-left: auto;
+}
+
+.start-kop .sync-icoon + .start-instellingen {
+  margin-left: 0;
+}
+
+.start-kop > .start-instellingen:only-of-type {
+  margin-left: auto;
+}
+
+.account-blok {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.account-icoon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primair-licht);
+  color: var(--primair-donker);
+}
+
+.account-naam {
+  margin: 0;
+  font-family: var(--font-kop);
+  font-size: 1.4rem;
+}
+
+.account-kort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.account-form {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.account-form .knop-breed {
+  margin-top: 14px;
+}
+
+.melding-goed {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--makkelijker-licht);
+  color: var(--makkelijker);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.gevaar-blok h3 {
+  color: var(--fout);
+}
+
+.knop-gevaar {
+  border-color: var(--fout);
+  color: var(--fout);
+}
+
+.team-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.team-form input {
+  flex: 1;
+  min-width: 0;
+}
+
+.code-invoer {
+  font-family: var(--font-kop);
+  font-size: 1.4rem !important;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.team-code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.team-code .klein {
+  margin: 0;
+  color: var(--tekst-2);
+  font-size: 0.85rem;
+}
+
+.team-code .code {
+  margin: 0;
+  font-family: var(--font-kop);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--primair-tekst);
+}
+
+.team-code-knoppen {
+  display: flex;
+  gap: 8px;
+}
+
+.knop-klein {
+  min-height: 36px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+
+.lid-regel .training-acties {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 6px;
+}
+
+.team-onder {
+  margin-top: 24px;
+}
+
+.rij-knop {
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+}
+
+.gedeeld-met {
+  flex-basis: 100%;
+  margin: 2px 0 0;
+  color: var(--tekst-2);
+  font-size: 0.85rem;
+}
+
+.team-delen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+/* Gedeelde oefening in een team: het ene knopje naast de kaart, ook op een telefoon. */
+.eigen-regel.team-regel {
+  flex-direction: row;
+  align-items: center;
+  padding-right: 4px;
+}
+
+.eigen-regel.team-regel .eigen-kaart {
+  flex: 1;
+  min-width: 0;
+}
+
+.eigen-regel.team-regel .training-acties {
+  margin: 0;
+}
+
+.eigen-regel.team-regel .training-acties:empty {
+  display: none;
+}

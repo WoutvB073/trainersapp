@@ -11,9 +11,14 @@ import './styles/editor.css';
 import { App } from './App';
 import { startServiceWorker } from './engine/update';
 import { pasThemaToe } from './engine/thema';
+import { bewaardAccount, online } from './engine/account';
+import { onlineBeschikbaar } from './online/config';
 
 // Clubkleuren en licht/donker meteen toepassen (geen kleurflits bij het opstarten).
 pasThemaToe();
+
+// Was je ingelogd? Dan de online-module laden (synchroniseren en teams). Anders blijft Firebase weg.
+if (bewaardAccount() && onlineBeschikbaar()) void online().then((m) => m.startOnline());
 
 startServiceWorker();
 

@@ -1,14 +1,9 @@
 import { initializeApp, type FirebaseApp, type FirebaseOptions } from 'firebase/app';
 import { connectAuthEmulator, indexedDBLocalPersistence, initializeAuth, inMemoryPersistence, type Auth } from 'firebase/auth';
+import { emulatorGekozen, FIREBASE_CONFIG } from './config';
 import { connectFirestoreEmulator, initializeFirestore, memoryLocalCache, persistentLocalCache, persistentMultipleTabManager, type Firestore } from 'firebase/firestore';
 
-/**
- * Firebase-verbinding. De webconfig is openbaar bedoeld (geen geheim); de beveiliging zit in firestore.rules.
- * Zolang `FIREBASE_CONFIG` leeg is, staat online uit (de app werkt gewoon op het apparaat).
- * Emulator (tests): localStorage `trainersapp.emulator` = '1', of `verbind({ emulator: true })` in node.
- */
-export const FIREBASE_CONFIG: FirebaseOptions | null = null;
-
+/** Firebase-verbinding (config: ./config.ts). Emulator voor tests: zie emulatorGekozen. */
 const EMULATOR_CONFIG: FirebaseOptions = { apiKey: 'demo-sleutel', authDomain: 'demo-toptraining.firebaseapp.com', projectId: 'demo-toptraining', appId: 'demo-app' };
 
 export interface Verbinding {
@@ -17,17 +12,6 @@ export interface Verbinding {
   db: Firestore;
   emulator: boolean;
 }
-
-export function emulatorGekozen(): boolean {
-  try {
-    return typeof localStorage !== 'undefined' && localStorage.getItem('trainersapp.emulator') === '1';
-  } catch {
-    return false;
-  }
-}
-
-/** Is online (inloggen, teams) beschikbaar in deze versie? */
-export const onlineBeschikbaar = () => !!FIREBASE_CONFIG || emulatorGekozen();
 
 let enkel: Verbinding | null = null;
 

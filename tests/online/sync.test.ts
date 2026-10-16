@@ -16,13 +16,20 @@ describe('synchroniseren tussen twee toestellen (zelfde account)', () => {
     const lap = await toestel('test1@example.com');
     const a = lokaleOpslag();
     const b = lokaleOpslag();
-    const sa = synchroniseer(tel, a);
-    const sb = synchroniseer(lap, b);
+    const statusA: string[] = [];
+    const statusB: string[] = [];
+    const sa = synchroniseer(tel, a, (x) => statusA.push(x));
+    const sb = synchroniseer(lap, b, (x) => statusB.push(x));
     a.eigen.bewaar(oefening('eigen-1', 'Mijn rondo'));
     a.trainingen.bewaar({ ...nieuweTraining(1, 't1'), naam: 'Dinsdag', oefeningen: ['eigen-1'] });
     a.favorieten.wissel('veld-pt-derde-man');
     a.zetInstellingen({ thema: 'rood', modus: 'donker', aantallen: { spelers: 8, keepers: 1 } });
     await wachtTot(() => b.eigen.haal('eigen-1')?.naam === 'Mijn rondo' && b.trainingen.haal('t1')?.naam === 'Dinsdag' && b.favorieten.is('veld-pt-derde-man') && b.instellingen().thema === 'rood');
+    // En daarna komt het tot rust: geen eindeloos opnieuw schrijven (status 'klaar' op beide toestellen).
+    await wachtTot(() => statusA.at(-1) === 'klaar' && statusB.at(-1) === 'klaar', 10000, 'status klaar');
+    const aantal = statusA.length;
+    await new Promise((r) => setTimeout(r, 1500));
+    expect(statusA.length - aantal).toBeLessThanOrEqual(1);
     expect(b.instellingen()).toMatchObject({ modus: 'donker', aantallen: { spelers: 8, keepers: 1 } });
 
     // Aanpassen op de laptop → telefoon; verwijderen op de telefoon → laptop.

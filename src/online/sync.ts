@@ -52,6 +52,14 @@ export interface SyncDoelen {
 
 type Collectie = 'oefeningen' | 'trainingen';
 
+/** Instellingen in een vaste vorm (Firestore geeft velden in een andere volgorde terug). */
+function vast(i: Instellingen | undefined): Instellingen | undefined {
+  if (!i) return undefined;
+  const a = i.aantallen ? { spelers: Number(i.aantallen.spelers), keepers: Number(i.aantallen.keepers) } : null;
+  return { thema: String(i.thema), modus: String(i.modus), aantallen: a, gewijzigd: Number(i.gewijzigd) || 0 };
+}
+const gelijk = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+
 export class Synchronisatie {
   private stoppers: (() => void)[] = [];
   private bezigMetToepassen = false;
@@ -162,10 +170,11 @@ export class Synchronisatie {
       const w: Record<string, unknown> = {};
       if (v.onlineVeranderd) w.favorieten = v.online;
       // Instellingen: de nieuwste wint.
-      const lokaal = this.doelen.instellingen.lees();
-      const beste = nieuwste(lokaal, data.instellingen);
-      if (beste && beste !== lokaal && JSON.stringify(beste) !== JSON.stringify(lokaal)) this.toepassen(() => this.doelen.instellingen.zet(beste));
-      else if (!data.instellingen || JSON.stringify(data.instellingen) !== JSON.stringify(lokaal)) w.instellingen = lokaal;
+      const lokaal = vast(this.doelen.instellingen.lees())!;
+      const online = vast(data.instellingen);
+      const beste = nieuwste(lokaal, online)!;
+      if (!gelijk(beste, lokaal)) this.toepassen(() => this.doelen.instellingen.zet(beste));
+      else if (!gelijk(online, lokaal)) w.instellingen = lokaal;
       if (Object.keys(w).length) {
         data = { ...data, ...w };
         void setDoc(pad, w, { merge: true }).catch(() => this.zetFout());

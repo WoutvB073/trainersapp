@@ -3,6 +3,43 @@ import { Kop } from '../components/Kop';
 import { Icoon, type IcoonNaam } from '../components/Icoon';
 import { isDonker, kiesThema, THEMAS, themaVariabelen, useThema, type Modus } from '../engine/thema';
 import { APP_NAAM, VERSIE } from '../config';
+import { onlineBeschikbaar } from '../online/config';
+import { useOnlineStatus } from '../engine/account';
+import { ga } from '../router';
+import { SyncRegel } from './online/Account';
+
+/** Account en teams (alleen als online beschikbaar is). */
+function AccountBlok() {
+  const s = useOnlineStatus();
+  return (
+    <section className="blok">
+      <h3>Account en teams</h3>
+      {s.account ? (
+        <>
+          <p className="account-kort">
+            <Icoon naam="persoon" maat={20} />
+            <span>
+              <strong>{s.account.naam}</strong> · {s.account.email}
+            </span>
+          </p>
+          <SyncRegel />
+        </>
+      ) : (
+        <p className="klein">Log in om je oefeningen en trainingen op al je apparaten te hebben en ze met je team te delen. Zonder account werkt alles gewoon op dit apparaat.</p>
+      )}
+      <div className="knoppenrij">
+        <button className="knop knop-primair" onClick={() => ga('/account')}>
+          <Icoon naam="persoon" maat={18} />
+          {s.account ? 'Account' : 'Inloggen'}
+        </button>
+        <button className="knop" onClick={() => ga('/teams')}>
+          <Icoon naam="team" maat={18} />
+          Teams
+        </button>
+      </div>
+    </section>
+  );
+}
 
 const MODI: { modus: Modus; naam: string; icoon: IcoonNaam }[] = [
   { modus: 'licht', naam: 'Licht', icoon: 'zon' },
@@ -18,6 +55,7 @@ export function Instellingen() {
     <div className="pagina">
       <Kop titel="Instellingen" ouder="/" />
       <main className="inhoud smal">
+        {onlineBeschikbaar() && <AccountBlok />}
         <section className="blok">
           <h3>Clubkleuren</h3>
           <p className="klein">De kleuren van de app. Het veld en de teamkleuren in de animaties blijven altijd hetzelfde.</p>
