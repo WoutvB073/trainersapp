@@ -322,8 +322,22 @@ html.editor-open body {
   font-family: var(--font-kop);
   font-size: 1.25rem;
   font-weight: 700;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1.1;
+  /* Lange naam: op twee regels, daarna netjes afgekapt. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  .editor-titel {
+    font-size: 1.02rem;
+  }
+
+  .editor-kop .editor-knop {
+    width: 38px;
+  }
 }
 
 .editor-knop {

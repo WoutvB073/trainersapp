@@ -85,8 +85,49 @@ function alleActies(stappen: Stap[]): Actie[] {
 const PERSONEN = ['speler', 'keeper', 'trainer'];
 const r2 = (x: number) => x.toFixed(1);
 
+/** Eén fysieke fout: technische tekst (tests), begrijpelijke uitleg (editor), tijdstip en wie de bal speelt of loopt. */
+export interface FysiekeMelding {
+  tekst: string;
+  uitleg: string;
+  t: number;
+  wie?: string;
+}
+
+/** Naam van materiaal in een zin ("de ladder"). */
+const NAAM: Partial<Record<VeldObject['soort'], string>> = {
+  ladder: 'de ladder',
+  horde: 'een horde',
+  stok: 'een stok',
+  ring: 'een ring',
+  pion: 'een pion',
+  paaltje: 'een paaltje',
+  pop: 'een pop',
+  bank: 'een bank',
+  rebounder: 'de rebounder',
+  muurtje: 'het muurtje',
+  net: 'het net of lint',
+  kooi: 'de boarding',
+  goal: 'het goal',
+  'klein-goal': 'het goal',
+};
+
 export function fysiekeFouten(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(tekening)): string[] {
-  const fouten = new Set<string>();
+  return fysiekeMeldingen(tekening, tl).map((m) => m.tekst);
+}
+
+export function fysiekeMeldingen(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(tekening)): FysiekeMelding[] {
+  const fouten = new Map<string, FysiekeMelding>();
+  const persoonNaam = (id: string) => {
+    const o = tekening.objecten.find((x) => x.id === id);
+    if (!o) return id;
+    if (o.soort === 'keeper') return o.nummer && tekening.objecten.filter((x) => x.soort === 'keeper').length > 1 ? `keeper ${o.nummer}` : 'de keeper';
+    if (o.soort === 'trainer') return 'de trainer';
+    return o.nummer ? `speler ${o.nummer}` : 'een speler';
+  };
+  const naam = (o: VeldObject) => NAAM[o.soort] ?? o.soort;
+  const meld = (tekst: string, t: number, uitleg: string, wie?: string) => {
+    if (!fouten.has(tekst)) fouten.set(tekst, { tekst, t, uitleg, wie });
+  };
   const materiaal = tekening.objecten.filter((o) => vormen(o).length || o.soort === 'kooi');
   const goals = tekening.objecten.filter((o) => o.soort === 'goal' || o.soort === 'klein-goal');
   const personen = tekening.objecten.filter((o) => PERSONEN.includes(o.soort)).map((o) => o.id);
@@ -116,7 +157,7 @@ export function fysiekeFouten(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(te
             if (vorige) {
               const qv = lokaal(o, vorige.p);
               const was = Math.abs(qv[0]) < w && Math.abs(qv[1]) < l;
-              if (was !== binnen && h < 0.6) fouten.add(`bal ${bal} gaat laag over de boarding van ${o.id} (t=${r2(t)})`);
+              if (was !== binnen && h < 0.6) meld(`bal ${bal} gaat laag over de boarding van ${o.id} (t=${r2(t)})`, t, 'De bal gaat laag over de boarding', e.passeerder);
             }
             continue;
           }
@@ -126,11 +167,11 @@ export function fysiekeFouten(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(te
               // Net/lint: bij het oversteken hoog genoeg.
               if (vorige && Math.abs(q[0]) < v.lijn + BAL_R) {
                 const qv = lokaal(o, vorige.p);
-                if (Math.sign(qv[1]) !== Math.sign(q[1]) && Math.min(h, vorige.h) < v.hoogte + 0.05) fouten.add(`bal ${bal} gaat door ${o.id} (${o.soort}) op ${h.toFixed(2)} m (t=${r2(t)})`);
+                if (Math.sign(qv[1]) !== Math.sign(q[1]) && Math.min(h, vorige.h) < v.hoogte + 0.05) meld(`bal ${bal} gaat door ${o.id} (${o.soort}) op ${h.toFixed(2)} m (t=${r2(t)})`, t, `De bal gaat door ${naam(o)} (te laag)`, e.passeerder);
               }
               continue;
             }
-            if (afstandTot(v, q) < BAL_R && h < v.hoogte + BAL_R) fouten.add(`bal ${bal} gaat door/over ${o.id} (${o.soort}) op ${h.toFixed(2)} m (t=${r2(t)})`);
+            if (afstandTot(v, q) < BAL_R && h < v.hoogte + BAL_R) meld(`bal ${bal} gaat door/over ${o.id} (${o.soort}) op ${h.toFixed(2)} m (t=${r2(t)})`, t, `De bal gaat door of laag over ${naam(o)}`, e.passeerder);
           }
         }
         // Goal: alleen via de opening erin.
@@ -146,7 +187,7 @@ export function fysiekeFouten(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(te
             const qv = lokaal(g, vorige.p);
             const wasBinnen = Math.abs(qv[0]) < B && qv[1] < 0 && qv[1] > -D && vorige.h < H;
             const viaOpening = qv[1] >= 0 && Math.abs(qv[0]) < B + 0.15;
-            if (!wasBinnen && !viaOpening) fouten.add(`bal ${bal} gaat door het net van ${g.id} (zij- of achterkant, t=${r2(t)})`);
+            if (!wasBinnen && !viaOpening) meld(`bal ${bal} gaat door het net van ${g.id} (zij- of achterkant, t=${r2(t)})`, t, 'De bal gaat via de zij- of achterkant het goal in', e.passeerder);
           }
         }
         // Spelers die de bal niet spelen of krijgen.
@@ -156,7 +197,7 @@ export function fysiekeFouten(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(te
             const ps = s.objecten.get(id)!;
             // Liggend, of bewust tussen de benen door (panna).
             if (ps.liggen > 0.3 || panna.has(`${e.passeerder}>${id}`)) continue;
-            if (Math.hypot(ps.x - p[0], ps.y - p[1]) < LIJF + BAL_R - 0.03) fouten.add(`bal ${bal} gaat door ${id} heen (t=${r2(t)})`);
+            if (Math.hypot(ps.x - p[0], ps.y - p[1]) < LIJF + BAL_R - 0.03) meld(`bal ${bal} gaat door ${id} heen (t=${r2(t)})`, t, `De bal gaat dwars door ${persoonNaam(id)} heen`, e.passeerder ?? undefined);
           }
         }
         vorige = { p, h };
@@ -183,8 +224,8 @@ export function fysiekeFouten(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(te
           const q = lokaal(o, p);
           const qv = lokaal(o, vp);
           if (Math.abs(q[0]) < w && Math.abs(q[1]) < l) {
-            if (!(Math.abs(qv[0]) < w && Math.abs(qv[1]) < l)) fouten.add(`${id} loopt door de boarding van ${o.id} (t=${r2(t)})`);
-          } else if (Math.abs(qv[0]) < w && Math.abs(qv[1]) < l) fouten.add(`${id} loopt door de boarding van ${o.id} (t=${r2(t)})`);
+            if (!(Math.abs(qv[0]) < w && Math.abs(qv[1]) < l)) meld(`${id} loopt door de boarding van ${o.id} (t=${r2(t)})`, t, `${persoonNaam(id)} loopt door de boarding`, id);
+          } else if (Math.abs(qv[0]) < w && Math.abs(qv[1]) < l) meld(`${id} loopt door de boarding van ${o.id} (t=${r2(t)})`, t, `${persoonNaam(id)} loopt door de boarding`, id);
           continue;
         }
         for (const v of vormen(o)) {
@@ -192,20 +233,20 @@ export function fysiekeFouten(tekening: Tekening, tl: Tijdlijn = maakTijdlijn(te
           if (v.lijn !== undefined) {
             if (vp && Math.abs(q[0]) < v.lijn) {
               const qv = lokaal(o, vp);
-              if (Math.sign(qv[1]) !== Math.sign(q[1])) fouten.add(`${id} loopt door ${o.id} (${o.soort}, t=${r2(t)})`);
+              if (Math.sign(qv[1]) !== Math.sign(q[1])) meld(`${id} loopt door ${o.id} (${o.soort}, t=${r2(t)})`, t, `${persoonNaam(id)} loopt door ${naam(o)}`, id);
             }
             continue;
           }
           const d = afstandTot(v, q);
           if (o.soort === 'ladder' || o.soort === 'horde' || o.soort === 'ring' || o.soort === 'stok') {
-            if (d < LIJF * 0.6 && !parcours) fouten.add(`${id} staat/loopt in ${o.id} (${o.soort}) zonder parcours-loopwijze (t=${r2(t)})`);
+            if (d < LIJF * 0.6 && !parcours) meld(`${id} staat/loopt in ${o.id} (${o.soort}) zonder parcours-loopwijze (t=${r2(t)})`, t, `${persoonNaam(id)} loopt door ${naam(o)} zonder voetenwerk of sprongen`, id);
           } else if (o.soort !== 'pion' && o.soort !== 'paaltje' && d < LIJF) {
             // Pionnen en paaltjes controleert de afstandstest al (0,5 m).
-            fouten.add(`${id} loopt door ${o.id} (${o.soort}, t=${r2(t)})`);
+            meld(`${id} loopt door ${o.id} (${o.soort}, t=${r2(t)})`, t, `${persoonNaam(id)} loopt door ${naam(o)}`, id);
           }
         }
       }
     }
   }
-  return [...fouten];
+  return [...fouten.values()];
 }

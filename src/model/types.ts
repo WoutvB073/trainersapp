@@ -107,6 +107,20 @@ export interface Lijn {
   /** Editor: begin of eind vast aan een object (bv. een speler); de lijn beweegt mee als dat object verschuift. */
   van?: string;
   naar?: string;
+  /**
+   * Editor-animatie: stapnummer (1, 2, 3 …). Lijnen met hetzelfde nummer gebeuren tegelijk. De app zet de lijnen om naar
+   * gewone animatiestappen (src/editor/animatie.ts): looplijn = lopen, dribbellijn = dribbelen, ballijn = pass, schot op
+   * een goal of kaatsen tegen een rebounder/pop. Zonder nummer is het alleen een getekende lijn.
+   */
+  stap?: number;
+  /** Looplijn: loopwijze (standaard normaal; over een ladder/horde/ring vanzelf voetenwerk/hordes/huppelen). */
+  manier?: 'sprint' | 'zijwaarts' | 'achteruit';
+  /** Ballijn: hoogte (standaard grond bij een pass, laag bij een schot). */
+  hoogte?: 'grond' | 'halfhoog' | 'hoog';
+  /** Ballijn naar een goal (schot): afloop. Standaard: keeper vangt (als er een keeper is), anders goal. */
+  afloop?: 'goal' | 'vangt' | 'duikt' | 'naast';
+  /** Wachttijd in seconden vóór deze stap (de langste van de lijnen met dit nummer telt). */
+  wacht?: number;
 }
 
 interface ActieBasis {
@@ -424,6 +438,8 @@ export interface Tekening {
   animatie?: Stap[];
   /** Beginstand van de 3D-camera (standaard schuin). */
   camera?: CameraStand;
+  /** Editor-animatie: het patroon herhalen voor de volgende spelers in de rij (zie src/editor/animatie.ts). */
+  herhaalRij?: boolean;
 }
 
 export interface Oefening {

@@ -128,8 +128,10 @@ function Maat({ label, waarde, zet }: { label: string; waarde: number; zet: (v: 
 export function NieuweOefening() {
   const [soort, setSoort] = useState<Soort>('veld');
   const [veld, setVeld] = useState<VeldType>('leeg');
-  const [breedte, setBreedte] = useState(30);
-  const [lengte, setLengte] = useState(20);
+  // Telefoon: staand veld (past beter op het scherm); tablet en laptop: liggend.
+  const [staand] = useState(() => typeof window !== 'undefined' && window.innerWidth < 600 && window.innerHeight > window.innerWidth);
+  const [breedte, setBreedte] = useState(staand ? 20 : 30);
+  const [lengte, setLengte] = useState(staand ? 30 : 20);
 
   const maak = () => {
     const o = eigenOefeningen.bewaar(nieuweEigen(nieuweTekening(veld, breedte, lengte), soort));

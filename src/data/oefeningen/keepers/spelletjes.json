@@ -831,7 +831,12 @@
     "id": "keeper-sp-keepersrondo",
     "soort": "keeper",
     "naam": "Keepersrondo",
-    "categorieen": ["spelletjes", "passing", "laag-duiken"],
+    "categorieen": [
+      "spelletjes",
+      "passing",
+      "laag-duiken",
+      "warming-up"
+    ],
     "uitleg": "Rondo voor keepers. De buitenkeepers spelen de bal met de voet rond, de keeper in het midden probeert hem te onderscheppen en mag daarbij zijn handen gebruiken: wegduiken, plukken of vangen. Wie de bal verliest of wiens pass gevangen wordt, gaat het midden in; de onderschepper wordt buitenkeeper.",
     "organisatie": "Kleinste vorm: 3 tegen 1 in een driehoek met zijden van 9 m (hoedjes op de hoeken). Met 3 keepers speelt de trainer mee als derde buitenspeler. Met 4 keepers: 3 tegen 1 zonder trainer of 4 tegen 1 in een vierkant van 9 × 9 m. Met 7 keepers: 5 tegen 2 in een vak van 12 × 12 m.",
     "benodigdheden": ["3 hoedjes", "1 bal (reserveballen bij de trainer)"],
