@@ -5,7 +5,7 @@ import { benodigdheden, dupliceer, kiesbaar, naarCode, nieuweTraining, pastBij, 
 import type { Oefening } from '../src/model/types';
 
 const oef = (id: string, extra: Partial<Oefening> = {}): Oefening =>
-  ({ id, soort: 'veld', naam: id, categorieen: ['afwerken'], uitleg: '', benodigdheden: [], spelersNodig: 2, keepersNodig: 0, coachpunten: [], variaties: { makkelijker: [], moeilijker: [] }, tekening: { veld: { type: 'leeg' }, objecten: [] }, ...extra }) as Oefening;
+  ({ id, soort: 'veld', naam: id, categorieen: ['afwerken'], uitleg: '', benodigdheden: [], spelersNodig: 2, keepersNodig: 0, doorwisselbaar: true, coachpunten: [], variaties: { makkelijker: [], moeilijker: [] }, tekening: { veld: { type: 'leeg' }, objecten: [] }, ...extra }) as Oefening;
 
 describe('filter op aantallen', () => {
   it('minder nodig is prima, meer nodig valt af', () => {

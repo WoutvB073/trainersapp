@@ -9,6 +9,7 @@
     "benodigdheden": ["Goal", "Ballen", "Hoedjes voor de flank"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Bal ver weg: één à twee meter uit het doel en meer naar het midden", "Bal bij de achterlijn: eerste paal dicht, maar niet tegen de paal aan plakken", "Lage voorzet: naar de bal toe stappen en hem vóór de spits pakken"],
     "variaties": {
       "makkelijker": ["Trainer staat stil op drie plekken in plaats van te dribbelen", "Voorzet met de hand gooien"],
@@ -65,9 +66,7 @@
             {
               "type": "dribbel",
               "wie": "t1",
-              "via": [
-                [55, 13]
-              ],
+              "via": [[55, 13]],
               "naar": [55, 5.5]
             }
           ]
@@ -119,6 +118,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Eerst kijken, dan gaan: pas vertrekken als je weet waar de bal komt",
       "Afzetten op één been, de andere knie omhoog ter bescherming",
@@ -240,6 +240,7 @@
     "benodigdheden": ["Goal", "2 ballen", "2 hoedjes"],
     "spelersNodig": 0,
     "keepersNodig": 3,
+    "doorwisselbaar": true,
     "coachpunten": ["Na elke bal je positie aanpassen aan de kant van de nieuwe voorzet", "Lichaam open naar het veld: schuin staan, zodat je de bal en het doel ziet", "Uitkomen en vangen op het hoogste punt, met de knie omhoog"],
     "variaties": {
       "makkelijker": ["Gooien in plaats van trappen", "Steeds van dezelfde kant"],
@@ -386,9 +387,7 @@
             {
               "type": "loop",
               "wie": "k3",
-              "via": [
-                [50, 2.5]
-              ],
+              "via": [[50, 2.5]],
               "naar": [34, 1.5]
             },
             {
@@ -416,6 +415,7 @@
     "benodigdheden": ["Goal", "3 poppen of dummies", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Twee vuisten: vuisten tegen elkaar, armen gestrekt, de bal hoog en ver terug wegstompen", "Eén vuist: de bal in zijn vlucht doorstompen naar de verre kant", "Ook bij stompen: afzetten op één been met de knie omhoog en het hoogste punt zoeken"],
     "variaties": {
       "makkelijker": ["Zonder poppen, eerst alleen techniek", "Bal met de hand voorgooien"],
@@ -539,6 +539,7 @@
     "benodigdheden": ["Goal", "Ballen", "Eventueel een stootkussen voor de tegenstander"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Ga er vóór: de kortste weg naar de bal is tussen de tegenstander en de bal door", "Knie omhoog aan de kant van de tegenstander", "Na de vang de bal stevig tegen de borst en sluiten (niet direct weer uitgooien in de drukte)"],
     "variaties": {
       "makkelijker": ["Tegenstander springt niet mee, staat alleen in de weg", "Bal met de hand voorgooien"],
@@ -643,9 +644,7 @@
             {
               "type": "loop",
               "wie": "k2",
-              "via": [
-                [31.4, 4]
-              ],
+              "via": [[31.4, 4]],
               "naar": [36.4, 1.1]
             },
             {
@@ -694,6 +693,7 @@
     "benodigdheden": ["Goal", "3 ballen (of meer)", "Hoedjes voor de plekken"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Hoe verder de voorzet, hoe verder je uit het doel en hoe meer naar het midden", "Bij de achterlijn: eerste paal dicht, lage bal onderscheppen", "Verre voorzet: wachten tot je de vlucht kunt inschatten, dan pas versnellen"],
     "variaties": {
       "makkelijker": ["Alleen van twee plekken", "Gooien in plaats van trappen"],
@@ -859,6 +859,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Stompen: hoog en ver, weg van het doel", "Na het stompen niet blijven kijken: direct herstellen en positie kiezen tussen bal en doel", "1 op 1: uitlopen, afremmen en groot maken"],
     "variaties": {
       "makkelijker": ["Bal vangen in plaats van stompen", "Aanvaller wacht 2 seconden"],

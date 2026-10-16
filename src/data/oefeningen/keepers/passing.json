@@ -9,6 +9,7 @@
     "benodigdheden": ["Goal", "4 pionnen", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Open staan: lichaam schuin, zodat je het veld ziet en niet naar je eigen doel kijkt", "Aannemen met de binnenkant, de bal opzij meenemen (nooit richting het doel)", "Standbeen naast de bal, enkel strak, door de bal heen trappen"],
     "variaties": {
       "makkelijker": ["Bal rustig rollen, eerst altijd aannemen", "Grotere poortjes"],
@@ -175,6 +176,7 @@
     "benodigdheden": ["Goal", "4 pionnen", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Vóór de bal komt: kijk over je schouder waar de druk is", "Speel weg van de druk, in één keer", "Twijfel? Dan ver en hoog weg, nooit dwars voor je eigen doel"],
     "variaties": {
       "makkelijker": ["Trainer loopt pas als de bal bij de keeper is", "Eén aanname mag"],
@@ -259,9 +261,7 @@
             {
               "type": "loop",
               "wie": "t1",
-              "via": [
-                [30.6, 9]
-              ],
+              "via": [[30.6, 9]],
               "naar": [32.4, 5.6],
               "manier": "sprint",
               "start": 0.3
@@ -296,6 +296,7 @@
     "benodigdheden": ["Hoedjes voor twee zones", "1–2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Bal recht voor het trapbeen laten vallen, niet opgooien", "Volley: enkel strak, door de bal heen; dropkick: raken op het moment dat hij de grond raakt", "Na de trap het been laten uitzwaaien in de richting van de ontvanger"],
     "variaties": {
       "makkelijker": ["Afstand 25 m", "Grotere zones"],
@@ -400,6 +401,7 @@
     "benodigdheden": ["Goal", "Hoedjes voor twee zones", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Aanloop schuin van achteren, de laatste pas wat langer", "Standbeen naast de bal, lichaam iets achterover voor een hoge bal", "Raak de bal met de wreef iets onder het midden"],
     "variaties": {
       "makkelijker": ["Zones dichterbij (20 m)", "Bal op een klein heuveltje gras of op een hoedje leggen"],
@@ -496,9 +498,7 @@
             {
               "type": "loop",
               "wie": "k1",
-              "via": [
-                [34, 3.4]
-              ],
+              "via": [[34, 3.4]],
               "naar": [31.7, 3.2]
             }
           ]
@@ -541,6 +541,7 @@
     "benodigdheden": ["2 pionnen", "Hoedjes voor twee zones", "3 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Rollen: diep door de knieën, bal laag en vlak loslaten (geen stuit)", "Zwaaiworp: arm gestrekt opzij, de bal vlak laten 'zeilen'", "Bovenhands: stap in met het andere been, arm gestrekt over de schouder, de bal loslaten boven het hoofd"],
     "variaties": {
       "makkelijker": ["Kortere afstanden (8, 14 en 20 m)", "Grotere poortjes en zones"],
@@ -702,6 +703,7 @@
     "benodigdheden": ["Goal", "Hoedjes voor twee zones", "2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 3,
+    "doorwisselbaar": true,
     "coachpunten": ["Kijk eerst kort: is daar ruimte, dan snel en zuiver rollen", "Kort gedekt? Niet forceren: kies de lange bal", "Na de beslissing zonder aarzelen uitvoeren"],
     "variaties": {
       "makkelijker": ["Trainer zegt vooraf of de korte gedekt is", "Lange bal mag ook gegooid worden"],
@@ -849,6 +851,7 @@
     "benodigdheden": ["Goal", "2 hoedjes", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Na de vang meteen opkijken: waar is de vrije medespeler?", "Gooi vóór de loper uit, niet op hem", "Snelheid boven alles, maar de worp moet wel aankomen"],
     "variaties": {
       "makkelijker": ["Loper staat stil", "Rollend in plaats van bovenhands"],
@@ -967,6 +970,7 @@
     "benodigdheden": ["Goal", "2 pionnen", "2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Aanname opzij, weg van het doel; daarna opkijken", "Na de pass achteruit terug, met je gezicht naar de bal", "Klaar staan vóór het schot: basishouding, gewicht naar voren"],
     "variaties": {
       "makkelijker": ["Na de pass mag de keeper rustig terug, schot pas als hij staat", "Schot op het lichaam"],
@@ -1118,6 +1122,7 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Kruispas: achterste been voor langs, schouders blijven naar het veld", "Vangen en dan pas draaien naar de worprichting", "Zwaaiworp: arm gestrekt opzij, bal vlak laten gaan"],
     "variaties": {
       "makkelijker": ["Schuifpassen in plaats van kruispassen", "Rollen in plaats van zwaaien"],

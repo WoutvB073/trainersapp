@@ -9,6 +9,7 @@
     "benodigdheden": ["4 kleine doeltjes", "4 pionnen", "ballen"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Met snelheid op de verdediger af, dan pas de actie", "Kijk op: welk doeltje laat de verdediger open?", "Verdediger: niet duiken, op je tenen en schuin staan, de aanvaller naar één kant dwingen"],
     "variaties": {
       "makkelijker": ["Breder vak (15 × 18 m)", "Eén groot doeltje per kant"],
@@ -176,6 +177,7 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Balbezitter: dribbel op de verdediger af tot hij moet kiezen", "Medespeler: houd breedte, niet naar de bal toe lopen", "Na de pass meteen diep: de kaats komt in de loop"],
     "variaties": {
       "makkelijker": ["Verdediger start pas als de eerste pass gegeven is", "Zonder keeper op een groter doel"],
@@ -333,6 +335,7 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Zonder bal: loop in de rug van je tegenstander, niet naar de bal toe", "Speel de bal in de loop van je medespeler", "Verdedigen: één zet druk, de ander dekt de loopactie"],
     "variaties": {
       "makkelijker": ["Groter vak (25 × 18 m)", "Geen wissel na een goal, maar na 2 minuten"],
@@ -569,6 +572,8 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 1,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: na elke aanval wisselt er een groepje, of maak een tweede veld.",
     "coachpunten": ["Aanvallers: snel het overtal benutten, de bal verplaatsen naar de vrije man", "Verdedigers: dek de gevaarlijkste lijn af en wacht op de fout", "Bij balwinst: eerste pass vooruit, en direct meelopen"],
     "variaties": {
       "makkelijker": ["3 tegen 1", "Verdedigers scoren met een pass door een poortje in plaats van op doeltjes"],
@@ -851,6 +856,8 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 7 spelers: een joker die met de balbezitter meespeelt. Met 8 of meer: 4 tegen 4 of een tweede veldje.",
     "coachpunten": ["Kijk vóór je de bal krijgt al naar het verre doeltje", "Breed staan als je de bal hebt: zo moet de tegenstander ver schuiven", "Verdedigend als blok meeschuiven naar de balkant"],
     "variaties": {
       "makkelijker": ["Groter vak (30 × 24 m)", "4 tegen 3 met een joker"],
@@ -982,7 +989,7 @@
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [10, 12.5],
+              "naar": [10.6, 11],
               "start": 0.3,
               "duur": 1
             },
@@ -1030,7 +1037,7 @@
               "wie": "b1",
               "op": "a1",
               "afstand": 2,
-              "start": 0.3
+              "start": 0.6
             }
           ]
         },
@@ -1099,6 +1106,8 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 2,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 9 spelers: een joker. Met meer: 5 tegen 5 op een groter veld, of wisselen om de 3 minuten.",
     "coachpunten": ["Opbouw: breed staan en de keeper laten uitgooien naar de vrije man", "Diepe spits: kom kort, leg af en ga dan door", "Na balverlies direct druk zetten met de dichtstbijzijnde speler"],
     "variaties": {
       "makkelijker": ["5 tegen 4 met een joker", "Keeper mag ook meespelen als veldspeler"],
@@ -1319,7 +1328,7 @@
             {
               "type": "schot",
               "van": "a3",
-              "naar": [12.2, 0.4],
+              "naar": [16.2, 0.4],
               "afloop": "goal",
               "direct": true
             }
@@ -1347,6 +1356,8 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 2,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 11 spelers: een joker. Met meer: wisselspelers om de 3 minuten, of twee velden naast elkaar.",
     "coachpunten": ["Maak het veld breed: één speler per flank", "Voorzet: kijk eerst wie er inloopt (eerste paal, tweede paal)", "Spitsen: niet te vroeg in de zestien, kom met snelheid"],
     "variaties": {
       "makkelijker": ["In de flankzone mag niet verdedigd worden", "Flankzones breder (8 m)"],
@@ -1461,8 +1472,8 @@
           "soort": "speler",
           "team": "B",
           "nummer": 9,
-          "x": 15,
-          "y": 29,
+          "x": 12.5,
+          "y": 28.5,
           "kijkrichting": 90
         },
         {
@@ -1652,6 +1663,8 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: extra kaatsers op de zijlijn, of 4 tegen 4 met de kaatsers erbij.",
     "coachpunten": ["Na je pass naar de kaatser direct versnellen: de bal komt in je loop terug", "Kaatsers: in één keer terugspelen, op de loopvoet", "Verdedigers: volg de loper, niet de bal"],
     "variaties": {
       "makkelijker": ["Ook zonder kaats scoren mag, met kaats telt dubbel", "Kaatsers mogen twee keer raken"],
@@ -1862,6 +1875,8 @@
     "benodigdheden": ["4 pionnen", "1 bal", "hesjes"],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 9 spelers: een joker. Met meer: 5 tegen 5 op een breder veld, of een tweede veldje.",
     "coachpunten": ["Zoek de ruimte naast of achter de laatste verdediger", "Met bal: kies het moment om te versnellen", "Verdedigen: blijf samen, laat geen gaten tussen elkaar"],
     "variaties": {
       "makkelijker": ["Breder veld (30 m)", "Scoren mag ook met een pass naar een speler achter de lijn"],
@@ -2096,6 +2111,7 @@
     "benodigdheden": ["Goal", "Ballen", "Hesjes"],
     "spelersNodig": 4,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["1 tegen 1: met snelheid op de verdediger af, actie en dan versnellen", "2 tegen 1: dribbel tot de verdediger moet kiezen, dan pas passen", "Meelopende aanvaller: breedte houden en niet te vroeg naar binnen"],
     "variaties": {
       "makkelijker": ["Eerste verdediger verdedigt half (alleen meelopen)", "Tweede verdediger start pas als de pass komt"],

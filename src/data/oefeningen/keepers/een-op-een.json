@@ -9,6 +9,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Uitlopen op de lijn tussen bal en midden van het doel", "Afremmen met kleine pasjes en stilstaan op het moment van het schot", "In basishouding: gewicht naar voren, handen laag naast het lichaam"],
     "variaties": {
       "makkelijker": ["Aanvaller dribbelt langzaam", "Schot pas na een teken van de trainer"],
@@ -111,6 +112,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Pas springen als de aanvaller schiet, niet ervoor", "Armen en benen wijd, handen open en naar voren", "Lichaam iets naar voren, zodat de bal weg van het doel kaatst"],
     "variaties": {
       "makkelijker": ["Zachte schoten, eerst alleen de houding", "Tegen een stilstaande bal: trainer trapt van 4 m"],
@@ -215,6 +217,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Knie zakt naar de kant van het schot, onderbeen dwars achter de bal", "Lichaam rechtop en armen wijd: de keeper is één muur", "Niet te vroeg zakken: blijf in basishouding tot het schot komt"],
     "variaties": {
       "makkelijker": ["Aanvaller schiet vanuit stilstand van 5 m", "Rustig schieten"],
@@ -292,7 +295,7 @@
               "hoogte": "grond",
               "blokt": "k1",
               "blokSoort": "knie",
-              "afloopNaar": [38.4, 8.2]
+              "afloopNaar": [40.6, 6.4]
             }
           ]
         },
@@ -305,15 +308,13 @@
             {
               "type": "loop",
               "wie": "k2",
-              "via": [
-                [32.4, 4.5]
-              ],
+              "via": [[32.4, 4.5]],
               "naar": [34.6, 1.5]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [37.8, 8.8],
+              "naar": [40.1, 6],
               "start": 0.7
             }
           ]
@@ -353,6 +354,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Wachten op de te grote aanname: dan pas gaan", "Laag en zijwaarts duiken, handen eerst naar de bal, hoofd achter de armen", "Lichaam dwars voor de bal, zodat de aanvaller er niet langs kan"],
     "variaties": {
       "makkelijker": ["Trainer speelt de bal duidelijk te ver", "Langzaam dribbelen"],
@@ -468,6 +470,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Meteen beslissen: kan ik de bal eerder halen? Dan gaan, zonder twijfel", "Laatste meters: laag worden en met het lichaam dwars op de bal", "Roepen 'keeper!' en de bal vastklemmen"],
     "variaties": {
       "makkelijker": ["Bal dichter bij het doel", "Aanvaller start verder weg"],
@@ -576,6 +579,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["De eerste paal moet dicht: daar mag je nooit gepasseerd worden", "Blijf op de lijn tussen bal en midden van het doel, en kom iets naar voren", "Lage bal bij de paal: wegstompen naast het doel, niet terug voor het doel"],
     "variaties": {
       "makkelijker": ["Aanvaller staat stil en schiet", "Alleen schoten op de eerste paal"],
@@ -633,9 +637,7 @@
             {
               "type": "dribbel",
               "wie": "t1",
-              "via": [
-                [44, 10]
-              ],
+              "via": [[44, 10]],
               "naar": [41.6, 7]
             }
           ]
@@ -671,6 +673,7 @@
     "benodigdheden": ["Goal", "2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Knieblok: knie naar de kant van het schot, armen wijd", "Opstaan en meteen kijken waar de volgende bal vandaan komt", "Voorzet: inschatten, uitkomen, vangen op het hoogste punt"],
     "variaties": {
       "makkelijker": ["Na het knieblok even rust voor de voorzet", "Voorzet met de hand gooien"],
@@ -812,6 +815,7 @@
     "benodigdheden": ["Goal", "2 hoedjes", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Meteen beslissen en zonder twijfel gaan", "Opstaan en opkijken: waar is de vrije medespeler?", "Gooi vóór de loper uit, niet op hem"],
     "variaties": {
       "makkelijker": ["Aanvaller start verder weg", "Uitgooien naar een stilstaande medespeler"],

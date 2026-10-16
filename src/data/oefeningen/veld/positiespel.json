@@ -9,6 +9,8 @@
     "benodigdheden": ["3 hoedjes", "1 bal", "1 hesje"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 5 spelers: 4 tegen 1 in een vierkant. Met 6 of meer: een tweede rondo, of 4 tegen 2.",
     "coachpunten": ["Altijd twee aanspeelmogelijkheden geven: beweeg weg van de middenman", "Speel de bal naar de speler die de middenman niet afschermt", "Middenman: sluit met je lichaam één passlijn af en dwing de pass naar de andere kant"],
     "variaties": {
       "makkelijker": ["Grotere driehoek (12 m)", "Middenman mag alleen onderscheppen, niet tackelen"],
@@ -172,6 +174,8 @@
     "benodigdheden": ["4 pionnen", "1 bal", "2 hesjes"],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 7 spelers: een middenman erbij (5 tegen 2). Met meer: een tweede rondo.",
     "coachpunten": ["Buitenspelers: open staan, en verplaatsen zodat de passlijn niet door een verdediger loopt", "Zoek de 'splitpass' door het midden als de verdedigers te ver uit elkaar staan", "Verdedigers: samenwerken – één zet druk, de ander dekt de gevaarlijkste lijn"],
     "variaties": {
       "makkelijker": ["Groter vak (12 × 12 m)", "Vrij aantal aanrakingen", "4 tegen 1"],
@@ -372,6 +376,8 @@
     "benodigdheden": ["4 pionnen", "1 bal", "2 hesjes"],
     "spelersNodig": 7,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: een tweede rondo, of 6 tegen 3 in een groter vak.",
     "coachpunten": ["Middenman: blijf in de rug van de verdedigers en vraag de bal tussen de lijnen", "Speel de middenman alleen aan als hij open staat; anders eerst de bal verplaatsen", "Verdedigers: dek eerst de middenman af, zet daarna pas druk"],
     "variaties": {
       "makkelijker": ["Vrij aantal aanrakingen", "Groter vak (14 × 14 m)"],
@@ -467,8 +473,8 @@
           "soort": "speler",
           "team": "B",
           "nummer": 6,
-          "x": 5.2,
-          "y": 10.4
+          "x": 4,
+          "y": 12
         },
         {
           "id": "d2",
@@ -563,7 +569,7 @@
               "type": "druk",
               "wie": "d1",
               "op": "a4",
-              "start": 0.15
+              "start": 0.4
             }
           ]
         },
@@ -616,6 +622,8 @@
     "benodigdheden": ["4 pionnen", "1 bal", "hesjes in 2 kleuren + 2 voor de jokers"],
     "spelersNodig": 10,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 11 of 12 spelers: 5 tegen 5 met 2 jokers. Met meer: extra jokers op de zijlijn.",
     "coachpunten": ["Maak het veld groot bij balbezit: breed en diep staan", "Gebruik de jokers om de bal te verplaatsen naar de vrije kant", "Bij balverlies direct druk zetten (omschakelen)"],
     "variaties": {
       "makkelijker": ["Jokers ook in het vak", "Vijf passes is een punt", "Groter vak (25 × 25 m)"],
@@ -875,6 +883,8 @@
     "benodigdheden": ["4 pionnen", "8+ ballen", "hesjes in 2 kleuren + 2 voor de jokers"],
     "spelersNodig": 12,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: jokers op de zijlijn, of wisselen per blok van 3 minuten.",
     "coachpunten": ["Zoek de vrije man: wie heeft er geen tegenstander dichtbij?", "Driehoeken maken rond de balbezitter", "Hardop tellen helpt het team om rustig te blijven"],
     "variaties": {
       "makkelijker": ["Zeven passes is een punt", "Jokers mogen vrij bewegen en onbeperkt raken"],
@@ -1157,6 +1167,8 @@
     "benodigdheden": ["8 pionnen", "1 bal", "hesjes"],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 9 spelers: een joker. Met meer: 5 tegen 5 in een groter vak, of een tweede veld.",
     "coachpunten": ["Diepte maken: altijd iemand op de laatste lijn die kan inlopen", "Timing: loop pas in als de balbezitter kan passen", "Verdedigers: dek de ruimte achter je af, niet alleen de balbezitter"],
     "variaties": {
       "makkelijker": ["Inlopen met de bal (dribbel) telt ook", "Groter veld (25 × 30 m)"],
@@ -1359,6 +1371,8 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: wachtende groepjes naast het vak, na elke aanval wisselen.",
     "coachpunten": ["Dribbel op een verdediger af om hem vast te zetten, en speel dan pas", "Breed spelen: de buitenste aanvallers houden afstand", "Snel beslissen: het overtal duurt maar een paar seconden"],
     "variaties": {
       "makkelijker": ["3 tegen 1", "Bredere poortjes (4 m)"],
@@ -1575,6 +1589,8 @@
     "benodigdheden": ["8 pionnen", "2–3 ballen", "hesjes"],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: jokers op de zijlijnen, of 5 tegen 5 in grotere vakken.",
     "coachpunten": ["Na balwinst: eerste pass meteen naar het andere vak, voor de tegenstander zich herpakt", "Na balverlies: direct omschakelen en met twee spelers sprinten", "In vak 2 eerst breed en open staan, dan pas rustig rondspelen"],
     "variaties": {
       "makkelijker": ["Vakken dichter bij elkaar (3 m)", "Eén speler van rood gaat druk zetten in plaats van twee"],
@@ -1787,6 +1803,8 @@
     "benodigdheden": ["8 pionnen", "ballen", "hesjes"],
     "spelersNodig": 9,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: een extra speler per zone, of een joker op de zijlijn.",
     "coachpunten": ["Verplaats de bal snel van links naar rechts om een gat in de middenzone te maken", "Speel door het gat zodra het open is: niet te lang wachten", "Blauw: schuif als blok mee en houd de ruimte tussen elkaar klein"],
     "variaties": {
       "makkelijker": ["Hoge bal over de middenzone mag ook", "Geen blauwe speler in de buitenzone"],
@@ -2034,6 +2052,8 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 1,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: een tweede rondo ernaast, de rondo’s breken om de beurt uit.",
     "coachpunten": ["Rondo: open staan en in twee aanrakingen spelen", "Uitbreken: pas gaan als de bal aan de juiste kant is, dan vol versnellen", "Steekpass in de loop, niet op de man"],
     "variaties": {
       "makkelijker": ["Rondo 4 tegen 0 (alleen passen)", "Uitbreken zonder tegenstander"],

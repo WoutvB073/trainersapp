@@ -433,6 +433,13 @@ export interface Oefening {
   benodigdheden: string[];
   spelersNodig: number;
   keepersNodig: number;
+  /**
+   * Doorwisselbaar: er zijn er zoveel tegelijk bezig, extra spelers (bij keeperoefeningen: keepers) sluiten aan in de
+   * rij of wisselen door. Getoond als "4+". Vast: de oefening is gebouwd op precies dit aantal (partijvorm, rondo).
+   */
+  doorwisselbaar: boolean;
+  /** Alleen bij een vast aantal: korte tip voor als je er meer hebt ("Met meer spelers: …"). */
+  meerSpelers?: string;
   /** Combinatievorm: 2–4 onderdelen achter elkaar (bv. voetenwerk → vangen → duiken). Badge in lijst en detail. */
   combinatievorm?: boolean;
   /** Combinatievorm: de onderdelen in volgorde (2–4 korte namen), getoond als genummerd verloop. */

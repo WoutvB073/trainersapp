@@ -46,6 +46,10 @@ describe('oefeningen (databestanden)', () => {
           expect(o.variaties.makkelijker.length).toBeGreaterThan(0);
           expect(o.variaties.moeilijker.length).toBeGreaterThan(0);
           if (o.soort === 'keeper') expect(o.keepersNodig).toBeGreaterThan(0);
+          // Doorwisselbaar ("4+") of een vast aantal met een tip voor meer spelers.
+          expect(typeof o.doorwisselbaar).toBe('boolean');
+          if (o.doorwisselbaar) expect(o.meerSpelers).toBeUndefined();
+          else expect(o.meerSpelers ?? '').toMatch(/^Met (meer|\d+) /);
           // Combinatievorm: 2 tot 4 onderdelen in volgorde.
           if (o.combinatievorm) {
             expect(o.onderdelen?.length ?? 0).toBeGreaterThanOrEqual(2);

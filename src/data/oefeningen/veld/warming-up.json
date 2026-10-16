@@ -9,6 +9,7 @@
     "benodigdheden": ["4 pionnen", "1–2 hesjes"],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Kijk om je heen en zoek de open ruimte op", "Kleine pasjes bij het wenden, daarna versnellen", "Tikker: snijd de ruimte af in plaats van achter iemand aan te rennen"],
     "variaties": {
       "makkelijker": ["Groter vak (25 × 25 m)", "Tikker mag alleen huppelen of zijwaarts lopen"],
@@ -224,6 +225,7 @@
     "benodigdheden": ["2 pionnen", "1 bal per groep"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Pass met de binnenkant, standbeen naast de bal",
       "Na de pass direct de eerste meters versnellen",
@@ -354,6 +356,7 @@
     "benodigdheden": ["2 pionnen"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Op de voorvoet, niet op de hakken",
       "Armen actief meebewegen (90° in de elleboog)",
@@ -362,7 +365,12 @@
     ],
     "variaties": {
       "makkelijker": ["Baan van 8 m", "Alleen huppelen en joggen"],
-      "moeilijker": ["Na 6 m de loopvorm overgaan in een sprint", "Achteruit met over de schouder kijken", "Zijwaarts met de armen kruisend boven het hoofd", "Aan het eind van de baan een bal van de trainer aannemen en terugspelen"]
+      "moeilijker": [
+        "Na 6 m de loopvorm overgaan in een sprint",
+        "Achteruit met over de schouder kijken",
+        "Zijwaarts met de armen kruisend boven het hoofd",
+        "Aan het eind van de baan een bal van de trainer aannemen en terugspelen"
+      ]
     },
     "tekening": {
       "veld": {
@@ -485,6 +493,8 @@
     "benodigdheden": ["4 pionnen", "1 bal", "1 hesje"],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met 6 spelers: 4 tegen 2. Met meer: een tweede rondo.",
     "coachpunten": [
       "Open staan: aannemen met de verste voet, zodat je beide kanten op kunt",
       "Beweeg langs je lijn om aanspeelbaar te blijven",
@@ -493,7 +503,12 @@
     ],
     "variaties": {
       "makkelijker": ["5 tegen 1", "Groter vak (10 × 10 m)", "Middenman mag alleen onderscheppen, niet duelleren"],
-      "moeilijker": ["Maximaal twee balcontacten", "Kleiner vak (6 × 6 m)", "4 tegen 2 in een vak van 10 × 10 m", "Na zes passes een steekpass naar een speler die uit het vak sprint en op een klein doeltje schiet"]
+      "moeilijker": [
+        "Maximaal twee balcontacten",
+        "Kleiner vak (6 × 6 m)",
+        "4 tegen 2 in een vak van 10 × 10 m",
+        "Na zes passes een steekpass naar een speler die uit het vak sprint en op een klein doeltje schiet"
+      ]
     },
     "tekening": {
       "veld": {
@@ -718,6 +733,7 @@
     "benodigdheden": ["4 pionnen", "1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Bal dicht bij de voet: bij elke stap of elke tweede stap contact",
       "Kijk op tussen de balcontacten, niet alleen naar de bal",
@@ -730,7 +746,8 @@
         "Kleiner vak (10 × 10 m)",
         "Alleen het zwakke been",
         "Kleuren als opdracht (rood = kap, blauw = schaar)",
-        "De trainer probeert ballen weg te tikken", "Op een fluitsignaal naar een van de vier kleine doeltjes dribbelen en scoren"
+        "De trainer probeert ballen weg te tikken",
+        "Op een fluitsignaal naar een van de vier kleine doeltjes dribbelen en scoren"
       ]
     },
     "tekening": {
@@ -922,6 +939,7 @@
     "benodigdheden": ["12 hoedjes of pionnen", "5+ ballen", "hesjes voor één team"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Snel kiezen: welke bal pak ik?", "Korte dribbel met veel balcontact, kijk op", "Overleg met je team: wie gaat roven en wie haalt uit het midden?"],
     "variaties": {
       "makkelijker": ["Meer ballen in het midden", "Niet roven bij de tegenstander"],
@@ -1158,10 +1176,16 @@
     "benodigdheden": ["4 hoedjes per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Laag zwaartepunt, op de voorvoet", "Zijwaarts: voeten niet kruisen", "Volger: kijk naar de heup van je partner, niet naar het hoofd"],
     "variaties": {
       "makkelijker": ["Alleen zijwaarts, rustig tempo", "Kortere lijnen (5 m)"],
-      "moeilijker": ["Voorganger mag schijnbewegingen maken", "Wie het eerst bij het hoedje is, scoort een punt", "Met een bal aan de voet", "Na het spiegelen speelt de trainer een bal in: 1 tegen 1 op twee kleine doeltjes"]
+      "moeilijker": [
+        "Voorganger mag schijnbewegingen maken",
+        "Wie het eerst bij het hoedje is, scoort een punt",
+        "Met een bal aan de voet",
+        "Na het spiegelen speelt de trainer een bal in: 1 tegen 1 op twee kleine doeltjes"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1331,10 +1355,16 @@
     "benodigdheden": ["4 pionnen per tweetal", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Speel de bal vóór je partner, in zijn looprichting", "Aanname naar voren meenemen, niet stilstaan", "Rustig tempo: het is een warming-up"],
     "variaties": {
       "makkelijker": ["Afstand 4 m, wandelend tempo", "Aannemen, dan passen"],
-      "moeilijker": ["In één keer doorspelen", "Passen met de buitenkant", "Afstand 10 m of een opgegooide bal met de wreef terugspelen", "Aan het eind van de baan een schot op een klein doeltje"]
+      "moeilijker": [
+        "In één keer doorspelen",
+        "Passen met de buitenkant",
+        "Afstand 10 m of een opgegooide bal met de wreef terugspelen",
+        "Aan het eind van de baan een schot op een klein doeltje"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1448,6 +1478,7 @@
     "benodigdheden": ["4 pionnen", "hesjes voor de tikkers"],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Kijk vooruit en zoek de gaten tussen de tikkers", "Versnel en verander van richting op het goede moment", "Tikkers: werk samen en sluit samen de ruimte af"],
     "variaties": {
       "makkelijker": ["Breder vak", "Tikkers mogen alleen zijwaarts bewegen"],
@@ -1655,6 +1686,7 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Hordes: knieën hoog, kort contact met de grond", "Slalom: kleine tikjes, links en rechts om de beurt", "Rebounder: binnenkant voet, aannemen in de loop naar de volgende pass"],
     "variaties": {
       "makkelijker": ["Twee stations", "Langzamer tempo, eerst techniek"],

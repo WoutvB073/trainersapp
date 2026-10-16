@@ -9,10 +9,16 @@
     "benodigdheden": ["Goal", "1 pop of dummy", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Niet gokken: blijf in basishouding tot de bal de pop gepasseerd is", "Gewicht op de voorvoeten, zodat je naar beide kanten kunt", "Kort en explosief afzetten naar de nieuwe richting"],
     "variaties": {
       "makkelijker": ["Pop verder van de keeper (meer reactietijd)", "Gooien in plaats van schieten"],
-      "moeilijker": ["Twee poppen", "Pop dichter bij de keeper (3 m)", "Harder schieten", "Na de redding een tweede schot langs de andere kant van de pop"]
+      "moeilijker": [
+        "Twee poppen",
+        "Pop dichter bij de keeper (3 m)",
+        "Harder schieten",
+        "Na de redding een tweede schot langs de andere kant van de pop"
+      ]
     },
     "tekening": {
       "veld": {
@@ -138,6 +144,7 @@
     "benodigdheden": ["Rebounder", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Basishouding met de handen laag en voor het lichaam", "Kijk naar het net, niet naar de trainer", "Kleine stap naar de bal en dan pas duiken; bal vastklemmen"],
     "variaties": {
       "makkelijker": ["Rebounder verder weg (6 m)", "Zachter gooien"],
@@ -264,6 +271,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Kijk langs de verdediger: zie de bal zo vroeg mogelijk", "Niet meegaan met de eerste richting: wacht tot je zeker bent", "Snel voetenwerk en kort duiken"],
     "variaties": {
       "makkelijker": ["Keeper 2 staat verder van het doel", "Alleen gooien"],
@@ -381,10 +389,16 @@
     "benodigdheden": ["Reactiebal (of tennisbal)", "2 hoedjes"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Laag in basishouding, handen voor het lichaam", "Pas bewegen als je ziet welke kant de bal op springt", "Met twee handen vangen, ook als het een kleine bal is"],
     "variaties": {
       "makkelijker": ["Grotere afstand (6–7 m)", "Gewone bal die op een hobbelig stuk gras stuit"],
-      "moeilijker": ["Afstand 3 m", "Vangen met één hand (links en rechts)", "Keeper start op de knieën of op de buik", "Na de vang direct uitgooien naar een derde keeper op 15 m"]
+      "moeilijker": [
+        "Afstand 3 m",
+        "Vangen met één hand (links en rechts)",
+        "Keeper start op de knieën of op de buik",
+        "Na de vang direct uitgooien naar een derde keeper op 15 m"
+      ]
     },
     "tekening": {
       "veld": {
@@ -499,6 +513,7 @@
     "benodigdheden": ["Goal", "2 poppen of dummies", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Positie kiezen zodat je de trainer nét kunt zien: niet recht achter de poppen", "Rustig blijven tot je de bal ziet, dan explosief", "Duik naar voren, naar de bal toe"],
     "variaties": {
       "makkelijker": ["Eén pop", "Trainer schiet altijd naast de poppen"],
@@ -634,6 +649,7 @@
     "benodigdheden": ["Goal", "3 ballen per serie"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Opstaan via de knieën en meteen terug in het midden", "Eerst in basishouding, dan pas reageren op de volgende bal", "Elke bal is een nieuwe bal: niet nadenken over de vorige"],
     "variaties": {
       "makkelijker": ["Meer tijd tussen de ballen", "Twee ballen in plaats van drie"],
@@ -789,6 +805,7 @@
     "benodigdheden": ["Goal", "3 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Klein en breed staan, handen naast de heupen", "Op deze afstand niet vangen als het niet kan: stomp de bal naast het doel", "Direct weer klaar voor de volgende bal"],
     "variaties": {
       "makkelijker": ["Afstand 9 m", "Gooien in plaats van schieten"],
@@ -926,6 +943,7 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Uitworp: arm gestrekt, de bal ver en laag genoeg zodat hij snel aankomt", "Terug: achteruit met kleine pasjes, je gezicht naar het veld", "Reactiebal: laag blijven, pas bewegen als je de sprong ziet"],
     "variaties": {
       "makkelijker": ["Na het terugkomen even stilstaan voor de reactiebal", "Gewone bal met een stuit in plaats van een reactiebal"],
@@ -1047,6 +1065,7 @@
     "benodigdheden": ["Goal", "3 ballen", "3 hoedjes"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Na elke redding: eerst positie, dan pas basishouding", "Schuin van opzij: de eerste paal dicht", "Kleine snelle pasjes, nooit kruisen als de bal er bijna is"],
     "variaties": {
       "makkelijker": ["Trainer wacht tot de keeper stilstaat", "Alleen gooien"],

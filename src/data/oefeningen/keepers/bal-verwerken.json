@@ -9,17 +9,15 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Naar de bal toe stappen, niet afwachten",
-      "Benen dicht of één knie achter de bal: de bal mag er niet doorheen",
-      "Handen met de pinken bij elkaar, bal naar de borst scheppen"
-    ],
+    "doorwisselbaar": true,
+    "coachpunten": ["Naar de bal toe stappen, niet afwachten", "Benen dicht of één knie achter de bal: de bal mag er niet doorheen", "Handen met de pinken bij elkaar, bal naar de borst scheppen"],
     "variaties": {
       "makkelijker": ["Bal rollen met de hand", "Kortere afstand (6 m)"],
       "moeilijker": [
         "Harder schieten",
         "Bal 2–3 m naast de keeper",
-        "Bal stuitert vlak voor de keeper (hobbelig veld nadoen)", "Na de vang direct uitgooien naar een hoedje op de flank"
+        "Bal stuitert vlak voor de keeper (hobbelig veld nadoen)",
+        "Na de vang direct uitgooien naar een hoedje op de flank"
       ]
     },
     "tekening": {
@@ -167,17 +165,15 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Armen onder de bal, handpalmen naar boven",
-      "Licht voorover en de bal tegen het lichaam klemmen (bovenlichaam als 'deksel')",
-      "Lichaam achter de bal: eerst verplaatsen, dan vangen"
-    ],
+    "doorwisselbaar": true,
+    "coachpunten": ["Armen onder de bal, handpalmen naar boven", "Licht voorover en de bal tegen het lichaam klemmen (bovenlichaam als 'deksel')", "Lichaam achter de bal: eerst verplaatsen, dan vangen"],
     "variaties": {
       "makkelijker": ["Gooien in plaats van trappen", "Alleen recht op de keeper"],
       "moeilijker": [
         "Hardere volleys",
         "Afwisselend buik- en borsthoogte",
-        "Keeper start met de rug naar de trainer en draait op een roep", "Na de vang een tweede bal laag in de hoek: bal wegleggen, opstaan en duiken"
+        "Keeper start met de rug naar de trainer en draait op een roep",
+        "Na de vang een tweede bal laag in de hoek: bal wegleggen, opstaan en duiken"
       ]
     },
     "tekening": {
@@ -310,18 +306,11 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Afzetten op één been, de andere knie omhoog (bescherming tegen tegenstanders)",
-      "Armen gestrekt, duimen en wijsvingers vormen een W achter de bal",
-      "Vangen vóór het hoofd, zodat je de bal ziet; na de vang de bal naar de borst halen"
-    ],
+    "doorwisselbaar": true,
+    "coachpunten": ["Afzetten op één been, de andere knie omhoog (bescherming tegen tegenstanders)", "Armen gestrekt, duimen en wijsvingers vormen een W achter de bal", "Vangen vóór het hoofd, zodat je de bal ziet; na de vang de bal naar de borst halen"],
     "variaties": {
       "makkelijker": ["Vangen zonder sprong", "Lagere ballen (net boven het hoofd)"],
-      "moeilijker": [
-        "Trainer of tweede keeper springt mee als tegenstander (met een kussen)",
-        "Ballen verder achter de keeper",
-        "Na de vang direct uitgooien naar een hoedje"
-      ]
+      "moeilijker": ["Trainer of tweede keeper springt mee als tegenstander (met een kussen)", "Ballen verder achter de keeper", "Na de vang direct uitgooien naar een hoedje"]
     },
     "tekening": {
       "veld": {
@@ -461,17 +450,15 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Kijk waar de bal stuit en stap ernaartoe: hoe dichter bij de stuit, hoe makkelijker",
-      "Lichaam altijd achter de bal, handen vóór het lichaam",
-      "Na de stuit niet ineens omhoog of omlaag graaien: rustig vangen"
-    ],
+    "doorwisselbaar": true,
+    "coachpunten": ["Kijk waar de bal stuit en stap ernaartoe: hoe dichter bij de stuit, hoe makkelijker", "Lichaam altijd achter de bal, handen vóór het lichaam", "Na de stuit niet ineens omhoog of omlaag graaien: rustig vangen"],
     "variaties": {
       "makkelijker": ["Bal stuit ver voor de keeper", "Gooien met een boogje (langzamer)"],
       "moeilijker": [
         "Trappen in plaats van gooien",
         "Op een nat veld of tegen een rebounder (onvoorspelbare stuit)",
-        "Keeper moet eerst opzij schuiven", "Na de vang direct terug naar het midden voor een hoge bal"
+        "Keeper moet eerst opzij schuiven",
+        "Na de vang direct terug naar het midden voor een hoge bal"
       ]
     },
     "tekening": {
@@ -603,24 +590,18 @@
     "categorieen": ["bal-verwerken"],
     "uitleg": "Twee keepers: de ene staat in het doel, de andere schiet van 11 m hard op hem: eerst een trap van de grond op borsthoogte, dan een volley uit de handen op buikhoogte. Vastpakken, terugrollen en na twee ballen wisselen van rol.",
     "organisatie": "Goal, schietplek op 11 m (hoedje). De keeper die schiet, haalt na het wisselen zelf de bal mee. Rollen wisselen na 2–4 ballen.",
-    "benodigdheden": [
-      "Goal",
-      "1 hoedje",
-      "Ballen"
-    ],
+    "benodigdheden": ["Goal", "1 hoedje", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
-    "coachpunten": [
-      "Basishouding vóór het schot: gewicht op de voorvoet, handen klaar",
-      "Hoog op het lichaam: borst, ellebogen bij elkaar; laag: kommetje",
-      "De bal vastpakken en vasthouden, niet terug laten stuiten"
-    ],
+    "doorwisselbaar": true,
+    "coachpunten": ["Basishouding vóór het schot: gewicht op de voorvoet, handen klaar", "Hoog op het lichaam: borst, ellebogen bij elkaar; laag: kommetje", "De bal vastpakken en vasthouden, niet terug laten stuiten"],
     "variaties": {
       "makkelijker": ["Gooien in plaats van schieten", "Afstand 14 m"],
       "moeilijker": [
         "Afstand 8 m",
         "Schutter kiest zelf de hoogte",
-        "Bal net naast de keeper: één stap opzij en vastpakken", "Na de vang direct uittrappen (volley) naar de schutter"
+        "Bal net naast de keeper: één stap opzij en vastpakken",
+        "Na de vang direct uittrappen (volley) naar de schutter"
       ]
     },
     "tekening": {
@@ -727,17 +708,13 @@
             {
               "type": "loop",
               "wie": "k1",
-              "via": [
-                [31.2, 6.4]
-              ],
+              "via": [[31.2, 6.4]],
               "naar": [35.8, 11.6]
             },
             {
               "type": "loop",
               "wie": "k2",
-              "via": [
-                [36.8, 6.4]
-              ],
+              "via": [[36.8, 6.4]],
               "naar": [34, 1.6],
               "start": 0.2
             }
@@ -777,17 +754,15 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Eerst verplaatsen, dan vangen: de bal komt vóór het lichaam, niet ernaast",
-      "Kruispas: het achterste been kruist vóór langs, schouders blijven naar de bal",
-      "Na de vang meteen terug naar het midden van het doel"
-    ],
+    "doorwisselbaar": true,
+    "coachpunten": ["Eerst verplaatsen, dan vangen: de bal komt vóór het lichaam, niet ernaast", "Kruispas: het achterste been kruist vóór langs, schouders blijven naar de bal", "Na de vang meteen terug naar het midden van het doel"],
     "variaties": {
       "makkelijker": ["Schuifpassen in plaats van kruispassen", "Bal 1 m naast de keeper"],
       "moeilijker": [
         "Bal 3 m naast de keeper (bijna duiken)",
         "Trainer trapt in plaats van gooit",
-        "Keeper begint op een hoedje naast de paal", "Na de vang direct een zwaaiworp naar de flank"
+        "Keeper begint op een hoedje naast de paal",
+        "Na de vang direct een zwaaiworp naar de flank"
       ]
     },
     "tekening": {

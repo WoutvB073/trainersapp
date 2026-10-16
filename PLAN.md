@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (16-10-2026, versie 0.11.0)
+## Status (16-10-2026, versie 0.12.0)
 
 | Fase | Status |
 |---|---|
@@ -14,8 +14,8 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ online (0.1.0), getest op de telefoon door de gebruiker |
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
-| 3. Training maken | ✅ online (0.11.0) – **wacht op test** op de telefoon: aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, klaarzetten, opslaan op het apparaat, dupliceren, delen via een link |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – **wacht op test** (samen met 0.11.0). |
+| 3. Training maken | ✅ online (0.11.0), getest en akkoord: aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, klaarzetten, opslaan op het apparaat, dupliceren, delen via een link |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – getest en akkoord. Feedback 0.11.0 (0.12.0): fysieke controle van alle oefeningen, Keepersrondo en Keepersoorlog op één goal, aantallen "4+" (doorwisselbaar) of vast – **wacht op test**. |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -98,6 +98,8 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   "benodigdheden": ["1 goal", "4 pionnen", "Ballen"],
   "spelersNodig": 2,                     // veldspelers (minimaal)
   "keepersNodig": 1,
+  "doorwisselbaar": true,                // true = "2+": extra spelers sluiten aan of wisselen door; false = vast aantal
+  "meerSpelers": "Met meer spelers: …",  // alleen bij een vast aantal: tip voor als je er meer hebt
   "combinatievorm": true,               // optioneel: 2–4 onderdelen achter elkaar (badge "Combinatievorm")
   "onderdelen": ["Ladder", "Vangen", "Duiken"], // alleen bij een combinatievorm: het verloop in volgorde
   "coachpunten": ["…"],
@@ -460,6 +462,28 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   (op een iPhone hebben de app en Safari elk hun eigen opslag).
 - **Tests:** `tests/training.test.ts` (filter, slepen, opslaan, dupliceren, delen, benodigdheden) en
   `tools/e2e/training.mjs` (hele flow op telefoon, tablet en laptop, slepen met de vinger, vegen, delen, offline).
+
+## Besluiten feedback na 0.11.0 (versie 0.12.0)
+- **Fysieke controle** (`src/anim/fysiek.ts`, test `tests/fysiek.test.ts`, draait over alle oefeningen):
+  - Een bal over de grond of laag gaat niet door of over ladders, hordes, ringen, stokken, pionnen, paaltjes, poppen,
+    banken, rebounders, muurtjes, netten/linten of de boarding van een kooi. Uitzondering: materiaal waar de bal bewust
+    tegenaan gaat of vanaf kaatst (eind- of beginpunt van de bal ligt er binnen 0,9 m).
+  - Een hoge bal mag over lage dingen, maar niet door een net of lint en nooit via de zij- of achterkant een goal in.
+  - Een bal gaat niet door een persoon die hem niet speelt of krijgt (behalve liggend, en bij een panna tussen de benen door).
+  - Personen lopen niet door materiaal; door een ladder, over hordes, door ringen en over stokken alleen met een
+    parcours-loopwijze (voetenwerk, hordes, sprong, huppel, kniehef, zijwaarts).
+  - Aangepast door de controle (8): Knieblok bij een schot van dichtbij, Laag duiken over een horde, Ladder, borstbal en
+    lage duik, Kaats en schieten van afstand, 3 tegen 3 op vier doeltjes, 4 tegen 4 met keepers, 5 tegen 5 met keepers:
+    via de flank telt dubbel, Rondo 5 tegen 2 met een middenman.
+- **Nieuwe keeperspellen:** Keepersrondo (3 tegen 1 in een driehoek, trainer als derde buitenspeler bij 3 keepers;
+  buiten met de voet, midden met de handen; 3+ keepers) en Keepersoorlog op één goal (trainer naast het doel speelt in
+  op de rij aan de zestien; aannemen of direct schieten; wisselen: schutter → doel, keeper → achter de rij; 2+ keepers).
+  Totaal nu 85 veld- en 71 keeperoefeningen.
+- **Aantallen:** elke oefening is `doorwisselbaar` (lijst, detail en Training maken tonen "4+ spelers" / "2+ keepers";
+  bij veldoefeningen gaat het om de spelers, bij keeperoefeningen om de keepers) of heeft een vast aantal (22 oefeningen:
+  partijvormen, rondo's, positiespel, voetbaltennis/voetvolley/bankjesvoetbal, keepersoorlog, keepersvolleybal). Bij een vast
+  aantal staat op de detailpagina en in de trainingsmodus een tip (`meerSpelers`). Het filter in Training maken blijft
+  "minimaal nodig ≤ aantal".
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

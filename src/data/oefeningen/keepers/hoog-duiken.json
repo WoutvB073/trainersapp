@@ -9,10 +9,16 @@
     "benodigdheden": ["2 landingskussens of dikke matten", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Handen eerst naar de bal, armen gestrekt", "Bal vangen in de lucht, vóór het lichaam (zodat je hem ziet)", "Landen op de zij: eerst bal en bovenarm, dan heup en been"],
     "variaties": {
       "makkelijker": ["Lager gooien (borsthoogte)", "Vanuit zit met gestrekte benen"],
-      "moeilijker": ["Vanuit hurkzit of stand", "Hoger en verder gooien", "Zonder kussen op gras", "Na de landing opstaan en een lage bal aan de andere kant"]
+      "moeilijker": [
+        "Vanuit hurkzit of stand",
+        "Hoger en verder gooien",
+        "Zonder kussen op gras",
+        "Na de landing opstaan en een lage bal aan de andere kant"
+      ]
     },
     "tekening": {
       "veld": {
@@ -176,6 +182,7 @@
     "benodigdheden": ["2 landingskussens", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Afzet: klein pasje naar de bal en afzetten met het been aan de balkant", "Andere knie omhoog en het lichaam zijwaarts strekken, niet naar achteren", "Landen in volgorde: bal (tegen de grond geklemd), bovenarm, heup, been"],
     "variaties": {
       "makkelijker": ["Lager gooien", "Eén kussen en alleen naar de goede kant"],
@@ -349,10 +356,16 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Eerst een stap terug, dan afzetten (niet achteruit vallen)", "Tippen met gestrekte arm en open hand, de bal over de lat begeleiden", "Blijf de bal zien tot hij over de lat is"],
     "variaties": {
       "makkelijker": ["Gooien in plaats van trappen", "Keeper begint op 1 m van de lijn"],
-      "moeilijker": ["Keeper begint verder uit het doel (3 m)", "Volleys uit de handen", "Afwisselend vangen en tippen: trainer roept welke", "Na het tippen direct een lage bal in de hoek"]
+      "moeilijker": [
+        "Keeper begint verder uit het doel (3 m)",
+        "Volleys uit de handen",
+        "Afwisselend vangen en tippen: trainer roept welke",
+        "Na het tippen direct een lage bal in de hoek"
+      ]
     },
     "tekening": {
       "veld": {
@@ -453,6 +466,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Afzetten met het been aan de balkant, schuin naar voren", "Tippen met de bovenste hand (de hand die het verst reikt), pols stevig", "De bal naar buiten begeleiden, niet terug het veld in"],
     "variaties": {
       "makkelijker": ["Landingskussen naast de paal", "Gooien in plaats van schieten"],
@@ -557,6 +571,7 @@
     "benodigdheden": ["Goal", "2 hoedjes", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Kruispassen klein en snel, schouders naar de bal", "Afzet vanaf het been aan de balkant, niet eerst stilstaan", "In de lucht: bal vóór het hoofd vangen, dan landen op de zij"],
     "variaties": {
       "makkelijker": ["Na de kruispassen eerst stilstaan, dan de bal", "Lagere bal"],
@@ -690,6 +705,7 @@
     "benodigdheden": ["Goal", "1 hoedje", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Eerst een stapje naar de bal, dan afzetten en strekken", "Bal vangen op het hoogste punt, vóór het lichaam", "Aangever: hoog in de hoek, maar haalbaar (niet in de kruising)"],
     "variaties": {
       "makkelijker": ["Gooien in plaats van trappen", "Afstand 8 m"],
@@ -790,17 +806,13 @@
             {
               "type": "loop",
               "wie": "k1",
-              "via": [
-                [31.2, 6.4]
-              ],
+              "via": [[31.2, 6.4]],
               "naar": [35.8, 11.6]
             },
             {
               "type": "loop",
               "wie": "k2",
-              "via": [
-                [37, 6.4]
-              ],
+              "via": [[37, 6.4]],
               "naar": [34, 1.6],
               "start": 0.2
             }
@@ -855,6 +867,7 @@
     "benodigdheden": ["Goal", "3 lage hordes", "2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Over de hordes: knieën hoog, kort grondcontact", "Hoge bal: afzet op één been, vangen op het hoogste punt", "Hoge duik: eerst een pasje naar de bal, dan afzetten met het been aan de balkant"],
     "variaties": {
       "makkelijker": ["Zonder hordes", "Hoge duik op een landingskussen"],
@@ -1021,6 +1034,7 @@
     "benodigdheden": ["Goal", "2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Opstaan via de knieën en meteen terug naar het midden", "Eerst stilstaan in basishouding, dan pas op de tweede bal reageren", "Laag: duik naar voren naar de bal, niet zijwaarts wegvallen"],
     "variaties": {
       "makkelijker": ["Meer tijd tussen de twee ballen", "Hoge bal op borsthoogte (zonder duik)"],
@@ -1161,6 +1175,7 @@
     "benodigdheden": ["Goal", "2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Tippen: eerst een stap terug, dan afzetten en met gestrekte arm", "Na de landing direct een stap naar voren en basishouding", "Lage bal: duik naar voren, naar de bal toe"],
     "variaties": {
       "makkelijker": ["Meer tijd voor de tweede bal", "Eerst de hoge bal vangen in plaats van tippen"],

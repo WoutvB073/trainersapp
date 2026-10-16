@@ -9,6 +9,7 @@
     "benodigdheden": ["Goal (of 2 paaltjes)", "2 hoedjes", "3–5 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Duik schuin naar voren, naar de bal toe (niet achteruit)",
       "Onderste hand achter de bal, bovenste hand erbovenop; bal vastklemmen tegen de grond",
@@ -209,10 +210,16 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Afzetten met het been aan de kant van de bal, schuin naar voren", "Handen eerst naar de bal: onderste hand achter, bovenste hand erop", "Landen op de zij en meteen de bal tegen de grond klemmen"],
     "variaties": {
       "makkelijker": ["Bal dichter bij de keeper", "Rollen in plaats van schieten"],
-      "moeilijker": ["Bal verder weg (2,5 m)", "Harder schieten", "Trainer schiet zonder te zeggen welke kant", "Na de duik opstaan en meteen een hoge bal aan de andere kant"]
+      "moeilijker": [
+        "Bal verder weg (2,5 m)",
+        "Harder schieten",
+        "Trainer schiet zonder te zeggen welke kant",
+        "Na de duik opstaan en meteen een hoge bal aan de andere kant"
+      ]
     },
     "tekening": {
       "veld": {
@@ -371,6 +378,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "doorwisselbaar": true,
     "coachpunten": ["Uit de basishouding eerst een klein stapje naar de bal, dan afzetten", "Niet eerst door de knieën zakken en dan pas vallen: in één beweging schuin naar voren", "Na de duik snel op en terug in basishouding"],
     "variaties": {
       "makkelijker": ["Bal dichter bij de keeper", "Alleen gooien"],
@@ -494,17 +502,13 @@
             {
               "type": "loop",
               "wie": "k1",
-              "via": [
-                [37, 5.6]
-              ],
+              "via": [[37, 5.6]],
               "naar": [35.8, 9.6]
             },
             {
               "type": "loop",
               "wie": "k2",
-              "via": [
-                [31, 5.6]
-              ],
+              "via": [[31, 5.6]],
               "naar": [34, 1.6],
               "start": 0.2
             }
@@ -543,6 +547,7 @@
     "benodigdheden": ["Goal", "2 hoedjes", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Tijdens het voetenwerk de bal (trainer) blijven zien", "Afzetten vanaf het been aan de balkant, het andere been zwaait mee", "Lange duik: laag en vlak, niet eerst omhoog springen"],
     "variaties": {
       "makkelijker": ["Eerst stilstaan, dan pas de bal", "Kortere duik (bal dichterbij)"],
@@ -676,10 +681,16 @@
     "benodigdheden": ["Goal", "2 lage hordes", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Afzetten en schuin naar voren over de horde, niet ernaast vallen", "Armen eerst: de handen zijn als eerste bij de bal", "Landen op de zij, achter de horde, bal vastklemmen"],
     "variaties": {
       "makkelijker": ["Stok of hoedjes in plaats van een horde", "Bal dichter bij de horde"],
-      "moeilijker": ["Hogere horde (hoog duiken)", "Vanuit voetenwerk tussen de hordes", "Trainer trapt de bal", "Na de duik opstaan, terug over de horde en een bal aan de andere kant"]
+      "moeilijker": [
+        "Hogere horde (hoog duiken)",
+        "Vanuit voetenwerk tussen de hordes",
+        "Trainer trapt de bal",
+        "Na de duik opstaan, terug over de horde en een bal aan de andere kant"
+      ]
     },
     "tekening": {
       "veld": {
@@ -770,7 +781,8 @@
               "wie": "k1",
               "naar": [34, 1.8],
               "start": 0.4,
-              "duur": 0.8
+              "duur": 1.1,
+              "via": [[32.9, 3]]
             }
           ]
         },
@@ -815,7 +827,8 @@
               "wie": "k1",
               "naar": [34, 1.8],
               "start": 0.4,
-              "duur": 0.8
+              "duur": 1.1,
+              "via": [[35.1, 3]]
             }
           ]
         },
@@ -841,6 +854,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Draaien op de voorvoeten en meteen in basishouding landen", "Eerst de bal zoeken met je ogen, dan pas bewegen", "Niet te ver draaien: schouders recht naar de bal"],
     "variaties": {
       "makkelijker": ["Pas gooien als de keeper zich heeft omgedraaid", "Trainer zegt de kant erbij"],
@@ -993,6 +1007,7 @@
     "benodigdheden": ["Goal", "2 ballen", "2 hoedjes"],
     "spelersNodig": 0,
     "keepersNodig": 3,
+    "doorwisselbaar": true,
     "coachpunten": ["Na de eerste duik snel op: eerst de bal vastpakken, dan opstaan", "Stel je opnieuw op tussen de aangever en het midden van het doel", "Duik naar voren naar de bal, zodat hij niet achter je komt"],
     "variaties": {
       "makkelijker": ["Meer tijd tussen de twee ballen", "Ballen rollen"],
@@ -1148,17 +1163,13 @@
             {
               "type": "loop",
               "wie": "k3",
-              "via": [
-                [36.4, 4.6]
-              ],
+              "via": [[36.4, 4.6]],
               "naar": [34, 1.6]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "via": [
-                [39.2, 2.6]
-              ],
+              "via": [[39.2, 2.6]],
               "naar": [37.5, 8]
             }
           ]
@@ -1198,6 +1209,7 @@
     "benodigdheden": ["Goal", "Loopladder", "2 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Na de ladder snel achteruit, met je gezicht naar het veld", "Borstbal: ellebogen bij elkaar, bal klemmen", "Na de worp meteen weer in basishouding voor de lage bal"],
     "variaties": {
       "makkelijker": ["Zonder ladder: beginnen met kleine pasjes op de plaats", "Lage bal rollen in plaats van schieten"],
@@ -1224,7 +1236,7 @@
         {
           "id": "l1",
           "soort": "ladder",
-          "x": 31.5,
+          "x": 30.6,
           "y": 5.5,
           "lengte": 4,
           "breedte": 0.5,
@@ -1233,7 +1245,7 @@
         {
           "id": "k1",
           "soort": "keeper",
-          "x": 27.8,
+          "x": 26.9,
           "y": 5.5,
           "nummer": 1,
           "kijkrichting": 0
@@ -1255,8 +1267,8 @@
         {
           "id": "b2",
           "soort": "bal",
-          "x": 37,
-          "y": 11.6
+          "x": 37.6,
+          "y": 11.8
         }
       ],
       "animatie": [

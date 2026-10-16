@@ -9,6 +9,8 @@
     "benodigdheden": ["Voetvolleynet of lint met 2 paaltjes", "4 pionnen", "1 bal"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: 3 tegen 3, of winnaar blijft met wachtende tweetallen.",
     "coachpunten": ["Eerste aanraking zacht: leg de bal op voor je medespeler", "Speel de bal over het net naar de plek waar niemand staat", "Na je actie terug naar je eigen helft van het veld"],
     "variaties": {
       "makkelijker": ["Bal mag twee keer stuiten", "Opslag met de hand (gooien)", "Lager net (0,7 m)"],
@@ -141,6 +143,8 @@
     "benodigdheden": ["Lint of laag net met 2 paaltjes", "4 hoedjes", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: 2 tegen 2 over hetzelfde lint, of winnaar blijft.",
     "coachpunten": ["Kijk naar de bal tot hij je voet raakt: enkel strak", "Raak de bal met de wreef of binnenkant, niet met de punt", "Kies de lege hoek van het vakje"],
     "variaties": {
       "makkelijker": ["Bal mag twee keer stuiten", "Drie keer raken", "Groter vak (5 × 10 m)"],
@@ -260,6 +264,7 @@
     "benodigdheden": ["1 groot doel", "1 bal per speler", "hoedjes voor de schietlijn"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Raak de bal iets onder het midden met de wreef", "Standbeen naast de bal, bovenlichaam iets achterover", "Niet hard, wel precies: de juiste hoogte is belangrijker dan kracht"],
     "variaties": {
       "makkelijker": ["Op 11 m schieten", "Bal mag eerst stilgelegd worden of je mag hem opgooien", "Paal telt ook een heel punt"],
@@ -392,6 +397,7 @@
     "benodigdheden": ["Pannakooi of 4 banken", "2 mini-doeltjes", "1 bal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Lok je tegenstander: laat de bal even los, dan stapt hij in", "Panna als hij zijn benen spreidt; daarna snel om hem heen", "Verdediger: niet breed gaan staan, blijf kort op je tenen"],
     "variaties": {
       "makkelijker": ["Panna telt als doelpunt, je hoeft de bal niet op te pakken", "Groter vak"],
@@ -526,6 +532,7 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Elke ronde telt: vanaf de eerste seconde vol gas", "Durf de actie te maken, ook op het koningsveld", "Doorschuiven gaat snel: winnaars rechtsom, verliezers linksom"],
     "variaties": {
       "makkelijker": ["Doorschuiven alleen voor de winnaar, de verliezer blijft", "Groter veld (10 × 15 m)"],
@@ -894,6 +901,7 @@
     "benodigdheden": ["3 banken", "1 bal per kind", "4 pionnen"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Leg de bal eerst stil, dan pas schieten", "Onder de bal raken, dan gaat hij omhoog over de bank", "Kijk waar plek is aan de overkant: daar mag je bal landen"],
     "variaties": {
       "makkelijker": ["Ook onder de bank door mag", "De bal mag eerst met de hand worden stilgelegd"],
@@ -1069,6 +1077,8 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: grotere teams (tot 4 tegen 4), of een tweede veldje.",
     "coachpunten": ["Schiet als je de bank kunt zien: niet te lang dribbelen", "Samen aanvallen: wie de bal niet heeft, loopt mee naar voren", "Verdedigen: tussen de bal en je eigen bank staan"],
     "variaties": {
       "makkelijker": ["Twee banken per kant", "Raak je de bank met een pass, dan telt het ook"],
@@ -1235,6 +1245,7 @@
     "benodigdheden": ["4 pionnen", "1 bal per kind", "hesjes"],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Kleine tikjes, de bal dicht bij je voet", "Kijk op: waar is de piraat?", "Draai weg en zet je lichaam tussen de piraat en je bal"],
     "variaties": {
       "makkelijker": ["Piraat mag de bal alleen aantikken (niet wegschieten)", "Groter vak"],
@@ -1438,6 +1449,7 @@
     "benodigdheden": ["Mini-doeltjes of pionnen als hole", "Pionnen voor de poorten", "1 bal per speler"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Lange bal: wreef, enkel strak, door de bal heen", "Korte bal: binnenkant voet, rustig en precies", "Denk vooruit: waar wil je dat je bal stil komt te liggen?"],
     "variaties": {
       "makkelijker": ["Bredere poort (6 m)", "Groter doel als hole", "Kortere holes"],
@@ -1627,6 +1639,7 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Slalom: snel maar met de bal dicht aan de voet", "Pass op het goede moment: niet te vroeg, niet te laat", "Schieten in één keer, plaatsen in de hoek"],
     "variaties": {
       "makkelijker": ["Minder pionnen", "Schutter mag de bal eerst aannemen"],

@@ -9,6 +9,7 @@
     "benodigdheden": ["3 hoedjes", "1 bal per groep"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Aannemen met de voet die het verst van de bal is, lichaam open naar de volgende pion", "Pass op de goede voet van je medespeler (de voet waarmee hij wil aannemen)", "Na je pass meteen versnellen"],
     "variaties": {
       "makkelijker": ["Kleinere driehoek (6 m)", "Vrij aantal aanrakingen"],
@@ -147,6 +148,7 @@
     "benodigdheden": ["3 pionnen", "1 bal per groep"],
     "spelersNodig": 3,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["A: na de pass meteen diep gaan, niet blijven kijken", "B: afleggen in één keer, op de loopvoet van C", "C: speel de bal vóór A, in de ruimte waar hij heen loopt"],
     "variaties": {
       "makkelijker": ["B mag eerst aannemen", "Kortere afstanden (6 m)"],
@@ -271,10 +273,16 @@
     "benodigdheden": ["4 pionnen", "1–2 ballen"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["B: eerst van de pion weg, dan kort komen om aanspeelbaar te zijn", "Kaats op de loopvoet van A, zodat hij in één keer kan doorspelen", "Diepe pass stevig en vóór de ontvanger"],
     "variaties": {
       "makkelijker": ["Kortere afstanden", "B neemt eerst aan en passt dan terug"],
-      "moeilijker": ["Alles in één keer", "C/D kaatst ook nog terug op de inlopende B (derde man)", "Twee ballen: links en rechts om en om", "Na de kaats speelt C diep op B, die afrondt op het grote doel"]
+      "moeilijker": [
+        "Alles in één keer",
+        "C/D kaatst ook nog terug op de inlopende B (derde man)",
+        "Twee ballen: links en rechts om en om",
+        "Na de kaats speelt C diep op B, die afrondt op het grote doel"
+      ]
     },
     "tekening": {
       "veld": {
@@ -481,10 +489,16 @@
     "benodigdheden": ["1 rebounder (of muur)", "2 hoedjes", "1 bal"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Steeds weer in balans staan vóór je de bal aanneemt", "Binnenkant, enkel vast, standbeen naast de bal", "Om en om links en rechts passen"],
     "variaties": {
       "makkelijker": ["Op de plaats blijven, afstand 4 m", "Eerst aannemen, dan passen"],
-      "moeilijker": ["In één keer terugspelen", "Afstand 10 m en harder", "Na elke pass een draai om een pion achter je", "Na drie keer kaatsen de bal meenemen en scoren op een klein doeltje"]
+      "moeilijker": [
+        "In één keer terugspelen",
+        "Afstand 10 m en harder",
+        "Na elke pass een draai om een pion achter je",
+        "Na drie keer kaatsen de bal meenemen en scoren op een klein doeltje"
+      ]
     },
     "tekening": {
       "veld": {
@@ -616,6 +630,7 @@
     "benodigdheden": ["2 pionnen", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Passer: kijk naar de loopactie en speel de bal vóór de speler, niet op hem", "Loper: versnel op het moment dat de passer opkijkt", "Aanname in de looprichting, zonder af te remmen"],
     "variaties": {
       "makkelijker": ["Kortere loopacties (6 m), rustiger tempo", "Bal mag even stuiten of vaker geraakt worden"],
@@ -735,6 +750,7 @@
     "benodigdheden": ["8 hoedjes", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Standbeen naast en iets achter de bal, raak de onderkant met de wreef", "Lichaam iets achterover en doortrappen naar je doel", "Ontvanger: lees de baan vroeg en neem aan in de looprichting"],
     "variaties": {
       "makkelijker": ["Afstand 15 m", "Bal mag eerst stuiten"],
@@ -844,10 +860,16 @@
     "benodigdheden": ["4 pionnen", "10 hoedjes", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Zonder bal: loop alvast naar de andere kant van een vrij poortje", "Met bal: kijk op en kies een poortje waar je partner al staat", "Pass stevig en over de grond"],
     "variaties": {
       "makkelijker": ["Bredere poortjes (2,5 m)", "Twee keer hetzelfde poortje mag"],
-      "moeilijker": ["Maximaal twee aanrakingen", "Een tikker of verdediger die passes mag onderscheppen", "Pass alleen met het zwakke been", "Na de pass door het poortje direct doorlopen: je maat speelt de bal terug in je loop"]
+      "moeilijker": [
+        "Maximaal twee aanrakingen",
+        "Een tikker of verdediger die passes mag onderscheppen",
+        "Pass alleen met het zwakke been",
+        "Na de pass door het poortje direct doorlopen: je maat speelt de bal terug in je loop"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1045,6 +1067,7 @@
     "benodigdheden": ["5 pionnen (liefst hoge)", "4 hoedjes voor de lijnen", "1 bal per speler"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Standbeen naast de bal, wijzend naar je doel", "Binnenkant voor precisie, wreef voor een harde pass", "Snel een volgende bal pakken en opnieuw mikken"],
     "variaties": {
       "makkelijker": ["Lijnen dichterbij (8 m)", "Grotere doelen (kegels of ballen op een pion)"],
@@ -1240,6 +1263,7 @@
     "benodigdheden": ["4 pionnen", "2 ballen"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Open staan: lichaam naar de bal én naar de volgende hoek", "Aannemen met de verste voet, in één beweging naar je passvoet", "Let op de tweede bal: communiceer en speel op tijd"],
     "variaties": {
       "makkelijker": ["Eén bal", "Kleiner vierkant (8 m)"],
@@ -1410,6 +1434,7 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Speler 2: kort komen en in één keer terugleggen", "Derde man: pas starten als de bal bij speler 2 is, dan vol versnellen", "Diepe bal in de loop, niet op de man"],
     "variaties": {
       "makkelijker": ["Zonder pop", "Speler 3 start al vóór de eerste pass"],

@@ -97,6 +97,7 @@ export function TrainingModus({ id, nr }: { id: string; nr: number }) {
               <div>
                 <h3>Aantal</h3>
                 <p>{aantalTekst(o)}</p>
+                {o.meerSpelers && <p className="klein">{o.meerSpelers}</p>}
               </div>
             </section>
             <section className="blok">

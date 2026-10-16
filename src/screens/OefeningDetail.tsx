@@ -100,7 +100,7 @@ export function OefeningDetail({ id }: { id: string }) {
             <div>
               <h3>Aantal</h3>
               <p>{aantalTekst(oefening)}</p>
-              {soort === 'keeper' && <p className="klein">Extra keepers kunnen inschieten of aangooien.</p>}
+              {oefening.meerSpelers && <p className="klein">{oefening.meerSpelers}</p>}
             </div>
           </section>
 

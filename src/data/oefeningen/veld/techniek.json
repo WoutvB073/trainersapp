@@ -9,6 +9,7 @@
     "benodigdheden": ["1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Licht op de voorvoet, standbeen licht gebogen",
       "Voetzool bovenop de bal, niet ertegenaan",
@@ -225,10 +226,16 @@
     "benodigdheden": ["4 hoedjes", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Al vóór de aanname over je schouder kijken: waar is ruimte?", "Aannemen met de voet die het verst van de bal is (open staan)", "Eerste aanraking stevig genoeg om in één keer door het poortje te gaan"],
     "variaties": {
       "makkelijker": ["Poortjes breder (3 m)", "A rolt de bal met de hand toe"],
-      "moeilijker": ["A roept pas tijdens de pass 'links' of 'rechts'", "Aanname met de buitenkant", "Een tegenstander achter B die een poortje afsluit", "Na het poortje doordribbelen en afronden op een klein doeltje"]
+      "moeilijker": [
+        "A roept pas tijdens de pass 'links' of 'rechts'",
+        "Aanname met de buitenkant",
+        "Een tegenstander achter B die een poortje afsluit",
+        "Na het poortje doordribbelen en afronden op een klein doeltje"
+      ]
     },
     "tekening": {
       "veld": {
@@ -382,6 +389,7 @@
     "benodigdheden": ["1 pion per speler", "1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Afremmen met kleine pasjes vlak voor de draai", "Laag zakken en het lichaam tussen bal en pion houden", "Na de draai meteen versnellen: de eerste twee meter zijn het belangrijkst"],
     "variaties": {
       "makkelijker": ["Alleen binnenkantdraai", "Langzaam tempo, draaien bij een lijn in plaats van een pion"],
@@ -551,6 +559,7 @@
     "benodigdheden": ["1 paaltje (of pion)", "1 pion", "1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Schijnbeweging op 1–2 m van de verdediger: niet te vroeg, niet te laat", "Overtuigend: schouder en heup gaan echt mee", "Na de schijnbeweging met de andere voet wegtikken en versnellen"],
     "variaties": {
       "makkelijker": ["Eerst zonder bal de beweging voordoen", "Alleen een lichaamsschijnbeweging (schouder)"],
@@ -691,10 +700,16 @@
     "benodigdheden": ["4 pionnen", "12 hoedjes", "1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Kijk op en kies alvast het volgende poortje", "Afremmen en draaien vlak na het poortje, daarna versnellen", "Kleine aanrakingen in de drukte, grotere in de vrije ruimte"],
     "variaties": {
       "makkelijker": ["Bredere poortjes (2,5 m)", "Geen tijdslimiet"],
-      "moeilijker": ["Alleen het zwakke been", "Na elk poortje een andere draai", "Twee spelers zonder bal mogen poortjes 'bewaken'", "Na vijf poortjes een pass naar de trainer en een kaats in de loop terug"]
+      "moeilijker": [
+        "Alleen het zwakke been",
+        "Na elk poortje een andere draai",
+        "Twee spelers zonder bal mogen poortjes 'bewaken'",
+        "Na vijf poortjes een pass naar de trainer en een kaats in de loop terug"
+      ]
     },
     "tekening": {
       "veld": {
@@ -891,10 +906,16 @@
     "benodigdheden": ["1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Raak de bal met de wreef, enkel gestrekt", "Zachte aanraking: de bal komt niet hoger dan je heup", "Standbeen licht gebogen, ogen op de bal"],
     "variaties": {
       "makkelijker": ["Bal uit de handen laten vallen, één keer raken en weer vangen", "Tussen elke aanraking één stuit"],
-      "moeilijker": ["Om en om links en rechts", "Voet – dij – voet – hoofd", "In tweetallen: om de beurt raken (hooghouden samen)", "Na tien keer hooghouden de bal uit de lucht op een klein doeltje schieten"]
+      "moeilijker": [
+        "Om en om links en rechts",
+        "Voet – dij – voet – hoofd",
+        "In tweetallen: om de beurt raken (hooghouden samen)",
+        "Na tien keer hooghouden de bal uit de lucht op een klein doeltje schieten"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1032,6 +1053,7 @@
     "benodigdheden": ["1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Kom de bal tegemoet en lees de baan vroeg", "Maak het aannamevlak 'zacht': geef mee op het moment van contact", "Neem de bal aan in de richting waar je heen wilt"],
     "variaties": {
       "makkelijker": ["Bal eerst laten stuiten en dan aannemen", "Lagere worpen, kleinere afstand"],
@@ -1143,6 +1165,7 @@
     "benodigdheden": ["2 pionnen (startplek A en C)", "1 bal per drietal"],
     "spelersNodig": 3,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Eerst van de bal weg, dan kort komen: zo maak je ruimte", "Vóór de aanname over je schouder kijken", "Open staan en aannemen met de voet die het verst van de bal is"],
     "variaties": {
       "makkelijker": ["Eerst aannemen, dan draaien (twee aanrakingen)", "Afstand 15 m"],
@@ -1289,6 +1312,7 @@
     "benodigdheden": ["4 pionnen", "1 bal per speler"],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Lichaam tussen tegenstander en bal (afschermen)", "Kijk op: waar is gevaar en waar is een bal te pakken?", "Bal dicht aan de voet in de drukte"],
     "variaties": {
       "makkelijker": ["Groter vak", "Eén speler zonder bal is de 'jager'"],
@@ -1506,6 +1530,7 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Zachte aanname: geef mee met de bal, zodat hij niet wegspringt", "Neem de bal mee in de richting van het doel, niet stilleggen", "Opkijken vóór het schot: waar staat de keeper?"],
     "variaties": {
       "makkelijker": ["Bal eerst laten stuiten", "Lagere worp"],
@@ -1617,6 +1642,7 @@
     "benodigdheden": ["Rebounder", "2 kleine doeltjes", "Ballen"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Kaatsen met de binnenkant, enkel strak", "Aanname in de draai: lichaam open, de bal meenemen naar de kant van het doeltje", "Afronden: plaatsen, niet hard"],
     "variaties": {
       "makkelijker": ["Één keer kaatsen", "Doeltjes dichterbij"],

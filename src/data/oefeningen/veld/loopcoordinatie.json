@@ -9,6 +9,7 @@
     "benodigdheden": ["1 loopladder (4 m)", "1 pion"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Op de voorvoet, kleine en snelle pasjes",
       "In elk vak één voet, niet op de sporten stappen",
@@ -127,6 +128,7 @@
     "benodigdheden": ["1 loopladder (4 m)", "1 pion"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Heupen en schouders blijven naar de trainer gericht", "Laag en licht op de voorvoet", "Tel hardop mee: in-in-uit-uit"],
     "variaties": {
       "makkelijker": ["Eerst wandelend het ritme leren", "Alleen in-in (beide voeten in elk vak)"],
@@ -262,6 +264,7 @@
     "benodigdheden": ["6 lage hordes (of stokken op pionnen)", "1 pion"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Knie omhoog, tenen opgetrokken",
       "Voet onder de heup neerzetten, kort grondcontact",
@@ -270,7 +273,12 @@
     ],
     "variaties": {
       "makkelijker": ["Hordes op 1 m afstand", "Stokken plat op de grond in plaats van hordes"],
-      "moeilijker": ["Hoge hordes (30 cm)", "Zijwaarts over de hordes", "Twee contacten tussen de hordes, hoog tempo", "Na de laatste horde een pass van de trainer aannemen en op een klein doeltje schieten"]
+      "moeilijker": [
+        "Hoge hordes (30 cm)",
+        "Zijwaarts over de hordes",
+        "Twee contacten tussen de hordes, hoog tempo",
+        "Na de laatste horde een pass van de trainer aannemen en op een klein doeltje schieten"
+      ]
     },
     "tekening": {
       "veld": {
@@ -419,6 +427,7 @@
     "benodigdheden": ["6 paaltjes (of pionnen)", "1 pion"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Kleine pasjes vlak voor het paaltje, afzetten met de buitenste voet",
       "Laag zwaartepunt in de bocht",
@@ -427,7 +436,12 @@
     ],
     "variaties": {
       "makkelijker": ["Paaltjes 2 m uit elkaar", "Rustig tempo, eerst de looplijn leren"],
-      "moeilijker": ["Met bal: dribbel met binnen- en buitenkant", "Twee banen naast elkaar: wie is eerst?", "Achterwaarts terug door de slalom", "Na de slalom een bal van de trainer in één keer op doel schieten"]
+      "moeilijker": [
+        "Met bal: dribbel met binnen- en buitenkant",
+        "Twee banen naast elkaar: wie is eerst?",
+        "Achterwaarts terug door de slalom",
+        "Na de slalom een bal van de trainer in één keer op doel schieten"
+      ]
     },
     "tekening": {
       "veld": {
@@ -572,6 +586,7 @@
     "benodigdheden": ["4 pionnen", "stopwatch (optioneel)"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Bij elke pion laag zakken en aantikken", "Zijwaarts: voeten niet kruisen, heupen blijven naar voren", "Achteruit: kleine pasjes, gewicht boven de voeten"],
     "variaties": {
       "makkelijker": ["Halve afstanden (5 m en 2,5 m)", "Zonder aantikken"],
@@ -714,6 +729,7 @@
     "benodigdheden": ["11 ringen (of hoedjes)", "1 pion"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Landen op de voorvoet, zacht door de knieën", "Armen helpen mee bij de afzet", "Ritme vasthouden: niet stoppen tussen de ringen"],
     "variaties": {
       "makkelijker": ["In elke ring met twee voeten landen", "Ringen dichter bij elkaar"],
@@ -901,6 +917,7 @@
     "benodigdheden": ["7 stokken (of hoedjes als markering)", "1 pion"],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Tussen elke twee stokken precies één pas",
       "Voet actief onder je lichaam neerzetten (niet ver voor je uit)",
@@ -1077,13 +1094,15 @@
     "benodigdheden": ["4 gekleurde hoedjes per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Licht door de knieën en op de voorvoet: klaar om weg te gaan", "Eerste pas explosief in de goede richting", "Afremmen met kleine pasjes, laag aantikken en snel omdraaien"],
     "variaties": {
       "makkelijker": ["Trainer wijst de kleur ook aan (zien én horen)", "Maar twee kleuren"],
       "moeilijker": [
         "Trainer roept twee kleuren achter elkaar",
         "\"Niet rood\": naar het hoedje tegenover rood",
-        "Met een bal aan de voet", "Wie het eerst bij het hoedje is, krijgt een bal van de trainer: 1 tegen 1 op een klein doeltje"
+        "Met een bal aan de voet",
+        "Wie het eerst bij het hoedje is, krijgt een bal van de trainer: 1 tegen 1 op een klein doeltje"
       ]
     },
     "tekening": {
@@ -1243,10 +1262,16 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Techniek gaat voor snelheid: een fout in de ladder is opnieuw", "Kort en laag om de pion draaien", "Moedig je teamgenoten aan en sluit snel aan"],
     "variaties": {
       "makkelijker": ["Alleen slalom en pion", "Ladder met twee voeten per vak"],
-      "moeilijker": ["Met een bal door de slalom", "Extra onderdeel met lage hordes", "Twee rondes per speler", "Laatste onderdeel: schieten op een klein doeltje, alleen raak telt"]
+      "moeilijker": [
+        "Met een bal door de slalom",
+        "Extra onderdeel met lage hordes",
+        "Twee rondes per speler",
+        "Laatste onderdeel: schieten op een klein doeltje, alleen raak telt"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1496,6 +1521,7 @@
     "benodigdheden": ["8 lage hordes", "2 kleine doeltjes", "Ballen"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Hordes: snel en precies, niet de horde raken", "Sprint: lage start na de laatste horde, kijk naar de bal", "Aanvaller: lichaam tussen bal en verdediger; verdediger: niet duiken"],
     "variaties": {
       "makkelijker": ["Zonder hordes, starten op een signaal", "Bal dichter bij de aanvaller"],

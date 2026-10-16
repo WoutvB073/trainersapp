@@ -9,6 +9,7 @@
     "benodigdheden": ["1 goal", "2 pionnen", "Ballen (1 per speler)"],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": [
       "Inspelen op het voorste been van de kaatser: stevig en over de grond",
       "Kaatser staat open en legt de bal in één keer in de loop terug",
@@ -147,6 +148,7 @@
     "benodigdheden": ["1 goal", "4 pionnen", "1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Bal dicht aan de voet bij de poort, daarna een grotere aanraking richting doel", "Kijk voor het schot even op: waar staat de keeper?", "Plaatsen in de verre hoek, laag en met de binnenkant of wreef"],
     "variaties": {
       "makkelijker": ["Poorten op 15 m", "Groter doel of geen keeper (keeper speelt met handen op de rug)"],
@@ -322,6 +324,7 @@
     "benodigdheden": ["1 goal", "8+ ballen", "1 pion (startplek)"],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Timing: versnel op het moment dat de trainer de bal aanraakt", "Lichaam boven de bal: dan blijft je schot laag", "In één keer: binnenkant voor plaatsing, wreef voor kracht"],
     "variaties": {
       "makkelijker": ["Eerst aannemen, dan schieten", "Kortere loopactie (± 8 m)"],
@@ -503,6 +506,7 @@
     "benodigdheden": ["1 goal", "6+ ballen", "4 hoedjes (startplekken)"],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Spitsen: niet te vroeg inlopen, start als de vleugelspeler opkijkt", "Eerste paal: kort voor de verdediger/keeper komen, in één keer binnenkant", "Kopbal: afzetten op één been, met het voorhoofd en ogen open naar beneden koppen"],
     "variaties": {
       "makkelijker": ["Bal mag eerst aangenomen worden", "Voorzet uit de hand gooien (hoge bal)"],
@@ -712,6 +716,7 @@
     "benodigdheden": ["1 goal", "1 bal per speler", "2 hoedjes (startplekken)"],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Volger: altijd inlopen, verwacht dat de keeper de bal niet klemvast heeft", "Kort voor de bal komen, in één keer en laag afronden", "Schutter: laag en op doel, dan is er altijd een kans op een rebound"],
     "variaties": {
       "makkelijker": ["Trainer gooit de bal na het schot zelf terug in de zestien", "Afstand 14 m"],
@@ -836,6 +841,7 @@
     "benodigdheden": ["1 goal", "1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Hoge snelheid tot ± 16 m, daarna bal dicht aan de voet", "Kijk naar de keeper: staat hij al stil, dan schieten; komt hij nog, dan omspelen", "Laag in de hoek, niet op de keeper"],
     "variaties": {
       "makkelijker": ["Keeper mag niet verder uitkomen dan het doelgebied", "Start op 20 m"],
@@ -952,6 +958,7 @@
     "benodigdheden": ["1 goal", "6+ ballen", "hesjes voor de verdedigers"],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Eerste aanraking ver genoeg naar voren, zodat je snelheid houdt", "Lichaam tussen verdediger en bal (afschermen)", "Niet te lang wachten: afronden zodra je binnen de zestien bent"],
     "variaties": {
       "makkelijker": ["Verdediger start 4 m erachter", "Verdediger mag alleen volgen, niet tackelen"],
@@ -1090,6 +1097,7 @@
     "benodigdheden": ["1 goal", "1 bal per speler"],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Standbeen naast de bal, knie en lichaam boven de bal", "Raak de bal vol met de wreef, enkel gestrekt en vast", "Na het schot doorlopen: er kan een rebound komen"],
     "variaties": {
       "makkelijker": ["Bal eerst aannemen, dan schieten", "Afstand 16 m"],
@@ -1124,7 +1132,7 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 32.2,
           "y": 19,
           "kijkrichting": 90
         },
@@ -1264,6 +1272,7 @@
     "benodigdheden": ["1 goal", "8+ ballen", "hesjes voor één team"],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Aanvaller: lichaam tussen tegenstander en bal, en snel naar doel", "Verdediger: niet duiken, blijf tussen aanvaller en doel", "Snel omschakelen: wie de bal verliest, verdedigt meteen"],
     "variaties": {
       "makkelijker": ["Bal dichter bij de aanvallende rij", "Verdediger start 1 m later"],
@@ -1445,6 +1454,7 @@
     "benodigdheden": ["2 kleine doeltjes", "4 hoedjes", "1 bal per speler"],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "doorwisselbaar": true,
     "coachpunten": ["Kijk voor het schot op: waar is het doeltje?", "Plaatsen gaat voor hard: binnenkant voet", "Snel terug aansluiten, dan is je team sneller weer aan de beurt"],
     "variaties": {
       "makkelijker": ["Schietlijn op 5 m", "Grotere doeltjes of twee pionnen als doel"],
@@ -1683,6 +1693,7 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Ladder: op de voorvoet, armen actief, niet naar je voeten kijken", "Aanname in één beweging richting de slalom", "Slalom: kleine tikjes, de bal dicht bij je voet; daarna opkijken en schieten"],
     "variaties": {
       "makkelijker": ["Zonder ladder, starten met de bal aan de voet", "Pionnen verder uit elkaar"],
@@ -1834,6 +1845,7 @@
     "benodigdheden": ["Goal", "1 pop of pion", "Ballen"],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Dribbel de verdediger vast voordat je de kaats speelt", "Na je pass meteen versnellen langs de andere kant van de pop", "Kaatser: in één keer, in de loop vóór de loper"],
     "variaties": {
       "makkelijker": ["Kaats mag met twee aanrakingen", "Schutter mag de bal eerst aannemen"],
@@ -1970,6 +1982,7 @@
     "benodigdheden": ["Goal", "Ballen", "Hoedjes"],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Aanname met de buitenkant (of binnenkant) weg van de tegenstander, direct in de draai", "Opkijken vóór de voorzet: waar loopt de spits?", "Spits: niet te vroeg, met een curve naar de eerste paal"],
     "variaties": {
       "makkelijker": ["Voorzet laag in plaats van hoog", "Spits staat al in de zestien"],
@@ -2126,6 +2139,7 @@
     "benodigdheden": ["Goal", "Ballen", "Hoedjes"],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "doorwisselbaar": true,
     "coachpunten": ["Na de pass meteen buitenom, met snelheid", "Buitenspeler: even naar binnen dribbelen trekt de verdediger mee, dan de bal in de loop", "Lage voorzet: hard over de grond tussen keeper en verdedigers"],
     "variaties": {
       "makkelijker": ["Buitenspeler staat stil en legt de bal klaar", "Spits staat al op de plek"],
