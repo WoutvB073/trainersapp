@@ -1,4 +1,6 @@
-# TrainersApp
+# TopTraining
+
+(Repository en link heten nog "trainersapp"; dat blijft zo, zodat geïnstalleerde apps en gedeelde links blijven werken.)
 
 Webapp voor voetbaltrainers (JO7 t/m JO19, veld én keepers): een oefenbibliotheek met bewegende uitleg.
 Statische Progressive Web App: installeerbaar op het beginscherm, werkt op telefoon, tablet en laptop, en

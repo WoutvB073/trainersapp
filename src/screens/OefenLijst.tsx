@@ -3,30 +3,36 @@ import { oefeningenVan } from '../data/oefeningen';
 import { Kop } from '../components/Kop';
 import { Labels } from '../components/Labels';
 import { Miniatuur } from '../components/Miniatuur';
+import { FilterBalk, GeenResultaat, Hartje } from '../components/Filters';
+import { useFavorieten } from '../engine/favorieten';
+import { aantalActief, filterOefeningen, useFilters } from '../engine/filters';
+import { useEigenOefeningen } from '../eigen/opslag';
 import { ga } from '../router';
 import type { Soort } from '../model/types';
 import { NietGevonden } from './NietGevonden';
 
 export function OefenLijst({ soort, categorie }: { soort: Soort; categorie: string }) {
+  const filters = useFilters();
+  const favs = useFavorieten();
+  useEigenOefeningen();
   const basis = `/${SOORT_PAD[soort]}`;
   const alle = categorie === 'alle';
   const cat = alle ? undefined : vindCategorie(soort, categorie);
   if (!alle && !cat) return <NietGevonden />;
-  const oefeningen = oefeningenVan(soort, cat?.id);
+  const inCategorie = oefeningenVan(soort, cat?.id);
+  const oefeningen = filterOefeningen(inCategorie, filters, favs);
 
   return (
     <div className="pagina">
       <Kop titel={alle ? `${SOORT_NAAM[soort]}: alle oefeningen` : cat!.naam} ouder={basis} />
       <main className="inhoud">
+        <FilterBalk aantal={oefeningen.length} />
         {oefeningen.length === 0 ? (
-          <div className="leeg">
-            <p className="leeg-titel">Nog geen oefeningen</p>
-            <p>In deze categorie komen binnenkort oefeningen.</p>
-          </div>
+          <GeenResultaat metFilters={aantalActief(filters) > 0 && inCategorie.length > 0} />
         ) : (
           <ul className="kaarten">
             {oefeningen.map((o) => (
-              <li key={o.id}>
+              <li key={o.id} className="met-hart">
                 <a
                   className="kaart"
                   href={`#/oefening/${o.id}`}
@@ -42,6 +48,7 @@ export function OefenLijst({ soort, categorie }: { soort: Soort; categorie: stri
                     <Labels oefening={o} />
                   </span>
                 </a>
+                <Hartje id={o.id} naam={o.naam} />
               </li>
             ))}
           </ul>

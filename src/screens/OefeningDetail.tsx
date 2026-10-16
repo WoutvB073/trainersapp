@@ -6,6 +6,7 @@ import { Kop } from '../components/Kop';
 import { Icoon } from '../components/Icoon';
 import { aantalTekst, Labels } from '../components/Labels';
 import { NietGevonden } from './NietGevonden';
+import { Hartje } from '../components/Filters';
 import { ga, terug, vervang } from '../router';
 import { eigenOefeningen, useEigenOefeningen } from '../eigen/opslag';
 import { inBibliotheek, kopieerNaarEigen } from '../eigen/eigen';
@@ -115,7 +116,10 @@ export function OefeningDetail({ id }: { id: string }) {
         </div>
 
         <div className="detail-tekst">
-          <h2 className="detail-titel">{oefening.naam}</h2>
+          <div className="detail-titelrij">
+            <h2 className="detail-titel">{oefening.naam}</h2>
+            <Hartje id={oefening.id} naam={oefening.naam} groot />
+          </div>
           <div className="detail-cats">
             <span className="cat cat-soort">{SOORT_NAAM[soort]}</span>
             {categorieen.map((c) => (

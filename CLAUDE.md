@@ -1,4 +1,6 @@
-# TrainersApp — werkafspraken voor Claude
+# TopTraining — werkafspraken voor Claude
+
+(App-naam TopTraining; repo, link /trainersapp/ en opslagsleutels `trainersapp.…` blijven zo.)
 
 PWA (Vite + React + TS) voor voetbaltrainers: oefenbibliotheek veld/keepers met animaties. Visie, datamodel,
 fasering en besluiten: **PLAN.md** (eerst lezen).

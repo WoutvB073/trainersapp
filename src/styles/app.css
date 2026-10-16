@@ -27,7 +27,7 @@ button {
 }
 
 a {
-  color: var(--primair);
+  color: var(--primair-tekst);
 }
 
 h1,
@@ -417,12 +417,12 @@ h3 {
   height: 22px;
   border-radius: 50%;
   background: var(--combi);
-  color: #fff;
+  color: var(--op-combi);
   font-size: 0.8rem;
 }
 
 .label-keeper {
-  background: var(--accent-licht);
+  background: var(--moeilijker-licht);
   color: var(--moeilijker);
 }
 
@@ -502,7 +502,7 @@ h3 {
 
 .cat-soort {
   border-color: var(--primair);
-  color: var(--primair);
+  color: var(--primair-tekst);
   font-weight: 650;
 }
 
@@ -563,7 +563,7 @@ h3 {
 .vinkjes svg {
   flex: none;
   margin-top: 3px;
-  color: var(--primair);
+  color: var(--primair-tekst);
 }
 
 .variatie-knoppen {
@@ -595,13 +595,13 @@ h3 {
 .variatie-knop.makkelijker.aan {
   background: var(--makkelijker);
   border-color: var(--makkelijker);
-  color: #fff;
+  color: var(--op-makkelijker);
 }
 
 .variatie-knop.moeilijker.aan {
   background: var(--moeilijker);
   border-color: var(--moeilijker);
-  color: #fff;
+  color: var(--op-moeilijker);
 }
 
 .variatie-lijst {
@@ -675,7 +675,7 @@ h3 {
 .knop-rond.aan {
   background: var(--primair-licht);
   border-color: var(--primair);
-  color: var(--primair);
+  color: var(--primair-tekst);
 }
 
 .knop-rond.knop-hoofd {
@@ -752,7 +752,7 @@ h3 {
   gap: 14px;
   padding: 10px 10px 10px 18px;
   border-radius: 999px;
-  background: var(--tekst);
+  background: #1d2a23;
   color: #fff;
   box-shadow: 0 6px 20px rgb(0 0 0 / 0.25);
   white-space: nowrap;
@@ -763,7 +763,7 @@ h3 {
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--op-accent);
   font-weight: 700;
 }
 
@@ -782,7 +782,7 @@ h3 {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: var(--primair);
+  color: var(--primair-tekst);
   font-weight: 650;
 }
 

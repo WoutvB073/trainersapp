@@ -3,9 +3,13 @@ import { oefeningenVan } from '../data/oefeningen';
 import { Kop } from '../components/Kop';
 import { Icoon } from '../components/Icoon';
 import { ga } from '../router';
+import { FilterBalk } from '../components/Filters';
+import { useFavorieten } from '../engine/favorieten';
+import { aantalActief, filterOefeningen, useFilters } from '../engine/filters';
+import { useEigenOefeningen } from '../eigen/opslag';
 import type { Soort } from '../model/types';
 
-function Rij({ pad, naam, omschrijving, aantal }: { pad: string; naam: string; omschrijving: string; aantal: number }) {
+function Rij({ pad, naam, omschrijving, aantal, gefilterd }: { pad: string; naam: string; omschrijving: string; aantal: number; gefilterd: boolean }) {
   return (
     <li>
       <a
@@ -20,7 +24,7 @@ function Rij({ pad, naam, omschrijving, aantal }: { pad: string; naam: string; o
           <span className="rij-titel">{naam}</span>
           <span className="rij-sub">{omschrijving}</span>
         </span>
-        <span className="teller">{aantal === 0 ? 'Nog leeg' : aantal}</span>
+        <span className="teller">{aantal === 0 ? (gefilterd ? '0' : 'Nog leeg') : aantal}</span>
         <Icoon naam="verder" className="rij-pijl" />
       </a>
     </li>
@@ -28,18 +32,25 @@ function Rij({ pad, naam, omschrijving, aantal }: { pad: string; naam: string; o
 }
 
 export function Categorieen({ soort }: { soort: Soort }) {
+  const filters = useFilters();
+  const favs = useFavorieten();
+  useEigenOefeningen();
   const basis = `/${SOORT_PAD[soort]}`;
+  // Aantallen per categorie volgens de filters.
+  const tel = (c?: string) => filterOefeningen(oefeningenVan(soort, c), filters, favs).length;
+  const gefilterd = aantalActief(filters) > 0;
   return (
     <div className="pagina">
       <Kop titel={SOORT_NAAM[soort]} ouder="/" />
       <main className="inhoud">
+        <FilterBalk aantal={tel()} />
         <ul className="lijst">
-          <Rij pad={`${basis}/alle`} naam="Alle oefeningen" omschrijving="Alles op een rij" aantal={oefeningenVan(soort).length} />
+          <Rij pad={`${basis}/alle`} naam="Alle oefeningen" omschrijving={gefilterd ? 'Alles wat bij je filters past' : 'Alles op een rij'} aantal={tel()} gefilterd={gefilterd} />
         </ul>
         <h2 className="sectie-titel">Categorieën</h2>
         <ul className="lijst">
           {CATEGORIEEN[soort].map((c) => (
-            <Rij key={c.id} pad={`${basis}/${c.id}`} naam={c.naam} omschrijving={c.omschrijving} aantal={oefeningenVan(soort, c.id).length} />
+            <Rij key={c.id} pad={`${basis}/${c.id}`} naam={c.naam} omschrijving={c.omschrijving} aantal={tel(c.id)} gefilterd={gefilterd} />
           ))}
         </ul>
       </main>

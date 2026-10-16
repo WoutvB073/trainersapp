@@ -138,6 +138,9 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
           <h1 className="start-titel">{APP_NAAM}</h1>
           <p className="start-sub">Oefeningen voor veld en keepers</p>
         </div>
+        <button className="icoon-knop start-instellingen" aria-label="Instellingen" title="Instellingen" onClick={() => ga('/instellingen')}>
+          <Icoon naam="instellingen" maat={26} />
+        </button>
       </header>
       <main className="inhoud">
         <h2 className="sectie-titel">Oefenbibliotheek, trainingen en eigen oefeningen</h2>

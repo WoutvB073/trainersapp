@@ -12,6 +12,7 @@ import { useSyncExternalStore } from 'react';
  *   #/training/:id/modus/:nr Trainingsmodus (oefening nr, vanaf 1)
  *   #/t/:code                Gedeelde training (link)
  *   #/eigen                  Eigen oefeningen
+ *   #/instellingen           Instellingen (clubkleuren, licht/donker)
  *   #/eigen/nieuw            Nieuwe oefening: veld kiezen
  *   #/eigen/:id/tekenen      Editor (tekenen)
  *   #/eigen/:id/gegevens     Naam, categorieën, uitleg …
@@ -27,6 +28,7 @@ export type Route =
   | { naam: 'modus'; id: string; nr: number }
   | { naam: 'gedeeld'; code: string }
   | { naam: 'eigen' }
+  | { naam: 'instellingen' }
   | { naam: 'eigen-nieuw' }
   | { naam: 'tekenen'; id: string }
   | { naam: 'gegevens'; id: string }
@@ -45,6 +47,7 @@ export function leesHash(hash: string): Route {
   if (a === 'training' && b && c === 'modus') return { naam: 'modus', id: b, nr: Math.max(1, Number(d) || 1) };
   if (a === 't' && b) return { naam: 'gedeeld', code: b };
   if (a === 'eigen' && !b) return { naam: 'eigen' };
+  if (a === 'instellingen' && !b) return { naam: 'instellingen' };
   if (a === 'eigen' && b === 'nieuw') return { naam: 'eigen-nieuw' };
   if (a === 'eigen' && b && c === 'tekenen') return { naam: 'tekenen', id: b };
   if (a === 'eigen' && b && c === 'gegevens') return { naam: 'gegevens', id: b };

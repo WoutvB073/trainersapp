@@ -144,7 +144,7 @@
 .poort-knop-tweede {
   border: 2px solid var(--primair);
   background: var(--kaart);
-  color: var(--primair);
+  color: var(--primair-tekst);
 }
 
 .poort-kopieer {
@@ -175,7 +175,7 @@
 
 .poort-zelf summary {
   cursor: pointer;
-  color: var(--primair);
+  color: var(--primair-tekst);
   font-weight: 650;
   margin-bottom: 10px;
 }
@@ -230,7 +230,7 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  color: var(--primair);
+  color: var(--primair-tekst);
   animation: poort-stuiter 1.3s ease-in-out infinite;
 }
 

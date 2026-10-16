@@ -1,0 +1,80 @@
+import { useSyncExternalStore } from 'react';
+
+/**
+ * Favoriete oefeningen (ingebouwd en eigen), als lijst id's. Net als trainingen en eigen oefeningen via een
+ * verwisselbare backend: nu het apparaat, later online (dan dezelfde lijst per account).
+ */
+export interface FavorietenBackend {
+  laad(): string[];
+  bewaar(ids: string[]): void;
+}
+
+const SLEUTEL = 'trainersapp.favorieten';
+const VERSIE = 1;
+
+type Opslagplek = Pick<Storage, 'getItem' | 'setItem'>;
+
+export function apparaatFavorieten(opslag: Opslagplek | undefined, sleutel = SLEUTEL): FavorietenBackend {
+  return {
+    laad() {
+      try {
+        const data = JSON.parse(opslag?.getItem(sleutel) ?? 'null') as { versie?: number; ids?: unknown } | null;
+        return data?.versie === VERSIE && Array.isArray(data.ids) ? data.ids.filter((x): x is string => typeof x === 'string') : [];
+      } catch {
+        return [];
+      }
+    },
+    bewaar(ids) {
+      try {
+        opslag?.setItem(sleutel, JSON.stringify({ versie: VERSIE, ids }));
+      } catch {
+        /* vol of geblokkeerd */
+      }
+    },
+  };
+}
+
+export class FavorietenStore {
+  private ids: Set<string>;
+  private luisteraars = new Set<() => void>();
+
+  constructor(private backend: FavorietenBackend) {
+    this.ids = new Set(backend.laad());
+  }
+
+  /** Vaste verzameling (nieuw object na elke wijziging, voor React). */
+  alle = (): ReadonlySet<string> => this.ids;
+
+  is(id: string): boolean {
+    return this.ids.has(id);
+  }
+
+  wissel(id: string): boolean {
+    const nieuw = new Set(this.ids);
+    if (nieuw.has(id)) nieuw.delete(id);
+    else nieuw.add(id);
+    this.ids = nieuw;
+    this.backend.bewaar([...nieuw]);
+    for (const cb of this.luisteraars) cb();
+    return nieuw.has(id);
+  }
+
+  abonneer = (cb: () => void): (() => void) => {
+    this.luisteraars.add(cb);
+    return () => this.luisteraars.delete(cb);
+  };
+}
+
+function lokaleOpslag(): Opslagplek | undefined {
+  try {
+    return typeof localStorage === 'undefined' ? undefined : localStorage;
+  } catch {
+    return undefined;
+  }
+}
+
+export const favorieten = new FavorietenStore(apparaatFavorieten(lokaleOpslag()));
+
+export function useFavorieten(): ReadonlySet<string> {
+  return useSyncExternalStore(favorieten.abonneer, favorieten.alle, favorieten.alle);
+}

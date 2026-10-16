@@ -1,24 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Volledig gevuld vierkant; inhoud binnen de veilige zone (± 80%). -->
+  <!-- TopTraining: grote witte T met een bal eronder, op een grasveld. Volledig gevuld vierkant, inhoud binnen de
+       veilige zone (± 80%), zodat iOS en Android de hoeken zelf kunnen afronden. Hieruit maakt de build alle iconen. -->
   <rect width="512" height="512" fill="#0f6b3a"/>
   <rect y="0" width="512" height="64" fill="#12773f"/>
   <rect y="128" width="512" height="64" fill="#12773f"/>
   <rect y="256" width="512" height="64" fill="#12773f"/>
   <rect y="384" width="512" height="64" fill="#12773f"/>
-  <!-- Strafschopgebied + goal -->
-  <g fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" opacity="0.9">
-    <path d="M136 96 V196 H376 V96"/>
-    <path d="M204 96 V132 H308 V96"/>
-    <path d="M206 196 A 56 56 0 0 0 306 196"/>
-  </g>
-  <rect x="222" y="80" width="68" height="16" rx="4" fill="#ffffff"/>
-  <!-- Looplijn (stippel) en ballijn -->
-  <path d="M150 400 C 170 330, 220 300, 250 260" fill="none" stroke="#ffd23f" stroke-width="12" stroke-linecap="round" stroke-dasharray="4 26"/>
-  <path d="M268 240 L 252 150" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
-  <path d="M232 168 L 251 138 L 272 166" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Speler met nummer -->
-  <circle cx="300" cy="320" r="58" fill="#ff7a1a" stroke="#ffffff" stroke-width="10"/>
-  <text x="300" y="342" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" fill="#ffffff" text-anchor="middle">9</text>
-  <!-- Bal -->
-  <circle cx="262" cy="254" r="22" fill="#ffffff" stroke="#1b1b1b" stroke-width="6"/>
+  <rect x="96" y="92" width="320" height="88" rx="22" fill="#ffffff"/>
+  <rect x="210" y="150" width="92" height="172" rx="18" fill="#ffffff"/>
+  <circle cx="256" cy="392" r="54" fill="#ffffff" stroke="#14231a" stroke-width="4.9"/>
+  <polygon points="256.0,372.6 274.5,386.0 267.4,407.7 244.6,407.7 237.5,386.0" fill="#14231a"/>
+  <line x1="256.0" y1="372.6" x2="256.0" y2="349.9" stroke="#14231a" stroke-width="3.8"/>
+  <polygon points="246.5,351.0 265.5,351.0 266.0,340.6 246.0,340.6" fill="#14231a"/>
+  <line x1="274.5" y1="386.0" x2="296.1" y2="379.0" stroke="#14231a" stroke-width="3.8"/>
+  <polygon points="292.1,370.3 298.0,388.3 308.0,385.6 301.8,366.6" fill="#14231a"/>
+  <line x1="267.4" y1="407.7" x2="280.8" y2="426.1" stroke="#14231a" stroke-width="3.8"/>
+  <polygon points="287.8,419.6 272.5,430.8 278.1,439.5 294.3,427.7" fill="#14231a"/>
+  <line x1="244.6" y1="407.7" x2="231.2" y2="426.1" stroke="#14231a" stroke-width="3.8"/>
+  <polygon points="239.5,430.8 224.2,419.6 217.7,427.7 233.9,439.5" fill="#14231a"/>
+  <line x1="237.5" y1="386.0" x2="215.9" y2="379.0" stroke="#14231a" stroke-width="3.8"/>
+  <polygon points="214.0,388.3 219.9,370.3 210.2,366.6 204.0,385.6" fill="#14231a"/>
 </svg>

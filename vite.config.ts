@@ -21,8 +21,9 @@ export default defineConfig({
       pwaAssets: { config: true, overrideManifestIcons: true, injectThemeColor: false },
       manifest: {
         id: BASE,
-        name: 'TrainersApp',
-        short_name: 'TrainersApp',
+        // Naam TopTraining; id, start_url en scope blijven /trainersapp/ (zelfde app voor wie hem al heeft).
+        name: 'TopTraining',
+        short_name: 'TopTraining',
         description: 'Voetbaloefeningen voor veld en keepers, met bewegende uitleg.',
         lang: 'nl',
         dir: 'ltr',

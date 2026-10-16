@@ -1,10 +1,11 @@
-# Plan: TrainersApp (PWA voor voetbaltrainers)
+# Plan: TopTraining (PWA voor voetbaltrainers)
 
 Webapp voor voetbaltrainers (JO7 t/m JO19, veld én keepers): een oefenbibliotheek met bewegende uitleg,
 trainingen samenstellen en later zelf oefeningen tekenen. Statische Progressive Web App op GitHub Pages,
 installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop en is offline te gebruiken.
-Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
-(`src/config.ts` + manifest in `vite.config.ts`).
+Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; daarvoor werknaam "TrainersApp"). De naam
+staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
+opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
 ## Status (16-10-2026, versie 0.14.0)
 
@@ -301,7 +302,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - Geïnstalleerd (beginscherm/app-venster, `display-mode: standalone` of `navigator.standalone`): altijd de app.
   - Telefoon/tablet in een gewone browser: **alleen** het installatiescherm.
   - Computer in de browser: installatie-uitleg + knop **Gewoon in de browser gebruiken** (onthouden in
-    `localStorage` `trainersapp.browserGekozen`). Op het startscherm staat dan "TrainersApp als app installeren" om terug te gaan.
+    `localStorage` `trainersapp.browserGekozen`). Op het startscherm staat dan "TopTraining als app installeren" om terug te gaan.
 - Uitleg per toestel (`src/screens/installeren/stappen.tsx`): iPhone/iPad Safari (deelknop → Zet op beginscherm; Safari 26:
   ••• → Deel → Zet op beginscherm → Open als webapp), iPhone met andere browser (kopieer link → open in Safari),
   ingebouwde browsers (WhatsApp e.d.: openen in Safari/Chrome), Android Chrome (knop **Installeren** via de

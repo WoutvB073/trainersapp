@@ -16,6 +16,7 @@ import { GedeeldeTraining } from './screens/training/GedeeldeTraining';
 import { EigenOefeningen, NieuweOefening } from './screens/eigen/EigenOefeningen';
 import { Tekenen } from './screens/eigen/Tekenen';
 import { Gegevens } from './screens/eigen/Gegevens';
+import { Instellingen } from './screens/Instellingen';
 import { browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen } from './engine/platform';
 
 function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => void }) {
@@ -50,6 +51,8 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <Tekenen key={route.id} id={route.id} />;
     case 'gegevens':
       return <Gegevens key={route.id} id={route.id} />;
+    case 'instellingen':
+      return <Instellingen />;
     default:
       return <NietGevonden />;
   }

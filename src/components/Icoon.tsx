@@ -34,6 +34,12 @@ const PADEN = {
   link: 'M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1',
   kalender: 'M4 6h16v14H4zM4 10h16M8.5 3.5v4M15.5 3.5v4',
   potlood: 'M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4',
+  instellingen: 'M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM19.4 13.5l1.6 1.2-1.8 3.1-1.9-.7a7 7 0 0 1-1.6.9L15.4 20h-3.6l-.3-2a7 7 0 0 1-1.6-.9l-1.9.7-1.8-3.1 1.6-1.2a7 7 0 0 1 0-1.9L6.2 10.4 8 7.3l1.9.7a7 7 0 0 1 1.6-.9l.3-2h3.6l.3 2a7 7 0 0 1 1.6.9l1.9-.7 1.8 3.1-1.6 1.2a7 7 0 0 1 0 1.9z',
+  hart: 'M12 20.3s-7.5-4.6-9-9.4C2 7.6 4.2 4.6 7.4 4.6c2 0 3.6 1.1 4.6 2.7 1-1.6 2.6-2.7 4.6-2.7 3.2 0 5.4 3 4.4 6.3-1.5 4.8-9 9.4-9 9.4z',
+  zoek: 'M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13zM15.3 15.3L20 20',
+  filter: 'M4 6h16M7 12h10M10 18h4',
+  zon: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4',
+  maan: 'M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z',
   ongedaan: 'M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11',
   herdoen: 'M15 14l5-5-5-5M20 9H9.5a5.5 5.5 0 0 0 0 11H13',
   draai: 'M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5',
@@ -52,8 +58,9 @@ const DIK: readonly string[] = ['meer', 'puntjes', 'grip'];
 
 export type IcoonNaam = keyof typeof PADEN;
 
-export function Icoon({ naam, maat = 22, className }: { naam: IcoonNaam; maat?: number; className?: string }) {
-  const vol = naam === 'afspelen' || naam === 'pauze';
+/** `gevuld`: vlak in plaats van een lijn (bv. een rood hartje bij een favoriet). */
+export function Icoon({ naam, maat = 22, className, gevuld }: { naam: IcoonNaam; maat?: number; className?: string; gevuld?: boolean }) {
+  const vol = gevuld ?? (naam === 'afspelen' || naam === 'pauze');
   return (
     <svg
       className={className}

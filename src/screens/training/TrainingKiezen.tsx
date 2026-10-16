@@ -10,6 +10,9 @@ import { trainingen, useTraining } from '../../training/opslag';
 import { kiesbaar } from '../../training/training';
 import type { Soort } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
+import { FilterBalk, GeenResultaat, Hartje } from '../../components/Filters';
+import { useFavorieten } from '../../engine/favorieten';
+import { filterOefeningen, useFilters } from '../../engine/filters';
 
 /** Onthoud tab en categorie per training (zodat terug van een oefening op dezelfde plek uitkomt). */
 function bewaard(id: string): { soort?: Soort; categorie?: string } {
@@ -22,6 +25,8 @@ function bewaard(id: string): { soort?: Soort; categorie?: string } {
 
 export function TrainingKiezen({ id }: { id: string }) {
   const t = useTraining(id);
+  const filters = useFilters();
+  const favs = useFavorieten();
   const eerder = bewaard(id);
   const [soort, setSoort] = useState<Soort>(eerder.soort ?? (t && t.spelers === 0 ? 'keeper' : 'veld'));
   const [categorie, setCategorie] = useState<string | undefined>(eerder.categorie);
@@ -43,8 +48,11 @@ export function TrainingKiezen({ id }: { id: string }) {
     setCategorie(c);
     onthoud(soort, c);
   };
-  const lijst = kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers);
-  const telling = (c?: string) => kiesbaar(alleOefeningen(), soort, c, t.spelers, t.keepers).length;
+  // De aantallen van de training gelden; de andere filters (favorieten, zoeken …) komen erbij.
+  const f = { ...filters, aantallen: null };
+  const lijst = filterOefeningen(kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers), f, favs);
+  const telling = (c?: string) => filterOefeningen(kiesbaar(alleOefeningen(), soort, c, t.spelers, t.keepers), f, favs).length;
+  const zonderFilters = kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers).length;
   // Altijd de nieuwste versie uit de opslag (ook bij snel achter elkaar tikken).
   const wissel = (oid: string) => {
     const nu = trainingen.haal(id) ?? t;
@@ -74,10 +82,10 @@ export function TrainingKiezen({ id }: { id: string }) {
         </div>
       </div>
       <main className="inhoud">
-        <p className="filter-uitleg">
-          <Icoon naam="spelers" maat={18} /> Passend bij {meervoud(t.spelers, 'speler', 'spelers')} en {meervoud(t.keepers, 'keeper', 'keepers')}
-        </p>
-        {lijst.length === 0 ? (
+        <FilterBalk aantal={lijst.length} aantallenVan={`Passend bij ${meervoud(t.spelers, 'speler', 'spelers')} en ${meervoud(t.keepers, 'keeper', 'keepers')} (van de training)`} />
+        {lijst.length === 0 && zonderFilters > 0 ? (
+          <GeenResultaat metFilters />
+        ) : lijst.length === 0 ? (
           <div className="leeg">
             <p className="leeg-titel">Geen passende oefeningen</p>
             <p>
@@ -93,7 +101,7 @@ export function TrainingKiezen({ id }: { id: string }) {
             {lijst.map((o) => {
               const gekozen = t.oefeningen.includes(o.id);
               return (
-                <li key={o.id} className={`kies-kaart${gekozen ? ' gekozen' : ''}`}>
+                <li key={o.id} className={`kies-kaart met-hart${gekozen ? ' gekozen' : ''}`}>
                   <a
                     className="kaart"
                     href={`#/oefening/${o.id}`}
@@ -109,6 +117,7 @@ export function TrainingKiezen({ id }: { id: string }) {
                       <Labels oefening={o} />
                     </span>
                   </a>
+                  <Hartje id={o.id} naam={o.naam} />
                   <button className={`toevoeg-knop${gekozen ? ' aan' : ''}`} onClick={() => wissel(o.id)} aria-pressed={gekozen} aria-label={gekozen ? `${o.naam} uit de training halen` : `${o.naam} toevoegen`}>
                     <Icoon naam={gekozen ? 'vink' : 'plus'} maat={20} />
                     {gekozen ? 'In training' : 'Toevoegen'}
