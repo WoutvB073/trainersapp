@@ -13,6 +13,9 @@ import { TrainingBewerk } from './screens/training/TrainingBewerk';
 import { TrainingKiezen } from './screens/training/TrainingKiezen';
 import { TrainingModus } from './screens/training/TrainingModus';
 import { GedeeldeTraining } from './screens/training/GedeeldeTraining';
+import { EigenOefeningen, NieuweOefening } from './screens/eigen/EigenOefeningen';
+import { Tekenen } from './screens/eigen/Tekenen';
+import { Gegevens } from './screens/eigen/Gegevens';
 import { browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen } from './engine/platform';
 
 function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => void }) {
@@ -39,6 +42,14 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <TrainingModus id={route.id} nr={route.nr} />;
     case 'gedeeld':
       return <GedeeldeTraining key={route.code} code={route.code} />;
+    case 'eigen':
+      return <EigenOefeningen />;
+    case 'eigen-nieuw':
+      return <NieuweOefening />;
+    case 'tekenen':
+      return <Tekenen key={route.id} id={route.id} />;
+    case 'gegevens':
+      return <Gegevens key={route.id} id={route.id} />;
     default:
       return <NietGevonden />;
   }

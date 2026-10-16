@@ -33,6 +33,18 @@ const PADEN = {
   training: 'M9 3.5h6v3H9zM7 5H5v16h14V5h-2M8.5 11h7M8.5 15h7',
   link: 'M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1',
   kalender: 'M4 6h16v14H4zM4 10h16M8.5 3.5v4M15.5 3.5v4',
+  potlood: 'M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4',
+  ongedaan: 'M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11',
+  herdoen: 'M15 14l5-5-5-5M20 9H9.5a5.5 5.5 0 0 0 0 11H13',
+  draai: 'M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5',
+  wijzer: 'M6 3.5l12 7.2-5.3 1.5-2.6 5.3z',
+  ster: 'M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z',
+  info: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 11v5.5M12 7.5h.01',
+  kubus: 'M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9',
+  lijnBal: 'M4 18L18 6M18 6h-5M18 6v5',
+  lijnLoop: 'M4 18l2.5-2.1M9 13.8l2.5-2.1M14 9.6l4-3.6M18 6h-5M18 6v5',
+  lijnDribbel: 'M4 18c1.5-3 3.5 0 5-3s3.5 0 5-3 2.5-2 4-6M18 6h-4.5M18 6v4.5',
+
 } as const;
 
 /** Stippen hebben een dikkere lijn nodig om zichtbaar te zijn. */

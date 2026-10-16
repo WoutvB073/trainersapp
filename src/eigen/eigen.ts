@@ -32,11 +32,24 @@ const kloon = <T>(x: T): T => JSON.parse(JSON.stringify(x)) as T;
 /** Een ingebouwde oefening naar de eigen oefeningen kopiëren. De animatie blijft, tot je iets verschuift. */
 export function kopieerNaarEigen(o: Oefening, nu = Date.now(), id = EIGEN_VOORVOEGSEL + maakId()): EigenOefening {
   const k = kloon(o);
-  return { ...k, id, eigen: true, bron: o.eigen ? (o as EigenOefening).bron : o.id, gemaakt: nu, gewijzigd: nu };
+  return {
+    ...k,
+    id,
+    eigen: true,
+    bron: o.eigen ? (o as EigenOefening).bron : o.id,
+    gemaakt: nu,
+    gewijzigd: nu,
+  };
 }
 
 export function dupliceerEigen(o: EigenOefening, nu = Date.now(), id = EIGEN_VOORVOEGSEL + maakId()): EigenOefening {
-  return { ...kloon(o), id, naam: o.naam ? `${o.naam} (kopie)` : '', gemaakt: nu, gewijzigd: nu };
+  return {
+    ...kloon(o),
+    id,
+    naam: o.naam ? `${o.naam} (kopie)` : '',
+    gemaakt: nu,
+    gewijzigd: nu,
+  };
 }
 
 /** Wat ontbreekt er nog om de oefening in de bibliotheek te zetten? (Alleen naam en een categorie zijn verplicht.) */

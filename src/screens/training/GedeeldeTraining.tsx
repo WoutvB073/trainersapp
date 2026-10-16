@@ -7,6 +7,7 @@ import { APP_NAAM } from '../../config';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
 import { trainingen } from '../../training/opslag';
+import { eigenOefeningen } from '../../eigen/opslag';
 import { benodigdheden, datumTekst, trainingNaam, uitCode } from '../../training/training';
 import type { Oefening } from '../../model/types';
 import { Toast, useToast } from './onderdelen';
@@ -18,7 +19,8 @@ import { Toast, useToast } from './onderdelen';
 export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { code: string; nietGeinstalleerd?: boolean; opInstalleren?: () => void }) {
   const g = useMemo(() => uitCode(code), [code]);
   const [melding, toon] = useToast();
-  const oefeningen = useMemo(() => (g?.oefeningen ?? []).map((id) => vindOefening(id)).filter((o): o is Oefening => !!o), [g]);
+  // Eigen oefeningen van de afzender zitten in de link zelf.
+  const oefeningen = useMemo(() => (g?.oefeningen ?? []).map((id) => g?.eigen?.find((o) => o.id === id) ?? vindOefening(id)).filter((o): o is Oefening => !!o), [g]);
   const onbekend = (g?.oefeningen.length ?? 0) - oefeningen.length;
   const spullen = useMemo(() => benodigdheden(oefeningen), [oefeningen]);
 
@@ -37,7 +39,14 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
   }
 
   const opslaan = () => {
-    const t = trainingen.importeer({ ...g, oefeningen: [...new Set(g.oefeningen)] });
+    // Eerst de eigen oefeningen opslaan (eventueel met een nieuwe id), dan de training met de juiste id's.
+    const ids = g.eigen?.length ? eigenOefeningen.importeer(g.eigen) : new Map<string, string>();
+    const { eigen: _e, ...rest } = g;
+    void _e;
+    const t = trainingen.importeer({
+      ...rest,
+      oefeningen: [...new Set(g.oefeningen.map((id) => ids.get(id) ?? id))],
+    });
     if (nietGeinstalleerd) toon('Opgeslagen in deze browser');
     else ga(`/training/${t.id}`);
   };

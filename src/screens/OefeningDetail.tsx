@@ -6,6 +6,10 @@ import { Kop } from '../components/Kop';
 import { Icoon } from '../components/Icoon';
 import { aantalTekst, Labels } from '../components/Labels';
 import { NietGevonden } from './NietGevonden';
+import { ga, terug, vervang } from '../router';
+import { eigenOefeningen, useEigenOefeningen } from '../eigen/opslag';
+import { inBibliotheek, kopieerNaarEigen } from '../eigen/eigen';
+import type { EigenOefening, Oefening } from '../model/types';
 
 type Variatie = 'makkelijker' | 'moeilijker';
 
@@ -34,14 +38,71 @@ function Legenda() {
   );
 }
 
+/** Kopiëren naar eigen oefeningen, of (bij een eigen oefening) bewerken, dupliceren en verwijderen. */
+function Acties({ oefening }: { oefening: Oefening }) {
+  if (!oefening.eigen) {
+    return (
+      <div className="detail-acties">
+        <button
+          className="knop"
+          onClick={() => {
+            const k = eigenOefeningen.bewaar(kopieerNaarEigen(oefening));
+            ga(`/eigen/${k.id}/tekenen`);
+          }}
+        >
+          <Icoon naam="kopieer" maat={18} />
+          Kopiëren naar eigen oefeningen
+        </button>
+      </div>
+    );
+  }
+  const o = oefening as EigenOefening;
+  return (
+    <div className="detail-acties">
+      <button className="knop" onClick={() => ga(`/eigen/${o.id}/tekenen`)}>
+        <Icoon naam="potlood" maat={18} />
+        Tekening
+      </button>
+      <button className="knop" onClick={() => ga(`/eigen/${o.id}/gegevens`)}>
+        <Icoon naam="info" maat={18} />
+        Gegevens
+      </button>
+      <button
+        className="knop"
+        onClick={() => {
+          const k = eigenOefeningen.dupliceer(o.id);
+          if (k) vervang(`/eigen/${k.id}/gegevens`);
+        }}
+      >
+        <Icoon naam="kopieer" maat={18} />
+        Dupliceren
+      </button>
+      <button
+        className="knop"
+        onClick={() => {
+          if (window.confirm(`"${o.naam || 'Deze oefening'}" verwijderen?`)) {
+            eigenOefeningen.verwijder(o.id);
+            terug('/eigen');
+          }
+        }}
+      >
+        <Icoon naam="prullenbak" maat={18} />
+        Verwijderen
+      </button>
+    </div>
+  );
+}
+
 export function OefeningDetail({ id }: { id: string }) {
+  // Eigen oefeningen kunnen veranderen (dupliceren, verwijderen): dan opnieuw tekenen.
+  useEigenOefeningen();
   const oefening = vindOefening(id);
   const [variatie, setVariatie] = useState<Variatie | null>(null);
   if (!oefening) return <NietGevonden />;
 
   const { soort, categorieen } = oefening;
   const hoofd = vindCategorie(soort, categorieen[0]!);
-  const ouder = `/${SOORT_PAD[soort]}/${hoofd?.id ?? 'alle'}`;
+  const ouder = oefening.eigen && !inBibliotheek(oefening) ? '/eigen' : `/${SOORT_PAD[soort]}/${hoofd?.id ?? 'alle'}`;
   const kies = (v: Variatie) => setVariatie(variatie === v ? null : v);
 
   return (
@@ -64,6 +125,7 @@ export function OefeningDetail({ id }: { id: string }) {
             ))}
           </div>
           <Labels oefening={oefening} />
+          <Acties oefening={oefening} />
 
           {oefening.onderdelen && oefening.onderdelen.length > 0 && (
             <ol className="verloop" aria-label="Verloop van de oefening">
@@ -76,10 +138,12 @@ export function OefeningDetail({ id }: { id: string }) {
             </ol>
           )}
 
-          <section className="blok">
-            <h3>Uitleg</h3>
-            <p>{oefening.uitleg}</p>
-          </section>
+          {oefening.uitleg && (
+            <section className="blok">
+              <h3>Uitleg</h3>
+              <p>{oefening.uitleg}</p>
+            </section>
+          )}
 
           {oefening.organisatie && (
             <section className="blok">
@@ -91,11 +155,15 @@ export function OefeningDetail({ id }: { id: string }) {
           <section className="blok blok-twee">
             <div>
               <h3>Benodigdheden</h3>
-              <ul className="opsomming">
-                {oefening.benodigdheden.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
+              {oefening.benodigdheden.length ? (
+                <ul className="opsomming">
+                  {oefening.benodigdheden.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="klein">Niet ingevuld</p>
+              )}
             </div>
             <div>
               <h3>Aantal</h3>
@@ -104,38 +172,42 @@ export function OefeningDetail({ id }: { id: string }) {
             </div>
           </section>
 
-          <section className="blok">
-            <h3>Coachpunten</h3>
-            <ul className="vinkjes">
-              {oefening.coachpunten.map((c) => (
-                <li key={c}>
-                  <Icoon naam="vink" maat={18} />
-                  <span>{c}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="blok">
-            <h3>Variaties</h3>
-            <div className="variatie-knoppen">
-              <button className={`variatie-knop makkelijker${variatie === 'makkelijker' ? ' aan' : ''}`} onClick={() => kies('makkelijker')} aria-expanded={variatie === 'makkelijker'}>
-                <Icoon naam="makkelijker" maat={18} />
-                Makkelijker
-              </button>
-              <button className={`variatie-knop moeilijker${variatie === 'moeilijker' ? ' aan' : ''}`} onClick={() => kies('moeilijker')} aria-expanded={variatie === 'moeilijker'}>
-                <Icoon naam="moeilijker" maat={18} />
-                Moeilijker
-              </button>
-            </div>
-            {variatie && (
-              <ul className={`variatie-lijst ${variatie}`}>
-                {oefening.variaties[variatie].map((v) => (
-                  <li key={v}>{v}</li>
+          {oefening.coachpunten.length > 0 && (
+            <section className="blok">
+              <h3>Coachpunten</h3>
+              <ul className="vinkjes">
+                {oefening.coachpunten.map((c) => (
+                  <li key={c}>
+                    <Icoon naam="vink" maat={18} />
+                    <span>{c}</span>
+                  </li>
                 ))}
               </ul>
-            )}
-          </section>
+            </section>
+          )}
+
+          {(oefening.variaties.makkelijker.length > 0 || oefening.variaties.moeilijker.length > 0) && (
+            <section className="blok">
+              <h3>Variaties</h3>
+              <div className="variatie-knoppen">
+                <button className={`variatie-knop makkelijker${variatie === 'makkelijker' ? ' aan' : ''}`} onClick={() => kies('makkelijker')} aria-expanded={variatie === 'makkelijker'}>
+                  <Icoon naam="makkelijker" maat={18} />
+                  Makkelijker
+                </button>
+                <button className={`variatie-knop moeilijker${variatie === 'moeilijker' ? ' aan' : ''}`} onClick={() => kies('moeilijker')} aria-expanded={variatie === 'moeilijker'}>
+                  <Icoon naam="moeilijker" maat={18} />
+                  Moeilijker
+                </button>
+              </div>
+              {variatie && (
+                <ul className={`variatie-lijst ${variatie}`}>
+                  {oefening.variaties[variatie].map((v) => (
+                    <li key={v}>{v}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          )}
         </div>
       </main>
     </div>

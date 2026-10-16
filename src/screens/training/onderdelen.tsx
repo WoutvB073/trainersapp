@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Icoon } from '../../components/Icoon';
-import { MAX_AANTAL, naarCode, trainingNaam, type Training } from '../../training/training';
+import { eigenIds, MAX_AANTAL, naarCode, trainingNaam, type Training } from '../../training/training';
+import { eigenOefeningen } from '../../eigen/opslag';
+import { voorDelen } from '../../eigen/eigen';
+import type { EigenOefening } from '../../model/types';
 
 /** Stapper met − en + (ook 0 mag). */
 export function Stapper({ label, waarde, onStap, icoon }: { label: string; waarde: number; onStap: (stap: 1 | -1) => void; icoon: 'spelers' | 'keeper' }) {
@@ -25,9 +28,13 @@ export function Stapper({ label, waarde, onStap, icoon }: { label: string; waard
   );
 }
 
-/** Volledige deellink voor een training. */
+/** Volledige deellink voor een training. Eigen oefeningen gaan in hun geheel mee in de link. */
 export function deelLink(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'oefeningen'>): string {
-  return `${location.origin}${import.meta.env.BASE_URL}#/t/${naarCode(t)}`;
+  const eigen = eigenIds(t)
+    .map((id) => eigenOefeningen.haal(id))
+    .filter((o): o is EigenOefening => !!o)
+    .map(voorDelen);
+  return `${location.origin}${import.meta.env.BASE_URL}#/t/${naarCode(t, eigen)}`;
 }
 
 /** Code uit een geplakte link (of de code zelf). */

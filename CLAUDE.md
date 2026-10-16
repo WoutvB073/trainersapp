@@ -21,6 +21,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
   `render2d.ts` — canvas; `render3d.ts` — Three.js (lui geladen); `weergave.ts` — gezamenlijke interface;
   `AnimatieSpeler.tsx` — bediening, 2D/3D-keuze, terugvallen op 2D.
 - `src/engine/platform.ts` — toestel/browser + `kiesScherm` (installatiescherm of app); `src/screens/installeren/`.
+- `src/editor/editor.ts` — pure editorlogica (palet, aanraken, slepen/draaien/maat, lijnen, ongedaan maken, benodigdheden, bevriezen); `src/eigen/` — eigen oefeningen (opslag, kopiëren, delen); `src/screens/eigen/` — lijst, nieuw, Tekenen, Gegevens.
 - `src/styles/thema.css` — alle kleuren als CSS-variabelen (ook veld/teams), basis voor Clubkleuren.
 
 ## Browsertests (`tools/e2e/`, preview op poort 4184 moet draaien; geef een URL mee om online te testen)
@@ -28,6 +29,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `installeren.mjs` — installatiescherm per toestel, standalone = app, computerkeuze onthouden.
 - `drie-d.mjs` — 3D-momenten van beide oefeningen + camerastanden (`blad-3d-*.png`), cameragrenzen, beeldsnelheid.
 - `training.mjs [url]` — Training maken: hele flow op telefoon/tablet/laptop (kiezen, slepen met de vinger, trainingsmodus met vegen, delen, opslaan, dupliceren, verwijderen, offline). Blad: `blad-training.png`.
+- `editor.mjs [url]` — editor op telefoon/tablet (vinger, ook twee vingers) en laptop (muis), gegevens, bibliotheek, delen naar een ander toestel, kopie met animatie. Blad: `blad-editor.png`. Testhaakje `window.__editor` alleen met localStorage `trainersapp.testEditor=1`.
 - `keeper-momenten.mjs [url] [filter]` — 3D-close-ups op de sleutelmomenten (worp, duik, vang, tip); rekent de momenten zelf uit met de tijdlijn (via jiti). Camera op de keeper via het testhaakje `window.__camera3d` (alleen met `trainersapp.testCamera=1`).
 - `oefeningen.mjs [url] [filter]` — per oefening 3D/2D-screenshots (`blad-oef-<map>-<categorie>.png`), aantallen per categorie, "Keeper nodig".
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
@@ -45,6 +47,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - Knoppen die de opgeslagen training wijzigen: altijd uitgaan van de nieuwste versie uit `trainingen.haal(id)`, niet van de training uit de render (anders telt snel achter elkaar tikken maar één keer).
 - Fysieke controle (`tests/fysiek.test.ts`): geen bal laag door/over materiaal of door een speler die hem niet krijgt, niemand door materiaal (ladder/horde/ring/stok alleen met parcours-loopwijze). Zet een verdediger nooit precies op de passlijn; verleg eerder de route of de beginplek.
 - Nieuwe oefening: ook `doorwisselbaar` invullen (bij `false` een `meerSpelers`-tip "Met meer spelers: …").
+- Puppeteer: aanraken (CDP `Input.dispatchTouchEvent`) werkt alleen op de pagina die vooraan staat; na een tweede browsercontext een nieuwe pagina openen.
+- Prettier staat niet in het project: gebruik `npx prettier --single-quote --print-width 200` (anders dubbele aanhalingstekens).
 - Nieuwe oefening: `npm test` controleert ook of de bal alleen via een pass/schot van speler wisselt, en afstanden (personen ≥ 1,5 m, niet door pionnen/paaltjes/hoedjes); daarna `oefeningen.mjs` en de bladen bekijken.
 - Op een telefoon-/tabletformaat in de browser zie je alleen het installatiescherm: in tests `alsGeinstalleerd(page)`,
   in de preview-pane een laptopformaat gebruiken of "Gewoon in de browser gebruiken" kiezen.

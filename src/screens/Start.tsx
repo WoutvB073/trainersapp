@@ -4,6 +4,7 @@ import { meervoud } from '../components/Labels';
 import { Icoon } from '../components/Icoon';
 import { ga } from '../router';
 import { useTrainingen } from '../training/opslag';
+import { useEigenOefeningen } from '../eigen/opslag';
 import { maakTraining } from './training/MijnTrainingen';
 import type { Soort } from '../model/types';
 
@@ -94,6 +95,39 @@ function TrainingTegel() {
   );
 }
 
+function EigenTegel() {
+  const lijst = useEigenOefeningen();
+  return (
+    <div className="tegel tegel-training">
+      <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
+        <rect width="120" height="80" rx="10" fill="var(--gras-1)" />
+        <rect x="10" y="10" width="100" height="60" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.7" />
+        <path d="M30 56 Q 52 24 80 34" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M80 34l-7-4.5M80 34l-6 5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+        <circle cx="28" cy="58" r="6" fill="var(--team-a)" stroke="#fff" strokeWidth="1.5" />
+        <path d="M88 22l4 8h-8z" fill="#ff7a1a" />
+        <g transform="translate(82 50) rotate(-35)">
+          <rect x="0" y="0" width="26" height="7" rx="1.5" fill="#ffd23f" stroke="#8a5a00" strokeWidth="1" />
+          <path d="M26 0l6 3.5-6 3.5z" fill="#f5d6a8" />
+        </g>
+      </svg>
+      <span className="tegel-tekst">
+        <span className="tegel-titel">Eigen oefeningen</span>
+        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'eigen oefening', 'eigen oefeningen') : 'Teken je eigen oefening'}</span>
+        <span className="tegel-knoppen">
+          <button className="knop knop-primair" onClick={() => ga('/eigen/nieuw')}>
+            <Icoon naam="plus" maat={18} />
+            Nieuwe oefening
+          </button>
+          <button className="knop" onClick={() => ga('/eigen')}>
+            Mijn oefeningen
+          </button>
+        </span>
+      </span>
+    </div>
+  );
+}
+
 /** `opInstalleren`: alleen op de computer in de browser (terug naar de installatie-uitleg). */
 export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
   return (
@@ -106,11 +140,12 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
         </div>
       </header>
       <main className="inhoud">
-        <h2 className="sectie-titel">Oefenbibliotheek en trainingen</h2>
+        <h2 className="sectie-titel">Oefenbibliotheek, trainingen en eigen oefeningen</h2>
         <div className="tegels">
           <Tegel soort="veld" />
           <Tegel soort="keeper" />
           <TrainingTegel />
+          <EigenTegel />
         </div>
         {opInstalleren && (
           <button className="link-knop" onClick={opInstalleren}>

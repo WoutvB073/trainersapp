@@ -46,7 +46,13 @@ export function volgendNummer(t: Tekening, soort: ObjectSoort, team?: Team): num
 
 const ding =
   (soort: ObjectSoort, voorvoegsel: string, extra: Partial<VeldObject> = {}) =>
-  (t: Tekening, p: Punt): VeldObject => ({ id: nieuwId(t, voorvoegsel), soort, x: r1(p[0]), y: r1(p[1]), ...extra });
+  (t: Tekening, p: Punt): VeldObject => ({
+    id: nieuwId(t, voorvoegsel),
+    soort,
+    x: r1(p[0]),
+    y: r1(p[1]),
+    ...extra,
+  });
 
 const speler =
   (team: Team, voorvoegsel: string) =>
@@ -60,32 +66,158 @@ const speler =
   });
 
 export const PALET: PaletItem[] = [
-  { sleutel: 'speler-a', naam: 'Speler team A', groep: 'Spelers', maak: speler('A', 'a') },
-  { sleutel: 'speler-b', naam: 'Speler team B', groep: 'Spelers', maak: speler('B', 'b') },
+  {
+    sleutel: 'speler-a',
+    naam: 'Speler team A',
+    groep: 'Spelers',
+    maak: speler('A', 'a'),
+  },
+  {
+    sleutel: 'speler-b',
+    naam: 'Speler team B',
+    groep: 'Spelers',
+    maak: speler('B', 'b'),
+  },
   { sleutel: 'joker', naam: 'Joker', groep: 'Spelers', maak: speler('J', 'j') },
-  { sleutel: 'keeper', naam: 'Keeper', groep: 'Spelers', maak: (t, p) => ({ id: nieuwId(t, 'k'), soort: 'keeper', nummer: volgendNummer(t, 'keeper'), x: r1(p[0]), y: r1(p[1]) }) },
-  { sleutel: 'trainer', naam: 'Trainer', groep: 'Spelers', maak: ding('trainer', 't') },
+  {
+    sleutel: 'keeper',
+    naam: 'Keeper',
+    groep: 'Spelers',
+    maak: (t, p) => ({
+      id: nieuwId(t, 'k'),
+      soort: 'keeper',
+      nummer: volgendNummer(t, 'keeper'),
+      x: r1(p[0]),
+      y: r1(p[1]),
+    }),
+  },
+  {
+    sleutel: 'trainer',
+    naam: 'Trainer',
+    groep: 'Spelers',
+    maak: ding('trainer', 't'),
+  },
   { sleutel: 'bal', naam: 'Bal', groep: 'Spelers', maak: ding('bal', 'bal') },
-  { sleutel: 'goal', naam: 'Groot goal', groep: 'Doelen', maak: ding('goal', 'g') },
-  { sleutel: 'jeugdgoal', naam: 'Jeugdgoal', groep: 'Doelen', maak: ding('goal', 'g', { breedte: 5, hoogte: 2 }) },
-  { sleutel: 'klein-goal', naam: 'Klein goal', groep: 'Doelen', maak: ding('klein-goal', 'g') },
-  { sleutel: 'pion', naam: 'Pion', groep: 'Materiaal', maak: ding('pion', 'p') },
-  { sleutel: 'hoedje', naam: 'Hoedje', groep: 'Materiaal', maak: ding('hoedje', 'h') },
-  { sleutel: 'paaltje', naam: 'Paaltje', groep: 'Materiaal', maak: ding('paaltje', 'pa') },
-  { sleutel: 'stok', naam: 'Stok', groep: 'Materiaal', maak: ding('stok', 's', { lengte: 1.5 }) },
-  { sleutel: 'ladder', naam: 'Ladder', groep: 'Materiaal', maak: ding('ladder', 'l', { lengte: 4, breedte: 0.5 }) },
-  { sleutel: 'horde-laag', naam: 'Horde laag', groep: 'Materiaal', maak: ding('horde', 'ho', { hoogte: HORDE.laag }) },
-  { sleutel: 'horde-hoog', naam: 'Horde hoog', groep: 'Materiaal', maak: ding('horde', 'ho', { hoogte: HORDE.hoog }) },
-  { sleutel: 'ring', naam: 'Ring', groep: 'Materiaal', maak: ding('ring', 'r') },
-  { sleutel: 'bank', naam: 'Bank', groep: 'Materiaal', maak: ding('bank', 'bk', { breedte: 2.5 }) },
-  { sleutel: 'pop', naam: 'Pop / dummy', groep: 'Materiaal', maak: ding('pop', 'po') },
-  { sleutel: 'rebounder', naam: 'Rebounder', groep: 'Materiaal', maak: ding('rebounder', 'rb') },
-  { sleutel: 'net', naam: 'Net', groep: 'Materiaal', maak: ding('net', 'n', { breedte: 6, hoogte: 1 }) },
-  { sleutel: 'lint', naam: 'Lint', groep: 'Materiaal', maak: ding('net', 'n', { breedte: 6, hoogte: 0.5 }) },
-  { sleutel: 'keepersmat', naam: 'Keepersmat', groep: 'Materiaal', maak: ding('keepersmat', 'm', { breedte: 2, lengte: 1 }) },
-  { sleutel: 'landingskussen', naam: 'Landingskussen', groep: 'Materiaal', maak: ding('keepersmat', 'm', { breedte: 2, lengte: 1.5, hoogte: 0.4 }) },
-  { sleutel: 'zone', naam: 'Vak / zone', groep: 'Vakken en tekst', maak: ding('zone', 'z', { breedte: 10, lengte: 10 }) },
-  { sleutel: 'tekst', naam: 'Tekst', groep: 'Vakken en tekst', maak: ding('tekst', 'tx', { tekst: 'Tekst' }) },
+  {
+    sleutel: 'goal',
+    naam: 'Groot goal',
+    groep: 'Doelen',
+    maak: ding('goal', 'g'),
+  },
+  {
+    sleutel: 'jeugdgoal',
+    naam: 'Jeugdgoal',
+    groep: 'Doelen',
+    maak: ding('goal', 'g', { breedte: 5, hoogte: 2 }),
+  },
+  {
+    sleutel: 'klein-goal',
+    naam: 'Klein goal',
+    groep: 'Doelen',
+    maak: ding('klein-goal', 'g'),
+  },
+  {
+    sleutel: 'pion',
+    naam: 'Pion',
+    groep: 'Materiaal',
+    maak: ding('pion', 'p'),
+  },
+  {
+    sleutel: 'hoedje',
+    naam: 'Hoedje',
+    groep: 'Materiaal',
+    maak: ding('hoedje', 'h'),
+  },
+  {
+    sleutel: 'paaltje',
+    naam: 'Paaltje',
+    groep: 'Materiaal',
+    maak: ding('paaltje', 'pa'),
+  },
+  {
+    sleutel: 'stok',
+    naam: 'Stok',
+    groep: 'Materiaal',
+    maak: ding('stok', 's', { lengte: 1.5 }),
+  },
+  {
+    sleutel: 'ladder',
+    naam: 'Ladder',
+    groep: 'Materiaal',
+    maak: ding('ladder', 'l', { lengte: 4, breedte: 0.5 }),
+  },
+  {
+    sleutel: 'horde-laag',
+    naam: 'Horde laag',
+    groep: 'Materiaal',
+    maak: ding('horde', 'ho', { hoogte: HORDE.laag }),
+  },
+  {
+    sleutel: 'horde-hoog',
+    naam: 'Horde hoog',
+    groep: 'Materiaal',
+    maak: ding('horde', 'ho', { hoogte: HORDE.hoog }),
+  },
+  {
+    sleutel: 'ring',
+    naam: 'Ring',
+    groep: 'Materiaal',
+    maak: ding('ring', 'r'),
+  },
+  {
+    sleutel: 'bank',
+    naam: 'Bank',
+    groep: 'Materiaal',
+    maak: ding('bank', 'bk', { breedte: 2.5 }),
+  },
+  {
+    sleutel: 'pop',
+    naam: 'Pop / dummy',
+    groep: 'Materiaal',
+    maak: ding('pop', 'po'),
+  },
+  {
+    sleutel: 'rebounder',
+    naam: 'Rebounder',
+    groep: 'Materiaal',
+    maak: ding('rebounder', 'rb'),
+  },
+  {
+    sleutel: 'net',
+    naam: 'Net',
+    groep: 'Materiaal',
+    maak: ding('net', 'n', { breedte: 6, hoogte: 1 }),
+  },
+  {
+    sleutel: 'lint',
+    naam: 'Lint',
+    groep: 'Materiaal',
+    maak: ding('net', 'n', { breedte: 6, hoogte: 0.5 }),
+  },
+  {
+    sleutel: 'keepersmat',
+    naam: 'Keepersmat',
+    groep: 'Materiaal',
+    maak: ding('keepersmat', 'm', { breedte: 2, lengte: 1 }),
+  },
+  {
+    sleutel: 'landingskussen',
+    naam: 'Landingskussen',
+    groep: 'Materiaal',
+    maak: ding('keepersmat', 'm', { breedte: 2, lengte: 1.5, hoogte: 0.4 }),
+  },
+  {
+    sleutel: 'zone',
+    naam: 'Vak / zone',
+    groep: 'Vakken en tekst',
+    maak: ding('zone', 'z', { breedte: 10, lengte: 10 }),
+  },
+  {
+    sleutel: 'tekst',
+    naam: 'Tekst',
+    groep: 'Vakken en tekst',
+    maak: ding('tekst', 'tx', { tekst: 'Tekst' }),
+  },
 ];
 
 /** Bij welk palet-item hoort dit object (voor de naam in beeld en de benodigdheden)? */
@@ -232,7 +364,21 @@ export function afstandTotObject(o: VeldObject, p: Punt): number {
 }
 
 /** Volgorde van boven naar onder (wat bovenop ligt, pak je eerst). */
-const LAAG: Partial<Record<ObjectSoort, number>> = { tekst: 0, bal: 1, speler: 2, keeper: 2, trainer: 2, pion: 3, hoedje: 3, paaltje: 3, ring: 3, pop: 3, zone: 9, keepersmat: 8, kooi: 8 };
+const LAAG: Partial<Record<ObjectSoort, number>> = {
+  tekst: 0,
+  bal: 1,
+  speler: 2,
+  keeper: 2,
+  trainer: 2,
+  pion: 3,
+  hoedje: 3,
+  paaltje: 3,
+  ring: 3,
+  pop: 3,
+  zone: 9,
+  keepersmat: 8,
+  kooi: 8,
+};
 
 /**
  * Welk object raak je op punt p? `marge` in meters (vinger/muis: een klein object is zo toch goed te pakken).
@@ -319,12 +465,19 @@ export function objectHandvatten(o: VeldObject, extra: number): Partial<Record<H
 
 export function lijnHandvatten(t: Tekening, l: Lijn): Record<'begin' | 'midden' | 'eind', Punt> {
   const pts = lijnPunten(l, plekIn(t));
-  return { begin: pts[0]!, midden: lijnMidden(l, plekIn(t)), eind: pts[pts.length - 1]! };
+  return {
+    begin: pts[0]!,
+    midden: lijnMidden(l, plekIn(t)),
+    eind: pts[pts.length - 1]!,
+  };
 }
 
 // ---------- wijzigen ----------
 
-const metObjecten = (t: Tekening, objecten: VeldObject[]): Tekening => ({ ...t, objecten });
+const metObjecten = (t: Tekening, objecten: VeldObject[]): Tekening => ({
+  ...t,
+  objecten,
+});
 
 export function voegToe(t: Tekening, o: VeldObject): Tekening {
   const uit = metObjecten(t, [...t.objecten, o]);
@@ -424,7 +577,12 @@ export function kopieer(t: Tekening, id: string): { tekening: Tekening; id: stri
   const o = t.objecten.find((x) => x.id === id);
   if (!o) return { tekening: t, id };
   const voorvoegsel = id.replace(/\d+$/, '') || 'o';
-  const nieuw: VeldObject = { ...o, id: nieuwId(t, voorvoegsel), x: r1(o.x + 1.5), y: r1(o.y + 1.5) };
+  const nieuw: VeldObject = {
+    ...o,
+    id: nieuwId(t, voorvoegsel),
+    x: r1(o.x + 1.5),
+    y: r1(o.y + 1.5),
+  };
   delete nieuw.bij;
   if (o.nummer !== undefined) nieuw.nummer = volgendNummer(t, o.soort, o.team);
   delete nieuw.verdedigt;
@@ -451,7 +609,10 @@ export function verwijder(t: Tekening, id: string): Tekening {
 function losVan(l: Lijn, id: string, plek: (id: string) => Punt | undefined): Lijn {
   if (l.van !== id && l.naar !== id) return l;
   const pts = lijnPunten({ ...l, bocht: undefined }, plek);
-  const uit: Lijn = { ...l, punten: [pts[0]!, ...l.punten.slice(1, -1), pts[pts.length - 1]!] };
+  const uit: Lijn = {
+    ...l,
+    punten: [pts[0]!, ...l.punten.slice(1, -1), pts[pts.length - 1]!],
+  };
   if (l.van === id) delete uit.van;
   if (l.naar === id) delete uit.naar;
   return uit;
@@ -461,14 +622,32 @@ function losVan(l: Lijn, id: string, plek: (id: string) => Punt | undefined): Li
 
 /** Persoon (of bal) waar een lijnpunt aan vast kan: binnen de marge. */
 export function vastPunt(t: Tekening, p: Punt, marge: number): VeldObject | undefined {
+  // Een persoon gaat voor (ook als zijn bal ervoor ligt): de lijn hoort bij de speler, de bal gaat toch met hem mee.
+  let beste: VeldObject | undefined;
+  let d = marge;
+  for (const o of t.objecten) {
+    if (!isPersoon(o)) continue;
+    const a = afstandTotObject(o, p);
+    if (a <= d) {
+      d = a;
+      beste = o;
+    }
+  }
+  if (beste) return beste;
   const o = raakObject(t, p, marge);
-  return o && (isPersoon(o) || o.soort === 'bal') ? o : undefined;
+  return o?.soort === 'bal' && !o.bij ? o : undefined;
 }
 
 export function nieuweLijn(t: Tekening, soort: LijnSoort, van: Punt, naar: Punt, marge: number): Lijn {
   const a = vastPunt(t, van, marge);
   const b = vastPunt(t, naar, marge);
-  const l: Lijn = { soort, punten: [[r1(van[0]), r1(van[1])], [r1(naar[0]), r1(naar[1])]] };
+  const l: Lijn = {
+    soort,
+    punten: [
+      [r1(van[0]), r1(van[1])],
+      [r1(naar[0]), r1(naar[1])],
+    ],
+  };
   if (a) l.van = a.id;
   if (b && b.id !== a?.id) l.naar = b.id;
   return l;
@@ -631,7 +810,10 @@ export function benodigdhedenUit(t: Tekening): string[] {
 
 /** Aantal spelers en keepers in de tekening (voorstel voor "nodig"). */
 export function telPersonen(t: Tekening): { spelers: number; keepers: number } {
-  return { spelers: t.objecten.filter((o) => o.soort === 'speler').length, keepers: t.objecten.filter((o) => o.soort === 'keeper').length };
+  return {
+    spelers: t.objecten.filter((o) => o.soort === 'speler').length,
+    keepers: t.objecten.filter((o) => o.soort === 'keeper').length,
+  };
 }
 
 // ---------- animatie ----------
@@ -688,7 +870,13 @@ export function autoUitsnede(t: Tekening): Uitsnede | undefined {
     const v = objectVorm(o);
     if (v.rechthoek) {
       const [a, b, c, d] = v.rechthoek;
-      for (const q of [[a, c], [b, c], [a, d], [b, d]] as Punt[]) neem(wereld(o, q));
+      for (const q of [
+        [a, c],
+        [b, c],
+        [a, d],
+        [b, d],
+      ] as Punt[])
+        neem(wereld(o, q));
     } else neem([o.x, o.y]);
   }
   for (const l of t.lijnen ?? []) for (const p of lijnPunten(l, plekIn(t))) neem(p);

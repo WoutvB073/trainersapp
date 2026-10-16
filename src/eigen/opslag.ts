@@ -23,7 +23,10 @@ export function apparaatEigenBackend(opslag: Opslagplek | undefined, sleutel = S
       try {
         const ruw = opslag?.getItem(sleutel);
         if (!ruw) return [];
-        const data = JSON.parse(ruw) as { versie?: number; oefeningen?: EigenOefening[] };
+        const data = JSON.parse(ruw) as {
+          versie?: number;
+          oefeningen?: EigenOefening[];
+        };
         return data.versie === VERSIE && Array.isArray(data.oefeningen) ? data.oefeningen : [];
       } catch {
         return [];

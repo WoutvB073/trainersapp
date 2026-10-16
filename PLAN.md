@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (16-10-2026, versie 0.12.0)
+## Status (16-10-2026, versie 0.13.0)
 
 | Fase | Status |
 |---|---|
@@ -16,7 +16,7 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ✅ online (0.11.0), getest en akkoord: aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, klaarzetten, opslaan op het apparaat, dupliceren, delen via een link |
 | 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – getest en akkoord. Feedback 0.11.0 (0.12.0): fysieke controle van alle oefeningen, Keepersrondo en Keepersoorlog op één goal, aantallen "4+" (doorwisselbaar) of vast – **wacht op test**. |
-| 5. Editor | ⏳ |
+| 5. Editor | ✅ online (0.13.0) – **wacht op test** op de telefoon: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
 | 8. Later: animatie in de editor, delen met andere trainers (product) | ⏳ |
@@ -484,6 +484,51 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   partijvormen, rondo's, positiespel, voetbaltennis/voetvolley/bankjesvoetbal, keepersoorlog, keepersvolleybal). Bij een vast
   aantal staat op de detailpagina en in de trainingsmodus een tip (`meerSpelers`). Het filter in Training maken blijft
   "minimaal nodig ≤ aantal".
+
+## Besluiten fase 5 – Editor (versie 0.13.0)
+- **Startscherm:** vierde tegel "Eigen oefeningen" met **Nieuwe oefening** en **Mijn oefeningen**.
+- **Routes:** `#/eigen` (lijst: bewerken, dupliceren, verwijderen), `#/eigen/nieuw` (voor veld of keepers; leeg veld met
+  instelbare maat, half veld met goal, heel veld), `#/eigen/<id>/tekenen` (editor), `#/eigen/<id>/gegevens`.
+  Een eigen oefening heeft id `eigen-…` en gebruikt de gewone detailpagina `#/oefening/<id>` (met knoppen Tekening,
+  Gegevens, Dupliceren, Verwijderen). Onder een ingebouwde oefening: **Kopiëren naar eigen oefeningen**.
+- **Datamodel:** precies het formaat van de ingebouwde oefeningen (`EigenOefening` = `Oefening` + `eigen`, `gemaakt`,
+  `gewijzigd`, `bron`). Lijnen kregen `bocht` (buigpunt: vloeiende boog door dat punt) en `van`/`naar` (vast aan een
+  speler; de lijn beweegt mee). Animatiestappen kunnen later in hetzelfde formaat (fase 8).
+- **Editor** (`src/editor/editor.ts` = pure logica, getest; `src/screens/eigen/Tekenen.tsx` = scherm):
+  - Zelfde 2D-tekenwerk als de animaties. Onderin: Kiezen, Toevoegen (paneel met plaatjes: spelers A/B, joker, keeper,
+    trainer, bal, groot goal, jeugdgoal, klein goal, pion, hoedje, paaltje, stok, ladder, horde laag/hoog, ring, bank,
+    pop, rebounder, net, lint, keepersmat, landingskussen, vak/zone, tekst), Pass-, Loop- en Dribbellijn.
+  - Plaatsen: item kiezen, dan elke tik op het veld zet er één neer (snel 6 pionnen), tot je op × tikt.
+  - Gekozen object: slepen; draaihandvat (stappen van 15°; bij personen = kijkrichting); maathandvat bij vak, ladder,
+    stok, net/lint, bank, mat; balk met naam, nummer −/+, kleur (vak), tekst, draai 45°, kopiëren, verwijderen.
+    Spelers en keepers krijgen automatisch het volgende nummer (per team).
+  - Een bal binnen 0,8 m van een speler hoort bij die speler (gaat mee); verder weg slepen = los.
+  - Lijn: sleep over het veld; begint/eindigt hij op een speler, dan zit hij daaraan vast. Handvatten: begin, eind,
+    buigpunt (ruitje). Een vastgemaakt eind pak je niet als handvat (dan pak je de speler).
+  - Aanraakmarge ± 22 px (vinger), dus kleine dingen zijn makkelijk te pakken. Eén vinger op een leeg stuk = schuiven,
+    twee vingers = zoomen, muiswiel = zoomen, kompasknop = heel veld in beeld. De pagina schuift niet mee
+    (`touch-action: none`, editor vast in beeld).
+  - Ongedaan maken/opnieuw (ook Ctrl+Z / Ctrl+Y; Delete = verwijderen); slepen is één stap.
+  - Kubusknop: bekijken in 3D (stilstaand, draaien, camerastanden) of 2D. Getekende lijnen staan ook in 3D.
+  - Opslaan gaat vanzelf. Bij een half/heel veld wordt de uitsnede automatisch rond de tekening gezet.
+- **Kopie van een ingebouwde oefening:** houdt de animatie zolang je niets verschuift (toevoegen mag). Verschuif, draai of
+  verwijder je iets, dan eerst de vraag "Animatie laten vervallen?"; bij ja staat iedereen op zijn beginplek (ook spelers
+  in een rij) en is het een tekening zonder animatie.
+- **Gegevens:** naam en minstens één categorie verplicht (de rest wordt ook zonder bewaard, maar de oefening komt pas dan in
+  de bibliotheek). Veld of keepers + meerdere categorieën, uitleg, organisatie, benodigdheden (voorstel uit de tekening,
+  bv. "4 pionnen, 1 loopladder, 1 bal, Hesjes"; overnemen per regel of alles), spelers/keepers nodig (voorstel uit de
+  tekening), doorwisselbaar of vast (met tip), coachpunten, makkelijker, moeilijker (één per regel).
+- **Bibliotheek en Training maken:** eigen oefeningen met naam en categorie staan in hun categorieën met de badge "Eigen" en
+  zijn kiesbaar in Training maken (zelfde filter).
+- **Opslag:** `src/eigen/opslag.ts` (`EigenStore` met verwisselbare backend; nu localStorage `trainersapp.eigen` met
+  versienummer, later online/teams).
+- **Delen:** zit er een eigen oefening in een training, dan gaat die in zijn geheel mee in de deellink (`e` in de code,
+  getallen afgerond). De ontvanger ziet hem meteen; bij opslaan komt hij in zijn eigen oefeningen (zelfde inhoud wordt
+  hergebruikt, zelfde id met andere inhoud krijgt een nieuwe id).
+- **Tests:** `tests/editor.test.ts` (tekenen, nummers, slepen/draaien/maat, bal bij speler, lijnen vast/buigen, ongedaan
+  maken, benodigdheden, uitsnede, opslaan, kopiëren/bevriezen, delen en importeren) en `tools/e2e/editor.mjs`
+  (telefoon/tablet met de vinger incl. twee vingers zoomen, laptop met de muis; gegevens, bibliotheek, delen naar een
+  ander toestel, kopie met animatie).
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.
