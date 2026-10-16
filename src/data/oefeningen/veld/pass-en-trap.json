@@ -9,44 +9,126 @@
     "benodigdheden": ["3 hoedjes", "1 bal per groep"],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Aannemen met de voet die het verst van de bal is, lichaam open naar de volgende pion",
-      "Pass op de goede voet van je medespeler (de voet waarmee hij wil aannemen)",
-      "Na je pass meteen versnellen"
-    ],
+    "coachpunten": ["Aannemen met de voet die het verst van de bal is, lichaam open naar de volgende pion", "Pass op de goede voet van je medespeler (de voet waarmee hij wil aannemen)", "Na je pass meteen versnellen"],
     "variaties": {
       "makkelijker": ["Kleinere driehoek (6 m)", "Vrij aantal aanrakingen"],
       "moeilijker": ["In één keer doorspelen", "Tweede bal erbij", "Aanname met de buitenkant"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 18, "lengte": 15 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 18,
+        "lengte": 15
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "hA", "soort": "hoedje", "x": 2.6, "y": 11.2 },
-        { "id": "hB", "soort": "hoedje", "x": 8.9, "y": 5 },
-        { "id": "hC", "soort": "hoedje", "x": 12.6, "y": 12.8 },
-        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 0, "y": 0 },
-        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 0, "y": 0 },
-        { "id": "a3", "soort": "speler", "team": "A", "nummer": 3, "x": 0, "y": 0 },
-        { "id": "a4", "soort": "speler", "team": "A", "nummer": 4, "x": 0, "y": 0 },
-        { "id": "bal", "soort": "bal", "x": 3, "y": 12, "bij": "a1" }
+        {
+          "id": "hA",
+          "soort": "hoedje",
+          "x": 2.6,
+          "y": 11.2
+        },
+        {
+          "id": "hB",
+          "soort": "hoedje",
+          "x": 8.9,
+          "y": 5
+        },
+        {
+          "id": "hC",
+          "soort": "hoedje",
+          "x": 12.6,
+          "y": 12.8
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 3,
+          "y": 12,
+          "bij": "a1"
+        }
       ],
       "rijen": [
-        { "id": "rA", "x": 3, "y": 12, "richting": 155, "spelers": ["a1", "a4"] },
-        { "id": "rB", "x": 8, "y": 5, "richting": -90, "spelers": ["a2"] },
-        { "id": "rC", "x": 13, "y": 12, "richting": 25, "spelers": ["a3"] }
+        {
+          "id": "rA",
+          "x": 3,
+          "y": 12,
+          "richting": 155,
+          "spelers": ["a1", "a4"]
+        },
+        {
+          "id": "rB",
+          "x": 8,
+          "y": 5,
+          "richting": -90,
+          "spelers": ["a2"]
+        },
+        {
+          "id": "rC",
+          "x": 13,
+          "y": 12,
+          "richting": 25,
+          "spelers": ["a3"]
+        }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3", "a4"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3",
+              "a4"
+            ],
             "rondes": 2,
             "tussen": 1.4,
             "stappen": [
               {
                 "acties": [
-                  { "type": "pass", "van": "@", "naar": "@volgende" },
-                  { "type": "aansluiten", "wie": "@", "bij": "@volgende", "manier": "sprint", "start": 0.2 }
+                  {
+                    "type": "pass",
+                    "van": "@",
+                    "naar": "@volgende"
+                  },
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "bij": "@volgende",
+                    "manier": "sprint",
+                    "start": 0.2
+                  }
                 ]
               }
             ]
@@ -65,37 +147,117 @@
     "benodigdheden": ["3 pionnen", "1 bal per groep"],
     "spelersNodig": 3,
     "keepersNodig": 0,
-    "coachpunten": [
-      "A: na de pass meteen diep gaan, niet blijven kijken",
-      "B: afleggen in één keer, op de loopvoet van C",
-      "C: speel de bal vóór A, in de ruimte waar hij heen loopt"
-    ],
+    "coachpunten": ["A: na de pass meteen diep gaan, niet blijven kijken", "B: afleggen in één keer, op de loopvoet van C", "C: speel de bal vóór A, in de ruimte waar hij heen loopt"],
     "variaties": {
       "makkelijker": ["B mag eerst aannemen", "Kortere afstanden (6 m)"],
       "moeilijker": ["Alles in één keer", "Een passieve verdediger bij B", "A rondt af op een klein goal"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 15, "lengte": 14 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 15,
+        "lengte": 14
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "pA", "soort": "pion", "x": 3.2, "y": 12.6 },
-        { "id": "pB", "soort": "pion", "x": 3.2, "y": 4.6 },
-        { "id": "pC", "soort": "pion", "x": 10.8, "y": 6.6 },
-        { "id": "a", "soort": "speler", "team": "A", "nummer": 1, "x": 4, "y": 12, "kijkrichting": -90 },
-        { "id": "b", "soort": "speler", "team": "A", "nummer": 2, "x": 4, "y": 4, "kijkrichting": 90 },
-        { "id": "c", "soort": "speler", "team": "A", "nummer": 3, "x": 10, "y": 6, "kijkrichting": 180 },
-        { "id": "bal", "soort": "bal", "x": 4, "y": 11.6, "bij": "a" }
+        {
+          "id": "pA",
+          "soort": "pion",
+          "x": 3.2,
+          "y": 12.6
+        },
+        {
+          "id": "pB",
+          "soort": "pion",
+          "x": 3.2,
+          "y": 4.6
+        },
+        {
+          "id": "pC",
+          "soort": "pion",
+          "x": 10.8,
+          "y": 6.6
+        },
+        {
+          "id": "a",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 4,
+          "y": 12,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 4,
+          "y": 4,
+          "kijkrichting": 90
+        },
+        {
+          "id": "c",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 10,
+          "y": 6,
+          "kijkrichting": 180
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 4,
+          "y": 11.6,
+          "bij": "a"
+        }
       ],
       "animatie": [
-        { "acties": [{ "type": "pass", "van": "a", "naar": "b" }] },
         {
           "acties": [
-            { "type": "pass", "van": "b", "naar": "c" },
-            { "type": "loop", "wie": "a", "naar": [8.5, 2], "manier": "sprint", "start": 0.15 }
+            {
+              "type": "pass",
+              "van": "a",
+              "naar": "b"
+            }
           ]
         },
-        { "acties": [{ "type": "pass", "van": "c", "naar": "a" }] },
-        { "acties": [{ "type": "dribbel", "wie": "a", "naar": [12.5, 1.4], "duur": 1.0 }] }
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b",
+              "naar": "c"
+            },
+            {
+              "type": "loop",
+              "wie": "a",
+              "naar": [8.5, 2],
+              "manier": "sprint",
+              "start": 0.15
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "c",
+              "naar": "a"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a",
+              "naar": [12.5, 1.4],
+              "duur": 1
+            }
+          ]
+        }
       ]
     }
   },
@@ -109,71 +271,201 @@
     "benodigdheden": ["4 pionnen", "1–2 ballen"],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "B: eerst van de pion weg, dan kort komen om aanspeelbaar te zijn",
-      "Kaats op de loopvoet van A, zodat hij in één keer kan doorspelen",
-      "Diepe pass stevig en vóór de ontvanger"
-    ],
+    "coachpunten": ["B: eerst van de pion weg, dan kort komen om aanspeelbaar te zijn", "Kaats op de loopvoet van A, zodat hij in één keer kan doorspelen", "Diepe pass stevig en vóór de ontvanger"],
     "variaties": {
       "makkelijker": ["Kortere afstanden", "B neemt eerst aan en passt dan terug"],
-      "moeilijker": ["Alles in één keer", "C/D kaatst ook nog terug op de inlopende B (derde man)", "Twee ballen: links en rechts om en om"]
+      "moeilijker": ["Alles in één keer", "C/D kaatst ook nog terug op de inlopende B (derde man)", "Twee ballen: links en rechts om en om", "Na de kaats speelt C diep op B, die afrondt op het grote doel"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 16, "lengte": 18 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 16,
+        "lengte": 18
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "pA", "soort": "pion", "x": 9, "y": 16.6 },
-        { "id": "pB", "soort": "pion", "x": 9.2, "y": 8.6 },
-        { "id": "pC", "soort": "pion", "x": 2.2, "y": 2.2 },
-        { "id": "pD", "soort": "pion", "x": 13.8, "y": 2.2 },
-        { "id": "a", "soort": "speler", "team": "A", "nummer": 1, "x": 8, "y": 16, "kijkrichting": -90 },
-        { "id": "b", "soort": "speler", "team": "A", "nummer": 2, "x": 8, "y": 9, "kijkrichting": 90 },
-        { "id": "c", "soort": "speler", "team": "A", "nummer": 3, "x": 3, "y": 3, "kijkrichting": 45 },
-        { "id": "d", "soort": "speler", "team": "A", "nummer": 4, "x": 13, "y": 3, "kijkrichting": 135 },
-        { "id": "bal", "soort": "bal", "x": 8, "y": 15.6, "bij": "a" }
+        {
+          "id": "pA",
+          "soort": "pion",
+          "x": 9,
+          "y": 16.6
+        },
+        {
+          "id": "pB",
+          "soort": "pion",
+          "x": 9.2,
+          "y": 8.6
+        },
+        {
+          "id": "pC",
+          "soort": "pion",
+          "x": 2.2,
+          "y": 2.2
+        },
+        {
+          "id": "pD",
+          "soort": "pion",
+          "x": 13.8,
+          "y": 2.2
+        },
+        {
+          "id": "a",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 8,
+          "y": 16,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 8,
+          "y": 9,
+          "kijkrichting": 90
+        },
+        {
+          "id": "c",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 3,
+          "y": 3,
+          "kijkrichting": 45
+        },
+        {
+          "id": "d",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 13,
+          "y": 3,
+          "kijkrichting": 135
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 8,
+          "y": 15.6,
+          "bij": "a"
+        }
       ],
       "animatie": [
         {
           "acties": [
-            { "type": "loop", "wie": "b", "naar": [8, 10.3], "duur": 0.5 },
-            { "type": "pass", "van": "a", "naar": "b" }
+            {
+              "type": "loop",
+              "wie": "b",
+              "naar": [8, 10.3],
+              "duur": 0.5
+            },
+            {
+              "type": "pass",
+              "van": "a",
+              "naar": "b"
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "b", "naar": "a" },
-            { "type": "loop", "wie": "a", "naar": [8, 14], "duur": 0.8 }
+            {
+              "type": "pass",
+              "van": "b",
+              "naar": "a"
+            },
+            {
+              "type": "loop",
+              "wie": "a",
+              "naar": [8, 14],
+              "duur": 0.8
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "a", "naar": "c" },
-            { "type": "loop", "wie": "c", "naar": [3.8, 4.2], "start": 0.2, "duur": 0.6 }
+            {
+              "type": "pass",
+              "van": "a",
+              "naar": "c"
+            },
+            {
+              "type": "loop",
+              "wie": "c",
+              "naar": [3.8, 4.2],
+              "start": 0.2,
+              "duur": 0.6
+            }
           ]
         },
         {
           "acties": [
-            { "type": "dribbel", "wie": "c", "via": [[1.6, 9]], "naar": [8, 16.6] },
-            { "type": "loop", "wie": "b", "via": [[5.2, 7.4]], "naar": [3, 3], "start": 0.2 },
-            { "type": "loop", "wie": "a", "naar": [8, 9.6], "start": 0.8 }
+            {
+              "type": "dribbel",
+              "wie": "c",
+              "via": [[1.6, 9]],
+              "naar": [8, 16.6]
+            },
+            {
+              "type": "loop",
+              "wie": "b",
+              "via": [[5.2, 7.4]],
+              "naar": [3, 3],
+              "start": 0.2
+            },
+            {
+              "type": "loop",
+              "wie": "a",
+              "naar": [8, 9.6],
+              "start": 0.8
+            }
           ]
         },
         {
           "acties": [
-            { "type": "loop", "wie": "a", "naar": [8, 10.4], "duur": 0.5 },
-            { "type": "pass", "van": "c", "naar": "a" }
+            {
+              "type": "loop",
+              "wie": "a",
+              "naar": [8, 10.4],
+              "duur": 0.5
+            },
+            {
+              "type": "pass",
+              "van": "c",
+              "naar": "a"
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "a", "naar": "c" },
-            { "type": "loop", "wie": "c", "naar": [8, 14.6], "duur": 0.8 }
+            {
+              "type": "pass",
+              "van": "a",
+              "naar": "c"
+            },
+            {
+              "type": "loop",
+              "wie": "c",
+              "naar": [8, 14.6],
+              "duur": 0.8
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "c", "naar": "d" },
-            { "type": "loop", "wie": "d", "naar": [12.2, 4.2], "start": 0.2, "duur": 0.6 }
+            {
+              "type": "pass",
+              "van": "c",
+              "naar": "d"
+            },
+            {
+              "type": "loop",
+              "wie": "d",
+              "naar": [12.2, 4.2],
+              "start": 0.2,
+              "duur": 0.6
+            }
           ]
         }
       ]
@@ -189,48 +481,126 @@
     "benodigdheden": ["1 rebounder (of muur)", "2 hoedjes", "1 bal"],
     "spelersNodig": 1,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Steeds weer in balans staan vóór je de bal aanneemt",
-      "Binnenkant, enkel vast, standbeen naast de bal",
-      "Om en om links en rechts passen"
-    ],
+    "coachpunten": ["Steeds weer in balans staan vóór je de bal aanneemt", "Binnenkant, enkel vast, standbeen naast de bal", "Om en om links en rechts passen"],
     "variaties": {
       "makkelijker": ["Op de plaats blijven, afstand 4 m", "Eerst aannemen, dan passen"],
-      "moeilijker": ["In één keer terugspelen", "Afstand 10 m en harder", "Na elke pass een draai om een pion achter je"]
+      "moeilijker": ["In één keer terugspelen", "Afstand 10 m en harder", "Na elke pass een draai om een pion achter je", "Na drie keer kaatsen de bal meenemen en scoren op een klein doeltje"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 12, "lengte": 11 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 11
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "rb", "soort": "rebounder", "x": 6, "y": 2, "breedte": 1.6 },
-        { "id": "h1", "soort": "hoedje", "x": 3.5, "y": 9 },
-        { "id": "h2", "soort": "hoedje", "x": 8.5, "y": 9 },
-        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 5, "y": 9, "kijkrichting": -90 },
-        { "id": "bal", "soort": "bal", "x": 5, "y": 8.6, "bij": "a1" }
+        {
+          "id": "rb",
+          "soort": "rebounder",
+          "x": 6,
+          "y": 2,
+          "breedte": 1.6
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 3.5,
+          "y": 9
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 8.5,
+          "y": 9
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 5,
+          "y": 9,
+          "kijkrichting": -90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 5,
+          "y": 8.6,
+          "bij": "a1"
+        }
       ],
       "animatie": [
         {
           "acties": [
-            { "type": "pass", "van": "a1", "naar": "rb" },
-            { "type": "loop", "wie": "a1", "naar": [7, 9], "manier": "zijwaarts", "kijk": -90, "start": 0.15, "duur": 0.7 }
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "rb"
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [7, 9],
+              "manier": "zijwaarts",
+              "kijk": -90,
+              "start": 0.15,
+              "duur": 0.7
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "a1", "naar": "rb" },
-            { "type": "loop", "wie": "a1", "naar": [5, 9], "manier": "zijwaarts", "kijk": -90, "start": 0.15, "duur": 0.7 }
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "rb"
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [5, 9],
+              "manier": "zijwaarts",
+              "kijk": -90,
+              "start": 0.15,
+              "duur": 0.7
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "a1", "naar": "rb" },
-            { "type": "loop", "wie": "a1", "naar": [7, 9], "manier": "zijwaarts", "kijk": -90, "start": 0.15, "duur": 0.7 }
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "rb"
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [7, 9],
+              "manier": "zijwaarts",
+              "kijk": -90,
+              "start": 0.15,
+              "duur": 0.7
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "a1", "naar": "rb" },
-            { "type": "loop", "wie": "a1", "naar": [5, 9], "manier": "zijwaarts", "kijk": -90, "start": 0.15, "duur": 0.7 }
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "rb"
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [5, 9],
+              "manier": "zijwaarts",
+              "kijk": -90,
+              "start": 0.15,
+              "duur": 0.7
+            }
           ]
         }
       ]
@@ -246,40 +616,112 @@
     "benodigdheden": ["2 pionnen", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Passer: kijk naar de loopactie en speel de bal vóór de speler, niet op hem",
-      "Loper: versnel op het moment dat de passer opkijkt",
-      "Aanname in de looprichting, zonder af te remmen"
-    ],
+    "coachpunten": ["Passer: kijk naar de loopactie en speel de bal vóór de speler, niet op hem", "Loper: versnel op het moment dat de passer opkijkt", "Aanname in de looprichting, zonder af te remmen"],
     "variaties": {
       "makkelijker": ["Kortere loopacties (6 m), rustiger tempo", "Bal mag even stuiten of vaker geraakt worden"],
       "moeilijker": ["Over een verdediger heen (chip) of tussen twee pionnen door", "Pass met de buitenkant", "Afronden op een goal na de aanname"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 17, "lengte": 18 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 17,
+        "lengte": 18
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "p1", "soort": "pion", "x": 3, "y": 16.8 },
-        { "id": "p2", "soort": "pion", "x": 10, "y": 15.8 },
-        { "id": "a", "soort": "speler", "team": "A", "nummer": 1, "x": 4, "y": 16, "kijkrichting": -90 },
-        { "id": "b", "soort": "speler", "team": "B", "nummer": 2, "x": 9, "y": 15, "kijkrichting": -90 },
-        { "id": "bal", "soort": "bal", "x": 4, "y": 15.6, "bij": "a" }
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 3,
+          "y": 16.8
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 10,
+          "y": 15.8
+        },
+        {
+          "id": "a",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 4,
+          "y": 16,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 9,
+          "y": 15,
+          "kijkrichting": -90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 4,
+          "y": 15.6,
+          "bij": "a"
+        }
       ],
       "animatie": [
         {
           "acties": [
-            { "type": "loop", "wie": "b", "naar": [13, 5], "manier": "sprint", "duur": 1.9 },
-            { "type": "pass", "van": "a", "naar": "b", "start": 0.5 }
+            {
+              "type": "loop",
+              "wie": "b",
+              "naar": [13, 5],
+              "manier": "sprint",
+              "duur": 1.9
+            },
+            {
+              "type": "pass",
+              "van": "a",
+              "naar": "b",
+              "start": 0.5
+            }
           ]
         },
-        { "acties": [{ "type": "dribbel", "wie": "b", "naar": [14, 2.4], "duur": 0.9 }] },
         {
           "acties": [
-            { "type": "loop", "wie": "a", "naar": [6.5, 6], "manier": "sprint", "duur": 1.7 },
-            { "type": "pass", "van": "b", "naar": "a", "start": 0.6 }
+            {
+              "type": "dribbel",
+              "wie": "b",
+              "naar": [14, 2.4],
+              "duur": 0.9
+            }
           ]
         },
-        { "acties": [{ "type": "dribbel", "wie": "a", "naar": [6, 3.4], "duur": 0.8 }] }
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a",
+              "naar": [6.5, 6],
+              "manier": "sprint",
+              "duur": 1.7
+            },
+            {
+              "type": "pass",
+              "van": "b",
+              "naar": "a",
+              "start": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a",
+              "naar": [6, 3.4],
+              "duur": 0.8
+            }
+          ]
+        }
       ]
     }
   },
@@ -293,30 +735,102 @@
     "benodigdheden": ["8 hoedjes", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Standbeen naast en iets achter de bal, raak de onderkant met de wreef",
-      "Lichaam iets achterover en doortrappen naar je doel",
-      "Ontvanger: lees de baan vroeg en neem aan in de looprichting"
-    ],
+    "coachpunten": ["Standbeen naast en iets achter de bal, raak de onderkant met de wreef", "Lichaam iets achterover en doortrappen naar je doel", "Ontvanger: lees de baan vroeg en neem aan in de looprichting"],
     "variaties": {
       "makkelijker": ["Afstand 15 m", "Bal mag eerst stuiten"],
       "moeilijker": ["Afstand 30–35 m", "Aanname direct met één aanraking het vak uit (meenemen)", "Crossbal: van de zijkant naar een speler die inloopt"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 34, "lengte": 12 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 34,
+        "lengte": 12
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "zA", "soort": "zone", "x": 4, "y": 6, "breedte": 6, "lengte": 6 },
-        { "id": "zB", "soort": "zone", "x": 30, "y": 6, "breedte": 6, "lengte": 6 },
-        { "id": "a", "soort": "speler", "team": "A", "nummer": 1, "x": 4, "y": 6, "kijkrichting": 0 },
-        { "id": "b", "soort": "speler", "team": "B", "nummer": 2, "x": 30, "y": 6, "kijkrichting": 180 },
-        { "id": "bal", "soort": "bal", "x": 4.4, "y": 6, "bij": "a" }
+        {
+          "id": "zA",
+          "soort": "zone",
+          "x": 4,
+          "y": 6,
+          "breedte": 6,
+          "lengte": 6
+        },
+        {
+          "id": "zB",
+          "soort": "zone",
+          "x": 30,
+          "y": 6,
+          "breedte": 6,
+          "lengte": 6
+        },
+        {
+          "id": "a",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 4,
+          "y": 6,
+          "kijkrichting": 0
+        },
+        {
+          "id": "b",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 30,
+          "y": 6,
+          "kijkrichting": 180
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 4.4,
+          "y": 6,
+          "bij": "a"
+        }
       ],
       "animatie": [
-        { "acties": [{ "type": "pass", "van": "a", "naar": "b", "hoogte": "hoog" }] },
-        { "acties": [{ "type": "dribbel", "wie": "b", "naar": [28.6, 7.2], "duur": 1.0 }] },
-        { "acties": [{ "type": "pass", "van": "b", "naar": "a", "hoogte": "hoog" }] },
-        { "acties": [{ "type": "dribbel", "wie": "a", "naar": [5.4, 4.8], "duur": 1.0 }] }
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a",
+              "naar": "b",
+              "hoogte": "hoog"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "b",
+              "naar": [28.6, 7.2],
+              "duur": 1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b",
+              "naar": "a",
+              "hoogte": "hoog"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a",
+              "naar": [5.4, 4.8],
+              "duur": 1
+            }
+          ]
+        }
       ]
     }
   },
@@ -330,56 +844,192 @@
     "benodigdheden": ["4 pionnen", "10 hoedjes", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Zonder bal: loop alvast naar de andere kant van een vrij poortje",
-      "Met bal: kijk op en kies een poortje waar je partner al staat",
-      "Pass stevig en over de grond"
-    ],
+    "coachpunten": ["Zonder bal: loop alvast naar de andere kant van een vrij poortje", "Met bal: kijk op en kies een poortje waar je partner al staat", "Pass stevig en over de grond"],
     "variaties": {
       "makkelijker": ["Bredere poortjes (2,5 m)", "Twee keer hetzelfde poortje mag"],
-      "moeilijker": ["Maximaal twee aanrakingen", "Een tikker of verdediger die passes mag onderscheppen", "Pass alleen met het zwakke been"]
+      "moeilijker": ["Maximaal twee aanrakingen", "Een tikker of verdediger die passes mag onderscheppen", "Pass alleen met het zwakke been", "Na de pass door het poortje direct doorlopen: je maat speelt de bal terug in je loop"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 20, "lengte": 19 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 19
+      },
       "camera": "boven",
       "objecten": [
-        { "id": "z1", "soort": "zone", "x": 10, "y": 9.5, "breedte": 18, "lengte": 17 },
-        { "id": "g1a", "soort": "hoedje", "x": 6, "y": 5.25 },
-        { "id": "g1b", "soort": "hoedje", "x": 6, "y": 6.75 },
-        { "id": "g2a", "soort": "hoedje", "x": 13.25, "y": 6 },
-        { "id": "g2b", "soort": "hoedje", "x": 14.75, "y": 6 },
-        { "id": "g3a", "soort": "hoedje", "x": 10, "y": 10.25 },
-        { "id": "g3b", "soort": "hoedje", "x": 10, "y": 11.75 },
-        { "id": "g4a", "soort": "hoedje", "x": 5.25, "y": 15 },
-        { "id": "g4b", "soort": "hoedje", "x": 6.75, "y": 15 },
-        { "id": "g5a", "soort": "hoedje", "x": 15, "y": 14.25 },
-        { "id": "g5b", "soort": "hoedje", "x": 15, "y": 15.75 },
-        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 3.5, "y": 6, "kijkrichting": 0 },
-        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 8.5, "y": 6, "kijkrichting": 180 },
-        { "id": "b1", "soort": "speler", "team": "B", "nummer": 1, "x": 14, "y": 3.5, "kijkrichting": 90 },
-        { "id": "b2", "soort": "speler", "team": "B", "nummer": 2, "x": 14, "y": 8.5, "kijkrichting": -90 },
-        { "id": "ba", "soort": "bal", "x": 3.9, "y": 6, "bij": "a1" },
-        { "id": "bb", "soort": "bal", "x": 14, "y": 3.9, "bij": "b1" }
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 10,
+          "y": 9.5,
+          "breedte": 18,
+          "lengte": 17
+        },
+        {
+          "id": "g1a",
+          "soort": "hoedje",
+          "x": 6,
+          "y": 5.25
+        },
+        {
+          "id": "g1b",
+          "soort": "hoedje",
+          "x": 6,
+          "y": 6.75
+        },
+        {
+          "id": "g2a",
+          "soort": "hoedje",
+          "x": 13.25,
+          "y": 6
+        },
+        {
+          "id": "g2b",
+          "soort": "hoedje",
+          "x": 14.75,
+          "y": 6
+        },
+        {
+          "id": "g3a",
+          "soort": "hoedje",
+          "x": 10,
+          "y": 10.25
+        },
+        {
+          "id": "g3b",
+          "soort": "hoedje",
+          "x": 10,
+          "y": 11.75
+        },
+        {
+          "id": "g4a",
+          "soort": "hoedje",
+          "x": 5.25,
+          "y": 15
+        },
+        {
+          "id": "g4b",
+          "soort": "hoedje",
+          "x": 6.75,
+          "y": 15
+        },
+        {
+          "id": "g5a",
+          "soort": "hoedje",
+          "x": 15,
+          "y": 14.25
+        },
+        {
+          "id": "g5b",
+          "soort": "hoedje",
+          "x": 15,
+          "y": 15.75
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 3.5,
+          "y": 6,
+          "kijkrichting": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 8.5,
+          "y": 6,
+          "kijkrichting": 180
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 1,
+          "x": 14,
+          "y": 3.5,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 14,
+          "y": 8.5,
+          "kijkrichting": -90
+        },
+        {
+          "id": "ba",
+          "soort": "bal",
+          "x": 3.9,
+          "y": 6,
+          "bij": "a1"
+        },
+        {
+          "id": "bb",
+          "soort": "bal",
+          "x": 14,
+          "y": 3.9,
+          "bij": "b1"
+        }
       ],
       "animatie": [
         {
           "acties": [
-            { "type": "pass", "van": "a1", "naar": "a2" },
-            { "type": "pass", "van": "b1", "naar": "b2" }
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            },
+            {
+              "type": "pass",
+              "van": "b1",
+              "naar": "b2"
+            }
           ]
         },
         {
           "acties": [
-            { "type": "dribbel", "wie": "a2", "naar": [8, 11] },
-            { "type": "loop", "wie": "a1", "via": [[5.2, 8.2], [9, 8.6], [12.5, 9]], "naar": [12.5, 11] },
-            { "type": "dribbel", "wie": "b2", "via": [[15.5, 11]], "naar": [12.8, 15] },
-            { "type": "loop", "wie": "b1", "via": [[16.5, 4.5], [17.5, 10]], "naar": [17.5, 15] }
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "naar": [8, 11]
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "via": [[5.2, 8.2], [9, 8.6], [12.5, 9]],
+              "naar": [12.5, 11]
+            },
+            {
+              "type": "dribbel",
+              "wie": "b2",
+              "via": [[15.5, 11]],
+              "naar": [12.8, 15]
+            },
+            {
+              "type": "loop",
+              "wie": "b1",
+              "via": [[16.5, 4.5], [17.5, 10]],
+              "naar": [17.5, 15]
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "a2", "naar": "a1" },
-            { "type": "pass", "van": "b2", "naar": "b1" }
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a1"
+            },
+            {
+              "type": "pass",
+              "van": "b2",
+              "naar": "b1"
+            }
           ]
         }
       ]
@@ -395,52 +1045,188 @@
     "benodigdheden": ["5 pionnen (liefst hoge)", "4 hoedjes voor de lijnen", "1 bal per speler"],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Standbeen naast de bal, wijzend naar je doel",
-      "Binnenkant voor precisie, wreef voor een harde pass",
-      "Snel een volgende bal pakken en opnieuw mikken"
-    ],
+    "coachpunten": ["Standbeen naast de bal, wijzend naar je doel", "Binnenkant voor precisie, wreef voor een harde pass", "Snel een volgende bal pakken en opnieuw mikken"],
     "variaties": {
       "makkelijker": ["Lijnen dichterbij (8 m)", "Grotere doelen (kegels of ballen op een pion)"],
       "moeilijker": ["Alleen het zwakke been", "Lijnen verder uit elkaar (16 m)", "In één keer: de bal van de tegenstander direct terugspelen"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 20, "lengte": 16 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 16
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "h1", "soort": "hoedje", "x": 2, "y": 14 },
-        { "id": "h2", "soort": "hoedje", "x": 18, "y": 14 },
-        { "id": "h3", "soort": "hoedje", "x": 2, "y": 2 },
-        { "id": "h4", "soort": "hoedje", "x": 18, "y": 2 },
-        { "id": "p1", "soort": "pion", "x": 4, "y": 8 },
-        { "id": "p2", "soort": "pion", "x": 7, "y": 8 },
-        { "id": "p3", "soort": "pion", "x": 10, "y": 8 },
-        { "id": "p4", "soort": "pion", "x": 13, "y": 8 },
-        { "id": "p5", "soort": "pion", "x": 16, "y": 8 },
-        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 6, "y": 14, "kijkrichting": -90 },
-        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 12, "y": 14, "kijkrichting": -90 },
-        { "id": "b1", "soort": "speler", "team": "B", "nummer": 1, "x": 8, "y": 2, "kijkrichting": 90 },
-        { "id": "b2", "soort": "speler", "team": "B", "nummer": 2, "x": 14, "y": 2, "kijkrichting": 90 },
-        { "id": "ba1", "soort": "bal", "x": 6, "y": 13.6, "bij": "a1" },
-        { "id": "ba2", "soort": "bal", "x": 12, "y": 13.6, "bij": "a2" },
-        { "id": "bb1", "soort": "bal", "x": 8, "y": 2.4, "bij": "b1" },
-        { "id": "bb2", "soort": "bal", "x": 14, "y": 2.4, "bij": "b2" }
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 2,
+          "y": 14
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 18,
+          "y": 14
+        },
+        {
+          "id": "h3",
+          "soort": "hoedje",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "id": "h4",
+          "soort": "hoedje",
+          "x": 18,
+          "y": 2
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 4,
+          "y": 8
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 7,
+          "y": 8
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 10,
+          "y": 8
+        },
+        {
+          "id": "p4",
+          "soort": "pion",
+          "x": 13,
+          "y": 8
+        },
+        {
+          "id": "p5",
+          "soort": "pion",
+          "x": 16,
+          "y": 8
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 6,
+          "y": 14,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 12,
+          "y": 14,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 1,
+          "x": 8,
+          "y": 2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 14,
+          "y": 2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "ba1",
+          "soort": "bal",
+          "x": 6,
+          "y": 13.6,
+          "bij": "a1"
+        },
+        {
+          "id": "ba2",
+          "soort": "bal",
+          "x": 12,
+          "y": 13.6,
+          "bij": "a2"
+        },
+        {
+          "id": "bb1",
+          "soort": "bal",
+          "x": 8,
+          "y": 2.4,
+          "bij": "b1"
+        },
+        {
+          "id": "bb2",
+          "soort": "bal",
+          "x": 14,
+          "y": 2.4,
+          "bij": "b2"
+        }
       ],
       "animatie": [
         {
           "acties": [
-            { "type": "pass", "van": "a1", "naar": [7, 8.55] },
-            { "type": "pass", "van": "b1", "naar": [10, 7.45], "start": 0.3 }
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": [7, 8.55]
+            },
+            {
+              "type": "pass",
+              "van": "b1",
+              "naar": [10, 7.45],
+              "start": 0.3
+            }
           ]
         },
         {
           "acties": [
-            { "type": "pass", "van": "a2", "naar": [12.6, 2.9] },
-            { "type": "pass", "van": "b2", "naar": [13, 7.45], "start": 0.2 }
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": [12.6, 2.9]
+            },
+            {
+              "type": "pass",
+              "van": "b2",
+              "naar": [13, 7.45],
+              "start": 0.2
+            }
           ]
         },
-        { "acties": [{ "type": "pak", "wie": "b2", "bal": "ba2" }] },
-        { "acties": [{ "type": "pass", "van": "b2", "bal": "ba2", "naar": [16, 7.45] }] }
+        {
+          "acties": [
+            {
+              "type": "pak",
+              "wie": "b2",
+              "bal": "ba2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b2",
+              "bal": "ba2",
+              "naar": [16, 7.45]
+            }
+          ]
+        }
       ]
     }
   },
@@ -454,35 +1240,307 @@
     "benodigdheden": ["4 pionnen", "2 ballen"],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Open staan: lichaam naar de bal én naar de volgende hoek",
-      "Aannemen met de verste voet, in één beweging naar je passvoet",
-      "Let op de tweede bal: communiceer en speel op tijd"
-    ],
+    "coachpunten": ["Open staan: lichaam naar de bal én naar de volgende hoek", "Aannemen met de verste voet, in één beweging naar je passvoet", "Let op de tweede bal: communiceer en speel op tijd"],
     "variaties": {
       "makkelijker": ["Eén bal", "Kleiner vierkant (8 m)"],
       "moeilijker": ["In één keer doorspelen", "Na de pass meelopen naar de volgende hoek", "Derde bal erbij"]
     },
     "tekening": {
-      "veld": { "type": "leeg", "breedte": 18, "lengte": 18 },
+      "veld": {
+        "type": "leeg",
+        "breedte": 18,
+        "lengte": 18
+      },
       "camera": "schuin",
       "objecten": [
-        { "id": "p1", "soort": "pion", "x": 4, "y": 4 },
-        { "id": "p2", "soort": "pion", "x": 14, "y": 4 },
-        { "id": "p3", "soort": "pion", "x": 14, "y": 14 },
-        { "id": "p4", "soort": "pion", "x": 4, "y": 14 },
-        { "id": "a1", "soort": "speler", "team": "A", "nummer": 1, "x": 4.8, "y": 4.8, "kijkrichting": 0 },
-        { "id": "a2", "soort": "speler", "team": "A", "nummer": 2, "x": 13.2, "y": 4.8, "kijkrichting": 180 },
-        { "id": "a3", "soort": "speler", "team": "A", "nummer": 3, "x": 13.2, "y": 13.2, "kijkrichting": 180 },
-        { "id": "a4", "soort": "speler", "team": "A", "nummer": 4, "x": 4.8, "y": 13.2, "kijkrichting": 0 },
-        { "id": "bA", "soort": "bal", "x": 5.2, "y": 4.8, "bij": "a1" },
-        { "id": "bB", "soort": "bal", "x": 12.8, "y": 13.2, "bij": "a3" }
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 14,
+          "y": 4
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 14,
+          "y": 14
+        },
+        {
+          "id": "p4",
+          "soort": "pion",
+          "x": 4,
+          "y": 14
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 4.8,
+          "y": 4.8,
+          "kijkrichting": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 13.2,
+          "y": 4.8,
+          "kijkrichting": 180
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 13.2,
+          "y": 13.2,
+          "kijkrichting": 180
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 4.8,
+          "y": 13.2,
+          "kijkrichting": 0
+        },
+        {
+          "id": "bA",
+          "soort": "bal",
+          "x": 5.2,
+          "y": 4.8,
+          "bij": "a1"
+        },
+        {
+          "id": "bB",
+          "soort": "bal",
+          "x": 12.8,
+          "y": 13.2,
+          "bij": "a3"
+        }
       ],
       "animatie": [
-        { "acties": [{ "type": "pass", "van": "a1", "naar": "a2" }, { "type": "pass", "van": "a3", "naar": "a4" }] },
-        { "acties": [{ "type": "pass", "van": "a2", "naar": "a3" }, { "type": "pass", "van": "a4", "naar": "a1" }] },
-        { "acties": [{ "type": "pass", "van": "a3", "naar": "a4" }, { "type": "pass", "van": "a1", "naar": "a2" }] },
-        { "acties": [{ "type": "pass", "van": "a4", "naar": "a1" }, { "type": "pass", "van": "a2", "naar": "a3" }] }
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            },
+            {
+              "type": "pass",
+              "van": "a3",
+              "naar": "a4"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a3"
+            },
+            {
+              "type": "pass",
+              "van": "a4",
+              "naar": "a1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a3",
+              "naar": "a4"
+            },
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a4",
+              "naar": "a1"
+            },
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a3"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-cv-derde-man-afronden",
+    "soort": "veld",
+    "naam": "Driehoek, derde man en afronden",
+    "categorieen": ["pass-en-trap", "afwerken", "positiespel"],
+    "combinatievorm": true,
+    "onderdelen": [
+      "Inspelen",
+      "Kaats terug",
+      "Derde man diep",
+      "Afronden"
+    ],
+    "uitleg": "Speler 1 speelt in op de kort komende speler 2, die kaatst terug. Intussen loopt speler 3 (de derde man) in de rug van de verdediger. Speler 1 speelt hem in één keer diep aan en speler 3 rondt af.",
+    "organisatie": "Driehoek van ± 8 m op 20–28 m van het doel, pop als verdediger op 15 m. Na elke aanval doordraaien: 1 wordt 2, 2 wordt 3, 3 sluit aan bij de bal.",
+    "benodigdheden": [
+      "Goal",
+      "1 pop",
+      "Ballen",
+      "Hoedjes"
+    ],
+    "spelersNodig": 3,
+    "keepersNodig": 1,
+    "coachpunten": ["Speler 2: kort komen en in één keer terugleggen", "Derde man: pas starten als de bal bij speler 2 is, dan vol versnellen", "Diepe bal in de loop, niet op de man"],
+    "variaties": {
+      "makkelijker": ["Zonder pop", "Speler 3 start al vóór de eerste pass"],
+      "moeilijker": ["Verdediger in plaats van de pop", "Alles in één keer", "Na het schot verdedigt speler 1 tegen een tweede aanval"]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 22,
+        "y": -3,
+        "breedte": 24,
+        "lengte": 34
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 34,
+          "y": 1.5,
+          "nummer": 1,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "pp",
+          "soort": "pop",
+          "x": 35,
+          "y": 15
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 6,
+          "x": 33.5,
+          "y": 28,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 29.5,
+          "y": 21.5,
+          "kijkrichting": 60
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 39.5,
+          "y": 22.5,
+          "kijkrichting": -120
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 33.5,
+          "y": 27.6,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [30, 22.6],
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a1",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a3",
+              "via": [[38.4, 17]],
+              "naar": [36.6, 10.4],
+              "manier": "sprint"
+            },
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a3",
+              "direct": true,
+              "start": 0.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a3",
+              "naar": [32.2, 0.3],
+              "hoogte": "grond",
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 1.4,
+          "acties": []
+        }
       ]
     }
   }

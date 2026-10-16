@@ -3,35 +3,16 @@
     "id": "veld-sp-voetbaltennis",
     "soort": "veld",
     "naam": "Voetbaltennis 2 tegen 2",
-    "categorieen": [
-      "spelletjes",
-      "techniek"
-    ],
+    "categorieen": ["spelletjes", "techniek"],
     "uitleg": "Twee tegen twee over een net van 1 m. De bal mag aan jouw kant één keer stuiten en je team mag hem maximaal drie keer raken (voet, dij of hoofd) voordat hij terug over het net moet. Lukt dat niet, of gaat de bal uit, dan is het punt voor de ander.",
     "organisatie": "Veld van 8 × 14 m met in het midden een net of lint op 1 m hoogte (tussen twee paaltjes). Opslag om de beurt vanaf de achterlijn; tellen zoals bij tennis of tot 11.",
-    "benodigdheden": [
-      "Voetvolleynet of lint met 2 paaltjes",
-      "4 pionnen",
-      "1 bal"
-    ],
+    "benodigdheden": ["Voetvolleynet of lint met 2 paaltjes", "4 pionnen", "1 bal"],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Eerste aanraking zacht: leg de bal op voor je medespeler",
-      "Speel de bal over het net naar de plek waar niemand staat",
-      "Na je actie terug naar je eigen helft van het veld"
-    ],
+    "coachpunten": ["Eerste aanraking zacht: leg de bal op voor je medespeler", "Speel de bal over het net naar de plek waar niemand staat", "Na je actie terug naar je eigen helft van het veld"],
     "variaties": {
-      "makkelijker": [
-        "Bal mag twee keer stuiten",
-        "Opslag met de hand (gooien)",
-        "Lager net (0,7 m)"
-      ],
-      "moeilijker": [
-        "Bal mag niet stuiten",
-        "Elke speler raakt de bal maar één keer",
-        "Alleen met het hoofd over het net"
-      ]
+      "makkelijker": ["Bal mag twee keer stuiten", "Opslag met de hand (gooien)", "Lager net (0,7 m)"],
+      "moeilijker": ["Bal mag niet stuiten", "Elke speler raakt de bal maar één keer", "Alleen met het hoofd over het net"]
     },
     "tekening": {
       "veld": {
@@ -154,35 +135,16 @@
     "id": "veld-sp-voetvolley",
     "soort": "veld",
     "naam": "Voetvolley 1 tegen 1 over het lint",
-    "categorieen": [
-      "spelletjes",
-      "techniek"
-    ],
+    "categorieen": ["spelletjes", "techniek"],
     "uitleg": "Eén tegen één over een laag lint. Je mag de bal één keer laten stuiten en hem twee keer raken: één keer aannemen of hooghouden, één keer terugspelen. Speel je de bal in één keer terug als volley of kopbal, dan is dat extra lastig voor je tegenstander.",
     "organisatie": "Vakje van 4 × 9 m met in het midden een lint op 0,5 m hoogte tussen twee paaltjes. Meerdere vakjes naast elkaar; na elke game van 5 punten doorschuiven.",
-    "benodigdheden": [
-      "Lint of laag net met 2 paaltjes",
-      "4 hoedjes",
-      "1 bal per tweetal"
-    ],
+    "benodigdheden": ["Lint of laag net met 2 paaltjes", "4 hoedjes", "1 bal per tweetal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Kijk naar de bal tot hij je voet raakt: enkel strak",
-      "Raak de bal met de wreef of binnenkant, niet met de punt",
-      "Kies de lege hoek van het vakje"
-    ],
+    "coachpunten": ["Kijk naar de bal tot hij je voet raakt: enkel strak", "Raak de bal met de wreef of binnenkant, niet met de punt", "Kies de lege hoek van het vakje"],
     "variaties": {
-      "makkelijker": [
-        "Bal mag twee keer stuiten",
-        "Drie keer raken",
-        "Groter vak (5 × 10 m)"
-      ],
-      "moeilijker": [
-        "Bal mag niet stuiten: alleen volleys",
-        "Alleen met je zwakke been",
-        "Een punt met een kopbal telt dubbel"
-      ]
+      "makkelijker": ["Bal mag twee keer stuiten", "Drie keer raken", "Groter vak (5 × 10 m)"],
+      "moeilijker": ["Bal mag niet stuiten: alleen volleys", "Alleen met je zwakke been", "Een punt met een kopbal telt dubbel"]
     },
     "tekening": {
       "veld": {
@@ -292,35 +254,16 @@
     "id": "veld-sp-latje-trap",
     "soort": "veld",
     "naam": "Latje-trap",
-    "categorieen": [
-      "spelletjes",
-      "afwerken"
-    ],
+    "categorieen": ["spelletjes", "afwerken"],
     "uitleg": "Om de beurt schiet iedereen vanaf 16 m op het grote doel. Raak je de lat, dan krijg je een punt; raak je de paal, dan een half punt. Een doelpunt telt niet. Wie heeft na vijf rondes de meeste punten?",
     "organisatie": "Groot doel zonder keeper. Spelers staan naast elkaar op 16 m, ieder met een eigen bal. Ballen die terugkaatsen haal je zelf op.",
-    "benodigdheden": [
-      "1 groot doel",
-      "1 bal per speler",
-      "hoedjes voor de schietlijn"
-    ],
+    "benodigdheden": ["1 groot doel", "1 bal per speler", "hoedjes voor de schietlijn"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Raak de bal iets onder het midden met de wreef",
-      "Standbeen naast de bal, bovenlichaam iets achterover",
-      "Niet hard, wel precies: de juiste hoogte is belangrijker dan kracht"
-    ],
+    "coachpunten": ["Raak de bal iets onder het midden met de wreef", "Standbeen naast de bal, bovenlichaam iets achterover", "Niet hard, wel precies: de juiste hoogte is belangrijker dan kracht"],
     "variaties": {
-      "makkelijker": [
-        "Op 11 m schieten",
-        "Bal mag eerst stilgelegd worden of je mag hem opgooien",
-        "Paal telt ook een heel punt"
-      ],
-      "moeilijker": [
-        "Op 20 m",
-        "Alleen in één keer uit een pass",
-        "Wie mist, moet de volgende ronde een stap naar achteren"
-      ]
+      "makkelijker": ["Op 11 m schieten", "Bal mag eerst stilgelegd worden of je mag hem opgooien", "Paal telt ook een heel punt"],
+      "moeilijker": ["Op 20 m", "Alleen in één keer uit een pass", "Wie mist, moet de volgende ronde een stap naar achteren"]
     },
     "tekening": {
       "veld": {
@@ -443,34 +386,16 @@
     "id": "veld-sp-pannavoetbal",
     "soort": "veld",
     "naam": "Pannavoetbal in de kooi",
-    "categorieen": [
-      "spelletjes",
-      "techniek"
-    ],
+    "categorieen": ["spelletjes", "techniek"],
     "uitleg": "Eén tegen één in een kleine kooi of afgezet vakje met twee mini-doeltjes. Een doelpunt is een punt, maar speel je de bal tussen de benen van je tegenstander door (een panna) en pak je hem daarna weer op, dan heb je de ronde meteen gewonnen.",
     "organisatie": "Pannakooi of vakje van 9 × 6 m (afgezet met banken of pionnen) met op beide korte zijden een mini-doeltje. Rondes van 1 minuut; de anderen wachten buiten en spelen daarna tegen de winnaar.",
-    "benodigdheden": [
-      "Pannakooi of 4 banken",
-      "2 mini-doeltjes",
-      "1 bal"
-    ],
+    "benodigdheden": ["Pannakooi of 4 banken", "2 mini-doeltjes", "1 bal"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Lok je tegenstander: laat de bal even los, dan stapt hij in",
-      "Panna als hij zijn benen spreidt; daarna snel om hem heen",
-      "Verdediger: niet breed gaan staan, blijf kort op je tenen"
-    ],
+    "coachpunten": ["Lok je tegenstander: laat de bal even los, dan stapt hij in", "Panna als hij zijn benen spreidt; daarna snel om hem heen", "Verdediger: niet breed gaan staan, blijf kort op je tenen"],
     "variaties": {
-      "makkelijker": [
-        "Panna telt als doelpunt, je hoeft de bal niet op te pakken",
-        "Groter vak"
-      ],
-      "moeilijker": [
-        "Alleen een panna telt",
-        "2 tegen 2 in een grotere kooi",
-        "Maximaal 5 seconden balbezit"
-      ]
+      "makkelijker": ["Panna telt als doelpunt, je hoeft de bal niet op te pakken", "Groter vak"],
+      "moeilijker": ["Alleen een panna telt", "2 tegen 2 in een grotere kooi", "Maximaal 5 seconden balbezit"]
     },
     "tekening": {
       "veld": {
@@ -590,10 +515,7 @@
     "id": "veld-sp-koning-van-het-veld",
     "soort": "veld",
     "naam": "Koning van het veld",
-    "categorieen": [
-      "spelletjes",
-      "partijvormen"
-    ],
+    "categorieen": ["spelletjes", "partijvormen"],
     "uitleg": "Drie (of meer) veldjes naast elkaar met in elk veldje een 1 tegen 1. Na elke ronde schuift de winnaar een veld op richting het koningsveld en de verliezer een veld terug. Wie aan het eind op het koningsveld wint, is de koning.",
     "organisatie": "Veldjes van 8 × 12 m met twee mini-doeltjes, 3 m ertussen. Het gele veld is het koningsveld. Rondes van 1 minuut; bij gelijkspel beslist een penalty op het lege doeltje.",
     "benodigdheden": [
@@ -604,21 +526,10 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Elke ronde telt: vanaf de eerste seconde vol gas",
-      "Durf de actie te maken, ook op het koningsveld",
-      "Doorschuiven gaat snel: winnaars rechtsom, verliezers linksom"
-    ],
+    "coachpunten": ["Elke ronde telt: vanaf de eerste seconde vol gas", "Durf de actie te maken, ook op het koningsveld", "Doorschuiven gaat snel: winnaars rechtsom, verliezers linksom"],
     "variaties": {
-      "makkelijker": [
-        "Doorschuiven alleen voor de winnaar, de verliezer blijft",
-        "Groter veld (10 × 15 m)"
-      ],
-      "moeilijker": [
-        "2 tegen 2 per veld",
-        "Op het koningsveld telt alleen een doelpunt na een actie",
-        "Rondes van 45 seconden"
-      ]
+      "makkelijker": ["Doorschuiven alleen voor de winnaar, de verliezer blijft", "Groter veld (10 × 15 m)"],
+      "moeilijker": ["2 tegen 2 per veld", "Op het koningsveld telt alleen een doelpunt na een actie", "Rondes van 45 seconden"]
     },
     "tekening": {
       "veld": {
@@ -852,9 +763,7 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [
-                [2.4, 9]
-              ],
+              "via": [[2.4, 9]],
               "naar": [3.2, 6.2],
               "manier": "sprint"
             },
@@ -868,9 +777,7 @@
             {
               "type": "dribbel",
               "wie": "b2",
-              "via": [
-                [18.8, 10]
-              ],
+              "via": [[18.8, 10]],
               "naar": [18, 13.2],
               "manier": "sprint"
             },
@@ -884,9 +791,7 @@
             {
               "type": "dribbel",
               "wie": "a3",
-              "via": [
-                [29.3, 8.8]
-              ],
+              "via": [[29.3, 8.8]],
               "naar": [28.8, 6.2],
               "manier": "sprint"
             },
@@ -931,9 +836,7 @@
             {
               "type": "loop",
               "wie": "b1",
-              "via": [
-                [10.5, 10]
-              ],
+              "via": [[10.5, 10]],
               "naar": [16, 13],
               "manier": "jog"
             },
@@ -947,27 +850,21 @@
             {
               "type": "loop",
               "wie": "b2",
-              "via": [
-                [12, 18.5]
-              ],
+              "via": [[12, 18.5]],
               "naar": [5, 13],
               "manier": "jog"
             },
             {
               "type": "loop",
               "wie": "a2",
-              "via": [
-                [21.5, 12]
-              ],
+              "via": [[21.5, 12]],
               "naar": [27, 13],
               "manier": "jog"
             },
             {
               "type": "loop",
               "wie": "a3",
-              "via": [
-                [21.5, 3.5]
-              ],
+              "via": [[21.5, 3.5]],
               "naar": [16, 7],
               "manier": "jog"
             },
@@ -991,34 +888,16 @@
     "id": "veld-sp-opruimen",
     "soort": "veld",
     "naam": "Opruimen: ballen over de bank",
-    "categorieen": [
-      "spelletjes",
-      "pass-en-trap"
-    ],
+    "categorieen": ["spelletjes", "pass-en-trap"],
     "uitleg": "Twee teams, elk op een eigen helft met een rij banken ertussen. Iedereen probeert zijn eigen helft op te ruimen door de ballen met een opgetilde trap over de bank naar de andere kant te schieten. Op het fluitsignaal stopt iedereen: het team met de minste ballen op zijn helft wint.",
     "organisatie": "Veld van 14 × 12 m, in het midden een rij van drie banken. Verdeel minstens één bal per kind over beide helften. Rondes van 1 minuut. Voor JO7–JO9.",
-    "benodigdheden": [
-      "3 banken",
-      "1 bal per kind",
-      "4 pionnen"
-    ],
+    "benodigdheden": ["3 banken", "1 bal per kind", "4 pionnen"],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Leg de bal eerst stil, dan pas schieten",
-      "Onder de bal raken, dan gaat hij omhoog over de bank",
-      "Kijk waar plek is aan de overkant: daar mag je bal landen"
-    ],
+    "coachpunten": ["Leg de bal eerst stil, dan pas schieten", "Onder de bal raken, dan gaat hij omhoog over de bank", "Kijk waar plek is aan de overkant: daar mag je bal landen"],
     "variaties": {
-      "makkelijker": [
-        "Ook onder de bank door mag",
-        "De bal mag eerst met de hand worden stilgelegd"
-      ],
-      "moeilijker": [
-        "Alleen met je zwakke been",
-        "Een bal die op de bank blijft liggen telt mee voor jouw team",
-        "Bank verder weg: over een lijn op 3 m van de bank"
-      ]
+      "makkelijker": ["Ook onder de bank door mag", "De bal mag eerst met de hand worden stilgelegd"],
+      "moeilijker": ["Alleen met je zwakke been", "Een bal die op de bank blijft liggen telt mee voor jouw team", "Bank verder weg: over een lijn op 3 m van de bank"]
     },
     "tekening": {
       "veld": {
@@ -1179,10 +1058,7 @@
     "id": "veld-sp-bankjesvoetbal",
     "soort": "veld",
     "naam": "Bankjesvoetbal",
-    "categorieen": [
-      "spelletjes",
-      "partijvormen"
-    ],
+    "categorieen": ["spelletjes", "partijvormen"],
     "uitleg": "Partijtje 2 tegen 2 (of 3 tegen 3) waarbij elk team een bank als doel heeft. Je scoort door de bal tegen de bank van de tegenstander te schieten. Niemand mag voor de bank gaan staan, dus er is geen keeper: wie durft te schieten, scoort.",
     "organisatie": "Veld van 16 × 22 m met op beide korte zijden een bank (dwars, met de zitkant naar het veld). Een zone van 2 m voor de bank mag niemand in. Rondes van 3 minuten. Voor JO7–JO9.",
     "benodigdheden": [
@@ -1193,21 +1069,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Schiet als je de bank kunt zien: niet te lang dribbelen",
-      "Samen aanvallen: wie de bal niet heeft, loopt mee naar voren",
-      "Verdedigen: tussen de bal en je eigen bank staan"
-    ],
+    "coachpunten": ["Schiet als je de bank kunt zien: niet te lang dribbelen", "Samen aanvallen: wie de bal niet heeft, loopt mee naar voren", "Verdedigen: tussen de bal en je eigen bank staan"],
     "variaties": {
-      "makkelijker": [
-        "Twee banken per kant",
-        "Raak je de bank met een pass, dan telt het ook"
-      ],
-      "moeilijker": [
-        "Alleen in één keer schieten",
-        "Bank omdraaien: alleen de smalle kant telt",
-        "Kleiner veld"
-      ]
+      "makkelijker": ["Twee banken per kant", "Raak je de bank met een pass, dan telt het ook"],
+      "moeilijker": ["Alleen in één keer schieten", "Bank omdraaien: alleen de smalle kant telt", "Kleiner veld"]
     },
     "tekening": {
       "veld": {
@@ -1364,34 +1229,16 @@
     "id": "veld-sp-piratenspel",
     "soort": "veld",
     "naam": "Piratenspel",
-    "categorieen": [
-      "spelletjes",
-      "techniek"
-    ],
+    "categorieen": ["spelletjes", "techniek"],
     "uitleg": "Alle kinderen dribbelen met een bal in het vak. Eén of twee piraten (zonder bal) proberen een bal af te pakken en uit het vak te schieten. Wie zijn bal kwijt is, wordt ook piraat. Wie houdt het langst zijn schat (de bal)?",
     "organisatie": "Vak van 14 × 14 m. Iedereen een bal, behalve 1 piraat per 6 kinderen (met hesje). Rondes tot er nog 1 of 2 kinderen met bal over zijn. Voor JO7–JO9.",
-    "benodigdheden": [
-      "4 pionnen",
-      "1 bal per kind",
-      "hesjes"
-    ],
+    "benodigdheden": ["4 pionnen", "1 bal per kind", "hesjes"],
     "spelersNodig": 5,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Kleine tikjes, de bal dicht bij je voet",
-      "Kijk op: waar is de piraat?",
-      "Draai weg en zet je lichaam tussen de piraat en je bal"
-    ],
+    "coachpunten": ["Kleine tikjes, de bal dicht bij je voet", "Kijk op: waar is de piraat?", "Draai weg en zet je lichaam tussen de piraat en je bal"],
     "variaties": {
-      "makkelijker": [
-        "Piraat mag de bal alleen aantikken (niet wegschieten)",
-        "Groter vak"
-      ],
-      "moeilijker": [
-        "Meer piraten",
-        "Wie zijn bal kwijt is, mag hem terugwinnen bij een andere piraat",
-        "Alleen dribbelen met je zwakke been"
-      ]
+      "makkelijker": ["Piraat mag de bal alleen aantikken (niet wegschieten)", "Groter vak"],
+      "moeilijker": ["Meer piraten", "Wie zijn bal kwijt is, mag hem terugwinnen bij een andere piraat", "Alleen dribbelen met je zwakke been"]
     },
     "tekening": {
       "veld": {
@@ -1489,17 +1336,13 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [
-                [6.5, 2.6]
-              ],
+              "via": [[6.5, 2.6]],
               "naar": [9.5, 3]
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "via": [
-                [13.8, 6.5]
-              ],
+              "via": [[13.8, 6.5]],
               "naar": [13.4, 8.6]
             },
             {
@@ -1510,9 +1353,7 @@
             {
               "type": "dribbel",
               "wie": "a4",
-              "via": [
-                [2.8, 9.5]
-              ],
+              "via": [[2.8, 9.5]],
               "naar": [4, 6.8]
             },
             {
@@ -1591,35 +1432,16 @@
     "id": "veld-sp-voetgolf",
     "soort": "veld",
     "naam": "Voetgolf",
-    "categorieen": [
-      "spelletjes",
-      "pass-en-trap"
-    ],
+    "categorieen": ["spelletjes", "pass-en-trap"],
     "uitleg": "Een golfbaan op het veld: vanaf de afslag speel je de bal met zo weinig mogelijk trappen door de poort en in het doeltje (de 'hole'). Om de beurt trappen; wie het verst van de hole ligt, is eerst. Na een ronde van drie holes wint wie de minste trappen nodig had.",
     "organisatie": "Per hole: een afslag, een poort van 4 m breed op ongeveer 15 m en een mini-doeltje op 30–35 m. Zet drie holes uit over het veld. Spelers in tweetallen of drietallen met elk een bal.",
-    "benodigdheden": [
-      "Mini-doeltjes of pionnen als hole",
-      "Pionnen voor de poorten",
-      "1 bal per speler"
-    ],
+    "benodigdheden": ["Mini-doeltjes of pionnen als hole", "Pionnen voor de poorten", "1 bal per speler"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Lange bal: wreef, enkel strak, door de bal heen",
-      "Korte bal: binnenkant voet, rustig en precies",
-      "Denk vooruit: waar wil je dat je bal stil komt te liggen?"
-    ],
+    "coachpunten": ["Lange bal: wreef, enkel strak, door de bal heen", "Korte bal: binnenkant voet, rustig en precies", "Denk vooruit: waar wil je dat je bal stil komt te liggen?"],
     "variaties": {
-      "makkelijker": [
-        "Bredere poort (6 m)",
-        "Groter doel als hole",
-        "Kortere holes"
-      ],
-      "moeilijker": [
-        "Alleen het zwakke been",
-        "Bal door de poort moet in één keer",
-        "Strafpunt als de bal buiten de baan komt"
-      ]
+      "makkelijker": ["Bredere poort (6 m)", "Groter doel als hole", "Kortere holes"],
+      "moeilijker": ["Alleen het zwakke been", "Bal door de poort moet in één keer", "Strafpunt als de bal buiten de baan komt"]
     },
     "tekening": {
       "veld": {
@@ -1783,6 +1605,248 @@
         },
         {
           "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-cv-estafette",
+    "soort": "veld",
+    "naam": "Estafette: slalom, pass en schot",
+    "categorieen": ["spelletjes", "warming-up", "afwerken"],
+    "combinatievorm": true,
+    "onderdelen": ["Slalom met bal", "Pass naar de medespeler", "Schot op het doeltje"],
+    "uitleg": "Twee teams tegen elkaar. De eerste speler dribbelt in slalom langs de pionnen en speelt de bal naar zijn medespeler bij het doeltje, die direct scoort. Daarna wisselen ze van plek. Welk team scoort als eerste vijf keer?",
+    "organisatie": "Per team een baan van 15 m met drie pionnen en aan het eind een klein doeltje. De tweede speler staat 3 m schuin voor het doeltje. Na het schot loopt de schutter met de bal terug naar de start en sluit de dribbelaar aan bij het doeltje.",
+    "benodigdheden": [
+      "6 pionnen",
+      "2 kleine doeltjes",
+      "Ballen",
+      "Hesjes"
+    ],
+    "spelersNodig": 4,
+    "keepersNodig": 0,
+    "coachpunten": ["Slalom: snel maar met de bal dicht aan de voet", "Pass op het goede moment: niet te vroeg, niet te laat", "Schieten in één keer, plaatsen in de hoek"],
+    "variaties": {
+      "makkelijker": ["Minder pionnen", "Schutter mag de bal eerst aannemen"],
+      "moeilijker": ["Dribbelen met het zwakke been", "Schot alleen in één keer", "Een keeper in elk doeltje"]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 22,
+        "lengte": 21
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 6,
+          "y": 15
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 6,
+          "y": 12
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 6,
+          "y": 9
+        },
+        {
+          "id": "p4",
+          "soort": "pion",
+          "x": 16,
+          "y": 15
+        },
+        {
+          "id": "p5",
+          "soort": "pion",
+          "x": 16,
+          "y": 12
+        },
+        {
+          "id": "p6",
+          "soort": "pion",
+          "x": 16,
+          "y": 9
+        },
+        {
+          "id": "kA",
+          "soort": "klein-goal",
+          "x": 6,
+          "y": 1.2,
+          "breedte": 2
+        },
+        {
+          "id": "kB",
+          "soort": "klein-goal",
+          "x": 16,
+          "y": 1.2,
+          "breedte": 2
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 6,
+          "y": 18.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 8.6,
+          "y": 4.6,
+          "kijkrichting": 135
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 3,
+          "x": 16,
+          "y": 18.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 4,
+          "x": 18.6,
+          "y": 4.6,
+          "kijkrichting": 135
+        },
+        {
+          "id": "ballA",
+          "soort": "bal",
+          "x": 6,
+          "y": 18.2,
+          "bij": "a1"
+        },
+        {
+          "id": "ballB",
+          "soort": "bal",
+          "x": 16,
+          "y": 18.2,
+          "bij": "b1"
+        }
+      ],
+      "animatie": [
+        {
+          "tegelijk": [
+            [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "a1",
+                    "via": [[5.2, 15], [6.8, 12], [5.2, 9]],
+                    "naar": [6, 7]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "pass",
+                    "van": "a1",
+                    "naar": "a2"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "a2",
+                    "naar": [6.3, 0.6],
+                    "direct": true,
+                    "hoogte": "grond"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "a1",
+                    "naar": [8.6, 4.6],
+                    "start": 1.1
+                  },
+                  {
+                    "type": "loop",
+                    "wie": "a2",
+                    "via": [[10, 8]],
+                    "naar": [6, 18.6],
+                    "start": 0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "b1",
+                    "via": [[15.2, 15], [16.8, 12], [15.2, 9]],
+                    "naar": [16, 7],
+                    "duur": 4
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "pass",
+                    "van": "b1",
+                    "naar": "b2"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "b2",
+                    "naar": [15.7, 0.6],
+                    "direct": true,
+                    "hoogte": "grond"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "b1",
+                    "naar": [18.6, 4.6],
+                    "start": 1.1
+                  },
+                  {
+                    "type": "loop",
+                    "wie": "b2",
+                    "via": [[20, 8]],
+                    "naar": [16, 18.6],
+                    "start": 0
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "duur": 0.6,
           "acties": []
         }
       ]

@@ -5,9 +5,15 @@ const meervoud = (n: number, een: string, meer: string) => `${n} ${n === 1 ? een
 
 /** Spelers / keepers / "Keeper nodig". */
 export function Labels({ oefening }: { oefening: Oefening }) {
-  const { spelersNodig, keepersNodig, soort } = oefening;
+  const { spelersNodig, keepersNodig, soort, combinatievorm } = oefening;
   return (
     <div className="labels">
+      {combinatievorm && (
+        <span className="label label-combi">
+          <Icoon naam="combi" maat={16} />
+          Combinatievorm
+        </span>
+      )}
       {spelersNodig > 0 && (
         <span className="label">
           <Icoon naam="spelers" maat={16} />

@@ -433,6 +433,10 @@ export interface Oefening {
   benodigdheden: string[];
   spelersNodig: number;
   keepersNodig: number;
+  /** Combinatievorm: 2–4 onderdelen achter elkaar (bv. voetenwerk → vangen → duiken). Badge in lijst en detail. */
+  combinatievorm?: boolean;
+  /** Combinatievorm: de onderdelen in volgorde (2–4 korte namen), getoond als genummerd verloop. */
+  onderdelen?: string[];
   coachpunten: string[];
   variaties: { makkelijker: string[]; moeilijker: string[] };
   tekening: Tekening;

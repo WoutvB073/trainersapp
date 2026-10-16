@@ -378,6 +378,49 @@ h3 {
   font-weight: 600;
 }
 
+.label-combi {
+  background: var(--combi-licht);
+  color: var(--combi);
+}
+
+.verloop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 4px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.verloop li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 4px;
+  border-radius: 999px;
+  background: var(--combi-licht);
+  color: var(--tekst);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.verloop li + li::before {
+  content: '→';
+  margin: 0 2px 0 -2px;
+  color: var(--combi);
+}
+
+.verloop-nr {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--combi);
+  color: #fff;
+  font-size: 0.8rem;
+}
+
 .label-keeper {
   background: var(--accent-licht);
   color: var(--moeilijker);

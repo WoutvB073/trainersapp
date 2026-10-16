@@ -65,6 +65,17 @@ export function OefeningDetail({ id }: { id: string }) {
           </div>
           <Labels oefening={oefening} />
 
+          {oefening.onderdelen && oefening.onderdelen.length > 0 && (
+            <ol className="verloop" aria-label="Verloop van de oefening">
+              {oefening.onderdelen.map((d, i) => (
+                <li key={d}>
+                  <span className="verloop-nr">{i + 1}</span>
+                  {d}
+                </li>
+              ))}
+            </ol>
+          )}
+
           <section className="blok">
             <h3>Uitleg</h3>
             <p>{oefening.uitleg}</p>

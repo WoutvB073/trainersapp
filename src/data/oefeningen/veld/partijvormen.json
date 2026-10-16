@@ -3,34 +3,16 @@
     "id": "veld-pv-1-1-doeltjes",
     "soort": "veld",
     "naam": "1 tegen 1 op twee kleine doeltjes",
-    "categorieen": [
-      "partijvormen",
-      "techniek"
-    ],
+    "categorieen": ["partijvormen", "techniek"],
     "uitleg": "Twee spelers spelen 1 tegen 1. Elke speler verdedigt twee kleine doeltjes en valt aan op de twee doeltjes van de ander. Durf te passeren: maak een schijnbeweging en kies het doeltje dat open ligt. Na een doelpunt krijgt de ander de bal.",
     "organisatie": "Vak van 13 × 18 m met op beide korte zijden twee kleine doeltjes (2–3 m breed) in de hoeken. Wachtende tweetallen naast het vak; elke ronde 45–60 seconden.",
-    "benodigdheden": [
-      "4 kleine doeltjes",
-      "4 pionnen",
-      "ballen"
-    ],
+    "benodigdheden": ["4 kleine doeltjes", "4 pionnen", "ballen"],
     "spelersNodig": 2,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Met snelheid op de verdediger af, dan pas de actie",
-      "Kijk op: welk doeltje laat de verdediger open?",
-      "Verdediger: niet duiken, op je tenen en schuin staan, de aanvaller naar één kant dwingen"
-    ],
+    "coachpunten": ["Met snelheid op de verdediger af, dan pas de actie", "Kijk op: welk doeltje laat de verdediger open?", "Verdediger: niet duiken, op je tenen en schuin staan, de aanvaller naar één kant dwingen"],
     "variaties": {
-      "makkelijker": [
-        "Breder vak (15 × 18 m)",
-        "Eén groot doeltje per kant"
-      ],
-      "moeilijker": [
-        "Doelpunt telt pas na een schijnbeweging of kapbeweging",
-        "Kleiner vak (10 × 15 m)",
-        "Rondes van 90 seconden: wie houdt het vol?"
-      ]
+      "makkelijker": ["Breder vak (15 × 18 m)", "Eén groot doeltje per kant"],
+      "moeilijker": ["Doelpunt telt pas na een schijnbeweging of kapbeweging", "Kleiner vak (10 × 15 m)", "Rondes van 90 seconden: wie houdt het vol?"]
     },
     "tekening": {
       "veld": {
@@ -149,9 +131,7 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [
-                [10.8, 9.8]
-              ],
+              "via": [[10.8, 9.8]],
               "naar": [5.6, 10.6],
               "manier": "sprint"
             },
@@ -185,10 +165,7 @@
     "id": "veld-pv-2-1",
     "soort": "veld",
     "naam": "2 tegen 1 naar het doel",
-    "categorieen": [
-      "partijvormen",
-      "afwerken"
-    ],
+    "categorieen": ["partijvormen", "afwerken"],
     "uitleg": "Twee aanvallers starten op 26 m en spelen tegen één verdediger en een keeper. Dribbel op de verdediger af om hem vast te zetten, speel dan je medespeler aan en ga diep: met een kaats is de verdediger uitgespeeld. Wint de verdediger de bal, dan mag hij scoren op een klein doeltje op de middenlijn.",
     "organisatie": "Op een half veld: aanvallers met bal op 26 m, verdediger op 16 m, keeper in het doel. Klein doeltje op de middenlijn voor de verdediger. Na elke aanval doordraaien.",
     "benodigdheden": [
@@ -199,21 +176,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Balbezitter: dribbel op de verdediger af tot hij moet kiezen",
-      "Medespeler: houd breedte, niet naar de bal toe lopen",
-      "Na de pass meteen diep: de kaats komt in de loop"
-    ],
+    "coachpunten": ["Balbezitter: dribbel op de verdediger af tot hij moet kiezen", "Medespeler: houd breedte, niet naar de bal toe lopen", "Na de pass meteen diep: de kaats komt in de loop"],
     "variaties": {
-      "makkelijker": [
-        "Verdediger start pas als de eerste pass gegeven is",
-        "Zonder keeper op een groter doel"
-      ],
-      "moeilijker": [
-        "Maximaal 6 seconden per aanval",
-        "Tweede verdediger komt na 3 seconden van de zijkant (2 tegen 2)",
-        "Doelpunt telt alleen na een kaats"
-      ]
+      "makkelijker": ["Verdediger start pas als de eerste pass gegeven is", "Zonder keeper op een groter doel"],
+      "moeilijker": ["Maximaal 6 seconden per aanval", "Tweede verdediger komt na 3 seconden van de zijkant (2 tegen 2)", "Doelpunt telt alleen na een kaats"]
     },
     "tekening": {
       "veld": {
@@ -356,9 +322,7 @@
     "id": "veld-pv-2-2-winnaar-blijft",
     "soort": "veld",
     "naam": "2 tegen 2: winnaar blijft",
-    "categorieen": [
-      "partijvormen"
-    ],
+    "categorieen": ["partijvormen"],
     "uitleg": "Twee tegen twee op twee kleine doeltjes. Wie scoort, blijft staan; het team dat de goal tegen krijgt, gaat eruit en een nieuw tweetal komt erin. Werk samen: een pass en een loopactie achter de verdediger (overlap of diepte) levert vaak de goal op.",
     "organisatie": "Vak van 22 × 14 m met een klein doeltje (3 m) op elke korte zijde. Tweetallen wachten naast het vak; het wisselen gaat via de zijkant.",
     "benodigdheden": [
@@ -369,21 +333,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Zonder bal: loop in de rug van je tegenstander, niet naar de bal toe",
-      "Speel de bal in de loop van je medespeler",
-      "Verdedigen: één zet druk, de ander dekt de loopactie"
-    ],
+    "coachpunten": ["Zonder bal: loop in de rug van je tegenstander, niet naar de bal toe", "Speel de bal in de loop van je medespeler", "Verdedigen: één zet druk, de ander dekt de loopactie"],
     "variaties": {
-      "makkelijker": [
-        "Groter vak (25 × 18 m)",
-        "Geen wissel na een goal, maar na 2 minuten"
-      ],
-      "moeilijker": [
-        "Goal telt alleen na een pass",
-        "Maximaal 10 seconden per aanval",
-        "Met een keeper in elk doeltje"
-      ]
+      "makkelijker": ["Groter vak (25 × 18 m)", "Geen wissel na een goal, maar na 2 minuten"],
+      "moeilijker": ["Goal telt alleen na een pass", "Maximaal 10 seconden per aanval", "Met een keeper in elk doeltje"]
     },
     "tekening": {
       "veld": {
@@ -510,9 +463,7 @@
             {
               "type": "loop",
               "wie": "a1",
-              "via": [
-                [12, 3]
-              ],
+              "via": [[12, 3]],
               "naar": [17.5, 3.6],
               "manier": "sprint"
             },
@@ -560,9 +511,7 @@
             {
               "type": "loop",
               "wie": "b1",
-              "via": [
-                [20, 13]
-              ],
+              "via": [[20, 13]],
               "naar": [19.5, 17],
               "duur": 2.2
             },
@@ -609,10 +558,7 @@
     "id": "veld-pv-3-2-omschakeling",
     "soort": "veld",
     "naam": "3 tegen 2 met omschakeling",
-    "categorieen": [
-      "partijvormen",
-      "afwerken"
-    ],
+    "categorieen": ["partijvormen", "afwerken"],
     "uitleg": "Drie aanvallers spelen tegen twee verdedigers en een keeper op het grote doel. Zodra de verdedigers of de keeper de bal winnen, schakelen ze om: zij mogen scoren op de twee kleine doeltjes op de middenlijn, en de aanvallers moeten direct terug verdedigen.",
     "organisatie": "Half veld met keeper. Twee kleine doeltjes op de middenlijn, 12 m uit elkaar. Aanvallers starten met de bal op 26 m, verdedigers op 16 m.",
     "benodigdheden": [
@@ -623,21 +569,10 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Aanvallers: snel het overtal benutten, de bal verplaatsen naar de vrije man",
-      "Verdedigers: dek de gevaarlijkste lijn af en wacht op de fout",
-      "Bij balwinst: eerste pass vooruit, en direct meelopen"
-    ],
+    "coachpunten": ["Aanvallers: snel het overtal benutten, de bal verplaatsen naar de vrije man", "Verdedigers: dek de gevaarlijkste lijn af en wacht op de fout", "Bij balwinst: eerste pass vooruit, en direct meelopen"],
     "variaties": {
-      "makkelijker": [
-        "3 tegen 1",
-        "Verdedigers scoren met een pass door een poortje in plaats van op doeltjes"
-      ],
-      "moeilijker": [
-        "Aanvallers moeten binnen 8 seconden afronden",
-        "Na balverlies mogen alle drie de aanvallers terug verdedigen",
-        "Twee keepers: ook op de kleine doeltjes"
-      ]
+      "makkelijker": ["3 tegen 1", "Verdedigers scoren met een pass door een poortje in plaats van op doeltjes"],
+      "moeilijker": ["Aanvallers moeten binnen 8 seconden afronden", "Na balverlies mogen alle drie de aanvallers terug verdedigen", "Twee keepers: ook op de kleine doeltjes"]
     },
     "tekening": {
       "veld": {
@@ -855,9 +790,7 @@
             {
               "type": "loop",
               "wie": "d2",
-              "via": [
-                [38, 13]
-              ],
+              "via": [[38, 13]],
               "naar": [38.5, 20],
               "manier": "sprint"
             },
@@ -907,9 +840,7 @@
     "id": "veld-pv-3-3-vier-doeltjes",
     "soort": "veld",
     "naam": "3 tegen 3 op vier doeltjes",
-    "categorieen": [
-      "partijvormen"
-    ],
+    "categorieen": ["partijvormen"],
     "uitleg": "Elk team verdedigt twee kleine doeltjes in de hoeken en valt aan op de twee doeltjes van de tegenstander. Speel aan één kant om de tegenstander te lokken, en verplaats dan snel naar het doeltje dat vrij ligt.",
     "organisatie": "Vak van 24 × 20 m met in elke hoek een klein doeltje (2,5 m). Twee teams van drie met hesjes; rondes van 3 minuten.",
     "benodigdheden": [
@@ -920,21 +851,10 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Kijk vóór je de bal krijgt al naar het verre doeltje",
-      "Breed staan als je de bal hebt: zo moet de tegenstander ver schuiven",
-      "Verdedigend als blok meeschuiven naar de balkant"
-    ],
+    "coachpunten": ["Kijk vóór je de bal krijgt al naar het verre doeltje", "Breed staan als je de bal hebt: zo moet de tegenstander ver schuiven", "Verdedigend als blok meeschuiven naar de balkant"],
     "variaties": {
-      "makkelijker": [
-        "Groter vak (30 × 24 m)",
-        "4 tegen 3 met een joker"
-      ],
-      "moeilijker": [
-        "Maximaal drie aanrakingen",
-        "Doelpunt in het doeltje aan de andere kant dan waar de aanval begon telt dubbel",
-        "Kleiner vak"
-      ]
+      "makkelijker": ["Groter vak (30 × 24 m)", "4 tegen 3 met een joker"],
+      "moeilijker": ["Maximaal drie aanrakingen", "Doelpunt in het doeltje aan de andere kant dan waar de aanval begon telt dubbel", "Kleiner vak"]
     },
     "tekening": {
       "veld": {
@@ -1168,9 +1088,7 @@
     "id": "veld-pv-4-4-keepers",
     "soort": "veld",
     "naam": "4 tegen 4 met keepers",
-    "categorieen": [
-      "partijvormen"
-    ],
+    "categorieen": ["partijvormen"],
     "uitleg": "Partij 4 tegen 4 met twee keepers op twee jeugdgoals. De keeper begint de aanval met een worp; het team bouwt rustig op, speelt de diepe spits aan en die legt af op een inlopende medespeler. Vrij spel, met de nadruk op samenspel.",
     "organisatie": "Veld van 28 × 36 m met op beide korte zijden een jeugdgoal (5 × 2 m) en een keeper. Teams met hesjes, rondes van 4–5 minuten.",
     "benodigdheden": [
@@ -1181,21 +1099,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 2,
-    "coachpunten": [
-      "Opbouw: breed staan en de keeper laten uitgooien naar de vrije man",
-      "Diepe spits: kom kort, leg af en ga dan door",
-      "Na balverlies direct druk zetten met de dichtstbijzijnde speler"
-    ],
+    "coachpunten": ["Opbouw: breed staan en de keeper laten uitgooien naar de vrije man", "Diepe spits: kom kort, leg af en ga dan door", "Na balverlies direct druk zetten met de dichtstbijzijnde speler"],
     "variaties": {
-      "makkelijker": [
-        "5 tegen 4 met een joker",
-        "Keeper mag ook meespelen als veldspeler"
-      ],
-      "moeilijker": [
-        "Maximaal drie aanrakingen",
-        "Doelpunt binnen 10 seconden na balwinst telt dubbel",
-        "Kleiner veld (24 × 30 m)"
-      ]
+      "makkelijker": ["5 tegen 4 met een joker", "Keeper mag ook meespelen als veldspeler"],
+      "moeilijker": ["Maximaal drie aanrakingen", "Doelpunt binnen 10 seconden na balwinst telt dubbel", "Kleiner veld (24 × 30 m)"]
     },
     "tekening": {
       "veld": {
@@ -1354,10 +1261,7 @@
             {
               "type": "dek",
               "wie": "b1",
-              "tussen": [
-                "a1",
-                "a2"
-              ],
+              "tussen": ["a1", "a2"],
               "fractie": 0.35,
               "start": 0.3,
               "manier": "jog"
@@ -1432,10 +1336,7 @@
     "id": "veld-pv-5-5-flank",
     "soort": "veld",
     "naam": "5 tegen 5 met keepers: via de flank telt dubbel",
-    "categorieen": [
-      "partijvormen",
-      "afwerken"
-    ],
+    "categorieen": ["partijvormen", "afwerken"],
     "uitleg": "Partij 5 tegen 5 met keepers. Langs beide zijlijnen ligt een flankzone. Een doelpunt na een voorzet of pass uit de flankzone telt dubbel. Zo leren spelers het veld breed te maken en de aanval via de zijkant op te zetten.",
     "organisatie": "Veld van 34 × 44 m met twee jeugdgoals en keepers. Flankzones van 6 m breed langs de zijlijnen (pionnen of hoedjes). Teams met hesjes.",
     "benodigdheden": [
@@ -1446,21 +1347,10 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 2,
-    "coachpunten": [
-      "Maak het veld breed: één speler per flank",
-      "Voorzet: kijk eerst wie er inloopt (eerste paal, tweede paal)",
-      "Spitsen: niet te vroeg in de zestien, kom met snelheid"
-    ],
+    "coachpunten": ["Maak het veld breed: één speler per flank", "Voorzet: kijk eerst wie er inloopt (eerste paal, tweede paal)", "Spitsen: niet te vroeg in de zestien, kom met snelheid"],
     "variaties": {
-      "makkelijker": [
-        "In de flankzone mag niet verdedigd worden",
-        "Flankzones breder (8 m)"
-      ],
-      "moeilijker": [
-        "Alleen doelpunten uit de flank tellen",
-        "In de flankzone maximaal twee aanrakingen",
-        "Ook de verdedigers mogen in de flankzone (1 tegen 1)"
-      ]
+      "makkelijker": ["In de flankzone mag niet verdedigd worden", "Flankzones breder (8 m)"],
+      "moeilijker": ["Alleen doelpunten uit de flank tellen", "In de flankzone maximaal twee aanrakingen", "Ook de verdedigers mogen in de flankzone (1 tegen 1)"]
     },
     "tekening": {
       "veld": {
@@ -1751,10 +1641,7 @@
     "id": "veld-pv-scoren-na-kaats",
     "soort": "veld",
     "naam": "3 tegen 3 + kaatsers: alleen scoren na een kaats",
-    "categorieen": [
-      "partijvormen",
-      "pass-en-trap"
-    ],
+    "categorieen": ["partijvormen", "pass-en-trap"],
     "uitleg": "Drie tegen drie op twee kleine doeltjes, met twee kaatsers op de zijlijnen die altijd meespelen met het team dat de bal heeft. Een doelpunt telt alleen als de aanval een kaats (eentje-tweetje) bevat, met een medespeler of een kaatser.",
     "organisatie": "Vak van 20 × 26 m met een klein doeltje (3 m) op elke korte zijde. Kaatsers (paars) op het midden van beide zijlijnen. Wissel de kaatsers elke ronde.",
     "benodigdheden": [
@@ -1765,21 +1652,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Na je pass naar de kaatser direct versnellen: de bal komt in je loop terug",
-      "Kaatsers: in één keer terugspelen, op de loopvoet",
-      "Verdedigers: volg de loper, niet de bal"
-    ],
+    "coachpunten": ["Na je pass naar de kaatser direct versnellen: de bal komt in je loop terug", "Kaatsers: in één keer terugspelen, op de loopvoet", "Verdedigers: volg de loper, niet de bal"],
     "variaties": {
-      "makkelijker": [
-        "Ook zonder kaats scoren mag, met kaats telt dubbel",
-        "Kaatsers mogen twee keer raken"
-      ],
-      "moeilijker": [
-        "Kaatsers spelen alleen in één keer",
-        "Doelpunt telt alleen na een kaats met een kaatser",
-        "Met keepers in de doeltjes"
-      ]
+      "makkelijker": ["Ook zonder kaats scoren mag, met kaats telt dubbel", "Kaatsers mogen twee keer raken"],
+      "moeilijker": ["Kaatsers spelen alleen in één keer", "Doelpunt telt alleen na een kaats met een kaatser", "Met keepers in de doeltjes"]
     },
     "tekening": {
       "veld": {
@@ -1901,9 +1777,7 @@
             {
               "type": "loop",
               "wie": "a1",
-              "via": [
-                [5, 17]
-              ],
+              "via": [[5, 17]],
               "naar": [5.5, 11],
               "manier": "sprint",
               "start": 0.2
@@ -1982,33 +1856,16 @@
     "id": "veld-pv-lijnvoetbal",
     "soort": "veld",
     "naam": "Lijnvoetbal 4 tegen 4",
-    "categorieen": [
-      "partijvormen"
-    ],
+    "categorieen": ["partijvormen"],
     "uitleg": "Twee teams van vier. Je scoort door met de bal aan de voet over de achterlijn van de tegenstander te dribbelen. Er zijn geen doelen, dus de hele breedte is 'doel': zoek de ruimte, durf de 1 tegen 1 aan en dribbel erdoor.",
     "organisatie": "Veld van 26 × 30 m; de korte zijden zijn de scoorlijnen (pionnen op de hoeken). Teams met hesjes, rondes van 3 minuten.",
-    "benodigdheden": [
-      "4 pionnen",
-      "1 bal",
-      "hesjes"
-    ],
+    "benodigdheden": ["4 pionnen", "1 bal", "hesjes"],
     "spelersNodig": 8,
     "keepersNodig": 0,
-    "coachpunten": [
-      "Zoek de ruimte naast of achter de laatste verdediger",
-      "Met bal: kies het moment om te versnellen",
-      "Verdedigen: blijf samen, laat geen gaten tussen elkaar"
-    ],
+    "coachpunten": ["Zoek de ruimte naast of achter de laatste verdediger", "Met bal: kies het moment om te versnellen", "Verdedigen: blijf samen, laat geen gaten tussen elkaar"],
     "variaties": {
-      "makkelijker": [
-        "Breder veld (30 m)",
-        "Scoren mag ook met een pass naar een speler achter de lijn"
-      ],
-      "moeilijker": [
-        "Over de lijn dribbelen, dan nog stoppen met de zool (stoppen op de lijn)",
-        "Scoren alleen in de twee zones van 5 m bij de zijlijnen",
-        "Smaller veld (20 m)"
-      ]
+      "makkelijker": ["Breder veld (30 m)", "Scoren mag ook met een pass naar een speler achter de lijn"],
+      "moeilijker": ["Over de lijn dribbelen, dan nog stoppen met de zool (stoppen op de lijn)", "Scoren alleen in de twee zones van 5 m bij de zijlijnen", "Smaller veld (20 m)"]
     },
     "tekening": {
       "veld": {
@@ -2202,9 +2059,7 @@
             {
               "type": "dribbel",
               "wie": "a4",
-              "via": [
-                [22, 8]
-              ],
+              "via": [[22, 8]],
               "naar": [22.5, 0.4],
               "manier": "sprint"
             },
@@ -2219,6 +2074,200 @@
         },
         {
           "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-cv-1t1-2t1",
+    "soort": "veld",
+    "naam": "1 tegen 1, pass en 2 tegen 1 uitspelen",
+    "categorieen": ["partijvormen", "afwerken", "techniek"],
+    "combinatievorm": true,
+    "onderdelen": [
+      "1 tegen 1-actie",
+      "Doordribbelen",
+      "2 tegen 1 uitspelen",
+      "Afronden"
+    ],
+    "uitleg": "De aanvaller gaat met een schijnbeweging langs de eerste verdediger. Daarna ontstaat een 2 tegen 1: hij dribbelt de tweede verdediger vast en speelt zijn meegelopen medespeler aan, die afrondt.",
+    "organisatie": "Eerste verdediger op 27 m, tweede op 15 m. Tweede aanvaller start op de flank op 24 m. Na elke aanval wisselen aanvallers en verdedigers van rol.",
+    "benodigdheden": ["Goal", "Ballen", "Hesjes"],
+    "spelersNodig": 4,
+    "keepersNodig": 1,
+    "coachpunten": ["1 tegen 1: met snelheid op de verdediger af, actie en dan versnellen", "2 tegen 1: dribbel tot de verdediger moet kiezen, dan pas passen", "Meelopende aanvaller: breedte houden en niet te vroeg naar binnen"],
+    "variaties": {
+      "makkelijker": ["Eerste verdediger verdedigt half (alleen meelopen)", "Tweede verdediger start pas als de pass komt"],
+      "moeilijker": ["Eerste verdediger mag terugsprinten (2 tegen 2)", "Maximaal 8 seconden voor de hele aanval", "Afronden alleen in één keer"]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 22,
+        "y": -3,
+        "breedte": 26,
+        "lengte": 38
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 34,
+          "y": 1.5,
+          "nummer": 1,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 30,
+          "y": 33,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 11,
+          "x": 41,
+          "y": 25,
+          "kijkrichting": -90
+        },
+        {
+          "id": "d1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 4,
+          "x": 30,
+          "y": 26.5,
+          "kijkrichting": 90
+        },
+        {
+          "id": "d2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 5,
+          "x": 35,
+          "y": 14,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 30,
+          "y": 32.6,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [30.2, 30.4],
+              "duur": 1
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a1",
+              "afstand": 2,
+              "start": 0.2,
+              "manier": "jog"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schijn",
+              "wie": "a1",
+              "kant": "links"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "via": [[32.8, 28.6]],
+              "naar": [33.6, 23.4],
+              "manier": "sprint"
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a1",
+              "afstand": 2.2,
+              "start": 0.4
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [41, 19.6],
+              "start": 0.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [34.4, 17.8]
+            },
+            {
+              "type": "druk",
+              "wie": "d2",
+              "op": "a1",
+              "afstand": 2.2,
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [40.4, 14],
+              "manier": "sprint",
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [32.6, 0.3],
+              "hoogte": "grond",
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 1.4,
           "acties": []
         }
       ]

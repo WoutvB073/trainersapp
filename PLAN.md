@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (15-10-2026, versie 0.9.0)
+## Status (16-10-2026, versie 0.10.0)
 
 | Fase | Status |
 |---|---|
@@ -14,8 +14,8 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ online (0.1.0), getest op de telefoon door de gebruiker |
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
-| 3. Training maken | ⏳ |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten (6), Passing (7), 1 op 1 (6), Reactie (7), Spelletjes (6) – **wacht op test** op de telefoon. Daarmee zijn alle veld- en keepercategorieën gevuld (fase 4 klaar na akkoord). |
+| 3. Training maken | 🔄 wordt gebouwd (0.11.0): aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, benodigdheden, opslaan op het apparaat, delen via een link |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – **wacht op test**. |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -98,6 +98,8 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   "benodigdheden": ["1 goal", "4 pionnen", "Ballen"],
   "spelersNodig": 2,                     // veldspelers (minimaal)
   "keepersNodig": 1,
+  "combinatievorm": true,               // optioneel: 2–4 onderdelen achter elkaar (badge "Combinatievorm")
+  "onderdelen": ["Ladder", "Vangen", "Duiken"], // alleen bij een combinatievorm: het verloop in volgorde
   "coachpunten": ["…"],
   "variaties": { "makkelijker": ["…"], "moeilijker": ["…"] },
   "tekening": { … }                      // zie hieronder
@@ -413,6 +415,23 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - Plukken: de keeper duikt zijwaarts en ligt dwars voor de bal (niet op zijn buik naar voren).
 - Aantallen keepers (met dubbele categorieën): Warming-up 9, Laag duiken 11, Hoog duiken 7, Bal verwerken 11,
   Voorzetten 6, Passing 8, 1 op 1 6, Reactie 9, Spelletjes 6 – totaal 57 keeperoefeningen.
+
+## Besluiten fase 4 – feedback na 0.9.0 (versie 0.10.0)
+- **Nummers bij keepers:** niet meer op of boven het lijf. In 3D een ring op het gras in de eigen tint van de keeper met
+  een klein nummer aan de camerakant (beweegt mee, ligt onder hem bij een duik, groeit iets mee als de camera ver weg
+  is). In 2D een kleine nummerbadge naast het poppetje. Bij één keeper geen nummer: de keeperskleur is genoeg.
+- **Veldspelers:** nummerbadge iets kleiner (0,05) en op het scherm net bóven het hoofd verankerd (`center`), zodat hij
+  ook van boven (camera Boven) het lijf niet meer afdekt.
+- **Combinatievormen:** veld `combinatievorm: true` + `onderdelen` (2–4, getest). Badge "Combinatievorm" (paars) in de
+  lijst en op de detailpagina; op de detailpagina het genummerde verloop. Ze staan in het bestand van hun hoofdcategorie
+  en hebben meerdere categorieën. 12 veld (o.a. ladder → slalom → schot, kaats → doordiepen, derde man, aannemen/draaien →
+  voorzet, 1 tegen 1 → 2 tegen 1, circuit met drie stations, rondo → uitbreken, overlap → lage voorzet, estafette) en 12
+  keepers (o.a. ladder → vangen → duiken, terugspeelbal → wegspelen → schot, hoge duik → laag andere hoek, stompen →
+  herstellen → 1 op 1, uitworp → terug → reactiebal, drie schoten met steeds nieuwe positie, keeperscircuit).
+- 30 kale oefeningen kregen bij "Moeilijker" een concreet extra onderdeel (bv. "daarna op een klein doeltje schieten").
+- Aantallen: veld 85 (Warming-up 20, Techniek 23, Loopcoördinatie 14, Pass en trap 25, Afwerken 24, Positiespel 13,
+  Partijvormen 16, Spelletjes 12), keepers 69 (Warming-up 13, Laag duiken 17, Hoog duiken 11, Bal verwerken 15,
+  Voorzetten 8, Passing 12, 1 op 1 10, Reactie 13, Spelletjes 6).
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

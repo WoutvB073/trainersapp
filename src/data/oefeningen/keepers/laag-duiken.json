@@ -6,11 +6,7 @@
     "categorieen": ["laag-duiken", "warming-up"],
     "uitleg": "De keeper zit op de knieën tussen twee hoedjes. De trainer gooit de bal laag naast de keeper. De keeper valt opzij op zijn zij, vangt de bal, staat op, gaat weer in kniezit zitten en rolt de bal terug. Afwisselend links en rechts.",
     "organisatie": "In het doel of tussen twee paaltjes. Twee hoedjes 3 m links en rechts van de keeper, op de lijn waar hij zit. De trainer staat op 6 m met de ballen naast zich.",
-    "benodigdheden": [
-      "Goal (of 2 paaltjes)",
-      "2 hoedjes",
-      "3–5 ballen"
-    ],
+    "benodigdheden": ["Goal (of 2 paaltjes)", "2 hoedjes", "3–5 ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
     "coachpunten": [
@@ -20,11 +16,7 @@
       "Ogen op de bal tot hij vastzit"
     ],
     "variaties": {
-      "makkelijker": [
-        "Bal rollen in plaats van gooien",
-        "Kortere afstand en dichter bij het lichaam",
-        "Vanuit zit beginnen, benen gespreid"
-      ],
+      "makkelijker": ["Bal rollen in plaats van gooien", "Kortere afstand en dichter bij het lichaam", "Vanuit zit beginnen, benen gespreid"],
       "moeilijker": [
         "Vanuit hurkzit of stand duiken",
         "Bal harder of verder van het lichaam",
@@ -217,18 +209,10 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Afzetten met het been aan de kant van de bal, schuin naar voren",
-      "Handen eerst naar de bal: onderste hand achter, bovenste hand erop",
-      "Landen op de zij en meteen de bal tegen de grond klemmen"
-    ],
+    "coachpunten": ["Afzetten met het been aan de kant van de bal, schuin naar voren", "Handen eerst naar de bal: onderste hand achter, bovenste hand erop", "Landen op de zij en meteen de bal tegen de grond klemmen"],
     "variaties": {
       "makkelijker": ["Bal dichter bij de keeper", "Rollen in plaats van schieten"],
-      "moeilijker": [
-        "Bal verder weg (2,5 m)",
-        "Harder schieten",
-        "Trainer schiet zonder te zeggen welke kant"
-      ]
+      "moeilijker": ["Bal verder weg (2,5 m)", "Harder schieten", "Trainer schiet zonder te zeggen welke kant", "Na de duik opstaan en meteen een hoge bal aan de andere kant"]
     },
     "tekening": {
       "veld": {
@@ -387,18 +371,10 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 2,
-    "coachpunten": [
-      "Uit de basishouding eerst een klein stapje naar de bal, dan afzetten",
-      "Niet eerst door de knieën zakken en dan pas vallen: in één beweging schuin naar voren",
-      "Na de duik snel op en terug in basishouding"
-    ],
+    "coachpunten": ["Uit de basishouding eerst een klein stapje naar de bal, dan afzetten", "Niet eerst door de knieën zakken en dan pas vallen: in één beweging schuin naar voren", "Na de duik snel op en terug in basishouding"],
     "variaties": {
       "makkelijker": ["Bal dichter bij de keeper", "Alleen gooien"],
-      "moeilijker": [
-        "Aangever kiest zelf de hoek",
-        "Twee ballen kort na elkaar (links, dan rechts)",
-        "Afstand 11 m, hard getrapt"
-      ]
+      "moeilijker": ["Aangever kiest zelf de hoek", "Twee ballen kort na elkaar (links, dan rechts)", "Afstand 11 m, hard getrapt"]
     },
     "tekening": {
       "veld": {
@@ -564,25 +540,13 @@
     "categorieen": ["laag-duiken"],
     "uitleg": "De keeper schuift opzij naar het hoedje bij de paal en komt met kruispassen terug naar het midden. Tijdens het terugkomen gooit de trainer een lage bal naar de verre hoek: de keeper zet af en maakt een lange, lage duik.",
     "organisatie": "Goal, twee hoedjes vlak voor de palen. Trainer op 8 m. Na elke bal de andere kant op beginnen.",
-    "benodigdheden": [
-      "Goal",
-      "2 hoedjes",
-      "Ballen"
-    ],
+    "benodigdheden": ["Goal", "2 hoedjes", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Tijdens het voetenwerk de bal (trainer) blijven zien",
-      "Afzetten vanaf het been aan de balkant, het andere been zwaait mee",
-      "Lange duik: laag en vlak, niet eerst omhoog springen"
-    ],
+    "coachpunten": ["Tijdens het voetenwerk de bal (trainer) blijven zien", "Afzetten vanaf het been aan de balkant, het andere been zwaait mee", "Lange duik: laag en vlak, niet eerst omhoog springen"],
     "variaties": {
       "makkelijker": ["Eerst stilstaan, dan pas de bal", "Kortere duik (bal dichterbij)"],
-      "moeilijker": [
-        "Bal komt op een willekeurig moment tijdens het voetenwerk",
-        "Grondbal hard getrapt",
-        "Na de duik meteen een tweede bal naar de andere hoek"
-      ]
+      "moeilijker": ["Bal komt op een willekeurig moment tijdens het voetenwerk", "Grondbal hard getrapt", "Na de duik meteen een tweede bal naar de andere hoek"]
     },
     "tekening": {
       "veld": {
@@ -709,25 +673,13 @@
     "categorieen": ["laag-duiken"],
     "uitleg": "Naast de keeper staat aan beide kanten een lage horde. De trainer gooit de bal net voorbij de horde. De keeper duikt over de horde heen naar de bal: zo leert hij naar voren en over de grond te duiken in plaats van achteruit te vallen.",
     "organisatie": "Keeper in het doel, links en rechts een horde van 30 cm op 1 m naast hem. Trainer op 7 m. Afwisselend links en rechts.",
-    "benodigdheden": [
-      "Goal",
-      "2 lage hordes",
-      "Ballen"
-    ],
+    "benodigdheden": ["Goal", "2 lage hordes", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Afzetten en schuin naar voren over de horde, niet ernaast vallen",
-      "Armen eerst: de handen zijn als eerste bij de bal",
-      "Landen op de zij, achter de horde, bal vastklemmen"
-    ],
+    "coachpunten": ["Afzetten en schuin naar voren over de horde, niet ernaast vallen", "Armen eerst: de handen zijn als eerste bij de bal", "Landen op de zij, achter de horde, bal vastklemmen"],
     "variaties": {
       "makkelijker": ["Stok of hoedjes in plaats van een horde", "Bal dichter bij de horde"],
-      "moeilijker": [
-        "Hogere horde (hoog duiken)",
-        "Vanuit voetenwerk tussen de hordes",
-        "Trainer trapt de bal"
-      ]
+      "moeilijker": ["Hogere horde (hoog duiken)", "Vanuit voetenwerk tussen de hordes", "Trainer trapt de bal", "Na de duik opstaan, terug over de horde en een bal aan de andere kant"]
     },
     "tekening": {
       "veld": {
@@ -889,18 +841,10 @@
     "benodigdheden": ["Goal", "Ballen"],
     "spelersNodig": 0,
     "keepersNodig": 1,
-    "coachpunten": [
-      "Draaien op de voorvoeten en meteen in basishouding landen",
-      "Eerst de bal zoeken met je ogen, dan pas bewegen",
-      "Niet te ver draaien: schouders recht naar de bal"
-    ],
+    "coachpunten": ["Draaien op de voorvoeten en meteen in basishouding landen", "Eerst de bal zoeken met je ogen, dan pas bewegen", "Niet te ver draaien: schouders recht naar de bal"],
     "variaties": {
       "makkelijker": ["Pas gooien als de keeper zich heeft omgedraaid", "Trainer zegt de kant erbij"],
-      "moeilijker": [
-        "Keeper ligt eerst op de buik en springt op",
-        "Bal hard getrapt",
-        "Twee aangevers: alleen degene die roept, gooit"
-      ]
+      "moeilijker": ["Keeper ligt eerst op de buik en springt op", "Bal hard getrapt", "Twee aangevers: alleen degene die roept, gooit"]
     },
     "tekening": {
       "veld": {
@@ -1046,25 +990,13 @@
     "categorieen": ["laag-duiken"],
     "uitleg": "Twee keepers geven aan vanaf links en rechts, elk met een bal. Eerst gooit de linker een lage bal, dan de rechter: de keeper in het doel duikt naar beide kanten, staat snel op en rolt de bal terug. Daarna doordraaien: de keeper uit het doel wordt aangever, de aangever rechts gaat in het doel.",
     "organisatie": "Goal, aangevers op 8 m voor het doel, 7 m uit elkaar. Na 4–6 ballen doordraaien.",
-    "benodigdheden": [
-      "Goal",
-      "2 ballen",
-      "2 hoedjes"
-    ],
+    "benodigdheden": ["Goal", "2 ballen", "2 hoedjes"],
     "spelersNodig": 0,
     "keepersNodig": 3,
-    "coachpunten": [
-      "Na de eerste duik snel op: eerst de bal vastpakken, dan opstaan",
-      "Stel je opnieuw op tussen de aangever en het midden van het doel",
-      "Duik naar voren naar de bal, zodat hij niet achter je komt"
-    ],
+    "coachpunten": ["Na de eerste duik snel op: eerst de bal vastpakken, dan opstaan", "Stel je opnieuw op tussen de aangever en het midden van het doel", "Duik naar voren naar de bal, zodat hij niet achter je komt"],
     "variaties": {
       "makkelijker": ["Meer tijd tussen de twee ballen", "Ballen rollen"],
-      "moeilijker": [
-        "Tweede bal komt al als de keeper nog ligt (opstaan en duiken)",
-        "Aangevers trappen de bal",
-        "Aangevers kiezen zelf wie gooit"
-      ]
+      "moeilijker": ["Tweede bal komt al als de keeper nog ligt (opstaan en duiken)", "Aangevers trappen de bal", "Aangevers kiezen zelf wie gooit"]
     },
     "tekening": {
       "veld": {
@@ -1244,6 +1176,143 @@
               "worp": "onderhands",
               "hoogte": "laag",
               "duikNaar": [32.1, 1.9]
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-cv-ladder-vangen-duiken",
+    "soort": "keeper",
+    "naam": "Ladder, borstbal en lage duik",
+    "categorieen": ["laag-duiken", "warming-up", "bal-verwerken"],
+    "combinatievorm": true,
+    "onderdelen": ["Ladder", "Borstbal vangen", "Lage duik"],
+    "uitleg": "De keeper loopt met snelle pasjes door de ladder, gaat achteruit terug in het doel en vangt een borstbal. Bal terug naar de trainer, en meteen daarna komt een lage bal in de hoek waar hij naartoe duikt.",
+    "organisatie": "Ladder van 4 m schuin voor het doel. Trainer op 10 m met twee ballen. Na de serie terug naar het begin van de ladder; om en om de lage bal links en rechts.",
+    "benodigdheden": ["Goal", "Loopladder", "2 ballen"],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "coachpunten": ["Na de ladder snel achteruit, met je gezicht naar het veld", "Borstbal: ellebogen bij elkaar, bal klemmen", "Na de worp meteen weer in basishouding voor de lage bal"],
+    "variaties": {
+      "makkelijker": ["Zonder ladder: beginnen met kleine pasjes op de plaats", "Lage bal rollen in plaats van schieten"],
+      "moeilijker": ["Twee voeten per vak in de ladder", "Lage bal komt al terwijl de keeper de borstbal teruggooit", "Daarna nog een hoge bal in de andere hoek"]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 24,
+        "y": -3,
+        "breedte": 20,
+        "lengte": 17
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "l1",
+          "soort": "ladder",
+          "x": 31.5,
+          "y": 5.5,
+          "lengte": 4,
+          "breedte": 0.5,
+          "hoek": 90
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 27.8,
+          "y": 5.5,
+          "nummer": 1,
+          "kijkrichting": 0
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 35.8,
+          "y": 11,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 35.8,
+          "y": 10.6,
+          "bij": "t1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 37,
+          "y": 11.6
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [34.2, 5.5],
+              "manier": "voetenwerk"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [34, 2.2],
+              "manier": "achteruit"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.8
+            }
+          ]
+        },
+        {
+          "duur": 0.3,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "bal": "b2",
+              "hoogte": "grond",
+              "duikNaar": [32.2, 2.5]
             }
           ]
         },
