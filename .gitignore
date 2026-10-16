@@ -5,3 +5,9 @@ dev-dist
 .DS_Store
 .claude
 tools/e2e/*.png
+
+# Firebase-emulator
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/

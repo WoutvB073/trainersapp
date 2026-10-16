@@ -1,0 +1,127 @@
+rules_version = '2';
+
+// Beveiliging van TopTraining (Firestore). Zelf plakken in de Firebase-console → Firestore → Regels → Publiceren.
+// Getest met de emulator: tests/online/regels.test.ts (npm run test:online).
+//
+// Opbouw:
+//   users/{uid}                     eigen document: naam, teams, favorieten, instellingen
+//   users/{uid}/oefeningen/{id}     eigen oefeningen   { data: JSON-tekst, gewijzigd }
+//   users/{uid}/trainingen/{id}     eigen trainingen   { data: JSON-tekst, gewijzigd }
+//   teams/{teamId}                  { naam, code, maker, gemaakt }
+//   teams/{teamId}/leden/{uid}      { rol: 'beheerder' | 'lid', naam, sinds, code? }
+//   teams/{teamId}/items/{itemId}   gedeelde oefening/training { soort, data, naam, eigenaar, eigenaarNaam, gewijzigd }
+//   teamCodes/{code}                { team } — om met een code te kunnen joinen
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function ingelogd() {
+      return request.auth != null;
+    }
+    function lidPad(team, uid) {
+      return /databases/$(database)/documents/teams/$(team)/leden/$(uid);
+    }
+    function isLid(team) {
+      return ingelogd() && exists(lidPad(team, request.auth.uid));
+    }
+    function isBeheerder(team) {
+      return isLid(team) && get(lidPad(team, request.auth.uid)).data.rol == 'beheerder';
+    }
+    // Na deze schrijfactie (in dezelfde batch): beheerder van het team?
+    function wordtBeheerder(team) {
+      return ingelogd() && existsAfter(lidPad(team, request.auth.uid)) && getAfter(lidPad(team, request.auth.uid)).data.rol == 'beheerder';
+    }
+    function tekst(v, max) {
+      return v is string && v.size() > 0 && v.size() <= max;
+    }
+    function geldigeCode(c) {
+      return c is string && c.matches('^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{6}$');
+    }
+
+    // ---------- eigen gegevens ----------
+    match /users/{uid} {
+      allow read, delete: if ingelogd() && request.auth.uid == uid;
+      allow create, update: if ingelogd() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['naam', 'email', 'teams', 'favorieten', 'instellingen', 'gewijzigd'])
+        && (!('teams' in request.resource.data) || (request.resource.data.teams is list && request.resource.data.teams.size() <= 50))
+        && (!('favorieten' in request.resource.data) || (request.resource.data.favorieten is list && request.resource.data.favorieten.size() <= 2000));
+
+      match /{soort}/{id} {
+        allow read, delete: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen'];
+        allow create, update: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen']
+          && request.resource.data.keys().hasOnly(['data', 'gewijzigd'])
+          && tekst(request.resource.data.data, 500000)
+          && request.resource.data.gewijzigd is number;
+      }
+    }
+
+    // ---------- teams ----------
+    match /teamCodes/{code} {
+      // Een code opzoeken mag (alleen als je hem kent: geen lijst opvragen).
+      allow get: if ingelogd();
+      allow list: if false;
+      allow create: if geldigeCode(code) && request.resource.data.keys().hasOnly(['team'])
+        && wordtBeheerder(request.resource.data.team)
+        && getAfter(/databases/$(database)/documents/teams/$(request.resource.data.team)).data.code == code;
+      allow update: if false;
+      allow delete: if isBeheerder(resource.data.team);
+    }
+
+    match /teams/{team} {
+      allow get: if isLid(team);
+      allow list: if false;
+      // Aanmaken: in dezelfde batch als jezelf als beheerder en de code.
+      allow create: if ingelogd()
+        && request.resource.data.keys().hasOnly(['naam', 'code', 'maker', 'gemaakt'])
+        && request.resource.data.maker == request.auth.uid
+        && tekst(request.resource.data.naam, 60)
+        && geldigeCode(request.resource.data.code)
+        && wordtBeheerder(team)
+        && existsAfter(/databases/$(database)/documents/teamCodes/$(request.resource.data.code));
+      // Naam of code wijzigen: alleen beheerders (de maker blijft de maker).
+      allow update: if isBeheerder(team)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['naam', 'code'])
+        && tekst(request.resource.data.naam, 60)
+        && geldigeCode(request.resource.data.code);
+      allow delete: if isBeheerder(team);
+
+      match /leden/{uid} {
+        allow read: if isLid(team);
+        allow create: if ingelogd() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['rol', 'naam', 'sinds', 'code'])
+          && tekst(request.resource.data.naam, 80)
+          && (
+            // De maker, bij het aanmaken van het team (zelfde batch).
+            (request.resource.data.rol == 'beheerder'
+              && !exists(/databases/$(database)/documents/teams/$(team))
+              && getAfter(/databases/$(database)/documents/teams/$(team)).data.maker == uid)
+            // Iemand die de juiste code invult.
+            || (request.resource.data.rol == 'lid'
+              && request.resource.data.code == get(/databases/$(database)/documents/teams/$(team)).data.code)
+          );
+        // Rol wijzigen: alleen beheerders, en alleen de rol.
+        allow update: if isBeheerder(team)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rol'])
+          && request.resource.data.rol in ['beheerder', 'lid'];
+        // Zelf vertrekken, of verwijderd worden door een beheerder.
+        allow delete: if ingelogd() && (request.auth.uid == uid || isBeheerder(team));
+      }
+
+      match /items/{item} {
+        allow read: if isLid(team);
+        allow create: if isLid(team)
+          && request.resource.data.keys().hasOnly(['soort', 'data', 'naam', 'eigenaar', 'eigenaarNaam', 'gewijzigd'])
+          && request.resource.data.eigenaar == request.auth.uid
+          && request.resource.data.soort in ['oefening', 'training']
+          && tekst(request.resource.data.data, 500000)
+          && tekst(request.resource.data.naam, 120);
+        // Aanpassen: alleen je eigen gedeelde items.
+        allow update: if isLid(team)
+          && resource.data.eigenaar == request.auth.uid
+          && request.resource.data.eigenaar == request.auth.uid
+          && request.resource.data.keys().hasOnly(['soort', 'data', 'naam', 'eigenaar', 'eigenaarNaam', 'gewijzigd'])
+          && tekst(request.resource.data.data, 500000);
+        // Terugtrekken (eigen item) of verwijderen door een beheerder.
+        allow delete: if isLid(team) && (resource.data.eigenaar == request.auth.uid || isBeheerder(team));
+      }
+    }
+  }
+}

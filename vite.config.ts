@@ -48,5 +48,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['tests/**/*.test.ts'],
+    // Online-tests (Firebase-emulator) apart: npm run test:online.
+    exclude: ['tests/online/**', 'node_modules/**'],
   },
 });
