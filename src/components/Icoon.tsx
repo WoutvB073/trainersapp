@@ -26,10 +26,17 @@ const PADEN = {
   browser: 'M3 5h18v14H3zM3 9h18M6 7h.01M8.5 7h.01',
   plus: 'M12 5v14M5 12h14',
   combi: 'M3.5 8.5h5v7h-5zM15.5 8.5h5v7h-5zM8.5 12h7M12.5 9.5L15 12l-2.5 2.5',
+  min: 'M5 12h14',
+  kruis: 'M6.5 6.5l11 11M17.5 6.5l-11 11',
+  grip: 'M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01',
+  prullenbak: 'M4.5 7h15M10 11v6M14 11v6M6.5 7l1 13h9l1-13M9.5 7V4.5h5V7',
+  training: 'M9 3.5h6v3H9zM7 5H5v16h14V5h-2M8.5 11h7M8.5 15h7',
+  link: 'M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1',
+  kalender: 'M4 6h16v14H4zM4 10h16M8.5 3.5v4M15.5 3.5v4',
 } as const;
 
 /** Stippen hebben een dikkere lijn nodig om zichtbaar te zijn. */
-const DIK: readonly string[] = ['meer', 'puntjes'];
+const DIK: readonly string[] = ['meer', 'puntjes', 'grip'];
 
 export type IcoonNaam = keyof typeof PADEN;
 

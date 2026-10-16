@@ -10,7 +10,8 @@ const BASE = '/trainersapp/';
 export default defineConfig({
   base: BASE,
   // Three.js (3D) staat in een eigen bestand dat pas op de detailpagina laadt; ± 560 kB is daar prima.
-  build: { chunkSizeWarningLimit: 700 },
+  // De hoofdbundel bevat alle oefeningen (JSON) en is daardoor groot (± 185 kB gzip); alles staat in de offline-cache.
+  build: { chunkSizeWarningLimit: 900 },
   plugins: [
     react(),
     VitePWA({

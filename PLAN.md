@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (16-10-2026, versie 0.10.0)
+## Status (16-10-2026, versie 0.11.0)
 
 | Fase | Status |
 |---|---|
@@ -14,8 +14,8 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 1. Basis: projectopzet, PWA, datamodel, 2 voorbeeldoefeningen, schermen, 2D-animatie | ✅ online (0.1.0), getest op de telefoon door de gebruiker |
 | 1b. Installatiescherm (zoals IntervalFit) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
-| 3. Training maken | 🔄 wordt gebouwd (0.11.0): aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, benodigdheden, opslaan op het apparaat, delen via een link |
-| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – **wacht op test**. |
+| 3. Training maken | ✅ online (0.11.0) – **wacht op test** op de telefoon: aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, klaarzetten, opslaan op het apparaat, dupliceren, delen via een link |
+| 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – **wacht op test** (samen met 0.11.0). |
 | 5. Editor | ⏳ |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
@@ -432,6 +432,34 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - Aantallen: veld 85 (Warming-up 20, Techniek 23, Loopcoördinatie 14, Pass en trap 25, Afwerken 24, Positiespel 13,
   Partijvormen 16, Spelletjes 12), keepers 69 (Warming-up 13, Laag duiken 17, Hoog duiken 11, Bal verwerken 15,
   Voorzetten 8, Passing 12, 1 op 1 10, Reactie 13, Spelletjes 6).
+
+## Besluiten fase 3 – Training maken (versie 0.11.0)
+- **Startscherm:** derde tegel "Training" met de knoppen **Training maken** en **Mijn trainingen**.
+- **Routes:** `#/trainingen` (Mijn trainingen), `#/training/<id>` (bewerken), `#/training/<id>/kiezen`,
+  `#/training/<id>/modus/<nr>` (trainingsmodus), `#/t/<code>` (gedeelde training).
+- **Training** (`src/training/training.ts`): `{ id, naam, datum?, spelers, keepers, oefeningen: id[], gemaakt, gewijzigd }`.
+  Nieuwe training: 12 spelers, 1 keeper. Naam en datum zijn optioneel ("Training 20 okt 2026" of "Training zonder naam").
+- **Kiezen:** tabs Veld/Keepers, categorie-chips met aantallen, alleen oefeningen met spelersNodig ≤ spelers én
+  keepersNodig ≤ keepers. Bij 0 spelers opent de tab Keepers. Toevoegen/weghalen met één knop (elke oefening één keer);
+  tik op de kaart = oefening bekijken. Badge "Combinatievorm" zoals in de bibliotheek.
+- **Bewerken:** volgorde slepen met een greepje (`@dnd-kit`, `touch-action: none` alleen op het greepje, zodat de
+  pagina gewoon scrolt), oefening weghalen met ×. Minder spelers/keepers: oefeningen die niet meer passen krijgen een
+  oranje rand en een melding, ze worden niet verwijderd.
+- **Klaarzetten:** per soort materiaal het grootste aantal dat één oefening nodig heeft (de oefeningen komen na elkaar,
+  materiaal gebruik je opnieuw), met de oefeningen die het gebruiken. "3–5 ballen", "8+ ballen", "Pionnen"/"1 pion" worden
+  samengevoegd.
+- **Trainingsmodus:** per oefening de animatie, uitleg, organisatie, benodigdheden en coachpunten; Vorige/Volgende
+  onderin, of vegen over de tekst (niet over de animatie, daar draai je de 3D-camera mee). Puntjes bovenaan voor de voortgang.
+- **Opslag** (`src/training/opslag.ts`): `TrainingStore` met een verwisselbare `TrainingBackend`. Nu het apparaat
+  (localStorage `trainersapp.trainingen`, met versienummer; kapotte data = lege lijst). In fase 6 komt er een online
+  backend bij (Firebase) met hetzelfde formaat.
+- **Delen:** de link bevat de training zelf (`#/t/<code>`, base64url van compacte JSON; geen server nodig, werkt dus ook
+  offline zodra de app geladen is). Deelmenu van de telefoon als dat er is, anders "Link gekopieerd". De ontvanger ziet de
+  training en slaat hem op met één knop. Opent hij de link in de gewone browser (app niet geïnstalleerd), dan ziet hij de
+  training met uitleg: link kopiëren en in de app openen via **Mijn trainingen → Gedeelde training openen via een link**
+  (op een iPhone hebben de app en Safari elk hun eigen opslag).
+- **Tests:** `tests/training.test.ts` (filter, slepen, opslaan, dupliceren, delen, benodigdheden) en
+  `tools/e2e/training.mjs` (hele flow op telefoon, tablet en laptop, slepen met de vinger, vegen, delen, offline).
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

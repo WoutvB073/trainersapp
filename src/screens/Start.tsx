@@ -3,6 +3,8 @@ import { OEFENINGEN } from '../data/oefeningen';
 import { meervoud } from '../components/Labels';
 import { Icoon } from '../components/Icoon';
 import { ga } from '../router';
+import { useTrainingen } from '../training/opslag';
+import { maakTraining } from './training/MijnTrainingen';
 import type { Soort } from '../model/types';
 
 function VeldPlaatje() {
@@ -62,6 +64,36 @@ function Tegel({ soort }: { soort: Soort }) {
   );
 }
 
+function TrainingTegel() {
+  const lijst = useTrainingen();
+  return (
+    <div className="tegel tegel-training">
+      <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
+        <rect width="120" height="80" rx="10" fill="var(--primair-licht)" />
+        <rect x="34" y="10" width="52" height="62" rx="6" fill="#fff" stroke="var(--primair)" strokeWidth="2.5" />
+        <rect x="48" y="5" width="24" height="10" rx="3" fill="var(--primair)" />
+        <g stroke="var(--primair)" strokeWidth="3" strokeLinecap="round">
+          <path d="M43 30h8M43 44h8M43 58h8" />
+          <path d="M56 30h20M56 44h20M56 58h14" opacity="0.5" />
+        </g>
+      </svg>
+      <span className="tegel-tekst">
+        <span className="tegel-titel">Training</span>
+        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'training opgeslagen', 'trainingen opgeslagen') : 'Stel je training samen'}</span>
+        <span className="tegel-knoppen">
+          <button className="knop knop-primair" onClick={maakTraining}>
+            <Icoon naam="plus" maat={18} />
+            Training maken
+          </button>
+          <button className="knop" onClick={() => ga('/trainingen')}>
+            Mijn trainingen
+          </button>
+        </span>
+      </span>
+    </div>
+  );
+}
+
 /** `opInstalleren`: alleen op de computer in de browser (terug naar de installatie-uitleg). */
 export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
   return (
@@ -74,10 +106,11 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
         </div>
       </header>
       <main className="inhoud">
-        <h2 className="sectie-titel">Kies je oefenbibliotheek</h2>
+        <h2 className="sectie-titel">Oefenbibliotheek en trainingen</h2>
         <div className="tegels">
           <Tegel soort="veld" />
           <Tegel soort="keeper" />
+          <TrainingTegel />
         </div>
         {opInstalleren && (
           <button className="link-knop" onClick={opInstalleren}>

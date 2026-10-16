@@ -8,6 +8,11 @@ import { OefenLijst } from './screens/OefenLijst';
 import { OefeningDetail } from './screens/OefeningDetail';
 import { NietGevonden } from './screens/NietGevonden';
 import { Installeren } from './screens/installeren/Installeren';
+import { MijnTrainingen } from './screens/training/MijnTrainingen';
+import { TrainingBewerk } from './screens/training/TrainingBewerk';
+import { TrainingKiezen } from './screens/training/TrainingKiezen';
+import { TrainingModus } from './screens/training/TrainingModus';
+import { GedeeldeTraining } from './screens/training/GedeeldeTraining';
 import { browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen } from './engine/platform';
 
 function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => void }) {
@@ -24,6 +29,16 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
     }
     case 'oefening':
       return <OefeningDetail key={route.id} id={route.id} />;
+    case 'trainingen':
+      return <MijnTrainingen />;
+    case 'training':
+      return <TrainingBewerk key={route.id} id={route.id} />;
+    case 'kiezen':
+      return <TrainingKiezen key={route.id} id={route.id} />;
+    case 'modus':
+      return <TrainingModus id={route.id} nr={route.nr} />;
+    case 'gedeeld':
+      return <GedeeldeTraining key={route.code} code={route.code} />;
     default:
       return <NietGevonden />;
   }
@@ -35,12 +50,18 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
  */
 export function App() {
   const [gekozen, setGekozen] = useState(browserGekozen);
+  const route = useRoute();
+  const [installatieGetoond, setInstallatieGetoond] = useState(false);
   const scherm = kiesScherm({ standalone: isStandalone(), mobiel: omgeving.mobiel, browserGekozen: gekozen });
   const kies = (aan: boolean) => {
     zetBrowserGekozen(aan);
     setGekozen(aan);
     window.scrollTo(0, 0);
   };
+  // Een gedeelde training (link) kun je ook zonder de app bekijken, met uitleg hoe je hem in de app krijgt.
+  if (scherm !== 'app' && route.naam === 'gedeeld' && !installatieGetoond) {
+    return <GedeeldeTraining code={route.code} nietGeinstalleerd opInstalleren={() => setInstallatieGetoond(true)} />;
+  }
   if (scherm === 'installeren') return <Installeren />;
   if (scherm === 'installeren-computer') return <Installeren computer opBrowserGekozen={() => kies(true)} />;
   return <AppSchermen opInstalleren={isStandalone() ? undefined : () => kies(false)} />;

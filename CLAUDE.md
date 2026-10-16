@@ -27,6 +27,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `schermen.mjs` — alle schermen op 5 formaten (als geïnstalleerde app), offline (ook 3D), 2D/3D-knop.
 - `installeren.mjs` — installatiescherm per toestel, standalone = app, computerkeuze onthouden.
 - `drie-d.mjs` — 3D-momenten van beide oefeningen + camerastanden (`blad-3d-*.png`), cameragrenzen, beeldsnelheid.
+- `training.mjs [url]` — Training maken: hele flow op telefoon/tablet/laptop (kiezen, slepen met de vinger, trainingsmodus met vegen, delen, opslaan, dupliceren, verwijderen, offline). Blad: `blad-training.png`.
 - `keeper-momenten.mjs [url] [filter]` — 3D-close-ups op de sleutelmomenten (worp, duik, vang, tip); rekent de momenten zelf uit met de tijdlijn (via jiti). Camera op de keeper via het testhaakje `window.__camera3d` (alleen met `trainersapp.testCamera=1`).
 - `oefeningen.mjs [url] [filter]` — per oefening 3D/2D-screenshots (`blad-oef-<map>-<categorie>.png`), aantallen per categorie, "Keeper nodig".
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
@@ -41,6 +42,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - Keepers die rouleren: geen `verdedigt` geven (dan loopt de keeper na zijn actie vanzelf terug naar zijn doel).
 - Bash-heredoc met `cat > bestand` zonder heredoc erachter blijft hangen op invoer: schrijf scripts met Write.
 - Keeper: duik en bal op elkaar afstemmen met `duikNaar` op de pass (niet met losse `start`-tijden): een worp schuift vanzelf op (oppakken + uithalen), waardoor losse tijden niet meer kloppen.
+- Knoppen die de opgeslagen training wijzigen: altijd uitgaan van de nieuwste versie uit `trainingen.haal(id)`, niet van de training uit de render (anders telt snel achter elkaar tikken maar één keer).
 - Nieuwe oefening: `npm test` controleert ook of de bal alleen via een pass/schot van speler wisselt, en afstanden (personen ≥ 1,5 m, niet door pionnen/paaltjes/hoedjes); daarna `oefeningen.mjs` en de bladen bekijken.
 - Op een telefoon-/tabletformaat in de browser zie je alleen het installatiescherm: in tests `alsGeinstalleerd(page)`,
   in de preview-pane een laptopformaat gebruiken of "Gewoon in de browser gebruiken" kiezen.

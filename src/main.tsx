@@ -6,6 +6,7 @@ import '@fontsource/barlow-condensed/latin-700.css';
 import './styles/thema.css';
 import './styles/app.css';
 import './styles/installeren.css';
+import './styles/training.css';
 import { App } from './App';
 import { startServiceWorker } from './engine/update';
 

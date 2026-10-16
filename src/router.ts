@@ -6,21 +6,36 @@ import { useSyncExternalStore } from 'react';
  *   #/veld, #/keepers        Categorieën
  *   #/veld/:categorie        Oefenlijst (categorie "alle" = alle oefeningen)
  *   #/oefening/:id           Detailpagina
+ *   #/trainingen             Mijn trainingen
+ *   #/training/:id           Training bewerken (aantallen, volgorde, benodigdheden)
+ *   #/training/:id/kiezen    Oefeningen kiezen (gefilterd op aantallen)
+ *   #/training/:id/modus/:nr Trainingsmodus (oefening nr, vanaf 1)
+ *   #/t/:code                Gedeelde training (link)
  */
 export type Route =
   | { naam: 'start' }
   | { naam: 'categorieen'; soort: string }
   | { naam: 'lijst'; soort: string; categorie: string }
   | { naam: 'oefening'; id: string }
+  | { naam: 'trainingen' }
+  | { naam: 'training'; id: string }
+  | { naam: 'kiezen'; id: string }
+  | { naam: 'modus'; id: string; nr: number }
+  | { naam: 'gedeeld'; code: string }
   | { naam: 'onbekend' };
 
 export function leesHash(hash: string): Route {
   const delen = (hash.replace(/^#/, '') || '/').split('/').filter(Boolean).map(decodeURIComponent);
-  const [a, b] = delen;
+  const [a, b, c, d] = delen;
   if (!a) return { naam: 'start' };
   if ((a === 'veld' || a === 'keepers') && !b) return { naam: 'categorieen', soort: a };
   if ((a === 'veld' || a === 'keepers') && b) return { naam: 'lijst', soort: a, categorie: b };
   if (a === 'oefening' && b) return { naam: 'oefening', id: b };
+  if (a === 'trainingen' && !b) return { naam: 'trainingen' };
+  if (a === 'training' && b && !c) return { naam: 'training', id: b };
+  if (a === 'training' && b && c === 'kiezen') return { naam: 'kiezen', id: b };
+  if (a === 'training' && b && c === 'modus') return { naam: 'modus', id: b, nr: Math.max(1, Number(d) || 1) };
+  if (a === 't' && b) return { naam: 'gedeeld', code: b };
   return { naam: 'onbekend' };
 }
 
@@ -50,6 +65,13 @@ const staat = () => (history.state as Staat | null) ?? {};
 export function ga(pad: string): void {
   history.replaceState({ ...staat(), scrollY: window.scrollY }, '');
   history.pushState({ diepte: (staat().diepte ?? 0) + 1 } satisfies Staat, '', `#${pad}`);
+  window.dispatchEvent(new Event(WIJZIGING));
+  window.scrollTo(0, 0);
+}
+
+/** Huidige pagina vervangen (geen extra stap in "terug"), bv. van de ene oefening naar de volgende in de trainingsmodus. */
+export function vervang(pad: string): void {
+  history.replaceState({ ...staat() }, '', `#${pad}`);
   window.dispatchEvent(new Event(WIJZIGING));
   window.scrollTo(0, 0);
 }
