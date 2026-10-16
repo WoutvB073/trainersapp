@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { sleutelVoor } from './account';
 
 /**
  * Favoriete oefeningen (ingebouwd en eigen), als lijst id's. Net als trainingen en eigen oefeningen via een
@@ -59,6 +60,21 @@ export class FavorietenStore {
     return nieuw.has(id);
   }
 
+
+  /** Andere opslagplek (inloggen of uitloggen). */
+  wisselBackend(backend: FavorietenBackend): void {
+    this.backend = backend;
+    this.ids = new Set(backend.laad());
+    for (const cb of this.luisteraars) cb();
+  }
+
+  /** Alles in één keer vervangen (synchronisatie met online). */
+  vervangAlles(ids: readonly string[]): void {
+    this.ids = new Set(ids);
+    this.backend.bewaar([...this.ids]);
+    for (const cb of this.luisteraars) cb();
+  }
+
   abonneer = (cb: () => void): (() => void) => {
     this.luisteraars.add(cb);
     return () => this.luisteraars.delete(cb);
@@ -73,7 +89,12 @@ function lokaleOpslag(): Opslagplek | undefined {
   }
 }
 
-export const favorieten = new FavorietenStore(apparaatFavorieten(lokaleOpslag()));
+/** Opslag van dit apparaat, of (ingelogd) de lokale kopie van het account. */
+export function favorietenBackend(uid: string | null): FavorietenBackend {
+  return apparaatFavorieten(lokaleOpslag(), sleutelVoor('favorieten', uid));
+}
+
+export const favorieten = new FavorietenStore(apparaatFavorieten(lokaleOpslag(), sleutelVoor('favorieten')));
 
 export function useFavorieten(): ReadonlySet<string> {
   return useSyncExternalStore(favorieten.abonneer, favorieten.alle, favorieten.alle);

@@ -1,5 +1,14 @@
 /* ---------- eigen oefeningen en editor ---------- */
 
+.label-team {
+  background: var(--primair-licht);
+  color: var(--primair-donker);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .label-eigen {
   background: var(--eigen-licht);
   color: var(--eigen);

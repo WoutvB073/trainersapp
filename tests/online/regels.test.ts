@@ -25,15 +25,15 @@ const db = (uid: string | null): Firestore => (uid ? env.authenticatedContext(ui
 async function maakTeam(d: Firestore, uid: string, team = 't1', code = 'ABC234') {
   const b = writeBatch(d);
   b.set(doc(d, 'teams', team), { naam: 'JO11-1', code, maker: uid, gemaakt: 1 });
-  b.set(doc(d, 'teams', team, 'leden', uid), { rol: 'beheerder', naam: 'Wout', sinds: 1 });
+  b.set(doc(d, 'teams', team, 'leden', uid), { rol: 'beheerder', naam: 'Testtrainer 1', sinds: 1 });
   b.set(doc(d, 'teamCodes', code), { team });
   await b.commit();
 }
-const join = (d: Firestore, uid: string, code: string, team = 't1') => setDoc(doc(d, 'teams', team, 'leden', uid), { rol: 'lid', naam: 'Davinia', sinds: 2, code });
+const join = (d: Firestore, uid: string, code: string, team = 't1') => setDoc(doc(d, 'teams', team, 'leden', uid), { rol: 'lid', naam: 'Testtrainer 2', sinds: 2, code });
 
 describe('eigen gegevens', () => {
   it('alleen je eigen document en eigen oefeningen/trainingen', async () => {
-    await assertSucceeds(setDoc(doc(db('a'), 'users', 'a'), { naam: 'A', teams: [], favorieten: ['veld-pt-derde-man'] }));
+    await assertSucceeds(setDoc(doc(db('a'), 'users', 'a'), { naam: 'Testtrainer A', teams: [], favorieten: ['veld-pt-derde-man'] }));
     await assertSucceeds(setDoc(doc(db('a'), 'users', 'a', 'oefeningen', 'eigen-1'), { data: '{"naam":"x"}', gewijzigd: 1 }));
     await assertSucceeds(setDoc(doc(db('a'), 'users', 'a', 'trainingen', 'x1'), { data: '{}', gewijzigd: 1 }));
     await assertSucceeds(getDoc(doc(db('a'), 'users', 'a', 'oefeningen', 'eigen-1')));
@@ -45,7 +45,7 @@ describe('eigen gegevens', () => {
     // Niet ingelogd: niets.
     await assertFails(getDoc(doc(db(null), 'users', 'a')));
     // Alleen bekende velden en collecties.
-    await assertFails(setDoc(doc(db('a'), 'users', 'a'), { naam: 'A', admin: true }));
+    await assertFails(setDoc(doc(db('a'), 'users', 'a'), { naam: 'Testtrainer A', admin: true }));
     await assertFails(setDoc(doc(db('a'), 'users', 'a', 'geheim', 'x'), { data: '{}', gewijzigd: 1 }));
     await assertFails(setDoc(doc(db('a'), 'users', 'a', 'oefeningen', 'e'), { data: '', gewijzigd: 1 }));
     await assertSucceeds(deleteDoc(doc(db('a'), 'users', 'a', 'oefeningen', 'eigen-1')));

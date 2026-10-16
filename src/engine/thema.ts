@@ -261,6 +261,9 @@ const abonneer = (cb: () => void) => {
 };
 const nu = () => huidig;
 
+/** Luisteren naar themawijzigingen (synchronisatie). */
+export const abonneerThema = abonneer;
+
 export function useThema(): ThemaKeuze {
   return useSyncExternalStore(abonneer, nu, nu);
 }

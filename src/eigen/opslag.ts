@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { sleutelVoor } from '../engine/account';
 import type { EigenOefening, Oefening } from '../model/types';
 import { dupliceerEigen, EIGEN_VOORVOEGSEL, zelfdeInhoud } from './eigen';
 import { maakId } from '../model/id';
@@ -96,6 +97,19 @@ export class EigenStore {
     return ids;
   }
 
+
+  /** Andere opslagplek (inloggen of uitloggen): de lijst van daar laden. */
+  wisselBackend(backend: EigenBackend): void {
+    this.backend = backend;
+    this.lijstNu = backend.laad();
+    for (const cb of this.luisteraars) cb();
+  }
+
+  /** Alles in één keer vervangen (synchronisatie met online). */
+  vervangAlles(lijst: EigenOefening[]): void {
+    this.zet(lijst);
+  }
+
   abonneer = (cb: () => void): (() => void) => {
     this.luisteraars.add(cb);
     return () => this.luisteraars.delete(cb);
@@ -116,7 +130,12 @@ function lokaleOpslag(): Opslagplek | undefined {
   }
 }
 
-export const eigenOefeningen = new EigenStore(apparaatEigenBackend(lokaleOpslag()));
+/** Opslag van dit apparaat, of (ingelogd) de lokale kopie van het account. */
+export function eigenBackend(uid: string | null): EigenBackend {
+  return apparaatEigenBackend(lokaleOpslag(), sleutelVoor('eigen', uid));
+}
+
+export const eigenOefeningen = new EigenStore(apparaatEigenBackend(lokaleOpslag(), sleutelVoor('eigen')));
 
 export function useEigenOefeningen(): EigenOefening[] {
   return useSyncExternalStore(eigenOefeningen.abonneer, eigenOefeningen.lijst, eigenOefeningen.lijst);

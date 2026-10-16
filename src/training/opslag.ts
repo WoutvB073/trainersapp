@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { sleutelVoor } from '../engine/account';
 import { dupliceer, maakId, type GedeeldeTraining, type Training } from './training';
 
 /**
@@ -79,6 +80,19 @@ export class TrainingStore {
     return t;
   }
 
+
+  /** Andere opslagplek (inloggen of uitloggen): de lijst van daar laden. */
+  wisselBackend(backend: TrainingBackend): void {
+    this.backend = backend;
+    this.lijstNu = backend.laad();
+    for (const cb of this.luisteraars) cb();
+  }
+
+  /** Alles in één keer vervangen (synchronisatie met online). */
+  vervangAlles(lijst: Training[]): void {
+    this.zet(lijst);
+  }
+
   abonneer = (cb: () => void): (() => void) => {
     this.luisteraars.add(cb);
     return () => this.luisteraars.delete(cb);
@@ -99,7 +113,12 @@ function lokaleOpslag(): Opslagplek | undefined {
   }
 }
 
-export const trainingen = new TrainingStore(apparaatBackend(lokaleOpslag()));
+/** Opslag van dit apparaat, of (ingelogd) de lokale kopie van het account. */
+export function trainingBackend(uid: string | null): TrainingBackend {
+  return apparaatBackend(lokaleOpslag(), sleutelVoor('trainingen', uid));
+}
+
+export const trainingen = new TrainingStore(apparaatBackend(lokaleOpslag(), sleutelVoor('trainingen')));
 
 export function useTrainingen(): Training[] {
   return useSyncExternalStore(trainingen.abonneer, trainingen.lijst, trainingen.lijst);

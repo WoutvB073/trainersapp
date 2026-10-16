@@ -32,11 +32,13 @@ const kloon = <T>(x: T): T => JSON.parse(JSON.stringify(x)) as T;
 /** Een ingebouwde oefening naar de eigen oefeningen kopiëren. De animatie blijft, tot je iets verschuift. */
 export function kopieerNaarEigen(o: Oefening, nu = Date.now(), id = EIGEN_VOORVOEGSEL + maakId()): EigenOefening {
   const k = kloon(o);
+  // Een kopie uit een team is daarna gewoon van jou (geen teambadge meer).
+  delete k.team;
   return {
     ...k,
     id,
     eigen: true,
-    bron: o.eigen ? (o as EigenOefening).bron : o.id,
+    bron: o.eigen ? (o as EigenOefening).bron : o.team ? undefined : o.id,
     gemaakt: nu,
     gewijzigd: nu,
   };

@@ -21,6 +21,12 @@ export function Labels({ oefening }: { oefening: Oefening }) {
   const { spelersNodig, keepersNodig, soort, combinatievorm } = oefening;
   return (
     <div className="labels">
+      {oefening.team && (
+        <span className="label label-team" title={`Gedeeld door ${oefening.team.eigenaarNaam}`}>
+          <Icoon naam="spelers" maat={16} />
+          {oefening.team.naam}
+        </span>
+      )}
       {oefening.eigen && (
         <span className="label label-eigen">
           <Icoon naam="ster" maat={16} />

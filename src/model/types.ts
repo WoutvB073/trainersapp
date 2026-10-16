@@ -470,6 +470,8 @@ export interface Oefening {
   tekening: Tekening;
   /** Eigen oefening (gemaakt in de editor of gekopieerd), badge "Eigen". */
   eigen?: boolean;
+  /** Gedeeld in een team (badge met de teamnaam). Id is dan `team-<teamId>-<itemId>`. */
+  team?: { id: string; naam: string; itemId: string; eigenaar: string; eigenaarNaam: string };
 }
 
 /** Eigen oefening: hetzelfde formaat, met tijden en (bij een kopie) de ingebouwde oefening waar hij van komt. */

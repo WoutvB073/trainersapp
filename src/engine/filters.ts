@@ -103,6 +103,10 @@ const abonneer = (cb: () => void) => {
 };
 const nu = () => huidig;
 
+/** Luisteren naar filterwijzigingen (synchronisatie van de aantallen). */
+export const abonneerFilters = abonneer;
+export const huidigeFilters = nu;
+
 export function useFilters(): Filters {
   return useSyncExternalStore(abonneer, nu, nu);
 }
