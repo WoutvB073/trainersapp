@@ -18,7 +18,7 @@ export function keepersLabel(o: Aantallen): string {
 
 /** Spelers / keepers / "Keeper nodig". */
 export function Labels({ oefening }: { oefening: Oefening }) {
-  const { spelersNodig, keepersNodig, soort, combinatievorm } = oefening;
+  const { spelersNodig, keepersNodig, soort } = oefening;
   return (
     <div className="labels">
       {oefening.team && (
@@ -31,12 +31,6 @@ export function Labels({ oefening }: { oefening: Oefening }) {
         <span className="label label-eigen">
           <Icoon naam="ster" maat={16} />
           Eigen
-        </span>
-      )}
-      {combinatievorm && (
-        <span className="label label-combi">
-          <Icoon naam="combi" maat={16} />
-          Combinatievorm
         </span>
       )}
       {spelersNodig > 0 && (

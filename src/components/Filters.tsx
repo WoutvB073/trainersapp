@@ -29,7 +29,7 @@ export function Hartje({ id, naam, groot }: { id: string; naam: string; groot?: 
 const breed = () => typeof window !== 'undefined' && window.innerWidth >= 900;
 
 /**
- * Filterbalk boven een lijst met oefeningen: zoeken, aantallen, favorieten, combinatievormen, eigen oefeningen.
+ * Filterbalk boven een lijst met oefeningen: zoeken, aantallen, favorieten, eigen oefeningen.
  * Op een telefoon ingeklapt (knop Filters); toont altijd hoeveel oefeningen er overblijven.
  * `aantallenVan`: bij Training maken gelden de aantallen van de training (dan geen eigen aantallen).
  */
@@ -85,9 +85,6 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
           <div className="chips filter-chips" role="group" aria-label="Alleen">
             <button className={f.favorieten ? 'aan' : ''} aria-pressed={f.favorieten} onClick={() => zetFilters({ favorieten: !f.favorieten })}>
               <Icoon naam="hart" maat={15} gevuld={f.favorieten} /> Favorieten
-            </button>
-            <button className={f.combi ? 'aan' : ''} aria-pressed={f.combi} onClick={() => zetFilters({ combi: !f.combi })}>
-              <Icoon naam="combi" maat={15} /> Combinatievormen
             </button>
             <button className={f.eigen ? 'aan' : ''} aria-pressed={f.eigen} onClick={() => zetFilters({ eigen: !f.eigen })}>
               <Icoon naam="ster" maat={15} /> Eigen

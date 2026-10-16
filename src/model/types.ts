@@ -48,7 +48,9 @@ export type ObjectSoort =
   /** Pannakooi: lage boarding rond een klein vak (breedte × lengte). */
   | 'kooi'
   /** Losse pop/dummy (± 1,8 m): hindernis in de zestien of om de bal van richting te laten veranderen. */
-  | 'pop';
+  | 'pop'
+  /** Doelnet/schotnet in een goal (in plaats van een keeper), met een gat in elke hoek (zie src/anim/doelnet.ts). */
+  | 'doelnet';
 
 /** Personen kunnen bewegen en een bal hebben. */
 export const PERSONEN: readonly ObjectSoort[] = ['speler', 'keeper', 'trainer'];
@@ -75,6 +77,8 @@ export interface VeldObject {
    * van het goal), zet zich bij een schot en reageert op schoten met `afloop`.
    */
   verdedigt?: string;
+  /** Doelnet: id van het goal waar het in hangt (plek, draaiing en maat volgen dat goal). */
+  doel?: string;
   /** Keeper mag buiten het doelgebied komen (bv. 1 tegen keeper). */
   uitkomen?: boolean;
   /** Bal: een reactiebal (stuit alle kanten op) of tennisbal (klein). */
@@ -206,8 +210,11 @@ export interface BalActie extends ActieBasis {
   onderschept?: string;
   /** De bal stuit eerst op dit punt en gaat dan verder naar `naar` (voetvolley, voetbaltennis). */
   stuitOp?: Punt;
-  /** Schot tegen de lat of paal: `naar` is het punt op de doellijn; de bal springt terug naar `terugNaar`. */
-  raakt?: 'lat' | 'paal';
+  /**
+   * Schot tegen de lat, de paal of een doelnet: `naar` is het punt op de doellijn; de bal springt terug naar `terugNaar`.
+   * Bij `net` raakt de bal het doek op hoogte `eindHoogte`.
+   */
+  raakt?: 'lat' | 'paal' | 'net';
   terugNaar?: Punt;
   /** Welke bal (standaard de bal die `van` heeft). */
   bal?: string;
@@ -461,7 +468,7 @@ export interface Oefening {
   doorwisselbaar: boolean;
   /** Alleen bij een vast aantal: korte tip voor als je er meer hebt ("Met meer spelers: …"). */
   meerSpelers?: string;
-  /** Combinatievorm: 2–4 onderdelen achter elkaar (bv. voetenwerk → vangen → duiken). Badge in lijst en detail. */
+  /** Combinatievorm: 2–4 onderdelen achter elkaar (bv. voetenwerk → vangen → duiken). Niet meer als badge getoond. */
   combinatievorm?: boolean;
   /** Combinatievorm: de onderdelen in volgorde (2–4 korte namen), getoond als genummerd verloop. */
   onderdelen?: string[];

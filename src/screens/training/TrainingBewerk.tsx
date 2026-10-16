@@ -14,8 +14,9 @@ import { benodigdheden, MAX_AANTAL, pastBij, trainingNaam, verplaats, type Train
 import type { Oefening } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { deel, Stapper, Toast, useToast } from './onderdelen';
+import { andereVoor } from './TrainingGenereren';
 
-function Onderdeel({ id, nr, oefening, past, opVerwijder }: { id: string; nr: number; oefening?: Oefening; past: boolean; opVerwijder: () => void }) {
+function Onderdeel({ id, nr, oefening, past, opVerwijder, opAnder }: { id: string; nr: number; oefening?: Oefening; past: boolean; opVerwijder: () => void; opAnder?: () => void }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id });
   const stijl = { transform: CSS.Transform.toString(transform), transition };
   return (
@@ -42,6 +43,11 @@ function Onderdeel({ id, nr, oefening, past, opVerwijder }: { id: string; nr: nu
         </a>
       ) : (
         <span className="onderdeel-tekst onderdeel-onbekend">Onbekende oefening (niet in deze versie van de app)</span>
+      )}
+      {opAnder && (
+        <button className="icoon-knop" onClick={opAnder} aria-label={`Andere oefening in plaats van ${oefening?.naam ?? 'deze'}`} title="Andere oefening">
+          <Icoon naam="wissel" maat={20} />
+        </button>
       )}
       <button className="icoon-knop" onClick={opVerwijder} aria-label={`${oefening?.naam ?? 'Oefening'} uit de training halen`}>
         <Icoon naam="kruis" maat={20} />
@@ -123,20 +129,38 @@ export function TrainingBewerk({ id }: { id: string }) {
         {t.oefeningen.length === 0 ? (
           <div className="leeg">
             <p className="leeg-titel">Nog geen oefeningen</p>
-            <p>Kies oefeningen die passen bij je aantallen spelers en keepers.</p>
+            <p>Kies zelf oefeningen die passen bij je aantallen spelers en keepers, of laat de app een training samenstellen.</p>
+            <button className="knop" onClick={() => ga(`/training/${t.id}/genereren`)}>
+              <Icoon naam="wissel" maat={20} />
+              Training genereren
+            </button>
           </div>
         ) : (
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={sleep}>
             <SortableContext items={t.oefeningen} strategy={verticalListSortingStrategy}>
               <ol className="onderdelen">
                 {t.oefeningen.map((oid, i) => (
-                  <Onderdeel key={oid} id={oid} nr={i + 1} oefening={vindOefening(oid)} past={passen[i]!} opVerwijder={() => zet({ oefeningen: (trainingen.haal(t.id) ?? t).oefeningen.filter((x) => x !== oid) })} />
+                  <Onderdeel
+                    key={oid}
+                    id={oid}
+                    nr={i + 1}
+                    oefening={vindOefening(oid)}
+                    past={passen[i]!}
+                    opVerwijder={() => zet({ oefeningen: (trainingen.haal(t.id) ?? t).oefeningen.filter((x) => x !== oid) })}
+                    opAnder={t.generator?.keuzes.includes(oid) ? () => (andereVoor(t.id, oid) ? undefined : toon('Geen andere passende oefening')) : undefined}
+                  />
                 ))}
               </ol>
             </SortableContext>
           </DndContext>
         )}
         {t.oefeningen.length > 1 && <p className="hint">Sleep aan het greepje om de volgorde te veranderen.</p>}
+        {t.generator && t.oefeningen.length > 0 && (
+          <button className="link-knop" onClick={() => ga(`/training/${t.id}/genereren`)}>
+            <Icoon naam="wissel" maat={18} />
+            Gegenereerd: onderdelen aanpassen of alles opnieuw
+          </button>
+        )}
 
         <div className="knoppenrij">
           <button className="knop" onClick={() => ga(`/training/${t.id}/kiezen`)}>

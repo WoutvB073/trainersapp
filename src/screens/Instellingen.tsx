@@ -7,6 +7,7 @@ import { onlineBeschikbaar } from '../online/config';
 import { useOnlineStatus } from '../engine/account';
 import { ga } from '../router';
 import { SyncRegel } from './online/Account';
+import { GegevensBlok } from './GegevensBlok';
 
 /** Account en teams (alleen als online beschikbaar is). */
 function AccountBlok() {
@@ -106,6 +107,7 @@ export function Instellingen() {
           </div>
           <p className="klein">Automatisch volgt de instelling van je telefoon of computer.</p>
         </section>
+        <GegevensBlok />
         <p className="voetnoot">
           {APP_NAAM} · versie {VERSIE}
         </p>

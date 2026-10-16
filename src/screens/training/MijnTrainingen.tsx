@@ -13,6 +13,12 @@ export function maakTraining() {
   ga(`/training/${t.id}`);
 }
 
+/** Nieuwe training die de app samenstelt uit gekozen onderdelen. */
+export function genereerTraining() {
+  const t = trainingen.bewaar(nieuweTraining());
+  ga(`/training/${t.id}/genereren`);
+}
+
 function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }) {
   const sub = [
     meervoud(t.oefeningen.length, 'oefening', 'oefeningen'),
@@ -76,10 +82,16 @@ export function MijnTrainingen() {
     <div className="pagina">
       <Kop titel="Mijn trainingen" ouder="/" />
       <main className="inhoud smal">
-        <button className="knop knop-primair knop-breed" onClick={maakTraining}>
-          <Icoon naam="plus" maat={20} />
-          Training maken
-        </button>
+        <div className="knoppenrij knoppen-twee">
+          <button className="knop knop-primair" onClick={maakTraining}>
+            <Icoon naam="plus" maat={20} />
+            Training maken
+          </button>
+          <button className="knop" onClick={genereerTraining}>
+            <Icoon naam="wissel" maat={20} />
+            Training genereren
+          </button>
+        </div>
 
         {lijst.length === 0 ? (
           <div className="leeg">

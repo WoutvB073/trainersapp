@@ -37,7 +37,7 @@ import {
 } from '../../editor/editor';
 import { eigenOefeningen, useEigenOefening } from '../../eigen/opslag';
 import { editorBegin, heeftLijnAnimatie, isSchotLijn, lijnMeldingen, stapPunt, volgendeStap, type LijnMelding } from '../../editor/animatie';
-import { heeftKeeperBijGoal } from '../../editor/animatie';
+import { doelnetUitkomst, heeftKeeperBijGoal } from '../../editor/animatie';
 import { metTekening } from '../../eigen/eigen';
 import { ga, terug } from '../../router';
 import { NietGevonden } from '../NietGevonden';
@@ -1102,7 +1102,16 @@ function Editor({ start }: { start: EigenOefening }) {
                 </div>
               </section>
             )}
-            {isSchotLijn(t, gekozenLijn) && (
+            {doelnetUitkomst(t, gekozenLijn) && (
+              <section className="optie-groep">
+                <h3>Doelnet</h3>
+                <p className="melding-goed doelnet-uitkomst" role="status">
+                  {doelnetUitkomst(t, gekozenLijn) === 'gat' ? 'Raak: de bal gaat door het gat het goal in.' : 'De bal raakt het net en kaatst terug.'}
+                </p>
+                <p className="klein">Mik in een hoek: laag of over de grond voor de onderste gaten, hoog voor de bovenste. Daartussen kaatst de bal terug.</p>
+              </section>
+            )}
+            {isSchotLijn(t, gekozenLijn) && !doelnetUitkomst(t, gekozenLijn) && (
               <section className="optie-groep">
                 <h3>Afloop van het schot</h3>
                 <div className="chips">

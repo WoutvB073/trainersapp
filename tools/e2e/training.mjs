@@ -56,10 +56,12 @@ await foto(page, 'start', 'Startscherm met Training maken');
 await klik(page, 'Training maken');
 controle(page.url().includes('#/training/'), 'Training maken opent de training niet');
 await page.type('.veld input', 'Dinsdag JO11-1');
-// Spelers van 12 naar 8, keepers blijft 1.
+// Standaard 4 spelers en 1 keeper; spelers naar 8.
+const standaard = await page.evaluate(() => [...document.querySelectorAll('.stapper output')].map((o) => o.textContent).join(','));
+controle(standaard === '4,1', `Standaard aantallen: ${standaard} (verwacht 4, 1)`);
 await page.evaluate(() => {
-  const min = document.querySelector('[aria-label="Eén spelers minder"]');
-  for (let i = 0; i < 4; i++) min?.click();
+  const meer = document.querySelector('[aria-label="Eén spelers meer"]');
+  for (let i = 0; i < 4; i++) meer?.click();
 });
 await slaap(200);
 const aantallen = await page.evaluate(() => [...document.querySelectorAll('.stapper output')].map((o) => o.textContent));

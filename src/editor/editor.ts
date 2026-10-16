@@ -1,3 +1,4 @@
+import { koppelDoelnetten, netMaten, vrijGoal } from '../anim/doelnet';
 import type { Lijn, LijnSoort, ObjectSoort, Punt, Team, Tekening, Uitsnede, VeldObject, VeldType } from '../model/types';
 import { HORDE, PERSONEN } from '../model/types';
 import { lijnMidden, lijnPunten } from '../model/lijn';
@@ -119,6 +120,16 @@ export const PALET: PaletItem[] = [
     naam: 'Klein goal',
     groep: 'Doelen',
     maak: ding('klein-goal', 'g'),
+  },
+  {
+    sleutel: 'doelnet',
+    naam: 'Doelnet',
+    groep: 'Doelen',
+    // Hangt in het dichtstbijzijnde goal zonder net (in plaats van een keeper).
+    maak: (t, p) => {
+      const g = vrijGoal(t.objecten, p);
+      return { id: nieuwId(t, 'dn'), soort: 'doelnet', x: g ? g.x : r1(p[0]), y: g ? g.y : r1(p[1]), ...(g ? { doel: g.id } : {}) };
+    },
   },
   {
     sleutel: 'pion',
@@ -283,6 +294,10 @@ export function objectVorm(o: VeldObject): ObjectVorm {
       const w = Math.max(1.2, (o.tekst?.length ?? 4) * 0.62) / 2;
       return { rechthoek: [-w, w, -0.7, 0.7] };
     }
+    case 'doelnet': {
+      const b = netMaten(o).B / 2;
+      return { rechthoek: [-b, b, -0.2, 0.6] };
+    }
     default: {
       const [b, l] = afmetingen(o);
       return { rechthoek: [-b / 2, b / 2, -l / 2, l / 2] };
@@ -313,6 +328,8 @@ export function afmetingen(o: VeldObject): [number, number] {
       return [o.breedte ?? 2, o.lengte ?? 1];
     case 'kooi':
       return [o.breedte ?? 7, o.lengte ?? 5];
+    case 'doelnet':
+      return [netMaten(o).B, 0.2];
     default:
       return [0.5, 0.5];
   }
@@ -339,7 +356,7 @@ export function maatBaar(o: VeldObject): 'breedte-lengte' | 'lengte' | 'breedte'
 
 /** Kan dit object draaien? (Personen draaien hun kijkrichting.) */
 export function draaiBaar(o: VeldObject): boolean {
-  return !['bal', 'pion', 'hoedje', 'paaltje', 'ring', 'pop', 'tekst'].includes(o.soort);
+  return !['bal', 'pion', 'hoedje', 'paaltje', 'ring', 'pop', 'tekst', 'doelnet'].includes(o.soort);
 }
 
 /** Punt in de eigen assen van het object. */
@@ -478,9 +495,10 @@ export function lijnHandvatten(t: Tekening, l: Lijn): Record<'begin' | 'midden' 
 
 // ---------- wijzigen ----------
 
+/** Nieuwe objecten; doelnetten blijven aan hun goal vast (verschuift of draait het goal, dan het net mee). */
 const metObjecten = (t: Tekening, objecten: VeldObject[]): Tekening => ({
   ...t,
-  objecten,
+  objecten: koppelDoelnetten(objecten),
 });
 
 export function voegToe(t: Tekening, o: VeldObject): Tekening {
@@ -528,6 +546,15 @@ function koppelBal(t: Tekening, id: string): Tekening {
 export function verplaats(t: Tekening, id: string, p: Punt): Tekening {
   const o = t.objecten.find((x) => x.id === id);
   if (!o) return t;
+  // Doelnet: los van zijn goal en naar het dichtstbijzijnde (vrije) goal waar je het heen sleept.
+  if (o.soort === 'doelnet') {
+    const { doel: _d, ...los } = o;
+    void _d;
+    return metObjecten(
+      t,
+      t.objecten.map((x) => (x.id === id ? { ...los, x: r1(p[0]), y: r1(p[1]) } : x)),
+    );
+  }
   let uit = zetObject(t, id, { x: r1(p[0]), y: r1(p[1]) });
   if (o.soort === 'bal') {
     if (o.bij) {
@@ -607,7 +634,7 @@ export function verwijder(t: Tekening, id: string): Tekening {
       return { ...rest, x: r1(o.x), y: r1(o.y + 0.55) };
     });
   const lijnen = (t.lijnen ?? []).map((l) => losVan(l, id, plek));
-  return { ...t, objecten, lijnen };
+  return { ...t, objecten: koppelDoelnetten(objecten), lijnen };
 }
 
 function losVan(l: Lijn, id: string, plek: (id: string) => Punt | undefined): Lijn {
@@ -774,6 +801,7 @@ const BENODIGD: Record<string, [string, string]> = {
   goal: ['groot goal', 'grote goals'],
   jeugdgoal: ['jeugdgoal', 'jeugdgoals'],
   'klein-goal': ['klein goal', 'kleine goals'],
+  doelnet: ['doelnet', 'doelnetten'],
   pion: ['pion', 'pionnen'],
   hoedje: ['hoedje', 'hoedjes'],
   paaltje: ['paaltje', 'paaltjes'],

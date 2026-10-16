@@ -2,6 +2,7 @@ import type { LijnSoort, Punt, Team, Tekening, Uitsnede, VeldObject } from '../m
 import { HORDE } from '../model/types';
 import { lijnPunten } from '../model/lijn';
 import { PASJES, PASLENGTE, type NetInslag, type ObjectStand, type Stand } from './timeline';
+import { DOELNET_KLEUR, doelnetGaten, netMaten } from './doelnet';
 
 /** Kleuren komen uit CSS-variabelen, zodat clubkleuren (fase 6) ook de animatie kleuren. */
 export interface Kleuren {
@@ -85,6 +86,8 @@ export interface TekenOpties {
   dpr: number;
   /** Klein plaatje (lijst): iets kleinere minimummaten. */
   mini?: boolean;
+  /** Looplijnen (sporen van lopende spelers) tekenen; standaard ja. Pass- en dribbellijnen altijd. */
+  looplijnen?: boolean;
 }
 
 export function tekenScene(
@@ -110,7 +113,7 @@ export function tekenScene(
   tekenLijnen(b, tekening, k);
 
   const objecten = tekening.objecten;
-  const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'pop', 'rebounder', 'klein-goal', 'goal', 'net'];
+  const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'pop', 'rebounder', 'klein-goal', 'goal', 'doelnet', 'net'];
   for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o, stand.net.find((n) => n.id === o.id));
 
   const plek = (id: string): Punt | undefined => {
@@ -119,6 +122,7 @@ export function tekenScene(
   };
   for (const l of tekening.lijnen ?? []) tekenPolylijn(b, l.soort, lijnPunten(l, plek), k, true);
   for (const s of stand.sporen) {
+    if (s.soort === 'loop' && opties.looplijnen === false) continue;
     if (s.soort === 'loop' && s.manier && PASJES.includes(s.manier)) tekenPasjes(b, s.punten, k, s.klaar, PASLENGTE[s.manier] ?? 0.45);
     else tekenPolylijn(b, s.soort, s.punten, k, s.klaar);
   }
@@ -328,6 +332,26 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
           c.strokeStyle = '#ffffff';
           c.lineWidth = maat(b, 0.08, 1.2);
           c.stroke();
+        }
+      });
+      break;
+    }
+    case 'doelnet': {
+      // Van boven: een gekleurde band op de doellijn, met de gaten in de hoeken als donkere stippen.
+      const { B, H } = netMaten(o);
+      const w = B * s;
+      const dik = maat(b, 0.24, 3);
+      metDraaiing(b, o, (c) => {
+        c.fillStyle = DOELNET_KLEUR;
+        c.fillRect(-w / 2, -dik, w, dik);
+        c.strokeStyle = 'rgba(0,0,0,0.3)';
+        c.lineWidth = Math.max(1, dik * 0.12);
+        c.strokeRect(-w / 2, -dik, w, dik);
+        c.fillStyle = 'rgba(20,35,26,0.9)';
+        for (const g of doelnetGaten(B, H).filter((x) => x.rij === 'laag')) {
+          c.beginPath();
+          c.arc(g.x * s, -dik / 2, Math.max(dik * 0.32, Math.min(dik * 0.45, g.r * s)), 0, Math.PI * 2);
+          c.fill();
         }
       });
       break;

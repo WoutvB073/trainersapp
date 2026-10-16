@@ -2,6 +2,9 @@ import {
   BoxGeometry,
   IcosahedronGeometry,
   RingGeometry,
+  Path,
+  Shape,
+  ShapeGeometry,
   BufferGeometry,
   CanvasTexture,
   CapsuleGeometry,
@@ -37,6 +40,7 @@ import {
   Vector3,
   WebGLRenderer,
 } from 'three';
+import { DOELNET_KLEUR, doelnetGaten, netMaten } from './doelnet';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { CameraStand, Manier, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
@@ -61,6 +65,8 @@ export interface Opties3D {
   opInteractie?: () => void;
   /** WebGL viel weg (bv. te weinig geheugen): terug naar 2D. */
   opFout?: () => void;
+  /** Looplijnen tonen (standaard ja). */
+  looplijnen?: boolean;
 }
 
 const BAL_R = 0.16; // iets groter dan echt (0,11 m), zodat hij goed te zien is
@@ -226,6 +232,31 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
     case 'goal':
     case 'klein-goal':
       return goal(o, netTex, materialen);
+    case 'doelnet': {
+      // Doek net achter de palen, met een rond gat in elke hoek (wit omrand).
+      const { B, H } = netMaten(o);
+      const vorm = new Shape();
+      vorm.moveTo(-B / 2 + 0.04, 0.02);
+      vorm.lineTo(B / 2 - 0.04, 0.02);
+      vorm.lineTo(B / 2 - 0.04, H - 0.03);
+      vorm.lineTo(-B / 2 + 0.04, H - 0.03);
+      vorm.lineTo(-B / 2 + 0.04, 0.02);
+      const g = new Group();
+      const rand = kleur('#ffffff');
+      for (const gat of doelnetGaten(B, H)) {
+        const p = new Path();
+        p.absarc(gat.x, gat.h, gat.r, 0, Math.PI * 2, true);
+        vorm.holes.push(p);
+        const ring = new Mesh(new RingGeometry(gat.r, gat.r + 0.045, 28), rand);
+        ring.position.set(gat.x, gat.h, -0.075);
+        g.add(ring);
+      }
+      const doek = new Mesh(new ShapeGeometry(vorm, 28), new MeshLambertMaterial({ color: DOELNET_KLEUR, side: DoubleSide }));
+      materialen.push(doek.material as Material);
+      doek.position.z = -0.08;
+      g.add(doek);
+      return opGrond(g);
+    }
     case 'pion':
       return opGrond(new Mesh(new ConeGeometry(0.13, 0.32, 18), kleur('#ff7a1a')), 0.16);
     case 'hoedje':
@@ -1280,6 +1311,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   };
 
   // ---------- stand tekenen ----------
+  let toonLoop = opties.looplijnen ?? true;
   let vorigeT = 0;
   let vorigeEcht = performance.now();
   const teken = (t: number, sprong = false) => {
@@ -1339,7 +1371,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     for (const sm of sporen) sm.mesh.visible = sm.pijl.visible = false;
     for (const sp of s.sporen) {
       const sm = sporen[sp.index];
-      if (!sm) continue;
+      if (!sm || (sp.soort === 'loop' && !toonLoop)) continue;
       sm.mesh.visible = true;
       const n = Math.floor((sm.totaal / sm.stuk) * sp.fractie) * sm.stuk;
       sm.mesh.geometry.setDrawRange(0, sp.klaar ? sm.totaal : n);
@@ -1380,6 +1412,10 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       controls.enabled = false;
       overgang = { van: { positie: camera.position.clone(), doel: controls.target.clone() }, naar, start: performance.now(), duur: 750 };
       vraagTekenen();
+    },
+    looplijnen(aan) {
+      toonLoop = aan;
+      teken(vorigeT, true);
     },
     opruimen() {
       opgeruimd = true;

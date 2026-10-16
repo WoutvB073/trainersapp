@@ -24,7 +24,7 @@ export default defineConfig({
         // Naam TopTraining; id, start_url en scope blijven /trainersapp/ (zelfde app voor wie hem al heeft).
         name: 'TopTraining',
         short_name: 'TopTraining',
-        description: 'Voetbaloefeningen voor veld en keepers, met bewegende uitleg.',
+        description: 'Voetbaloefeningen voor spelers en keepers, met bewegende uitleg.',
         lang: 'nl',
         dir: 'ltr',
         start_url: BASE,

@@ -4,19 +4,18 @@ import { pastBij } from '../training/training';
 
 /**
  * Filters voor lijsten met oefeningen: aantallen die je hebt (dezelfde regel als bij Training maken: minder nodig is
- * prima), alleen favorieten, alleen combinatievormen, alleen eigen oefeningen en zoeken op naam. De aantallen worden
+ * prima), alleen favorieten, alleen eigen oefeningen en zoeken op naam. De aantallen worden
  * onthouden op het apparaat; de rest geldt zolang de app open is (ook als je naar een andere categorie gaat).
  */
 export interface Filters {
   /** Aantal spelers en keepers dat je hebt (`null` = niet op aantallen filteren). */
   aantallen: { spelers: number; keepers: number } | null;
   favorieten: boolean;
-  combi: boolean;
   eigen: boolean;
   zoek: string;
 }
 
-export const GEEN_FILTERS: Filters = { aantallen: null, favorieten: false, combi: false, eigen: false, zoek: '' };
+export const GEEN_FILTERS: Filters = { aantallen: null, favorieten: false, eigen: false, zoek: '' };
 
 /** Zonder hoofdletters en accenten (zoeken op "coordinatie" vindt "Coördinatie"). */
 const plat = (s: string) =>
@@ -30,7 +29,6 @@ const plat = (s: string) =>
 export function pastBijFilters(o: Oefening, f: Filters, favorieten: ReadonlySet<string>): boolean {
   if (f.aantallen && !pastBij(o, f.aantallen.spelers, f.aantallen.keepers)) return false;
   if (f.favorieten && !favorieten.has(o.id)) return false;
-  if (f.combi && !o.combinatievorm) return false;
   if (f.eigen && !o.eigen) return false;
   const z = plat(f.zoek);
   if (z) {
@@ -47,7 +45,7 @@ export function filterOefeningen(lijst: Oefening[], f: Filters, favorieten: Read
 
 /** Hoeveel filters staan er aan (voor het knopje "Filters (2)"). */
 export function aantalActief(f: Filters, metAantallen = true): number {
-  return (metAantallen && f.aantallen ? 1 : 0) + (f.favorieten ? 1 : 0) + (f.combi ? 1 : 0) + (f.eigen ? 1 : 0) + (f.zoek.trim() ? 1 : 0);
+  return (metAantallen && f.aantallen ? 1 : 0) + (f.favorieten ? 1 : 0) + (f.eigen ? 1 : 0) + (f.zoek.trim() ? 1 : 0);
 }
 
 // ---------- gedeelde toestand (zolang de app open is; aantallen ook op het apparaat) ----------

@@ -1,6 +1,7 @@
 import type { Oefening, Soort } from '../model/types';
 import { maakId } from '../model/id';
 import { geldigeEigen, isEigenId } from '../eigen/eigen';
+import type { Generator } from './genereren';
 
 /**
  * Een training: aantallen, optioneel naam en datum, en de gekozen oefeningen (id's) in volgorde.
@@ -16,6 +17,8 @@ export interface Training {
   oefeningen: string[];
   gemaakt: number;
   gewijzigd: number;
+  /** Gegenereerde training: de gekozen onderdelen en per onderdeel de oefening (voor "Andere oefening"). */
+  generator?: Generator;
 }
 
 export const MAX_AANTAL = 40;
@@ -42,7 +45,12 @@ export function verplaats<T>(lijst: readonly T[], van: number, naar: number): T[
 export { maakId };
 
 export function nieuweTraining(nu = Date.now(), id = maakId()): Training {
-  return { id, naam: '', spelers: 12, keepers: 1, oefeningen: [], gemaakt: nu, gewijzigd: nu };
+  return { id, naam: '', spelers: 4, keepers: 1, oefeningen: [], gemaakt: nu, gewijzigd: nu };
+}
+
+/** Niets ingevuld (geen oefeningen, naam of datum): zo'n training wordt niet bewaard. */
+export function isLeeg(t: Pick<Training, 'naam' | 'datum' | 'oefeningen'>): boolean {
+  return t.oefeningen.length === 0 && !t.naam.trim() && !t.datum;
 }
 
 export function dupliceer(t: Training, nu = Date.now(), id = maakId()): Training {
@@ -139,6 +147,7 @@ const ENKELVOUD: Record<string, string> = {
   doelen: 'doel',
   doeltjes: 'doeltje',
   'mini-doeltjes': 'mini-doeltje',
+  doelnetten: 'doelnet',
   hesjes: 'hesje',
   hordes: 'horde',
   ringen: 'ring',

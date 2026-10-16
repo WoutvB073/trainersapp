@@ -9,6 +9,7 @@ import { useSyncExternalStore } from 'react';
  *   #/trainingen             Mijn trainingen
  *   #/training/:id           Training bewerken (aantallen, volgorde, benodigdheden)
  *   #/training/:id/kiezen    Oefeningen kiezen (gefilterd op aantallen)
+ *   #/training/:id/genereren Training genereren (onderdelen kiezen, app kiest de oefeningen)
  *   #/training/:id/modus/:nr Trainingsmodus (oefening nr, vanaf 1)
  *   #/t/:code                Gedeelde training (link)
  *   #/eigen                  Eigen oefeningen
@@ -29,6 +30,7 @@ export type Route =
   | { naam: 'trainingen' }
   | { naam: 'training'; id: string }
   | { naam: 'kiezen'; id: string }
+  | { naam: 'genereren'; id: string }
   | { naam: 'modus'; id: string; nr: number }
   | { naam: 'gedeeld'; code: string }
   | { naam: 'eigen' }
@@ -52,6 +54,7 @@ export function leesHash(hash: string): Route {
   if (a === 'trainingen' && !b) return { naam: 'trainingen' };
   if (a === 'training' && b && !c) return { naam: 'training', id: b };
   if (a === 'training' && b && c === 'kiezen') return { naam: 'kiezen', id: b };
+  if (a === 'training' && b && c === 'genereren') return { naam: 'genereren', id: b };
   if (a === 'training' && b && c === 'modus') return { naam: 'modus', id: b, nr: Math.max(1, Number(d) || 1) };
   if (a === 't' && b) return { naam: 'gedeeld', code: b };
   if (a === 'eigen' && !b) return { naam: 'eigen' };

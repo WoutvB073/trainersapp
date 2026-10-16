@@ -146,7 +146,7 @@ h3 {
   opacity: 0.85;
 }
 
-/* Volgorde: Training bovenaan, dan Veld en Keepers naast elkaar, dan Eigen oefeningen. */
+/* Volgorde: Training bovenaan, dan Spelers en Keepers naast elkaar, dan Eigen oefeningen. */
 .tegels {
   display: grid;
   gap: 12px;

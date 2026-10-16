@@ -20,6 +20,8 @@ type Modus = '3d' | '2d';
 // Onthouden zolang de app open is: 3D blijft de standaard bij een nieuwe start.
 let gekozenModus: Modus | null = null;
 const TRAAG = 'trainersapp.3dTraag';
+/** Looplijnen in de animatie: standaard uit (rustiger beeld); de keuze wordt onthouden. */
+const LOOPLIJNEN = 'trainersapp.looplijnen';
 const UITLEG = 'trainersapp.uitleg3d';
 const lees = (k: string) => {
   try {
@@ -65,6 +67,8 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
   const [camera, setCamera] = useState<CameraStand>(tekening.camera ?? 'schuin');
   const [melding, setMelding] = useState<string | null>(null);
   const [uitleg, setUitleg] = useState(false);
+  const [looplijnen, setLooplijnen] = useState(() => lees(LOOPLIJNEN) === '1');
+  const looplijnenRef = useRef(looplijnen);
 
   const teken = useCallback((sprong = false) => {
     weergaveRef.current?.teken(tRef.current, sprong);
@@ -103,7 +107,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
       pasMaatAan();
     };
     if (modus === '2d') {
-      zet(maakWeergave2D(tekening, tijdlijn));
+      zet(maakWeergave2D(tekening, tijdlijn, looplijnenRef.current));
     } else {
       setKlaar3d(false);
       import('./render3d')
@@ -116,6 +120,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
                 schrijf(UITLEG, '1');
               },
               opFout: () => naar2D('3D viel weg; je ziet nu de 2D-weergave.'),
+              looplijnen: looplijnenRef.current,
             });
             zet(w);
             setCamera(tekening.camera ?? 'schuin');
@@ -219,6 +224,13 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
     if (m === '3d') schrijf(TRAAG, null);
     setModus(m);
   };
+  const wisselLooplijnen = () => {
+    const aan = !looplijnen;
+    looplijnenRef.current = aan;
+    setLooplijnen(aan);
+    schrijf(LOOPLIJNEN, aan ? '1' : '0');
+    weergaveRef.current?.looplijnen(aan);
+  };
   const kiesCamera = (c: CameraStand) => {
     setCamera(c);
     (weergaveRef.current as Weergave3D | null)?.camera(c);
@@ -306,6 +318,15 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
               title="Herhalen"
             >
               <Icoon naam="herhalen" />
+            </button>
+            <button
+              className={`knop-rond${looplijnen ? ' aan' : ''}`}
+              onClick={wisselLooplijnen}
+              aria-pressed={looplijnen}
+              aria-label="Looplijnen"
+              title={looplijnen ? 'Looplijnen verbergen' : 'Looplijnen tonen'}
+            >
+              <Icoon naam="looplijn" />
             </button>
             <div className="snelheid" role="group" aria-label="Snelheid">
               {SNELHEDEN.map((s) => (

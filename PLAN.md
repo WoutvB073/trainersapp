@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (16-10-2026, versie 0.16.0)
+## Status (16-10-2026, versie 0.17.0)
 
 | Fase | Status |
 |---|---|
@@ -20,6 +20,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 5. Editor | ✅ online (0.13.0), getest en akkoord. Animatie in de editor (0.14.0) – getest en akkoord: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
 | 6. Instellingen + Clubkleuren | ✅ online (0.15.0) – **wacht op test**: naam TopTraining met nieuw logo, 8 clubkleuren in licht/donker/automatisch, favorieten, filterbalk, categorie-indeling nagelopen – getest en akkoord. 0.15.1: nieuw tandwiel en startscherm opnieuw ingedeeld – **wacht op test** |
 | 7. Inloggen + online opslag (Firebase) + teams | ✅ online (0.16.0) – **wacht op test**: Firebase-project `toptraining-40a90` gekoppeld, account, synchronisatie, eerste keer samenvoegen, teams met code en rollen, strenge regels; live getest met twee testaccounts (daarna verwijderd) |
+| 9. Verbeteringen en training genereren (0.17.0) | ✅ online – **wacht op test**: 4+1 standaard, datumveld, geen lege trainingen, Training genereren, looplijnen uit (knop), doelnet in de editor, "Spelers" met illustraties, geen Combinatievorm-badge, exporteren/importeren |
+| 10. Wedstrijd: opstelling, tactiekbord, spelhervattingen (0.18.0) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -688,6 +690,48 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   laatste die een team verlaat heft het helemaal op (code, leden, items). Emulatortest erbij.
 - Live test: `ECHT=1 node tools/e2e/online.mjs` (tegen het echte project, met test1/test2@example.com; ruimt vooraf en na
   afloop op en controleert dat de accounts weg zijn). Los opruimen: `node tools/e2e/online-opruimen.mjs`.
+
+## Besluiten versie 0.17.0 – verbeteringen en training genereren
+- **Training maken:** standaard 4 spelers en 1 keeper. Datumveld even breed als het naamveld (iOS: `appearance: none`).
+  Een training zonder oefeningen, naam en datum is "leeg" (aantallen tellen niet mee) en wordt opgeruimd zodra je de
+  training verlaat (`trainingen.ruimLegeOp` bij elke schermwissel, in `App.tsx`); oude lege trainingen ook.
+- **Training genereren** (`#/training/:id/genereren`, logica `src/training/genereren.ts`): aantallen, onderdelen aantikken
+  (categorieën van Spelers en Keepers) in volgorde, verslepen, Genereren. Per onderdeel één oefening die past; score =
+  toeval + favoriet (+1,5) − recent gebruikt (laatste training −4, daarvoor −2, −1,3) − vaste oefening voor veel minder
+  spelers dan je hebt (−0,8); nooit dubbel. Bewaard in de training (`generator`: onderdelen + keuzes), zodat "Andere
+  oefening" (ook in Training bewerken, wissel-icoon) en "Alles opnieuw genereren" werken. Geen passende oefening: melding
+  bij dat onderdeel. Het resultaat is een gewone training.
+- **Looplijnen** in de animatie standaard uit; knop (lijn-icoon) naast Herhalen, keuze onthouden
+  (`trainersapp.looplijnen`). Pass- en dribbellijnen blijven; plaatjes (Miniatuur) tonen alle lijnen.
+- **Doelnet** (editor, `src/anim/doelnet.ts`): object "Doelnet" bij Doelen; hangt in het dichtstbijzijnde goal zonder net en
+  volgt het (verschuiven/draaien); geel doek met 4 ronde gaten in de hoeken, in 2D (band op de doellijn) en 3D. Schot op
+  een goal met doelnet: hoogte van de lijn kiest de rij gaten (Over de grond/Laag = onder, Hoog = boven); eindigt de lijn
+  in een hoek (buitenste ± 1,4 m) dan door het gat het goal in, anders kaatst de bal terug richting de schutter
+  (`raakt: 'net'`, 3–7 m). De editor toont bij zo'n schot de uitkomst. Ingebouwde oefeningen ongewijzigd.
+- **Spelers** i.p.v. Veld overal in beeld (`SOORT_NAAM`); routes blijven `#/veld` (links blijven werken). Getekende
+  illustraties (`src/components/Illustraties.tsx`): twee spelertjes met bal, keepershandschoenen die een bal vangen.
+- **Combinatievorm:** badge en filter weg; de oefeningen en het genummerde verloop blijven.
+- **Exporteren/importeren** (Instellingen → Je gegevens, `src/engine/exporteren.ts`): JSON-bestand
+  `toptraining-JJJJ-MM-DD.json` met eigen oefeningen, trainingen en favorieten. Telefoon/tablet: deelmenu, computer:
+  downloaden. Importeren voegt samen: zelfde inhoud (ook met een andere id) wordt overgeslagen, zelfde id met andere
+  inhoud komt erbij met een nieuwe id (trainingen wijzen dan naar de nieuwe id).
+- **Tests:** `tests/deel-a.test.ts`; browsertest `tools/e2e/deel-a.mjs` (telefoon/tablet/laptop, blad `blad-deel-a.png`).
+
+## Keuzes zonder overleg
+(Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
+  starttegel bleef zoals hij was (ruimte op de iPhone SE).
+- 0.17.0 – Hetzelfde onderdeel mag vaker in de lijst (krijgt dan verschillende oefeningen). Na het genereren krijgt een
+  nieuw aangetikt onderdeel meteen een oefening; zelf toegevoegde oefeningen blijven achteraan staan bij opnieuw genereren.
+- 0.17.0 – "Laatste trainingen" = de laatste 3 (op datum, anders laatst gewijzigd). Eigen en teamoefeningen doen mee.
+- 0.17.0 – Een lege training wordt ook opgeruimd als je de aantallen wel veranderde (alleen naam, datum of oefeningen tellen).
+- 0.17.0 – Filter "aantallen" in de bibliotheek begint nog steeds op 12/1 (alleen Training maken werd 4/1).
+- 0.17.0 – Looplijnen-keuze geldt per toestel (niet via het account). Getekende lijnen zonder stapnummer blijven zichtbaar.
+- 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
+  een schot, dus de middelste hoogte kaatst altijd terug.
+- 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.17.0 – Exporteren bevat geen teamoefeningen (die staan al in het team). Op de telefoon kon het deelmenu niet in de
+  browsertest worden getest (alleen downloaden).
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

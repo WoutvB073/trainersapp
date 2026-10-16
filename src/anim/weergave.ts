@@ -11,10 +11,12 @@ export interface Weergave {
   /** `sprong`: niet vloeiend overgaan (na doorspoelen of opnieuw beginnen). */
   teken(t: number, sprong?: boolean): void;
   maat(breedte: number, hoogte: number, dpr: number): void;
+  /** Looplijnen tonen of verbergen (pass- en dribbellijnen blijven). */
+  looplijnen(aan: boolean): void;
   opruimen(): void;
 }
 
-export function maakWeergave2D(tekening: Tekening, tijdlijn: Tijdlijn): Weergave {
+export function maakWeergave2D(tekening: Tekening, tijdlijn: Tijdlijn, looplijnen = true): Weergave {
   const canvas = document.createElement('canvas');
   canvas.className = 'speler-canvas';
   const ctx = canvas.getContext('2d')!;
@@ -23,7 +25,7 @@ export function maakWeergave2D(tekening: Tekening, tijdlijn: Tijdlijn): Weergave
   let laatste = 0;
   const teken = (t: number) => {
     laatste = t;
-    tekenScene(ctx, canvas.width, canvas.height, tekening, standOp(tijdlijn, t), { kleuren, dpr });
+    tekenScene(ctx, canvas.width, canvas.height, tekening, standOp(tijdlijn, t), { kleuren, dpr, looplijnen });
   };
   // Rugnummers opnieuw tekenen zodra het lettertype er is.
   void document.fonts?.ready.then(() => teken(laatste));
@@ -35,6 +37,10 @@ export function maakWeergave2D(tekening: Tekening, tijdlijn: Tijdlijn): Weergave
       canvas.style.height = `${Math.round(hoogte)}px`;
       canvas.width = Math.round(breedte * d);
       canvas.height = Math.round(hoogte * d);
+      teken(laatste);
+    },
+    looplijnen(aan) {
+      looplijnen = aan;
       teken(laatste);
     },
     opruimen() {

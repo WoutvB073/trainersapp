@@ -59,7 +59,7 @@ export function Installeren({ computer = false, opBrowserGekozen }: { computer?:
       <header className="poort-kop">
         <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="poort-logo" width={72} height={72} />
         <h1 className="poort-titel">{APP_NAAM}</h1>
-        <p className="poort-lead">Voetbaloefeningen voor veld en keepers, met bewegende uitleg.</p>
+        <p className="poort-lead">Voetbaloefeningen voor spelers en keepers, met bewegende uitleg.</p>
       </header>
 
       <section className="poort-kaart" aria-labelledby="poort-stappen">

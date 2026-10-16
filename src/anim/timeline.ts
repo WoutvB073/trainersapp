@@ -1371,7 +1371,7 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
   }
   // Tegen de lat of paal: de bal springt terug het veld in.
   if (a.raakt && typeof a.naar !== 'string') {
-    const hoog = a.raakt === 'lat' ? 2.4 : 0.8;
+    const hoog = a.raakt === 'lat' ? 2.4 : a.raakt === 'net' ? (a.eindHoogte ?? 0.6) : 0.8;
     kijkNaar(a.naar);
     const tR = vlucht(tl, bal, start, t0, a.naar, { ...opties, eindHoogte: hoog }, a.van, 1, a.duur);
     let g: Goal | undefined;
@@ -1381,8 +1381,9 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
     }
     const n = g?.n ?? [0, 1];
     const terug: Punt = a.terugNaar ?? [a.naar[0] + n[0] * 7, a.naar[1] + n[1] * 7];
-    vlucht(tl, bal, a.naar, tR + 0.01, terug, { type: 'pass', hoogte: a.raakt === 'lat' ? 1.2 : 0.4, h0: hoog }, a.van, 1.3);
-    return tR;
+    const tT = vlucht(tl, bal, a.naar, tR + 0.01, terug, { type: 'pass', hoogte: a.raakt === 'lat' ? 1.2 : 0.4, h0: hoog }, a.van, 1.3);
+    // Doelnet: de stap duurt tot de bal terug is (lat en paal: zoals altijd tot de inslag).
+    return a.raakt === 'net' ? tT : tR;
   }
   if (a.afloop && typeof a.naar !== 'string') {
     const t = keeperReactie(tl, a, bal, start, t0, a.naar, opties);

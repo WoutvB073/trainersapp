@@ -4,6 +4,7 @@ import { lijnPunten } from '../model/lijn';
 import { maakTijdlijn, standOp, TekeningFout, type Tijdlijn } from '../anim/timeline';
 import { fysiekeMeldingen } from '../anim/fysiek';
 import { lokaal, wereld } from './editor';
+import { doelnetGaten, goalMaten, netVan } from '../anim/doelnet';
 
 /**
  * Animatie uit de editor: de getekende lijnen met een stapnummer worden gewone animatiestappen voor de bestaande
@@ -73,6 +74,26 @@ function schotDoel(g: VeldObject, p: Punt, afloop: Lijn['afloop']): Punt {
   if (afloop === 'duikt') lx = kant * Math.max(Math.abs(lx), B / 2 - 0.7);
   if (afloop === 'naast') lx = kant * (B / 2 + 1);
   return rond(wereld(g, [lx, -0.3]));
+}
+
+/**
+ * Schot op een goal met een doelnet. De hoogte van de lijn kiest de rij gaten (standaard/grond = laag, hoog = hoog;
+ * halfhoog = midden, daar zit geen gat). Eindigt de lijn in een hoek, dan gaat de bal door het gat het goal in;
+ * anders kaatst hij terug van het net, richting de schutter.
+ */
+export function doelnetSchot(g: VeldObject, eind: Punt, hoogte: Lijn['hoogte'], van: Punt): { naar: Punt; eindHoogte: number; hoogte: BalHoogte; terugNaar?: Punt } {
+  const { B, H } = goalMaten(g);
+  const q = lokaal(g, eind);
+  const rij = hoogte === 'hoog' ? 'hoog' : hoogte === 'halfhoog' ? 'midden' : 'laag';
+  const gat = doelnetGaten(B, H).find((x) => x.rij === rij && Math.sign(q[0]) === Math.sign(x.x) && Math.abs(q[0]) >= Math.abs(x.x) - (x.r + 0.6));
+  const boog: BalHoogte = rij === 'hoog' ? 'halfhoog' : 'laag';
+  if (gat) return { naar: rond(wereld(g, [gat.x, -0.6])), eindHoogte: Math.round(gat.h * 0.9 * 100) / 100, hoogte: boog };
+  const lx = Math.max(-(B / 2 - 0.3), Math.min(B / 2 - 0.3, q[0]));
+  const raak = wereld(g, [lx, 0.15]);
+  const h = rij === 'hoog' ? H - 0.45 : rij === 'midden' ? H * 0.5 : 0.45;
+  const d = afstand(raak, van) || 1;
+  const terug = Math.max(3, Math.min(7, d * 0.4));
+  return { naar: rond(raak), eindHoogte: Math.round(h * 100) / 100, hoogte: boog, terugNaar: rond([raak[0] + ((van[0] - raak[0]) / d) * terug, raak[1] + ((van[1] - raak[1]) / d) * terug]) };
 }
 
 /** Wordt er over een parcoursding gelopen? Dan de bijpassende loopwijze. */
@@ -285,6 +306,13 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
           }
           houder.set(bal, ontvanger);
           ontvangt.add(ontvanger);
+        } else if (goal && netVan(objecten, goal) && l.afloop !== 'naast') {
+          // Doelnet: door een gat het goal in, of terugkaatsen van het net.
+          const s = doelnetSchot(goal, eind, l.hoogte, nu.get(wie)!);
+          a = { type: 'schot', van: wie, naar: s.naar, eindHoogte: s.eindHoogte, hoogte: s.hoogte };
+          if (s.terugNaar) Object.assign(a, { raakt: 'net', terugNaar: s.terugNaar });
+          houder.set(bal, null);
+          losPlek.set(bal, s.terugNaar ?? s.naar);
         } else if (goal) {
           const keeper = keeperVan(goal);
           const afloop = l.afloop ?? (keeper ? 'vangt' : 'goal');
@@ -308,7 +336,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
           }
         }
         const h = hoogteVan(l, a.type === 'schot');
-        if (h !== 'grond' || a.type === 'schot') a.hoogte = h;
+        if ((h !== 'grond' || a.type === 'schot') && a.eindHoogte === undefined) a.hoogte = h;
         if (direct) a.direct = true;
         acties.push(a);
         inStap.push(i);
@@ -629,6 +657,19 @@ export function isSchotLijn(t: Tekening, l: Lijn): boolean {
   const naar = l.naar ? t.objecten.find((o) => o.id === l.naar) : undefined;
   if (naar && naar.soort !== 'keeper') return false;
   return !!goalBij(goals, p[p.length - 1]!);
+}
+
+/** Schot op een goal met een doelnet: gaat de bal door een gat of kaatst hij terug? (null = geen doelnet) */
+export function doelnetUitkomst(t: Tekening, l: Lijn): 'gat' | 'net' | null {
+  if (!isSchotLijn(t, l)) return null;
+  const goals = t.objecten.filter((o) => o.soort === 'goal' || o.soort === 'klein-goal');
+  const p = lijnPunten(l, (id) => {
+    const o = t.objecten.find((x) => x.id === id);
+    return o && [o.x, o.y];
+  });
+  const g = goalBij(goals, p[p.length - 1]!);
+  if (!g || !netVan(t.objecten, g) || l.afloop === 'naast') return null;
+  return doelnetSchot(g, p[p.length - 1]!, l.hoogte, p[0]!).terugNaar ? 'net' : 'gat';
 }
 
 /** Staat er een keeper bij een goal (dan reageert hij op schoten)? */

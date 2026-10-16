@@ -8,41 +8,7 @@ import { useEigenOefeningen } from '../eigen/opslag';
 import { SyncIcoon } from './online/Account';
 import { maakTraining } from './training/MijnTrainingen';
 import type { Soort } from '../model/types';
-
-function VeldPlaatje() {
-  return (
-    <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
-      <rect width="120" height="80" rx="10" fill="var(--gras-1)" />
-      <g fill="none" stroke="#fff" strokeWidth="2" opacity="0.9">
-        <rect x="8" y="8" width="104" height="64" />
-        <line x1="60" y1="8" x2="60" y2="72" />
-        <circle cx="60" cy="40" r="11" />
-        <rect x="8" y="24" width="14" height="32" />
-        <rect x="98" y="24" width="14" height="32" />
-      </g>
-      <circle cx="44" cy="52" r="6" fill="var(--team-a)" stroke="#fff" strokeWidth="1.5" />
-      <circle cx="78" cy="30" r="6" fill="var(--team-b)" stroke="#fff" strokeWidth="1.5" />
-      <path d="M49 48 L72 33" stroke="#fff" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function KeeperPlaatje() {
-  return (
-    <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
-      <rect width="120" height="80" rx="10" fill="var(--gras-1)" />
-      <g fill="none" stroke="#fff" strokeWidth="2" opacity="0.9">
-        <rect x="18" y="8" width="84" height="40" />
-        <rect x="40" y="8" width="40" height="16" />
-      </g>
-      <rect x="44" y="4" width="32" height="5" rx="2" fill="#fff" />
-      <rect x="37" y="15" width="22" height="11" rx="5.5" fill="var(--keeper)" stroke="#fff" strokeWidth="1.5" transform="rotate(-12 48 20)" />
-      <circle cx="35" cy="17" r="3.5" fill="#fff" stroke="#1b1b1b" strokeWidth="1.2" />
-      <circle cx="60" cy="60" r="6" fill="var(--trainer)" stroke="#fff" strokeWidth="1.5" />
-      <path d="M57 55 L38 20" stroke="#fff" strokeWidth="2" />
-    </svg>
-  );
-}
+import { KeepersPlaatje, SpelersPlaatje } from '../components/Illustraties';
 
 function Tegel({ soort }: { soort: Soort }) {
   const aantal = OEFENINGEN.filter((o) => o.soort === soort).length;
@@ -56,9 +22,9 @@ function Tegel({ soort }: { soort: Soort }) {
         ga(pad);
       }}
     >
-      {soort === 'veld' ? <VeldPlaatje /> : <KeeperPlaatje />}
+      {soort === 'veld' ? <SpelersPlaatje /> : <KeepersPlaatje />}
       <span className="tegel-tekst">
-        <span className="tegel-titel">{soort === 'veld' ? 'Veld' : 'Keepers'}</span>
+        <span className="tegel-titel">{soort === 'veld' ? 'Spelers' : 'Keepers'}</span>
         <span className="tegel-sub">{meervoud(aantal, 'oefening', 'oefeningen')}</span>
       </span>
       <Icoon naam="verder" className="tegel-pijl" />
@@ -137,7 +103,7 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
         <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="start-logo" width={56} height={56} />
         <div>
           <h1 className="start-titel">{APP_NAAM}</h1>
-          <p className="start-sub">Oefeningen voor veld en keepers</p>
+          <p className="start-sub">Oefeningen voor spelers en keepers</p>
         </div>
         <SyncIcoon />
         <button className="icoon-knop start-instellingen" aria-label="Instellingen" title="Instellingen" onClick={() => ga('/instellingen')}>

@@ -1,5 +1,5 @@
 // Favorieten en filters in de browser (als geïnstalleerde app) op telefoon, tablet en laptop:
-// filterbalk (klapbaar op de telefoon), aantallen (onthouden), favorieten (hartje op kaart en detail), combinatievormen,
+// filterbalk (klapbaar op de telefoon), aantallen (onthouden), favorieten (hartje op kaart en detail), geen combinatievormen meer,
 // eigen oefeningen, zoeken, aantallen per categorie, lege melding met "Filters wissen", en de filters bij Training maken.
 // Screenshots: blad-filters.png. Gebruik: node tools/e2e/filters.mjs [basis-url]
 import { alsGeinstalleerd, BASE, blad, MAP, slaap, start } from './hulp.mjs';
@@ -106,8 +106,7 @@ for (const [naam, vp] of [
   await klik(page, 'Favorieten', '.filter-chips button');
   controle((await status(page)) === 2, `${naam}: alleen favorieten: ${await status(page)}`);
   await foto(page, `${naam}-favorieten`, `${naam}: Afwerken, alleen favorieten`, naam === 'telefoon');
-  // Combinatievorm erbij: misschien 0 → lege melding met "Filters wissen".
-  await klik(page, 'Combinatievormen', '.filter-chips button');
+  // Niets gevonden → lege melding met "Filters wissen".
   await typ(page, 'zzz-bestaat-niet');
   const leeg = await page.evaluate(() => ({ tekst: document.querySelector('.leeg-titel')?.textContent, knop: !!document.querySelector('.leeg .knop') }));
   controle(leeg.tekst === 'Geen oefeningen gevonden' && leeg.knop, `${naam}: lege melding ${JSON.stringify(leeg)}`);
@@ -119,12 +118,10 @@ for (const [naam, vp] of [
   const gevonden = await kaarten(page);
   controle(gevonden.length > 0 && gevonden.every((t) => /keeper/i.test(t)), `${naam}: zoeken op "KEEPER": ${gevonden.join(' | ')}`);
   await typ(page, '');
-  // Alleen combinatievormen.
+  // Geen combinatievorm-filter of -badge meer.
   if (!(await page.evaluate(() => !!document.querySelector('.filter-paneel')))) await klik(page, 'Filters', '.filter-knop');
-  await klik(page, 'Combinatievormen', '.filter-chips button');
-  const combi = await page.evaluate(() => [...document.querySelectorAll('.kaarten li')].every((li) => li.textContent.includes('Combinatievorm')));
-  controle(combi && (await status(page)) > 0, `${naam}: alleen combinatievormen`);
-  await klik(page, 'Combinatievormen', '.filter-chips button');
+  const combi = await page.evaluate(() => document.body.innerText.includes('Combinatievorm'));
+  controle(!combi, `${naam}: het woord Combinatievorm staat nog in beeld`);
 
   // Detailpagina: hartje.
   await page.goto(`${BASE}?r=f${naam}4#/oefening/veld-pt-derde-man`, { waitUntil: 'networkidle0' });

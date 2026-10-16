@@ -30,7 +30,7 @@ export const CATEGORIEEN: Record<Soort, Categorie[]> = {
   ],
 };
 
-export const SOORT_NAAM: Record<Soort, string> = { veld: 'Veld', keeper: 'Keepers' };
+export const SOORT_NAAM: Record<Soort, string> = { veld: 'Spelers', keeper: 'Keepers' };
 
 /** Routes gebruiken "veld" en "keepers". */
 export const SOORT_PAD: Record<Soort, string> = { veld: 'veld', keeper: 'keepers' };

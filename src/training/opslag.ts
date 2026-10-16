@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { sleutelVoor } from '../engine/account';
-import { dupliceer, maakId, type GedeeldeTraining, type Training } from './training';
+import { dupliceer, isLeeg, maakId, type GedeeldeTraining, type Training } from './training';
 
 /**
  * Opslag van trainingen. De app praat alleen met `TrainingStore`; waar de trainingen echt staan, regelt een
@@ -80,6 +80,12 @@ export class TrainingStore {
     return t;
   }
 
+
+  /** Lege trainingen (niets ingevuld) weghalen, behalve die je nu open hebt. */
+  ruimLegeOp(behalve?: string): void {
+    const weg = this.lijstNu.filter((t) => t.id !== behalve && isLeeg(t));
+    if (weg.length) this.zet(this.lijstNu.filter((t) => !weg.includes(t)));
+  }
 
   /** Andere opslagplek (inloggen of uitloggen): de lijst van daar laden. */
   wisselBackend(backend: TrainingBackend): void {

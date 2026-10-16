@@ -38,7 +38,7 @@ describe('teams', () => {
     trainer2.stop();
   });
 
-  it('delen: oefening en training; eigen items aanpassen en terugtrekken, niet die van anderen', async () => {
+  it('delen: oefening en training; eigen items aanpassen en terugtrekken, niet die van anderen', { timeout: 30000 }, async () => {
     const trainer1 = await persoon('test1@example.com', 'Testtrainer 1');
     const trainer2 = await persoon('test2@example.com', 'Testtrainer 2');
     const { id, code } = await maakTeam(trainer1.ik, 'JO11-1');

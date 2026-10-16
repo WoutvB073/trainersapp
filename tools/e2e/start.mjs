@@ -54,11 +54,11 @@ for (const [naam, vp, telefoon] of FORMATEN) {
       };
     });
     if (thema === 'standaard') {
-      controle(JSON.stringify(m.volgorde) === JSON.stringify(['Training', 'Veld', 'Keepers', 'Eigen oefeningen']), `${naam}: volgorde ${m.volgorde.join(', ')}`);
+      controle(JSON.stringify(m.volgorde) === JSON.stringify(['Training', 'Spelers', 'Keepers', 'Eigen oefeningen']), `${naam}: volgorde ${m.volgorde.join(', ')}`);
       controle(!m.sectie, `${naam}: de tekst "Oefenbibliotheek …" staat er nog`);
       controle(m.tandwiel, `${naam}: geen tandwiel`);
-      // Veld en Keepers naast elkaar.
-      controle(m.rijen[1] === m.rijen[2], `${naam}: Veld en Keepers niet naast elkaar`);
+      // Spelers en Keepers naast elkaar.
+      controle(m.rijen[1] === m.rijen[2], `${naam}: Spelers en Keepers niet naast elkaar`);
     }
     controle(m.breed <= 0, `${naam}/${thema}: pagina scrolt horizontaal (${m.breed}px)`);
     if (telefoon) controle(Math.max(m.onderkant, m.knoppen) <= m.hoogte, `${naam}/${thema}: niet alles in beeld (onderkant ${Math.round(Math.max(m.onderkant, m.knoppen))} > ${m.hoogte})`);

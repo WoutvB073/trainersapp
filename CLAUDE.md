@@ -27,6 +27,10 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/editor/editor.ts` — pure editorlogica (palet, aanraken, slepen/draaien/maat, lijnen, ongedaan maken, benodigdheden, bevriezen); `src/eigen/` — eigen oefeningen (opslag, kopiëren, delen); `src/screens/eigen/` — lijst, nieuw, Tekenen, Gegevens.
 - `src/styles/thema.css` — veld/teamkleuren (vast) + standaard app-kleuren; `src/engine/thema.ts` — clubkleuren (8 thema's × licht/donker), toegepast als CSS-variabelen. Gebruik in CSS `--primair-tekst` voor de themakleur als tekst (niet `--primair`), en `--op-…` voor tekst op een gekleurd vlak (nooit `#fff`).
 - `src/engine/favorieten.ts`, `src/engine/filters.ts`, `src/components/Filters.tsx` — favorieten en de filterbalk.
+- `src/training/genereren.ts` — Training genereren (puur); `src/screens/training/TrainingGenereren.tsx`.
+- `src/anim/doelnet.ts` — doelnet (gaten, koppelen aan een goal); `src/engine/exporteren.ts` — exporteren/importeren.
+- `src/components/Illustraties.tsx` — getekende tegelplaatjes (Spelers, Keepers, bal zoals in het logo).
+- Keuzes die de gebruiker niet kon beantwoorden: PLAN.md → "Keuzes zonder overleg".
 
 ## Browsertests (`tools/e2e/`, preview op poort 4184 moet draaien; geef een URL mee om online te testen)
 - `schermen.mjs` — alle schermen op 5 formaten (als geïnstalleerde app), offline (ook 3D), 2D/3D-knop.
@@ -44,6 +48,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
   Firebase-emulator (`npm run emulator` moet draaien; zet `trainersapp.emulator=1`). Blad: `blad-online.png`.
   Met `ECHT=1` tegen het echte project (`toptraining-40a90`): ruimt de testaccounts vooraf en na afloop op via de app.
 - `online-opruimen.mjs [url]` — testaccounts test1/test2@example.com in het echte project verwijderen (via "Account verwijderen").
+- `deel-a.mjs [url]` — 0.17.0: Training maken (4+1, datumveld, geen lege), Training genereren (slepen, Andere oefening, geen passende), looplijnen-knop, doelnet 2D/3D + palet, Spelers/geen Combinatievorm, exporteren/importeren. Blad: `blad-deel-a.png`.
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
   Chrome draait met de echte videokaart (`--use-angle=d3d11`); `trainersapp.3dAltijd=1` zet de 2D-terugval uit in tests.
 

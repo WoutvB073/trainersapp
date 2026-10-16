@@ -46,9 +46,8 @@ describe('filters', () => {
     expect(ids(filterOefeningen(lijst, f({ aantallen: { spelers: 6, keepers: 1 } }), new Set()))).toEqual(['a', 'b', 'c', 'eigen-d']);
   });
 
-  it('favorieten, combinatievormen, eigen, zoeken (zonder hoofdletters en accenten, alle woorden)', () => {
+  it('favorieten, eigen, zoeken (zonder hoofdletters en accenten, alle woorden)', () => {
     expect(ids(filterOefeningen(lijst, f({ favorieten: true }), new Set(['c', 'b'])))).toEqual(['b', 'c']);
-    expect(ids(filterOefeningen(lijst, f({ combi: true }), new Set()))).toEqual(['b']);
     expect(ids(filterOefeningen(lijst, f({ eigen: true }), new Set()))).toEqual(['eigen-d']);
     expect(ids(filterOefeningen(lijst, f({ zoek: 'COORDINATIE' }), new Set()))).toEqual(['eigen-d']);
     expect(ids(filterOefeningen(lijst, f({ zoek: ' pass loop ' }), new Set()))).toEqual(['a']);
@@ -58,7 +57,6 @@ describe('filters', () => {
   it('combinaties van filters', () => {
     const favs = new Set(['a', 'b', 'eigen-d']);
     expect(ids(filterOefeningen(lijst, f({ favorieten: true, aantallen: { spelers: 4, keepers: 0 } }), favs))).toEqual(['a', 'eigen-d']);
-    expect(ids(filterOefeningen(lijst, f({ favorieten: true, combi: true, aantallen: { spelers: 4, keepers: 0 } }), favs))).toEqual([]);
     expect(ids(filterOefeningen(lijst, f({ favorieten: true, eigen: true, zoek: 'parcours' }), favs))).toEqual(['eigen-d']);
     expect(aantalActief(f({ favorieten: true, eigen: true, zoek: 'x', aantallen: { spelers: 1, keepers: 0 } }))).toBe(4);
     expect(aantalActief(f({ aantallen: { spelers: 1, keepers: 0 } }), false)).toBe(0);
@@ -68,7 +66,6 @@ describe('filters', () => {
     const met = filterOefeningen(OEFENINGEN, f({ aantallen: { spelers: 4, keepers: 0 } }), new Set());
     expect(met.length).toBeGreaterThan(20);
     expect(met.every((o) => o.spelersNodig <= 4 && o.keepersNodig === 0)).toBe(true);
-    expect(filterOefeningen(OEFENINGEN, f({ combi: true }), new Set()).every((o) => o.combinatievorm)).toBe(true);
     expect(pastBijFilters(OEFENINGEN[0]!, f({ zoek: OEFENINGEN[0]!.naam.slice(0, 5) }), new Set())).toBe(true);
   });
 
