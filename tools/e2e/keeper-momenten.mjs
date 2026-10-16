@@ -33,6 +33,18 @@ function momenten(o) {
   for (const x of tl.loslaten) if (x.soort !== 'voet') m.push({ t: x.t - 0.12, tekst: `worp ${x.soort}`, wie: x.wie });
   for (const x of tl.blokken ?? []) m.push({ t: x.t, tekst: x.soort === 'ster' ? 'blok: spreidsprong' : 'knieblok', wie: x.wie });
   for (const x of tl.stompen ?? []) m.push({ t: x.t, tekst: `stompt (${x.vuisten} vuist${x.vuisten === 2 ? 'en' : ''})`, wie: x.wie });
+  // Geen keepermomenten (veldoefening): op 35% en 65% inzoomen op de bal.
+  if (!m.length) {
+    const bal = o.tekening.objecten.find((x) => x.soort === 'bal');
+    if (bal) return [0.35, 0.65].map((f) => {
+      const t = Math.round(tl.duur * f * 100) / 100;
+      const sb = standOp(tl, t).objecten.get(bal.id);
+      // Op de balbezitter (of wie de bal net speelde), anders op de bal.
+      const wie = sb.houder ?? sb.vlucht?.van;
+      const p = wie ? standOp(tl, t).objecten.get(wie) : sb;
+      return { t, tekst: `${Math.round(f * 100)}%`, x: p.x, y: p.y };
+    });
+  }
   m.sort((a, b) => a.t - b.t);
   return m.slice(0, 8).map((x) => {
     const p = standOp(tl, x.t).objecten.get(x.wie);

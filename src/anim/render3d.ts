@@ -1,6 +1,7 @@
 import {
   BoxGeometry,
   IcosahedronGeometry,
+  RingGeometry,
   BufferGeometry,
   CanvasTexture,
   CapsuleGeometry,
@@ -421,6 +422,8 @@ interface Figuur {
   benen: [Group, Group];
   armen: [Group, Group];
   schaduw: Mesh;
+  /** Keeper (bij meer keepers): gekleurde ring met nummer op het gras, onder hem. */
+  ring?: Group;
   hoek: number;
   fase: number;
   vorige?: { x: number; y: number; t: number };
@@ -439,7 +442,26 @@ interface Gedeeld {
   schaduwMat: MeshBasicMaterial;
 }
 
-function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Material[], texturen: Texture[]): Figuur {
+/** Ring op het gras onder een keeper: rand in zijn tint met een klein nummer in het midden (ligt plat). */
+function maakRing(label: string, kleur: string, materialen: Material[], texturen: Texture[]): Group {
+  const g = new Group();
+  const randMat = new MeshBasicMaterial({ color: kleur, transparent: true, opacity: 0.95, depthWrite: false });
+  const rand = new Mesh(new RingGeometry(0.5, 0.64, 40), randMat);
+  rand.rotation.x = -Math.PI / 2;
+  const tex = nummerTextuur(label, kleur);
+  const schijfMat = new MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false });
+  const schijf = new Mesh(new PlaneGeometry(0.56, 0.56), schijfMat);
+  schijf.name = 'nummer';
+  // Het nummer ligt vóór de keeper (aan de kant van de camera), zodat het lijf het niet afdekt.
+  schijf.position.y = 0.002;
+  g.add(rand, schijf);
+  g.renderOrder = 1;
+  materialen.push(randMat, schijfMat);
+  texturen.push(tex);
+  return g;
+}
+
+function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Material[], texturen: Texture[], keeperNummer = false): Figuur {
   const shirt = new MeshLambertMaterial({ color: kleur });
   const kous = new MeshLambertMaterial({ color: new Color(kleur).multiplyScalar(0.55) });
   materialen.push(shirt, kous);
@@ -477,7 +499,8 @@ function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Materi
 
   const label = o.soort === 'trainer' ? 'T' : o.nummer !== undefined ? String(o.nummer) : '';
   let badge: Sprite | undefined;
-  if (label) {
+  // Keepers: geen nummer op of boven het lijf (dat dekt de keepertechniek af); bij meer keepers een ring op het gras.
+  if (label && o.soort !== 'keeper') {
     // Rugnummer op het shirt …
     const rugTex = nummerTextuur(label, null);
     const rugMat = new MeshBasicMaterial({ map: rugTex, transparent: true });
@@ -490,8 +513,10 @@ function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Materi
     // Vaste grootte op het scherm (ook leesbaar als de camera ver weg staat).
     const badgeMat = new SpriteMaterial({ map: badgeTex, depthTest: false, transparent: true, sizeAttenuation: false });
     badge = new Sprite(badgeMat);
-    badge.scale.set(0.058, 0.058, 1);
-    badge.position.y = 2.3;
+    // Iets kleiner, en op het scherm altijd net bóven het hoofd (ook van boven gezien niet op het lijf).
+    badge.scale.set(0.05, 0.05, 1);
+    badge.center.set(0.5, -0.12);
+    badge.position.y = 1.95;
     badge.renderOrder = 10;
     wortel.add(badge);
     materialen.push(rugMat, badgeMat);
@@ -501,7 +526,8 @@ function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Materi
   const schaduw = new Mesh(d.schaduw, d.schaduwMat);
   schaduw.rotation.x = -Math.PI / 2;
   schaduw.position.y = 0.012;
-  return { o, shirt, kous, badge, label, team: o.team, wortel, benen, armen, schaduw, hoek: 0, fase: 0 };
+  const ring = keeperNummer && label ? maakRing(label, kleur, materialen, texturen) : undefined;
+  return { o, shirt, kous, badge, label, team: o.team, wortel, benen, armen, schaduw, ring, hoek: 0, fase: 0 };
 }
 
 /** Kortste weg tussen twee hoeken (radialen). */
@@ -794,6 +820,8 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   f.schaduw.position.set(s.x - dx * 0.5 * l, 0.012, s.y - dz * 0.5 * l);
   f.schaduw.rotation.z = -dh;
   f.schaduw.scale.set((1 + l * 1.7) * (1 - klem(s.zweef / 3)), 1 - klem(s.zweef / 3), 1);
+  // Nummerring: onder het lijf (ook als hij ligt of in de lucht hangt).
+  if (f.ring) f.ring.position.set(s.x - dx * 0.55 * l, 0.016, s.y - dz * 0.55 * l);
 }
 
 // ---------- sporen ----------
@@ -1093,11 +1121,14 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   };
   materialen.push(gedeeld.huid, gedeeld.broekMat, gedeeld.schaduwMat);
   const figuren = new Map<string, Figuur>();
+  // Nummers bij keepers alleen als er meer dan één keeper is (anders is de keeperskleur genoeg).
+  const meerKeepers = tekening.objecten.filter((o) => o.soort === 'keeper').length > 1;
   for (const o of tekening.objecten) {
     if (o.soort !== 'speler' && o.soort !== 'keeper' && o.soort !== 'trainer') continue;
-    const f = maakFiguur(o, persoonKleur(o, kleuren), gedeeld, materialen, texturen);
+    const f = maakFiguur(o, persoonKleur(o, kleuren), gedeeld, materialen, texturen, o.soort === 'keeper' && meerKeepers);
     figuren.set(o.id, f);
     scene.add(f.wortel, f.schaduw);
+    if (f.ring) scene.add(f.ring);
   }
 
   // Ballen.
@@ -1253,6 +1284,17 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       if (!st) continue;
       if (st.team !== f.team) wisselHesje(f, st.team);
       poseer(f, st, t, dtEcht, sprong, inHanden.has(id));
+      if (f.ring) {
+        // Nummer rechtop voor de camera, net vóór de keeper (camerakant), zodat het lijf het niet afdekt.
+        const dxc = f.ring.position.x - camera.position.x;
+        const dzc = f.ring.position.z - camera.position.z;
+        const lengte = Math.hypot(dxc, dzc) || 1;
+        // Van ver weg iets groter, zodat het nummer op een telefoon leesbaar blijft.
+        f.ring.scale.setScalar(klem(camera.position.distanceTo(f.ring.position) / 14, 1, 2.2));
+        const nummer = f.ring.getObjectByName('nummer')!;
+        nummer.rotation.set(-Math.PI / 2, 0, Math.atan2(-dxc, -dzc));
+        nummer.position.set((-dxc / lengte) * 0.66, 0.002, (-dzc / lengte) * 0.66);
+      }
     }
 
     for (const [id, b] of ballen) {

@@ -118,10 +118,12 @@ export function tekenScene(
     else tekenPolylijn(b, s.soort, s.punten, k, s.klaar);
   }
 
+  // Keepernummers alleen als er meer dan één keeper is.
+  const meerKeepers = objecten.filter((o) => o.soort === 'keeper').length > 1;
   for (const o of objecten) {
     if (o.soort !== 'speler' && o.soort !== 'keeper' && o.soort !== 'trainer') continue;
     const s = stand.objecten.get(o.id);
-    if (s) tekenPersoon(b, o, s, k);
+    if (s) tekenPersoon(b, o, s, k, meerKeepers);
   }
   // Een bal bij een persoon komt aan de rand van het poppetje te liggen, niet over het rugnummer.
   const personen: Punt[] = [];
@@ -653,7 +655,7 @@ function tekenPasjes(b: Beeld, punten: Punt[], k: Kleuren, pijl: boolean, paslen
 
 const lerpPunt = (a: Punt, c: Punt, u: number): Punt => [a[0] + (c[0] - a[0]) * u, a[1] + (c[1] - a[1]) * u];
 
-function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
+function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren, keeperNummer = false) {
   const { ctx } = b;
   const c = px(b, [s.x, s.y]);
   // In kniezit of hurkzit iets kleiner (lager bij de grond).
@@ -723,7 +725,26 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren) {
   }
 
   const label = o.soort === 'trainer' ? 'T' : o.nummer !== undefined ? String(o.nummer) : '';
-  if (label) {
+  if (label && keeper) {
+    // Keeper: klein nummer in een badge naast het poppetje (niet erop), alleen bij meer keepers.
+    if (keeperNummer) {
+      const bx = r * 1.05;
+      const by = -r * 1.05;
+      const br = r * 0.52;
+      ctx.fillStyle = kleur;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = Math.max(1, br * 0.22);
+      ctx.beginPath();
+      ctx.arc(bx, by, br, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `700 ${Math.round(br * 1.35)}px "Barlow Condensed", system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, bx, by + br * 0.06);
+    }
+  } else if (label) {
     ctx.fillStyle = k.rugnummer;
     ctx.font = `700 ${Math.round(r * (label.length > 1 ? 1.0 : 1.15))}px "Barlow Condensed", system-ui, sans-serif`;
     ctx.textAlign = 'center';
