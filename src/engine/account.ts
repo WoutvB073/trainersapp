@@ -18,7 +18,7 @@ export interface OnlineStatus {
   account: AccountInfo | null;
   sync: SyncStatus;
   /** Eerste keer inloggen op dit apparaat: wat er lokaal staat (vraag of het naar het account mag). */
-  samenvoegen: { eigen: number; trainingen: number; favorieten: number } | null;
+  samenvoegen: { eigen: number; trainingen: number; favorieten: number; wedstrijd?: number } | null;
   /** Online-module geladen en Firebase verbonden. */
   verbonden: boolean;
   fout?: string;

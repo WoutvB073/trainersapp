@@ -6,6 +6,8 @@ import { Synchronisatie, type Instellingen, type SyncDoelen } from '../../src/on
 import { apparaatEigenBackend, EigenStore } from '../../src/eigen/opslag';
 import { apparaatBackend, TrainingStore } from '../../src/training/opslag';
 import { apparaatFavorieten, FavorietenStore } from '../../src/engine/favorieten';
+import { apparaatLijst, LijstStore } from '../../src/wedstrijd/opslag';
+import type { Bord, Opstelling } from '../../src/wedstrijd/wedstrijd';
 
 const PROJECT = 'demo-toptraining';
 
@@ -59,12 +61,16 @@ export function lokaleOpslag() {
   const eigen = new EigenStore(apparaatEigenBackend(plek));
   const trainingen = new TrainingStore(apparaatBackend(plek));
   const favorieten = new FavorietenStore(apparaatFavorieten(plek));
+  const opstellingen = new LijstStore<Opstelling>(apparaatLijst(plek, 'opstellingen'));
+  const borden = new LijstStore<Bord>(apparaatLijst(plek, 'borden'));
   let inst: Instellingen = { thema: 'standaard', modus: 'licht', aantallen: null, gewijzigd: 0 };
   const instLuisteraars = new Set<() => void>();
   const bekend = new Map<string, unknown>();
   const doelen: SyncDoelen = {
     eigen,
     trainingen,
+    opstellingen,
+    borden,
     favorieten,
     instellingen: {
       lees: () => inst,
@@ -85,6 +91,8 @@ export function lokaleOpslag() {
     eigen,
     trainingen,
     favorieten,
+    opstellingen,
+    borden,
     doelen,
     instellingen: () => inst,
     /** Instelling lokaal wijzigen (zoals de app dat doet). */

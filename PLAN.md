@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (16-10-2026, versie 0.17.0)
+## Status (17-10-2026, versie 0.18.0)
 
 | Fase | Status |
 |---|---|
@@ -21,7 +21,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 6. Instellingen + Clubkleuren | ✅ online (0.15.0) – **wacht op test**: naam TopTraining met nieuw logo, 8 clubkleuren in licht/donker/automatisch, favorieten, filterbalk, categorie-indeling nagelopen – getest en akkoord. 0.15.1: nieuw tandwiel en startscherm opnieuw ingedeeld – **wacht op test** |
 | 7. Inloggen + online opslag (Firebase) + teams | ✅ online (0.16.0) – **wacht op test**: Firebase-project `toptraining-40a90` gekoppeld, account, synchronisatie, eerste keer samenvoegen, teams met code en rollen, strenge regels; live getest met twee testaccounts (daarna verwijderd) |
 | 9. Verbeteringen en training genereren (0.17.0) | ✅ online – **wacht op test**: 4+1 standaard, datumveld, geen lege trainingen, Training genereren, looplijnen uit (knop), doelnet in de editor, "Spelers" met illustraties, geen Combinatievorm-badge, exporteren/importeren |
-| 10. Wedstrijd: opstelling, tactiekbord, spelhervattingen (0.18.0) | ⏳ |
+| 10. Wedstrijd: opstelling, tactiekbord, spelhervattingen (0.18.0) | ✅ online – **wacht op test**: tegel Wedstrijd, opstellingen (4/6/8/11 tegen …, formaties, namen slepen, wissels), tactiekbord (editor + 2D/3D, vanuit een opstelling, lijnen wissen), spelhervattingen (8 beginsituaties, 3 voorbeelden), opslaan/dupliceren/link/team, sync via het account |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -717,6 +717,31 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   inhoud komt erbij met een nieuwe id (trainingen wijzen dan naar de nieuwe id).
 - **Tests:** `tests/deel-a.test.ts`; browsertest `tools/e2e/deel-a.mjs` (telefoon/tablet/laptop, blad `blad-deel-a.png`).
 
+## Besluiten versie 0.18.0 – wedstrijd: opstelling, tactiekbord en spelhervattingen
+- **Startscherm:** tegel "Wedstrijd" (getekend tactiekbordje). Telefoon staand: lage tegel onderaan; liggend: naast
+  Spelers en Keepers; tablet/laptop: naast Eigen oefeningen. Op een lage telefoon (iPhone SE) valt de ondertitel weg
+  en worden de plaatjes iets lager, zodat alles in beeld blijft (`tools/e2e/start.mjs`).
+- **Overzicht** `#/wedstrijd`: Opstellingen, Tactiekborden, Spelhervattingen (nieuw, openen, dupliceren, verwijderen) en een
+  gedeelde link openen.
+- **Opstelling** (`src/wedstrijd/wedstrijd.ts`, scherm `src/screens/wedstrijd/`): spelvormen 4 tegen 4 (zonder keeper),
+  6, 8 en 11 tegen 11 met KNVB-veldmaten; formaties 4v4: 1-2-1, 2-2 · 6v6: 1-2-1-2, 1-3-2, 1-2-2-1 · 8v8: 1-3-3-1,
+  1-2-3-2, 1-3-2-2 · 11v11: 1-4-3-3, 1-4-4-2, 1-3-4-3, 1-4-2-3-1. Rugnummers per positie (keeper 1, dan van achter naar
+  voren). Eigen SVG-veld waarvan de lijnen meeschalen. Slepen met vinger of muis (pointer events): wissel → positie, ruilen,
+  naar de bank, lege positie vrij verslepen; tikken-en-tikken kan ook; toetsenbord (Enter). Namen toevoegen (onthouden in
+  `trainersapp.spelersnamen`), "Wissels op de lege posities zetten", andere formatie/spelvorm houdt de volgorde.
+- **Tactiekbord** = een gewone tekening, getekend in **dezelfde editor** (`Editor` met een `EditorBron`) en afgespeeld met
+  dezelfde `AnimatieSpeler` (2D/3D) – geen tweede animatielogica. Nieuw: heel/half veld, of vanuit een opstelling (eigen
+  spelers op hun plek op een heel veld, tegenstander in dezelfde spelvorm verdeeld over zijn helft, bal op de middenstip).
+  Knop "Lijnen wissen" (gum) in de editor en op het bord; de spelers blijven staan.
+- **Spelhervattingen** (`src/wedstrijd/hervattingen.ts`): corner links/rechts, vrije trap 18/25/30 m (muurtje van 4 op
+  9,15 m), inworp, doeltrap/uittrap, aftrap (heel veld); voorbeelden met lijnen: corner op de eerste paal, korte corner,
+  vrije trap via een kaats (getest: spelen af zonder meldingen, eindigen in het goal, geen fysieke fouten).
+- **Opslaan en delen:** `src/wedstrijd/opslag.ts` (per account, zoals de andere stores); ingelogd synchroniseren ze mee
+  (`users/{uid}/opstellingen|borden`). Delen via een link `#/w/<code>` (opslaan bij mijn wedstrijd) en met een team
+  (items van soort `opstelling`/`bord`, bekijken en kopiëren). Firestore-regels daarvoor uitgebreid en live gezet.
+- **Tests:** `tests/deel-b.test.ts`, online `tests/online` (sync en teamdelen van wedstrijd), browsertest
+  `tools/e2e/deel-b.mjs` (blad `blad-deel-b.png`) en `tools/e2e/online.mjs` (opstelling delen in het team).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -730,6 +755,15 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.18.0 – 4 tegen 4 zonder keeper (zoals bij de jongsten), met formaties 1-2-1 (ruit) en 2-2. Bij elke spelvorm één
+  extra formatie (6v6 1-2-2-1, 8v8 1-3-2-2, 11v11 1-4-2-3-1).
+- 0.18.0 – Nieuwe opstelling: laatst gebruikte spelvorm (anders 11 tegen 11); alle namen uit je lijst staan eerst op de bank.
+- 0.18.0 – De namenlijst staat per toestel (niet via het account); opstellingen en borden gaan wel via het account.
+- 0.18.0 – Tactiekbord vanuit een opstelling staat altijd op een heel 11-tegen-11-veld; de tegenstander krijgt de eerste
+  formatie van dezelfde spelvorm; namen staan niet op het bord (rugnummers wel).
+- 0.18.0 – Jouw team is rood (A), de tegenstander blauw (B). Vrije trap 18 m centraal, 25 m links, 30 m rechts.
+- 0.18.0 – "Wissen" wist alle lijnen; de spelers blijven staan (opnieuw beginnen = nieuw bord).
+- 0.18.0 – Delen via een link heeft een eigen adres (`#/w/…`); een gedeelde opstelling neemt de namen mee.
 - 0.17.0 – Exporteren bevat geen teamoefeningen (die staan al in het team). Op de telefoon kon het deelmenu niet in de
   browsertest worden getest (alleen downloaden).
 

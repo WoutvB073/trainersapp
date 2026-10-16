@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import type { EigenOefening, Lijn, LijnSoort, Punt, Tekening, Uitsnede, VeldObject } from '../../model/types';
+import type { Lijn, LijnSoort, Punt, Tekening, Uitsnede, VeldObject } from '../../model/types';
 import { PERSONEN } from '../../model/types';
 import { maakTijdlijn, standOp, type Stand } from '../../anim/timeline';
 import { leesKleuren, tekenScene, uitsnede } from '../../anim/render2d';
@@ -39,6 +39,7 @@ import { eigenOefeningen, useEigenOefening } from '../../eigen/opslag';
 import { editorBegin, heeftLijnAnimatie, isSchotLijn, lijnMeldingen, stapPunt, volgendeStap, type LijnMelding } from '../../editor/animatie';
 import { doelnetUitkomst, heeftKeeperBijGoal } from '../../editor/animatie';
 import { metTekening } from '../../eigen/eigen';
+import { autoUitsnede } from '../../editor/editor';
 import { ga, terug } from '../../router';
 import { NietGevonden } from '../NietGevonden';
 import { eigenNaam } from './EigenOefeningen';
@@ -111,12 +112,42 @@ function beginStand(t: Tekening): Stand {
   return s;
 }
 
+/**
+ * Waar de editor zijn tekening vandaan haalt en bewaart. Eigen oefeningen en tactiekborden gebruiken dezelfde editor.
+ */
+export interface EditorBron {
+  /** Tekening bij het openen. */
+  tekening: Tekening;
+  naam: () => string;
+  /** Bewaren (de editor geeft de tekening zonder uitsnede; die wordt vanzelf bepaald). */
+  bewaar: (t: Tekening) => void;
+  /** Waar Terug heen gaat. */
+  ouder: string;
+  /** Knop rechtsboven (bv. "Gegevens"). */
+  verder: { label: string; naar: string };
+  /** Knop om alle lijnen in één keer te wissen (tactiekbord). */
+  wissen?: boolean;
+}
+
 export function Tekenen({ id }: { id: string }) {
   const o = useEigenOefening(id);
   // Alleen de eerste versie gebruiken; daarna houdt de editor zelf de tekening bij.
   const [start] = useState(o);
-  if (!start) return <NietGevonden />;
-  return <Editor start={start} />;
+  const bron = useMemo<EditorBron | null>(
+    () =>
+      start
+        ? {
+            tekening: start.tekening,
+            naam: () => eigenNaam(eigenOefeningen.haal(start.id) ?? start),
+            bewaar: (t) => eigenOefeningen.bewaar(metTekening(eigenOefeningen.haal(start.id) ?? start, t)),
+            ouder: '/eigen',
+            verder: { label: 'Gegevens', naar: `/eigen/${start.id}/gegevens` },
+          }
+        : null,
+    [start],
+  );
+  if (!bron) return <NietGevonden />;
+  return <Editor bron={bron} />;
 }
 
 /** Klein plaatje van een palet-item (zelfde tekenwerk als het veld). */
@@ -156,7 +187,17 @@ function PaletPlaatje({ item }: { item: PaletItem }) {
   return <canvas ref={ref} className="palet-plaatje" aria-hidden="true" />;
 }
 
-function Editor({ start }: { start: EigenOefening }) {
+/** Tekening met de uitsnede die bij de inhoud past (voor afspelen en bewaren). */
+const metUitsnede = (t: Tekening) => {
+  const weergave = autoUitsnede(t);
+  const uit: Tekening = { ...t };
+  if (weergave) uit.weergave = weergave;
+  else delete uit.weergave;
+  return uit;
+};
+
+export function Editor({ bron }: { bron: EditorBron }) {
+  const start = bron;
   const [begin] = useState(() => editorBegin(start.tekening));
   const [gesch] = useState(() => new Geschiedenis<Tekening>(begin.tekening));
   const [beginMelding, setBeginMelding] = useState(begin.melding);
@@ -182,16 +223,17 @@ function Editor({ start }: { start: EigenOefening }) {
   const t = gesch.nu;
   const meldingen = useMemo(() => lijnMeldingen(t), [t]);
   // Vaste tekening voor de speler (anders bouwt 3D bij elke herteken opnieuw op).
-  const speelTekening = useMemo(() => metTekening(start, t).tekening, [start, t]);
+  const speelTekening = useMemo(() => metUitsnede(t), [t]);
   const meldingenRef = useRef<LijnMelding[]>(meldingen);
   meldingenRef.current = meldingen;
 
   // ---------- opslaan (even wachten, en zeker bij weggaan) ----------
+  const bewaard = useRef<Tekening>(start.tekening);
   const opslaan = useCallback(() => {
-    const nu = eigenOefeningen.haal(start.id) ?? start;
-    if (nu.tekening === gesch.nu) return;
-    eigenOefeningen.bewaar(metTekening(nu, gesch.nu));
-  }, [gesch, start]);
+    if (bewaard.current === gesch.nu) return;
+    bewaard.current = gesch.nu;
+    bron.bewaar(gesch.nu);
+  }, [gesch, bron]);
   useEffect(() => {
     const id = window.setTimeout(opslaan, 400);
     return () => window.clearTimeout(id);
@@ -756,7 +798,12 @@ function Editor({ start }: { start: EigenOefening }) {
 
   const naarGegevens = () => {
     opslaan();
-    ga(`/eigen/${start.id}/gegevens`);
+    ga(bron.verder.naar);
+  };
+  const lijnenWissen = () => {
+    if (!t.lijnen?.length) return;
+    zet({ ...gesch.nu, lijnen: [] });
+    setSelectie(null);
   };
 
   const kiesGereedschap = (g: Gereedschap) => {
@@ -764,7 +811,7 @@ function Editor({ start }: { start: EigenOefening }) {
     if (g.soort !== 'kies') setSelectie(null);
   };
 
-  const naam = eigenNaam(eigenOefeningen.haal(start.id) ?? start);
+  const naam = bron.naam();
   const plaatsNaam = gereedschap.soort === 'plaats' ? gereedschap.item.naam : gereedschap.soort === 'lijn' ? `${LIJN_NAMEN[gereedschap.lijn].naam}lijn` : '';
 
   return (
@@ -775,7 +822,7 @@ function Editor({ start }: { start: EigenOefening }) {
           aria-label="Terug"
           onClick={() => {
             opslaan();
-            terug('/eigen');
+            terug(bron.ouder);
           }}
         >
           <Icoon naam="terug" maat={26} />
@@ -790,8 +837,13 @@ function Editor({ start }: { start: EigenOefening }) {
         <button className="editor-knop editor-afspelen" onClick={() => setDrieD(true)} aria-label="Afspelen" title="Afspelen (2D en 3D)">
           <Icoon naam="afspelen" />
         </button>
+        {bron.wissen && (
+          <button className="editor-knop" onClick={lijnenWissen} disabled={!t.lijnen?.length} aria-label="Lijnen wissen" title="Alle lijnen wissen">
+            <Icoon naam="gum" />
+          </button>
+        )}
         <button className="knop knop-primair editor-gegevens" onClick={naarGegevens}>
-          Gegevens
+          {bron.verder.label}
           <Icoon naam="verder" maat={18} />
         </button>
       </header>

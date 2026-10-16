@@ -1,0 +1,440 @@
+/* ---------- Wedstrijd: tegel op het startscherm ---------- */
+
+.tegels {
+  grid-template-areas:
+    'training training'
+    'veld keepers'
+    'eigen wedstrijd';
+}
+
+.tegel-wedstrijd {
+  grid-area: wedstrijd;
+}
+
+.tegel-wedstrijd .tegel-tekst {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Telefoon staand: Wedstrijd als lage tegel onderaan (plaatje klein links). */
+@media (max-width: 639px) {
+  .tegels {
+    grid-template-areas:
+      'training training'
+      'veld keepers'
+      'eigen eigen'
+      'wedstrijd wedstrijd';
+  }
+
+  .tegel-wedstrijd {
+    gap: 12px;
+    padding: 8px 12px 8px 8px;
+  }
+
+  .tegel-wedstrijd .tegel-plaatje {
+    width: 74px;
+    flex: none;
+  }
+
+  .tegel-wedstrijd .tegel-titel {
+    font-size: 1.35rem;
+  }
+
+  .tegel-wedstrijd .tegel-sub {
+    font-size: 0.82rem;
+  }
+}
+
+/* Lage telefoon (iPhone SE): alles iets compacter, zodat ook de vierde tegel in beeld past. */
+@media (max-width: 639px) and (max-height: 700px) {
+  .start-kop {
+    padding-top: calc(10px + env(safe-area-inset-top));
+    padding-bottom: 10px;
+  }
+
+  .start-sub {
+    display: none;
+  }
+
+  .pagina-start .inhoud {
+    padding-top: 10px;
+  }
+
+  .tegels {
+    gap: 10px;
+  }
+
+  .tegel-soort .tegel-plaatje {
+    max-height: 70px;
+  }
+
+  .tegel-wedstrijd .tegel-plaatje {
+    width: 62px;
+  }
+}
+
+/* Telefoon liggend: Training | Eigen en daaronder Spelers | Keepers | Wedstrijd. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .tegels {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+      'training training training eigen eigen eigen'
+      'veld veld keepers keepers wedstrijd wedstrijd';
+  }
+
+  .tegel-wedstrijd {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .tegel-wedstrijd .tegel-plaatje,
+  .tegel-soort .tegel-plaatje {
+    width: 66px;
+  }
+
+  .tegel-wedstrijd .tegel-pijl,
+  .tegel-soort .tegel-pijl {
+    display: none;
+  }
+
+  .tegel-wedstrijd .tegel-titel,
+  .tegel-soort .tegel-titel {
+    font-size: 1.2rem;
+  }
+
+  .tegel-wedstrijd .tegel-sub,
+  .tegel-soort .tegel-sub {
+    font-size: 0.78rem;
+  }
+}
+
+/* ---------- Wedstrijd: overzicht ---------- */
+
+.wedstrijd-deel {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.wedstrijd-deel .sectie-titel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.wedstrijd-deel .lijst {
+  margin: 0;
+}
+
+.wedstrijd-paneel {
+  max-height: min(86vh, 760px);
+  overflow-y: auto;
+}
+
+.wedstrijd-sub {
+  margin: 16px 0 8px;
+  font-size: 0.95rem;
+}
+
+.wedstrijd-keuzes {
+  display: grid;
+  gap: 8px;
+}
+
+.wedstrijd-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.keuze-kaart {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--rand);
+  border-radius: 12px;
+  background: var(--kaart);
+  color: var(--tekst);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.keuze-kaart > svg {
+  flex: none;
+  color: var(--primair-tekst);
+}
+
+.keuze-kaart span {
+  display: grid;
+  gap: 2px;
+}
+
+.keuze-kaart .klein {
+  color: var(--tekst-2);
+  font-size: 0.85rem;
+}
+
+.keuze-kaart:active {
+  transform: scale(0.98);
+  background: var(--primair-licht);
+}
+
+.gen-chip.aan {
+  border-color: var(--primair);
+  background: var(--primair);
+  color: var(--op-primair);
+}
+
+.naam-chip {
+  display: inline-flex;
+  align-items: center;
+}
+
+.naam-chip .icoon-knop {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  color: var(--tekst-2);
+}
+
+.gevaar-link {
+  margin-top: 14px;
+  color: var(--fout);
+}
+
+.opst-soort {
+  margin: 0;
+  color: var(--tekst-2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.opst-sub {
+  margin-top: 14px;
+}
+
+/* ---------- Opstelling ---------- */
+
+.opst-pagina {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .opst-pagina {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
+    padding-top: 24px;
+    max-width: 1180px;
+  }
+
+  .opst-links {
+    position: sticky;
+    top: calc(72px + env(safe-area-inset-top));
+  }
+}
+
+.opst-rechts {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.opst-rechts .blok,
+.opst-rechts .knoppenrij,
+.opst-rechts .team-delen {
+  margin: 0;
+}
+
+.opstelling {
+  display: grid;
+  gap: 12px;
+}
+
+.opst-veld {
+  position: relative;
+  width: 100%;
+  max-height: 78vh;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--schaduw);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (min-width: 900px) {
+  .opst-veld {
+    max-width: calc(78vh * 0.68);
+  }
+}
+
+.opst-lijnen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.opst-plek {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-width: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  transform: translate(-50%, -22px);
+  font: inherit;
+  cursor: default;
+  touch-action: none;
+}
+
+.bewerkbaar .opst-plek {
+  cursor: grab;
+}
+
+.opst-nr {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  background: var(--team-a);
+  color: #fff;
+  font-family: var(--font-kop);
+  font-size: 1.05rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.35);
+}
+
+.opst-plek.keeper .opst-nr {
+  background: var(--keeper);
+}
+
+.opst-plek.leeg .opst-nr {
+  border-style: dashed;
+  background: rgb(0 0 0 / 0.25);
+  box-shadow: none;
+}
+
+.opst-plek.gekozen .opst-nr {
+  outline: 3px solid #ffd23f;
+  outline-offset: 2px;
+}
+
+.opst-naam {
+  max-width: 92px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgb(10 25 15 / 0.78);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.opst-bank {
+  padding: 10px 12px 12px;
+  border: 2px dashed var(--rand);
+  border-radius: var(--radius);
+  background: var(--kaart);
+}
+
+.opst-bank.doel {
+  border-color: var(--primair);
+  background: var(--primair-licht);
+}
+
+.opst-bank .klein {
+  margin: 4px 0 0;
+}
+
+.opst-bank-kop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.opst-wissels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.opst-wissel {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--rand);
+  border-radius: 999px;
+  background: var(--achtergrond);
+}
+
+.opst-wissel.gekozen {
+  border-color: #e0a800;
+  box-shadow: 0 0 0 2px #ffd23f;
+}
+
+.opst-wissel-naam {
+  min-height: 36px;
+  padding: 4px 4px 4px 12px;
+  border: 0;
+  background: none;
+  color: var(--tekst);
+  font: inherit;
+  font-weight: 650;
+  cursor: grab;
+  touch-action: none;
+}
+
+.opst-wissel-weg {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 3px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--tekst-2);
+}
+
+.opst-hint {
+  margin: 0;
+  color: var(--tekst-2);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.opst-geest {
+  position: fixed;
+  z-index: 50;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--primair);
+  color: var(--op-primair);
+  font-weight: 700;
+  pointer-events: none;
+  transform: translate(-50%, -130%);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.3);
+}
+
+/* ---------- Tactiekbord ---------- */
+
+.bord-pagina .hint {
+  margin-top: 0;
+}

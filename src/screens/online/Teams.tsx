@@ -176,6 +176,7 @@ export function TeamScherm({ id }: { id: string }) {
   const beheerder = t.rol === 'beheerder';
   const oefeningen = t.items.filter((i) => i.soort === 'oefening');
   const trainingenTeam = t.items.filter((i) => i.soort === 'training');
+  const wedstrijdTeam = t.items.filter((i) => i.soort === 'opstelling' || i.soort === 'bord');
   const deelCode = async () => {
     const tekst = `Kom in mijn team "${t.naam}" in TopTraining: open de app, ga naar Instellingen → Teams en vul de code ${t.code} in.`;
     try {
@@ -290,6 +291,35 @@ export function TeamScherm({ id }: { id: string }) {
                   <span className="rij-tekst">
                     <span className="rij-titel">{it.naam}</span>
                     <span className="rij-sub">Gedeeld door {it.eigenaar === ik ? 'jou' : it.eigenaarNaam}</span>
+                  </span>
+                </a>
+                <div className="training-acties">{itemKnoppen(it)}</div>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <h2 className="sectie-titel">Gedeelde opstellingen en tactiekborden</h2>
+        {wedstrijdTeam.length === 0 ? (
+          <p className="klein">Nog niets gedeeld. Open een opstelling, tactiekbord of spelhervatting en kies "Delen met team".</p>
+        ) : (
+          <ul className="lijst">
+            {wedstrijdTeam.map((it) => (
+              <li key={it.id} className="training-regel">
+                <a
+                  className="rij"
+                  href={`#/team/${t.id}/wedstrijd/${it.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    ga(`/team/${t.id}/wedstrijd/${it.id}`);
+                  }}
+                >
+                  <Icoon naam={it.soort === 'opstelling' ? 'opstelling' : 'tactiek'} maat={24} className="training-icoon" />
+                  <span className="rij-tekst">
+                    <span className="rij-titel">{it.naam}</span>
+                    <span className="rij-sub">
+                      {it.soort === 'opstelling' ? 'Opstelling' : 'Tactiekbord'} · gedeeld door {it.eigenaar === ik ? 'jou' : it.eigenaarNaam}
+                    </span>
                   </span>
                 </a>
                 <div className="training-acties">{itemKnoppen(it)}</div>
@@ -435,7 +465,7 @@ export function TeamTrainingScherm({ id, item }: { id: string; item: string }) {
  * "Delen met team" (eigen oefening of training). Alleen zichtbaar als je ingelogd bent. Zit je in meerdere teams, dan
  * kies je er een.
  */
-export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training'; id: string; naam: string }) {
+export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training' | 'opstelling' | 'bord'; id: string; naam: string }) {
   const s = useOnlineStatus();
   const lijst = useTeams();
   const [open, setOpen] = useState(false);
@@ -449,7 +479,8 @@ export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training
         const o = eigenOefeningen.haal(id);
         if (!o) throw new Error('Online: oefening niet gevonden');
         await m.deelOefening(t.id, o);
-      } else await m.deelTraining(t.id, id);
+      } else if (soort === 'training') await m.deelTraining(t.id, id);
+      else await m.deelWedstrijd(t.id, soort, id);
     }, `Gedeeld met ${t.naam}`);
   };
   const gedeeld = lijst.filter((t) => t.items.some((it) => it.id === id && it.eigenaar === s.account!.uid));

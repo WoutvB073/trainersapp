@@ -4,6 +4,8 @@ import { leegmaken, lokaleOpslag, synchroniseer, toestel, wachtTot, opruimen } f
 import { nieuweEigen } from '../../src/eigen/eigen';
 import { nieuweTekening } from '../../src/editor/editor';
 import { nieuweTraining } from '../../src/training/training';
+import { nieuweOpstelling, nieuwBord, vulAan } from '../../src/wedstrijd/wedstrijd';
+import { VOORBEELDEN } from '../../src/wedstrijd/hervattingen';
 
 beforeEach(leegmaken);
 afterEach(opruimen);
@@ -114,6 +116,26 @@ describe('synchroniseren tussen twee toestellen (zelfde account)', () => {
     await wachtTot(() => d.eigen.lijst().length === 2);
     sn.stop();
     sd.stop();
+  });
+
+  it('opstellingen en tactiekborden (wedstrijd) komen op het andere toestel', { timeout: 30000 }, async () => {
+    const tel = await toestel('test1@example.com', 'Testtrainer 1');
+    const lap = await toestel('test1@example.com', 'Testtrainer 1');
+    const a = lokaleOpslag();
+    const b = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    const sb = synchroniseer(lap, b);
+    const o = { ...vulAan(nieuweOpstelling('8v8', ['Speler A', 'Speler B', 'Speler C'], 1, 'o1')), naam: 'Zaterdag' };
+    a.opstellingen.bewaar(o);
+    a.borden.bewaar(nieuwBord('hervatting', VOORBEELDEN[0]!.maak(), 'Corner', 1, 'b1'));
+    await wachtTot(() => b.opstellingen.haal('o1')?.naam === 'Zaterdag' && b.borden.haal('b1')?.naam === 'Corner', 15000, 'wedstrijd naar het andere toestel');
+    expect(b.opstellingen.haal('o1')!.plekken.filter((p) => p.naam)).toHaveLength(3);
+    expect(b.borden.haal('b1')!.tekening.lijnen).toHaveLength(3);
+    // Verwijderen gaat ook mee.
+    b.borden.verwijder('b1');
+    await wachtTot(() => !a.borden.haal('b1'), 15000, 'verwijderen');
+    sa.stop();
+    sb.stop();
   });
 
   it('een ander account ziet niets van mij', async () => {

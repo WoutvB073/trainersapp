@@ -15,6 +15,8 @@ import { bewaardAccount, huidigeStatus, sleutelVoor, zetBewaardAccount, zetStatu
 import { eigenBackend, eigenOefeningen } from '../eigen/opslag';
 import { trainingBackend, trainingen } from '../training/opslag';
 import { favorieten, favorietenBackend } from '../engine/favorieten';
+import { bordBackend, borden, opstellingBackend, opstellingen } from '../wedstrijd/opslag';
+import { bordNaam, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerFilters, huidigeFilters, zetFilters } from '../engine/filters';
 import { teams, isTeamId, teamOefeningen, type Rol } from '../engine/teams';
@@ -111,8 +113,13 @@ async function opIngelogd(u: User): Promise<void> {
     // Nieuw op dit apparaat (of een ander account): eerst vragen of de gegevens van het apparaat mee mogen.
     const gekoppeld = opslag()?.getItem(`trainersapp.gekoppeld.${a.uid}`);
     if (!gekoppeld) {
-      const aantallen = { eigen: eigenBackend(null).laad().length, trainingen: trainingBackend(null).laad().length, favorieten: favorietenBackend(null).laad().length };
-      if (aantallen.eigen + aantallen.trainingen + aantallen.favorieten > 0) {
+      const aantallen = {
+        eigen: eigenBackend(null).laad().length,
+        trainingen: trainingBackend(null).laad().length,
+        favorieten: favorietenBackend(null).laad().length,
+        wedstrijd: opstellingBackend(null).laad().length + bordBackend(null).laad().length,
+      };
+      if (aantallen.eigen + aantallen.trainingen + aantallen.favorieten + aantallen.wedstrijd > 0) {
         zetStatus({ samenvoegen: aantallen });
         const ja = await new Promise<boolean>((r) => (antwoord = r));
         antwoord = null;
@@ -122,6 +129,8 @@ async function opIngelogd(u: User): Promise<void> {
           eigenBackend(a.uid).bewaar(eigenBackend(null).laad());
           trainingBackend(a.uid).bewaar(trainingBackend(null).laad());
           favorietenBackend(a.uid).bewaar(favorietenBackend(null).laad());
+          opstellingBackend(a.uid).bewaar(opstellingBackend(null).laad());
+          bordBackend(a.uid).bewaar(bordBackend(null).laad());
         }
       }
       opslag()?.setItem(`trainersapp.gekoppeld.${a.uid}`, String(Date.now()));
@@ -130,6 +139,8 @@ async function opIngelogd(u: User): Promise<void> {
     eigenOefeningen.wisselBackend(eigenBackend(a.uid));
     trainingen.wisselBackend(trainingBackend(a.uid));
     favorieten.wisselBackend(favorietenBackend(a.uid));
+    opstellingen.wisselBackend(opstellingBackend(a.uid));
+    borden.wisselBackend(bordBackend(a.uid));
     teams.wisselAccount(a.uid);
   } else zetBewaardAccount(a);
   zetStatus({ account: a, sync: 'bezig' });
@@ -143,6 +154,8 @@ async function opUitgelogd(): Promise<void> {
     eigenOefeningen.wisselBackend(eigenBackend(null));
     trainingen.wisselBackend(trainingBackend(null));
     favorieten.wisselBackend(favorietenBackend(null));
+    opstellingen.wisselBackend(opstellingBackend(null));
+    borden.wisselBackend(bordBackend(null));
     teams.wisselAccount(null);
   }
   zetStatus({ account: null, sync: 'uit', samenvoegen: null });
@@ -203,6 +216,8 @@ function startSync(a: AccountInfo) {
   const doelen: SyncDoelen = {
     eigen: eigenOefeningen,
     trainingen,
+    opstellingen,
+    borden,
     favorieten,
     instellingen: instellingenDoel(a.uid),
     bekend: {
@@ -307,7 +322,7 @@ export async function verwijderAccount(wachtwoord: string): Promise<void> {
   stopSync();
   // Teams van de server (de lokale lijst kan op een nieuw apparaat nog leeg zijn).
   await T.verlaatAlleTeams(mij);
-  for (const col of ['oefeningen', 'trainingen']) {
+  for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden']) {
     const s = await getDocs(collection(db, 'users', u.uid, col));
     const b = writeBatch(db);
     s.docs.forEach((d) => b.delete(d.ref));
@@ -335,6 +350,18 @@ export const vernieuwCode = (team: string) => T.vernieuwCode(ik(), team);
 export const zetRol = (team: string, uid: string, rol: Rol) => T.zetRol(ik(), team, uid, rol);
 export const verwijderLid = (team: string, uid: string) => T.verwijderLid(ik(), team, uid);
 export const verwijderItem = (team: string, item: string) => T.verwijderItem(ik(), team, item);
+
+/** Opstelling of tactiekbord delen (in zijn geheel). */
+export function deelWedstrijd(team: string, soort: 'opstelling' | 'bord', id: string): Promise<void> {
+  if (soort === 'opstelling') {
+    const x = opstellingen.haal(id);
+    if (!x) throw new T.TeamFout('Opstelling niet gevonden');
+    return T.deelItem(ik(), team, { id, soort, naam: opstellingNaam(x), data: JSON.stringify(x) });
+  }
+  const x = borden.haal(id);
+  if (!x) throw new T.TeamFout('Tactiekbord niet gevonden');
+  return T.deelItem(ik(), team, { id, soort, naam: bordNaam(x), data: JSON.stringify(x) });
+}
 
 export function deelOefening(team: string, o: EigenOefening): Promise<void> {
   return T.deelItem(ik(), team, { id: o.id, soort: 'oefening', naam: o.naam, data: JSON.stringify(voorDelen(o)) });

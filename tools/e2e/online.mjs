@@ -251,6 +251,26 @@ for (const [naam, vp] of [
   const speelt = await t2.page.evaluate(() => Number(document.querySelector('.speler-balk')?.max ?? 0));
   controle(speelt > 0, `${naam}: gekopieerde training speelt de oefening niet af`);
 
+  // Wedstrijd: opstelling delen met het team en bij Testtrainer 2 kopiëren.
+  await t1.page.goto(`${BASE}?r=w1#/wedstrijd`, { waitUntil: 'domcontentloaded' });
+  await slaap(700);
+  await klik(t1.page, 'Nieuwe opstelling');
+  await wachtOp(t1.page, () => location.hash.startsWith('#/opstelling/'), null, `${naam}: opstelling gemaakt`);
+  await wachtTeams(t1.page, naam + ': teams geladen (opstelling)');
+  await wachtOp(t1.page, () => [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Delen met team')), null, `${naam}: knop Delen met team (opstelling)`);
+  await klik(t1.page, 'Delen met team');
+  await wachtOp(t1.page, () => document.body.innerText.includes('Gedeeld met Testteam'), null, `${naam}: opstelling gedeeld`);
+  await t2.page.goto(`${BASE}?r=w2#/teams`, { waitUntil: 'domcontentloaded' });
+  await slaap(700);
+  await wachtOp(t2.page, () => !!document.querySelector('.lijst .rij'), null, naam + ': teamlijst (wedstrijd)');
+  await t2.page.evaluate(() => document.querySelector('.lijst .rij')?.click());
+  await wachtOp(t2.page, () => [...document.querySelectorAll('.rij-sub')].some((x) => x.textContent.startsWith('Opstelling')), null, `${naam}: gedeelde opstelling bij Testtrainer 2`);
+  await t2.page.evaluate(() => [...document.querySelectorAll('.rij')].find((a) => a.querySelector('.rij-sub')?.textContent.startsWith('Opstelling'))?.click());
+  await wachtOp(t2.page, () => document.querySelectorAll('.opst-plek').length === 11, null, `${naam}: gedeelde opstelling openen`);
+  if (naam === 'telefoon') await foto(t2.page, 'team-opstelling', 'Gedeelde opstelling in het team (Testtrainer 2)', true);
+  await klik(t2.page, 'Kopiëren naar mijn wedstrijd');
+  await wachtOp(t2.page, () => location.hash.startsWith('#/opstelling/'), null, `${naam}: opstelling gekopieerd`);
+
   // Rollen: Testtrainer 1 maakt Testtrainer 2 beheerder; die ziet dan de beheerknoppen.
   await t1.page.goto(`${BASE}?r=8#/teams`, { waitUntil: 'domcontentloaded' });
   await slaap(700);

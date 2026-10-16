@@ -19,6 +19,8 @@ import { EigenOefeningen, NieuweOefening } from './screens/eigen/EigenOefeningen
 import { Tekenen } from './screens/eigen/Tekenen';
 import { Gegevens } from './screens/eigen/Gegevens';
 import { Instellingen } from './screens/Instellingen';
+import { BordScherm, GedeeldWedstrijd, OpstellingScherm, TeamWedstrijdScherm, Wedstrijd } from './screens/wedstrijd/Wedstrijd';
+import { BordTekenen } from './screens/wedstrijd/BordTekenen';
 import { Account, SamenvoegenVraag } from './screens/online/Account';
 import { Teams, TeamScherm, TeamTrainingScherm } from './screens/online/Teams';
 import { browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen } from './engine/platform';
@@ -59,6 +61,18 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <Gegevens key={route.id} id={route.id} />;
     case 'instellingen':
       return <Instellingen />;
+    case 'wedstrijd':
+      return <Wedstrijd />;
+    case 'opstelling':
+      return <OpstellingScherm key={route.id} id={route.id} />;
+    case 'bord':
+      return <BordScherm key={route.id} id={route.id} />;
+    case 'bord-tekenen':
+      return <BordTekenen key={route.id} id={route.id} />;
+    case 'wedstrijd-gedeeld':
+      return <GedeeldWedstrijd key={route.code} code={route.code} />;
+    case 'teamwedstrijd':
+      return <TeamWedstrijdScherm key={route.id + route.item} id={route.id} item={route.item} />;
     case 'account':
       return <Account />;
     case 'teams':

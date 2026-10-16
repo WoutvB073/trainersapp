@@ -84,14 +84,14 @@ export interface GedeeldeTraining {
   eigen?: Oefening[];
 }
 
-function naarBase64Url(tekst: string): string {
+export function naarBase64Url(tekst: string): string {
   const bytes = new TextEncoder().encode(tekst);
   let bin = '';
   for (const b of bytes) bin += String.fromCharCode(b);
   return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-function uitBase64Url(code: string): string {
+export function uitBase64Url(code: string): string {
   const b64 = code.replace(/-/g, '+').replace(/_/g, '/');
   const bin = atob(b64 + '='.repeat((4 - (b64.length % 4)) % 4));
   return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));

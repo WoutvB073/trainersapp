@@ -8,7 +8,8 @@ import { useEigenOefeningen } from '../eigen/opslag';
 import { SyncIcoon } from './online/Account';
 import { maakTraining } from './training/MijnTrainingen';
 import type { Soort } from '../model/types';
-import { KeepersPlaatje, SpelersPlaatje } from '../components/Illustraties';
+import { KeepersPlaatje, SpelersPlaatje, WedstrijdPlaatje } from '../components/Illustraties';
+import { useOpstellingen, useBorden } from '../wedstrijd/opslag';
 
 function Tegel({ soort }: { soort: Soort }) {
   const aantal = OEFENINGEN.filter((o) => o.soort === soort).length;
@@ -95,6 +96,27 @@ function EigenTegel() {
   );
 }
 
+function WedstrijdTegel() {
+  const n = useOpstellingen().length + useBorden().length;
+  return (
+    <a
+      className="tegel tegel-wedstrijd"
+      href="#/wedstrijd"
+      onClick={(e) => {
+        e.preventDefault();
+        ga('/wedstrijd');
+      }}
+    >
+      <WedstrijdPlaatje />
+      <span className="tegel-tekst">
+        <span className="tegel-titel">Wedstrijd</span>
+        <span className="tegel-sub">{n ? meervoud(n, 'opstelling of bord', 'opstellingen en borden') : 'Opstelling, tactiekbord, spelhervattingen'}</span>
+      </span>
+      <Icoon naam="verder" className="tegel-pijl" />
+    </a>
+  );
+}
+
 /** `opInstalleren`: alleen op de computer in de browser (terug naar de installatie-uitleg). */
 export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
   return (
@@ -116,6 +138,7 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
           <Tegel soort="veld" />
           <Tegel soort="keeper" />
           <EigenTegel />
+          <WedstrijdTegel />
         </div>
         {opInstalleren && (
           <button className="link-knop" onClick={opInstalleren}>

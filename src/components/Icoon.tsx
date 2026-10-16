@@ -19,6 +19,11 @@ const PADEN = {
   puntjes: 'M12 5.5v.01M12 12v.01M12 18.5v.01',
   kompas: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15.5 8.5l-2 5-5 2 2-5z',
   wissel: 'M16 3.5l3.5 3.5-3.5 3.5M4.5 7h15M8 20.5L4.5 17 8 13.5M19.5 17h-15',
+  gum: 'M7.5 19.5l-4-4a1.6 1.6 0 0 1 0-2.3l9.3-9.3a1.6 1.6 0 0 1 2.3 0l5.2 5.2a1.6 1.6 0 0 1 0 2.3l-7.8 7.8M7.5 19.5H20M6 11.3l6.7 6.7',
+  opstelling: 'M5 3.5h14v17H5zM5 12h14M12 18.2a.01.01 0 1 0 0 .02M8 15.5a.01.01 0 1 0 0 .02M16 15.5a.01.01 0 1 0 0 .02M9 8.5a.01.01 0 1 0 0 .02M15 8.5a.01.01 0 1 0 0 .02M12 6a.01.01 0 1 0 0 .02',
+  tactiek: 'M4 4h16v16H4zM7.5 16.5c2-5 5-7 9-8.5M16.5 8l-3.2-.6M16.5 8l-1 3M7 7.5l2 2M9 7.5l-2 2',
+  hervatting: 'M6 21V3.5l9 3.5-9 3.5M6 21h12M15 21a3 3 0 1 0 0-6',
+  wedstrijd: 'M4 5h16v14H4zM12 5v14M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4 9h2.5v6H4M20 9h-2.5v6H20',
   importeer: 'M8.5 13.5L12 17l3.5-3.5M12 4v13M5 14.5V20h14v-5.5',
   looplijn: 'M4 19c1.5-4 4-5.5 6.5-5.5M13.5 12.5c2.2-.8 3.8-2.8 4.6-5.6M15.3 7.6l3-1.4 1 3.2M5 6.5a1.6 1.6 0 1 0 0-.01',
   kopieer: 'M9 9h11v11H9zM5 15H4V4h11v1',
@@ -63,7 +68,7 @@ const PADEN = {
 } as const;
 
 /** Stippen hebben een dikkere lijn nodig om zichtbaar te zijn. */
-const DIK: readonly string[] = ['meer', 'puntjes', 'grip'];
+const DIK: readonly string[] = ['meer', 'puntjes', 'grip', 'opstelling'];
 
 export type IcoonNaam = keyof typeof PADEN;
 

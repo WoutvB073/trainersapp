@@ -1,6 +1,7 @@
 import { collection, deleteDoc, doc, onSnapshot, setDoc, type Firestore, type Unsubscribe } from 'firebase/firestore';
 import type { EigenOefening } from '../model/types';
 import type { Training } from '../training/training';
+import type { Bord, Opstelling } from '../wedstrijd/wedstrijd';
 import type { SyncStatus } from '../engine/account';
 import { nieuwste, verzoen, verzoenSet, type Item } from './samenvoegen';
 
@@ -45,12 +46,15 @@ export interface BekendOpslag {
 export interface SyncDoelen {
   eigen: LijstDoel<EigenOefening>;
   trainingen: LijstDoel<Training>;
+  /** Wedstrijd (0.18.0): opstellingen en tactiekborden/spelhervattingen. */
+  opstellingen?: LijstDoel<Opstelling>;
+  borden?: LijstDoel<Bord>;
   favorieten: FavorietenDoel;
   instellingen: InstellingenDoel;
   bekend: BekendOpslag;
 }
 
-type Collectie = 'oefeningen' | 'trainingen';
+type Collectie = 'oefeningen' | 'trainingen' | 'opstellingen' | 'borden';
 
 /** Instellingen in een vaste vorm (Firestore geeft velden in een andere volgorde terug). */
 function vast(i: Instellingen | undefined): Instellingen | undefined {
@@ -77,6 +81,8 @@ export class Synchronisatie {
   start(): void {
     this.koppelLijst('oefeningen', this.doelen.eigen);
     this.koppelLijst('trainingen', this.doelen.trainingen);
+    if (this.doelen.opstellingen) this.koppelLijst('opstellingen', this.doelen.opstellingen);
+    if (this.doelen.borden) this.koppelLijst('borden', this.doelen.borden);
     this.koppelGebruiker();
     if (typeof window !== 'undefined') {
       const melden = () => this.meldStatus();
@@ -109,8 +115,13 @@ export class Synchronisatie {
     if (this.fout) return this.opStatus('fout');
     if (typeof navigator !== 'undefined' && navigator.onLine === false) return this.opStatus('offline');
     if ([...this.wacht.values()].some(Boolean)) return this.opStatus('wacht');
-    if (this.vanServer.size < 3 || [...this.vanServer.values()].some((v) => !v)) return this.opStatus('bezig');
+    if (this.vanServer.size < this.aantalBronnen() || [...this.vanServer.values()].some((v) => !v)) return this.opStatus('bezig');
     this.opStatus('klaar');
+  }
+
+  /** Lijsten + het gebruikersdocument. */
+  private aantalBronnen(): number {
+    return 3 + (this.doelen.opstellingen ? 1 : 0) + (this.doelen.borden ? 1 : 0);
   }
 
   private koppelLijst<T extends Item>(col: Collectie, doel: LijstDoel<T>) {

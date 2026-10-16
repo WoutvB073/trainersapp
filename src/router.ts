@@ -18,6 +18,12 @@ import { useSyncExternalStore } from 'react';
  *   #/teams                  Mijn teams (maken, joinen)
  *   #/team/:id               Team: code, gedeelde oefeningen en trainingen, leden
  *   #/team/:id/training/:item  Gedeelde training bekijken en kopiëren
+ *   #/wedstrijd              Wedstrijd: opstellingen, tactiekborden, spelhervattingen
+ *   #/opstelling/:id         Opstelling (spelvorm, formatie, spelers slepen, wissels)
+ *   #/bord/:id               Tactiekbord of spelhervatting (afspelen, delen)
+ *   #/bord/:id/tekenen       Tekenen (editor)
+ *   #/w/:code                Gedeelde opstelling of tactiekbord (link)
+ *   #/team/:id/wedstrijd/:item  Gedeelde opstelling/tactiekbord in een team
  *   #/eigen/nieuw            Nieuwe oefening: veld kiezen
  *   #/eigen/:id/tekenen      Editor (tekenen)
  *   #/eigen/:id/gegevens     Naam, categorieën, uitleg …
@@ -39,6 +45,12 @@ export type Route =
   | { naam: 'teams' }
   | { naam: 'team'; id: string }
   | { naam: 'teamtraining'; id: string; item: string }
+  | { naam: 'wedstrijd' }
+  | { naam: 'opstelling'; id: string }
+  | { naam: 'bord'; id: string }
+  | { naam: 'bord-tekenen'; id: string }
+  | { naam: 'wedstrijd-gedeeld'; code: string }
+  | { naam: 'teamwedstrijd'; id: string; item: string }
   | { naam: 'eigen-nieuw' }
   | { naam: 'tekenen'; id: string }
   | { naam: 'gegevens'; id: string }
@@ -63,6 +75,12 @@ export function leesHash(hash: string): Route {
   if (a === 'teams' && !b) return { naam: 'teams' };
   if (a === 'team' && b && !c) return { naam: 'team', id: b };
   if (a === 'team' && b && c === 'training' && d) return { naam: 'teamtraining', id: b, item: d };
+  if (a === 'wedstrijd' && !b) return { naam: 'wedstrijd' };
+  if (a === 'opstelling' && b) return { naam: 'opstelling', id: b };
+  if (a === 'bord' && b && !c) return { naam: 'bord', id: b };
+  if (a === 'bord' && b && c === 'tekenen') return { naam: 'bord-tekenen', id: b };
+  if (a === 'w' && b) return { naam: 'wedstrijd-gedeeld', code: b };
+  if (a === 'team' && b && c === 'wedstrijd' && d) return { naam: 'teamwedstrijd', id: b, item: d };
   if (a === 'eigen' && b === 'nieuw') return { naam: 'eigen-nieuw' };
   if (a === 'eigen' && b && c === 'tekenen') return { naam: 'tekenen', id: b };
   if (a === 'eigen' && b && c === 'gegevens') return { naam: 'gegevens', id: b };

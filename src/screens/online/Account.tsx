@@ -227,11 +227,12 @@ export function Account() {
 export function SamenvoegenVraag() {
   const s = useOnlineStatus();
   if (!s.samenvoegen) return null;
-  const { eigen, trainingen, favorieten } = s.samenvoegen;
+  const { eigen, trainingen, favorieten, wedstrijd = 0 } = s.samenvoegen;
   const delen = [
     eigen ? meervoud(eigen, 'eigen oefening', 'eigen oefeningen') : '',
     trainingen ? meervoud(trainingen, 'training', 'trainingen') : '',
     favorieten ? meervoud(favorieten, 'favoriet', 'favorieten') : '',
+    wedstrijd ? meervoud(wedstrijd, 'opstelling of tactiekbord', 'opstellingen en tactiekborden') : '',
   ].filter(Boolean);
   const antwoord = (ja: boolean) => void online().then((m) => m.beantwoordSamenvoegen(ja));
   return (

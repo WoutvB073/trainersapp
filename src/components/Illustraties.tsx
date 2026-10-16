@@ -147,3 +147,33 @@ export function KeepersPlaatje({ className = 'tegel-plaatje' }: { className?: st
     </svg>
   );
 }
+
+/** Tegel Wedstrijd: tactiekbord met twee teams, een looplijn en een pass. */
+export function WedstrijdPlaatje({ className = 'tegel-plaatje' }: { className?: string }) {
+  const id = `gras-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  const rood = (x: number, y: number) => <circle cx={x} cy={y} r="5" fill="var(--team-a)" stroke="#fff" strokeWidth="1.4" />;
+  const blauw = (x: number, y: number) => <circle cx={x} cy={y} r="5" fill="var(--team-b)" stroke="#fff" strokeWidth="1.4" />;
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden="true">
+      <Gras id={id} />
+      <g fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.85">
+        <rect x="8" y="6" width="104" height="68" rx="1" />
+        <line x1="60" y1="6" x2="60" y2="74" />
+        <circle cx="60" cy="40" r="9" />
+        <rect x="8" y="24" width="12" height="32" />
+        <rect x="100" y="24" width="12" height="32" />
+      </g>
+      <path d="M38 56 Q 52 66 70 58" fill="none" stroke="#fff" strokeWidth="1.8" strokeDasharray="3 2.5" strokeLinecap="round" />
+      <path d="M70 58 l-5 -3.6 M70 58 l-5.6 2.4" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M30 34 L 66 22" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+      <path d="M66 22 l-6.2 -0.6 M66 22 l-4.4 4.4" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+      {rood(26, 36)}
+      {rood(36, 54)}
+      {rood(72, 22)}
+      {blauw(82, 40)}
+      {blauw(88, 26)}
+      {blauw(86, 56)}
+      <Bal x={31} y={33} r={2.6} />
+    </svg>
+  );
+}

@@ -54,7 +54,7 @@ for (const [naam, vp, telefoon] of FORMATEN) {
       };
     });
     if (thema === 'standaard') {
-      controle(JSON.stringify(m.volgorde) === JSON.stringify(['Training', 'Spelers', 'Keepers', 'Eigen oefeningen']), `${naam}: volgorde ${m.volgorde.join(', ')}`);
+      controle(JSON.stringify(m.volgorde) === JSON.stringify(['Training', 'Spelers', 'Keepers', 'Eigen oefeningen', 'Wedstrijd']), `${naam}: volgorde ${m.volgorde.join(', ')}`);
       controle(!m.sectie, `${naam}: de tekst "Oefenbibliotheek …" staat er nog`);
       controle(m.tandwiel, `${naam}: geen tandwiel`);
       // Spelers en Keepers naast elkaar.

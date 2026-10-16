@@ -67,6 +67,21 @@ describe('teams', () => {
     trainer2.stop();
   });
 
+  it('opstelling en tactiekbord delen met het team', { timeout: 30000 }, async () => {
+    const trainer1 = await persoon('test1@example.com', 'Testtrainer 1');
+    const trainer2 = await persoon('test2@example.com', 'Testtrainer 2');
+    const { id, code } = await maakTeam(trainer1.ik, 'JO11-1');
+    await joinTeam(trainer2.ik, code);
+    await deelItem(trainer1.ik, id, { id: 'o1', soort: 'opstelling', naam: 'Zaterdag', data: JSON.stringify({ naam: 'Zaterdag' }) });
+    await deelItem(trainer1.ik, id, { id: 'b1', soort: 'bord', naam: 'Corner', data: JSON.stringify({ naam: 'Corner' }) });
+    await wachtTot(() => trainer2.teams()[0]?.items.length === 2, 15000, 'gedeelde wedstrijd-items');
+    expect(trainer2.teams()[0]!.items.map((i) => i.soort).sort()).toEqual(['bord', 'opstelling']);
+    // Een onbekende soort mag niet.
+    await expect(deelItem(trainer1.ik, id, { id: 'x1', soort: 'iets' as 'bord', naam: 'x', data: '{}' })).rejects.toThrow();
+    trainer1.stop();
+    trainer2.stop();
+  });
+
   it('rollen: beheerder maken, lid verwijderen, code vernieuwen; leden kunnen dat niet', async () => {
     const trainer1 = await persoon('test1@example.com', 'Testtrainer 1');
     const trainer2 = await persoon('test2@example.com', 'Testtrainer 2');
