@@ -36,6 +36,8 @@ import {
   type PaletItem,
 } from '../../editor/editor';
 import { eigenOefeningen, useEigenOefening } from '../../eigen/opslag';
+import { editorBegin, heeftLijnAnimatie, isSchotLijn, lijnMeldingen, stapPunt, volgendeStap, type LijnMelding } from '../../editor/animatie';
+import { heeftKeeperBijGoal } from '../../editor/animatie';
 import { metTekening } from '../../eigen/eigen';
 import { ga, terug } from '../../router';
 import { NietGevonden } from '../NietGevonden';
@@ -70,6 +72,31 @@ const LIJN_NAMEN: Record<LijnSoort, { naam: string; icoon: IcoonNaam }> = {
 };
 
 const GROEPEN: PaletGroep[] = ['Spelers', 'Doelen', 'Materiaal', 'Vakken en tekst'];
+
+const LOOPWIJZEN: { waarde: Lijn['manier']; naam: string }[] = [
+  { waarde: undefined, naam: 'Normaal' },
+  { waarde: 'sprint', naam: 'Sprint' },
+  { waarde: 'zijwaarts', naam: 'Zijwaarts' },
+  { waarde: 'achteruit', naam: 'Achteruit' },
+];
+const HOOGTES: { waarde: Lijn['hoogte']; naam: string }[] = [
+  { waarde: undefined, naam: 'Grond' },
+  { waarde: 'halfhoog', naam: 'Halfhoog' },
+  { waarde: 'hoog', naam: 'Hoog' },
+];
+const HOOGTES_SCHOT: { waarde: Lijn['hoogte']; naam: string }[] = [
+  { waarde: 'grond', naam: 'Over de grond' },
+  { waarde: undefined, naam: 'Laag' },
+  { waarde: 'hoog', naam: 'Hoog' },
+];
+const AFLOPEN: { waarde: Lijn['afloop']; naam: string }[] = [
+  { waarde: 'goal', naam: 'Goal' },
+  { waarde: 'vangt', naam: 'Keeper vangt' },
+  { waarde: 'duikt', naam: 'Keeper duikt' },
+  { waarde: 'naast', naam: 'Naast' },
+];
+const WACHTTIJDEN = [0, 0.5, 1, 2];
+const komma = (v: number) => String(v).replace('.', ',');
 
 const isPersoon = (o: VeldObject) => PERSONEN.includes(o.soort);
 
@@ -130,7 +157,10 @@ function PaletPlaatje({ item }: { item: PaletItem }) {
 }
 
 function Editor({ start }: { start: EigenOefening }) {
-  const [gesch] = useState(() => new Geschiedenis<Tekening>(start.tekening));
+  const [begin] = useState(() => editorBegin(start.tekening));
+  const [gesch] = useState(() => new Geschiedenis<Tekening>(begin.tekening));
+  const [beginMelding, setBeginMelding] = useState(begin.melding);
+  const [opties, setOpties] = useState(false);
   const [, setVersie] = useState(0);
   const ververs = useCallback(() => setVersie((v) => v + 1), []);
   const [selectie, setSelectie] = useState<Selectie>(null);
@@ -150,6 +180,11 @@ function Editor({ start }: { start: EigenOefening }) {
   const vingers = useRef(new Map<number, Punt>());
   const kleuren = useMemo(() => leesKleuren(), []);
   const t = gesch.nu;
+  const meldingen = useMemo(() => lijnMeldingen(t), [t]);
+  // Vaste tekening voor de speler (anders bouwt 3D bij elke herteken opnieuw op).
+  const speelTekening = useMemo(() => metTekening(start, t).tekening, [start, t]);
+  const meldingenRef = useRef<LijnMelding[]>(meldingen);
+  meldingenRef.current = meldingen;
 
   // ---------- opslaan (even wachten, en zeker bij weggaan) ----------
   const opslaan = useCallback(() => {
@@ -216,6 +251,36 @@ function Editor({ start }: { start: EigenOefening }) {
     // Selectie en handvatten.
     const { schaal, ox, oy, dpr } = transform();
     const px = (p: Punt): Punt => [ox + p[0] * schaal, oy + p[1] * schaal];
+
+    // Stapnummers: rondje op elke lijn (oranje = let op, rood = doet niet mee).
+    const plekBegin = (id: string): Punt | undefined => {
+      const st = beginStand(tk).objecten.get(id);
+      return st ? [st.x, st.y] : undefined;
+    };
+    (tk.lijnen ?? []).forEach((l, i) => {
+      if (!l.stap) return;
+      const [x, y] = px(stapPunt(l, plekBegin));
+      const m = meldingenRef.current.filter((x) => x.lijn === i);
+      const kleur = m.some((x) => x.soort === 'fout') ? '#c92a2a' : m.length ? '#e8590c' : '#0f6b3a';
+      const rr = 10 * dpr;
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.35)';
+      ctx.shadowBlur = 3 * dpr;
+      ctx.beginPath();
+      ctx.arc(x, y, rr, 0, Math.PI * 2);
+      ctx.fillStyle = m.length ? kleur : '#ffffff';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 2.5 * dpr;
+      ctx.strokeStyle = kleur;
+      ctx.stroke();
+      ctx.fillStyle = m.length ? '#ffffff' : kleur;
+      ctx.font = `700 ${Math.round(12 * dpr)}px Inter Variable, system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(m.length ? `${l.stap}!` : String(l.stap), x, y + 0.5 * dpr);
+      ctx.restore();
+    });
     const handvat = (p: Punt, vorm: 'rond' | 'vierkant' | 'ruit', icoon?: boolean) => {
       const [x, y] = px(p);
       const r = 10 * dpr;
@@ -383,6 +448,8 @@ function Editor({ start }: { start: EigenOefening }) {
         for (const k of ['midden', 'begin', 'eind'] as const) {
           // Een eind dat aan een speler vastzit: dan pak je de speler (de lijn gaat mee).
           if ((k === 'begin' && l.van) || (k === 'eind' && l.naar)) continue;
+          // Met een lijngereedschap teken je vanaf het eind van de vorige lijn een nieuwe; alleen het buigpunt is te pakken.
+          if (k !== 'midden' && gereedschap.soort !== 'kies') continue;
           if (Math.hypot(h[k][0] - p[0], h[k][1] - p[1]) < marge) {
             gesch.begin();
             gebaar.current = { soort: 'handvat', h: k, lijn: sel.index };
@@ -534,7 +601,7 @@ function Editor({ start }: { start: EigenOefening }) {
         if (l) {
           const [a, b] = [l.punten[0]!, l.punten[l.punten.length - 1]!];
           if (Math.hypot(a[0] - b[0], a[1] - b[1]) > meter(14)) {
-            gesch.zet(voegLijnToe(gesch.nu, l));
+            gesch.zet(voegLijnToe(gesch.nu, { ...l, stap: volgendeStap(gesch.nu) }));
             setSelectie({
               soort: 'lijn',
               index: (gesch.nu.lijnen?.length ?? 1) - 1,
@@ -595,6 +662,16 @@ function Editor({ start }: { start: EigenOefening }) {
       },
       tekening: () => gesch.nu,
       beeld: () => beeld.current,
+      meldingen: () => lijnMeldingen(gesch.nu),
+      stapPunt: (i: number) => {
+        const l = gesch.nu.lijnen?.[i];
+        if (!l) return null;
+        const st = beginStand(gesch.nu);
+        return stapPunt(l, (id) => {
+          const o = st.objecten.get(id);
+          return o ? [o.x, o.y] : undefined;
+        });
+      },
       handvatten: () => {
         const sel = selectieRef.current;
         if (sel?.soort === 'object') {
@@ -710,8 +787,8 @@ function Editor({ start }: { start: EigenOefening }) {
         <button className="editor-knop" onClick={herdoen} disabled={!gesch.kanVooruit} aria-label="Opnieuw" title="Opnieuw">
           <Icoon naam="herdoen" />
         </button>
-        <button className="editor-knop" onClick={() => setDrieD(true)} aria-label="Bekijken in 3D" title="Bekijken in 3D">
-          <Icoon naam="kubus" />
+        <button className="editor-knop editor-afspelen" onClick={() => setDrieD(true)} aria-label="Afspelen" title="Afspelen (2D en 3D)">
+          <Icoon naam="afspelen" />
         </button>
         <button className="knop knop-primair editor-gegevens" onClick={naarGegevens}>
           Gegevens
@@ -731,7 +808,21 @@ function Editor({ start }: { start: EigenOefening }) {
           onPointerCancel={opAnnuleer}
           onContextMenu={(e) => e.preventDefault()}
         />
-        {animatie && <div className="editor-melding">Met animatie. Verschuif je iets, dan wordt het een tekening zonder animatie.</div>}
+        {beginMelding ? (
+          <button className="editor-melding editor-melding-knop" onClick={() => setBeginMelding(undefined)}>
+            {beginMelding} <span className="editor-melding-weg">OK</span>
+          </button>
+        ) : (
+          animatie && <div className="editor-melding">Met animatie. Verschuif je iets, dan wordt het een tekening zonder animatie.</div>
+        )}
+        {meldingen.length > 0 && (
+          <div className={`editor-waarschuwing${plaatsNaam ? ' hoger' : ''}`} role="status">
+            <Icoon naam="info" maat={16} />
+            {meldingen.some((m) => m.soort === 'fout')
+              ? `${meldingen.filter((m) => m.soort === 'fout').length === 1 ? 'Eén lijn doet' : `${meldingen.filter((m) => m.soort === 'fout').length} lijnen doen`} niet mee: tik op het rode nummer`
+              : 'Let op: tik op het oranje nummer'}
+          </div>
+        )}
         {hint && !animatie && t.objecten.length === 0 && <div className="editor-melding">Kies onderin wat je wilt toevoegen en tik op het veld. Twee vingers (of het muiswiel): zoomen.</div>}
         {plaatsNaam && (
           <div className="editor-plaats" role="status">
@@ -824,6 +915,20 @@ function Editor({ start }: { start: EigenOefening }) {
           )}
           {gekozenLijn && sel?.soort === 'lijn' && (
             <>
+              <span className="editor-nummer editor-stap" aria-label="Stapnummer">
+                <span className="editor-stap-label">Stap</span>
+                <button
+                  aria-label="Lager stapnummer"
+                  disabled={(gekozenLijn.stap ?? 1) <= 1}
+                  onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, stap: Math.max(1, (gekozenLijn.stap ?? 1) - 1) }))}
+                >
+                  <Icoon naam="min" maat={16} />
+                </button>
+                <output aria-label="Stap">{gekozenLijn.stap ?? '–'}</output>
+                <button aria-label="Hoger stapnummer" onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, stap: Math.min(30, (gekozenLijn.stap ?? 0) + 1) }))}>
+                  <Icoon naam="plus" maat={16} />
+                </button>
+              </span>
               <span className="editor-lijnsoorten" role="group" aria-label="Soort lijn">
                 {(['bal', 'loop', 'dribbel'] as const).map((s) => (
                   <button
@@ -838,18 +943,9 @@ function Editor({ start }: { start: EigenOefening }) {
                   </button>
                 ))}
               </span>
-              {gekozenLijn.bocht && (
-                <button
-                  className="knop editor-klein"
-                  onClick={() => {
-                    const { bocht: _b, ...recht } = gekozenLijn;
-                    void _b;
-                    zet(zetLijn(t, sel.index, recht));
-                  }}
-                >
-                  Recht
-                </button>
-              )}
+              <button className={`knop editor-klein${meldingen.some((m) => m.lijn === sel.index) ? ' editor-let-op' : ''}`} onClick={() => setOpties(true)}>
+                {meldingen.some((m) => m.lijn === sel.index) ? '! Opties' : 'Opties'}
+              </button>
             </>
           )}
           <button className="icoon-knop gevaar" aria-label="Verwijderen" title="Verwijderen" onClick={weg}>
@@ -913,14 +1009,153 @@ function Editor({ start }: { start: EigenOefening }) {
 
       {drieD && (
         <div className="paneel-achter editor-3d">
-          <div className="paneel paneel-groot" role="dialog" aria-label="Bekijken in 3D">
+          <div className="paneel paneel-groot" role="dialog" aria-label="Afspelen">
             <div className="paneel-kop">
-              <h2>Bekijken</h2>
+              <h2>{heeftLijnAnimatie(t) || animatie ? 'Afspelen' : 'Bekijken'}</h2>
               <button className="icoon-knop" aria-label="Sluiten" onClick={() => setDrieD(false)}>
                 <Icoon naam="kruis" />
               </button>
             </div>
-            <AnimatieSpeler tekening={metTekening(start, t).tekening} />
+            <AnimatieSpeler tekening={speelTekening} />
+            {!heeftLijnAnimatie(t) && !animatie && <p className="editor-uitleg">Nog geen animatie: teken lijnen (pass, lopen, dribbel). Elke lijn krijgt een stapnummer; zo speelt de oefening af.</p>}
+            {heeftLijnAnimatie(t) && (
+              <label className="editor-schakel">
+                <input type="checkbox" checked={!!t.herhaalRij} onChange={() => zet({ ...t, herhaalRij: !t.herhaalRij })} />
+                <span>
+                  <strong>Herhaal voor de volgende spelers in de rij</strong>
+                  <span className="klein">Zet de andere spelers vlak achter de eerste speler (zonder eigen lijnen). Iedereen doet het patroon na elkaar en sluit daarna achteraan aan.</span>
+                </span>
+              </label>
+            )}
+            {meldingen.length > 0 && (
+              <ul className="editor-meldingen">
+                {meldingen.map((m, i) => (
+                  <li key={i} className={m.soort === 'fout' ? 'fout' : ''}>
+                    {m.lijn >= 0 ? <strong>Stap {t.lijnen?.[m.lijn]?.stap ?? '?'}: </strong> : null}
+                    {m.tekst}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button className="knop knop-primair knop-breed" onClick={() => setDrieD(false)}>
+              <Icoon naam="potlood" maat={18} />
+              Terug naar tekenen
+            </button>
+          </div>
+        </div>
+      )}
+
+      {opties && gekozenLijn && sel?.soort === 'lijn' && (
+        <div className="paneel-achter" onClick={() => setOpties(false)}>
+          <div className="paneel" role="dialog" aria-label="Opties van de lijn" onClick={(e) => e.stopPropagation()}>
+            <div className="paneel-kop">
+              <h2>
+                {gekozenLijn.soort === 'bal' ? (isSchotLijn(t, gekozenLijn) ? 'Schot' : 'Pass') : gekozenLijn.soort === 'loop' ? 'Looplijn' : 'Dribbel'} – stap {gekozenLijn.stap ?? '–'}
+              </h2>
+              <button className="icoon-knop" aria-label="Sluiten" onClick={() => setOpties(false)}>
+                <Icoon naam="kruis" />
+              </button>
+            </div>
+            {meldingen.filter((m) => m.lijn === sel.index).length > 0 && (
+              <ul className="editor-meldingen">
+                {meldingen
+                  .filter((m) => m.lijn === sel.index)
+                  .map((m, i) => (
+                    <li key={i} className={m.soort === 'fout' ? 'fout' : ''}>
+                      {m.soort === 'fout' ? 'Doet niet mee: ' : 'Let op: '}
+                      {m.tekst}
+                    </li>
+                  ))}
+              </ul>
+            )}
+            {gekozenLijn.soort === 'loop' && (
+              <section className="optie-groep">
+                <h3>Loopwijze</h3>
+                <div className="chips">
+                  {LOOPWIJZEN.map((w) => (
+                    <button
+                      key={w.naam}
+                      className={gekozenLijn.manier === w.waarde ? 'aan' : ''}
+                      aria-pressed={gekozenLijn.manier === w.waarde}
+                      onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, manier: w.waarde }))}
+                    >
+                      {w.naam}
+                    </button>
+                  ))}
+                </div>
+                <p className="klein">Over een ladder, horde of ring loopt hij vanzelf met voetenwerk of sprongen.</p>
+              </section>
+            )}
+            {gekozenLijn.soort === 'bal' && (
+              <section className="optie-groep">
+                <h3>Hoogte van de bal</h3>
+                <div className="chips">
+                  {(isSchotLijn(t, gekozenLijn) ? HOOGTES_SCHOT : HOOGTES).map((w) => (
+                    <button
+                      key={w.naam}
+                      className={gekozenLijn.hoogte === w.waarde || (!isSchotLijn(t, gekozenLijn) && w.waarde === undefined && gekozenLijn.hoogte === 'grond') ? 'aan' : ''}
+                      onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, hoogte: w.waarde }))}
+                    >
+                      {w.naam}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
+            {isSchotLijn(t, gekozenLijn) && (
+              <section className="optie-groep">
+                <h3>Afloop van het schot</h3>
+                <div className="chips">
+                  {AFLOPEN.map((w) => {
+                    const nu = gekozenLijn.afloop ?? (heeftKeeperBijGoal(t) ? 'vangt' : 'goal');
+                    return (
+                      <button key={w.naam} className={nu === w.waarde ? 'aan' : ''} aria-pressed={nu === w.waarde} onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, afloop: w.waarde }))}>
+                        {w.naam}
+                      </button>
+                    );
+                  })}
+                </div>
+                {!heeftKeeperBijGoal(t) && <p className="klein">Zet een keeper in het goal: die kiest dan vanzelf positie en vangt of duikt.</p>}
+              </section>
+            )}
+            <section className="optie-groep">
+              <h3>Wachten vóór deze stap</h3>
+              <div className="chips">
+                {WACHTTIJDEN.map((w) => (
+                  <button key={w} className={(gekozenLijn.wacht ?? 0) === w ? 'aan' : ''} onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, wacht: w || undefined }))}>
+                    {w ? `${komma(w)} s` : 'Niet'}
+                  </button>
+                ))}
+              </div>
+            </section>
+            <section className="optie-groep">
+              <label className="editor-schakel">
+                <input type="checkbox" checked={!!t.herhaalRij} onChange={() => zet({ ...t, herhaalRij: !t.herhaalRij })} />
+                <span>
+                  <strong>Herhaal voor de volgende spelers in de rij</strong>
+                  <span className="klein">Geldt voor de hele oefening.</span>
+                </span>
+              </label>
+            </section>
+            <div className="knoppenrij">
+              {gekozenLijn.bocht ? (
+                <button
+                  className="knop"
+                  onClick={() => {
+                    const { bocht: _b, ...recht } = gekozenLijn;
+                    void _b;
+                    zet(zetLijn(t, sel.index, recht));
+                  }}
+                >
+                  Recht maken
+                </button>
+              ) : (
+                <span />
+              )}
+              <button className="knop knop-primair" onClick={() => setOpties(false)}>
+                Klaar
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -170,8 +170,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
     }
     return beste;
   };
-  const materiaalBij = (p: Punt) =>
-    objecten.find((o) => (o.soort === 'rebounder' || o.soort === 'pop' || o.soort === 'bank' || o.soort === 'muurtje') && afstand(p, [o.x, o.y]) < 1.4);
+  const materiaalBij = (p: Punt) => objecten.find((o) => (o.soort === 'rebounder' || o.soort === 'pop' || o.soort === 'bank' || o.soort === 'muurtje') && afstand(p, [o.x, o.y]) < 1.4);
 
   const nummers = [...new Set(lijnen.map((l) => l.stap ?? 0).filter((n) => n > 0))].sort((a, b) => a - b);
   const stappen: AnimatieStap[] = [];
@@ -600,4 +599,55 @@ export function animatieNaarLijnen(t: Tekening): { tekening: Tekening } | { rede
   const terug = lijnenNaarAnimatie(uit);
   if (terug.meldingen.some((m) => m.soort === 'fout')) return { reden: terug.meldingen.find((m) => m.soort === 'fout')!.tekst };
   return { tekening: uit };
+}
+
+// ---------- hulp voor de editor ----------
+
+/** Plek van het stapnummer: op 30% van de lijn (het buigpunt-handvat zit in het midden). */
+export function stapPunt(l: Lijn, plek?: (id: string) => Punt | undefined): Punt {
+  const p = lijnPunten(l, plek);
+  const lengtes = [0];
+  for (let i = 1; i < p.length; i++) lengtes.push(lengtes[i - 1]! + afstand(p[i - 1]!, p[i]!));
+  const doel = lengtes[lengtes.length - 1]! * 0.3;
+  for (let i = 1; i < p.length; i++) {
+    if (lengtes[i]! >= doel) {
+      const u = (doel - lengtes[i - 1]!) / Math.max(1e-6, lengtes[i]! - lengtes[i - 1]!);
+      return [p[i - 1]![0] + (p[i]![0] - p[i - 1]![0]) * u, p[i - 1]![1] + (p[i]![1] - p[i - 1]![1]) * u];
+    }
+  }
+  return p[0]!;
+}
+
+/** Is deze ballijn een schot (eindigt hij in of vlak voor een goal)? Dan kun je de afloop kiezen. */
+export function isSchotLijn(t: Tekening, l: Lijn): boolean {
+  if (l.soort !== 'bal') return false;
+  const goals = t.objecten.filter((o) => o.soort === 'goal' || o.soort === 'klein-goal');
+  const p = lijnPunten(l, (id) => {
+    const o = t.objecten.find((x) => x.id === id);
+    return o && [o.x, o.y];
+  });
+  const naar = l.naar ? t.objecten.find((o) => o.id === l.naar) : undefined;
+  if (naar && naar.soort !== 'keeper') return false;
+  return !!goalBij(goals, p[p.length - 1]!);
+}
+
+/** Staat er een keeper bij een goal (dan reageert hij op schoten)? */
+export function heeftKeeperBijGoal(t: Tekening): boolean {
+  const goals = t.objecten.filter((o) => o.soort === 'goal' || o.soort === 'klein-goal');
+  return t.objecten.some((k) => k.soort === 'keeper' && (k.verdedigt || goals.some((g) => afstand([g.x, g.y], [k.x, k.y]) < 9)));
+}
+
+/**
+ * Begintekening voor de editor. Een kopie met animatie wordt (als het kan) lijnen met stapnummers. Lijnen uit een eerdere
+ * versie zonder nummers krijgen nummers op volgorde. Met een korte uitleg voor in beeld.
+ */
+export function editorBegin(t: Tekening): { tekening: Tekening; melding?: string } {
+  if (t.animatie?.length) {
+    const r = animatieNaarLijnen(t);
+    if ('tekening' in r) return { tekening: r.tekening, melding: 'De animatie is omgezet naar lijnen met stapnummers. Tik op een lijn om hem aan te passen.' };
+    return { tekening: t, melding: `Deze animatie kan niet worden omgezet naar lijnen (${r.reden.charAt(0).toLowerCase()}${r.reden.slice(1)}). Verschuif je iets, dan vervalt de animatie.` };
+  }
+  const l = t.lijnen ?? [];
+  if (l.length && !l.some((x) => x.stap)) return { tekening: { ...t, lijnen: l.map((x, i) => ({ ...x, stap: i + 1 })) } };
+  return { tekening: t };
 }

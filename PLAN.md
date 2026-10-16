@@ -6,7 +6,7 @@ installeerbaar op het beginscherm, werkt op telefoon (staand), tablet en laptop 
 Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat op één plek
 (`src/config.ts` + manifest in `vite.config.ts`).
 
-## Status (16-10-2026, versie 0.13.0)
+## Status (16-10-2026, versie 0.14.0)
 
 | Fase | Status |
 |---|---|
@@ -16,10 +16,10 @@ Alle tekst in de app is Nederlands. "TrainersApp" is een werknaam; de naam staat
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ✅ online (0.11.0), getest en akkoord: aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, klaarzetten, opslaan op het apparaat, dupliceren, delen via een link |
 | 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – getest en akkoord. Feedback 0.11.0 (0.12.0): fysieke controle van alle oefeningen, Keepersrondo en Keepersoorlog op één goal, aantallen "4+" (doorwisselbaar) of vast – **wacht op test**. |
-| 5. Editor | ✅ online (0.13.0) – **wacht op test** op de telefoon: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
+| 5. Editor | ✅ online (0.13.0), getest en akkoord. Animatie in de editor (0.14.0) – **wacht op test**: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
 | 6. Instellingen + Clubkleuren | ⏳ |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
-| 8. Later: animatie in de editor, delen met andere trainers (product) | ⏳ |
+| 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
 - Bouwen in **kleine stappen**; na elke stap test de gebruiker op de telefoon en wachten we op akkoord.
@@ -529,6 +529,43 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   maken, benodigdheden, uitsnede, opslaan, kopiëren/bevriezen, delen en importeren) en `tools/e2e/editor.mjs`
   (telefoon/tablet met de vinger incl. twee vingers zoomen, laptop met de muis; gegevens, bibliotheek, delen naar een
   ander toestel, kopie met animatie).
+
+## Besluiten animatie in de editor (versie 0.14.0)
+- **Uitgangspunt:** de getekende lijnen zijn de animatie. Elke lijn heeft een stapnummer (`Lijn.stap`), zichtbaar als
+  rondje op 30% van de lijn. Nieuwe lijnen krijgen het volgende nummer. Lijnen met hetzelfde nummer gebeuren tegelijk.
+  Tik op een lijn (of het nummer) → balk met Stap −/+, soort lijn, **Opties**.
+- **Omzetten** (`src/editor/animatie.ts`, `lijnenNaarAnimatie`): lijnen → gewone animatiestappen voor de bestaande
+  tijdlijn (geen tweede animatielogica). Looplijn = `loop` (via tussenpunten bij een bocht; over ladder/horde/ring
+  vanzelf voetenwerk/hordes/huppel), dribbellijn = `dribbel`, ballijn naar een speler = `pass` (ontvanger loopt de bal
+  0,8 m tegemoet), naar een goal = `schot` (ook als de lijn aan de keeper vastzit), naar rebounder/pop/bank/muurtje =
+  kaatsen terug, naar een leeg stuk = bal rolt daarheen (wie daar in dezelfde stap heen loopt: pass in de loop).
+  Zelfde nummer: doorspelen in één keer (`direct`). Bal-bezit wordt bijgehouden: een ballijn of dribbel bij een speler
+  zonder bal doet niet mee (rood nummer + melding). De opgeslagen oefening bevat alleen de tekening; afspelen gebeurt via
+  `afspeelTekening` in `AnimatieSpeler` en `Miniatuur` (dus overal: bibliotheek, training, trainingsmodus, link).
+- **Keepers:** een keeper binnen 9 m van een goal verdedigt dat goal (positie kiezen, vangen/duiken/te laat op een
+  schot); dribbelt er iemand richting dat goal, dan mag hij uitkomen. Afloop van een schot: goal, keeper vangt
+  (standaard met keeper), keeper duikt (schot naar de hoek), naast.
+- **Opties per lijn:** looplijn: normaal, sprint, zijwaarts, achteruit; ballijn: grond/halfhoog/hoog (schot: over de
+  grond/laag/hoog) en bij een schot de afloop; wachten vóór de stap (0,5/1/2 s); herhalen voor de rij (hele oefening).
+- **Herhalen voor de rij** (`Tekening.herhaalRij`): spelers van hetzelfde team zonder eigen lijnen, binnen 3 m achter
+  de eerste speler, vormen een rij. Het patroon wordt een `herhaal` met `@`, daarna `aansluiten`. Had de eerste
+  speler een bal, dan krijgt iedereen in de rij er een.
+- **Afspelen in de editor:** afspeelknop (▶) in de kop opent de gewone speler (2D/3D, camera, snelheid, schuifbalk,
+  herhalen); tekenen kan dan niet; "Terug naar tekenen".
+- **Meldingen** (`lijnMeldingen`): wat niet kan (rood) en de fysieke check uit 0.12.0 (oranje: bal door een speler of
+  laag over materiaal, door een ladder lopen), op de lijn waar het gebeurt. Opslaan wordt nooit geblokkeerd.
+- **Kopieën:** `animatieNaarLijnen` zet de animatie van een kopie om naar lijnen met stapnummers als het kan (gewone
+  stappen met lopen, dribbelen, passen, schieten; nu 28 ingebouwde oefeningen). Anders (keeperacties zoals duiken naar
+  een punt, druk/dek, rijen) een melding met de reden en werkt het zoals in 0.13.0 (animatie vervalt na een vraag).
+  Lijnen uit 0.13.0 zonder nummer krijgen bij openen nummers op volgorde.
+- **Klein:** Keepersrondo ook in Keepers → Warming-up; leeg veld op een telefoon standaard staand (20 × 30 m), op tablet
+  en laptop liggend; lange naam in de editorkop op twee regels; half/heel veld begint met het goal (of beide goals).
+  Met een lijngereedschap pak je alleen het buigpunt van de vorige lijn (begin/eind met Kiezen), zodat je vanaf het eind
+  van een lijn meteen verder kunt tekenen.
+- **Tests:** `tests/animatie.test.ts` (omzetten, stapnummers en tegelijk, pass-regels, kaats, schot/keeper, rebounder,
+  diepe bal, parcours, bocht, wachten, herhalen voor de rij, waarschuwingen, kopieën) en `tools/e2e/editor.mjs`
+  (pass, dribbel, lopen en schot tekenen, nummers wijzigen, opties, melding, afspelen 2D/3D op telefoon/tablet/laptop,
+  opslaan, bibliotheek, delen, kopie met lijnen).
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

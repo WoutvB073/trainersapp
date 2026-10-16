@@ -2,9 +2,11 @@ import { useEffect, useMemo, useRef } from 'react';
 import type { Tekening } from '../model/types';
 import { maakTijdlijn, standOp } from '../anim/timeline';
 import { leesKleuren, tekenScene } from '../anim/render2d';
+import { afspeelTekening } from '../editor/animatie';
 
 /** Stilstaand plaatje van een oefening: eindstand met alle lijnen. */
-export function Miniatuur({ tekening, className }: { tekening: Tekening; className?: string }) {
+export function Miniatuur({ tekening: getekend, className }: { tekening: Tekening; className?: string }) {
+  const tekening = useMemo(() => afspeelTekening(getekend), [getekend]);
   const ref = useRef<HTMLCanvasElement>(null);
   const tijdlijn = useMemo(() => maakTijdlijn(tekening), [tekening]);
 

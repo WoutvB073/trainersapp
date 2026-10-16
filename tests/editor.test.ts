@@ -46,7 +46,9 @@ describe('editor: tekenen', () => {
   it('nieuwe tekening: leeg veld met eigen maat, half en heel veld', () => {
     expect(nieuweTekening('leeg', 25, 15).veld).toEqual({ type: 'leeg', breedte: 25, lengte: 15 });
     expect(nieuweTekening('half').veld).toEqual({ type: 'half' });
-    expect(nieuweTekening('heel').objecten).toEqual([]);
+    expect(nieuweTekening('heel').objecten.map((o) => o.soort)).toEqual(['goal', 'goal']);
+    expect(nieuweTekening('half').objecten).toEqual([{ id: 'g1', soort: 'goal', x: 34, y: 0 }]);
+    expect(nieuweTekening('leeg').objecten).toEqual([]);
   });
 
   it('elk palet-item is een geldig object dat in 2D/3D en de tijdlijn werkt', () => {
@@ -179,7 +181,6 @@ describe('editor: benodigdheden en aantallen', () => {
   it('voorstel uit de getekende objecten', () => {
     let t = nieuweTekening('half');
     for (let i = 0; i < 6; i++) t = plaats(t, 'pion', 10 + i * 2, 20).t;
-    t = plaats(t, 'goal', 34, 0).t;
     t = plaats(t, 'jeugdgoal', 34, 52).t;
     t = plaats(t, 'horde-hoog', 20, 30).t;
     t = plaats(t, 'speler-a', 30, 30).t;
@@ -191,7 +192,6 @@ describe('editor: benodigdheden en aantallen', () => {
 
   it('uitsnede rond de tekening bij een half veld', () => {
     let t = nieuweTekening('half');
-    t = plaats(t, 'goal', 34, 0).t;
     t = plaats(t, 'speler-a', 34, 16).t;
     const u = autoUitsnede(t)!;
     expect(u.x).toBeLessThan(30.4);

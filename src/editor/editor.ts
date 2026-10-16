@@ -14,7 +14,11 @@ import { STANDAARD_MATEN, veldMaten } from '../anim/render2d';
 
 export function nieuweTekening(type: VeldType, breedte?: number, lengte?: number): Tekening {
   const veld = type === 'leeg' ? { type, breedte: breedte ?? 30, lengte: lengte ?? 20 } : { type };
-  return { veld, camera: 'schuin', objecten: [], lijnen: [] };
+  // Half veld: het goal staat er al; heel veld: aan beide kanten.
+  const objecten: VeldObject[] = [];
+  if (type !== 'leeg') objecten.push({ id: 'g1', soort: 'goal', x: 34, y: 0 });
+  if (type === 'heel') objecten.push({ id: 'g2', soort: 'goal', x: 34, y: 105, hoek: 180 });
+  return { veld, camera: 'schuin', objecten, lijnen: [] };
 }
 
 // ---------- palet ----------

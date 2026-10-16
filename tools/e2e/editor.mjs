@@ -1,9 +1,11 @@
+// Ook: animatie maken met lijnen (pass, looplijn, dribbel, schot op een keeper), stapnummers wijzigen, opties, meldingen,
+// afspelen in 2D en 3D, opslaan, en een kopie waarvan de animatie lijnen worden.
 // Editor (eigen oefeningen) in de browser, als geïnstalleerde app, op telefoon en tablet (vinger) en laptop (muis):
 // objecten plaatsen, slepen, draaien, maat veranderen, lijnen tekenen en buigen, ongedaan maken, zoomen (twee vingers /
 // muiswiel), de pagina schuift niet mee, 3D bekijken, gegevens invullen, in de bibliotheek, in een training delen met een
 // andere telefoon (eigen oefening gaat mee in de link), een ingebouwde oefening kopiëren (animatie vervalt na een vraag).
 // Screenshots: blad-editor.png. Gebruik: node tools/e2e/editor.mjs [basis-url]
-import { alsGeinstalleerd, BASE, blad, MAP, slaap, start } from './hulp.mjs';
+import { alsGeinstalleerd, BASE, blad, MAP, slaap, start, zetTijd } from './hulp.mjs';
 
 const browser = await start();
 const fouten = [];
@@ -116,6 +118,14 @@ async function teken(naam, viewport, modus) {
   controle(tegel.includes('Eigen oefeningen'), `${naam}: geen tegel Eigen oefeningen (${tegel.join(', ')})`);
   if (naam === 'telefoon') await foto(page, 'start', 'Startscherm met de tegel Eigen oefeningen', true);
   await klik(page, 'Nieuwe oefening');
+  const maat = await page.evaluate(() => [...document.querySelectorAll('.veld-maat output')].map((o) => o.textContent).join(' × '));
+  controle(maat === (naam === 'telefoon' ? '20 m × 30 m' : '30 m × 20 m'), `${naam}: standaardmaat leeg veld ${maat}`);
+  if (naam === 'telefoon') {
+    await klik(page, 'Breedte 5 meter groter');
+    await klik(page, 'Breedte 5 meter groter');
+    await klik(page, 'Lengte 5 meter kleiner');
+    await klik(page, 'Lengte 5 meter kleiner');
+  }
   await klik(page, 'Beginnen met tekenen');
   await page.waitForSelector('.editor-canvas');
   await slaap(300);
@@ -251,11 +261,11 @@ await klik(page, 'Kleur #3fa9f5');
 t = await tekening(page);
 controle(t.objecten.find((o) => o.soort === 'zone')?.kleur === '#3fa9f5', `Vak kreeg geen kleur (${JSON.stringify(t.objecten.find((o) => o.soort === 'zone'))})`);
 
-// 3D bekijken.
-await klik(page, 'Bekijken in 3D');
+// Bekijken / afspelen (de passlijn is stap 1, dus er is al een kleine animatie).
+await klik(page, 'Afspelen');
 await page.waitForSelector('.paneel .speler-canvas', { timeout: 15000 }).catch(() => problemen.push('3D-weergave verschijnt niet'));
 await slaap(1500);
-await foto(page, '3d', 'Bekijken in 3D (stilstaand, draaien en camerastanden)');
+await foto(page, '3d', 'Afspelen: de passlijn (stap 1) speelt af');
 await klik(page, 'Sluiten', '.paneel button');
 
 // Gegevens.
@@ -321,6 +331,13 @@ await klik(ontvanger, 'Start training');
 await slaap(1200);
 const modusTitel = await ontvanger.evaluate(() => document.querySelector('.detail-titel')?.textContent);
 controle(!!modusTitel, 'Trainingsmodus bij de ontvanger opent niet');
+// De eigen oefening (met een passlijn als stap 1) speelt bij de ontvanger ook af.
+const balkOntvanger = await ontvanger.evaluate(() => {
+  const i = [...document.querySelectorAll('.modus-puntjes button, .modus-punt')].length;
+  void i;
+  return Number(document.querySelector('.speler-balk')?.max ?? 0);
+});
+controle(balkOntvanger > 1, `Trainingsmodus bij de ontvanger: geen animatie (${balkOntvanger})`);
 await anderToestel.close();
 
 // Ingebouwde oefening kopiëren: animatie blijft tot je iets verschuift. (Nieuwe pagina op hetzelfde toestel.)
@@ -362,6 +379,132 @@ await slaap(300);
 regels = await page.evaluate(() => document.querySelectorAll('.eigen-regel').length);
 controle(regels === 2, `Na verwijderen: ${regels}`);
 await page.close();
+
+// ---------- animatie maken met lijnen ----------
+async function animatieMaken(naam, viewport, modus, volledig) {
+  const page = await nieuwePagina(viewport);
+  await page.goto(`${BASE}?r=a${naam}#/eigen/nieuw`, { waitUntil: 'networkidle0' });
+  await klik(page, 'Beginnen met tekenen');
+  await page.waitForSelector('.editor-canvas');
+  await slaap(300);
+  const { breedte: B, lengte: L } = (await tekening(page)).veld;
+  // Goal bovenaan met een keeper, speler 1 met bal, speler 2.
+  await plaats(page, modus, 'Groot goal', [[B / 2, 2]]);
+  await plaats(page, modus, 'Keeper', [[B / 2, 3.4]]);
+  const a1 = [B / 2 - 4, L - 3];
+  const a2 = [B / 2 + 4, L - 7];
+  const dribbelEind = [B / 2 + 2, L - 12];
+  const loopEind = [B / 2 - 3, L - 11];
+  const schotEind = [B / 2 + 1.6, 2.2];
+  await plaats(page, modus, 'Speler team A', [a1, a2]);
+  await plaats(page, modus, 'Bal', [[a1[0] + 0.3, a1[1] - 0.3]]);
+  // Lijnen in tekenvolgorde: krijgen vanzelf 1, 2, 3, 4, 5.
+  await klik(page, 'Pass', '.editor-balk button');
+  await veldSleep(page, modus, a1, a2);
+  await klik(page, 'Dribbel', '.editor-balk button');
+  await veldSleep(page, modus, a2, dribbelEind);
+  await klik(page, 'Lopen', '.editor-balk button');
+  await veldSleep(page, modus, a1, loopEind);
+  await klik(page, 'Pass', '.editor-balk button');
+  await veldSleep(page, modus, dribbelEind, loopEind);
+  await veldSleep(page, modus, loopEind, schotEind);
+  let t = await tekening(page);
+  controle(JSON.stringify(t.lijnen.map((l) => l.stap)) === '[1,2,3,4,5]', `${naam}: stapnummers na tekenen ${JSON.stringify(t.lijnen.map((l) => l.stap))}`);
+  // Nummers wijzigen: lopen tegelijk met de dribbel (2), de pass wordt 3, het schot 4.
+  await klik(page, 'Kiezen', '.editor-balk button');
+  for (const i of [2, 3, 4]) {
+    await tik(page, modus, await scherm(page, await page.evaluate((i) => window.__editor.stapPunt(i), i)));
+    await klik(page, 'Lager stapnummer');
+  }
+  t = await tekening(page);
+  controle(JSON.stringify(t.lijnen.map((l) => l.stap)) === '[1,2,2,3,4]', `${naam}: stapnummers na wijzigen ${JSON.stringify(t.lijnen.map((l) => l.stap))}`);
+  // Opties van het schot: keeper duikt.
+  await klik(page, 'Opties');
+  const kop = await page.evaluate(() => document.querySelector('.paneel-kop h2')?.textContent ?? '');
+  controle(kop.startsWith('Schot'), `${naam}: opties-kop "${kop}" (verwacht Schot)`);
+  await klik(page, 'Keeper duikt', '.chips button');
+  if (volledig) await foto(page, `${naam}-opties`, `${naam}: opties van het schot (hoogte, afloop, wachten, herhalen)`);
+  await klik(page, 'Klaar', '.paneel button');
+  t = await tekening(page);
+  controle(t.lijnen[4].afloop === 'duikt', `${naam}: afloop ${t.lijnen[4].afloop}`);
+  let m = await page.evaluate(() => window.__editor.meldingen());
+  controle(!m.some((x) => x.soort === 'fout'), `${naam}: meldingen ${JSON.stringify(m)}`);
+  await foto(page, `${naam}-lijnen`, `${naam}: pass (1), dribbel + lopen tegelijk (2), pass (3), schot (4) met stapnummers`);
+
+  if (volledig) {
+    // Een ballijn vanaf een plek waar niemand (met bal) staat: rood nummer en melding; daarna ongedaan maken.
+    await klik(page, 'Pass', '.editor-balk button');
+    await veldSleep(page, modus, a2, [a2[0] - 6, a2[1]]);
+    m = await page.evaluate(() => window.__editor.meldingen());
+    controle(m.some((x) => x.lijn === 5 && x.soort === 'fout'), `Geen melding bij een ballijn zonder bal: ${JSON.stringify(m)}`);
+    const balk = await page.evaluate(() => document.querySelector('.editor-waarschuwing')?.textContent ?? '');
+    controle(balk.includes('niet mee'), `Geen waarschuwing in beeld: "${balk}"`);
+    await foto(page, 'melding', 'Ballijn zonder bal: rood nummer en melding (opslaan blijft mogelijk)');
+    await klik(page, 'Ongedaan maken');
+    await klik(page, 'Kiezen', '.editor-balk button');
+  }
+
+  // Afspelen in 3D en 2D; tijdens het afspelen kun je niet tekenen.
+  await klik(page, 'Afspelen');
+  await page.waitForSelector('.paneel .speler-canvas', { timeout: 15000 }).catch(() => problemen.push(`${naam}: afspelen opent niet`));
+  await slaap(1200);
+  const duur = await page.evaluate(() => Number(document.querySelector('.paneel .speler-balk')?.max ?? 0));
+  controle(duur > 5, `${naam}: animatie te kort of ontbreekt (${duur} s)`);
+  const knoppen = await page.evaluate(() => [...document.querySelectorAll('.paneel .speler-knoppen button')].map((b) => b.getAttribute('aria-label') ?? b.textContent));
+  controle(knoppen.includes('Opnieuw vanaf het begin') && knoppen.includes('Herhalen') && knoppen.some((k) => k === 'Pauze' || k === 'Afspelen'), `${naam}: bediening ${knoppen.join(', ')}`);
+  await zetTijd(page, duur * 0.86);
+  await slaap(400);
+  await foto(page, `${naam}-3d`, `${naam}: afspelen in 3D (schot, keeper duikt)`);
+  await klik(page, '2D', '.paneel button');
+  await zetTijd(page, duur * 0.45);
+  await foto(page, `${naam}-2d`, `${naam}: afspelen in 2D (lopen en dribbelen tegelijk)`);
+  await klik(page, 'Terug naar tekenen');
+  const dicht = await page.evaluate(() => !document.querySelector('.paneel .speler-canvas'));
+  controle(dicht, `${naam}: afspeelpaneel gaat niet dicht`);
+
+  if (volledig) {
+    // Opslaan als oefening en controleren dat hij in de bibliotheek afspeelt.
+    await klik(page, 'Gegevens');
+    await page.waitForSelector('.formulier');
+    await page.type('.formulier input', 'Combinatie met schot');
+    await klik(page, 'Afwerken', '.chips button');
+    await klik(page, 'Opslaan');
+    await slaap(1500);
+    const detailDuur = await page.evaluate(() => Number(document.querySelector('.speler-balk')?.max ?? 0));
+    controle(detailDuur > 5, `Detailpagina: animatie ontbreekt (${detailDuur})`);
+    await zetTijd(page, detailDuur * 0.6);
+    await foto(page, 'anim-detail', 'Detailpagina: de eigen oefening speelt af', true);
+    await page.goto(`${BASE}?r=f#/veld/afwerken`, { waitUntil: 'networkidle0' });
+    const inLijst = await page.evaluate(() => [...document.querySelectorAll('.kaart')].some((k) => k.textContent.includes('Combinatie met schot')));
+    controle(inLijst, 'Animatie-oefening staat niet in Afwerken');
+
+    // Kopie van een ingebouwde oefening: de animatie wordt lijnen met stapnummers.
+    await page.goto(`${BASE}?r=g#/oefening/veld-pt-derde-man`, { waitUntil: 'networkidle0' });
+    await klik(page, 'Kopiëren naar eigen oefeningen');
+    await page.waitForSelector('.editor-canvas');
+    await slaap(500);
+    t = await tekening(page);
+    const melding = await page.evaluate(() => document.querySelector('.editor-melding')?.textContent ?? '');
+    controle(!t.animatie && t.lijnen.some((l) => l.stap) && melding.includes('omgezet'), `Kopie: animatie niet omgezet (${melding}) ${JSON.stringify(t.lijnen?.map((l) => l.stap))}`);
+    await foto(page, 'kopie-lijnen', 'Kopie van "Derde man in de driehoek": animatie omgezet naar lijnen met stapnummers');
+    const sp = t.objecten.find((o) => o.soort === 'speler');
+    await klik(page, 'De animatie', '.editor-melding-knop');
+    await veldSleep(page, modus, [sp.x, sp.y], [sp.x + 1, sp.y + 1]);
+    const vraag = await page.evaluate(() => !!document.querySelector('.paneel-vraag'));
+    controle(!vraag, 'Kopie met lijnen: toch de vraag of de animatie mag vervallen');
+    await klik(page, 'Afspelen');
+    await page.waitForSelector('.paneel .speler-canvas', { timeout: 15000 }).catch(() => problemen.push('Kopie: afspelen opent niet'));
+    await slaap(800);
+    const kopieDuur = await page.evaluate(() => Number(document.querySelector('.paneel .speler-balk')?.max ?? 0));
+    controle(kopieDuur > 3, `Kopie: speelt niet af na aanpassen (${kopieDuur})`);
+    await klik(page, 'Terug naar tekenen');
+  }
+  await page.close();
+}
+
+await animatieMaken('telefoon', TELEFOON, 'vinger', true);
+await animatieMaken('tablet', TABLET, 'vinger', false);
+await animatieMaken('laptop', LAPTOP, 'muis', false);
 
 // ---------- tablet en laptop: tekenen ----------
 for (const [naam, vp, modus] of [

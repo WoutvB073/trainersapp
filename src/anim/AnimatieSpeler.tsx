@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Tekening } from '../model/types';
 import { maakTijdlijn, rondeDuur } from './timeline';
+import { afspeelTekening } from '../editor/animatie';
 import { uitsnede } from './render2d';
 import { maakWeergave2D, type Weergave } from './weergave';
 import type { CameraStand, Weergave3D } from './render3d';
@@ -43,7 +44,9 @@ function startModus(): Modus {
 }
 
 /** Speelt de animatie van een tekening af, in 3D (standaard) of 2D bovenaanzicht. */
-export function AnimatieSpeler({ tekening }: { tekening: Tekening }) {
+export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
+  // Eigen oefeningen: getekende lijnen met stapnummers worden hier animatiestappen.
+  const tekening = useMemo(() => afspeelTekening(getekend), [getekend]);
   const tijdlijn = useMemo(() => maakTijdlijn(tekening), [tekening]);
   const totaal = rondeDuur(tijdlijn);
 

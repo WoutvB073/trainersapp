@@ -142,7 +142,14 @@ describe('lijnen → animatiestappen', () => {
   });
 
   it('herhalen voor de rij: iedereen in de rij doet het patroon, met een eigen bal, en sluit daarna aan', () => {
-    const obj: VeldObject[] = [{ id: 'g', soort: 'goal', x: 20, y: 0 }, { id: 'k', soort: 'keeper', x: 20, y: 1.5 }, speler('a1', 20, 25), speler('a2', 20, 26.6), speler('a3', 20, 28.2), bal('b', 'a1')];
+    const obj: VeldObject[] = [
+      { id: 'g', soort: 'goal', x: 20, y: 0 },
+      { id: 'k', soort: 'keeper', x: 20, y: 1.5 },
+      speler('a1', 20, 25),
+      speler('a2', 20, 26.6),
+      speler('a3', 20, 28.2),
+      bal('b', 'a1'),
+    ];
     const lijnen = [lijn('dribbel', [20, 25], [20, 16], 1, { van: 'a1' }), lijn('bal', [20, 16], [18, 0.3], 2, { afloop: 'goal' })];
     const o = lijnenNaarAnimatie(t(obj, lijnen, { herhaalRij: true }));
     expect(o.meldingen).toEqual([]);
@@ -150,7 +157,10 @@ describe('lijnen → animatiestappen', () => {
     expect(o.tekening.rijen![0]!.spelers).toEqual(['a1', 'a2', 'a3']);
     expect(o.tekening.objecten.filter((x) => x.soort === 'bal')).toHaveLength(3);
     const tl = maakTijdlijn(o.tekening);
-    const schutters = [...tl.balEvents.values()].flat().filter((e) => e.soort === 'vlucht').map((e) => (e.soort === 'vlucht' ? e.passeerder : ''));
+    const schutters = [...tl.balEvents.values()]
+      .flat()
+      .filter((e) => e.soort === 'vlucht')
+      .map((e) => (e.soort === 'vlucht' ? e.passeerder : ''));
     expect(new Set(schutters)).toEqual(new Set(['a1', 'a2', 'a3']));
     expect(fysiekeFouten(o.tekening)).toEqual([]);
     // Geen rij achter de eerste speler: melding, wel gewoon één keer afspelen.
@@ -173,7 +183,18 @@ describe('lijnen → animatiestappen', () => {
   it('afspelen: ingebouwde oefeningen en tekeningen zonder nummers blijven zoals ze zijn', () => {
     const ingebouwd = OEFENINGEN[0]!.tekening;
     expect(afspeelTekening(ingebouwd)).toBe(ingebouwd);
-    const stil = t([speler('a1', 5, 10)], [{ soort: 'loop', punten: [[5, 10], [15, 10]] }]);
+    const stil = t(
+      [speler('a1', 5, 10)],
+      [
+        {
+          soort: 'loop',
+          punten: [
+            [5, 10],
+            [15, 10],
+          ],
+        },
+      ],
+    );
     expect(heeftLijnAnimatie(stil)).toBe(false);
     expect(afspeelTekening(stil)).toBe(stil);
     const met = t([speler('a1', 5, 10)], [lijn('loop', [5, 10], [15, 10], 1, { van: 'a1' })]);
