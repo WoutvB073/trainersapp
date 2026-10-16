@@ -118,7 +118,12 @@ export function TrainingKiezen({ id }: { id: string }) {
                     </span>
                   </a>
                   <Hartje id={o.id} naam={o.naam} />
-                  <button className={`toevoeg-knop${gekozen ? ' aan' : ''}`} onClick={() => wissel(o.id)} aria-pressed={gekozen} aria-label={gekozen ? `${o.naam} uit de training halen` : `${o.naam} toevoegen`}>
+                  <button
+                    className={`toevoeg-knop${gekozen ? ' aan' : ''}`}
+                    onClick={() => wissel(o.id)}
+                    aria-pressed={gekozen}
+                    aria-label={gekozen ? `${o.naam} uit de training halen` : `${o.naam} toevoegen`}
+                  >
                     <Icoon naam={gekozen ? 'vink' : 'plus'} maat={20} />
                     {gekozen ? 'In training' : 'Toevoegen'}
                   </button>

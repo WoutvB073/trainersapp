@@ -258,7 +258,7 @@
     "id": "veld-sp-latje-trap",
     "soort": "veld",
     "naam": "Latje-trap",
-    "categorieen": ["spelletjes", "afwerken"],
+    "categorieen": ["spelletjes", "techniek"],
     "uitleg": "Om de beurt schiet iedereen vanaf 16 m op het grote doel. Raak je de lat, dan krijg je een punt; raak je de paal, dan een half punt. Een doelpunt telt niet. Wie heeft na vijf rondes de meeste punten?",
     "organisatie": "Groot doel zonder keeper. Spelers staan naast elkaar op 16 m, ieder met een eigen bal. Ballen die terugkaatsen haal je zelf op.",
     "benodigdheden": ["1 groot doel", "1 bal per speler", "hoedjes voor de schietlijn"],
@@ -1239,7 +1239,7 @@
     "id": "veld-sp-piratenspel",
     "soort": "veld",
     "naam": "Piratenspel",
-    "categorieen": ["spelletjes", "techniek"],
+    "categorieen": ["spelletjes", "techniek", "warming-up"],
     "uitleg": "Alle kinderen dribbelen met een bal in het vak. Eén of twee piraten (zonder bal) proberen een bal af te pakken en uit het vak te schieten. Wie zijn bal kwijt is, wordt ook piraat. Wie houdt het langst zijn schat (de bal)?",
     "organisatie": "Vak van 14 × 14 m. Iedereen een bal, behalve 1 piraat per 6 kinderen (met hesje). Rondes tot er nog 1 of 2 kinderen met bal over zijn. Voor JO7–JO9.",
     "benodigdheden": ["4 pionnen", "1 bal per kind", "hesjes"],
@@ -1626,7 +1626,7 @@
     "id": "veld-cv-estafette",
     "soort": "veld",
     "naam": "Estafette: slalom, pass en schot",
-    "categorieen": ["spelletjes", "warming-up", "afwerken"],
+    "categorieen": ["spelletjes", "warming-up", "techniek"],
     "combinatievorm": true,
     "onderdelen": ["Slalom met bal", "Pass naar de medespeler", "Schot op het doeltje"],
     "uitleg": "Twee teams tegen elkaar. De eerste speler dribbelt in slalom langs de pionnen en speelt de bal naar zijn medespeler bij het doeltje, die direct scoort. Daarna wisselen ze van plek. Welk team scoort als eerste vijf keer?",
@@ -1861,6 +1861,429 @@
         {
           "duur": 0.6,
           "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-af-kleine-doeltjes",
+    "soort": "veld",
+    "naam": "Snelle schutter op kleine doeltjes",
+    "categorieen": ["spelletjes", "techniek"],
+    "uitleg": "Twee teams, elk met een eigen klein doeltje. Op het signaal dribbelt de voorste van elke rij naar de schietlijn en schiet op zijn doeltje. Raak = een punt. Daarna terug achteraan aansluiten. Welk team heeft na 3 minuten de meeste punten?",
+    "organisatie": "Twee kleine doeltjes (3 m breed) 8 m uit elkaar. Schietlijn van hoedjes op 8 m voor de doeltjes, de rijen met ballen op 18 m. Geschikt voor de jongste jeugd.",
+    "benodigdheden": ["2 kleine doeltjes", "4 hoedjes", "1 bal per speler"],
+    "spelersNodig": 2,
+    "keepersNodig": 0,
+    "doorwisselbaar": true,
+    "coachpunten": ["Kijk voor het schot op: waar is het doeltje?", "Plaatsen gaat voor hard: binnenkant voet", "Snel terug aansluiten, dan is je team sneller weer aan de beurt"],
+    "variaties": {
+      "makkelijker": ["Schietlijn op 5 m", "Grotere doeltjes of twee pionnen als doel"],
+      "moeilijker": ["Met een keeper in elk doeltje (wordt dan echt afwerken)", "Alleen met het zwakke been", "Een pion om te dribbelen vóór de schietlijn"]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 24
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "kA",
+          "soort": "klein-goal",
+          "x": 6,
+          "y": 2.5
+        },
+        {
+          "id": "kB",
+          "soort": "klein-goal",
+          "x": 14,
+          "y": 2.5
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 2.5,
+          "y": 10.5
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 9,
+          "y": 10.5
+        },
+        {
+          "id": "h3",
+          "soort": "hoedje",
+          "x": 11,
+          "y": 10.5
+        },
+        {
+          "id": "h4",
+          "soort": "hoedje",
+          "x": 17.5,
+          "y": 10.5
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "ba1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "ba2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "bb1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "b1"
+        },
+        {
+          "id": "bb2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "b2"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "rA",
+          "x": 6,
+          "y": 18,
+          "richting": 90,
+          "spelers": ["a1", "a2"]
+        },
+        {
+          "id": "rB",
+          "x": 14,
+          "y": 18,
+          "richting": 90,
+          "spelers": ["b1", "b2"]
+        }
+      ],
+      "animatie": [
+        {
+          "tegelijk": [
+            [
+              {
+                "herhaal": {
+                  "spelers": ["a1", "a2"],
+                  "waarden": {
+                    "doel": [[6.8, 1.6], [5.3, 1.7]]
+                  },
+                  "stappen": [
+                    {
+                      "acties": [
+                        {
+                          "type": "dribbel",
+                          "wie": "@",
+                          "naar": [6, 11.4],
+                          "manier": "sprint"
+                        }
+                      ]
+                    },
+                    {
+                      "acties": [
+                        {
+                          "type": "schot",
+                          "van": "@",
+                          "naar": "@doel",
+                          "hoogte": "grond"
+                        }
+                      ]
+                    },
+                    {
+                      "acties": [
+                        {
+                          "type": "aansluiten",
+                          "wie": "@",
+                          "rij": "rA"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            [
+              {
+                "herhaal": {
+                  "spelers": ["b1", "b2"],
+                  "waarden": {
+                    "doel": [[13.4, 1.7], [16.2, 1.6]]
+                  },
+                  "stappen": [
+                    {
+                      "acties": [
+                        {
+                          "type": "dribbel",
+                          "wie": "@",
+                          "naar": [14, 11.6],
+                          "manier": "sprint"
+                        }
+                      ]
+                    },
+                    {
+                      "acties": [
+                        {
+                          "type": "schot",
+                          "van": "@",
+                          "naar": "@doel",
+                          "hoogte": "grond"
+                        }
+                      ]
+                    },
+                    {
+                      "acties": [
+                        {
+                          "type": "aansluiten",
+                          "wie": "@",
+                          "rij": "rB"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-pt-pionnen-omschieten",
+    "soort": "veld",
+    "naam": "Pionnen omschieten",
+    "categorieen": ["spelletjes", "pass-en-trap"],
+    "uitleg": "Twee teams staan tegenover elkaar op hun eigen lijn, met een rij pionnen in het midden. Probeer met een pass over de grond de pionnen om te schieten. Ballen die doorrollen mag de tegenpartij gebruiken. Welk team heeft na 2 minuten de meeste pionnen om?",
+    "organisatie": "Twee lijnen op 12 m van elkaar, in het midden 5 pionnen op 3 m van elkaar. Teams van 2–6 spelers, iedereen een bal. Niet over de eigen lijn stappen.",
+    "benodigdheden": ["5 pionnen (liefst hoge)", "4 hoedjes voor de lijnen", "1 bal per speler"],
+    "spelersNodig": 4,
+    "keepersNodig": 0,
+    "doorwisselbaar": true,
+    "coachpunten": ["Standbeen naast de bal, wijzend naar je doel", "Binnenkant voor precisie, wreef voor een harde pass", "Snel een volgende bal pakken en opnieuw mikken"],
+    "variaties": {
+      "makkelijker": ["Lijnen dichterbij (8 m)", "Grotere doelen (kegels of ballen op een pion)"],
+      "moeilijker": ["Alleen het zwakke been", "Lijnen verder uit elkaar (16 m)", "In één keer: de bal van de tegenstander direct terugspelen"]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 2,
+          "y": 14
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 18,
+          "y": 14
+        },
+        {
+          "id": "h3",
+          "soort": "hoedje",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "id": "h4",
+          "soort": "hoedje",
+          "x": 18,
+          "y": 2
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 4,
+          "y": 8
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 7,
+          "y": 8
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 10,
+          "y": 8
+        },
+        {
+          "id": "p4",
+          "soort": "pion",
+          "x": 13,
+          "y": 8
+        },
+        {
+          "id": "p5",
+          "soort": "pion",
+          "x": 16,
+          "y": 8
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 6,
+          "y": 14,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 12,
+          "y": 14,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 1,
+          "x": 8,
+          "y": 2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 14,
+          "y": 2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "ba1",
+          "soort": "bal",
+          "x": 6,
+          "y": 13.6,
+          "bij": "a1"
+        },
+        {
+          "id": "ba2",
+          "soort": "bal",
+          "x": 12,
+          "y": 13.6,
+          "bij": "a2"
+        },
+        {
+          "id": "bb1",
+          "soort": "bal",
+          "x": 8,
+          "y": 2.4,
+          "bij": "b1"
+        },
+        {
+          "id": "bb2",
+          "soort": "bal",
+          "x": 14,
+          "y": 2.4,
+          "bij": "b2"
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": [7, 8.55]
+            },
+            {
+              "type": "pass",
+              "van": "b1",
+              "naar": [10, 7.45],
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": [12.6, 2.9]
+            },
+            {
+              "type": "pass",
+              "van": "b2",
+              "naar": [13, 7.45],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pak",
+              "wie": "b2",
+              "bal": "ba2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b2",
+              "bal": "ba2",
+              "naar": [16, 7.45]
+            }
+          ]
         }
       ]
     }

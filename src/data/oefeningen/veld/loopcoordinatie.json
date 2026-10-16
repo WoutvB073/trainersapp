@@ -1251,7 +1251,7 @@
     "id": "veld-lc-estafette",
     "soort": "veld",
     "naam": "Coördinatie-estafette",
-    "categorieen": ["loopcoordinatie", "warming-up"],
+    "categorieen": ["loopcoordinatie", "warming-up", "spelletjes"],
     "uitleg": "Twee teams doen tegelijk een parcours: door de ladder (één voet per vak), slalom om drie paaltjes, rechtsom de pion en buiten de baan terugsprinten. Achteraan aansluiten; dan mag de volgende. Welk team is als eerste helemaal rond?",
     "organisatie": "Twee gelijke banen naast elkaar, 7 m uit elkaar: ladder van 4 m, drie paaltjes op 1,5 m, keerpion 3,5 m verder. De teams staan in een rij voor hun eigen baan.",
     "benodigdheden": [
@@ -1508,7 +1508,7 @@
     "id": "veld-cv-hordes-sprint-duel",
     "soort": "veld",
     "naam": "Hordes, sprint naar de bal en 1 tegen 1",
-    "categorieen": ["loopcoordinatie", "partijvormen", "warming-up"],
+    "categorieen": ["loopcoordinatie", "partijvormen"],
     "combinatievorm": true,
     "onderdelen": [
       "Hordes",

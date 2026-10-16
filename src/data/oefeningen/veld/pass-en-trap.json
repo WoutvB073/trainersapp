@@ -854,7 +854,7 @@
     "id": "veld-pt-poortjesspel",
     "soort": "veld",
     "naam": "Poortjesspel in tweetallen",
-    "categorieen": ["pass-en-trap"],
+    "categorieen": ["pass-en-trap", "spelletjes"],
     "uitleg": "Tweetallen spelen de bal naar elkaar door een poortje: elke goede pass door een poortje is een punt. Daarna moet je een ander poortje kiezen. Welk tweetal heeft na 1,5 minuut de meeste punten?",
     "organisatie": "Vak van 18 × 17 m met 5 poortjes van twee hoedjes (1,5 m breed). Tweetallen met één bal; alle tweetallen spelen tegelijk.",
     "benodigdheden": ["4 pionnen", "10 hoedjes", "1 bal per tweetal"],
@@ -1058,202 +1058,6 @@
     }
   },
   {
-    "id": "veld-pt-pionnen-omschieten",
-    "soort": "veld",
-    "naam": "Pionnen omschieten",
-    "categorieen": ["pass-en-trap", "spelletjes"],
-    "uitleg": "Twee teams staan tegenover elkaar op hun eigen lijn, met een rij pionnen in het midden. Probeer met een pass over de grond de pionnen om te schieten. Ballen die doorrollen mag de tegenpartij gebruiken. Welk team heeft na 2 minuten de meeste pionnen om?",
-    "organisatie": "Twee lijnen op 12 m van elkaar, in het midden 5 pionnen op 3 m van elkaar. Teams van 2–6 spelers, iedereen een bal. Niet over de eigen lijn stappen.",
-    "benodigdheden": ["5 pionnen (liefst hoge)", "4 hoedjes voor de lijnen", "1 bal per speler"],
-    "spelersNodig": 4,
-    "keepersNodig": 0,
-    "doorwisselbaar": true,
-    "coachpunten": ["Standbeen naast de bal, wijzend naar je doel", "Binnenkant voor precisie, wreef voor een harde pass", "Snel een volgende bal pakken en opnieuw mikken"],
-    "variaties": {
-      "makkelijker": ["Lijnen dichterbij (8 m)", "Grotere doelen (kegels of ballen op een pion)"],
-      "moeilijker": ["Alleen het zwakke been", "Lijnen verder uit elkaar (16 m)", "In één keer: de bal van de tegenstander direct terugspelen"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 20,
-        "lengte": 16
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "h1",
-          "soort": "hoedje",
-          "x": 2,
-          "y": 14
-        },
-        {
-          "id": "h2",
-          "soort": "hoedje",
-          "x": 18,
-          "y": 14
-        },
-        {
-          "id": "h3",
-          "soort": "hoedje",
-          "x": 2,
-          "y": 2
-        },
-        {
-          "id": "h4",
-          "soort": "hoedje",
-          "x": 18,
-          "y": 2
-        },
-        {
-          "id": "p1",
-          "soort": "pion",
-          "x": 4,
-          "y": 8
-        },
-        {
-          "id": "p2",
-          "soort": "pion",
-          "x": 7,
-          "y": 8
-        },
-        {
-          "id": "p3",
-          "soort": "pion",
-          "x": 10,
-          "y": 8
-        },
-        {
-          "id": "p4",
-          "soort": "pion",
-          "x": 13,
-          "y": 8
-        },
-        {
-          "id": "p5",
-          "soort": "pion",
-          "x": 16,
-          "y": 8
-        },
-        {
-          "id": "a1",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 1,
-          "x": 6,
-          "y": 14,
-          "kijkrichting": -90
-        },
-        {
-          "id": "a2",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 2,
-          "x": 12,
-          "y": 14,
-          "kijkrichting": -90
-        },
-        {
-          "id": "b1",
-          "soort": "speler",
-          "team": "B",
-          "nummer": 1,
-          "x": 8,
-          "y": 2,
-          "kijkrichting": 90
-        },
-        {
-          "id": "b2",
-          "soort": "speler",
-          "team": "B",
-          "nummer": 2,
-          "x": 14,
-          "y": 2,
-          "kijkrichting": 90
-        },
-        {
-          "id": "ba1",
-          "soort": "bal",
-          "x": 6,
-          "y": 13.6,
-          "bij": "a1"
-        },
-        {
-          "id": "ba2",
-          "soort": "bal",
-          "x": 12,
-          "y": 13.6,
-          "bij": "a2"
-        },
-        {
-          "id": "bb1",
-          "soort": "bal",
-          "x": 8,
-          "y": 2.4,
-          "bij": "b1"
-        },
-        {
-          "id": "bb2",
-          "soort": "bal",
-          "x": 14,
-          "y": 2.4,
-          "bij": "b2"
-        }
-      ],
-      "animatie": [
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "a1",
-              "naar": [7, 8.55]
-            },
-            {
-              "type": "pass",
-              "van": "b1",
-              "naar": [10, 7.45],
-              "start": 0.3
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "a2",
-              "naar": [12.6, 2.9]
-            },
-            {
-              "type": "pass",
-              "van": "b2",
-              "naar": [13, 7.45],
-              "start": 0.2
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "pak",
-              "wie": "b2",
-              "bal": "ba2"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "b2",
-              "bal": "ba2",
-              "naar": [16, 7.45]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
     "id": "veld-pt-vierhoek-twee-ballen",
     "soort": "veld",
     "naam": "Vierhoek met twee ballen",
@@ -1416,7 +1220,7 @@
     "id": "veld-cv-derde-man-afronden",
     "soort": "veld",
     "naam": "Driehoek, derde man en afronden",
-    "categorieen": ["pass-en-trap", "afwerken", "positiespel"],
+    "categorieen": ["pass-en-trap", "afwerken"],
     "combinatievorm": true,
     "onderdelen": [
       "Inspelen",

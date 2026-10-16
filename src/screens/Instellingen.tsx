@@ -54,7 +54,13 @@ export function Instellingen() {
           <h3>Weergave</h3>
           <div className="keuze-drie" role="radiogroup" aria-label="Licht of donker">
             {MODI.map((m) => (
-              <button key={m.modus} role="radio" aria-checked={keuze.modus === m.modus} className={`keuze${keuze.modus === m.modus ? ' aan' : ''}`} onClick={() => kiesThema({ ...keuze, modus: m.modus })}>
+              <button
+                key={m.modus}
+                role="radio"
+                aria-checked={keuze.modus === m.modus}
+                className={`keuze${keuze.modus === m.modus ? ' aan' : ''}`}
+                onClick={() => kiesThema({ ...keuze, modus: m.modus })}
+              >
                 <Icoon naam={m.icoon} maat={20} />
                 {m.naam}
               </button>

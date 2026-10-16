@@ -10,7 +10,21 @@ const geheugen = () => {
   return { getItem: (k: string) => data.get(k) ?? null, setItem: (k: string, v: string) => void data.set(k, v), removeItem: (k: string) => void data.delete(k) };
 };
 const oef = (id: string, extra: Partial<Oefening> = {}): Oefening =>
-  ({ id, soort: 'veld', naam: id, categorieen: ['afwerken'], uitleg: '', benodigdheden: [], spelersNodig: 4, keepersNodig: 0, doorwisselbaar: true, coachpunten: [], variaties: { makkelijker: [], moeilijker: [] }, tekening: { veld: { type: 'leeg' }, objecten: [] }, ...extra }) as Oefening;
+  ({
+    id,
+    soort: 'veld',
+    naam: id,
+    categorieen: ['afwerken'],
+    uitleg: '',
+    benodigdheden: [],
+    spelersNodig: 4,
+    keepersNodig: 0,
+    doorwisselbaar: true,
+    coachpunten: [],
+    variaties: { makkelijker: [], moeilijker: [] },
+    tekening: { veld: { type: 'leeg' }, objecten: [] },
+    ...extra,
+  }) as Oefening;
 const f = (w: Partial<Filters>): Filters => ({ ...GEEN_FILTERS, ...w });
 
 describe('filters', () => {

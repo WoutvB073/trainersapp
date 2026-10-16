@@ -110,7 +110,7 @@
     "id": "keeper-sp-keepersvolleybal",
     "soort": "keeper",
     "naam": "Keepersvolleybal over het net",
-    "categorieen": ["spelletjes"],
+    "categorieen": ["spelletjes", "warming-up"],
     "uitleg": "Twee keepers spelen volleybal met de handen over een net van 2 m. Je gooit de bal over het net in het vak van de ander; die moet hem vangen voordat hij de grond raakt (duiken mag). Valt de bal in het vak, dan is het een punt.",
     "organisatie": "Vak van 8 × 14 m met in het midden een net of lint op 2 m. Gooien vanaf de plek waar je de bal vangt. Spelen tot 11 punten.",
     "benodigdheden": ["Net of lint op 2 m met 2 palen", "4 hoedjes", "1 bal"],
@@ -831,12 +831,7 @@
     "id": "keeper-sp-keepersrondo",
     "soort": "keeper",
     "naam": "Keepersrondo",
-    "categorieen": [
-      "spelletjes",
-      "passing",
-      "laag-duiken",
-      "warming-up"
-    ],
+    "categorieen": ["spelletjes", "passing", "warming-up"],
     "uitleg": "Rondo voor keepers. De buitenkeepers spelen de bal met de voet rond, de keeper in het midden probeert hem te onderscheppen en mag daarbij zijn handen gebruiken: wegduiken, plukken of vangen. Wie de bal verliest of wiens pass gevangen wordt, gaat het midden in; de onderschepper wordt buitenkeeper.",
     "organisatie": "Kleinste vorm: 3 tegen 1 in een driehoek met zijden van 9 m (hoedjes op de hoeken). Met 3 keepers speelt de trainer mee als derde buitenspeler. Met 4 keepers: 3 tegen 1 zonder trainer of 4 tegen 1 in een vierkant van 9 × 9 m. Met 7 keepers: 5 tegen 2 in een vak van 12 × 12 m.",
     "benodigdheden": ["3 hoedjes", "1 bal (reserveballen bij de trainer)"],

@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (16-10-2026, versie 0.14.0)
+## Status (16-10-2026, versie 0.15.0)
 
 | Fase | Status |
 |---|---|
@@ -17,8 +17,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 2. 3D-animaties (Three.js) | ✅ online (0.2.0), getest op de telefoon door de gebruiker |
 | 3. Training maken | ✅ online (0.11.0), getest en akkoord: aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, klaarzetten, opslaan op het apparaat, dupliceren, delen via een link |
 | 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – getest en akkoord. Feedback 0.11.0 (0.12.0): fysieke controle van alle oefeningen, Keepersrondo en Keepersoorlog op één goal, aantallen "4+" (doorwisselbaar) of vast – **wacht op test**. |
-| 5. Editor | ✅ online (0.13.0), getest en akkoord. Animatie in de editor (0.14.0) – **wacht op test**: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
-| 6. Instellingen + Clubkleuren | ⏳ |
+| 5. Editor | ✅ online (0.13.0), getest en akkoord. Animatie in de editor (0.14.0) – getest en akkoord: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
+| 6. Instellingen + Clubkleuren | ✅ online (0.15.0) – **wacht op test**: naam TopTraining met nieuw logo, 8 clubkleuren in licht/donker/automatisch, favorieten, filterbalk, categorie-indeling nagelopen (wacht op correcties van de gebruiker) |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
@@ -567,6 +567,59 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   diepe bal, parcours, bocht, wachten, herhalen voor de rij, waarschuwingen, kopieën) en `tools/e2e/editor.mjs`
   (pass, dribbel, lopen en schot tekenen, nummers wijzigen, opties, melding, afspelen 2D/3D op telefoon/tablet/laptop,
   opslaan, bibliotheek, delen, kopie met lijnen).
+
+## Besluiten versie 0.15.0 – naam, clubkleuren, favorieten en filters, categorie-indeling
+- **Naam:** TopTraining (app, startscherm, installatiescherm, paginatitel, manifest `name`/`short_name`, documentatie).
+  Niet veranderd: repo, link `/trainersapp/`, manifest `id`/`start_url`/`scope` en opslagsleutels `trainersapp.…`
+  (anders werken geïnstalleerde apps en gedeelde links niet meer). `tools/e2e/update.mjs <oude-build>` test de update van
+  een geïnstalleerde app (melding, bijwerken, gegevens blijven, offline).
+- **Logo/app-icoon** (`public/logo.svg`, de build maakt alle iconen): grote witte T met een bal eronder op een gestreept
+  grasveld. Gekozen uit vier varianten (T + bal, pijl omhoog + bal, goal, T met gele streep): de T blijft ook op 16–24 px
+  herkenbaar; zonder lettertype, dus overal hetzelfde.
+- **Instellingen** (`#/instellingen`, tandwiel op het startscherm): "Clubkleuren" met 8 tegels met voorbeeld (Groen
+  standaard, Rood-wit, Blauw-wit, Geel-zwart, Groen-wit fris, Oranje, Paars, Zwart-goud) en Weergave Licht / Donker /
+  Automatisch (volgt de telefoon, schakelt mee). Thema's staan in `src/engine/thema.ts` (per thema licht én donker) en
+  worden vóór de eerste weergave als CSS-variabelen gezet (geen kleurflits). Het veld en de teamkleuren (thema.css)
+  veranderen nooit. Nieuwe variabelen: `--primair-tekst` (themakleur als tekst), `--op-accent`, `--op-makkelijker`,
+  `--op-moeilijker`, `--op-combi`, `--eigen(-licht)`, `--waarschuwing(-licht)`, `--fout(-licht)`. Een test controleert
+  het contrast (WCAG ≥ 4,5 voor tekst, ≥ 7 voor gewone tekst) in alle 16 combinaties. Keuze: localStorage
+  `trainersapp.thema`.
+- **Favorieten:** hartje op elke kaart (lijst, Training maken) en op de detailpagina, voor ingebouwde en eigen oefeningen.
+  `src/engine/favorieten.ts` (`FavorietenStore` met verwisselbare backend, nu localStorage `trainersapp.favorieten`).
+- **Filterbalk** (`src/components/Filters.tsx`, logica `src/engine/filters.ts`) op Categorieën, Oefenlijst en Training maken →
+  kiezen: zoeken op naam (zonder hoofdletters/accenten, alle woorden), "Alleen wat past bij mijn aantal" (spelers/keepers,
+  zelfde regel als Training maken; onthouden in `trainersapp.filterAantallen`), Favorieten, Combinatievormen, Eigen.
+  Op de telefoon ingeklapt (knop "Filters" met aantal), op een laptop open. Toont het aantal oefeningen en "Filters wissen";
+  categorieën tonen de aantallen volgens de filters; niets gevonden → melding met knop. Bij Training maken gelden de
+  aantallen van de training. De filters (behalve aantallen) gelden zolang de app open is.
+- **Categorie-indeling** nagelopen met de richtlijnen (Afwerken = wedstrijdecht scoren op doel; Warming-up = laagdrempelig;
+  Partijvormen = twee partijen met een doel; Positiespel = balbezit/rondo's; Spelletjes = spelelement voorop; maximaal
+  drie categorieën). Test: precies één hoofdcategorie (= bestand), maximaal drie, geen dubbele. Aangepast (22, wacht op
+  correcties van de gebruiker):
+  - Veld – Snelle schutter op kleine doeltjes – afwerken, spelletjes → spelletjes, techniek (nieuwe hoofdcategorie)
+  - Veld – Overlap op de flank, lage voorzet en afronden – afwerken, pass-en-trap, positiespel → afwerken, pass-en-trap
+  - Veld – Coördinatie-estafette – loopcoordinatie, warming-up → loopcoordinatie, warming-up, spelletjes
+  - Veld – Hordes, sprint naar de bal en 1 tegen 1 – loopcoordinatie, partijvormen, warming-up → loopcoordinatie, partijvormen
+  - Veld – 5 tegen 5 met keepers: via de flank telt dubbel – partijvormen, afwerken → partijvormen
+  - Veld – Poortjesspel in tweetallen – pass-en-trap → pass-en-trap, spelletjes
+  - Veld – Pionnen omschieten – pass-en-trap, spelletjes → spelletjes, pass-en-trap (nieuwe hoofdcategorie)
+  - Veld – Driehoek, derde man en afronden – pass-en-trap, afwerken, positiespel → pass-en-trap, afwerken
+  - Veld – Overtal 3 tegen 2 naar doelpoortjes – positiespel, partijvormen → partijvormen, positiespel (nieuwe hoofdcategorie)
+  - Veld – Latje-trap – spelletjes, afwerken → spelletjes, techniek
+  - Veld – Piratenspel – spelletjes, techniek → spelletjes, techniek, warming-up
+  - Veld – Estafette: slalom, pass en schot – spelletjes, warming-up, afwerken → spelletjes, warming-up, techniek
+  - Veld – Koning van het vak – techniek, warming-up → techniek, warming-up, spelletjes
+  - Veld – Tikkertje met hesje – warming-up → warming-up, spelletjes
+  - Veld – Schatrovers – warming-up → warming-up, spelletjes
+  - Veld – Overlopertje – warming-up → warming-up, spelletjes
+  - Veld – Circuit: hordes, slalom en rebounder – warming-up, loopcoordinatie, techniek, pass-en-trap → warming-up, loopcoordinatie, pass-en-trap
+  - Keepers – Hordes, hoge bal en hoge duik – hoog-duiken, warming-up, bal-verwerken → hoog-duiken, bal-verwerken
+  - Keepers – Keepersvolleybal over het net – spelletjes → spelletjes, warming-up
+  - Keepers – Keepersrondo – spelletjes, passing, laag-duiken, warming-up → spelletjes, passing, warming-up
+  - Keepers – Werpen en vangen in de driehoek – warming-up → warming-up, passing
+  - Keepers – Keeperscircuit: ladder, hordes en duiken – warming-up, laag-duiken, hoog-duiken → laag-duiken, hoog-duiken (nieuwe hoofdcategorie)
+- **Tests:** `tests/filters.test.ts` (filters en combinaties, favorieten, aantallen onthouden, thema's en contrast),
+  categorie-test in `tests/oefeningen.test.ts`; browsertests `tools/e2e/thema.mjs`, `filters.mjs`, `update.mjs`.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.

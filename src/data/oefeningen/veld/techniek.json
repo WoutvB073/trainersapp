@@ -1306,7 +1306,7 @@
     "id": "veld-tq-koning-van-het-vak",
     "soort": "veld",
     "naam": "Koning van het vak",
-    "categorieen": ["techniek", "warming-up"],
+    "categorieen": ["techniek", "warming-up", "spelletjes"],
     "uitleg": "Iedereen dribbelt met een eigen bal in het vak. Bescherm je eigen bal en probeer ondertussen ballen van anderen uit het vak te tikken. Is je bal eruit, haal hem dan op, doe 5 keer hooghouden of kappen buiten het vak en doe weer mee.",
     "organisatie": "Vak van 12 × 12 m (kleiner bij weinig spelers). Iedereen een bal. Speel blokjes van 1 minuut.",
     "benodigdheden": ["4 pionnen", "1 bal per speler"],

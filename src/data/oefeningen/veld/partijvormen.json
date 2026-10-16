@@ -1345,7 +1345,7 @@
     "id": "veld-pv-5-5-flank",
     "soort": "veld",
     "naam": "5 tegen 5 met keepers: via de flank telt dubbel",
-    "categorieen": ["partijvormen", "afwerken"],
+    "categorieen": ["partijvormen"],
     "uitleg": "Partij 5 tegen 5 met keepers. Langs beide zijlijnen ligt een flankzone. Een doelpunt na een voorzet of pass uit de flankzone telt dubbel. Zo leren spelers het veld breed te maken en de aanval via de zijkant op te zetten.",
     "organisatie": "Veld van 34 × 44 m met twee jeugdgoals en keepers. Flankzones van 6 m breed langs de zijlijnen (pionnen of hoedjes). Teams met hesjes.",
     "benodigdheden": [
@@ -2284,6 +2284,229 @@
         },
         {
           "duur": 1.4,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-ps-3-2-poortjes",
+    "soort": "veld",
+    "naam": "Overtal 3 tegen 2 naar doelpoortjes",
+    "categorieen": ["partijvormen", "positiespel"],
+    "uitleg": "Drie aanvallers spelen tegen twee verdedigers en scoren door met de bal aan de voet door een van de twee doelpoortjes te dribbelen. Benut het overtal: lok een verdediger naar je toe en speel de vrije man aan.",
+    "organisatie": "Veld van 20 × 24 m. Twee poortjes van 3 m breed op de achterlijn. Aanvallers starten met de bal op de andere achterlijn, verdedigers op de middenlijn. Na elke aanval wisselen.",
+    "benodigdheden": [
+      "4 pionnen (veld)",
+      "4 pionnen (poortjes)",
+      "ballen",
+      "hesjes"
+    ],
+    "spelersNodig": 5,
+    "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: wachtende groepjes naast het vak, na elke aanval wisselen.",
+    "coachpunten": ["Dribbel op een verdediger af om hem vast te zetten, en speel dan pas", "Breed spelen: de buitenste aanvallers houden afstand", "Snel beslissen: het overtal duurt maar een paar seconden"],
+    "variaties": {
+      "makkelijker": ["3 tegen 1", "Bredere poortjes (4 m)"],
+      "moeilijker": ["Maximaal 8 seconden per aanval", "Verovert de verdediging de bal, dan mag zij scoren op een klein goaltje achter de aanvallers", "Na een pass mag je pas scoren als iedereen de bal heeft gehad"]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 24
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 10,
+          "y": 12.5,
+          "breedte": 20,
+          "lengte": 21
+        },
+        {
+          "id": "g1a",
+          "soort": "pion",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "id": "g1b",
+          "soort": "pion",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "id": "g2a",
+          "soort": "pion",
+          "x": 13,
+          "y": 2
+        },
+        {
+          "id": "g2b",
+          "soort": "pion",
+          "x": 16,
+          "y": 2
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 10,
+          "y": 21.5,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 3.5,
+          "y": 20.5,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 16.5,
+          "y": 20.5,
+          "kijkrichting": -90
+        },
+        {
+          "id": "d1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 4,
+          "x": 7.5,
+          "y": 10,
+          "kijkrichting": 90
+        },
+        {
+          "id": "d2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 5,
+          "x": 12.5,
+          "y": 10,
+          "kijkrichting": 90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 10,
+          "y": 21.1,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [9.5, 15.5],
+              "duur": 1.8
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [3.5, 15],
+              "duur": 1.8
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [16.5, 15],
+              "duur": 1.8
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a1",
+              "start": 0.4,
+              "duur": 1.4,
+              "manier": "jog"
+            },
+            {
+              "type": "dek",
+              "wie": "d2",
+              "tussen": ["a1", "a3"],
+              "fractie": 0.45,
+              "start": 0.4,
+              "duur": 1.4,
+              "manier": "jog"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [3.8, 11],
+              "manier": "sprint",
+              "start": 0.1
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a2",
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [16.2, 9],
+              "manier": "sprint",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a3"
+            },
+            {
+              "type": "druk",
+              "wie": "d2",
+              "op": "a3",
+              "start": 0.4
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [10, 9],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a3",
+              "via": [[15.2, 5]],
+              "naar": [14.5, 0.8],
+              "manier": "sprint"
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
           "acties": []
         }
       ]

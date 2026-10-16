@@ -66,8 +66,18 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
               </label>
               {f.aantallen && (
                 <div className="filter-stappers">
-                  <Stapper label="Spelers" icoon="spelers" waarde={f.aantallen.spelers} onStap={(d) => zetFilters({ aantallen: { ...f.aantallen!, spelers: Math.max(0, Math.min(40, f.aantallen!.spelers + d)) } })} />
-                  <Stapper label="Keepers" icoon="keeper" waarde={f.aantallen.keepers} onStap={(d) => zetFilters({ aantallen: { ...f.aantallen!, keepers: Math.max(0, Math.min(40, f.aantallen!.keepers + d)) } })} />
+                  <Stapper
+                    label="Spelers"
+                    icoon="spelers"
+                    waarde={f.aantallen.spelers}
+                    onStap={(d) => zetFilters({ aantallen: { ...f.aantallen!, spelers: Math.max(0, Math.min(40, f.aantallen!.spelers + d)) } })}
+                  />
+                  <Stapper
+                    label="Keepers"
+                    icoon="keeper"
+                    waarde={f.aantallen.keepers}
+                    onStap={(d) => zetFilters({ aantallen: { ...f.aantallen!, keepers: Math.max(0, Math.min(40, f.aantallen!.keepers + d)) } })}
+                  />
                 </div>
               )}
             </div>
