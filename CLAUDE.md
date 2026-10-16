@@ -34,6 +34,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `drie-d.mjs` — 3D-momenten van beide oefeningen + camerastanden (`blad-3d-*.png`), cameragrenzen, beeldsnelheid.
 - `training.mjs [url]` — Training maken: hele flow op telefoon/tablet/laptop (kiezen, slepen met de vinger, trainingsmodus met vegen, delen, opslaan, dupliceren, verwijderen, offline). Blad: `blad-training.png`.
 - `editor.mjs [url]` — editor op telefoon/tablet (vinger, ook twee vingers) en laptop (muis), gegevens, bibliotheek, delen naar een ander toestel, kopie met animatie. Blad: `blad-editor.png`. Testhaakje `window.__editor` alleen met localStorage `trainersapp.testEditor=1`.
+- `start.mjs [url]` — startscherm op 9 formaten (iPhone SE ook liggend, 320 px, tablet, laptop) in 4 thema's: volgorde, alles in beeld, geen horizontaal scrollen; tandwiel op meerdere maten. Bladen: `blad-start-formaten.png`, `blad-start-themas.png`, `blad-start-tandwiel.png`.
 - `thema.mjs [url]` — alle clubkleuren in licht en donker (startscherm) + schermen in een paar thema's; veld blijft gelijk; keuze onthouden; automatisch. Bladen: `blad-thema-start.png`, `blad-thema-schermen.png`.
 - `filters.mjs [url]` — filterbalk, favorieten, aantallen, lege melding, Training maken, op telefoon/tablet/laptop. Blad: `blad-filters.png`.
 - `update.mjs <oude-build> [nieuwe-build]` — update van een geïnstalleerde app (eigen server op poort 4190).

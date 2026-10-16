@@ -82,11 +82,6 @@
   font-size: 0.9rem;
 }
 
-@media (min-width: 640px) {
-  .tegel-training {
-    grid-column: 1 / -1;
-  }
-}
 
 /* Mijn trainingen */
 

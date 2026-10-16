@@ -146,14 +146,241 @@ h3 {
   opacity: 0.85;
 }
 
+/* Volgorde: Training bovenaan, dan Veld en Keepers naast elkaar, dan Eigen oefeningen. */
 .tegels {
   display: grid;
-  gap: 14px;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'training training'
+    'veld keepers'
+    'eigen eigen';
 }
 
-@media (min-width: 640px) {
+.tegel-training {
+  grid-area: training;
+}
+
+.tegel-veld {
+  grid-area: veld;
+}
+
+.tegel-keepers {
+  grid-area: keepers;
+}
+
+.tegel-eigen {
+  grid-area: eigen;
+}
+
+.pagina-start .inhoud {
+  padding-top: 14px;
+}
+
+.start-voet {
+  margin-top: 16px;
+}
+
+/* Telefoon (staand): alles in één scherm, ook op een kleine iPhone. Veld/Keepers als smalle tegels met het plaatje
+   boven; bij Training en Eigen oefeningen geen plaatje, zodat de twee knoppen naast elkaar passen. */
+@media (max-width: 639px) {
+  .start-kop {
+    gap: 12px;
+    padding-top: calc(14px + env(safe-area-inset-top));
+    padding-bottom: 16px;
+  }
+
+  .start-logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+
+  .start-titel {
+    font-size: 1.7rem;
+  }
+
+  .start-sub {
+    font-size: 0.9rem;
+  }
+
+  .tegel {
+    padding: 12px;
+  }
+
+  .tegel-soort {
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .tegel-soort .tegel-plaatje {
+    width: 100%;
+    max-height: 84px;
+  }
+
+  .tegel-soort .tegel-titel {
+    font-size: 1.45rem;
+  }
+
+  .tegel-soort .tegel-sub {
+    font-size: 0.88rem;
+  }
+
+  .tegel-soort .tegel-pijl {
+    position: absolute;
+    right: 8px;
+    bottom: 14px;
+  }
+
+  .tegel-actie .tegel-plaatje {
+    display: none;
+  }
+
+  .tegel-actie .tegel-titel {
+    font-size: 1.5rem;
+  }
+
+  .tegel-actie .tegel-knoppen {
+    flex-wrap: nowrap;
+  }
+
+  .tegel-actie .tegel-knoppen .knop {
+    flex: 1 1 auto;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+}
+
+/* Heel smal (± 320 px): alles iets kleiner, knoppen blijven naast elkaar (zonder plus-icoon). */
+@media (max-width: 359px) {
+  .start-sub {
+    display: none;
+  }
+
   .tegels {
-    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .tegel-soort .tegel-plaatje {
+    max-height: 64px;
+  }
+
+  .tegel-soort .tegel-pijl {
+    display: none;
+  }
+
+  .tegel-actie .tegel-titel,
+  .tegel-soort .tegel-titel {
+    font-size: 1.3rem;
+  }
+
+  .tegel-actie .tegel-knoppen .knop {
+    padding: 6px 6px;
+    font-size: 0.82rem;
+  }
+
+  .tegel-actie .tegel-knoppen .knop svg {
+    display: none;
+  }
+}
+
+/* Tablet en laptop: ruimer, grotere plaatjes en titels. */
+@media (min-width: 760px) and (min-height: 600px) {
+  .pagina-start .inhoud {
+    max-width: 980px;
+    padding-top: 24px;
+  }
+
+  .tegels {
+    gap: 18px;
+  }
+
+  .tegel {
+    gap: 22px;
+    padding: 20px;
+  }
+
+  .tegel-plaatje {
+    width: 150px;
+  }
+
+  .tegel-titel {
+    font-size: 2rem;
+  }
+
+  .tegel-knoppen .knop {
+    min-height: 46px;
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+}
+
+/* Telefoon liggend: twee kolommen (Training | Eigen, Veld | Keepers) en een lage kop. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .tegels {
+    grid-template-areas:
+      'training eigen'
+      'veld keepers';
+    gap: 10px;
+  }
+
+  .start-kop {
+    padding-top: calc(8px + env(safe-area-inset-top));
+    padding-bottom: 8px;
+  }
+
+  .start-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .start-titel {
+    font-size: 1.4rem;
+  }
+
+  .start-sub {
+    display: none;
+  }
+
+  .pagina-start .inhoud {
+    padding-top: 10px;
+  }
+
+  .tegel {
+    padding: 10px 12px;
+  }
+
+  .tegel-soort {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .tegel-soort .tegel-plaatje {
+    width: 84px;
+    max-height: none;
+  }
+
+  .tegel-soort .tegel-pijl {
+    position: static;
+  }
+
+  .tegel-actie .tegel-plaatje {
+    display: none;
+  }
+
+  .tegel-titel {
+    font-size: 1.35rem;
+  }
+
+  .tegel-actie .tegel-knoppen {
+    margin-top: 6px;
+  }
+
+  .start-voet {
+    display: none;
   }
 }
 

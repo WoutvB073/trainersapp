@@ -48,7 +48,7 @@ function Tegel({ soort }: { soort: Soort }) {
   const pad = soort === 'veld' ? '/veld' : '/keepers';
   return (
     <a
-      className="tegel"
+      className={`tegel tegel-soort tegel-${soort === 'veld' ? 'veld' : 'keepers'}`}
       href={`#${pad}`}
       onClick={(e) => {
         e.preventDefault();
@@ -68,7 +68,7 @@ function Tegel({ soort }: { soort: Soort }) {
 function TrainingTegel() {
   const lijst = useTrainingen();
   return (
-    <div className="tegel tegel-training">
+    <div className="tegel tegel-training tegel-actie">
       <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
         <rect width="120" height="80" rx="10" fill="var(--primair-licht)" />
         <rect x="34" y="10" width="52" height="62" rx="6" fill="#fff" stroke="var(--primair)" strokeWidth="2.5" />
@@ -98,7 +98,7 @@ function TrainingTegel() {
 function EigenTegel() {
   const lijst = useEigenOefeningen();
   return (
-    <div className="tegel tegel-training">
+    <div className="tegel tegel-eigen tegel-actie">
       <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
         <rect width="120" height="80" rx="10" fill="var(--gras-1)" />
         <rect x="10" y="10" width="100" height="60" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.7" />
@@ -143,11 +143,10 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
         </button>
       </header>
       <main className="inhoud">
-        <h2 className="sectie-titel">Oefenbibliotheek, trainingen en eigen oefeningen</h2>
         <div className="tegels">
+          <TrainingTegel />
           <Tegel soort="veld" />
           <Tegel soort="keeper" />
-          <TrainingTegel />
           <EigenTegel />
         </div>
         {opInstalleren && (
@@ -156,7 +155,7 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
             {APP_NAAM} als app installeren
           </button>
         )}
-        <p className="voetnoot">Versie {VERSIE}</p>
+        <p className="voetnoot start-voet">Versie {VERSIE}</p>
       </main>
     </div>
   );

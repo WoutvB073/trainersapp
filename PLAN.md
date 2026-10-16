@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (16-10-2026, versie 0.15.0)
+## Status (16-10-2026, versie 0.15.1)
 
 | Fase | Status |
 |---|---|
@@ -18,7 +18,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 3. Training maken | ✅ online (0.11.0), getest en akkoord: aantallen invullen, oefeningen kiezen (gefilterd), volgorde slepen, trainingsmodus, klaarzetten, opslaan op het apparaat, dupliceren, delen via een link |
 | 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – getest en akkoord. Feedback 0.11.0 (0.12.0): fysieke controle van alle oefeningen, Keepersrondo en Keepersoorlog op één goal, aantallen "4+" (doorwisselbaar) of vast – **wacht op test**. |
 | 5. Editor | ✅ online (0.13.0), getest en akkoord. Animatie in de editor (0.14.0) – getest en akkoord: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
-| 6. Instellingen + Clubkleuren | ✅ online (0.15.0) – **wacht op test**: naam TopTraining met nieuw logo, 8 clubkleuren in licht/donker/automatisch, favorieten, filterbalk, categorie-indeling nagelopen (wacht op correcties van de gebruiker) |
+| 6. Instellingen + Clubkleuren | ✅ online (0.15.0) – **wacht op test**: naam TopTraining met nieuw logo, 8 clubkleuren in licht/donker/automatisch, favorieten, filterbalk, categorie-indeling nagelopen – getest en akkoord. 0.15.1: nieuw tandwiel en startscherm opnieuw ingedeeld – **wacht op test** |
 | 7. Inloggen + online opslag (Firebase) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
@@ -620,6 +620,14 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - Keepers – Keeperscircuit: ladder, hordes en duiken – warming-up, laag-duiken, hoog-duiken → laag-duiken, hoog-duiken (nieuwe hoofdcategorie)
 - **Tests:** `tests/filters.test.ts` (filters en combinaties, favorieten, aantallen onthouden, thema's en contrast),
   categorie-test in `tests/oefeningen.test.ts`; browsertests `tools/e2e/thema.mjs`, `filters.mjs`, `update.mjs`.
+
+## Besluiten versie 0.15.1 – startscherm en tandwiel
+- **Tandwiel:** nieuw icoon, uitgerekend (8 gelijke tanden, rond gat), strak op elk formaat (16–96 px) en in elk thema.
+- **Startscherm:** zonder de tekst "Oefenbibliotheek …". Volgorde: Training (Training maken, Mijn trainingen), daaronder Veld en
+  Keepers naast elkaar, daaronder Eigen oefeningen. Telefoon staand: Veld/Keepers als smalle tegels met het plaatje boven,
+  Training/Eigen zonder plaatje (knoppen naast elkaar). Telefoon liggend: twee kolommen (Training | Eigen, Veld | Keepers)
+  en een lage kop. Tablet/laptop: ruimer (grotere plaatjes en titels). Alles past in beeld op iPhone SE (ook liggend),
+  iPhone 14, Android en 320 px; `tools/e2e/start.mjs` controleert dat op 9 formaten in 4 thema's.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.
