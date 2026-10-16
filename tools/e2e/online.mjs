@@ -4,6 +4,8 @@
 // account, een oefening en een training delen, die op het tweede account gebruiken (bibliotheek met teambadge,
 // training kopiëren), rollen, en tot slot de testaccounts verwijderen. Alleen nep-adressen (test1@example.com …).
 // Screenshots: blad-online.png. Gebruik: node tools/e2e/online.mjs [basis-url]
+// Met ECHT=1 tegen het echte Firebase-project (zonder emulator): de testaccounts worden dan vooraf en na afloop via
+// "Account verwijderen" in de app opgeruimd (dat verwijdert ook hun gegevens en teams), en gecontroleerd dat ze weg zijn.
 import { BASE, MAP, alsGeinstalleerd, blad, slaap, start } from './hulp.mjs';
 
 const browser = await start();
@@ -17,8 +19,14 @@ const TABLET = { width: 820, height: 1180, deviceScaleFactor: 1.5, isMobile: tru
 const LAPTOP = { width: 1366, height: 820, deviceScaleFactor: 1 };
 const PROJECT = 'demo-toptraining';
 const WACHTWOORD = 'testwachtwoord1';
+const ECHT = process.env.ECHT === '1';
+const TESTACCOUNTS = ['test2@example.com', 'test1@example.com'];
 
 async function leegmaken() {
+  if (ECHT) {
+    for (const email of TESTACCOUNTS) await verwijderViaApp(email);
+    return;
+  }
   await fetch(`http://127.0.0.1:8080/emulator/v1/projects/${PROJECT}/databases/(default)/documents`, { method: 'DELETE' });
   await fetch(`http://127.0.0.1:9099/emulator/v1/projects/${PROJECT}/accounts`, { method: 'DELETE' });
 }
@@ -36,13 +44,14 @@ async function toestel(viewport) {
   await context.overridePermissions(new URL(BASE).origin, ['clipboard-read', 'clipboard-write', 'clipboard-sanitized-write']);
   const page = await context.newPage();
   await alsGeinstalleerd(page);
-  await page.evaluateOnNewDocument(() => {
-    try {
-      localStorage.setItem('trainersapp.emulator', '1');
-    } catch {
-      /* about:blank */
-    }
-  });
+  if (!ECHT)
+    await page.evaluateOnNewDocument(() => {
+      try {
+        localStorage.setItem('trainersapp.emulator', '1');
+      } catch {
+        /* about:blank */
+      }
+    });
   page.on('pageerror', (e) => fouten.push(e.message));
   page.on('console', (m) => m.type() === 'error' && !/400|403|PERMISSION_DENIED|permission/i.test(m.text()) && fouten.push(m.text()));
   page.on('dialog', (d) => void d.accept());
@@ -64,18 +73,26 @@ const klik = async (page, tekst, selector = 'button') => {
   await slaap(300);
 };
 const vul = async (page, selector, tekst) => {
+  const ok = await page.waitForSelector(selector, { timeout: 20000 }).catch(() => null);
+  if (!ok) {
+    problemen.push(`Veld ${selector} niet gevonden op ${page.url()}: ${(await tekst_(page)).slice(0, 200)}`);
+    await page.screenshot({ path: `${MAP}online-fout-${problemen.length}.png` });
+    return;
+  }
   await page.$eval(selector, (el) => {
     el.value = '';
   });
   await page.type(selector, tekst);
 };
-const wachtOp = async (page, f, arg, wat, ms = 15000) => {
+const wachtOp = async (page, f, arg, wat, ms = ECHT ? 40000 : 15000) => {
   try {
     await page.waitForFunction(f, { timeout: ms }, arg);
   } catch {
-    problemen.push(`Wachten duurde te lang: ${wat}`);
+    problemen.push(`Wachten duurde te lang: ${wat} (zie online-fout-${problemen.length + 1}.png)`);
+    await page.screenshot({ path: `${MAP}online-fout-${problemen.length}.png` }).catch(() => {});
   }
 };
+const tekst_ = (page) => page.evaluate(() => document.body.innerText.replace(/\s+/g, ' '));
 const tekst = (page) => page.evaluate(() => document.body.innerText);
 /** Wachten tot de teams (na herladen) weer binnen zijn. */
 const wachtTeams = (page, wat) =>
@@ -120,6 +137,22 @@ async function account(page, naam, email, maken = true) {
   await vul(page, '.account-form input[type="email"]', email);
   await vul(page, '.account-form input[type="password"]', WACHTWOORD);
   await page.evaluate(() => document.querySelector('.account-form button[type="submit"]')?.click());
+}
+
+/** Inloggen met een testaccount; bestaat het, dan via de app verwijderen. Geeft terug of het bestond. */
+async function verwijderViaApp(email) {
+  const t = await toestel(LAPTOP);
+  await account(t.page, '', email, false);
+  await t.page.waitForFunction(() => document.querySelector('.account-naam') || document.querySelector('.account-form .waarschuwing'), { timeout: 20000 }).catch(() => {});
+  const bestond = !!(await t.page.$('.account-naam'));
+  if (bestond) {
+    await klik(t.page, 'Account verwijderen…');
+    await vul(t.page, '.gevaar-blok input[type="password"]', WACHTWOORD);
+    await klik(t.page, 'Definitief verwijderen');
+    await wachtOp(t.page, () => !!document.querySelector('.account-form'), null, `${email} verwijderen`, 30000);
+  }
+  await t.context.close();
+  return bestond;
 }
 
 for (const [naam, vp] of [
@@ -241,7 +274,7 @@ for (const [naam, vp] of [
     await foto(t1.page, 'instellingen', 'Instellingen: account en teams', true);
     // Uitloggen: de gegevens van het apparaat zijn er weer.
     await t1.page.goto(`${BASE}?r=11#/account`, { waitUntil: 'domcontentloaded' });
-  await slaap(700);
+    await slaap(700);
     await klik(t1.page, 'Uitloggen');
     await wachtOp(t1.page, () => !!document.querySelector('.account-form'), null, 'uitgelogd');
     const lokaal = await t1.page.evaluate(() => JSON.parse(localStorage.getItem('trainersapp.eigen') ?? '{}').oefeningen?.length ?? 0);
@@ -252,20 +285,19 @@ for (const [naam, vp] of [
     controle(!(await t1.page.evaluate(() => !!document.querySelector('.paneel-vraag'))), 'Opnieuw inloggen: toch weer de vraag om samen te voegen');
     // Account verwijderen (Testtrainer 2) via de app.
     await t2.page.goto(`${BASE}?r=12#/account`, { waitUntil: 'domcontentloaded' });
-  await slaap(700);
+    await slaap(700);
     await klik(t2.page, 'Account verwijderen…');
     await vul(t2.page, '.gevaar-blok input[type="password"]', WACHTWOORD);
     await klik(t2.page, 'Definitief verwijderen');
     await wachtOp(t2.page, () => !!document.querySelector('.account-form'), null, 'account verwijderd');
-    const accounts = await (await fetch(`http://127.0.0.1:9099/emulator/v1/projects/${PROJECT}/accounts`)).json().catch(() => ({}));
-    void accounts;
   }
   await t1.context.close();
   await t2.context.close();
 }
 
-// Alle testaccounts en gegevens uit de emulator.
+// Alle testaccounts en gegevens weg (emulator leeg, of in het echte project via de app verwijderd en gecontroleerd).
 await leegmaken();
+if (ECHT) for (const email of TESTACCOUNTS) controle(!(await verwijderViaApp(email)), `${email} bestaat na afloop nog`);
 await blad(browser, shots, `${MAP}blad-online.png`, 4, 2000);
 await browser.close();
 if (fouten.length) console.log('FOUTEN IN DE BROWSER:', [...new Set(fouten)]);

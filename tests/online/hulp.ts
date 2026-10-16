@@ -15,6 +15,13 @@ export async function leegmaken(): Promise<void> {
   await fetch(`http://127.0.0.1:9099/emulator/v1/projects/${PROJECT}/accounts`, { method: 'DELETE' });
 }
 
+/** Wat er in de emulator in een collectie staat (als beheerder gelezen, buiten de regels om): de document-id's. */
+export async function inEmulator(pad: string): Promise<string[]> {
+  const r = await fetch(`http://127.0.0.1:8080/v1/projects/${PROJECT}/databases/(default)/documents/${pad}?pageSize=300`, { headers: { Authorization: 'Bearer owner' } });
+  const j = (await r.json()) as { documents?: { name: string }[] };
+  return (j.documents ?? []).map((d) => d.name.split('/').pop()!);
+}
+
 let teller = 0;
 const open: Verbinding[] = [];
 

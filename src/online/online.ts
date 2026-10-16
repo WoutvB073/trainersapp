@@ -305,11 +305,8 @@ export async function verwijderAccount(wachtwoord: string): Promise<void> {
   await reauthenticateWithCredential(u, EmailAuthProvider.credential(u.email, wachtwoord));
   const mij = ik();
   stopSync();
-  for (const t of teams.lijst()) {
-    for (const it of t.items) if (it.eigenaar === u.uid) await T.verwijderItem(mij, t.id, it.id).catch(() => {});
-    if (t.leden.length <= 1 && t.rol === 'beheerder') await T.hefTeamOp(mij, t.id).catch(() => {});
-    else await T.verlaatTeam(mij, t.id).catch(() => {});
-  }
+  // Teams van de server (de lokale lijst kan op een nieuw apparaat nog leeg zijn).
+  await T.verlaatAlleTeams(mij);
   for (const col of ['oefeningen', 'trainingen']) {
     const s = await getDocs(collection(db, 'users', u.uid, col));
     const b = writeBatch(db);

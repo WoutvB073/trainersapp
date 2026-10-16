@@ -8,8 +8,9 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "emulator": "node tools/firebase.mjs emulators:start --only auth,firestore",
-    "test:online": "node tools/firebase.mjs emulators:exec --only auth,firestore \"vitest run --config vitest.online.config.ts\""
+    "emulator": "node tools/firebase.mjs emulators:start --project demo-toptraining --only auth,firestore",
+    "regels:live": "node tools/firebase.mjs deploy --project live --only firestore:rules",
+    "test:online": "node tools/firebase.mjs emulators:exec --project demo-toptraining --only auth,firestore \"vitest run --config vitest.online.config.ts\""
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { leegmaken, toestel, wachtTot, opruimen } from './hulp';
-import { deelItem, hefTeamOp, joinTeam, maakTeam, verlaatTeam, vernieuwCode, verwijderItem, verwijderLid, volgTeams, zetRol, type Ik } from '../../src/online/teamsOnline';
+import { inEmulator, leegmaken, toestel, wachtTot, opruimen } from './hulp';
+import { deelItem, hefTeamOp, joinTeam, maakTeam, verlaatTeam, vernieuwCode, verwijderItem, verwijderLid, verlaatAlleTeams, volgTeams, zetRol, type Ik } from '../../src/online/teamsOnline';
 import type { Team } from '../../src/engine/teams';
 import { leesTeamTraining } from '../../src/engine/teams';
 
@@ -118,5 +118,29 @@ describe('teams', () => {
     trainer1.stop();
     trainer2.stop();
     trainer3.stop();
+  });
+
+  it('account weg (ook op een nieuw apparaat zonder teamlijst): eigen items weg, laatste lid heft het team op', { timeout: 60000 }, async () => {
+    const trainer1 = await persoon('test1@example.com', 'Testtrainer 1');
+    const trainer2 = await persoon('test2@example.com', 'Testtrainer 2');
+    const a = await maakTeam(trainer1.ik, 'Samen');
+    const b = await maakTeam(trainer1.ik, 'Alleen');
+    await joinTeam(trainer2.ik, a.code);
+    await deelItem(trainer1.ik, a.id, { id: 'van-1', soort: 'oefening', naam: 'Van 1', data: '{}' });
+    await deelItem(trainer2.ik, a.id, { id: 'van-2', soort: 'oefening', naam: 'Van 2', data: '{}' });
+    trainer1.stop();
+    trainer2.stop();
+    // Testtrainer 2 op een ander apparaat (geen teamlijst geladen): alleen zijn eigen item weg, het team blijft.
+    const ander = await toestel('test2@example.com', 'Testtrainer 2');
+    await verlaatAlleTeams({ db: ander.db, uid: ander.uid, naam: 'Testtrainer 2' });
+    expect(await inEmulator(`teams/${a.id}/items`)).toEqual(['van-1']);
+    expect(await inEmulator(`teams/${a.id}/leden`)).toEqual([trainer1.ik.uid]);
+    // Testtrainer 1 is overal de laatste: beide teams helemaal weg (ook codes, leden en items).
+    const nieuw = await toestel('test1@example.com', 'Testtrainer 1');
+    await verlaatAlleTeams({ db: nieuw.db, uid: nieuw.uid, naam: 'Testtrainer 1' });
+    expect(await inEmulator('teams')).toEqual([]);
+    expect(await inEmulator('teamCodes')).toEqual([]);
+    expect(await inEmulator(`teams/${a.id}/items`)).toEqual([]);
+    expect(await inEmulator(`teams/${b.id}/leden`)).toEqual([]);
   });
 });

@@ -59,12 +59,35 @@ export async function verlaatTeam(ik: Ik, team: string): Promise<void> {
   const leden = await haalLeden(ik.db, team);
   const ikZelf = leden.find((l) => l.uid === ik.uid);
   const anderen = leden.filter((l) => l.uid !== ik.uid);
+  // De laatste die vertrekt: het team (met code en items) helemaal opruimen.
+  if (!anderen.length && ikZelf?.rol === 'beheerder') return hefTeamOp(ik, team);
   if (ikZelf?.rol === 'beheerder' && !anderen.some((l) => l.rol === 'beheerder') && anderen.length) {
     const opvolger = [...anderen].sort((a, b) => a.sinds - b.sinds)[0]!;
     await updateDoc(lidPad(ik.db, team, opvolger.uid), { rol: 'beheerder' });
   }
   await deleteDoc(lidPad(ik.db, team, ik.uid));
   await setDoc(doc(ik.db, 'users', ik.uid), { teams: arrayRemove(team) }, { merge: true });
+}
+
+/** Alle teams waar ik in zit (van de server, niet uit de lokale lijst). */
+export async function mijnTeams(ik: Ik): Promise<string[]> {
+  const u = await getDoc(doc(ik.db, 'users', ik.uid));
+  const ids = (u.data()?.teams as string[] | undefined) ?? [];
+  return ids.filter((x) => typeof x === 'string');
+}
+
+/** Account weg: mijn gedeelde items uit elk team, dan het team verlaten (de laatste heft het op). */
+export async function verlaatAlleTeams(ik: Ik): Promise<void> {
+  for (const team of await mijnTeams(ik)) {
+    const t = await getDoc(teamPad(ik.db, team)).catch(() => null);
+    if (!t?.exists()) {
+      await setDoc(doc(ik.db, 'users', ik.uid), { teams: arrayRemove(team) }, { merge: true });
+      continue;
+    }
+    const items = await eenmalig(collection(ik.db, 'teams', team, 'items'));
+    for (const d of items.docs) if ((d.data() as { eigenaar?: string }).eigenaar === ik.uid) await deleteDoc(d.ref);
+    await verlaatTeam(ik, team);
+  }
 }
 
 /** Team opheffen (beheerder): items, leden, code en team weg; jezelf als laatste. */

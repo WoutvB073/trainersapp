@@ -42,6 +42,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `oefeningen.mjs [url] [filter]` — per oefening 3D/2D-screenshots (`blad-oef-<map>-<categorie>.png`), aantallen per categorie, "Keeper nodig".
 - `online.mjs [url]` — account, eerste keer samenvoegen, teams (code, delen, rollen) met twee testaccounts tegen de
   Firebase-emulator (`npm run emulator` moet draaien; zet `trainersapp.emulator=1`). Blad: `blad-online.png`.
+  Met `ECHT=1` tegen het echte project (`toptraining-40a90`): ruimt de testaccounts vooraf en na afloop op via de app.
+- `online-opruimen.mjs [url]` — testaccounts test1/test2@example.com in het echte project verwijderen (via "Account verwijderen").
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
   Chrome draait met de echte videokaart (`--use-angle=d3d11`); `trainersapp.3dAltijd=1` zet de 2D-terugval uit in tests.
 
@@ -50,6 +52,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
   `samenvoegen.ts` (puur), `teamsOnline.ts`, `online.ts` (regisseur). Zonder Firebase: `src/engine/account.ts`, `teams.ts`.
 - `npm run emulator` / `npm run test:online` (tests in `tests/online/`, Java 21 in `C:\Users\woutv\tools\java` via
   `tools/firebase.mjs`). Regels: `firestore.rules`.
+- Echt project: `toptraining-40a90` (alias `live`); regels zetten met `npm run regels:live`. Nieuwe regels hebben
+  ~1 minuut nodig voor ze overal gelden ("geen toegang" vlak na een deploy).
 - **Testgegevens alleen neutraal:** test1@example.com, test2@example.com …, namen "Testtrainer 1/2". Nooit echte namen of
   adressen. Na testen tegen het echte project: testaccounts en hun data verwijderen.
 

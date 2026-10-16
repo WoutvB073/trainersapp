@@ -19,7 +19,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 4. Bibliotheek vullen (batches per categorie) | 🔄 Batch 1 (0.3.0): Warming-up + Loopcoördinatie – getest en akkoord. Batch 2 (0.4.0): Techniek + Pass en trap – getest en akkoord. Batch 3 (0.5.0): Afwerken + Positiespel – getest en akkoord. Batch 4 (0.6.0): Partijvormen + Spelletjes – getest en akkoord; alle veldcategorieën zijn gevuld. Keepers batch 1 (0.7.0): Warming-up, Bal verwerken, Laag duiken, Hoog duiken – getest en akkoord. Keepers batch 2 (0.8.0 + 0.9.0): Voorzetten, Passing, 1 op 1, Reactie, Spelletjes – getest en akkoord. Feedback (0.10.0): keepernummers als ring op het gras, 24 combinatievormen (12 veld, 12 keepers) met label "Combinatievorm", "Moeilijker" aangescherpt – getest en akkoord. Feedback 0.11.0 (0.12.0): fysieke controle van alle oefeningen, Keepersrondo en Keepersoorlog op één goal, aantallen "4+" (doorwisselbaar) of vast – **wacht op test**. |
 | 5. Editor | ✅ online (0.13.0), getest en akkoord. Animatie in de editor (0.14.0) – getest en akkoord: eigen oefeningen tekenen (leeg/half/heel veld, alle objecten, lijnen met buigpunt, vastmaken aan spelers, ongedaan maken, zoomen), 3D bekijken, gegevens, in de bibliotheek en Training maken, kopiëren van ingebouwde oefeningen, delen via de trainingslink |
 | 6. Instellingen + Clubkleuren | ✅ online (0.15.0) – **wacht op test**: naam TopTraining met nieuw logo, 8 clubkleuren in licht/donker/automatisch, favorieten, filterbalk, categorie-indeling nagelopen – getest en akkoord. 0.15.1: nieuw tandwiel en startscherm opnieuw ingedeeld – **wacht op test** |
-| 7. Inloggen + online opslag (Firebase) + teams | 🔄 0.16.0 gebouwd en getest met de Firebase-emulator (account, synchronisatie, eerste keer samenvoegen, teams met code en rollen, strenge regels). **Wacht op de gebruiker:** Firebase-project aanmaken (stappen hieronder) en de webconfig sturen; tot die tijd is het online deel in de app verborgen en werkt alles zoals voorheen. |
+| 7. Inloggen + online opslag (Firebase) + teams | ✅ online (0.16.0) – **wacht op test**: Firebase-project `toptraining-40a90` gekoppeld, account, synchronisatie, eerste keer samenvoegen, teams met code en rollen, strenge regels; live getest met twee testaccounts (daarna verwijderd) |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -674,16 +674,20 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   test1@example.com / test2@example.com, "Testtrainer 1/2"; alles wordt na afloop gewist). Alleen nep-adressen en neutrale
   namen gebruiken.
 
-### Nog te doen (wacht op de gebruiker) – Firebase-project
-1. console.firebase.google.com → Project toevoegen → naam **TopTraining** → Google Analytics uit.
-2. Build → Authentication → Aan de slag → Sign-in method → **E-mailadres/wachtwoord** aanzetten (alleen de eerste schakelaar).
-3. Authentication → Instellingen → Geautoriseerde domeinen → **woutvb073.github.io** toevoegen.
-4. (Optioneel) Authentication → Templates → taal **Nederlands**.
-5. Build → Firestore Database → Database maken → locatie **eur3 (Europa)** → productiemodus.
-6. Firestore → Regels → inhoud van `firestore.rules` plakken → Publiceren.
-7. Projectinstellingen (tandwiel) → Je apps → Web (</>) → bijnaam TopTraining (geen Hosting) → de `firebaseConfig` sturen.
-Daarna: config in `src/online/config.ts`, live testen met test1/test2@example.com, testaccounts en hun data verwijderen,
-push, live controleren, testlijst.
+### Firebase-project (gekoppeld)
+- Project **TopTraining**, ID `toptraining-40a90` (alias `live` in `.firebaserc`; `default` blijft `demo-toptraining` voor de
+  emulator). E-mail/wachtwoord aan, domein woutvb073.github.io toegestaan (gebruiker, in de console).
+- Firestore-database `(default)` in **eur3**, native modus, aangemaakt via de CLI (in de console was per ongeluk een
+  Realtime Database gemaakt; die wordt niet gebruikt en mag weg). Cloud Firestore-API via de CLI aangezet.
+- Regels online zetten: `npm run regels:live` (`firebase deploy --project live --only firestore:rules`). Plakken in de
+  console gaf "Line 1: Parse error"; via de CLI compileert het bestand zonder fouten.
+- Web-app "TopTraining" geregistreerd; de (openbare) webconfig staat in `src/online/config.ts`. Geen geheimen in de repo;
+  de CLI-inlog staat alleen op de computer van de gebruiker.
+- Bij de live test bleek: account verwijderen op een nieuw apparaat liet teams en codes achter (de lokale teamlijst was
+  nog leeg). Opgelost: verwijderen leest je teams van de server, haalt je gedeelde items weg en verlaat elk team; de
+  laatste die een team verlaat heft het helemaal op (code, leden, items). Emulatortest erbij.
+- Live test: `ECHT=1 node tools/e2e/online.mjs` (tegen het echte project, met test1/test2@example.com; ruimt vooraf en na
+  afloop op en controleert dat de accounts weg zijn). Los opruimen: `node tools/e2e/online-opruimen.mjs`.
 
 ## Open vragen (later beslissen)
 - Definitieve naam en logo van de app.
