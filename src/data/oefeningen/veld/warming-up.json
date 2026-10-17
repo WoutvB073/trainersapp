@@ -676,7 +676,7 @@
       "warming-up",
       "loopcoordinatie"
     ],
-    "uitleg": "De spelers gaan om de beurt naar de overkant met een loopvorm: huppelen, zijwaarts, knieheffen of achteruit. Terug joggen ze rustig langs de baan en sluiten ze achteraan aan. Na elke ronde een andere loopvorm.",
+    "uitleg": "De spelers gaan om de beurt naar de overkant met een loopvorm: huppelen, achteruit, zijwaarts, knieheffen of hakken-billen. Terug joggen ze rustig langs de baan en sluiten ze achteraan aan. Na elke ronde een andere loopvorm.",
     "organisatie": "Baan van 12 m tussen twee pionnen. De spelers staan in een rij achter de startpion. De volgende vertrekt als de voorganger ± 4 m weg is.",
     "benodigdheden": [
       "2 pionnen"
@@ -753,6 +753,14 @@
           "nummer": 4,
           "x": 0,
           "y": 0
+        },
+        {
+          "id": "a5",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 5,
+          "x": 0,
+          "y": 0
         }
       ],
       "rijen": [
@@ -765,7 +773,8 @@
             "a1",
             "a2",
             "a3",
-            "a4"
+            "a4",
+            "a5"
           ]
         }
       ],
@@ -776,7 +785,8 @@
               "a1",
               "a2",
               "a3",
-              "a4"
+              "a4",
+              "a5"
             ],
             "tussen": 2,
             "waarden": {
@@ -784,7 +794,8 @@
                 "huppel",
                 "achteruit",
                 "zijwaarts",
-                "kniehef"
+                "kniehef",
+                "hakbil"
               ]
             },
             "stappen": [

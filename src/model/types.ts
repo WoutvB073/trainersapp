@@ -229,7 +229,7 @@ export interface BalActie extends ActieBasis {
 /**
  * Loopwijze. Bepaalt de standaardsnelheid, hoe het poppetje beweegt (3D) en de kijkrichting:
  * - `jog` (standaard), `sprint`, `wandel`
- * - `huppel` (skippen), `kniehef`, `sprong` (hinkelen/springen, bv. door ringen)
+ * - `huppel` (skippen), `kniehef`, `hakbil` (hakken-billen), `sprong` (hinkelen/springen, bv. door ringen)
  * - `zijwaarts` (kijkt 90° naast de looprichting, of `kijk`), `achteruit` (kijkt tegen de looprichting in)
  * - `voetenwerk` (kleine snelle pasjes, bv. door een ladder), `hordes` (over lage hordes)
  * - `kruispas` (keeper: zijwaarts met gekruiste passen). Een keeper die `zijwaarts` of met `kruispas` gaat, blijft
@@ -242,6 +242,8 @@ export type Manier =
   | 'wandel'
   | 'huppel'
   | 'kniehef'
+  /** Hakken-billen: hielen om en om naar de billen. */
+  | 'hakbil'
   | 'sprong'
   | 'zijwaarts'
   | 'achteruit'

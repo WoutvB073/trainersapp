@@ -18,7 +18,7 @@ import {
   Vector3,
 } from 'three';
 import type { Manier } from '../model/types';
-import { PASJES, RITME, type ObjectStand, type Stand } from './timeline';
+import { RITME, type ObjectStand, type Stand } from './timeline';
 
 /**
  * 3D-poppetjes (0.21.0): een eigen figuur in code met echte lichaamsverhoudingen en gewrichten (heupen, knieën,
@@ -161,20 +161,7 @@ const verloop = (punten: [number, number][]) => (u: number) => {
   return punten[punten.length - 1]![1];
 };
 
-export type DeelNaam =
-  | 'bekken'
-  | 'romp'
-  | 'nek'
-  | 'hoofd'
-  | 'haar'
-  | 'mouw'
-  | 'bovenarm'
-  | 'onderarm'
-  | 'hand'
-  | 'pijp'
-  | 'dij'
-  | 'kous'
-  | 'schoen';
+export type DeelNaam = 'bekken' | 'romp' | 'nek' | 'hoofd' | 'haar' | 'mouw' | 'bovenarm' | 'onderarm' | 'hand' | 'pijp' | 'dij' | 'kous' | 'schoen';
 
 /** Geometrie per lichaamsdeel, in het assenstelsel van het gewricht waar het aan vastzit. `fijn` = veel detail. */
 function deelGeometrie(naam: DeelNaam, fijn: boolean): BufferGeometry {
@@ -183,12 +170,37 @@ function deelGeometrie(naam: DeelNaam, fijn: boolean): BufferGeometry {
   const k = fijn ? 4 : 2; // afronding
   switch (naam) {
     case 'bekken': {
-      const g = rond(0.09, -0.12, verloop([[0, 0.14], [0.35, 0.16], [1, 0.155]]), n, s, k);
+      const g = rond(
+        0.09,
+        -0.12,
+        verloop([
+          [0, 0.14],
+          [0.35, 0.16],
+          [1, 0.155],
+        ]),
+        n,
+        s,
+        k,
+      );
       return g.scale(1, 1, 0.72);
     }
     case 'romp': {
       // Taille smal, borst en schouders breder (V-vorm), van opzij plat.
-      const g = rond(0.45, -0.07, verloop([[0, 0.06], [0.1, 0.15], [0.22, 0.172], [0.42, 0.168], [0.7, 0.14], [1, 0.145]]), fijn ? 12 : 4, s, k);
+      const g = rond(
+        0.45,
+        -0.07,
+        verloop([
+          [0, 0.06],
+          [0.1, 0.15],
+          [0.22, 0.172],
+          [0.42, 0.168],
+          [0.7, 0.14],
+          [1, 0.145],
+        ]),
+        fijn ? 12 : 4,
+        s,
+        k,
+      );
       return g.scale(1, 1, 0.62);
     }
     case 'nek':
@@ -202,20 +214,86 @@ function deelGeometrie(naam: DeelNaam, fijn: boolean): BufferGeometry {
       return g.scale(0.9, 1.06, 1.0).translate(0, MAAT.hoofdMidden + 0.008, 0.006);
     }
     case 'mouw':
-      return rond(0.03, -0.15, verloop([[0, 0.066], [1, 0.056]]), n > 3 ? 4 : 2, s, k);
+      return rond(
+        0.03,
+        -0.15,
+        verloop([
+          [0, 0.066],
+          [1, 0.056],
+        ]),
+        n > 3 ? 4 : 2,
+        s,
+        k,
+      );
     case 'bovenarm':
-      return rond(0, -MAAT.bovenarm, verloop([[0, 0.047], [0.3, 0.046], [1, 0.037]]), n, s, k);
+      return rond(
+        0,
+        -MAAT.bovenarm,
+        verloop([
+          [0, 0.047],
+          [0.3, 0.046],
+          [1, 0.037],
+        ]),
+        n,
+        s,
+        k,
+      );
     case 'onderarm':
-      return rond(0, -MAAT.onderarm, verloop([[0, 0.038], [0.25, 0.039], [1, 0.027]]), n, s, k);
+      return rond(
+        0,
+        -MAAT.onderarm,
+        verloop([
+          [0, 0.038],
+          [0.25, 0.039],
+          [1, 0.027],
+        ]),
+        n,
+        s,
+        k,
+      );
     case 'hand':
       return new SphereGeometry(0.045, fijn ? 10 : 5, fijn ? 8 : 4).scale(0.72, 1.35, 0.5).translate(0, -0.052, 0.005);
     case 'pijp':
-      return rond(0.04, -0.2, verloop([[0, 0.092], [1, 0.087]]), n > 3 ? 4 : 2, s, k);
+      return rond(
+        0.04,
+        -0.2,
+        verloop([
+          [0, 0.092],
+          [1, 0.087],
+        ]),
+        n > 3 ? 4 : 2,
+        s,
+        k,
+      );
     case 'dij':
-      return rond(0.02, -MAAT.dij - 0.01, verloop([[0, 0.078], [0.45, 0.071], [0.85, 0.056], [1, 0.05]]), n, s, k);
+      return rond(
+        0.02,
+        -MAAT.dij - 0.01,
+        verloop([
+          [0, 0.078],
+          [0.45, 0.071],
+          [0.85, 0.056],
+          [1, 0.05],
+        ]),
+        n,
+        s,
+        k,
+      );
     case 'kous':
       // Kous over het onderbeen, met kuit; de knie blijft bloot.
-      return rond(-0.07, -MAAT.scheen + 0.01, verloop([[0, 0.05], [0.25, 0.058], [0.75, 0.04], [1, 0.036]]), n, s, k);
+      return rond(
+        -0.07,
+        -MAAT.scheen + 0.01,
+        verloop([
+          [0, 0.05],
+          [0.25, 0.058],
+          [0.75, 0.04],
+          [1, 0.036],
+        ]),
+        n,
+        s,
+        k,
+      );
     case 'schoen': {
       const g = new CapsuleGeometry(0.046, 0.15, fijn ? 4 : 2, fijn ? 10 : 6);
       g.rotateX(Math.PI / 2);
@@ -225,7 +303,7 @@ function deelGeometrie(naam: DeelNaam, fijn: boolean): BufferGeometry {
 }
 
 /** Welke kleur een deel krijgt. */
-type KleurSoort = 'shirt' | 'broek' | 'kous' | 'huid' | 'haar' | 'schoen' | 'mouw' | 'hand';
+type KleurSoort = 'shirt' | 'broek' | 'kous' | 'huid' | 'dij' | 'haar' | 'schoen' | 'mouw' | 'hand';
 
 interface DeelDef {
   naam: DeelNaam;
@@ -245,9 +323,9 @@ const DELEN: DeelDef[] = [
     { naam: 'mouw', node: (s) => s.schouder[i], kleur: 'shirt', eenvoudig: false },
     { naam: 'bovenarm', node: (s) => s.schouder[i], kleur: 'mouw', eenvoudig: true },
     { naam: 'onderarm', node: (s) => s.elleboog[i], kleur: 'mouw', eenvoudig: true },
-    { naam: 'hand', node: (s) => s.pols[i], kleur: 'hand', eenvoudig: false },
+    { naam: 'hand', node: (s) => s.pols[i], kleur: 'hand', eenvoudig: true },
     { naam: 'pijp', node: (s) => s.heup[i], kleur: 'broek', eenvoudig: false },
-    { naam: 'dij', node: (s) => s.heup[i], kleur: 'huid', eenvoudig: true },
+    { naam: 'dij', node: (s) => s.heup[i], kleur: 'dij', eenvoudig: true },
     { naam: 'kous', node: (s) => s.knie[i], kleur: 'kous', eenvoudig: true },
     { naam: 'schoen', node: (s) => s.enkel[i], kleur: 'schoen', eenvoudig: true },
   ]),
@@ -264,6 +342,8 @@ export interface PopKleuren {
   broek: Color;
   kous: Color;
   huid: Color;
+  /** Bovenbeen: huid, of de lange broek van de trainer. */
+  dij: Color;
   haar: Color;
   schoen: Color;
   mouw: Color;
@@ -282,7 +362,8 @@ export function popKleuren(soort: 'speler' | 'keeper' | 'trainer', shirt: string
     shirt: s,
     broek,
     kous: trainer ? broek.clone() : s.clone().multiplyScalar(0.55),
-    huid: trainer ? broek.clone() : huid,
+    huid,
+    dij: trainer ? broek.clone() : huid.clone(),
     haar: new Color(HAAR[Math.floor(zaad * 104729) % HAAR.length]!),
     schoen: new Color(SCHOEN),
     mouw: trainer || keeper ? s.clone() : huid.clone(),
@@ -297,7 +378,7 @@ export function zetHesje(k: PopKleuren, soort: 'speler' | 'keeper' | 'trainer', 
   if (soort !== 'speler') k.mouw.set(shirt);
 }
 
-// Dij van de trainer: broekkleur (lange broek); bij spelers de huid.
+/** Kleur van een lichaamsdeel voor dit poppetje. */
 const kleurVan = (k: PopKleuren, d: DeelDef): Color => k[d.kleur];
 
 /**
@@ -306,9 +387,11 @@ const kleurVan = (k: PopKleuren, d: DeelDef): Color => k[d.kleur];
  */
 export class Poppetjes {
   private readonly meshes = new Map<string, InstancedMesh>();
-  private readonly tellers = new Map<string, number>();
+  /** Per deel (index in DELEN) de mesh voor fijn en grof, en hoeveel plekken er dit beeld al gebruikt zijn. */
+  private readonly fijnVan: (InstancedMesh | null)[] = [];
+  private readonly grofVan: (InstancedMesh | null)[] = [];
+  private readonly teller = new Map<InstancedMesh, number>();
   readonly materiaal: Material;
-  private readonly m = new Matrix4();
 
   constructor(
     aantal: number,
@@ -331,6 +414,11 @@ export class Poppetjes {
         this.meshes.set(`${naam}|${fijn ? 'f' : 'g'}`, mesh);
       }
     }
+    for (const d of DELEN) {
+      const uit = eenvoudig && !d.eenvoudig;
+      this.fijnVan.push(uit ? null : (this.meshes.get(`${d.naam}|${eenvoudig ? 'g' : 'f'}`) ?? null));
+      this.grofVan.push(uit ? null : (this.meshes.get(`${d.naam}|g`) ?? null));
+    }
   }
 
   /** Alle meshes (om aan de scène toe te voegen en op te ruimen). */
@@ -339,30 +427,28 @@ export class Poppetjes {
   }
 
   begin() {
-    for (const k of this.meshes.keys()) this.tellers.set(k, 0);
+    for (const m of this.meshes.values()) this.teller.set(m, 0);
   }
 
   /** Eén poppetje tekenen (na het poseren): fijn of grof. */
   teken(sk: Skelet, k: PopKleuren, fijn: boolean) {
-    const f = fijn && !this.eenvoudig;
-    for (const d of DELEN) {
-      if (this.eenvoudig && !d.eenvoudig) continue;
-      const sleutel = `${d.naam}|${f ? 'f' : 'g'}`;
-      const mesh = this.meshes.get(sleutel);
+    const lijst = fijn ? this.fijnVan : this.grofVan;
+    for (let j = 0; j < DELEN.length; j++) {
+      const mesh = lijst[j];
       if (!mesh) continue;
-      const i = this.tellers.get(sleutel)!;
+      const d = DELEN[j]!;
+      const i = this.teller.get(mesh)!;
       if (i >= mesh.instanceMatrix.count) continue;
-      this.m.copy(d.node(sk).matrixWorld);
-      mesh.setMatrixAt(i, this.m);
+      mesh.setMatrixAt(i, d.node(sk).matrixWorld);
       // Eenvoudig: geen aparte mouw; de bovenarm is dan in shirtkleur.
       mesh.setColorAt(i, this.eenvoudig && d.naam === 'bovenarm' ? k.shirt : kleurVan(k, d));
-      this.tellers.set(sleutel, i + 1);
+      this.teller.set(mesh, i + 1);
     }
   }
 
   klaar() {
-    for (const [sleutel, mesh] of this.meshes) {
-      mesh.count = this.tellers.get(sleutel) ?? 0;
+    for (const mesh of this.meshes.values()) {
+      mesh.count = this.teller.get(mesh) ?? 0;
       mesh.instanceMatrix.needsUpdate = true;
       if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     }
@@ -458,17 +544,229 @@ interface Stijl {
 }
 
 const STIJL: Record<Exclude<Manier, 'sprong' | 'schijn'> | 'dribbel', Stijl> = {
-  wandel: { ritme: [0.95, 0.22], D: 0.6, Smax: 0.8, breed: 0.1, til: 0.08, piek: 0.45, knie: 0.03, tenen: 0, zak: 0.007, buig: 0.2, veer: 0, voorover: 0.03, arm: 0.38, armBasis: 0.02, elleboog: 0.32, opzij: 0.08, vol: 1.4 },
-  jog: { ritme: [1.25, 0.09], D: 0.38, Smax: 0.84, breed: 0.085, til: 0.26, piek: 0.4, knie: -0.05, tenen: 0.12, zak: 0.018, buig: 0.42, veer: 0.03, voorover: 0.12, arm: 0.55, armBasis: 0.06, elleboog: 1.45, opzij: 0.12, vol: 3.5 },
-  sprint: { ritme: [1.35, 0.1], D: 0.3, Smax: 0.88, breed: 0.08, til: 0.38, piek: 0.4, knie: 0.03, tenen: 0.3, zak: 0.02, buig: 0.48, veer: 0.05, voorover: 0.24, arm: 0.95, armBasis: 0.08, elleboog: 1.55, opzij: 0.1, vol: 6 },
-  achteruit: { ritme: [1.7, 0.12], D: 0.45, Smax: 0.6, breed: 0.11, til: 0.12, piek: 0.5, knie: 0.05, tenen: 0.45, zak: 0.022, buig: 0.4, veer: 0.02, voorover: 0.14, arm: 0.45, armBasis: 0.05, elleboog: 1.35, opzij: 0.15, vol: 2.4 },
-  zijwaarts: { ritme: [1.7, 0.15], D: 0.42, Smax: 0.36, breed: 0.24, til: 0.09, piek: 0.5, knie: 0.03, tenen: 0.35, zak: 0.025, buig: 0.62, veer: 0.03, voorover: 0.14, arm: 0.12, armBasis: -0.25, elleboog: 1.0, opzij: 0.35, vol: 2.2 },
-  kruispas: { D: 0.42, Smax: 0.6, breed: 0.1, til: 0.1, piek: 0.5, knie: 0.04, tenen: 0.35, zak: 0.02, buig: 0.5, veer: 0.04, voorover: 0.1, arm: 0.12, armBasis: -0.2, elleboog: 1.0, opzij: 0.35, vol: 2.2, kruis: 0.2 },
-  kniehef: { D: 0.4, Smax: 0.5, breed: 0.1, til: 0.46, piek: 0.5, knie: 0.3, tenen: 0.6, zak: 0.005, buig: 0.28, veer: 0.05, voorover: -0.03, arm: 1.0, armBasis: 0, elleboog: 1.55, opzij: 0.1, vol: 1.6 },
-  hordes: { D: 0.36, Smax: 0.6, breed: 0.1, til: 0.42, piek: 0.5, knie: 0.25, tenen: 0.5, zak: 0.007, buig: 0.36, veer: 0.12, voorover: 0.06, arm: 0.85, armBasis: 0, elleboog: 1.5, opzij: 0.1, vol: 2 },
-  voetenwerk: { D: 0.45, Smax: 0.42, breed: 0.1, til: 0.14, piek: 0.5, knie: 0.08, tenen: 0.6, zak: 0.015, buig: 0.45, veer: 0.03, voorover: 0.12, arm: 0.6, armBasis: 0.05, elleboog: 1.5, opzij: 0.1, vol: 1.6 },
-  huppel: { D: 0.36, Smax: 0.6, breed: 0.1, til: 0.4, piek: 0.5, knie: 0.26, tenen: 0.5, zak: 0.005, buig: 0.32, veer: 0.2, voorover: 0, arm: 1.3, armBasis: 0, elleboog: 1.2, opzij: 0.12, vol: 2.4, armHoog: true },
-  dribbel: { D: 0.4, Smax: 0.55, breed: 0.09, til: 0.16, piek: 0.45, knie: 0, tenen: 0.2, zak: 0.02, buig: 0.45, veer: 0.02, voorover: 0.16, arm: 0.45, armBasis: 0.05, elleboog: 1.3, opzij: 0.18, vol: 3 },
+  wandel: {
+    ritme: [0.95, 0.22],
+    D: 0.6,
+    Smax: 0.8,
+    breed: 0.1,
+    til: 0.08,
+    piek: 0.45,
+    knie: 0.03,
+    tenen: 0,
+    zak: 0.007,
+    buig: 0.2,
+    veer: 0,
+    voorover: 0.03,
+    arm: 0.38,
+    armBasis: 0.02,
+    elleboog: 0.32,
+    opzij: 0.08,
+    vol: 1.4,
+  },
+  jog: {
+    ritme: [1.25, 0.09],
+    D: 0.38,
+    Smax: 0.84,
+    breed: 0.085,
+    til: 0.26,
+    piek: 0.4,
+    knie: -0.05,
+    tenen: 0.12,
+    zak: 0.018,
+    buig: 0.42,
+    veer: 0.03,
+    voorover: 0.12,
+    arm: 0.55,
+    armBasis: 0.06,
+    elleboog: 1.45,
+    opzij: 0.12,
+    vol: 3.5,
+  },
+  sprint: {
+    ritme: [1.35, 0.1],
+    D: 0.3,
+    Smax: 0.88,
+    breed: 0.08,
+    til: 0.38,
+    piek: 0.4,
+    knie: 0.03,
+    tenen: 0.3,
+    zak: 0.02,
+    buig: 0.48,
+    veer: 0.05,
+    voorover: 0.24,
+    arm: 0.95,
+    armBasis: 0.08,
+    elleboog: 1.55,
+    opzij: 0.1,
+    vol: 6,
+  },
+  achteruit: {
+    ritme: [1.7, 0.12],
+    D: 0.45,
+    Smax: 0.6,
+    breed: 0.11,
+    til: 0.12,
+    piek: 0.5,
+    knie: 0.05,
+    tenen: 0.45,
+    zak: 0.022,
+    buig: 0.4,
+    veer: 0.02,
+    voorover: 0.14,
+    arm: 0.45,
+    armBasis: 0.05,
+    elleboog: 1.35,
+    opzij: 0.15,
+    vol: 2.4,
+  },
+  zijwaarts: {
+    ritme: [1.7, 0.15],
+    D: 0.42,
+    Smax: 0.36,
+    breed: 0.24,
+    til: 0.09,
+    piek: 0.5,
+    knie: 0.03,
+    tenen: 0.35,
+    zak: 0.025,
+    buig: 0.62,
+    veer: 0.03,
+    voorover: 0.14,
+    arm: 0.12,
+    armBasis: -0.25,
+    elleboog: 1.0,
+    opzij: 0.35,
+    vol: 2.2,
+  },
+  kruispas: {
+    D: 0.42,
+    Smax: 0.6,
+    breed: 0.1,
+    til: 0.1,
+    piek: 0.5,
+    knie: 0.04,
+    tenen: 0.35,
+    zak: 0.02,
+    buig: 0.5,
+    veer: 0.04,
+    voorover: 0.1,
+    arm: 0.12,
+    armBasis: -0.2,
+    elleboog: 1.0,
+    opzij: 0.35,
+    vol: 2.2,
+    kruis: 0.2,
+  },
+  kniehef: {
+    D: 0.4,
+    Smax: 0.5,
+    breed: 0.1,
+    til: 0.46,
+    piek: 0.5,
+    knie: 0.3,
+    tenen: 0.6,
+    zak: 0.005,
+    buig: 0.28,
+    veer: 0.05,
+    voorover: -0.03,
+    arm: 1.0,
+    armBasis: 0,
+    elleboog: 1.55,
+    opzij: 0.1,
+    vol: 1.6,
+  },
+  hordes: {
+    D: 0.36,
+    Smax: 0.6,
+    breed: 0.1,
+    til: 0.42,
+    piek: 0.5,
+    knie: 0.25,
+    tenen: 0.5,
+    zak: 0.007,
+    buig: 0.36,
+    veer: 0.12,
+    voorover: 0.06,
+    arm: 0.85,
+    armBasis: 0,
+    elleboog: 1.5,
+    opzij: 0.1,
+    vol: 2,
+  },
+  voetenwerk: {
+    D: 0.45,
+    Smax: 0.42,
+    breed: 0.1,
+    til: 0.14,
+    piek: 0.5,
+    knie: 0.08,
+    tenen: 0.6,
+    zak: 0.015,
+    buig: 0.45,
+    veer: 0.03,
+    voorover: 0.12,
+    arm: 0.6,
+    armBasis: 0.05,
+    elleboog: 1.5,
+    opzij: 0.1,
+    vol: 1.6,
+  },
+  hakbil: {
+    D: 0.42,
+    Smax: 0.45,
+    breed: 0.1,
+    til: 0.5,
+    piek: 0.45,
+    knie: -0.3,
+    tenen: 0.6,
+    zak: 0.005,
+    buig: 0.25,
+    veer: 0.05,
+    voorover: 0.02,
+    arm: 0.85,
+    armBasis: 0,
+    elleboog: 1.5,
+    opzij: 0.1,
+    vol: 1.8,
+  },
+  huppel: {
+    D: 0.36,
+    Smax: 0.6,
+    breed: 0.1,
+    til: 0.4,
+    piek: 0.5,
+    knie: 0.26,
+    tenen: 0.5,
+    zak: 0.005,
+    buig: 0.32,
+    veer: 0.2,
+    voorover: 0,
+    arm: 1.3,
+    armBasis: 0,
+    elleboog: 1.2,
+    opzij: 0.12,
+    vol: 2.4,
+    armHoog: true,
+  },
+  dribbel: {
+    D: 0.4,
+    Smax: 0.55,
+    breed: 0.09,
+    til: 0.16,
+    piek: 0.45,
+    knie: 0,
+    tenen: 0.2,
+    zak: 0.02,
+    buig: 0.45,
+    veer: 0.02,
+    voorover: 0.16,
+    arm: 0.45,
+    armBasis: 0.05,
+    elleboog: 1.3,
+    opzij: 0.18,
+    vol: 3,
+  },
 };
 
 // ---------- houding ----------
@@ -832,7 +1130,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   } else if (m === 'sprong' && l < 0.99) {
     // Sprongen met twee voeten (één sprong per half ritme): door de knieën, afzetten, benen opgetrokken, landen.
     const k = sterkte(s.snelheid, OLD_VOL.sprong!);
-    const ritme = (((s.fase * 2) / (Math.PI * 2) + 0.15) % 1 + 1) % 1;
+    const ritme = ((((s.fase * 2) / (Math.PI * 2) + 0.15) % 1) + 1) % 1;
     const steun = ritme < 0.3 ? 1 : 0;
     const q = steun ? 0 : (ritme - 0.3) / 0.7;
     const cyclus = Math.PI / RITME.sprong;
@@ -873,7 +1171,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   let zet = s.gezet;
   if (keeper && !inv.balInHanden && !s.worp) {
     const rustig = !m || s.snelheid < 1.5 || m === 'zijwaarts' || m === 'kruispas' || m === 'voetenwerk';
-    if (rustig) zet = Math.max(zet, 0.45);
+    if (rustig) zet = Math.max(zet, 0.55);
   }
   zet *= 1 - l;
   const zit = s.zit;
@@ -887,15 +1185,16 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       if (kLoop < 0.3) vt.p.x = mix(vt.p.x, kant(i) * b, zet);
       vt.kantel = Math.max(vt.kantel, 0.12 * zet);
     }
-    h.heup -= 0.16 * zet;
-    h.romp.x += 0.3 * zet;
-    h.bekken.x += 0.12 * zet;
+    // Basishouding: door de knieën, gewicht naar voren, handen voor het lijf (handpalmen naar voren).
+    h.heup -= 0.2 * zet;
+    h.romp.x += 0.32 * zet;
+    h.bekken.x += 0.14 * zet;
     for (const i of [0, 1] as const) {
       const ar = h.arm[i];
-      ar.x = mix(ar.x, -0.62, zet);
-      ar.z = mix(ar.z, kant(i) * 0.42, zet);
-      ar.y = mix(ar.y, kant(i) * -0.2, zet);
-      ar.elleboog = mix(ar.elleboog, 1.05, zet);
+      ar.x = mix(ar.x, -0.72, zet);
+      ar.z = mix(ar.z, kant(i) * 0.45, zet);
+      ar.y = mix(ar.y, kant(i) * -0.25, zet);
+      ar.elleboog = mix(ar.elleboog, 1.2, zet);
     }
   }
 
@@ -1133,7 +1432,8 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     const zij = kant(i);
     const terug = an.u > 0.5 ? glad((an.u - 0.5) / 0.3) * 0.12 : 0;
     if (an.hoogte < 0.45) {
-      vt.p.lerp(_v.set(zij * 0.02, MAAT.enkel + 0.05 + Math.min(an.hoogte, 0.3) * 0.5, 0.17 - terug), w);
+      // Binnenkant van de voet naar de bal (die komt 0,4 m voor het lijf aan), daarna meegeven.
+      vt.p.lerp(_v.set(zij * 0.01, MAAT.enkel + 0.03 + Math.min(an.hoogte, 0.3) * 0.5, 0.4 - BAL_R - 0.06 - terug), w);
       vt.draai = mix(vt.draai, zij * 0.9, w);
       vt.kantel = mix(vt.kantel, -0.1, w);
       vt.steun = 0;
@@ -1150,7 +1450,8 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     } else {
       h.hoofd.x += 0.35 * Math.sin(Math.PI * klem((an.u - 0.35) / 0.3));
     }
-    h.heup -= 0.04 * w;
+    h.heup -= 0.06 * w;
+    h.romp.x += 0.06 * w;
   }
 
   // ---- worp of trap uit de handen ----
@@ -1221,7 +1522,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
           [0.08, 1.05, 0.45],
         ];
         h.romp.x += u < los ? -0.15 * glad(u / los) : mix(-0.15, 0.3, glad((u - los) / (1 - los)));
-        h.romp.y += u < los ? 0.45 * glad(u / (los * 0.6)) * (1 - glad((u - los * 0.6) / (los * 0.4))) : -0.3 * Math.sin(Math.PI * (u - los) / (1 - los));
+        h.romp.y += u < los ? 0.45 * glad(u / (los * 0.6)) * (1 - glad((u - los * 0.6) / (los * 0.4))) : -0.3 * Math.sin((Math.PI * (u - los)) / (1 - los));
         h.voet[1].p.lerp(_v.set(0.14, MAAT.enkel, 0.38), venster(u, 0.3, 0.9));
         h.voet[0].p.lerp(_v.set(-0.14, MAAT.enkel, -0.25), venster(u, 0.3, 0.9));
         h.arm[1].x = mix(h.arm[1].x, -1.35, w);
@@ -1345,7 +1646,9 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       if (alleen !== undefined && i !== alleen) continue;
       if (gew[i]! >= w) continue;
       const p = (doelen[i] ??= new Vector3());
-      p.copy(bal).addScaledVector(zij, kant(i) * (alleen !== undefined ? 0 : 0.17)).addScaledVector(naar, alleen !== undefined ? -0.1 : -0.06);
+      p.copy(bal)
+        .addScaledVector(zij, kant(i) * (alleen !== undefined ? 0 : 0.17))
+        .addScaledVector(naar, alleen !== undefined ? -0.1 : -0.06);
       gew[i] = w;
     }
   };
@@ -1396,13 +1699,15 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   // Nog één keer: na de armen niets onder het gras.
   sk.wortel.updateMatrixWorld(true);
   const min2 = laagste(sk);
-  if (min2 < -0.003) sk.wortel.position.y -= min2;
+  if (min2 < -0.003) {
+    sk.wortel.position.y -= min2;
+    sk.wortel.updateMatrixWorld(true);
+  }
 
   // ---- hoofd: naar de bal kijken (tegen het voorover leunen in) ----
   let kijkY = 0;
   let kijkX = 0;
   if (inv.kijk && l < 0.3) {
-    sk.wortel.updateMatrixWorld(true);
     sk.nek.worldToLocal(_w.copy(inv.kijk));
     _w.y -= MAAT.hoofdY + MAAT.hoofdMidden;
     const afst = Math.hypot(_w.x, _w.z);
@@ -1423,7 +1728,8 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   const romp = h.romp.x + h.bekken.x;
   sk.nek.rotation.set(-romp * 0.35 + st.kijkX * 0.3, st.kijkY * 0.35 - h.romp.y * 0.4, 0);
   sk.hoofd.rotation.set(-romp * 0.4 + st.kijkX * 0.7 + h.hoofd.x, st.kijkY * 0.65 - h.romp.y * 0.3, 0);
-  sk.wortel.updateMatrixWorld(true);
+  // Alleen nek en hoofd zijn nog veranderd.
+  sk.nek.updateMatrixWorld(true);
 
   // Plek van de rechterhand (de bal volgt hem bij een worp).
   sk.pols[0].localToWorld(st.hand.set(0, -0.07, 0.07));
@@ -1437,14 +1743,6 @@ function opstaanHand(s: ObjectStand): boolean {
 export function boveHoofd(sk: Skelet, uit: Vector3): Vector3 {
   return sk.hoofd.localToWorld(uit.set(0, MAAT.hoofdMidden + 0.16, 0));
 }
-
-/** Matrix van de romp (voor het rugnummer). */
-export function rompMatrix(sk: Skelet): Matrix4 {
-  return sk.romp.matrixWorld;
-}
-
-/** De (lichte) pasjes waarbij het ritme van de tijdlijn telt. */
-export const TIJDLIJN_RITME: readonly Manier[] = PASJES;
 
 // ---------- invoer uit de stand (gedeeld door de 3D-weergave en de tests) ----------
 

@@ -259,12 +259,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
 
   return (
     <div className="speler">
-      <div
-        ref={vakRef}
-        className={`speler-vak${modus === '3d' ? ' is-3d' : ''}`}
-        onPointerDown={tikBegin}
-        onClick={tik}
-      >
+      <div ref={vakRef} className={`speler-vak${modus === '3d' ? ' is-3d' : ''}`} onPointerDown={tikBegin} onClick={tik}>
         {modus === '3d' && !klaar3d && <div className="speler-laden">3D laden…</div>}
         <div className="speler-boven">
           {modus === '3d' && klaar3d ? (
@@ -286,9 +281,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             ))}
           </div>
         </div>
-        {uitleg && modus === '3d' && klaar3d && (
-          <div className="speler-uitleg">{aanraak ? 'Veeg om te draaien · knijp om te zoomen' : 'Sleep om te draaien · scroll om te zoomen'}</div>
-        )}
+        {uitleg && modus === '3d' && klaar3d && <div className="speler-uitleg">{aanraak ? 'Veeg om te draaien · knijp om te zoomen' : 'Sleep om te draaien · scroll om te zoomen'}</div>}
         {melding && (
           <div className="speler-melding" role="status">
             {melding}
@@ -318,13 +311,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             <button className="knop-rond knop-hoofd" onClick={afspelenPauze} aria-label={speelt ? 'Pauze' : 'Afspelen'}>
               <Icoon naam={speelt ? 'pauze' : 'afspelen'} maat={26} />
             </button>
-            <button
-              className={`knop-rond${herhalen ? ' aan' : ''}`}
-              onClick={() => setHerhalen(!herhalen)}
-              aria-pressed={herhalen}
-              aria-label="Herhalen"
-              title="Herhalen"
-            >
+            <button className={`knop-rond${herhalen ? ' aan' : ''}`} onClick={() => setHerhalen(!herhalen)} aria-pressed={herhalen} aria-label="Herhalen" title="Herhalen">
               <Icoon naam="herhalen" />
             </button>
             <button

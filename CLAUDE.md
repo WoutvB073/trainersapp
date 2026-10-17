@@ -21,7 +21,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/data/oefeningen/{veld,keepers}/<categorie>.json` — oefeningen; `src/data/categorieen.ts` — categorieën.
 - `src/anim/timeline.ts` — stappen → posities/houding/balhoogte/sporen per tijdstip (puur, getest);
   `render2d.ts` — canvas; `render3d.ts` — Three.js (lui geladen); `weergave.ts` — gezamenlijke interface;
-  `AnimatieSpeler.tsx` — bediening, 2D/3D-keuze, terugvallen op 2D.
+  `AnimatieSpeler.tsx` — bediening, 2D/3D-keuze, snelheid 0,5/1/2×, terugvallen op eenvoudige poppetjes en dan 2D.
+- `src/anim/poppetje.ts` — 3D-poppetje: skelet, vormen (InstancedMesh, fijn/grof), houding per beeld (`poseer`: voetdoelen + IK, armen naar de bal), `balInvoer`/`persoonInvoer` (gedeeld met de tests). `src/engine/poppetjes.ts` — instelling Eenvoudige poppetjes (per toestel, ook automatisch).
 - `src/editor/animatie.ts` — editor-animatie: lijnen met stapnummers ↔ animatiestappen (`lijnenNaarAnimatie`, `animatieNaarLijnen`), `afspeelTekening` (gebruikt in AnimatieSpeler/Miniatuur), meldingen per lijn (ook fysieke check).
 - `src/engine/platform.ts` — toestel/browser + `kiesScherm` (installatiescherm of app); `src/screens/installeren/`.
 - `src/editor/editor.ts` — pure editorlogica (palet, aanraken, slepen/draaien/maat, lijnen, ongedaan maken, benodigdheden, bevriezen); `src/eigen/` — eigen oefeningen (opslag, kopiëren, delen); `src/screens/eigen/` — lijst, nieuw, Tekenen, Gegevens.
@@ -54,6 +55,9 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `deel-a.mjs [url]` — 0.17.0: Training maken (4+1, datumveld, geen lege), Training genereren (slepen, Andere oefening, geen passende), looplijnen-knop, doelnet 2D/3D + palet, Spelers/geen Combinatievorm, exporteren/importeren. Blad: `blad-deel-a.png`.
 - `deel-b.mjs [url]` — 0.18.0: Wedstrijd-tegel, opstelling (slepen/tikken/ruilen/bank/positie verslepen, formatie, spelvorm, namen, link), tactiekbord vanuit opstelling (editor, lijnen wissen, 2D/3D), spelhervattingen (voorbeeld + beginsituatie), gedeelde link op een ander toestel. Blad: `blad-deel-b.png`.
 - `versie-019.mjs [url]` — 0.19.0: genereren vanuit een training (bug), automatische naam, aantallenfilter, nieuw tactiekbord per spelvorm/formatie, namen (editor + bord, 2D/3D), weggehaalde oefening (melding, oude training), categorieën. Blad: `blad-019.png`.
+- `versie-021.mjs [url]` — 0.21.0: snelheidsknop (gemeten tempo), Eenvoudige poppetjes (instelling + automatisch bij een traag toestel), 3D in trainingsmodus/tactiekbord 11v11 met namen/spelhervatting. Blad: `blad-021.png`.
+- `animaties.mjs <label> [url] [scenes|snelheid|laden]` — vaste 3D-momenten (`anim-<label>-*.png`, met `voor` en `na` ook vergelijkingsbladen), beeldsnelheid 11 tegen 11 (processor 1/4/6× trager, ook eenvoudig) en laadtijd.
+- `pas.mjs set <lopen|keeper|spelers|kort>` of `pas.mjs <id> <wie> <t0> <t1>` — filmstrip van één persoon van dichtbij/opzij (voeten, knieën, armen beoordelen). Blad: `blad-pas-<naam>.png`.
 - `nieuw.mjs <id,id,…> [blad] [url]` — close-ups van (nieuwe) oefeningen: 3D op vier momenten + 2D, op één blad (`blad-<naam>.png`).
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
   Chrome draait met de echte videokaart (`--use-angle=d3d11`); `trainersapp.3dAltijd=1` zet de 2D-terugval uit in tests.
@@ -93,5 +97,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - Firestore-listeners niet starten/stoppen binnen een snapshot-callback (gaat mis bij wachtende schrijfacties) → `later()`;
   "geen lid/team weg" alleen besluiten op snapshots van de server (niet `fromCache`).
 - Objecten uit Firestore hebben andere veldvolgorde: vergelijken via een vaste vorm, anders blijft sync eindeloos schrijven.
+- 3D-poppetje: houding alleen in `poppetje.ts` aanpassen en dan `npx vitest run tests/poppetje.test.ts` (alle oefeningen: grond, gewrichten, handen/voet bij de bal, glijden) + `tools/e2e/pas.mjs set …` bekijken. Testhaakjes (alleen met `trainersapp.testCamera=1`): `__camera3d(x, y, afstand, kijkrichting?, hoogte?)`, `__info3d()`, `__three3d`.
+- three.js: doorzichtige `DoubleSide`-materialen altijd met `forceSinglePass: true` (anders elk beeld twee rondes + shaderkeuze).
 - Een bal "bij" een speler ligt rekenkundig 0,55 m voor de speler; de 2D-renderer duwt hem visueel naar de rand
   van het poppetje (niet over het rugnummer).

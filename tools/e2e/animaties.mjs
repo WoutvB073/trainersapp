@@ -17,9 +17,7 @@ const { afspeelTekening } = await jiti.import('../../src/editor/animatie.ts');
 
 const DATA = new URL('../../src/data/oefeningen/', import.meta.url);
 const oefeningen = new Map(
-  ['veld', 'keepers']
-    .flatMap((map) => fs.readdirSync(new URL(`${map}/`, DATA)).flatMap((f) => JSON.parse(fs.readFileSync(new URL(`${map}/${f}`, DATA), 'utf8'))))
-    .map((o) => [o.id, o]),
+  ['veld', 'keepers'].flatMap((map) => fs.readdirSync(new URL(`${map}/`, DATA)).flatMap((f) => JSON.parse(fs.readFileSync(new URL(`${map}/${f}`, DATA), 'utf8')))).map((o) => [o.id, o]),
 );
 
 /** 11 tegen 11 op het tactiekbord, iedereen loopt (stap 1 vooruit, stap 2 diagonaal sprinten), de bal wordt gedribbeld. */
@@ -67,7 +65,7 @@ function momenten(tekening, wat) {
       }
     } else if (w === 'duik' || w === 'vang') {
       for (const lijst of tl.balEvents.values()) {
-        const e = lijst.find((e) => e.soort === 'vlucht' && keepers.has(e.daarna) && (standOp(tl, e.t1).objecten.get(e.daarna).liggen > 0.5) === (w === 'duik'));
+        const e = lijst.find((e) => e.soort === 'vlucht' && keepers.has(e.daarna) && standOp(tl, e.t1).objecten.get(e.daarna).liggen > 0.5 === (w === 'duik'));
         if (e) {
           voeg(w, e.t1 - (w === 'duik' ? 0.1 : 0), e.daarna, w === 'duik' ? `duik (${e.h1.toFixed(1)} m)` : `vangt op ${e.h1.toFixed(1)} m`);
           if (w === 'duik') voeg('ligt', e.t1 + 0.45, e.daarna, 'na de duik');
@@ -187,7 +185,12 @@ if (ALLEEN === 'alles' || ALLEEN === 'scenes') {
   if (ander) {
     const paren = shots.flatMap(([pad, tekst, sleutel]) => {
       const oud = `${MAP}anim-${ander}-${sleutel}.png`;
-      return fs.existsSync(oud) ? [[oud, `VOOR – ${tekst}`], [pad, `NA – ${tekst}`]] : [];
+      return fs.existsSync(oud)
+        ? [
+            [oud, `VOOR – ${tekst}`],
+            [pad, `NA – ${tekst}`],
+          ]
+        : [];
     });
     if (paren.length) {
       for (let i = 0; i < paren.length; i += 16) await blad(browser, paren.slice(i, i + 16), `${MAP}blad-anim-vergelijk-${i / 16 + 1}.png`, 4, 2400);
@@ -214,8 +217,9 @@ if (ALLEEN === 'alles' || ALLEEN === 'snelheid') {
       });
   });
   const cdp = await page.target().createCDPSession();
-  const meet = async (rem, camera) => {
+  const meet = async (rem, camera, eenvoudig = false) => {
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: rem });
+    await page.evaluate((e) => (e ? localStorage.setItem('trainersapp.poppetjes', 'eenvoudig') : localStorage.removeItem('trainersapp.poppetjes')), eenvoudig).catch(() => {});
     await open(page, `#/w/${code}`);
     await page.evaluate((c) => [...document.querySelectorAll('.speler-groep button')].find((b) => b.textContent === c)?.click(), camera);
     await slaap(1200);
@@ -253,9 +257,12 @@ if (ALLEEN === 'alles' || ALLEEN === 'snelheid') {
   };
   const uit = {};
   for (const rem of [1, 4, 6]) for (const cam of ['Schuin', 'Boven']) uit[`${cam} cpu×${rem}`] = await meet(rem, cam);
+  uit.infoGewoon = await page.evaluate(() => window.__info3d?.() ?? null);
+  for (const rem of [4, 6]) uit[`eenvoudig Schuin cpu×${rem}`] = await meet(rem, 'Schuin', true);
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   // Hoeveel tekenopdrachten (draw calls) en driehoeken per beeld.
-  uit.info = await page.evaluate(() => window.__info3d?.() ?? null);
+  uit.infoEenvoudig = await page.evaluate(() => window.__info3d?.() ?? null);
+  await page.evaluate(() => localStorage.removeItem('trainersapp.poppetjes'));
   console.log('BEELDSNELHEID (11 tegen 11, 390×844, dpr 3):');
   console.table(uit);
   fs.writeFileSync(`${MAP}anim-${LABEL}-snelheid.json`, JSON.stringify(uit, null, 2));

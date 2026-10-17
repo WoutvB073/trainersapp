@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (17-10-2026, versie 0.20.1)
+## Status (17-10-2026, versie 0.21.0)
 
 | Fase | Status |
 |---|---|
@@ -25,7 +25,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 11. Fixes, opruimen, categorieën, tactiekbord (0.19.0) | ✅ online – **wacht op test** |
 | 12. Nieuwe oefeningen: 13 keepers, 8 spelers (0.20.0) | ✅ online, getest en akkoord |
 | 13. Kleine aanpassingen (0.20.1) | ✅ online – **wacht op test**: Grondoefeningen samengevoegd (met echt grond tikken), oplopend overtal op kleine goaltjes, Laag duiken bij Midden/voorzet/schot |
-| 14. Realistischere 3D-animaties (0.21.0) | ⏳ |
+| 14. Realistischere 3D-animaties (0.21.0) | ✅ online – **wacht op test**: nieuw poppetje (verhoudingen, gewrichten, natuurlijk lopen/trappen/duiken/gooien), snelheid 0,5×/1×/2×, Eenvoudige poppetjes (Instellingen, ook automatisch), hakken-billen |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -252,7 +252,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 | Iconen | @vite-pwa/assets-generator vanuit `public/logo.svg` |
 | Navigatie | Eigen mini hash-router (`#/…`) |
 | Animatie 2D | Canvas, eigen tijdlijn (puur rekenwerk, unit-getest) |
-| Animatie 3D (fase 2) | Three.js, zelfde tijdlijn |
+| Animatie 3D (fase 2) | Three.js, zelfde tijdlijn; poppetjes in code met gewrichten + IK, InstancedMesh (0.21.0) |
 | Opslag (fase 3) | localStorage met versienummer; vanaf fase 7 Firebase (Auth + Firestore) met offline cache |
 | Slepen (fase 3) | `@dnd-kit/sortable` |
 | Delen (fase 3) | `lz-string` in de link |
@@ -800,6 +800,70 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Oplopend overtal**: op twee kleine goaltjes (12 m uit elkaar) in plaats van een jeugdgoal.
 - **Midden, voorzet en schot andere kant**: + Laag duiken.
 
+## Besluiten versie 0.21.0 – realistischere 3D-animaties
+- **Aanpak (B1): eigen figuur in code** (`src/anim/poppetje.ts`), géén los 3D-model, dus ook geen licentie nodig.
+  - Gekozen (a): echte verhoudingen (± 1,76 m, benen ± 54% van de lengte, smalle taille, bredere schouders, normaal
+    hoofd met haar), gewrichten heup/knie/enkel, schouder/elleboog/pols, nek/hoofd. Voeten krijgen een doelplek en de
+    benen buigen daar met inverse kinematica (IK) naartoe: een steunende voet staat stil op het gras (geen schuivende
+    voeten), knieën en ellebogen buigen alleen de goede kant op. Handen gaan met IK naar de bal (vasthouden, vangen,
+    duiken, gooien). Shirt in hesjeskleur, donkere broek, kousen in een donkere tint van het hesje, schoenen; keeper
+    lange mouwen + lichte handschoenen; trainer in trainingspak. Haar- en huidkleur verschillen per persoon (vast per id).
+  - Afgewezen (b): vrije modellen met skelet (bv. Quaternius of Kenney, CC0) hebben alleen algemene animaties (staan,
+    lopen, rennen), geen keepersduiken, trappen, vangen of loopscholing. Die bewegingen moeten we dus toch zelf op het
+    skelet maken, terwijl het model 1–3 MB extra download is, skinning van 24 figuren zwaarder is op een telefoon en de
+    hesjeskleuren lastiger. Bij (a) groeit het 3D-bestand maar ± 9 kB (gzip).
+  - Snelheid: per lichaamsdeel één InstancedMesh voor alle poppetjes (gedeelde geometrie, één tekenopdracht per deel),
+    fijn en grof detail (grof als een poppetje kleiner dan ± 85 pixels in beeld is). Daarnaast: vaste objecten (veld,
+    goals, materiaal, lijnen) niet meer elk beeld doorgerekend en doorzichtige dubbelzijdige materialen (net, sporen) in
+    één pas (three.js koos er elk beeld opnieuw een shader voor).
+- **Spelers (B2):** pasritme past bij de snelheid (wandelen ± 2,6 passen/s, joggen ± 3,4, sprinten tot ± 5) en de pas
+  wordt langer naarmate hij harder gaat; afrollen over hiel en tenen; heupen op het steunbeen met een lichte kniebuiging;
+  armen tegengesteld (bij rennen ± 90° in de elleboog), bekken en schouders draaien mee. Optrekken: voorover; afremmen:
+  achterover (versnelling uit de tijdlijn; een loopactie begint en eindigt al rustig). In een bocht leunen ze naar binnen.
+  Lijf naar de looprichting (tijdlijn); bij stilstaan/wachten draaien hoofd en bovenlijf naar de bal die in het spel is.
+  Wachthouding: gewicht verplaatsen en ademen (niet bevroren). Trap bij pass en schot: stap naar de bal, uithalen, raken,
+  uitzwaaien in de richting van de bal (binnenkant voet bij een zachte pass, wreef bij een schot); aanname: binnenkant
+  voet naar de bal en meegeven, dij, borst of kopbal. Dribbelen: kleine pasjes in het ritme van de bal, de rechtervoet tikt
+  hem steeds vooruit. Loopcoördinatie: huppelen, knieheffen, hakken-billen, zijwaarts (voeten kruisen niet), kruispas,
+  achteruit, ladder, hordes, sprongen, schijnbeweging.
+- **Keepers (B3):** basishouding (door de knieën, handen voor het lijf) bij rustig staan en vóór elk schot. Duik: zijwaarts
+  strekken, armen naar de bal, laag over het gras of hoog in de lucht, landen op de zij; opstaan via gehurkt met een hand
+  op het gras. Vangen: hoog (W-greep), borst, laag (schepvangen, door de knieën); een bal van het gras oppakken = bukken.
+  Uitrollen (diep door de knieën, stap naar voren), bovenhands (bal achter het hoofd) en zwaaiworp: de bal zit tot het
+  loslaten in de hand. Uittrappen: bal valt uit de handen, been zwaait erdoor. Kniezit, hurkzit, zitten (ook grond tikken
+  met de handen echt op het gras), spreidsprong, knieblok, stompen.
+- **Bal (B4):** rolt en draait mee; in de lucht draait hij trager; de boog is die van de tijdlijn (parabool, voor alle
+  lobs, wippen, voorzetten en worpen). Zachte schaduw recht onder de bal, kleiner en lichter naarmate hij hoger is. In 3D
+  0,14 m straal (was 0,16; echt 0,11). De bal zit bij het aannemen, trappen en vangen aan voet of handen (getest).
+- **Afspelen (B5):** snelheid **0,5× · 1× · 2×** (1,5× vervalt). **Instellingen → 3D-animaties → Eenvoudige poppetjes**:
+  grovere vormen, geen haar/nek/mouwen, beeldscherpte maximaal 1,25× en geen anti-aliasing. Automatisch: haalt 3D in
+  de eerste ± 70 beelden geen ± 28 beelden/s (mediaan > 36 ms), dan eenvoudige poppetjes met een melding; is het dan nog
+  te traag (> 45 ms), dan 2D zoals eerst. Wie het zelf uitzet, krijgt het niet meer automatisch.
+- **Overal (B6):** bibliotheek, editor-voorbeeld, trainingsmodus, tactiekbord, spelhervattingen, gedeelde links en teams
+  gebruiken allemaal `AnimatieSpeler` → `render3d` → `poppetje`. 2D is niet veranderd.
+- **Tijdlijn:** alleen extra gegevens (looprichting, loopTijd, afgelegd, versnelling, trap, aanname, opstaan); posities,
+  balbanen en tijden zijn gelijk gebleven, dus alle oefeningtests (afstand, balbezit, keeper, fysiek) blijven gelden.
+- **Controle (B7):** `tests/poppetje.test.ts` rekent álle oefeningen door: niemand door de grond, knieën en ellebogen
+  binnen hun grenzen, voeten op het gras bij stilstaan, handen aan de bal bij vasthouden en vangen, voet bij de bal bij
+  trappen, een steunvoet glijdt hooguit een paar procent (7 loopwijzen), hoofd naar de bal, poseren snel genoeg.
+  `tests/versie-021.test.ts` (instelling, snelheden, tijdlijngegevens). Browser: `tools/e2e/versie-021.mjs`,
+  `animaties.mjs` (voor/na-bladen + metingen) en `pas.mjs` (filmstrips per beweging, van opzij).
+- **Gemeten** (laptop met Intel UHD/i3, telefoonformaat 390×844 @ 3×, tactiekbord 11 tegen 11 met alle 22 poppetjes
+  in beweging; beeldtijden zijn aan 60 Hz gekoppeld):
+
+  | | vóór (0.20.1) | na (0.21.0) | na, eenvoudig |
+  |---|---|---|---|
+  | processor 1× | 60 fps, 6,6 ms rekenen/beeld | 60 fps, 5,3 ms | – |
+  | processor 4× trager (± middenklasse telefoon) | 30 fps (90%: 20 fps), 25,5 ms | **30 fps (90%: 30 fps)**, 20 ms | 60 fps (90%: 30 fps), 16,7 ms |
+  | processor 6× trager | 20 fps (90%: 15), 32 ms | 20–30 fps (90%: 15), 30 ms | 30 fps (90%: 20), 25 ms |
+  | tekenopdrachten per beeld | ± 260 (berekend) | 70 | 61 |
+
+  Grootte: 3D-bestand 151 → 160 kB gzip, hoofdbestand 249,7 → 250,7 kB gzip, hele app 2,38 → 2,41 MB; geen modelbestanden.
+  Laadtijd eerste bezoek (geen cache, processor 4× trager, mediaan van 3, eigen server zonder compressie; online
+  comprimeert GitHub Pages, dus daar sneller) – oud en nieuw gelijk binnen de meetruis: 4G 3531 → 3337 ms tot de
+  oefening, 4752 → 4652 ms tot 3D; snel 3G 8028 → 7940 ms en 11788 → 11899 ms.
+  Een echte telefoon heeft een andere videokaart; de automatische terugval vangt een te trage telefoon op.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -813,6 +877,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.21.0 – Eigen figuur in code in plaats van een vrij 3D-model (zie besluiten 0.21.0): de keepers- en voetbalbewegingen
+  moesten toch zelf gemaakt worden en zo blijft de app klein en snel.
+- 0.21.0 – Hakken-billen bestond nog niet als loopwijze: toegevoegd (`hakbil`) en in "Loopscholing in de rij" als vijfde
+  loopvorm met een vijfde speler (dat is de enige oefening die veranderd is).
+- 0.21.0 – Haar- en huidkleur verschillen per poppetje (vast per persoon), zodat een groep er natuurlijker uitziet; de
+  hesjeskleur blijft het herkenningsteken. Keeper: lange mouwen + lichte handschoenen; trainer: trainingspak.
+- 0.21.0 – Het lijf zelf blijft in de kijkrichting van de tijdlijn; bij wachten draaien alleen hoofd en bovenlijf naar de
+  bal (anders zouden rijen die bewust één kant op kijken gaan draaien).
+- 0.21.0 – Bij dribbelen ligt de bal in 3D tot 0,3 m verder voor de voet en bij een trap stapt het poppetje tot 0,26 m
+  naar de bal: alleen in beeld, de tijdlijn (en dus 2D en alle tests) blijft gelijk.
+- 0.21.0 – Bal in 3D iets kleiner (straal 0,14 i.p.v. 0,16 m), passend bij de nieuwe voeten; nog steeds groter dan echt.
+- 0.21.0 – Snelheid 1,5× is vervallen (gevraagd: 0,5×, 1×, 2×). Eenvoudige poppetjes is een instelling per toestel
+  (niet via het account), want het gaat om de snelheid van dat toestel.
 - 0.20.0 – Categorieën waar je er geen noemde: 1 Hordes zijwaarts → Hoog duiken; 2 Vier kleuren en bal verwerken → Bal
   verwerken, Reactie; 3 Vier kleuren en bal voor de stuit → Reactie; 4 Pass naast het doel → Reactie; 5 Bal van achter → Reactie;
   6 Midden, voorzet en schot → Bal verwerken, Voorzetten, Hoog duiken; 13 grondoefeningen → Warming-up.

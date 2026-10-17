@@ -12,9 +12,7 @@ const { afspeelTekening } = await jiti.import('../../src/editor/animatie.ts');
 
 const DATA = new URL('../../src/data/oefeningen/', import.meta.url);
 const oefeningen = new Map(
-  ['veld', 'keepers']
-    .flatMap((map) => fs.readdirSync(new URL(`${map}/`, DATA)).flatMap((f) => JSON.parse(fs.readFileSync(new URL(`${map}/${f}`, DATA), 'utf8'))))
-    .map((o) => [o.id, o]),
+  ['veld', 'keepers'].flatMap((map) => fs.readdirSync(new URL(`${map}/`, DATA)).flatMap((f) => JSON.parse(fs.readFileSync(new URL(`${map}/${f}`, DATA), 'utf8')))).map((o) => [o.id, o]),
 );
 
 /** Vaste reeksen: [id, wie, t0, t1, beelden, kant, onderschrift]. */
@@ -29,6 +27,7 @@ const SETS = {
     ['veld-lc-lage-hordes', 'a1', 2.45, 2.95, 8, 'zij', 'sprint'],
     ['veld-lc-lage-hordes', 'a1', 1.0, 1.7, 8, 'zij', 'hordes'],
     ['veld-lc-ladder-enkel', 'a1', 1.0, 1.7, 8, 'zij', 'ladder'],
+    ['veld-wu-loopscholing', 'a5', 10.0, 10.7, 8, 'zij', 'hakken-billen'],
   ],
 };
 
@@ -49,6 +48,11 @@ SETS.keeper = [
   ['keeper-vz-stompen-tussen-poppen', 'auto:stomp', 'voor', 'stompen'],
   ['keeper-laag-duiken-kniezit', 'auto:duik', 'gezicht', 'duik vanuit kniezit'],
 ];
+SETS.kort = [
+  ['veld-wu-loopscholing', 'a5', 10.0, 10.7, 8, 'zij', 'hakken-billen'],
+  ['veld-pt-driehoek', 'auto:aanname', 'zij', 'aannemen'],
+  ['keeper-bv-grondballen', 'auto:vang', 'gezicht', 'basishouding en vangen'],
+];
 SETS.spelers = [
   ['veld-pt-driehoek', 'auto:trap', 'zij', 'pass'],
   ['veld-pt-driehoek', 'auto:aanname', 'zij', 'aannemen'],
@@ -62,7 +66,10 @@ SETS.spelers = [
 function automatisch(tl, wat) {
   const keepers = new Set([...tl.objecten.values()].filter((o) => o.soort === 'keeper').map((o) => o.id));
   const personen = new Set([...tl.objecten.values()].filter((o) => ['speler', 'keeper', 'trainer'].includes(o.soort)).map((o) => o.id));
-  const vluchten = [...tl.balEvents.values()].flat().filter((e) => e.soort === 'vlucht').sort((a, b) => a.t1 - b.t1);
+  const vluchten = [...tl.balEvents.values()]
+    .flat()
+    .filter((e) => e.soort === 'vlucht')
+    .sort((a, b) => a.t1 - b.t1);
   const [, soort, extra] = wat.split(':');
   if (soort === 'duik' || soort === 'opstaan') {
     const e = vluchten.find((e) => keepers.has(e.daarna) && standOp(tl, e.t1).objecten.get(e.daarna).liggen > 0.5);

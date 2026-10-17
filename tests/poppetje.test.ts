@@ -215,6 +215,32 @@ describe('lopen: voeten glijden niet', () => {
   }
 });
 
+describe('kijken naar de bal', () => {
+  it('een speler die stilstaat draait zijn hoofd (en iets het bovenlijf) naar de bal die gespeeld wordt', () => {
+    const objecten: VeldObject[] = [
+      { id: 'w', soort: 'speler', team: 'A', x: 10, y: 10, kijkrichting: 0 },
+      { id: 'a', soort: 'speler', team: 'B', x: 6, y: 2 },
+      { id: 'b', soort: 'speler', team: 'B', x: 16, y: 2 },
+      { id: 'bal', soort: 'bal', x: 0, y: 0, bij: 'a' },
+    ];
+    const tl = maakTijdlijn({ veld: { type: 'leeg', breedte: 20, lengte: 14 }, objecten, animatie: [{ duur: 0.6, acties: [] }, { acties: [{ type: 'pass', van: 'a', naar: 'b' }] }] });
+    let gecontroleerd = 0;
+    speel(tl, 1 / 30, (t, p, s, bal) => {
+      if (p.id !== 'w' || t < 1.2 || !s.objecten.get('bal')!.vlucht) return;
+      const hoofd = p.sk.hoofd.getWorldPosition(new Vector3());
+      const vooruit = new Vector3(0, 0, 1).applyQuaternion(p.sk.hoofd.getWorldQuaternion(new Quaternion()));
+      const lijf = new Vector3(0, 0, 1).applyQuaternion(p.sk.wortel.getWorldQuaternion(new Quaternion()));
+      const naarBal = bal.get('bal')!.clone().sub(hoofd).setY(0).normalize();
+      vooruit.setY(0).normalize();
+      lijf.setY(0).normalize();
+      // Het hoofd wijst duidelijk meer naar de bal dan het lijf.
+      expect(vooruit.angleTo(naarBal)).toBeLessThan(lijf.angleTo(naarBal) - 0.4);
+      gecontroleerd++;
+    });
+    expect(gecontroleerd).toBeGreaterThan(3);
+  });
+});
+
 describe('snelheid van het poseren', () => {
   it('22 spelers + 2 keepers: ruim binnen een beeld (telefoon ≈ 4× trager dan deze computer)', () => {
     const objecten: VeldObject[] = [];

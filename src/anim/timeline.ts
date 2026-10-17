@@ -1,21 +1,4 @@
-import type {
-  Actie,
-  AnimatieStap,
-  BalActie,
-  BeweegActie,
-  HerhaalStap,
-  LijnSoort,
-  Manier,
-  Punt,
-  Rij,
-  Stap,
-  TegelijkStap,
-  Team,
-  Tekening,
-  Waarde,
-  VeldObject,
-  Zithouding,
-} from '../model/types';
+import type { Actie, AnimatieStap, BalActie, BeweegActie, HerhaalStap, LijnSoort, Manier, Punt, Rij, Stap, TegelijkStap, Team, Tekening, Waarde, VeldObject, Zithouding } from '../model/types';
 import { PERSONEN } from '../model/types';
 
 /**
@@ -31,6 +14,7 @@ const SNELHEID: Record<Manier, number> = {
   wandel: 1.6,
   huppel: 3.2,
   kniehef: 2.2,
+  hakbil: 2.0,
   sprong: 2.5,
   zijwaarts: 2.6,
   achteruit: 2.8,
@@ -50,6 +34,7 @@ export const RITME: Record<Manier, number> = {
   wandel: 5.5,
   huppel: 4.5,
   kniehef: Math.PI / 0.35,
+  hakbil: Math.PI / 0.4,
   sprong: Math.PI / 0.9,
   zijwaarts: 6,
   achteruit: 6,
@@ -1492,22 +1477,11 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
  */
 type VluchtOpties = Pick<BalActie, 'type' | 'hoogte' | 'hoog' | 'eindHoogte' | 'snelheid'> & { h0?: number; geenSprong?: boolean };
 
-function vlucht(
-  tl: Tijdlijn,
-  bal: string,
-  start: Punt,
-  t0: number,
-  naar: string | Punt,
-  a: VluchtOpties,
-  passeerder: string,
-  trager = 1,
-  duur?: number,
-): number {
+function vlucht(tl: Tijdlijn, bal: string, start: Punt, t0: number, naar: string | Punt, a: VluchtOpties, passeerder: string, trager = 1, duur?: number): number {
   let doel: Punt;
   let ontvanger: string | null = null;
   let t1: number;
-  const tijd = (doel: Punt) =>
-    a.snelheid ? Math.max(MIN_DUUR, afstand(start, doel) / a.snelheid) : vluchtDuur(a.type, balTop(a, start, doel), afstand(start, doel)) * trager;
+  const tijd = (doel: Punt) => (a.snelheid ? Math.max(MIN_DUUR, afstand(start, doel) / a.snelheid) : vluchtDuur(a.type, balTop(a, start, doel), afstand(start, doel)) * trager);
 
   if (typeof naar === 'string') {
     const o = tl.objecten.get(naar);
@@ -1747,7 +1721,7 @@ function keeperReactie(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: 
   const ys = tovGoal(g, start).ly;
   const yd = tovGoal(g, doel).ly;
   const yk = tovGoal(g, kp).ly;
-  const s = Math.min(0.97, Math.max(0.4, (ys - yk) / ((ys - yd) || 1)));
+  const s = Math.min(0.97, Math.max(0.4, (ys - yk) / (ys - yd || 1)));
   const langs = lerp(start, doel, s);
   const totaal = opties.snelheid ? afstand(start, doel) / opties.snelheid : vluchtDuur(a.type, balTop(a, start, doel), afstand(start, doel));
   const tI = t0 + Math.max(0.4, totaal * s);
@@ -1774,10 +1748,7 @@ function keeperReactie(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: 
   const eind: Punt = duik ? [langs[0] - r[0] * 0.55, langs[1] - r[1] * 0.55] : [langs[0] - r[0] * 0.35, langs[1] - r[1] * 0.35];
   keeperBeweging(tl, k, kp, eind, reactie, tI, duik, duik ? hLangs : undefined);
   if (a.afloop === 'stompt') {
-    const weg: Punt = a.afloopNaar ?? [
-      langs[0] + g.zij[0] * zijkant * 4 + g.n[0] * 4,
-      langs[1] + g.zij[1] * zijkant * 4 + g.n[1] * 4,
-    ];
+    const weg: Punt = a.afloopNaar ?? [langs[0] + g.zij[0] * zijkant * 4 + g.n[0] * 4, langs[1] + g.zij[1] * zijkant * 4 + g.n[1] * 4];
     const tS = vlucht(tl, bal, start, t0, langs, { ...opties, eindHoogte: opties.eindHoogte ?? 0.4 }, a.van, 1, tI - t0);
     voegToe(tl.kijk, k.id, { t: reactie, hoek: kijkHoek(tl, k.id, reactie) }, (e) => e.t);
     vlucht(tl, bal, langs, tS + 0.02, weg, { type: 'pass', hoogte: 1.2, h0: 0.4 }, k.id);
@@ -1975,7 +1946,24 @@ export function rondeDuur(tl: Tijdlijn): number {
 
 export function standOp(tl: Tijdlijn, t: number): Stand {
   const objecten = new Map<string, ObjectStand>();
-  const rust = { hoek: 0, houding: 'staan' as const, liggen: 0, duikHoek: 0, hoogte: 0, houder: null, snelheid: 0, fase: 0, gezet: 0, sprong: 0, spreid: 0, zweef: 0, vang: 0, vangHoogte: 0, zit: 0, tik: 0 };
+  const rust = {
+    hoek: 0,
+    houding: 'staan' as const,
+    liggen: 0,
+    duikHoek: 0,
+    hoogte: 0,
+    houder: null,
+    snelheid: 0,
+    fase: 0,
+    gezet: 0,
+    sprong: 0,
+    spreid: 0,
+    zweef: 0,
+    vang: 0,
+    vangHoogte: 0,
+    zit: 0,
+    tik: 0,
+  };
   for (const o of tl.objecten.values()) {
     if (o.soort === 'bal') {
       objecten.set(o.id, { ...rust, ...balStand(tl, o.id, t) });

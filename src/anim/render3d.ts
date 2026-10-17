@@ -50,7 +50,23 @@ import { lijnPunten } from '../model/lijn';
 import { boog, PASJES, PASLENGTE, standOp, type NetInslag, type Spoor, type Tijdlijn } from './timeline';
 import { isKussen, leesKleuren, persoonKleur, PLAT, tekenGrasmat, uitsnede, veldMaten, type Kleuren } from './render2d';
 import type { Weergave } from './weergave';
-import { BAL_R, balInvoer, boveHoofd, LENGTE, maakSkelet, persoonInvoer, nieuweStaat, popKleuren, Poppetjes, poseer, zetHesje, type PopKleuren, type PopSoort, type PopStaat, type Skelet } from './poppetje';
+import {
+  BAL_R,
+  balInvoer,
+  boveHoofd,
+  LENGTE,
+  maakSkelet,
+  persoonInvoer,
+  nieuweStaat,
+  popKleuren,
+  Poppetjes,
+  poseer,
+  zetHesje,
+  type PopKleuren,
+  type PopSoort,
+  type PopStaat,
+  type Skelet,
+} from './poppetje';
 
 /**
  * 3D-weergave met Three.js. Gebruikt dezelfde tijdlijn als de 2D-weergave (standOp); hier zit alleen tekenwerk.
@@ -141,7 +157,16 @@ function balTextuur(): CanvasTexture {
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, 256, 128);
     ctx.fillStyle = '#1b1b1b';
-    const vlekken: Punt[] = [[32, 64], [96, 30], [96, 98], [160, 64], [224, 30], [224, 98], [0, 20], [256, 20]];
+    const vlekken: Punt[] = [
+      [32, 64],
+      [96, 30],
+      [96, 98],
+      [160, 64],
+      [224, 30],
+      [224, 98],
+      [0, 20],
+      [256, 20],
+    ];
     for (const [x, y] of vlekken) {
       ctx.beginPath();
       for (let i = 0; i < 5; i++) {
@@ -170,7 +195,7 @@ function goal(o: VeldObject, netTex: Texture, materialen: Material[]): Group {
   const r = groot ? 0.06 : 0.04;
   const g = new Group();
   const wit = new MeshLambertMaterial({ color: '#ffffff' });
-  const net = new MeshBasicMaterial({ map: netTex, transparent: true, side: DoubleSide, depthWrite: false, opacity: 0.55 });
+  const net = new MeshBasicMaterial({ map: netTex, transparent: true, side: DoubleSide, depthWrite: false, opacity: 0.55, forceSinglePass: true });
   materialen.push(wit, net);
   const paal = new CylinderGeometry(r, r, H, 10);
   for (const x of [-B / 2, B / 2]) {
@@ -338,7 +363,10 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
         g.add(p);
       }
       const doekHoogte = Math.min(h, 0.6);
-      const doek = new Mesh(herhaalUV(new PlaneGeometry(w, doekHoogte), w, doekHoogte, 0.12), new MeshBasicMaterial({ map: netTex, transparent: true, side: DoubleSide, opacity: 0.85, depthWrite: false }));
+      const doek = new Mesh(
+        herhaalUV(new PlaneGeometry(w, doekHoogte), w, doekHoogte, 0.12),
+        new MeshBasicMaterial({ map: netTex, transparent: true, side: DoubleSide, opacity: 0.85, depthWrite: false, forceSinglePass: true }),
+      );
       doek.position.set(0, h - doekHoogte / 2, 0);
       const band = new Mesh(new BoxGeometry(w, 0.05, 0.02), kleur('#ffffff'));
       band.position.set(0, h - 0.025, 0);
@@ -412,7 +440,7 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
     case 'rebounder': {
       const g = new Group();
       const w = o.breedte ?? 1.2;
-      const doek = new Mesh(new PlaneGeometry(w, 0.9), new MeshBasicMaterial({ map: netTex, transparent: true, side: DoubleSide, opacity: 0.9 }));
+      const doek = new Mesh(new PlaneGeometry(w, 0.9), new MeshBasicMaterial({ map: netTex, transparent: true, side: DoubleSide, opacity: 0.9, forceSinglePass: true }));
       doek.position.set(0, 0.45, 0);
       doek.rotation.x = -0.45;
       const frame = new Mesh(new BoxGeometry(w, 0.05, 0.05), kleur('#3a3a3a'));
@@ -568,6 +596,7 @@ const VOL: Record<Manier, number> = {
   wandel: 1.4,
   huppel: 2.8,
   kniehef: 1.8,
+  hakbil: 1.8,
   sprong: 2.2,
   zijwaarts: 2.2,
   achteruit: 2.4,
@@ -624,6 +653,12 @@ export function pose(manier: Manier | undefined, snelheid: number, fase: number,
       p.benen = [-op * 1.35 * k, -neer * 1.35 * k];
       p.armen = [neer * -0.9 * k, op * -0.9 * k];
       p.veer = Math.abs(sin) * (manier === 'hordes' ? 0.14 : 0.06) * k;
+      break;
+    case 'hakbil':
+      // Hielen om en om naar de billen (bovenbeen blijft bijna recht naar beneden).
+      p.benen = [op * 0.2 * k, neer * 0.2 * k];
+      p.armen = [-neer * 0.8 * k, -op * 0.8 * k];
+      p.veer = Math.abs(sin) * 0.05 * k;
       break;
     case 'huppel':
       p.benen = [(-op * 1.1 + neer * 0.3) * k, (-neer * 1.1 + op * 0.3) * k];
@@ -787,7 +822,7 @@ function pijlGeo(): BufferGeometry {
 }
 
 function maakSpoor(s: Spoor, kleur: string, pijl: BufferGeometry, materialen: Material[]): SpoorMesh {
-  const mat = new MeshBasicMaterial({ color: kleur, side: DoubleSide, polygonOffset: true, polygonOffsetFactor: -2, transparent: true, opacity: 0.95 });
+  const mat = new MeshBasicMaterial({ color: kleur, side: DoubleSide, polygonOffset: true, polygonOffsetFactor: -2, transparent: true, opacity: 0.95, forceSinglePass: true });
   materialen.push(mat);
   let geo: BufferGeometry;
   let stuk = 6;
@@ -853,7 +888,10 @@ function cameraDoelen(t: Tekening, u: Uitsnede, aspect: number, fov: number): Re
   const richting = v3(-Math.sin(gh), 0, Math.cos(gh)); // opening van het goal (hoek 0 = +z)
   const k = klem(u.lengte * 0.38, 4, 14);
   const achter: CameraDoel = {
-    positie: gp.clone().add(richting.clone().multiplyScalar(-(k * 0.45 + 3))).add(v3(0, 3.4 + k * 0.32, 0)),
+    positie: gp
+      .clone()
+      .add(richting.clone().multiplyScalar(-(k * 0.45 + 3)))
+      .add(v3(0, 3.4 + k * 0.32, 0)),
     doel: gp.clone().add(richting.clone().multiplyScalar(k * 1.3)),
   };
   return { boven, schuin, achter };
@@ -889,9 +927,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const y1 = Math.max(u.y + u.lengte, L) + marge;
   const gebied: Uitsnede = { x: x0, y: y0, breedte: x1 - x0, lengte: y1 - y0 };
   const pxPerM = klem(2048 / Math.max(gebied.breedte, gebied.lengte), 8, 32);
-  const grasTex = canvasTextuur(Math.round(gebied.breedte * pxPerM), Math.round(gebied.lengte * pxPerM), (ctx) =>
-    tekenGrasmat(ctx, ctx.canvas.width, ctx.canvas.height, tekening, gebied, kleuren),
-  );
+  const grasTex = canvasTextuur(Math.round(gebied.breedte * pxPerM), Math.round(gebied.lengte * pxPerM), (ctx) => tekenGrasmat(ctx, ctx.canvas.width, ctx.canvas.height, tekening, gebied, kleuren));
   grasTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   grasTex.minFilter = LinearMipmapLinearFilter;
   const grasMat = new MeshLambertMaterial({ map: grasTex });
@@ -1067,6 +1103,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       poppetjes: figuren.size,
       eenvoudig: !!opties.eenvoudig,
     });
+    (window as unknown as { __three3d?: unknown }).__three3d = { renderer, scene };
   }
 
   let tekenenGevraagd = 0;
@@ -1174,11 +1211,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       const l = st.liggen;
       const dh = (st.duikHoek * Math.PI) / 180;
       const lucht = 1 - klem((f.sk.wortel.position.y - 0.05) / 3, 0, 0.6);
-      schaduwMatrix.compose(
-        tijdelijk.set(bekken.x, 0.012, bekken.z),
-        schaduwDraai.setFromAxisAngle(Y_OMHOOG, -dh),
-        schaal.set((0.85 + l * 1.5) * lucht, 1, 0.8 * lucht),
-      );
+      schaduwMatrix.compose(tijdelijk.set(bekken.x, 0.012, bekken.z), schaduwDraai.setFromAxisAngle(Y_OMHOOG, -dh), schaal.set((0.85 + l * 1.5) * lucht, 1, 0.8 * lucht));
       schaduwen.setMatrixAt(n++, schaduwMatrix);
       if (f.ring) {
         f.ring.position.set(st.x - Math.cos(dh) * 0.55 * l, 0.016, st.y - Math.sin(dh) * 0.55 * l);
@@ -1245,6 +1278,20 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     }
     render();
   };
+
+  // Alles wat niet beweegt (veld, goals, materiaal, lijnen) niet elk beeld opnieuw doorrekenen.
+  const beweegt = new Set<Object3D>(poppetjes.lijst);
+  beweegt.add(schaduwen);
+  for (const b of ballen.values()) beweegt.add(b.mesh).add(b.schaduw);
+  for (const f of figuren.values()) for (const x of [f.rug, f.badge, f.naam, f.ring]) if (x) beweegt.add(x);
+  for (const kind of scene.children) {
+    if (beweegt.has(kind)) continue;
+    kind.traverse((o) => {
+      o.updateMatrix();
+      o.matrixAutoUpdate = false;
+    });
+  }
+  scene.updateMatrixWorld(true);
 
   plaats(doelen[stand]);
   zetGrenzen();
