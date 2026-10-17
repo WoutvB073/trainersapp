@@ -242,6 +242,23 @@ export interface ObjectStand {
   stomp?: { vuisten: 1 | 2; u: number };
   /** Keeper blokt: spreidsprong (ster) of knieblok (u: 0–1 rond het contact). */
   blok?: { soort: 'ster' | 'knie'; u: number };
+  /**
+   * Personen in beweging (voor de 3D-poppetjes): looprichting (graden), seconden sinds het begin van deze beweging,
+   * afgelegde weg (m) en versnelling (m/s², negatief = afremmen).
+   */
+  looprichting?: number;
+  loopTijd?: number;
+  afgelegd?: number;
+  versnelling?: number;
+  /**
+   * Trap tegen de bal (pass of schot met de voet): u 0–1, de voet raakt de bal op u = 0,5. Kracht 0–1 (uit de
+   * balsnelheid), richting van de bal (graden) en of hij hoog gaat.
+   */
+  trap?: { u: number; kracht: number; richting?: number; hoog: boolean };
+  /** Bal aannemen (niet met de handen): u 0–1, de bal komt aan op u = 0,5, op deze hoogte (m), uit deze richting (graden). */
+  aanname?: { u: number; hoogte: number; richting: number };
+  /** Opstaan na een duik: 0–1 (alleen tijdens het opstaan). */
+  opstaan?: number;
 }
 
 /** Een bal die net in een goal is gegaan: het net bolt op die plek even uit. */
@@ -300,6 +317,14 @@ function easeAfgeleide(soort: Ease, u: number): number {
   if (soort === 'mens') return (Math.PI / 2) * Math.sin(Math.PI * u);
   if (soort === 'duik') return 2 * (1 - u);
   return 1.25 - 0.5 * u;
+}
+
+/** Tweede afgeleide van de ease (voor de versnelling op een moment). */
+function easeTweede(soort: Ease, u: number): number {
+  u = klem(u);
+  if (soort === 'mens') return ((Math.PI * Math.PI) / 2) * Math.cos(Math.PI * u);
+  if (soort === 'duik') return -2;
+  return -0.5;
 }
 
 /** Hoogte boven de grond op voortgang u (0–1) van een boog met hoogste punt `top`. */
@@ -558,21 +583,24 @@ function kijkRuw(tl: Tijdlijn, id: string, t: number): number {
 }
 
 /** Hoe ver ligt deze persoon (0–1) en in welke richting is hij gedoken. */
-function ligging(tl: Tijdlijn, id: string, t: number): { liggen: number; hoek: number } {
+function ligging(tl: Tijdlijn, id: string, t: number): { liggen: number; hoek: number; opstaan?: number } {
   let liggen = 0;
   let hoek = 0;
+  let opstaan: number | undefined;
   for (const e of tl.houdingen.get(id) ?? []) {
     if (e.t > t) break;
     const u = e.t1 > e.t ? klem((t - e.t) / (e.t1 - e.t)) : 1;
     if (e.houding === 'duik') {
       liggen = ease('duik', u);
       hoek = e.hoek ?? 0;
+      opstaan = undefined;
     } else {
       // Opstaan vanuit de huidige ligging.
+      opstaan = liggen > 0.01 && u < 1 ? u : undefined;
       liggen = liggen * (1 - ease('mens', u));
     }
   }
-  return { liggen, hoek };
+  return { liggen, hoek, ...(opstaan !== undefined ? { opstaan } : {}) };
 }
 
 const ligt = (tl: Tijdlijn, id: string, t: number) => ligging(tl, id, t).liggen > 0.5;
@@ -735,6 +763,35 @@ function stompOp(tl: Tijdlijn, id: string, t: number): ObjectStand['stomp'] {
 function blokOp(tl: Tijdlijn, id: string, t: number): ObjectStand['blok'] {
   for (const x of tl.blokken) {
     if (x.wie === id && t >= x.t - 0.3 && t <= x.t + 0.6) return { soort: x.soort, u: (t - (x.t - 0.3)) / 0.9 };
+  }
+  return undefined;
+}
+
+/** Voetbeweging bij een pass of schot: 0,3 s uithalen, raken op u = 0,5, 0,3 s uitzwaaien. */
+const TRAP = 0.3;
+
+/** Trap tegen de bal (pass/schot met de voet) van deze persoon op tijdstip t. */
+function trapOp(tl: Tijdlijn, id: string, t: number): ObjectStand['trap'] {
+  for (const x of tl.loslaten) {
+    if (x.wie !== id || x.soort !== 'voet' || t < x.t - TRAP || t > x.t + TRAP) continue;
+    const e = (tl.balEvents.get(x.bal) ?? []).find((e) => e.soort === 'vlucht' && Math.abs(e.t0 - x.t) < 1e-6);
+    const u = (t - (x.t - TRAP)) / (2 * TRAP);
+    if (!e || e.soort !== 'vlucht') return { u, kracht: 0.5, hoog: false };
+    const v = afstand(e.van, e.naar) / Math.max(0.05, e.t1 - e.t0);
+    return { u, kracht: klem((v - 6) / 14) * 0.85 + 0.15, richting: afstand(e.van, e.naar) > 0.2 ? graden(e.van, e.naar) : undefined, hoog: e.top > 1 };
+  }
+  return undefined;
+}
+
+/** Bal aannemen met de voet (of borst/dij): rond het moment dat de bal aankomt. Niet als hij hem direct doorspeelt. */
+function aannameOp(tl: Tijdlijn, o: VeldObject, t: number): ObjectStand['aanname'] {
+  for (const lijst of tl.balEvents.values()) {
+    for (const e of lijst) {
+      if (e.soort !== 'vlucht' || e.daarna !== o.id || t < e.t1 - TRAP || t > e.t1 + TRAP) continue;
+      if (o.soort === 'keeper' && !metVoet(tl, o.id, e.t1)) continue;
+      if (tl.loslaten.some((x) => x.wie === o.id && Math.abs(x.t - e.t1) < 0.06)) continue;
+      return { u: (t - (e.t1 - TRAP)) / (2 * TRAP), hoogte: e.h1, richting: graden(e.van, e.naar) };
+    }
   }
   return undefined;
 }
@@ -1902,6 +1959,15 @@ function sprongOp(tl: Tijdlijn, id: string, t: number): number {
   return klem(w);
 }
 
+/** Alleen de velden die er zijn (dan blijven standen zonder deze bewegingen precies zoals ze waren). */
+function extra(trap: ObjectStand['trap'], aanname: ObjectStand['aanname'], opstaan: number | undefined): Partial<ObjectStand> {
+  const x: Partial<ObjectStand> = {};
+  if (trap) x.trap = trap;
+  if (aanname) x.aanname = aanname;
+  if (opstaan !== undefined) x.opstaan = opstaan;
+  return x;
+}
+
 /** Totale lengte van één ronde inclusief de rust aan het eind. */
 export function rondeDuur(tl: Tijdlijn): number {
   return tl.duur > 0 ? tl.duur + NA_AFLOOP : 0;
@@ -1917,14 +1983,20 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
       const p = positie(tl, o.id, t);
       const l = ligging(tl, o.id, t);
       const b = actief(tl, o.id, t);
-      let beweging: Pick<ObjectStand, 'manier' | 'snelheid' | 'fase'> = { snelheid: 0, fase: 0 };
+      let beweging: Pick<ObjectStand, 'manier' | 'snelheid' | 'fase' | 'looprichting' | 'loopTijd' | 'afgelegd' | 'versnelling'> = { snelheid: 0, fase: 0 };
       if (b) {
         const lengte = b.lengtes[b.lengtes.length - 1]!;
-        const u = (t - b.t0) / (b.t1 - b.t0);
+        const duur = b.t1 - b.t0;
+        const u = (t - b.t0) / duur;
+        const d = voortgang(b, t);
         beweging = {
           manier: b.manier,
-          snelheid: (lengte / (b.t1 - b.t0)) * easeAfgeleide(b.ease, u),
-          fase: voortgang(b, t) * RITME[b.manier],
+          snelheid: (lengte / duur) * easeAfgeleide(b.ease, u),
+          fase: d * RITME[b.manier],
+          looprichting: langsPad(b.pad, b.lengtes, Math.max(d, 0.001)).hoek,
+          loopTijd: t - b.t0,
+          afgelegd: d,
+          versnelling: (lengte / (duur * duur)) * easeTweede(b.ease, u),
         };
       }
       objecten.set(o.id, {
@@ -1947,6 +2019,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         tik: tikOp(tl, o.id, t),
         stomp: stompOp(tl, o.id, t),
         blok: blokOp(tl, o.id, t),
+        ...extra(trapOp(tl, o.id, t), aannameOp(tl, o, t), l.opstaan),
       });
     } else {
       objecten.set(o.id, { ...rust, x: o.x, y: o.y, hoek: o.hoek ?? 0 });

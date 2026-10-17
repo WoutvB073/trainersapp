@@ -11,3 +11,7 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 .firebase/
+
+# Metingen van tools/e2e/animaties.mjs
+tools/e2e/anim-*.json
+tools/tmp/

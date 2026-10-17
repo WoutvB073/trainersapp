@@ -8,8 +8,8 @@ import {
   BufferGeometry,
   CanvasTexture,
   CapsuleGeometry,
+  DynamicDrawUsage,
   CatmullRomCurve3,
-  CircleGeometry,
   Color,
   ConeGeometry,
   CylinderGeometry,
@@ -19,8 +19,10 @@ import {
   Fog,
   Group,
   HemisphereLight,
+  InstancedMesh,
   LinearMipmapLinearFilter,
   Material,
+  Matrix4,
   Mesh,
   MeshBasicMaterial,
   MeshLambertMaterial,
@@ -45,9 +47,10 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { CameraStand, Manier, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
 import { lijnPunten } from '../model/lijn';
-import { boog, PASJES, PASLENGTE, standOp, type NetInslag, type ObjectStand, type Spoor, type Tijdlijn } from './timeline';
+import { boog, PASJES, PASLENGTE, standOp, type NetInslag, type Spoor, type Tijdlijn } from './timeline';
 import { isKussen, leesKleuren, persoonKleur, PLAT, tekenGrasmat, uitsnede, veldMaten, type Kleuren } from './render2d';
 import type { Weergave } from './weergave';
+import { BAL_R, balInvoer, boveHoofd, LENGTE, maakSkelet, persoonInvoer, nieuweStaat, popKleuren, Poppetjes, poseer, zetHesje, type PopKleuren, type PopSoort, type PopStaat, type Skelet } from './poppetje';
 
 /**
  * 3D-weergave met Three.js. Gebruikt dezelfde tijdlijn als de 2D-weergave (standOp); hier zit alleen tekenwerk.
@@ -67,12 +70,11 @@ export interface Opties3D {
   opFout?: () => void;
   /** Looplijnen tonen (standaard ja). */
   looplijnen?: boolean;
+  /** Eenvoudige poppetjes: minder detail, lagere resolutie (tragere telefoons). */
+  eenvoudig?: boolean;
 }
 
-const BAL_R = 0.16; // iets groter dan echt (0,11 m), zodat hij goed te zien is
 const LUCHT = '#cfe6f2';
-const HUID = '#e7b48f';
-const BROEK = '#1f2933';
 const SPOOR_Y = 0.03;
 const SPOOR_BREED = 0.18;
 
@@ -445,33 +447,38 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
 
 interface Figuur {
   o: VeldObject;
-  shirt: MeshLambertMaterial;
-  kous: MeshLambertMaterial;
+  soort: PopSoort;
+  kleuren: PopKleuren;
+  sk: Skelet;
+  staat: PopStaat;
+  zaad: number;
   badge?: Sprite;
+  /** Rugnummer op het shirt (volgt de romp). */
+  rug?: Mesh;
+  naam?: Sprite;
   label: string;
   team?: Team;
-  wortel: Group;
-  benen: [Group, Group];
-  armen: [Group, Group];
-  schaduw: Mesh;
   /** Keeper (bij meer keepers): gekleurde ring met nummer op het gras, onder hem. */
   ring?: Group;
-  hoek: number;
-  fase: number;
-  vorige?: { x: number; y: number; t: number };
 }
 
-interface Gedeeld {
-  been: CylinderGeometry;
-  arm: CylinderGeometry;
-  romp: CapsuleGeometry;
-  broek: CylinderGeometry;
-  hoofd: SphereGeometry;
-  rug: PlaneGeometry;
-  schaduw: CircleGeometry;
-  huid: MeshLambertMaterial;
-  broekMat: MeshLambertMaterial;
-  schaduwMat: MeshBasicMaterial;
+/** Vast getal 0–1 per persoon (uit de id): wiebelfase, haar- en huidkleur. */
+function zaadVan(id: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < id.length; i++) h = Math.imul(h ^ id.charCodeAt(i), 16777619);
+  return ((h >>> 0) % 100000) / 100000;
+}
+
+/** Zachte, ronde schaduw (donker in het midden, vervaagt naar de rand). */
+function schaduwTextuur(): CanvasTexture {
+  return canvasTextuur(64, 64, (ctx) => {
+    const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(0,0,0,1)');
+    g.addColorStop(0.55, 'rgba(0,0,0,0.75)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 64, 64);
+  });
 }
 
 /** Ring op het gras onder een keeper: rand in zijn tint met een klein nummer in het midden (ligt plat). */
@@ -513,97 +520,46 @@ function naamTextuur(naam: string): { tex: CanvasTexture; verhouding: number } {
   return { tex: canvasTextuur(w, 64, teken), verhouding: w / 64 };
 }
 
-function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Material[], texturen: Texture[], keeperNummer = false, naam?: string): Figuur {
-  const shirt = new MeshLambertMaterial({ color: kleur });
-  const kous = new MeshLambertMaterial({ color: new Color(kleur).multiplyScalar(0.55) });
-  materialen.push(shirt, kous);
-  const wortel = new Group();
+/** Rugnummer: vlak op de rug van de romp (in het assenstelsel van de romp). */
+const RUG = new Matrix4().compose(new Vector3(0, 0.27, -0.118), new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI), new Vector3(1, 1, 1));
 
-  const been = (x: number) => {
-    const heup = new Group();
-    heup.position.set(x, 0.88, 0);
-    const m = new Mesh(d.been, kous);
-    m.position.y = -0.44;
-    heup.add(m);
-    wortel.add(heup);
-    return heup;
-  };
-  const arm = (x: number) => {
-    const schouder = new Group();
-    schouder.position.set(x, 1.5, 0);
-    const m = new Mesh(d.arm, shirt);
-    m.position.y = -0.3;
-    schouder.add(m);
-    wortel.add(schouder);
-    return schouder;
-  };
-  const benen: [Group, Group] = [been(-0.1), been(0.1)];
-  const armen: [Group, Group] = [arm(-0.29), arm(0.29)];
-
-  const broek = new Mesh(d.broek, d.broekMat);
-  broek.position.y = 0.9;
-  const romp = new Mesh(d.romp, shirt);
-  romp.position.y = 1.24;
-  romp.scale.set(1.12, 1, 0.75);
-  const hoofd = new Mesh(d.hoofd, d.huid);
-  hoofd.position.y = 1.79;
-  wortel.add(broek, romp, hoofd);
-
+function maakFiguur(o: VeldObject, kleur: string, rugGeo: PlaneGeometry, materialen: Material[], texturen: Texture[], keeperNummer = false, naam?: string): Figuur {
+  const soort: PopSoort = o.soort === 'keeper' ? 'keeper' : o.soort === 'trainer' ? 'trainer' : 'speler';
+  const zaad = zaadVan(o.id);
   const label = o.soort === 'trainer' ? 'T' : o.nummer !== undefined ? String(o.nummer) : '';
-  let badge: Sprite | undefined;
+  const f: Figuur = { o, soort, kleuren: popKleuren(soort, kleur, zaad), sk: maakSkelet(), staat: nieuweStaat(), zaad, label, team: o.team };
   // Keepers: geen nummer op of boven het lijf (dat dekt de keepertechniek af); bij meer keepers een ring op het gras.
   if (label && o.soort !== 'keeper') {
     // Rugnummer op het shirt …
     const rugTex = nummerTextuur(label, null);
-    const rugMat = new MeshBasicMaterial({ map: rugTex, transparent: true });
-    const rug = new Mesh(d.rug, rugMat);
-    rug.position.set(0, 1.3, -0.158);
-    rug.rotation.y = Math.PI;
-    wortel.add(rug);
+    const rugMat = new MeshBasicMaterial({ map: rugTex, transparent: true, polygonOffset: true, polygonOffsetFactor: -2 });
+    f.rug = new Mesh(rugGeo, rugMat);
+    f.rug.matrixAutoUpdate = false;
     // … en een badge boven het hoofd, van alle kanten (en van boven) leesbaar.
     const badgeTex = nummerTextuur(label, kleur);
     // Vaste grootte op het scherm (ook leesbaar als de camera ver weg staat).
     const badgeMat = new SpriteMaterial({ map: badgeTex, depthTest: false, transparent: true, sizeAttenuation: false });
-    badge = new Sprite(badgeMat);
-    // Iets kleiner, en op het scherm altijd net bóven het hoofd (ook van boven gezien niet op het lijf).
-    badge.scale.set(0.05, 0.05, 1);
-    badge.center.set(0.5, -0.12);
-    badge.position.y = 1.95;
-    badge.renderOrder = 10;
-    wortel.add(badge);
+    f.badge = new Sprite(badgeMat);
+    f.badge.scale.set(0.05, 0.05, 1);
+    // Op het scherm altijd net bóven het hoofd (ook van boven gezien niet op het lijf).
+    f.badge.center.set(0.5, -0.12);
+    f.badge.renderOrder = 10;
     materialen.push(rugMat, badgeMat);
     texturen.push(rugTex, badgeTex);
   }
-
-  const schaduw = new Mesh(d.schaduw, d.schaduwMat);
-  schaduw.rotation.x = -Math.PI / 2;
-  schaduw.position.y = 0.012;
   if (naam) {
     const { tex, verhouding } = naamTextuur(naam);
     const mat = new SpriteMaterial({ map: tex, depthTest: false, transparent: true, sizeAttenuation: false });
-    const sprite = new Sprite(mat);
-    sprite.scale.set(0.026 * verhouding, 0.026, 1);
-    sprite.center.set(0.5, 1.25);
-    sprite.position.y = 0.02;
-    sprite.renderOrder = 11;
-    wortel.add(sprite);
+    f.naam = new Sprite(mat);
+    f.naam.scale.set(0.026 * verhouding, 0.026, 1);
+    f.naam.center.set(0.5, 1.25);
+    f.naam.renderOrder = 11;
     materialen.push(mat);
     texturen.push(tex);
   }
-  const ring = keeperNummer && label ? maakRing(label, kleur, materialen, texturen) : undefined;
-  return { o, shirt, kous, badge, label, team: o.team, wortel, benen, armen, schaduw, ring, hoek: 0, fase: 0 };
+  if (keeperNummer && label) f.ring = maakRing(label, kleur, materialen, texturen);
+  return f;
 }
-
-/** Kortste weg tussen twee hoeken (radialen). */
-function hoekVerschil(a: number, b: number) {
-  let d = (b - a) % (Math.PI * 2);
-  if (d > Math.PI) d -= Math.PI * 2;
-  if (d < -Math.PI) d += Math.PI * 2;
-  return d;
-}
-
-const Y_AS = new Vector3(0, 1, 0);
-const X_AS = new Vector3(1, 0, 0);
 
 /** Snelheid waarbij de beweging "vol" is (voor de grootte van de pas). */
 const VOL: Record<Manier, number> = {
@@ -630,7 +586,10 @@ interface Pose {
   voorover: number;
 }
 
-/** Houding van benen, armen en lijf per loopwijze. Negatieve rotatie = naar voren. */
+/**
+ * Eenvoudige houding per loopwijze (heup- en schouderhoeken, negatief = naar voren). Het nieuwe poppetje
+ * (poppetje.ts) rekent zelf met voetdoelen; deze samenvatting blijft voor de tests en als referentie.
+ */
 export function pose(manier: Manier | undefined, snelheid: number, fase: number, liggen = 0): Pose {
   const k = manier ? klem(snelheid / (VOL[manier] * 0.7)) * (1 - liggen) : 0;
   const sin = Math.sin(fase);
@@ -700,211 +659,6 @@ export function pose(manier: Manier | undefined, snelheid: number, fase: number,
       loop(0.75, 0.6);
   }
   return p;
-}
-
-/** Zet het poppetje in de stand van dit moment (lopen, duiken, opstaan, vangen, gooien, bal vasthouden). */
-function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: boolean, balInHanden: boolean) {
-  const keeper = f.o.soort === 'keeper';
-  // Kijkrichting vloeiend draaien (de tijdlijn wisselt in één keer).
-  const doel = Math.PI / 2 - (s.hoek * Math.PI) / 180;
-  f.hoek = sprong ? doel : f.hoek + hoekVerschil(f.hoek, doel) * klem(dtEcht * 10);
-
-  // Snelheid en pas komen uit de tijdlijn (ook bij doorspoelen precies goed).
-  void t;
-
-  // Duiken: het lijf kantelt naar de duikkant en gaat naar de grond (voeten schuiven iets mee).
-  const l = s.liggen;
-  const dh = (s.duikHoek * Math.PI) / 180;
-  const dx = Math.cos(dh);
-  const dz = Math.sin(dh);
-  const p = pose(s.manier, s.snelheid, s.fase, l);
-  const kant = (i: number) => (i === 0 ? -1 : 1);
-
-  // Keeper: altijd licht in basishouding (door de knieën, handen voor het lijf), ook meteen na het opstaan.
-  let zet = s.gezet;
-  if (keeper && !balInHanden && !s.worp) {
-    const rustig = !s.manier || s.snelheid < 1.5 || s.manier === 'zijwaarts' || s.manier === 'kruispas' || s.manier === 'voetenwerk';
-    if (rustig) zet = Math.max(zet, 0.45);
-  }
-  zet *= 1 - l;
-  // Vangen: lage bal = door de knieën en voorover (schepvangen, kommetje).
-  const vang = keeper ? s.vang * klem(1 - l * 3) : 0;
-  const diep = vang * klem((0.9 - s.vangHoogte) / 0.75);
-  const spring = Math.sin(s.sprong * Math.PI * 0.5);
-  // Kniezit (op de knieën, onderbenen naar achteren) of hurkzit (diep door de knieën, benen breed).
-  const knie = s.zitSoort === 'kniezit' ? s.zit : 0;
-  const hurk = s.zitSoort === 'hurkzit' ? s.zit : 0;
-  // Op de billen: heupen op het gras, benen naar voren (gestrekt of met de knieën opgetrokken).
-  const isBillen = (z?: string) => z === 'zit' || z === 'zit-opgetrokken';
-  const billen = isBillen(s.zitSoort) ? s.zit : 0;
-  const mix = s.zitVorig ? (s.zitMix ?? 1) : 1;
-  const opgetrokken = ((s.zitSoort === 'zit-opgetrokken' ? 1 : 0) * mix + (s.zitVorig === 'zit-opgetrokken' ? 1 : 0) * (1 - mix)) * s.zit;
-  f.wortel.position.set(
-    s.x - dx * 1.45 * l,
-    l * 0.2 + s.zweef + p.veer - zet * 0.13 - diep * 0.3 + spring * 0.45 - knie * 0.47 - hurk * 0.4 - billen * (0.78 - opgetrokken * 0.08),
-    s.y - dz * 1.45 * l,
-  );
-  if (knie > 0) {
-    p.benen = [p.benen[0] + knie * 1.35, p.benen[1] + knie * 1.35];
-    p.voorover += knie * 0.08;
-  }
-  // Blokken: spreidsprong (stervorm: armen en benen wijd) of knieblok (één knie op de grond, ander been opzij).
-  const bl = keeper && s.blok ? s.blok : undefined;
-  const blokK = bl ? Math.sin(Math.PI * Math.min(1, bl.u / 0.66) * 0.5) * (bl.u > 0.85 ? 1 - (bl.u - 0.85) / 0.15 : 1) : 0;
-  if (bl && blokK > 0) {
-    if (bl.soort === 'ster') {
-      f.wortel.position.y += 0.12 * blokK;
-      p.spreid = [p.spreid[0] - 0.7 * blokK, p.spreid[1] + 0.7 * blokK];
-      p.benen = [p.benen[0] * (1 - blokK), p.benen[1] * (1 - blokK)];
-      p.voorover += 0.1 * blokK;
-    } else {
-      f.wortel.position.y -= 0.42 * blokK;
-      p.benen = [p.benen[0] + 1.4 * blokK, p.benen[1] - 0.2 * blokK];
-      p.spreid = [p.spreid[0], p.spreid[1] + 1.0 * blokK];
-      p.voorover += 0.15 * blokK;
-    }
-  }
-  if (billen > 0) {
-    // Benen naar voren (heup ± 90°); opgetrokken: minder ver, knieën omhoog. Bovenlijf iets achterover.
-    const heup = -1.5 + opgetrokken * 0.6;
-    p.benen = [p.benen[0] * (1 - billen) + heup * billen, p.benen[1] * (1 - billen) + heup * billen];
-    p.spreid = [p.spreid[0] - billen * 0.12, p.spreid[1] + billen * 0.12];
-    p.voorover -= billen * 0.12;
-    zet = 0;
-    // Grond tikken: achterover leunen en met beide handen achter je naar het gras.
-    if (s.tik > 0) {
-      p.voorover -= s.tik * 0.45;
-      p.armen = [p.armen[0] + s.tik * 1.25, p.armen[1] + s.tik * 1.25];
-      p.armenOpzij = Math.max(p.armenOpzij, s.tik * 0.25);
-    }
-  }
-  if (hurk > 0) {
-    p.benen = [p.benen[0] - hurk * 0.75, p.benen[1] - hurk * 0.75];
-    p.spreid = [p.spreid[0] - hurk * 0.35, p.spreid[1] + hurk * 0.35];
-    p.voorover += hurk * 0.35;
-  }
-  if (zet > 0) {
-    p.spreid = [p.spreid[0] - zet * 0.22, p.spreid[1] + zet * 0.22];
-    p.armen = [p.armen[0] - zet * 0.6, p.armen[1] - zet * 0.6];
-    p.armenOpzij = Math.max(p.armenOpzij, zet * 0.55);
-    p.voorover += zet * 0.15;
-  }
-  if (diep > 0) {
-    p.spreid = [p.spreid[0] - diep * 0.3, p.spreid[1] + diep * 0.3];
-    p.voorover += diep * 0.75;
-  }
-  if (spring > 0) {
-    // Een keeper reikt met gestrekte armen boven zijn hoofd (vangen of tippen).
-    const arm = keeper ? -2.9 : -1.6;
-    p.armen = [spring * arm, spring * arm];
-    p.armenOpzij = Math.max(p.armenOpzij, spring * (keeper ? 0.15 : 0.5));
-    // Keeper: afzetten op één been, de andere knie omhoog ter bescherming.
-    p.benen = keeper ? [p.benen[0] - spring * 1.3, p.benen[1] + spring * 0.2] : [p.benen[0] + spring * 0.35, p.benen[1] + spring * 0.35];
-  }
-
-  // Worp of trap: rechterarm (index 0) haalt uit en zwaait door; bij een volley of trap het rechterbeen.
-  const w = s.worp;
-  let armR: number | undefined;
-  let armL: number | undefined;
-  /** Zwaaiworp: rechterarm horizontaal opzij, draait van achteren naar voren (rotatie om de lengteas). */
-  let zwaai: number | undefined;
-  if (w) {
-    const u = w.u;
-    const los = 0.58;
-    if (w.soort === 'onderhands') {
-      armR = u < los ? 0.9 * Math.sin((u / los) * Math.PI * 0.5) : 0.9 - 2.3 * glad((u - los) / (1 - los));
-      armL = -0.6;
-      p.voorover += 0.35 * Math.sin(klem(u) * Math.PI);
-    } else if (w.soort === 'bovenhands') {
-      armR = u < los ? -1.2 - 2.4 * glad(u / los) : -3.6 + 2.6 * glad((u - los) / (1 - los));
-      armL = -1.4;
-    } else if (w.soort === 'zwaai') {
-      zwaai = u < los ? -1.3 * glad(u / los) : -1.3 + 2.8 * glad((u - los) / (1 - los));
-      armL = -1.2;
-      p.voorover += 0.15 * Math.sin(klem(u) * Math.PI);
-    } else {
-      // Volley of trap: de bal valt uit de handen, het been zwaait door de bal.
-      armR = armL = u < 0.45 ? -1.2 : -0.5;
-      p.armenOpzij = Math.max(p.armenOpzij, u < 0.45 ? 0.1 : 0.6);
-      const been = u < los ? 0.7 * glad(u / los) : 0.7 - 2.1 * glad((u - los) / (1 - los));
-      p.benen = [been, p.benen[1]];
-      p.voorover -= 0.12 * Math.sin(klem(u) * Math.PI);
-    }
-  }
-
-  // Hoge duik: afzetten met het been aan de duikkant, de andere knie gaat omhoog.
-  if (keeper && l > 0 && l < 0.8) {
-    const hk = (s.hoek * Math.PI) / 180;
-    const naarLinks = Math.sin(hk - dh) > 0; // lokaal +x = links
-    const q = Math.sin(Math.PI * klem(l / 0.8));
-    const knie = naarLinks ? 0 : 1;
-    p.benen = [p.benen[0], p.benen[1]];
-    p.benen[knie] = -1.2 * q;
-    p.benen[1 - knie] = 0.25 * q;
-  }
-
-  const draai = new Quaternion().setFromAxisAngle(Y_AS, f.hoek);
-  if (p.voorover) draai.multiply(new Quaternion().setFromAxisAngle(X_AS, p.voorover));
-  if (l > 0) {
-    const kantel = new Quaternion().setFromAxisAngle(new Vector3(dz, 0, -dx), l * 1.5);
-    f.wortel.quaternion.copy(kantel.multiply(draai));
-  } else {
-    f.wortel.quaternion.copy(draai);
-  }
-
-  // Benen en armen.
-  // Panna: benen spreiden als er een bal tussendoor gaat.
-  if (s.spreid > 0) p.spreid = [p.spreid[0] - s.spreid * 0.4, p.spreid[1] + s.spreid * 0.4];
-  for (const [i, b] of f.benen.entries()) b.rotation.set(p.benen[i]!, 0, p.spreid[i]!);
-  for (const [i, a] of f.armen.entries()) {
-    let rx = p.armen[i]!;
-    let rz = kant(i) * p.armenOpzij;
-    if (keeper && l > 0) {
-      rx = -l * 2.9; // armen gestrekt boven het hoofd, naar de bal
-      rz = 0;
-    } else if (balInHanden && !w) {
-      rx = -1.2; // bal voor de borst
-      rz = kant(i) * -0.25;
-    }
-    if (w) {
-      const wa = i === 0 ? armR : armL;
-      if (wa !== undefined) {
-        rx = wa;
-        rz = kant(i) * (w.soort === 'volley' || w.soort === 'trap' ? p.armenOpzij : 0.1);
-      }
-    }
-    if (bl && blokK > 0) {
-      const doelX = bl.soort === 'ster' ? -0.2 : -0.5;
-      const doelZ = kant(i) * (bl.soort === 'ster' ? 1.35 : 0.9);
-      rx += (doelX - rx) * blokK;
-      rz += (doelZ - rz) * blokK;
-    }
-    // Stompen: gestrekte arm(en) naar de bal, met twee vuisten tegen elkaar of één vuist.
-    const st = s.stomp;
-    if (st) {
-      const k = Math.sin(Math.PI * klem(st.u));
-      const doel = st.vuisten === 2 || i === 0 ? -2.75 : -1.1;
-      rx += (doel - rx) * k;
-      rz += (kant(i) * (st.vuisten === 2 ? -0.12 : 0.15) - rz) * k;
-    }
-    if (vang > 0) {
-      // Handen naar de bal: hoog = W-greep boven het hoofd, borst = armen naar voren, laag = handen omlaag.
-      const h = s.vangHoogte;
-      const doelX = h >= 1.6 ? -2.75 : h >= 0.9 ? -Math.acos(klem((1.5 - h) / 0.6, -1, 1)) - 0.35 : -0.75;
-      const doelZ = kant(i) * (h >= 1.6 ? -0.15 : -0.3);
-      rx += (doelX - rx) * vang;
-      rz += (doelZ - rz) * vang;
-    }
-    if (zwaai !== undefined && i === 0) a.rotation.set(0, zwaai, -1.35);
-    else a.rotation.set(rx, 0, rz);
-  }
-
-  // Schaduw: rond als hij staat, langgerekt als hij ligt; blijft op het gras als hij in de lucht hangt.
-  f.schaduw.position.set(s.x - dx * 0.5 * l, 0.012, s.y - dz * 0.5 * l);
-  f.schaduw.rotation.z = -dh;
-  f.schaduw.scale.set((1 + l * 1.7) * (1 - klem(s.zweef / 3)), 1 - klem(s.zweef / 3), 1);
-  // Nummerring: onder het lijf (ook als hij ligt of in de lucht hangt).
-  if (f.ring) f.ring.position.set(s.x - dx * 0.55 * l, 0.016, s.y - dz * 0.55 * l);
 }
 
 // ---------- sporen ----------
@@ -1108,7 +862,7 @@ function cameraDoelen(t: Tekening, u: Uitsnede, aspect: number, fov: number): Re
 // ---------- de weergave ----------
 
 export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: Opties3D = {}): Weergave3D {
-  const renderer = new WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+  const renderer = new WebGLRenderer({ antialias: !opties.eenvoudig, powerPreference: 'high-performance' });
   if (!renderer.getContext()) throw new Error('Geen WebGL');
   const canvas = renderer.domElement;
   canvas.className = 'speler-canvas speler-canvas-3d';
@@ -1189,29 +943,26 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     }
   };
 
-  // Poppetjes.
-  const gedeeld: Gedeeld = {
-    been: new CylinderGeometry(0.075, 0.062, 0.88, 10),
-    arm: new CylinderGeometry(0.055, 0.048, 0.6, 8),
-    romp: new CapsuleGeometry(0.2, 0.42, 4, 14),
-    broek: new CylinderGeometry(0.2, 0.21, 0.24, 14),
-    hoofd: new SphereGeometry(0.13, 16, 12),
-    rug: new PlaneGeometry(0.3, 0.3),
-    schaduw: new CircleGeometry(0.45, 20),
-    huid: new MeshLambertMaterial({ color: HUID }),
-    broekMat: new MeshLambertMaterial({ color: BROEK }),
-    schaduwMat: new MeshBasicMaterial({ color: '#000000', transparent: true, opacity: 0.22, depthWrite: false }),
-  };
-  materialen.push(gedeeld.huid, gedeeld.broekMat, gedeeld.schaduwMat);
+  // Poppetjes: één InstancedMesh per lichaamsdeel voor iedereen samen (zie poppetje.ts).
+  const personen = tekening.objecten.filter((o) => o.soort === 'speler' || o.soort === 'keeper' || o.soort === 'trainer');
+  const poppetjes = new Poppetjes(personen.length, !!opties.eenvoudig);
+  for (const m of poppetjes.lijst) scene.add(m);
+  const rugGeo = new PlaneGeometry(0.21, 0.21);
+  const schaduwTex = schaduwTextuur();
+  texturen.push(schaduwTex);
+  const schaduwMat = new MeshBasicMaterial({ map: schaduwTex, color: '#000000', transparent: true, opacity: 0.34, depthWrite: false });
+  materialen.push(schaduwMat);
+  const schaduwen = new InstancedMesh(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), schaduwMat, Math.max(1, personen.length));
+  schaduwen.instanceMatrix.setUsage(DynamicDrawUsage);
+  schaduwen.frustumCulled = false;
+  scene.add(schaduwen);
   const figuren = new Map<string, Figuur>();
   // Nummers bij keepers alleen als er meer dan één keeper is (anders is de keeperskleur genoeg).
   const meerKeepers = tekening.objecten.filter((o) => o.soort === 'keeper').length > 1;
-  for (const o of tekening.objecten) {
-    if (o.soort !== 'speler' && o.soort !== 'keeper' && o.soort !== 'trainer') continue;
-    const f = maakFiguur(o, persoonKleur(o, kleuren), gedeeld, materialen, texturen, o.soort === 'keeper' && meerKeepers, tekening.namen ? o.naam : undefined);
+  for (const o of personen) {
+    const f = maakFiguur(o, persoonKleur(o, kleuren), rugGeo, materialen, texturen, o.soort === 'keeper' && meerKeepers, tekening.namen ? o.naam : undefined);
     figuren.set(o.id, f);
-    scene.add(f.wortel, f.schaduw);
-    if (f.ring) scene.add(f.ring);
+    for (const x of [f.rug, f.badge, f.naam, f.ring]) if (x) scene.add(x);
   }
 
   // Ballen.
@@ -1220,7 +971,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const balMat = new MeshLambertMaterial({ map: balTex });
   const balGeo = new SphereGeometry(BAL_R, 20, 14);
   materialen.push(balMat);
-  const ballen = new Map<string, { mesh: Mesh; schaduw: Mesh; vorige?: Vector3 }>();
+  const ballen = new Map<string, { mesh: Mesh; schaduw: Mesh; vorige?: Vector3; hand?: { p: Vector3; t: number } }>();
   for (const o of tekening.objecten) {
     if (o.soort !== 'bal') continue;
     // Reactiebal (geel, bobbelig) of tennisbal (klein, geelgroen): eigen kleur en maat.
@@ -1233,7 +984,9 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     } else {
       mesh = new Mesh(balGeo, balMat);
     }
-    const schaduw = new Mesh(new CircleGeometry(BAL_R * 1.1, 16), gedeeld.schaduwMat);
+    const sm = new MeshBasicMaterial({ map: schaduwTex, color: '#000000', transparent: true, opacity: 0.45, depthWrite: false });
+    materialen.push(sm);
+    const schaduw = new Mesh(new PlaneGeometry(BAL_R * 2.6, BAL_R * 2.6), sm);
     schaduw.rotation.x = -Math.PI / 2;
     ballen.set(o.id, { mesh, schaduw });
     scene.add(mesh, schaduw);
@@ -1296,12 +1049,24 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     /* geen opslag */
   }
   if (testVlag) {
-    (window as unknown as { __camera3d?: unknown }).__camera3d = (x: number, y: number, afstand: number) => {
+    // Optioneel: kijkrichting (graden, wereld) en hoogte van de camera (graden boven het gras), bv. van opzij.
+    (window as unknown as { __camera3d?: unknown }).__camera3d = (x: number, y: number, afstand: number, kijk?: number, hoogte = 12) => {
       const richting = camera.position.clone().sub(controls.target).normalize();
+      if (kijk !== undefined) {
+        const r = (kijk * Math.PI) / 180;
+        const e = (hoogte * Math.PI) / 180;
+        richting.set(-Math.cos(r) * Math.cos(e), Math.sin(e), -Math.sin(r) * Math.cos(e));
+      }
       const doel = v3(x, 0.9, y);
       plaats({ positie: doel.clone().add(richting.multiplyScalar(afstand)), doel });
       zelfVerplaatst = true;
     };
+    (window as unknown as { __info3d?: unknown }).__info3d = () => ({
+      tekenopdrachten: renderer.info.render.calls,
+      driehoeken: renderer.info.render.triangles,
+      poppetjes: figuren.size,
+      eenvoudig: !!opties.eenvoudig,
+    });
   }
 
   let tekenenGevraagd = 0;
@@ -1347,8 +1112,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const wisselHesje = (f: Figuur, team: Team | undefined) => {
     f.team = team;
     const kleur = persoonKleur(f.o, kleuren, team);
-    f.shirt.color.set(kleur);
-    f.kous.color.set(kleur).multiplyScalar(0.55);
+    zetHesje(f.kleuren, f.soort, kleur);
     if (f.badge && f.label) {
       const sleutel = `${f.label}|${kleur}`;
       let tex = badges.get(sleutel);
@@ -1362,6 +1126,11 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   };
 
   // ---------- stand tekenen ----------
+  const tijdelijk = new Vector3();
+  const schaal = new Vector3();
+  const schaduwMatrix = new Matrix4();
+  const schaduwDraai = new Quaternion();
+  const Y_OMHOOG = new Vector3(0, 1, 0);
   let toonLoop = opties.looplijnen ?? true;
   let vorigeT = 0;
   let vorigeEcht = performance.now();
@@ -1371,18 +1140,48 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     vorigeEcht = nu;
     // Terug naar het begin of een grote sprong: niet vloeiend overgaan.
     sprong ||= t < vorigeT || t - vorigeT > 0.3;
+    const dtAnim = sprong ? 0 : t - vorigeT;
     vorigeT = t;
     const s = standOp(tijdlijn, t);
 
-    // Wie houdt een bal in zijn handen (keeper, of iemand die gaat gooien)?
-    const inHanden = new Set<string>();
-    for (const [, b] of s.objecten) if (b.houder && b.hoogte > 0.4) inHanden.add(b.houder);
+    // Waar de ballen zijn en wie welke bal heeft (zie poppetje.ts).
+    const bi = balInvoer(s, [...ballen.keys()], BAL_R);
+    const balPlek = bi.plek;
+
+    const tanHalf = Math.tan((camera.fov * Math.PI) / 360);
+    const schermHoogte = renderer.domElement.height || 600;
+    poppetjes.begin();
+    let n = 0;
     for (const [id, f] of figuren) {
       const st = s.objecten.get(id);
       if (!st) continue;
       if (st.team !== f.team) wisselHesje(f, st.team);
-      poseer(f, st, t, dtEcht, sprong, inHanden.has(id));
+      const balId = bi.houderVan.get(id);
+      poseer(f.sk, f.staat, { s: st, soort: f.soort, t, dtEcht, dtAnim, sprong, zaad: f.zaad, ...persoonInvoer(id, f.soort, st, s, bi) });
+      // Detail: fijn als hij groot genoeg in beeld is.
+      const afst = Math.max(0.5, camera.position.distanceTo(f.sk.wortel.position));
+      const fijn = (LENGTE / (afst * tanHalf)) * (schermHoogte / 2) > 85;
+      poppetjes.teken(f.sk, f.kleuren, fijn);
+      if (f.rug) {
+        f.rug.matrix.multiplyMatrices(f.sk.romp.matrixWorld, RUG);
+        f.rug.matrixWorldNeedsUpdate = true;
+        f.rug.visible = fijn;
+      }
+      if (f.badge) boveHoofd(f.sk, f.badge.position);
+      const bekken = f.sk.bekken.getWorldPosition(tijdelijk);
+      if (f.naam) f.naam.position.set(bekken.x, 0.02, bekken.z);
+      // Schaduw: rond als hij staat, langgerekt als hij ligt, kleiner als hij in de lucht is.
+      const l = st.liggen;
+      const dh = (st.duikHoek * Math.PI) / 180;
+      const lucht = 1 - klem((f.sk.wortel.position.y - 0.05) / 3, 0, 0.6);
+      schaduwMatrix.compose(
+        tijdelijk.set(bekken.x, 0.012, bekken.z),
+        schaduwDraai.setFromAxisAngle(Y_OMHOOG, -dh),
+        schaal.set((0.85 + l * 1.5) * lucht, 1, 0.8 * lucht),
+      );
+      schaduwen.setMatrixAt(n++, schaduwMatrix);
       if (f.ring) {
+        f.ring.position.set(st.x - Math.cos(dh) * 0.55 * l, 0.016, st.y - Math.sin(dh) * 0.55 * l);
         // Nummer rechtop voor de camera, net vóór de keeper (camerakant), zodat het lijf het niet afdekt.
         const dxc = f.ring.position.x - camera.position.x;
         const dzc = f.ring.position.z - camera.position.z;
@@ -1393,29 +1192,45 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
         nummer.rotation.set(-Math.PI / 2, 0, Math.atan2(-dxc, -dzc));
         nummer.position.set((-dxc / lengte) * 0.66, 0.002, (-dzc / lengte) * 0.66);
       }
+      // Gooien: tot het loslaten zit de bal in de hand.
+      if (balId && f.staat.balInHand > 0) {
+        balPlek.get(balId)!.copy(f.staat.hand);
+        const b = ballen.get(balId)!;
+        b.hand = { p: f.staat.hand.clone(), t };
+      }
     }
+    schaduwen.count = n;
+    schaduwen.instanceMatrix.needsUpdate = true;
+    poppetjes.klaar();
 
     for (const [id, b] of ballen) {
       const st = s.objecten.get(id);
-      if (!st) continue;
-      // De tijdlijn geeft de hoogte (ook in de handen); vlak bij de grond ligt de bal op zijn straal.
-      const h = st.hoogte + BAL_R * klem(1 - st.hoogte);
-      const p = v3(st.x, h, st.y);
-      // Rollen: draaien om de as dwars op de beweging.
+      const p = balPlek.get(id);
+      if (!st || !p) continue;
+      // Net losgelaten uit de hand: in een korte overgang naar de baan van de tijdlijn.
+      if (b.hand && !(st.houder && figuren.get(st.houder)?.staat.balInHand)) {
+        const u = (t - b.hand.t) / 0.15;
+        if (u >= 0 && u < 1 && !sprong) p.lerpVectors(b.hand.p, p.clone(), glad(u));
+        else if (u >= 1 || u < 0 || sprong) b.hand = undefined;
+      }
+      const h = p.y;
+      // Rollen: draaien om de as dwars op de beweging (in de lucht trager).
       if (b.vorige && !sprong) {
         const dx = p.x - b.vorige.x;
         const dz = p.z - b.vorige.z;
         const d = Math.hypot(dx, dz);
         if (d > 0.0001 && d < 5) {
-          const q = new Quaternion().setFromAxisAngle(new Vector3(dz / d, 0, -dx / d), d / BAL_R);
+          const q = new Quaternion().setFromAxisAngle(new Vector3(dz / d, 0, -dx / d), (d / BAL_R) * (h > BAL_R + 0.15 ? 0.35 : 1));
           b.mesh.quaternion.premultiply(q);
         }
       }
       b.vorige = p.clone();
       b.mesh.position.copy(p);
+      // Schaduw recht onder de bal: kleiner en lichter naarmate hij hoger is (zo zie je de hoogte).
       b.schaduw.position.set(p.x, 0.014, p.z);
-      const k = klem(1 - (h - BAL_R) / 6, 0.4, 1);
-      b.schaduw.scale.setScalar(k);
+      const k = klem(1 - (h - BAL_R) / 7, 0.35, 1);
+      b.schaduw.scale.setScalar(0.6 + 0.4 * k);
+      (b.schaduw.material as MeshBasicMaterial).opacity = 0.5 * k * k;
     }
 
     bolNet(s.net);
@@ -1439,7 +1254,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     element: canvas,
     teken,
     maat(breedte, hoogte, dpr) {
-      renderer.setPixelRatio(Math.min(dpr, 2));
+      renderer.setPixelRatio(Math.min(dpr, opties.eenvoudig ? 1.25 : 2));
       renderer.setSize(breedte, hoogte, false);
       canvas.style.height = `${Math.round(hoogte)}px`;
       camera.aspect = breedte / Math.max(1, hoogte);
@@ -1476,6 +1291,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
         if (o instanceof Mesh) o.geometry.dispose();
       });
       for (const m of materialen) m.dispose();
+      poppetjes.opruimen();
       for (const t of texturen) t.dispose();
       renderer.dispose();
       renderer.forceContextLoss();

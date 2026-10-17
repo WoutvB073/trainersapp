@@ -6,8 +6,9 @@ import { uitsnede } from './render2d';
 import { maakWeergave2D, type Weergave } from './weergave';
 import type { CameraStand, Weergave3D } from './render3d';
 import { Icoon } from '../components/Icoon';
+import { poppetjes, usePoppetjes } from '../engine/poppetjes';
 
-const SNELHEDEN = [0.5, 1, 1.5, 2] as const;
+export const SNELHEDEN = [0.5, 1, 2] as const;
 const snelheidTekst = (s: number) => `${String(s).replace('.', ',')}×`;
 const CAMERAS: { stand: CameraStand; naam: string }[] = [
   { stand: 'boven', naam: 'Boven' },
@@ -68,6 +69,8 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
   const [melding, setMelding] = useState<string | null>(null);
   const [uitleg, setUitleg] = useState(false);
   const [looplijnen, setLooplijnen] = useState(() => lees(LOOPLIJNEN) === '1');
+  // Eenvoudige poppetjes (Instellingen, of automatisch als 3D hapert).
+  const { eenvoudig } = usePoppetjes();
   const looplijnenRef = useRef(looplijnen);
 
   const teken = useCallback((sprong = false) => {
@@ -121,6 +124,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
               },
               opFout: () => naar2D('3D viel weg; je ziet nu de 2D-weergave.'),
               looplijnen: looplijnenRef.current,
+              eenvoudig,
             });
             zet(w);
             setCamera(tekening.camera ?? 'schuin');
@@ -137,7 +141,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
       weergaveRef.current?.opruimen();
       weergaveRef.current = null;
     };
-  }, [modus, tekening, tijdlijn, pasMaatAan, naar2D]);
+  }, [modus, tekening, tijdlijn, pasMaatAan, naar2D, eenvoudig]);
 
   // Maat volgen.
   useEffect(() => {
@@ -181,7 +185,11 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
         if (tussenpozen.length === 70) {
           // De eerste beelden overslaan (opstarten); mediaan van de rest.
           const rest = tussenpozen.slice(15).sort((a, b) => a - b);
-          if (rest[Math.floor(rest.length / 2)]! > 45) {
+          const mediaan = rest[Math.floor(rest.length / 2)]!;
+          // Onder ± 28 beelden per seconde: eerst eenvoudige poppetjes; is het dan nog te traag, dan 2D.
+          if (!eenvoudig && mediaan > 36 && poppetjes.automatisch()) {
+            setMelding('3D liep niet soepel; je ziet nu eenvoudige poppetjes (aan te passen bij Instellingen).');
+          } else if (mediaan > 45) {
             schrijf(TRAAG, '1');
             naar2D('Dit toestel is te traag voor 3D; je ziet de 2D-weergave.');
           }
@@ -204,7 +212,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
     };
     frame = requestAnimationFrame(stap);
     return () => cancelAnimationFrame(frame);
-  }, [speelt, snelheid, herhalen, totaal, tijdlijn, teken, modus, klaar3d, naar2D]);
+  }, [speelt, snelheid, herhalen, totaal, tijdlijn, teken, modus, klaar3d, naar2D, eenvoudig]);
 
   const afspelenPauze = () => {
     if (!speelt && tRef.current >= tijdlijn.duur) {

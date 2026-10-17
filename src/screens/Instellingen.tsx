@@ -8,6 +8,7 @@ import { useOnlineStatus } from '../engine/account';
 import { ga } from '../router';
 import { SyncRegel } from './online/Account';
 import { GegevensBlok } from './GegevensBlok';
+import { poppetjes, usePoppetjes } from '../engine/poppetjes';
 
 /** Account en teams (alleen als online beschikbaar is). */
 function AccountBlok() {
@@ -47,6 +48,25 @@ const MODI: { modus: Modus; naam: string; icoon: IcoonNaam }[] = [
   { modus: 'donker', naam: 'Donker', icoon: 'maan' },
   { modus: 'auto', naam: 'Automatisch', icoon: 'computer' },
 ];
+
+/** 3D-animaties: eenvoudige poppetjes voor tragere telefoons (alleen op dit apparaat). */
+function AnimatieBlok() {
+  const p = usePoppetjes();
+  return (
+    <section className="blok">
+      <h3>3D-animaties</h3>
+      <label className="filter-schakel">
+        <input type="checkbox" checked={p.eenvoudig} onChange={() => poppetjes.kies(!p.eenvoudig)} />
+        Eenvoudige poppetjes
+      </label>
+      <p className="klein">
+        {p.automatisch
+          ? 'Automatisch aangezet, omdat 3D op dit apparaat niet soepel liep. Zet hem uit om de gewone poppetjes weer te proberen.'
+          : 'Lichtere poppetjes en een iets lagere beeldscherpte, voor oudere of tragere telefoons. Gaat vanzelf aan als 3D niet soepel loopt.'}
+      </p>
+    </section>
+  );
+}
 
 /** Instellingen: clubkleuren (thema) en licht/donker. Bewaard op dit apparaat. */
 export function Instellingen() {
@@ -107,6 +127,7 @@ export function Instellingen() {
           </div>
           <p className="klein">Automatisch volgt de instelling van je telefoon of computer.</p>
         </section>
+        <AnimatieBlok />
         <GegevensBlok />
         <p className="voetnoot">
           {APP_NAAM} · versie {VERSIE}
