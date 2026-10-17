@@ -224,7 +224,7 @@ const oefeningen = [
   {
     id: 'keeper-bv-midden-voorzet-schot',
     naam: 'Midden, voorzet en schot andere kant',
-    categorieen: ['bal-verwerken', 'voorzetten', 'hoog-duiken'],
+    categorieen: ['bal-verwerken', 'voorzetten', 'hoog-duiken', 'laag-duiken'],
     uitleg:
       'Eerst gooit de trainer een bal recht op het lichaam van de keeper in het midden. Daarna verschuift de keeper naar de eerste paal voor een lage voorzet van keeper 2 vanaf de zijkant. Opstaan, en meteen schiet de trainer in de andere hoek, hoog of laag. Daarna wisselen de keepers.',
     organisatie: 'Trainer met ballen op 10 m recht voor het doel, keeper 2 met ballen op de rand van de zestien aan de zijkant (± 12 m van de paal). Minimaal 2 keepers.',
@@ -541,64 +541,54 @@ const deel3 = [
   },
 ];
 
-// 13. Grondoefeningen voor de warming-up: de keeper zit op zijn billen.
-const grond = (id, naam, houding, uitleg, coach, variaties, worpen) => ({
-  id,
-  naam,
+// 13. Grondoefeningen (warming-up): de keeper zit op zijn billen; drie varianten na elkaar.
+const gooi = (hoogte, eind, worp = 'onderhands') => [
+  stap({ type: 'pass', van: 't1', naar: 'k1', worp, hoogte, eindHoogte: eind }),
+  pauze(0.35),
+  stap({ type: 'pass', van: 'k1', naar: 't1', worp: 'onderhands', hoogte: 0.9 }),
+];
+const grondoefeningen = {
+  id: 'keeper-wu-grondoefeningen',
+  naam: 'Grondoefeningen',
   categorieen: ['warming-up'],
-  uitleg,
-  organisatie: 'Keeper zit op zijn billen op het gras, de trainer (of een andere keeper) staat met een bal op 3–4 m. Na 6–8 ballen wisselen of de volgende vorm.',
+  uitleg:
+    'De keeper zit op zijn billen op het gras, de trainer gooit van 3–4 m. Drie varianten na elkaar: (1) benen gestrekt: voor elke bal eerst met beide handen achter je de grond tikken, dan vangen en teruggooien; (2) benen gestrekt: vangen op verschillende hoogtes – borsthoogte, boven het hoofd en laag naast het lichaam; (3) knieën opgetrokken, voeten plat: laag, op borsthoogte en hoog vangen. Elke variant 6–8 ballen.',
+  organisatie: 'Keeper zit op zijn billen, de trainer (of een andere keeper) staat met een bal op 3–4 m. Na elke variant even opstaan en losschudden.',
   benodigdheden: ['1 bal per tweetal'],
   spelersNodig: 0,
   keepersNodig: 1,
   doorwisselbaar: true,
-  coachpunten: coach,
-  variaties,
+  coachpunten: ['Na het tikken meteen de handen voor het lichaam (W-vorm)', 'Vangen met de vingers en de bal naar de borst trekken', 'Romp stevig: niet achterover vallen bij de hoge bal'],
+  variaties: {
+    makkelijker: ['Zonder grond tikken', 'Zachter en dichterbij gooien', 'Alleen borsthoogte'],
+    moeilijker: ['Ballen links en rechts van het lichaam', 'Trainer gooit al terwijl de keeper nog tikt', 'Variant 3 met de voeten van de grond (balanceren op de billen)'],
+  },
   tekening: {
     veld: { type: 'leeg', breedte: 10, lengte: 9 },
     camera: 'schuin',
-    objecten: [keeper('k1', 1, 5, 2.8, { kijkrichting: 90, houding }), trainer(5, 6.6, -90), bal('b1', 5, 6.2, 't1')],
+    objecten: [keeper('k1', 1, 3.2, 4.5, { kijkrichting: 0, houding: 'zit' }), trainer(7, 4.5, 180), bal('b1', 6.6, 4.5, 't1')],
     animatie: [
       pauze(0.6),
-      ...worpen.flatMap((w) => [
-        pauze(w.wacht ?? 0.4),
-        stap({ type: 'pass', van: 't1', naar: 'k1', worp: w.worp ?? 'onderhands', hoogte: w.hoogte, eindHoogte: w.eind }),
-        pauze(0.4),
-        stap({ type: 'pass', van: 'k1', naar: 't1', worp: 'onderhands', hoogte: 0.9 }),
-      ]),
+      // Variant 1: grond tikken, vangen, teruggooien.
+      stap({ type: 'grondtik', wie: 'k1' }),
+      ...gooi(1.3, 0.75),
+      stap({ type: 'grondtik', wie: 'k1' }),
+      ...gooi(1.3, 0.75),
+      pauze(0.6),
+      // Variant 2: verschillende hoogtes.
+      ...gooi(1.3, 0.75),
+      ...gooi(2, 1.35, 'bovenhands'),
+      ...gooi(0.5, 0.2),
+      pauze(0.4),
+      // Variant 3: knieën opgetrokken.
+      stap({ type: 'zitten', wie: 'k1', houding: 'zit-opgetrokken' }),
+      pauze(0.4),
+      ...gooi(0.6, 0.35),
+      ...gooi(1.3, 0.8),
+      ...gooi(2, 1.35, 'bovenhands'),
       pauze(0.6),
     ],
   },
-});
+};
 
-const deel4 = [
-  grond(
-    'keeper-wu-zit-tikken-vangen',
-    'Zittend: grond tikken en vangen',
-    'zit',
-    'De keeper zit op zijn billen met de benen gestrekt. Voor elke bal tikt hij met beide handen achter zich de grond aan en komt hij snel terug; de trainer gooit en de keeper vangt op borsthoogte en gooit terug.',
-    ['Na het tikken meteen de handen voor het lichaam (W-vorm)', 'Vangen met de vingers, de bal naar de borst trekken', 'Rug recht, buikspieren aan'],
-    { makkelijker: ['Zonder grond tikken', 'Zachter en dichterbij'], moeilijker: ['Bal net naast het lichaam', 'Trainer gooit al terwijl de keeper nog tikt'] },
-    [{ hoogte: 1.3, eind: 0.75, wacht: 0.9 }, { hoogte: 1.3, eind: 0.75, wacht: 0.9 }, { hoogte: 1.3, eind: 0.75, wacht: 0.9 }],
-  ),
-  grond(
-    'keeper-wu-zit-drie-hoogtes',
-    'Zittend vangen op drie hoogtes',
-    'zit',
-    'De keeper zit met gestrekte benen. De trainer gooit om de beurt op borsthoogte, boven het hoofd en laag naast het lichaam. Vangen, klemmen en teruggooien.',
-    ['Borsthoogte: kommetje of borstvang', 'Boven het hoofd: W-vorm met de duimen achter de bal, armen gestrekt', 'Laag: handen naar de bal, pinken tegen elkaar'],
-    { makkelijker: ['Alleen borsthoogte en hoog', 'Trainer zegt de hoogte vooraf'], moeilijker: ['Harder en sneller achter elkaar', 'Na elke bal achterover rollen en terugkomen'] },
-    [{ hoogte: 1.3, eind: 0.75 }, { hoogte: 2, eind: 1.35, worp: 'bovenhands' }, { hoogte: 0.5, eind: 0.2 }],
-  ),
-  grond(
-    'keeper-wu-zit-knieen-opgetrokken',
-    'Zittend met opgetrokken knieën',
-    'zit-opgetrokken',
-    'De keeper zit met de knieën opgetrokken en de voeten plat op de grond. De trainer gooit laag, op borsthoogte en hoog; de keeper vangt en gooit terug. Zo traint hij vangen met een stevige romp.',
-    ['Voeten plat, knieën blijven omhoog', 'Bij de hoge bal niet achterover vallen: buikspieren aan', 'Vangen voor het lichaam, niet ernaast'],
-    { makkelijker: ['Handen op de grond achter je tussen de ballen door', 'Alleen borsthoogte'], moeilijker: ['Voeten van de grond (balanceren op de billen)', 'Ballen links en rechts van het lichaam'] },
-    [{ hoogte: 0.6, eind: 0.35 }, { hoogte: 1.3, eind: 0.8 }, { hoogte: 2, eind: 1.35, worp: 'bovenhands' }],
-  ),
-];
-
-zet('keepers', [...oefeningen, ...deel2, ...deel3, ...deel4]);
+zet('keepers', [...oefeningen, ...deel2, ...deel3, grondoefeningen]);

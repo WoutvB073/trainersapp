@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { OEFENINGEN } from '../src/data/oefeningen';
+import { OEFENINGEN, vindOefening } from '../src/data/oefeningen';
 import { maakTijdlijn, standOp } from '../src/anim/timeline';
 
 const opId = (id: string) => OEFENINGEN.find((o) => o.id === id);
@@ -12,16 +12,14 @@ describe('0.20.0 nieuwe oefeningen', () => {
       'keeper-re-kleuren-voor-de-stuit': ['reactie'],
       'keeper-re-pass-naast-doel': ['reactie'],
       'keeper-re-bal-van-achter': ['reactie'],
-      'keeper-bv-midden-voorzet-schot': ['bal-verwerken', 'voorzetten', 'hoog-duiken'],
+      'keeper-bv-midden-voorzet-schot': ['bal-verwerken', 'voorzetten', 'hoog-duiken', 'laag-duiken'],
       'keeper-1o1-inspelen-draaien-kaatsen': ['een-op-een', 'reactie'],
       'keeper-1o1-vijf-keuzes': ['een-op-een', 'bal-verwerken', 'hoog-duiken', 'laag-duiken', 'reactie'],
       'keeper-ld-ladder-dubbele-duik': ['laag-duiken', 'hoog-duiken'],
       'keeper-ps-terugspeelbal-hoge-bal': ['passing', 'voorzetten'],
       'keeper-re-drie-schutters-nummers': ['reactie', 'bal-verwerken', 'laag-duiken', 'hoog-duiken'],
       'keeper-vz-claimen-uitgooien-terug': ['voorzetten', 'passing', 'bal-verwerken', 'laag-duiken'],
-      'keeper-wu-zit-tikken-vangen': ['warming-up'],
-      'keeper-wu-zit-drie-hoogtes': ['warming-up'],
-      'keeper-wu-zit-knieen-opgetrokken': ['warming-up'],
+      'keeper-wu-grondoefeningen': ['warming-up'],
     };
     for (const [id, cats] of Object.entries(verwacht)) {
       const o = opId(id);
@@ -49,14 +47,34 @@ describe('0.20.0 nieuwe oefeningen', () => {
     }
   });
 
-  it('grondoefeningen: de keeper zit op zijn billen', () => {
-    for (const id of ['keeper-wu-zit-tikken-vangen', 'keeper-wu-zit-drie-hoogtes', 'keeper-wu-zit-knieen-opgetrokken']) {
-      const o = opId(id)!;
-      const tl = maakTijdlijn(o.tekening);
-      const s = standOp(tl, tl.duur / 2).objecten.get('k1')!;
-      expect(s.zit, id).toBeGreaterThan(0.9);
-      expect(s.zitSoort, id).toMatch(/^zit/);
+  it('grondoefeningen: één oefening, zittend, eerst grond tikken (echt zichtbaar), daarna knieën opgetrokken zonder op te staan', () => {
+    const o = opId('keeper-wu-grondoefeningen')!;
+    expect(o.naam).toBe('Grondoefeningen');
+    const tl = maakTijdlijn(o.tekening);
+    let tikMax = 0;
+    let zitMin = 1;
+    const soorten = new Set<string>();
+    for (let t = 0.7; t <= tl.duur; t += 0.05) {
+      const s = standOp(tl, t).objecten.get('k1')!;
+      tikMax = Math.max(tikMax, s.tik);
+      zitMin = Math.min(zitMin, s.zit);
+      soorten.add(s.zitSoort ?? '');
     }
+    expect(tikMax).toBeGreaterThan(0.95);
+    expect(zitMin).toBeGreaterThan(0.95);
+    expect([...soorten].sort()).toEqual(['zit', 'zit-opgetrokken']);
+    // De drie losse oefeningen staan in het archief (oude trainingen en links blijven werken).
+    for (const id of ['keeper-wu-zit-tikken-vangen', 'keeper-wu-zit-drie-hoogtes', 'keeper-wu-zit-knieen-opgetrokken']) {
+      expect(opId(id), id).toBeUndefined();
+      expect(vindOefening(id)?.verwijderd, id).toBe(true);
+    }
+  });
+
+  it('oplopend overtal op twee kleine goaltjes', () => {
+    const o = opId('veld-pv-oplopend-overtal')!;
+    expect(o.tekening.objecten.filter((x) => x.soort === 'klein-goal')).toHaveLength(2);
+    expect(o.tekening.objecten.some((x) => x.soort === 'goal')).toBe(false);
+    expect(o.benodigdheden).toContain('2 kleine goaltjes');
   });
 
   it('spelers: met de opgegeven categorieën', () => {

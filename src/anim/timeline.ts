@@ -184,6 +184,8 @@ export interface Tijdlijn {
   zitten: Map<string, { t: number; soort: Zithouding }[]>;
   /** Losse sprongen (hoogste punt), bv. een tegenstander die meespringt. */
   sprongen: Map<string, number[]>;
+  /** Grond achter je aantikken (zittende keeper). */
+  tikken: Map<string, { t0: number; t1: number }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
   /** Keeper blokt een schot met zijn lichaam (moment van contact). */
@@ -231,6 +233,11 @@ export interface ObjectStand {
   /** Keeper: 0–1 in kniezit of hurkzit. */
   zit: number;
   zitSoort?: Zithouding;
+  /** Overgang van de ene zithouding naar de andere zonder op te staan: de vorige soort en hoe ver (0–1) de nieuwe is. */
+  zitVorig?: Zithouding;
+  zitMix?: number;
+  /** Zittende keeper: 0–1, handen achter zich naar de grond (grondtik). */
+  tik: number;
   /** Keeper stompt: armen gestrekt naar de bal met één of twee vuisten (u: 0–1 rond het contact). */
   stomp?: { vuisten: 1 | 2; u: number };
   /** Keeper blokt: spreidsprong (ster) of knieblok (u: 0–1 rond het contact). */
@@ -571,10 +578,14 @@ function ligging(tl: Tijdlijn, id: string, t: number): { liggen: number; hoek: n
 const ligt = (tl: Tijdlijn, id: string, t: number) => ligging(tl, id, t).liggen > 0.5;
 
 /** Hoe ver zit deze persoon in kniezit of hurkzit (0–1)? Opstaan, lopen of duiken haalt hem eruit. */
-function zitOp(tl: Tijdlijn, id: string, t: number): { zit: number; soort?: Zithouding } {
-  const e = laatste(tl.zitten.get(id), t, (x) => x.t);
+function zitOp(tl: Tijdlijn, id: string, t: number): { zit: number; soort?: Zithouding; vorig?: Zithouding; mix?: number } {
+  const lijst = tl.zitten.get(id);
+  const e = laatste(lijst, t, (x) => x.t);
   if (!e) return { zit: 0 };
-  let w = e.t <= 0 ? 1 : ease('mens', klem((t - e.t) / 0.4));
+  // Zat hij al (in een andere houding)? Dan blijft hij zitten en gaat de houding geleidelijk over.
+  const vorige = lijst![lijst!.indexOf(e) - 1];
+  const doorzitten = !!vorige && e.t > 0 && zitOp(tl, id, e.t - 1e-6).zit > 0.9;
+  let w = e.t <= 0 || doorzitten ? 1 : ease('mens', klem((t - e.t) / 0.4));
   for (const b of tl.bewegingen.get(id) ?? []) {
     if (b.t0 > e.t + 1e-6 && b.t0 <= t && b.ease !== 'duik') w = Math.min(w, 1 - ease('mens', klem((t - b.t0) / 0.3)));
   }
@@ -582,13 +593,20 @@ function zitOp(tl: Tijdlijn, id: string, t: number): { zit: number; soort?: Zith
     if (h.t > e.t + 1e-6 && h.t <= t && h.houding === 'staan') w = 0;
   }
   w *= 1 - ligging(tl, id, t).liggen;
+  if (doorzitten) return { zit: w, soort: e.soort, vorig: vorige!.soort, mix: ease('mens', klem((t - e.t) / 0.5)) };
   return { zit: w, soort: e.soort };
 }
 
 const zitStand = (tl: Tijdlijn, id: string, t: number) => {
   const z = zitOp(tl, id, t);
-  return { zit: z.zit, zitSoort: z.soort };
+  return { zit: z.zit, zitSoort: z.soort, ...(z.vorig ? { zitVorig: z.vorig, zitMix: z.mix } : {}) };
 };
+
+/** Grondtik: handen naar achteren naar het gras en terug (0 → 1 → 0). */
+function tikOp(tl: Tijdlijn, id: string, t: number): number {
+  for (const e of tl.tikken.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return Math.sin(Math.PI * ((t - e.t0) / (e.t1 - e.t0)));
+  return 0;
+}
 
 /** Hoeveel lager de handen zijn in kniezit (0,45 m) of hurkzit (0,4 m). */
 const zitLager = (tl: Tijdlijn, id: string, t: number) => {
@@ -990,6 +1008,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     loslaten: [],
     zitten: new Map(),
     sprongen: new Map(),
+    tikken: new Map(),
     stompen: [],
     blokken: [],
   };
@@ -1137,6 +1156,12 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
     if (a.type === 'springen') {
       voegToe(tl.sprongen, o.id, t0 + 0.3, (x) => x);
       eind = Math.max(eind, t0 + 0.7);
+      continue;
+    }
+    if (a.type === 'grondtik') {
+      const t1 = t0 + (a.duur ?? 0.8);
+      voegToe(tl.tikken, o.id, { t0, t1 }, (e) => e.t0);
+      eind = Math.max(eind, t1);
       continue;
     }
     if (a.type === 'zitten') {
@@ -1884,7 +1909,7 @@ export function rondeDuur(tl: Tijdlijn): number {
 
 export function standOp(tl: Tijdlijn, t: number): Stand {
   const objecten = new Map<string, ObjectStand>();
-  const rust = { hoek: 0, houding: 'staan' as const, liggen: 0, duikHoek: 0, hoogte: 0, houder: null, snelheid: 0, fase: 0, gezet: 0, sprong: 0, spreid: 0, zweef: 0, vang: 0, vangHoogte: 0, zit: 0 };
+  const rust = { hoek: 0, houding: 'staan' as const, liggen: 0, duikHoek: 0, hoogte: 0, houder: null, snelheid: 0, fase: 0, gezet: 0, sprong: 0, spreid: 0, zweef: 0, vang: 0, vangHoogte: 0, zit: 0, tik: 0 };
   for (const o of tl.objecten.values()) {
     if (o.soort === 'bal') {
       objecten.set(o.id, { ...rust, ...balStand(tl, o.id, t) });
@@ -1919,6 +1944,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         ...vangStand(tl, o, t),
         worp: worpOp(tl, o.id, t),
         ...zitStand(tl, o.id, t),
+        tik: tikOp(tl, o.id, t),
         stomp: stompOp(tl, o.id, t),
         blok: blokOp(tl, o.id, t),
       });

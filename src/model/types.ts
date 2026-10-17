@@ -289,9 +289,12 @@ export interface ZitActie extends ActieBasis {
   houding: Zithouding;
 }
 
-/** opstaan, pak (dichtstbijzijnde losse bal) of springen (bv. een tegenstander die meespringt bij een voorzet). */
+/**
+ * opstaan, pak (dichtstbijzijnde losse bal), springen (bv. een tegenstander die meespringt bij een voorzet) of grondtik
+ * (zittende keeper tikt met beide handen achter zich de grond aan en komt terug, grondoefeningen).
+ */
 export interface PersoonActie extends ActieBasis {
-  type: 'opstaan' | 'pak' | 'springen';
+  type: 'opstaan' | 'pak' | 'springen' | 'grondtik';
   wie: string;
   bal?: string;
 }

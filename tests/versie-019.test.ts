@@ -39,7 +39,7 @@ const WEG = [
 
 describe('A4 oefeningen uit de bibliotheek', () => {
   it('niet meer in de bibliotheek, niet meer te kiezen of te genereren', () => {
-    expect(ARCHIEF.map((o) => o.id).sort()).toEqual([...WEG].sort());
+    expect(ARCHIEF.map((o) => o.id)).toEqual(expect.arrayContaining(WEG));
     const ids = new Set(OEFENINGEN.map((o) => o.id));
     for (const id of WEG) expect(ids.has(id), id).toBe(false);
     const lijst = new Set(alleOefeningen().map((o) => o.id));

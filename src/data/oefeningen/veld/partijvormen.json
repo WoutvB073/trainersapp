@@ -3971,10 +3971,10 @@
     "categorieen": [
       "partijvormen"
     ],
-    "uitleg": "Eén doorlopende actie. De trainer speelt aanvaller 1 in: 1 tegen 1. Dan komt er van de ene kant een aanvaller bij (2 tegen 1), daarna van de andere kant nog een aanvaller en een verdediger (3 tegen 2). Met een zesde speler komt er ook nog een tweede verdediger bij: 3 tegen 3. De aanvallers proberen te scoren voordat de verdediging compleet is.",
-    "organisatie": "Vak van 30 × 30 m met een goal (zonder keeper of met keeper). Aanvaller 1 tegenover verdediger 1 in het midden, de bijkomers op de zijlijnen. Trainer met ballen achter de aanvallers.",
+    "uitleg": "Eén doorlopende actie. De trainer speelt aanvaller 1 in: 1 tegen 1. Dan komt er van de ene kant een aanvaller bij (2 tegen 1), daarna van de andere kant nog een aanvaller en een verdediger (3 tegen 2). Met een zesde speler komt er ook nog een tweede verdediger bij: 3 tegen 3. De aanvallers proberen op een van de twee kleine goaltjes te scoren voordat de verdediging compleet is.",
+    "organisatie": "Vak van 30 × 30 m met op de achterlijn twee kleine goaltjes, 12 m uit elkaar. Aanvaller 1 tegenover verdediger 1 in het midden, de bijkomers op de zijlijnen. Trainer met ballen achter de aanvallers.",
     "benodigdheden": [
-      "Goal (of klein goal)",
+      "2 kleine goaltjes",
       "Ballen",
       "Hesjes",
       "4 pionnen"
@@ -4006,12 +4006,16 @@
       "camera": "schuin",
       "objecten": [
         {
-          "id": "g1",
-          "soort": "goal",
-          "x": 15,
-          "y": 0.5,
-          "breedte": 5,
-          "hoogte": 2
+          "id": "kg1",
+          "soort": "klein-goal",
+          "x": 9,
+          "y": 0.8
+        },
+        {
+          "id": "kg2",
+          "soort": "klein-goal",
+          "x": 21,
+          "y": 0.8
         },
         {
           "id": "a1",
@@ -4241,8 +4245,8 @@
               "type": "schot",
               "van": "a1",
               "naar": [
-                16.2,
-                0.1
+                8.6,
+                0.2
               ],
               "direct": true
             }

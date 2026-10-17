@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (17-10-2026, versie 0.20.0)
+## Status (17-10-2026, versie 0.20.1)
 
 | Fase | Status |
 |---|---|
@@ -23,7 +23,9 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 9. Verbeteringen en training genereren (0.17.0) | ✅ online – **wacht op test**: 4+1 standaard, datumveld, geen lege trainingen, Training genereren, looplijnen uit (knop), doelnet in de editor, "Spelers" met illustraties, geen Combinatievorm-badge, exporteren/importeren |
 | 10. Wedstrijd: opstelling, tactiekbord, spelhervattingen (0.18.0) | ✅ online – **wacht op test**: tegel Wedstrijd, opstellingen (4/6/8/11 tegen …, formaties, namen slepen, wissels), tactiekbord (editor + 2D/3D, vanuit een opstelling, lijnen wissen), spelhervattingen (8 beginsituaties, 3 voorbeelden), opslaan/dupliceren/link/team, sync via het account |
 | 11. Fixes, opruimen, categorieën, tactiekbord (0.19.0) | ✅ online – **wacht op test** |
-| 12. Nieuwe oefeningen: 13 keepers (15 oefeningen), 8 spelers (0.20.0) | ✅ online – **wacht op test** |
+| 12. Nieuwe oefeningen: 13 keepers, 8 spelers (0.20.0) | ✅ online, getest en akkoord |
+| 13. Kleine aanpassingen (0.20.1) | ✅ online – **wacht op test**: Grondoefeningen samengevoegd (met echt grond tikken), oplopend overtal op kleine goaltjes, Laag duiken bij Midden/voorzet/schot |
+| 14. Realistischere 3D-animaties (0.21.0) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -788,6 +790,15 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   Positiespel 3 tegen 3 + 3 naar de spits.
 - Alle nieuwe oefeningen slagen voor afstand, balbezit, keeper-in-doelgebied en de fysieke controle; per oefening
   3D-screenshots op vier momenten en 2D bekeken. Test: `tests/versie-020.test.ts`.
+
+## Besluiten versie 0.20.1 – kleine aanpassingen
+- **Grondoefeningen** (`keeper-wu-grondoefeningen`, Warming-up): één oefening met drie varianten na elkaar – grond tikken
+  en vangen, verschillende hoogtes, knieën opgetrokken. Nieuwe actie `grondtik` (handen achter je naar het gras, ook in
+  de tijdlijn als `tik`), en van de ene zithouding naar de andere zonder op te staan (`zitVorig`/`zitMix`). De drie
+  losse oefeningen staan in het archief (`tools/nieuw/archiveer.cjs`). Keeper en trainer staan naast elkaar, zodat de
+  startcamera de keeper van opzij ziet.
+- **Oplopend overtal**: op twee kleine goaltjes (12 m uit elkaar) in plaats van een jeugdgoal.
+- **Midden, voorzet en schot andere kant**: + Laag duiken.
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)

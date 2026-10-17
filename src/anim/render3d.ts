@@ -735,8 +735,10 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   const knie = s.zitSoort === 'kniezit' ? s.zit : 0;
   const hurk = s.zitSoort === 'hurkzit' ? s.zit : 0;
   // Op de billen: heupen op het gras, benen naar voren (gestrekt of met de knieën opgetrokken).
-  const billen = s.zitSoort === 'zit' || s.zitSoort === 'zit-opgetrokken' ? s.zit : 0;
-  const opgetrokken = s.zitSoort === 'zit-opgetrokken' ? s.zit : 0;
+  const isBillen = (z?: string) => z === 'zit' || z === 'zit-opgetrokken';
+  const billen = isBillen(s.zitSoort) ? s.zit : 0;
+  const mix = s.zitVorig ? (s.zitMix ?? 1) : 1;
+  const opgetrokken = ((s.zitSoort === 'zit-opgetrokken' ? 1 : 0) * mix + (s.zitVorig === 'zit-opgetrokken' ? 1 : 0) * (1 - mix)) * s.zit;
   f.wortel.position.set(
     s.x - dx * 1.45 * l,
     l * 0.2 + s.zweef + p.veer - zet * 0.13 - diep * 0.3 + spring * 0.45 - knie * 0.47 - hurk * 0.4 - billen * (0.78 - opgetrokken * 0.08),
@@ -769,6 +771,12 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
     p.spreid = [p.spreid[0] - billen * 0.12, p.spreid[1] + billen * 0.12];
     p.voorover -= billen * 0.12;
     zet = 0;
+    // Grond tikken: achterover leunen en met beide handen achter je naar het gras.
+    if (s.tik > 0) {
+      p.voorover -= s.tik * 0.45;
+      p.armen = [p.armen[0] + s.tik * 1.25, p.armen[1] + s.tik * 1.25];
+      p.armenOpzij = Math.max(p.armenOpzij, s.tik * 0.25);
+    }
   }
   if (hurk > 0) {
     p.benen = [p.benen[0] - hurk * 0.75, p.benen[1] - hurk * 0.75];
