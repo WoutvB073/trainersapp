@@ -734,9 +734,12 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
   // Kniezit (op de knieën, onderbenen naar achteren) of hurkzit (diep door de knieën, benen breed).
   const knie = s.zitSoort === 'kniezit' ? s.zit : 0;
   const hurk = s.zitSoort === 'hurkzit' ? s.zit : 0;
+  // Op de billen: heupen op het gras, benen naar voren (gestrekt of met de knieën opgetrokken).
+  const billen = s.zitSoort === 'zit' || s.zitSoort === 'zit-opgetrokken' ? s.zit : 0;
+  const opgetrokken = s.zitSoort === 'zit-opgetrokken' ? s.zit : 0;
   f.wortel.position.set(
     s.x - dx * 1.45 * l,
-    l * 0.2 + s.zweef + p.veer - zet * 0.13 - diep * 0.3 + spring * 0.45 - knie * 0.47 - hurk * 0.4,
+    l * 0.2 + s.zweef + p.veer - zet * 0.13 - diep * 0.3 + spring * 0.45 - knie * 0.47 - hurk * 0.4 - billen * (0.78 - opgetrokken * 0.08),
     s.y - dz * 1.45 * l,
   );
   if (knie > 0) {
@@ -758,6 +761,14 @@ function poseer(f: Figuur, s: ObjectStand, t: number, dtEcht: number, sprong: bo
       p.spreid = [p.spreid[0], p.spreid[1] + 1.0 * blokK];
       p.voorover += 0.15 * blokK;
     }
+  }
+  if (billen > 0) {
+    // Benen naar voren (heup ± 90°); opgetrokken: minder ver, knieën omhoog. Bovenlijf iets achterover.
+    const heup = -1.5 + opgetrokken * 0.6;
+    p.benen = [p.benen[0] * (1 - billen) + heup * billen, p.benen[1] * (1 - billen) + heup * billen];
+    p.spreid = [p.spreid[0] - billen * 0.12, p.spreid[1] + billen * 0.12];
+    p.voorover -= billen * 0.12;
+    zet = 0;
   }
   if (hurk > 0) {
     p.benen = [p.benen[0] - hurk * 0.75, p.benen[1] - hurk * 0.75];

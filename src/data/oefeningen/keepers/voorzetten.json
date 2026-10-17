@@ -1203,5 +1203,229 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-vz-claimen-uitgooien-terug",
+    "soort": "keeper",
+    "naam": "Voorzet claimen, uitgooien en terug",
+    "categorieen": [
+      "voorzetten",
+      "passing",
+      "bal-verwerken",
+      "laag-duiken"
+    ],
+    "uitleg": "Keeper 2 geeft een hoge voorzet vanaf de flank. De keeper komt uit, vangt de bal op het hoogste punt en gooit hem meteen uit in een zone op de andere flank. Daarna achteruit terug in het doel, waar de trainer een laag schot geeft. Daarna wisselen de keepers.",
+    "organisatie": "Keeper 2 met ballen op de flank (± 18 m van het doel), zone van 8 × 8 m op de andere flank op ± 25 m, trainer met ballen op 14 m voor het doel. Minimaal 2 keepers.",
+    "benodigdheden": [
+      "Goal",
+      "4 pionnen (zone)",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Op tijd starten en de bal op het hoogste punt pakken",
+      "Na het vangen meteen kijken: snel uitgooien (zwaaiworp) de zone in",
+      "Achteruit terug met de schouders naar het veld; gezet staan voor het schot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Voorzet gooien in plaats van trappen",
+        "Zone dichterbij"
+      ],
+      "moeilijker": [
+        "Een tegenstander springt mee bij de voorzet",
+        "Twee zones: de trainer roept welke",
+        "Schot direct als de keeper nog terugloopt"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 12,
+        "y": -3,
+        "breedte": 44,
+        "lengte": 31
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 16,
+          "y": 24,
+          "breedte": 8,
+          "lengte": 8,
+          "kleur": "#3fa9f5"
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.6,
+          "kijkrichting": 90,
+          "verdedigt": "g1",
+          "uitkomen": true
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 2,
+          "x": 51,
+          "y": 9,
+          "kijkrichting": -170
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 35.6,
+          "y": 14,
+          "kijkrichting": -100
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 50.6,
+          "y": 9,
+          "bij": "k2"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 35.5,
+          "y": 13.6,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": [
+                35.4,
+                5.8
+              ],
+              "worp": "trap",
+              "hoogte": "hoog",
+              "uitkomen": "k1"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": [
+                16.6,
+                23.4
+              ],
+              "worp": "zwaai",
+              "hoogte": "halfhoog"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34,
+                1.6
+              ],
+              "manier": "achteruit"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": "grond",
+              "duikNaar": [
+                31.9,
+                1.9
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k2",
+              "via": [
+                [
+                  42,
+                  3.2
+                ]
+              ],
+              "naar": [
+                34,
+                1.6
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "via": [
+                [
+                  36,
+                  6.8
+                ],
+                [
+                  44,
+                  11.6
+                ]
+              ],
+              "naar": [
+                51,
+                9
+              ],
+              "start": 0.5
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

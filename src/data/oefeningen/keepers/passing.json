@@ -1319,5 +1319,171 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-ps-terugspeelbal-hoge-bal",
+    "soort": "keeper",
+    "naam": "Terugspeelbal en hoge bal claimen",
+    "categorieen": [
+      "passing",
+      "voorzetten"
+    ],
+    "uitleg": "De trainer speelt een terugspeelbal op de keeper. De keeper neemt aan en speelt de bal door een poortje op de flank. Direct daarna gooit de trainer een hoge bal voor het doel; de keeper komt uit en pakt hem op het hoogste punt.",
+    "organisatie": "Poortje van twee pionnen (3 m breed) op de flank op 18 m van het doel. Trainer met twee ballen op 14 m schuin voor het doel.",
+    "benodigdheden": [
+      "Goal",
+      "2 pionnen",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Aannemen met de voet die van de trainer af wijst, open draaien",
+      "Doorspelen met de binnenkant: hard en vlak door het poortje",
+      "Na de pass meteen terug in positie, de hoge bal op het hoogste punt pakken (knie omhoog)"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Breder poortje",
+        "Hoge bal pas na een tel"
+      ],
+      "moeilijker": [
+        "Terugspeelbal met druk van een aanvaller",
+        "Doorspelen met het zwakke been",
+        "Hoge bal met een tegenstander die meespringt"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 26,
+        "y": -3,
+        "breedte": 34,
+        "lengte": 20
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 52,
+          "y": 9.1
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 52,
+          "y": 12.1
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.8,
+          "kijkrichting": 90,
+          "verdedigt": "g1",
+          "uitkomen": true
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 38.4,
+          "y": 14,
+          "kijkrichting": -110
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 38.3,
+          "y": 13.6,
+          "bij": "t1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 39.4,
+          "y": 14.5
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": [
+                57.6,
+                12.9
+              ],
+              "worp": "voet"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pak",
+              "wie": "t1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": [
+                35.2,
+                6.2
+              ],
+              "worp": "bovenhands",
+              "hoogte": "hoog",
+              "uitkomen": "k1"
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands"
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

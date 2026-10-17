@@ -2148,5 +2148,196 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-af-kaatsen-verdediger-rug",
+    "soort": "veld",
+    "naam": "Kaatsen met verdediger in de rug",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "De spits staat met een verdediger in zijn rug. Hij krijgt de bal van de aangever en kaatst direct terug, draait weg van zijn verdediger, krijgt de bal in de diepte en rondt af op de keeper.",
+    "organisatie": "Spits op 19 m van het doel met de verdediger vlak achter zich, aangever met ballen op 30 m. Groot doel met keeper. Na elke actie wisselen de rollen.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen",
+      "Hesjes"
+    ],
+    "spelersNodig": 3,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Spits: eerst contact maken met de verdediger, dan pas de bal vragen",
+      "Kaatsen in één keer, over de grond, terug in de voeten",
+      "Wegdraaien naar de kant waar de verdediger niet staat, en versnellen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Verdediger speelt half mee",
+        "Spits mag de bal eerst aannemen"
+      ],
+      "moeilijker": [
+        "Verdediger mag vol meedoen",
+        "Afronden binnen 3 tellen na de steekpass"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 22,
+        "y": -3,
+        "breedte": 24,
+        "lengte": 37
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "a9",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 34,
+          "y": 19,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b4",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 4,
+          "x": 33.4,
+          "y": 17.2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "a6",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 6,
+          "x": 34.6,
+          "y": 30.4,
+          "kijkrichting": -90
+        },
+        {
+          "id": "bal1",
+          "soort": "bal",
+          "x": 34.6,
+          "y": 30,
+          "bij": "a6"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a6",
+              "naar": "a9"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a9",
+              "naar": "a6",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a9",
+              "via": [
+                [
+                  37,
+                  19.4
+                ]
+              ],
+              "naar": [
+                38.8,
+                13.8
+              ],
+              "manier": "sprint"
+            },
+            {
+              "type": "pass",
+              "van": "a6",
+              "naar": "a9",
+              "start": 0.55
+            },
+            {
+              "type": "loop",
+              "wie": "b4",
+              "naar": [
+                35.4,
+                14.2
+              ],
+              "manier": "sprint",
+              "start": 0.35
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a9",
+              "naar": [
+                38.4,
+                9.8
+              ],
+              "manier": "sprint"
+            },
+            {
+              "type": "druk",
+              "wie": "b4",
+              "op": "a9",
+              "afstand": 2.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a9",
+              "naar": [
+                31.6,
+                -0.5
+              ],
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

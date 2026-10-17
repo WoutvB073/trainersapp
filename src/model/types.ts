@@ -276,7 +276,11 @@ export interface BeweegActie extends ActieBasis {
   hoogte?: number;
 }
 
-export type Zithouding = 'kniezit' | 'hurkzit';
+/**
+ * Kniezit, hurkzit, of op de billen: `zit` (benen gestrekt naar voren) of `zit-opgetrokken` (knieën opgetrokken),
+ * bv. grondoefeningen in de warming-up van keepers.
+ */
+export type Zithouding = 'kniezit' | 'hurkzit' | 'zit' | 'zit-opgetrokken';
 
 /** Keeper gaat (weer) in kniezit of hurkzit zitten, bv. na een duik voor de volgende bal. */
 export interface ZitActie extends ActieBasis {

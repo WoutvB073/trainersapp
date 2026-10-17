@@ -593,7 +593,7 @@ const zitStand = (tl: Tijdlijn, id: string, t: number) => {
 /** Hoeveel lager de handen zijn in kniezit (0,45 m) of hurkzit (0,4 m). */
 const zitLager = (tl: Tijdlijn, id: string, t: number) => {
   const z = zitOp(tl, id, t);
-  return z.zit * (z.soort === 'kniezit' ? 0.45 : 0.4);
+  return z.zit * (z.soort === 'kniezit' ? 0.45 : z.soort === 'zit' || z.soort === 'zit-opgetrokken' ? 0.75 : 0.4);
 };
 
 /** Hoogte van een landingskussen op deze plek (0 = gras). */

@@ -745,5 +745,506 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-wu-zit-tikken-vangen",
+    "soort": "keeper",
+    "naam": "Zittend: grond tikken en vangen",
+    "categorieen": [
+      "warming-up"
+    ],
+    "uitleg": "De keeper zit op zijn billen met de benen gestrekt. Voor elke bal tikt hij met beide handen achter zich de grond aan en komt hij snel terug; de trainer gooit en de keeper vangt op borsthoogte en gooit terug.",
+    "organisatie": "Keeper zit op zijn billen op het gras, de trainer (of een andere keeper) staat met een bal op 3–4 m. Na 6–8 ballen wisselen of de volgende vorm.",
+    "benodigdheden": [
+      "1 bal per tweetal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Na het tikken meteen de handen voor het lichaam (W-vorm)",
+      "Vangen met de vingers, de bal naar de borst trekken",
+      "Rug recht, buikspieren aan"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Zonder grond tikken",
+        "Zachter en dichterbij"
+      ],
+      "moeilijker": [
+        "Bal net naast het lichaam",
+        "Trainer gooit al terwijl de keeper nog tikt"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 9
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 5,
+          "y": 2.8,
+          "kijkrichting": 90,
+          "houding": "zit"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 5,
+          "y": 6.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 5,
+          "y": 6.2,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "duur": 0.9,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.3,
+              "eindHoogte": 0.75
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.9,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.3,
+              "eindHoogte": 0.75
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.9,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.3,
+              "eindHoogte": 0.75
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-wu-zit-drie-hoogtes",
+    "soort": "keeper",
+    "naam": "Zittend vangen op drie hoogtes",
+    "categorieen": [
+      "warming-up"
+    ],
+    "uitleg": "De keeper zit met gestrekte benen. De trainer gooit om de beurt op borsthoogte, boven het hoofd en laag naast het lichaam. Vangen, klemmen en teruggooien.",
+    "organisatie": "Keeper zit op zijn billen op het gras, de trainer (of een andere keeper) staat met een bal op 3–4 m. Na 6–8 ballen wisselen of de volgende vorm.",
+    "benodigdheden": [
+      "1 bal per tweetal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Borsthoogte: kommetje of borstvang",
+      "Boven het hoofd: W-vorm met de duimen achter de bal, armen gestrekt",
+      "Laag: handen naar de bal, pinken tegen elkaar"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Alleen borsthoogte en hoog",
+        "Trainer zegt de hoogte vooraf"
+      ],
+      "moeilijker": [
+        "Harder en sneller achter elkaar",
+        "Na elke bal achterover rollen en terugkomen"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 9
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 5,
+          "y": 2.8,
+          "kijkrichting": 90,
+          "houding": "zit"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 5,
+          "y": 6.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 5,
+          "y": 6.2,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.3,
+              "eindHoogte": 0.75
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "bovenhands",
+              "hoogte": 2,
+              "eindHoogte": 1.35
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.5,
+              "eindHoogte": 0.2
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-wu-zit-knieen-opgetrokken",
+    "soort": "keeper",
+    "naam": "Zittend met opgetrokken knieën",
+    "categorieen": [
+      "warming-up"
+    ],
+    "uitleg": "De keeper zit met de knieën opgetrokken en de voeten plat op de grond. De trainer gooit laag, op borsthoogte en hoog; de keeper vangt en gooit terug. Zo traint hij vangen met een stevige romp.",
+    "organisatie": "Keeper zit op zijn billen op het gras, de trainer (of een andere keeper) staat met een bal op 3–4 m. Na 6–8 ballen wisselen of de volgende vorm.",
+    "benodigdheden": [
+      "1 bal per tweetal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Voeten plat, knieën blijven omhoog",
+      "Bij de hoge bal niet achterover vallen: buikspieren aan",
+      "Vangen voor het lichaam, niet ernaast"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Handen op de grond achter je tussen de ballen door",
+        "Alleen borsthoogte"
+      ],
+      "moeilijker": [
+        "Voeten van de grond (balanceren op de billen)",
+        "Ballen links en rechts van het lichaam"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 9
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 5,
+          "y": 2.8,
+          "kijkrichting": 90,
+          "houding": "zit-opgetrokken"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 5,
+          "y": 6.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 5,
+          "y": 6.2,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.6,
+              "eindHoogte": 0.35
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.3,
+              "eindHoogte": 0.8
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "bovenhands",
+              "hoogte": 2,
+              "eindHoogte": 1.35
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

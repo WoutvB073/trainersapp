@@ -642,5 +642,180 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-hd-hordes-zijwaarts",
+    "soort": "keeper",
+    "naam": "Hordes zijwaarts en hoge duik",
+    "categorieen": [
+      "hoog-duiken"
+    ],
+    "uitleg": "De keeper springt zijwaarts over drie lage hordes naast het doel, met zijn gezicht naar het veld. Na de laatste horde maakt hij nog een pasje en duikt hij door naar dezelfde kant, naar een hoog schot van de trainer. Vangen, opstaan, bal terug en de volgende serie naar de andere kant.",
+    "organisatie": "Drie hordes van 30 cm op een rij naast het doel, 1 m uit elkaar, 2 m voor de doellijn. Trainer met ballen op 9–10 m. Om de beurt de andere kant op.",
+    "benodigdheden": [
+      "Goal",
+      "3 lage hordes",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Zijwaarts over de hordes: kort grondcontact, knieën hoog, schouders naar het veld",
+      "Na de laatste horde direct in basishouding: klaar om af te zetten",
+      "Afzetten met het been aan de balkant, handen voor de bal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eén of twee hordes",
+        "Halfhoge bal in plaats van hoog"
+      ],
+      "moeilijker": [
+        "Hogere hordes",
+        "Trainer kiest pas na de laatste horde de hoek",
+        "Na de hoge duik nog een lage bal in de andere hoek"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 23,
+        "y": -3,
+        "breedte": 20,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "h1",
+          "soort": "horde",
+          "x": 28.2,
+          "y": 2.2,
+          "hoek": 90,
+          "hoogte": 0.3
+        },
+        {
+          "id": "h2",
+          "soort": "horde",
+          "x": 29.2,
+          "y": 2.2,
+          "hoek": 90,
+          "hoogte": 0.3
+        },
+        {
+          "id": "h3",
+          "soort": "horde",
+          "x": 30.2,
+          "y": 2.2,
+          "hoek": 90,
+          "hoogte": 0.3
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 26.9,
+          "y": 2.2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34.6,
+          "y": 9.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 34.6,
+          "y": 9.2,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                31.4,
+                2.2
+              ],
+              "manier": "hordes",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                32.8,
+                1.9
+              ],
+              "manier": "zijwaarts",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": 2.4,
+              "duikNaar": [
+                36.2,
+                1.8
+              ],
+              "duikHoogte": 1.6
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands"
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

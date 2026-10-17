@@ -1082,5 +1082,614 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-1o1-inspelen-draaien-kaatsen",
+    "soort": "keeper",
+    "naam": "Inspelen, draaien of kaatsen",
+    "categorieen": [
+      "een-op-een",
+      "reactie"
+    ],
+    "uitleg": "Keeper 2 staat met de bal schuin voor het doel op ongeveer 15 m en speelt een middenman in die schuin op 5 m staat. De middenman kiest: hij draait en gaat 1 tegen 1 op de keeper af, of hij kaatst terug en de inspeler werkt direct af. De keeper weet niet wat er komt. Na een aantal ballen wisselen de keepers door.",
+    "organisatie": "Keeper 1 in het doel, keeper 2 met ballen op ± 15 m schuin voor het doel, middenman (trainer of keeper) op ± 5 m schuin voor het doel. Minimaal 2 keepers en een trainer.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Bij de pass op de middenman al een stap naar voren: klaar voor beide",
+      "Draait hij: snel uitkomen, laag en breed blokken",
+      "Kaatst hij: terug, gezet staan voor het schot van verder weg"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Middenman roept wat hij doet",
+        "Alleen kaatsen"
+      ],
+      "moeilijker": [
+        "Middenman mag ook zelf direct schieten",
+        "Een verdediger bij de middenman"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 25,
+        "y": -3,
+        "breedte": 24,
+        "lengte": 20
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34.4,
+          "y": 1.6,
+          "kijkrichting": 90,
+          "uitkomen": true
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 2,
+          "x": 43,
+          "y": 13.5,
+          "kijkrichting": -130
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 38.2,
+          "y": 5.6,
+          "kijkrichting": -150
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 42.8,
+          "y": 13.1,
+          "bij": "k2"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 44.2,
+          "y": 14.2
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": "t1"
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                35.4,
+                2.4
+              ],
+              "manier": "voetenwerk",
+              "start": 0.3,
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "t1",
+              "naar": [
+                36.4,
+                5.2
+              ],
+              "duur": 0.9
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                35.4,
+                3.4
+              ],
+              "manier": "voetenwerk",
+              "start": 0.2,
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": [
+                33.6,
+                0
+              ],
+              "hoogte": "grond",
+              "blokt": "k1",
+              "blokSoort": "ster",
+              "afloopNaar": [
+                31.2,
+                6.8
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.7,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34.4,
+                1.6
+              ],
+              "manier": "achteruit"
+            },
+            {
+              "type": "loop",
+              "wie": "t1",
+              "naar": [
+                38.2,
+                5.6
+              ],
+              "start": 0.2
+            },
+            {
+              "type": "pak",
+              "wie": "k2",
+              "start": 0.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": "t1"
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [
+                41.2,
+                11.2
+              ],
+              "start": 0.5,
+              "duur": 0.9
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k2",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "k2",
+              "naar": "k1",
+              "direct": true,
+              "hoogte": "grond",
+              "duikNaar": [
+                32.2,
+                1.9
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k2",
+              "via": [
+                [
+                  37,
+                  8
+                ]
+              ],
+              "naar": [
+                34.4,
+                1.6
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "via": [
+                [
+                  30.6,
+                  6.6
+                ]
+              ],
+              "naar": [
+                43,
+                13.5
+              ],
+              "start": 0.4
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-1o1-vijf-keuzes",
+    "soort": "keeper",
+    "naam": "Vijf keuzes van de keeperstrainer",
+    "categorieen": [
+      "een-op-een",
+      "bal-verwerken",
+      "hoog-duiken",
+      "laag-duiken",
+      "reactie"
+    ],
+    "uitleg": "De trainer staat met ballen op het midden van de zestien, links en rechts van hem staat een keeper op 5 à 10 m. De trainer kiest steeds: zelf schieten, de linker of rechter keeper in de voeten aanspelen (die neemt aan en schiet), of een bal in de diepte links of rechts waarop een keeper doorloopt; dan komt de keeper uit voor een 1 tegen 1. Na een paar ballen schuiven de keepers door.",
+    "organisatie": "Trainer met ballen op 16 m, keeper 2 en 3 op 7 m links en rechts naast hem, keeper 1 in het doel. Minimaal 3 keepers en een trainer.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 3,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Positie steeds op de lijn tussen bal en het midden van het doel",
+      "Bij elke balcontact van de trainer gezet staan",
+      "Diepe bal: vroeg beslissen en uitkomen, laag blokken of plukken"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Maar drie keuzes (schieten, links, rechts)",
+        "Trainer zegt de keuze vooraf"
+      ],
+      "moeilijker": [
+        "Keepers links en rechts mogen ook direct schieten",
+        "Twee keuzes kort na elkaar"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 21,
+        "y": -3,
+        "breedte": 26,
+        "lengte": 22
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.6,
+          "kijkrichting": 90,
+          "uitkomen": true
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 2,
+          "x": 27,
+          "y": 16.5,
+          "kijkrichting": -60
+        },
+        {
+          "id": "k3",
+          "soort": "keeper",
+          "nummer": 3,
+          "x": 41,
+          "y": 16.5,
+          "kijkrichting": -120
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34,
+          "y": 16.8,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 34,
+          "y": 16.4,
+          "bij": "t1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 35.1,
+          "y": 17.4
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 33,
+          "y": 17.5
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": "grond",
+              "duikNaar": [
+                32,
+                1.9
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            },
+            {
+              "type": "pak",
+              "wie": "t1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                33.2,
+                2
+              ],
+              "duur": 0.6
+            },
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": [
+                36,
+                12
+              ],
+              "worp": "onderhands",
+              "start": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "k2",
+              "naar": "k1",
+              "hoogte": 2.4,
+              "duikNaar": [
+                36.3,
+                1.8
+              ],
+              "duikHoogte": 1.6
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            },
+            {
+              "type": "pak",
+              "wie": "t1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34.4,
+                1.8
+              ],
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": [
+                39.6,
+                9.2
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "k3",
+              "naar": [
+                39.4,
+                10.2
+              ],
+              "manier": "sprint",
+              "start": 0.2
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                36.4,
+                4.6
+              ],
+              "manier": "sprint",
+              "start": 0.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "k3",
+              "naar": [
+                35.6,
+                0
+              ],
+              "hoogte": "grond",
+              "blokt": "k1",
+              "blokSoort": "knie",
+              "afloopNaar": [
+                42.4,
+                7.2
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k3",
+              "via": [
+                [
+                  37.2,
+                  5
+                ]
+              ],
+              "naar": [
+                34,
+                1.6
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "via": [
+                [
+                  30,
+                  8
+                ]
+              ],
+              "naar": [
+                27,
+                16.5
+              ],
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "via": [
+                [
+                  33.4,
+                  21
+                ]
+              ],
+              "naar": [
+                41,
+                16.5
+              ],
+              "start": 0.1
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

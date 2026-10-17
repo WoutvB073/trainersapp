@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (17-10-2026, versie 0.19.0)
+## Status (17-10-2026, versie 0.20.0)
 
 | Fase | Status |
 |---|---|
@@ -23,7 +23,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 9. Verbeteringen en training genereren (0.17.0) | ✅ online – **wacht op test**: 4+1 standaard, datumveld, geen lege trainingen, Training genereren, looplijnen uit (knop), doelnet in de editor, "Spelers" met illustraties, geen Combinatievorm-badge, exporteren/importeren |
 | 10. Wedstrijd: opstelling, tactiekbord, spelhervattingen (0.18.0) | ✅ online – **wacht op test**: tegel Wedstrijd, opstellingen (4/6/8/11 tegen …, formaties, namen slepen, wissels), tactiekbord (editor + 2D/3D, vanuit een opstelling, lijnen wissen), spelhervattingen (8 beginsituaties, 3 voorbeelden), opslaan/dupliceren/link/team, sync via het account |
 | 11. Fixes, opruimen, categorieën, tactiekbord (0.19.0) | ✅ online – **wacht op test** |
-| 12. Nieuwe oefeningen: 13 keepers, 8 spelers (0.20.0) | ⏳ |
+| 12. Nieuwe oefeningen: 13 keepers (15 oefeningen), 8 spelers (0.20.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -774,6 +774,21 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   `tests/filters.test.ts` (aantallen), `tests/deel-b.test.ts` (borden per spelvorm); browsertest `tools/e2e/versie-019.mjs`
   (blad `blad-019.png`).
 
+## Besluiten versie 0.20.0 – nieuwe oefeningen
+- Gebouwd met `tools/nieuw/keepers-020.cjs` en `tools/nieuw/spelers-020.cjs` (zet of vervangt op id in het bestand van de
+  eerste categorie; `tools/nieuw/hulp.cjs`). Close-ups: `tools/e2e/nieuw.mjs <ids> [blad]`.
+- **Keepers:** Hordes zijwaarts en hoge duik · Vier kleuren en bal verwerken · Vier kleuren en bal voor de stuit · Pass naast
+  het doel en kort schot · Bal van achter de keeper · Midden, voorzet en schot andere kant · Inspelen, draaien of kaatsen ·
+  Vijf keuzes van de keeperstrainer · Zijwaartse ladder en dubbele duik · Terugspeelbal en hoge bal claimen · Drie
+  schutters met nummers · Voorzet claimen, uitgooien en terug · Grondoefeningen: Zittend: grond tikken en vangen, Zittend
+  vangen op drie hoogtes, Zittend met opgetrokken knieën. Bij meerdere keepers is het doorwisselen te zien (getest).
+- **Nieuwe houding:** keeper op de billen (`houding: 'zit'` met gestrekte benen, `'zit-opgetrokken'`) in tijdlijn en 3D.
+- **Spelers:** 1 tegen 1 door de poortjes · Wippen en 1 tegen 1 · Oplopend overtal: 1v1, 2v1, 3v2, 3v3 · 2 tegen 1 met
+  inhalende verdediger · Rondo 4 tegen 2 met uitbraak · Golven: 1v1, 2v1, 3v2 · Kaatsen met verdediger in de rug ·
+  Positiespel 3 tegen 3 + 3 naar de spits.
+- Alle nieuwe oefeningen slagen voor afstand, balbezit, keeper-in-doelgebied en de fysieke controle; per oefening
+  3D-screenshots op vier momenten en 2D bekeken. Test: `tests/versie-020.test.ts`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -787,6 +802,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.20.0 – Categorieën waar je er geen noemde: 1 Hordes zijwaarts → Hoog duiken; 2 Vier kleuren en bal verwerken → Bal
+  verwerken, Reactie; 3 Vier kleuren en bal voor de stuit → Reactie; 4 Pass naast het doel → Reactie; 5 Bal van achter → Reactie;
+  6 Midden, voorzet en schot → Bal verwerken, Voorzetten, Hoog duiken; 13 grondoefeningen → Warming-up.
+- 0.20.0 – De grondoefeningen zijn drie losse oefeningen (tikken en vangen, drie hoogtes, opgetrokken knieën). "Achter je de
+  grond tikken" staat in de uitleg; in de animatie is dat een korte pauze voor elke bal (de arm doet dat niet na).
+- 0.20.0 – Drie schutters met nummers: de aangevers zijn spelers (spelersNodig 3); in de organisatie staat dat het ook
+  keepers of de trainer mogen zijn.
+- 0.20.0 – Bal van achter de keeper: de bal gaat in de animatie óver de keeper (onder de keeper door kan de animatie niet
+  netjes laten zien; het staat wel in de uitleg en variaties).
+- 0.20.0 – Oplopend overtal: de animatie laat 1v1 → 2v1 → 3v2 zien (5 spelers); 3v3 met de zesde speler staat in de uitleg.
+  Op één goal zonder keeper (jeugdgoal). Golven: met 5 spelers die na elke golf teruglopen (doorschuiven), op doel met keeper.
+- 0.20.0 – Rondo 4 tegen 2 met uitbraak: de spits is een vijfde aanvaller die bij het vak wacht; in de animatie 5 passes
+  (in de uitleg 8). Positiespel 3+3+3: neutralen in een derde hesjeskleur (geel), 6 passes en dan de spits.
 - 0.19.0 – Automatische naam alleen als een training zonder naam oefeningen krijgt (niet bij elke keer bewaren), zodat je
   de naam nog zelf kunt wissen en overtypen.
 - 0.19.0 – Volledig opgesteld tactiekbord: beide teams elk in hun eigen helft (zoals bij de aftrap), ook vanuit een

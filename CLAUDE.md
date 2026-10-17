@@ -32,6 +32,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/components/Illustraties.tsx` — getekende tegelplaatjes (Spelers, Keepers, bal zoals in het logo).
 - `src/wedstrijd/` — opstellingen, borden, spelhervattingen (puur) en opslag; `src/screens/wedstrijd/` (OpstellingVeld met slepen, BordTekenen = `Editor` uit `screens/eigen/Tekenen.tsx` met een `EditorBron`).
 - Keuzes die de gebruiker niet kon beantwoorden: PLAN.md → "Keuzes zonder overleg".
+- Nieuwe ingebouwde oefeningen: als bouwscript in `tools/nieuw/` (zie `keepers-020.cjs`, `spelers-020.cjs`, `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
 - Weggehaalde ingebouwde oefeningen gaan naar `src/data/oefeningen/archief.json` (`verwijderd: true`): niet in de bibliotheek, wel via `vindOefening`. Nooit echt wissen (oude trainingen/links/teams).
 
 ## Browsertests (`tools/e2e/`, preview op poort 4184 moet draaien; geef een URL mee om online te testen)
@@ -53,6 +54,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `deel-a.mjs [url]` — 0.17.0: Training maken (4+1, datumveld, geen lege), Training genereren (slepen, Andere oefening, geen passende), looplijnen-knop, doelnet 2D/3D + palet, Spelers/geen Combinatievorm, exporteren/importeren. Blad: `blad-deel-a.png`.
 - `deel-b.mjs [url]` — 0.18.0: Wedstrijd-tegel, opstelling (slepen/tikken/ruilen/bank/positie verslepen, formatie, spelvorm, namen, link), tactiekbord vanuit opstelling (editor, lijnen wissen, 2D/3D), spelhervattingen (voorbeeld + beginsituatie), gedeelde link op een ander toestel. Blad: `blad-deel-b.png`.
 - `versie-019.mjs [url]` — 0.19.0: genereren vanuit een training (bug), automatische naam, aantallenfilter, nieuw tactiekbord per spelvorm/formatie, namen (editor + bord, 2D/3D), weggehaalde oefening (melding, oude training), categorieën. Blad: `blad-019.png`.
+- `nieuw.mjs <id,id,…> [blad] [url]` — close-ups van (nieuwe) oefeningen: 3D op vier momenten + 2D, op één blad (`blad-<naam>.png`).
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
   Chrome draait met de echte videokaart (`--use-angle=d3d11`); `trainersapp.3dAltijd=1` zet de 2D-terugval uit in tests.
 
