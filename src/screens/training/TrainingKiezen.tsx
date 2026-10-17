@@ -7,7 +7,7 @@ import { CATEGORIEEN, SOORT_NAAM } from '../../data/categorieen';
 import { alleOefeningen } from '../../data/oefeningen';
 import { ga, terug } from '../../router';
 import { trainingen, useTraining } from '../../training/opslag';
-import { kiesbaar } from '../../training/training';
+import { kiesbaar, metNaam } from '../../training/training';
 import type { Soort } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { FilterBalk, GeenResultaat, Hartje } from '../../components/Filters';
@@ -56,7 +56,7 @@ export function TrainingKiezen({ id }: { id: string }) {
   // Altijd de nieuwste versie uit de opslag (ook bij snel achter elkaar tikken).
   const wissel = (oid: string) => {
     const nu = trainingen.haal(id) ?? t;
-    trainingen.bewaar({ ...nu, oefeningen: nu.oefeningen.includes(oid) ? nu.oefeningen.filter((x) => x !== oid) : [...nu.oefeningen, oid] });
+    trainingen.bewaar(metNaam({ ...nu, oefeningen: nu.oefeningen.includes(oid) ? nu.oefeningen.filter((x) => x !== oid) : [...nu.oefeningen, oid] }));
   };
 
   return (

@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (17-10-2026, versie 0.18.0)
+## Status (17-10-2026, versie 0.19.0)
 
 | Fase | Status |
 |---|---|
@@ -22,6 +22,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 7. Inloggen + online opslag (Firebase) + teams | ✅ online (0.16.0) – **wacht op test**: Firebase-project `toptraining-40a90` gekoppeld, account, synchronisatie, eerste keer samenvoegen, teams met code en rollen, strenge regels; live getest met twee testaccounts (daarna verwijderd) |
 | 9. Verbeteringen en training genereren (0.17.0) | ✅ online – **wacht op test**: 4+1 standaard, datumveld, geen lege trainingen, Training genereren, looplijnen uit (knop), doelnet in de editor, "Spelers" met illustraties, geen Combinatievorm-badge, exporteren/importeren |
 | 10. Wedstrijd: opstelling, tactiekbord, spelhervattingen (0.18.0) | ✅ online – **wacht op test**: tegel Wedstrijd, opstellingen (4/6/8/11 tegen …, formaties, namen slepen, wissels), tactiekbord (editor + 2D/3D, vanuit een opstelling, lijnen wissen), spelhervattingen (8 beginsituaties, 3 voorbeelden), opslaan/dupliceren/link/team, sync via het account |
+| 11. Fixes, opruimen, categorieën, tactiekbord (0.19.0) | ✅ online – **wacht op test** |
+| 12. Nieuwe oefeningen: 13 keepers, 8 spelers (0.20.0) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -596,8 +598,8 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   categorieën tonen de aantallen volgens de filters; niets gevonden → melding met knop. Bij Training maken gelden de
   aantallen van de training. De filters (behalve aantallen) gelden zolang de app open is.
 - **Categorie-indeling** nagelopen met de richtlijnen (Afwerken = wedstrijdecht scoren op doel; Warming-up = laagdrempelig;
-  Partijvormen = twee partijen met een doel; Positiespel = balbezit/rondo's; Spelletjes = spelelement voorop; maximaal
-  drie categorieën). Test: precies één hoofdcategorie (= bestand), maximaal drie, geen dubbele. Aangepast (22, wacht op
+  Partijvormen = twee partijen met een doel; Positiespel = balbezit/rondo's; Spelletjes = spelelement voorop; (tot 0.19.0) maximaal
+  drie categorieën). Test: precies één hoofdcategorie (= bestand), geen dubbele (sinds 0.19.0 geen maximum van drie meer). Aangepast (22, wacht op
   correcties van de gebruiker):
   - Veld – Snelle schutter op kleine doeltjes – afwerken, spelletjes → spelletjes, techniek (nieuwe hoofdcategorie)
   - Veld – Overlap op de flank, lage voorzet en afronden – afwerken, pass-en-trap, positiespel → afwerken, pass-en-trap
@@ -742,6 +744,36 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Tests:** `tests/deel-b.test.ts`, online `tests/online` (sync en teamdelen van wedstrijd), browsertest
   `tools/e2e/deel-b.mjs` (blad `blad-deel-b.png`) en `tools/e2e/online.mjs` (opstelling delen in het team).
 
+## Besluiten versie 0.19.0 – fixes, opruimen, categorieën en tactiekbord
+- **Bug "pagina bestaat niet" bij Training genereren:** het opruimen van lege trainingen stond op twee plekken; de
+  tweede (de geïnstalleerde app) kende het genereren-scherm niet en haalde de training weg als je vanuit een training op
+  "Training genereren" tikte. Nu één plek (`openTraining(route)` in `router.ts`, gebruikt in `App.tsx`). Een training
+  zonder naam die oefeningen krijgt (genereren of kiezen) heet automatisch "Training 17 okt" (`metNaam`). Tests erbij.
+- **Aantallenfilter** onthoudt de laatst gebruikte aantallen (`trainersapp.filterAantallenLaatst`), ook na uitzetten.
+- **Tactiekbord:** nieuw bord = spelvorm + formatie van jouw team + formatie van de tegenstander → beide teams volledig
+  opgesteld (elk in de eigen helft, zoals bij de aftrap; bal op de middenstip; camera van boven). Leeg bord (heel/half)
+  en vanuit een opstelling blijven. Het veld heeft de maat van de spelvorm (20×30, 30×42,5, 42,5×64, 68×105) met
+  meegeschaalde lijnen (`lijnMaten` in render2d, ook in 3D) en passende doelen (4v4 kleine doeltjes, 6v6/8v8 jeugdgoals).
+  Rugnummers altijd; "Namen tonen" op het bord; in de editor kun je per speler een naam invullen (vanuit een opstelling
+  staan de namen er al in). Namen in 2D (pilletje onder het poppetje) en 3D (label onder de voeten).
+- **Opgeruimd:** 23 ingebouwde oefeningen uit de bibliotheek (lijst hieronder). Ze staan in `src/data/oefeningen/archief.json`:
+  niet meer in lijsten, kiezen of genereren, maar trainingen, deellinks, teamtrainingen en favorieten tonen ze nog (label en
+  melding "Niet meer in de bibliotheek", met de hele inhoud en animatie; kopiëren naar eigen oefeningen kan nog).
+  Spelers: 1 tegen keeper · Bankjesvoetbal · Opruimen: ballen over de bank · Derde man in de driehoek · Diepe pass in de
+  loop · Kaatsen en afwerken · Op de rebound · Snelle schutter op kleine doeltjes. Keepers: Hoog duiken op het kussen
+  vanuit kniezit · Afzet en landing: hoog duiken vanuit stand (beide met landingskussen) · Afgeketst via de pop ·
+  Balgewenning: opgooien, stuit en schepvangen · Hoge bal naar de hoek: rouleren met twee keepers · Hoge ballen vangen in
+  de sprong · Kommetje: ballen op buikhoogte · Kruispas en vangen naast het lichaam · Kruispassen en hoog duiken naar de
+  hoek · Kruispassen, vangen en zwaaiworp · Lummelen voor keepers · Mikken in de hoepel · Tippen om de paal · Uitlopen en
+  afremmen · Vangen in tweetallen: drie hoogtes.
+- **Categorieën:** geen maximum van drie meer (regel en test weg); zo min mogelijk. Nieuwe regel (getest): spelers-oefeningen
+  zonder bal horen bij Loopcoördinatie, niet bij Spelletjes of Techniek. De opgegeven indeling is precies zo gezet (test).
+  Kleurenreactie in tweetallen gesplitst: zonder bal (Loopcoördinatie) en nieuw "Kleurenreactie met bal" (Techniek,
+  Spelletjes). De regel "zonder bal" veranderde verder niets.
+- **Tests:** `tests/versie-019.test.ts` (verwijderd, categorieën), uitbreiding `tests/deel-a.test.ts` (bug, naam),
+  `tests/filters.test.ts` (aantallen), `tests/deel-b.test.ts` (borden per spelvorm); browsertest `tools/e2e/versie-019.mjs`
+  (blad `blad-019.png`).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -755,6 +787,21 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.19.0 – Automatische naam alleen als een training zonder naam oefeningen krijgt (niet bij elke keer bewaren), zodat je
+  de naam nog zelf kunt wissen en overtypen.
+- 0.19.0 – Volledig opgesteld tactiekbord: beide teams elk in hun eigen helft (zoals bij de aftrap), ook vanuit een
+  opstelling (de onderlinge opstelling blijft gelijk). Op exacte plekken vielen spelers op kleine velden over elkaar.
+- 0.19.0 – Zo'n bord start met de camera van boven (schuin viel de eigen keeper buiten beeld).
+- 0.19.0 – Een naam invullen in de editor zet "Namen tonen" vanzelf aan; namen tonen kan met de knop op het bord.
+- 0.19.0 – Ook "Hoog duiken op het kussen vanuit kniezit" en "Afzet en landing: hoog duiken vanuit stand" weg (landingskussen).
+  Pannavoetbal blijft (pannakooi; de tekst noemt "of 4 banken" maar er wordt geen bank getekend).
+- 0.19.0 – Weggehaalde oefeningen staan in een archief (niet echt gewist), zodat oude trainingen, links, teams en
+  favorieten blijven werken.
+- 0.19.0 – Tikkertje met hesje en Overlopertje zijn zonder bal maar staan op jouw verzoek bij Warming-up en Spelletjes;
+  de regel "zonder bal" maakt voor die twee een uitzondering. De regel geldt alleen voor spelers (keepers hebben geen
+  Loopcoördinatie).
+- 0.19.0 – "Kleurenreactie in tweetallen" (zonder bal) houdt zijn id; de versie met bal is nieuw ("Kleurenreactie met bal"):
+  dribbelen naar de kleur en terug.
 - 0.18.0 – 4 tegen 4 zonder keeper (zoals bij de jongsten), met formaties 1-2-1 (ruit) en 2-2. Bij elke spelvorm één
   extra formatie (6v6 1-2-2-1, 8v8 1-3-2-2, 11v11 1-4-2-3-1).
 - 0.18.0 – Nieuwe opstelling: laatst gebruikte spelvorm (anders 11 tegen 11); alle namen uit je lijst staan eerst op de bank.

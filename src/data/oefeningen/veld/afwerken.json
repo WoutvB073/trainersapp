@@ -1,158 +1,37 @@
 [
   {
-    "id": "veld-kaatsen-en-afwerken",
-    "soort": "veld",
-    "naam": "Kaatsen en afwerken",
-    "categorieen": ["afwerken", "pass-en-trap"],
-    "uitleg": "Speler 9 speelt in op de kaatser (10), sprint langs hem en krijgt de bal diep terug. Na een korte dribbel richting de zestien schiet hij op doel. Daarna doorwisselen: de schutter wordt kaatser, de kaatser sluit achteraan in de rij.",
-    "organisatie": "Op een half veld. Startpion op ± 30 m van het doel, iets rechts van het midden; de kaatser staat bij een pion op ± 21 m, centraal. Keeper in het doel. Overige spelers wachten met een bal in een rij bij de startpion.",
-    "benodigdheden": ["1 goal", "2 pionnen", "Ballen (1 per speler)"],
-    "spelersNodig": 2,
-    "keepersNodig": 1,
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Inspelen op het voorste been van de kaatser: stevig en over de grond",
-      "Kaatser staat open en legt de bal in één keer in de loop terug",
-      "Na de pass direct versnellen (pass en ga)",
-      "Eerste aanname richting doel; kijk voor het schot even naar de keeper",
-      "Laag in de hoek afronden, met de binnenkant voor precisie"
-    ],
-    "variaties": {
-      "makkelijker": ["Kaatser mag de bal eerst aannemen", "Afstand tot het goal verkleinen", "Zonder keeper of op een klein goal"],
-      "moeilijker": [
-        "Direct op doel schieten na de kaats (geen dribbel)",
-        "Verdediger die vanaf de zijkant mag storen",
-        "Afronden met het zwakke been",
-        "Binnen 4 seconden na de kaats scoren"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 11,
-        "y": -3,
-        "breedte": 46,
-        "lengte": 37
-      },
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "p1",
-          "soort": "pion",
-          "x": 41,
-          "y": 31
-        },
-        {
-          "id": "p2",
-          "soort": "pion",
-          "x": 33,
-          "y": 22
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 34,
-          "y": 1.2,
-          "nummer": 1,
-          "verdedigt": "g1"
-        },
-        {
-          "id": "a1",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 9,
-          "x": 40,
-          "y": 30
-        },
-        {
-          "id": "a2",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 10,
-          "x": 34,
-          "y": 21
-        },
-        {
-          "id": "b1",
-          "soort": "bal",
-          "x": 40,
-          "y": 29.4,
-          "bij": "a1"
-        }
-      ],
-      "animatie": [
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "a1",
-              "naar": "a2"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "a1",
-              "naar": [37, 19.5]
-            },
-            {
-              "type": "pass",
-              "van": "a2",
-              "naar": "a1",
-              "start": 1.95
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "naar": [35.5, 13.5]
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "a1",
-              "naar": [31.1, -0.8],
-              "afloop": "goal"
-            }
-          ]
-        },
-        {
-          "duur": 1.8,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "veld-af-dribbel-afronden",
     "soort": "veld",
     "naam": "Dribbel door de poort en afronden",
-    "categorieen": ["afwerken", "techniek"],
+    "categorieen": [
+      "afwerken",
+      "techniek"
+    ],
     "uitleg": "Dribbel vanaf 30 m op het doel af, kies op tijd de linker- of rechterpoort, versnel erdoor en rond in de zestien af in de verre hoek. Jog daarna buitenom terug naar de rij (de bal blijft in het net liggen).",
     "organisatie": "Rij met ballen op 30 m, centraal voor het doel. Twee poortjes van pionnen (2,5 m breed) op 19 m, links en rechts. Keeper in het doel.",
-    "benodigdheden": ["1 goal", "4 pionnen", "1 bal per speler"],
+    "benodigdheden": [
+      "1 goal",
+      "4 pionnen",
+      "1 bal per speler"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Bal dicht aan de voet bij de poort, daarna een grotere aanraking richting doel", "Kijk voor het schot even op: waar staat de keeper?", "Plaatsen in de verre hoek, laag en met de binnenkant of wreef"],
+    "coachpunten": [
+      "Bal dicht aan de voet bij de poort, daarna een grotere aanraking richting doel",
+      "Kijk voor het schot even op: waar staat de keeper?",
+      "Plaatsen in de verre hoek, laag en met de binnenkant of wreef"
+    ],
     "variaties": {
-      "makkelijker": ["Poorten op 15 m", "Groter doel of geen keeper (keeper speelt met handen op de rug)"],
-      "moeilijker": ["Trainer roept pas op 22 m welke poort", "Een verdediger start bij de poort en mag storen", "Afronden met het zwakke been"]
+      "makkelijker": [
+        "Poorten op 15 m",
+        "Groter doel of geen keeper (keeper speelt met handen op de rug)"
+      ],
+      "moeilijker": [
+        "Trainer roept pas op 22 m welke poort",
+        "Een verdediger start bij de poort en mag storen",
+        "Afronden met het zwakke been"
+      ]
     },
     "tekening": {
       "veld": {
@@ -256,23 +135,88 @@
           "x": 34,
           "y": 29,
           "richting": 90,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 4.6,
             "waarden": {
               "via": [
-                [[31, 24], [28.25, 19]],
-                [[37, 24], [39.75, 19]],
-                [[31, 24], [28.25, 19]]
+                [
+                  [
+                    31,
+                    24
+                  ],
+                  [
+                    28.25,
+                    19
+                  ]
+                ],
+                [
+                  [
+                    37,
+                    24
+                  ],
+                  [
+                    39.75,
+                    19
+                  ]
+                ],
+                [
+                  [
+                    31,
+                    24
+                  ],
+                  [
+                    28.25,
+                    19
+                  ]
+                ]
               ],
-              "plek": [[29.6, 14.5], [38.4, 14.5], [29.8, 15]],
-              "doel": [[36.9, -0.6], [31.6, 0.4], [31.3, -0.5]],
-              "afloop": ["goal", "vangt", "goal"]
+              "plek": [
+                [
+                  29.6,
+                  14.5
+                ],
+                [
+                  38.4,
+                  14.5
+                ],
+                [
+                  29.8,
+                  15
+                ]
+              ],
+              "doel": [
+                [
+                  36.9,
+                  -0.6
+                ],
+                [
+                  31.6,
+                  0.4
+                ],
+                [
+                  31.3,
+                  -0.5
+                ]
+              ],
+              "afloop": [
+                "goal",
+                "vangt",
+                "goal"
+              ]
             },
             "stappen": [
               {
@@ -318,17 +262,35 @@
     "id": "veld-af-pass-in-de-loop",
     "soort": "veld",
     "naam": "Pass in de loop en direct afronden",
-    "categorieen": ["afwerken", "pass-en-trap"],
+    "categorieen": [
+      "afwerken",
+      "pass-en-trap"
+    ],
     "uitleg": "De aanvaller start vanaf de rechterkant en maakt een schuine loopactie naar het doel. De trainer speelt de bal van zijn stapel in de loop; de aanvaller rondt in één keer af. Daarna terug naar de rij en de volgende start.",
     "organisatie": "Trainer met een stapel ballen centraal op 21 m. Rij aanvallers rechts op ± 26 m (bij de hoek van de zestien). Keeper in het doel.",
-    "benodigdheden": ["1 goal", "8+ ballen", "1 pion (startplek)"],
+    "benodigdheden": [
+      "1 goal",
+      "8+ ballen",
+      "1 pion (startplek)"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Timing: versnel op het moment dat de trainer de bal aanraakt", "Lichaam boven de bal: dan blijft je schot laag", "In één keer: binnenkant voor plaatsing, wreef voor kracht"],
+    "coachpunten": [
+      "Timing: versnel op het moment dat de trainer de bal aanraakt",
+      "Lichaam boven de bal: dan blijft je schot laag",
+      "In één keer: binnenkant voor plaatsing, wreef voor kracht"
+    ],
     "variaties": {
-      "makkelijker": ["Eerst aannemen, dan schieten", "Kortere loopactie (± 8 m)"],
-      "moeilijker": ["Links starten: afronden met het andere been", "Een verdediger loopt mee vanaf de rij", "Trainer speelt soms hoog: volley of kopbal"]
+      "makkelijker": [
+        "Eerst aannemen, dan schieten",
+        "Kortere loopactie (± 8 m)"
+      ],
+      "moeilijker": [
+        "Links starten: afronden met het andere been",
+        "Een verdediger loopt mee vanaf de rij",
+        "Trainer speelt soms hoog: volley of kopbal"
+      ]
     },
     "tekening": {
       "veld": {
@@ -424,18 +386,56 @@
           "x": 47,
           "y": 25,
           "richting": 90,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 4.4,
             "waarden": {
-              "loop": [[38, 10], [37.5, 11], [39, 9.5]],
-              "doel": [[30.8, -0.5], [31.3, 0.4], [37.2, -0.5]],
-              "afloop": ["goal", "stompt", "goal"]
+              "loop": [
+                [
+                  38,
+                  10
+                ],
+                [
+                  37.5,
+                  11
+                ],
+                [
+                  39,
+                  9.5
+                ]
+              ],
+              "doel": [
+                [
+                  30.8,
+                  -0.5
+                ],
+                [
+                  31.3,
+                  0.4
+                ],
+                [
+                  37.2,
+                  -0.5
+                ]
+              ],
+              "afloop": [
+                "goal",
+                "stompt",
+                "goal"
+              ]
             },
             "stappen": [
               {
@@ -475,8 +475,16 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "via": [[45, 9]],
-                    "naar": [50.5, 20],
+                    "via": [
+                      [
+                        45,
+                        9
+                      ]
+                    ],
+                    "naar": [
+                      50.5,
+                      20
+                    ],
                     "spoor": false
                   }
                 ]
@@ -500,17 +508,34 @@
     "id": "veld-af-voorzetten",
     "soort": "veld",
     "naam": "Voorzet laag en hoog: inlopen en afronden",
-    "categorieen": ["afwerken"],
+    "categorieen": [
+      "afwerken"
+    ],
     "uitleg": "De vleugelspeler dribbelt naar de achterlijn en geeft een voorzet. Twee spitsen lopen in: één naar de eerste paal, één naar de tweede. Eerst een lage, harde voorzet die bij de eerste paal binnengetikt wordt; daarna een hoge voorzet op de tweede paal voor een kopbal.",
     "organisatie": "Vleugelspeler rechts op ± 16 m met een stapel ballen. Twee spitsen op 20–24 m, centraal. Keeper in het doel. Na elke voorzet terug naar de startplekken; regelmatig rollen wisselen.",
-    "benodigdheden": ["1 goal", "6+ ballen", "4 hoedjes (startplekken)"],
+    "benodigdheden": [
+      "1 goal",
+      "6+ ballen",
+      "4 hoedjes (startplekken)"
+    ],
     "spelersNodig": 3,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Spitsen: niet te vroeg inlopen, start als de vleugelspeler opkijkt", "Eerste paal: kort voor de verdediger/keeper komen, in één keer binnenkant", "Kopbal: afzetten op één been, met het voorhoofd en ogen open naar beneden koppen"],
+    "coachpunten": [
+      "Spitsen: niet te vroeg inlopen, start als de vleugelspeler opkijkt",
+      "Eerste paal: kort voor de verdediger/keeper komen, in één keer binnenkant",
+      "Kopbal: afzetten op één been, met het voorhoofd en ogen open naar beneden koppen"
+    ],
     "variaties": {
-      "makkelijker": ["Bal mag eerst aangenomen worden", "Voorzet uit de hand gooien (hoge bal)"],
-      "moeilijker": ["Eén verdediger in de zestien", "Derde loper naar de rand van de zestien (cut-back)", "Voorzet in één keer na een pass van achteren"]
+      "makkelijker": [
+        "Bal mag eerst aangenomen worden",
+        "Voorzet uit de hand gooien (hoge bal)"
+      ],
+      "moeilijker": [
+        "Eén verdediger in de zestien",
+        "Derde loper naar de rand van de zestien (cut-back)",
+        "Voorzet in één keer na een pass van achteren"
+      ]
     },
     "tekening": {
       "veld": {
@@ -591,20 +616,29 @@
             {
               "type": "dribbel",
               "wie": "v",
-              "naar": [60, 8],
+              "naar": [
+                60,
+                8
+              ],
               "duur": 2.2
             },
             {
               "type": "loop",
               "wie": "s1",
-              "naar": [38.2, 6.8],
+              "naar": [
+                38.2,
+                6.8
+              ],
               "manier": "sprint",
               "start": 0.9
             },
             {
               "type": "loop",
               "wie": "s2",
-              "naar": [30.5, 10],
+              "naar": [
+                30.5,
+                10
+              ],
               "start": 0.9
             }
           ]
@@ -624,7 +658,10 @@
             {
               "type": "schot",
               "van": "s1",
-              "naar": [36.2, -0.5],
+              "naar": [
+                36.2,
+                -0.5
+              ],
               "afloop": "goal",
               "direct": true,
               "hoogte": "grond"
@@ -636,19 +673,28 @@
             {
               "type": "loop",
               "wie": "s1",
-              "naar": [40, 20],
+              "naar": [
+                40,
+                20
+              ],
               "duur": 2.4
             },
             {
               "type": "loop",
               "wie": "s2",
-              "naar": [30, 21],
+              "naar": [
+                30,
+                21
+              ],
               "duur": 2.4
             },
             {
               "type": "loop",
               "wie": "v",
-              "naar": [58, 15.4],
+              "naar": [
+                58,
+                15.4
+              ],
               "duur": 2.4
             }
           ]
@@ -658,20 +704,29 @@
             {
               "type": "dribbel",
               "wie": "v",
-              "naar": [60, 9],
+              "naar": [
+                60,
+                9
+              ],
               "duur": 2
             },
             {
               "type": "loop",
               "wie": "s2",
-              "naar": [31.5, 6.5],
+              "naar": [
+                31.5,
+                6.5
+              ],
               "manier": "sprint",
               "start": 0.7
             },
             {
               "type": "loop",
               "wie": "s1",
-              "naar": [38, 9.5],
+              "naar": [
+                38,
+                9.5
+              ],
               "start": 0.7
             }
           ]
@@ -692,7 +747,10 @@
             {
               "type": "schot",
               "van": "s2",
-              "naar": [32, 0.3],
+              "naar": [
+                32,
+                0.3
+              ],
               "afloop": "vangt",
               "direct": true,
               "hoogte": "grond"
@@ -707,262 +765,37 @@
     }
   },
   {
-    "id": "veld-af-rebound",
-    "soort": "veld",
-    "naam": "Op de rebound",
-    "categorieen": ["afwerken"],
-    "uitleg": "Speler A schiet vanaf de rand van de zestien. Speler B start tegelijk met het schot en volgt in richting doel. Stompt de keeper de bal weg, dan maakt B de rebound af. Daarna wisselen A en B van rol.",
-    "organisatie": "A met bal op ± 20 m, links van het midden. B op dezelfde hoogte, 8 m naar rechts. Keeper in het doel. Wachtende spelers met ballen achter A.",
-    "benodigdheden": ["1 goal", "1 bal per speler", "2 hoedjes (startplekken)"],
-    "spelersNodig": 2,
-    "keepersNodig": 1,
-    "doorwisselbaar": true,
-    "coachpunten": ["Volger: altijd inlopen, verwacht dat de keeper de bal niet klemvast heeft", "Kort voor de bal komen, in één keer en laag afronden", "Schutter: laag en op doel, dan is er altijd een kans op een rebound"],
-    "variaties": {
-      "makkelijker": ["Trainer gooit de bal na het schot zelf terug in de zestien", "Afstand 14 m"],
-      "moeilijker": ["Een verdediger volgt ook in", "Rebound alleen binnen 2 aanrakingen", "Schutter mag zelf ook de rebound pakken: wie is eerst?"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 18,
-        "y": -3,
-        "breedte": 32,
-        "lengte": 28
-      },
-      "camera": "achter",
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 34,
-          "y": 1.5,
-          "nummer": 1,
-          "verdedigt": "g1"
-        },
-        {
-          "id": "h1",
-          "soort": "hoedje",
-          "x": 29.2,
-          "y": 21
-        },
-        {
-          "id": "h2",
-          "soort": "hoedje",
-          "x": 38.8,
-          "y": 20
-        },
-        {
-          "id": "a",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 8,
-          "x": 30,
-          "y": 20,
-          "kijkrichting": -90
-        },
-        {
-          "id": "b",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 9,
-          "x": 38,
-          "y": 19,
-          "kijkrichting": -90
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 30,
-          "y": 19.6,
-          "bij": "a"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.4,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "a",
-              "naar": [31.4, 0.5],
-              "afloop": "stompt",
-              "afloopNaar": [33, 7]
-            },
-            {
-              "type": "loop",
-              "wie": "b",
-              "naar": [33.6, 8.8],
-              "manier": "sprint",
-              "start": 0.15
-            }
-          ]
-        },
-        {
-          "duur": 1,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "b",
-              "naar": [36.8, -0.5],
-              "afloop": "goal",
-              "hoogte": "grond"
-            }
-          ]
-        },
-        {
-          "duur": 1.5,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
-    "id": "veld-af-een-tegen-keeper",
-    "soort": "veld",
-    "naam": "1 tegen keeper",
-    "categorieen": ["afwerken"],
-    "uitleg": "De aanvaller start met de bal op 30 m en gaat alleen op de keeper af. De keeper komt uit om de hoek te verkleinen. De aanvaller kiest: laag in de hoek schieten of de keeper omspelen. Na het schot sluit hij weer aan.",
-    "organisatie": "Rij aanvallers met ballen op 30 m, centraal. Keeper in het doel; hij mag uitkomen tot de 11-meterstip. Start op fluitsignaal; maximaal 8 seconden per poging.",
-    "benodigdheden": ["1 goal", "1 bal per speler"],
-    "spelersNodig": 1,
-    "keepersNodig": 1,
-    "doorwisselbaar": true,
-    "coachpunten": ["Hoge snelheid tot ± 16 m, daarna bal dicht aan de voet", "Kijk naar de keeper: staat hij al stil, dan schieten; komt hij nog, dan omspelen", "Laag in de hoek, niet op de keeper"],
-    "variaties": {
-      "makkelijker": ["Keeper mag niet verder uitkomen dan het doelgebied", "Start op 20 m"],
-      "moeilijker": ["Een verdediger start 3 m achter de aanvaller", "Maximaal 5 seconden", "Afronden alleen met het zwakke been"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 18,
-        "y": -3,
-        "breedte": 32,
-        "lengte": 37
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 34,
-          "y": 1.5,
-          "nummer": 1,
-          "verdedigt": "g1",
-          "uitkomen": true
-        },
-        {
-          "id": "a1",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 9,
-          "x": 41,
-          "y": 30,
-          "kijkrichting": -90
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 41,
-          "y": 29.6,
-          "bij": "a1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.4,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "naar": [38.5, 16.5],
-              "manier": "sprint",
-              "duur": 3
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [35.2, 5.4],
-              "start": 1.6,
-              "duur": 1.4
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "naar": [37.2, 11.6],
-              "duur": 1.1
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [35.4, 7.4],
-              "duur": 1.1
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "a1",
-              "naar": [30.9, -0.4],
-              "afloop": "goal",
-              "hoogte": "grond"
-            }
-          ]
-        },
-        {
-          "duur": 2,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "veld-af-onder-druk",
     "soort": "veld",
     "naam": "Afronden met een achtervolger",
-    "categorieen": ["afwerken"],
+    "categorieen": [
+      "afwerken"
+    ],
     "uitleg": "De trainer speelt de bal diep. De aanvaller sprint erop af; de verdediger start schuin achter hem en probeert hem in te halen. De aanvaller neemt de bal mee en moet afronden voordat de verdediger erbij is.",
     "organisatie": "Trainer met ballen op 30 m. Aanvaller 3 m schuin voor hem, verdediger 3,5 m schuin erachter (aan de andere kant). Keeper in het doel. Na elke actie wisselen aanvaller en verdediger.",
-    "benodigdheden": ["1 goal", "6+ ballen", "hesjes voor de verdedigers"],
+    "benodigdheden": [
+      "1 goal",
+      "6+ ballen",
+      "hesjes voor de verdedigers"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Eerste aanraking ver genoeg naar voren, zodat je snelheid houdt", "Lichaam tussen verdediger en bal (afschermen)", "Niet te lang wachten: afronden zodra je binnen de zestien bent"],
+    "coachpunten": [
+      "Eerste aanraking ver genoeg naar voren, zodat je snelheid houdt",
+      "Lichaam tussen verdediger en bal (afschermen)",
+      "Niet te lang wachten: afronden zodra je binnen de zestien bent"
+    ],
     "variaties": {
-      "makkelijker": ["Verdediger start 4 m erachter", "Verdediger mag alleen volgen, niet tackelen"],
-      "moeilijker": ["Verdediger start naast de aanvaller", "Twee aanvallers tegen één verdediger: wie krijgt de bal?", "Bal komt hoog: eerst aannemen uit de lucht"]
+      "makkelijker": [
+        "Verdediger start 4 m erachter",
+        "Verdediger mag alleen volgen, niet tackelen"
+      ],
+      "moeilijker": [
+        "Verdediger start naast de aanvaller",
+        "Twee aanvallers tegen één verdediger: wie krijgt de bal?",
+        "Bal komt hoog: eerst aannemen uit de lucht"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1034,19 +867,28 @@
             {
               "type": "pass",
               "van": "t1",
-              "naar": [33.2, 17]
+              "naar": [
+                33.2,
+                17
+              ]
             },
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [33.4, 18.6],
+              "naar": [
+                33.4,
+                18.6
+              ],
               "manier": "sprint",
               "start": 0.2
             },
             {
               "type": "loop",
               "wie": "d1",
-              "naar": [30.2, 20.8],
+              "naar": [
+                30.2,
+                20.8
+              ],
               "manier": "sprint",
               "start": 0.45
             }
@@ -1057,7 +899,10 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [33.6, 13],
+              "naar": [
+                33.6,
+                13
+              ],
               "manier": "sprint",
               "duur": 1.2
             },
@@ -1075,7 +920,10 @@
             {
               "type": "schot",
               "van": "a1",
-              "naar": [36.9, -0.5],
+              "naar": [
+                36.9,
+                -0.5
+              ],
               "afloop": "goal"
             }
           ]
@@ -1091,17 +939,33 @@
     "id": "veld-af-afstandsschot",
     "soort": "veld",
     "naam": "Kaats en schieten van afstand",
-    "categorieen": ["afwerken"],
+    "categorieen": [
+      "afwerken"
+    ],
     "uitleg": "Speel de trainer (of een medespeler) aan op de rand van de zestien. Hij legt de bal in één keer terug in je loop, en jij schiet in één keer hard en laag op doel van ± 20 m. Afwisselend hard en geplaatst.",
     "organisatie": "Rij met ballen op 29 m, centraal. Trainer (kaatser) op 19 m met de rug naar het doel. Keeper in het doel.",
-    "benodigdheden": ["1 goal", "1 bal per speler"],
+    "benodigdheden": [
+      "1 goal",
+      "1 bal per speler"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Standbeen naast de bal, knie en lichaam boven de bal", "Raak de bal vol met de wreef, enkel gestrekt en vast", "Na het schot doorlopen: er kan een rebound komen"],
+    "coachpunten": [
+      "Standbeen naast de bal, knie en lichaam boven de bal",
+      "Raak de bal vol met de wreef, enkel gestrekt en vast",
+      "Na het schot doorlopen: er kan een rebound komen"
+    ],
     "variaties": {
-      "makkelijker": ["Bal eerst aannemen, dan schieten", "Afstand 16 m"],
-      "moeilijker": ["Afstand 22–25 m", "Kaatser legt soms schuin af: schieten met het zwakke been", "Een verdediger start bij de kaatser en mag blokken"]
+      "makkelijker": [
+        "Bal eerst aannemen, dan schieten",
+        "Afstand 16 m"
+      ],
+      "moeilijker": [
+        "Afstand 22–25 m",
+        "Kaatser legt soms schuin af: schieten met het zwakke been",
+        "Een verdediger start bij de kaatser en mag blokken"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1188,17 +1052,42 @@
           "x": 34,
           "y": 28,
           "richting": 0,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 4.8,
             "waarden": {
-              "doel": [[37.1, -0.4], [31.6, 0.5], [30.9, -0.4]],
-              "afloop": ["goal", "stompt", "goal"],
+              "doel": [
+                [
+                  37.1,
+                  -0.4
+                ],
+                [
+                  31.6,
+                  0.5
+                ],
+                [
+                  30.9,
+                  -0.4
+                ]
+              ],
+              "afloop": [
+                "goal",
+                "stompt",
+                "goal"
+              ],
               "snelheid": [
                 26,
                 20,
@@ -1220,7 +1109,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [34.6, 22.2],
+                    "naar": [
+                      34.6,
+                      22.2
+                    ],
                     "duur": 0.8
                   },
                   {
@@ -1266,17 +1158,35 @@
     "id": "veld-af-duel-twee-rijen",
     "soort": "veld",
     "naam": "Duel om de bal: 1 tegen 1 naar doel",
-    "categorieen": ["afwerken", "partijvormen"],
+    "categorieen": [
+      "afwerken",
+      "partijvormen"
+    ],
     "uitleg": "De trainer speelt een bal tussen twee rijen in. De eerste van beide rijen sprint erop af: wie de bal heeft, valt aan op het doel, de ander verdedigt. Een doelpunt is een punt voor je team. Welk team staat na 10 duels voor?",
     "organisatie": "Twee rijen (team rood en team blauw) op 30 m, 14 m uit elkaar. Trainer met een stapel ballen in het midden tussen de rijen. Keeper in het doel.",
-    "benodigdheden": ["1 goal", "8+ ballen", "hesjes voor één team"],
+    "benodigdheden": [
+      "1 goal",
+      "8+ ballen",
+      "hesjes voor één team"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Aanvaller: lichaam tussen tegenstander en bal, en snel naar doel", "Verdediger: niet duiken, blijf tussen aanvaller en doel", "Snel omschakelen: wie de bal verliest, verdedigt meteen"],
+    "coachpunten": [
+      "Aanvaller: lichaam tussen tegenstander en bal, en snel naar doel",
+      "Verdediger: niet duiken, blijf tussen aanvaller en doel",
+      "Snel omschakelen: wie de bal verliest, verdedigt meteen"
+    ],
     "variaties": {
-      "makkelijker": ["Bal dichter bij de aanvallende rij", "Verdediger start 1 m later"],
-      "moeilijker": ["2 tegen 2 (twee spelers per rij tegelijk)", "Verovert de verdediger de bal, dan mag hij scoren op een klein doeltje achter de rijen", "Bal komt hoog: eerst aannemen"]
+      "makkelijker": [
+        "Bal dichter bij de aanvallende rij",
+        "Verdediger start 1 m later"
+      ],
+      "moeilijker": [
+        "2 tegen 2 (twee spelers per rij tegelijk)",
+        "Verovert de verdediger de bal, dan mag hij scoren op een klein doeltje achter de rijen",
+        "Bal komt hoog: eerst aannemen"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1362,14 +1272,20 @@
           "x": 27,
           "y": 30,
           "richting": 180,
-          "spelers": ["a1", "a2"]
+          "spelers": [
+            "a1",
+            "a2"
+          ]
         },
         {
           "id": "rB",
           "x": 41,
           "y": 30,
           "richting": 0,
-          "spelers": ["b1", "b2"]
+          "spelers": [
+            "b1",
+            "b2"
+          ]
         }
       ],
       "animatie": [
@@ -1378,19 +1294,28 @@
             {
               "type": "pass",
               "van": "t1",
-              "naar": [33.8, 20.5]
+              "naar": [
+                33.8,
+                20.5
+              ]
             },
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [33.2, 21.8],
+              "naar": [
+                33.2,
+                21.8
+              ],
               "manier": "sprint",
               "start": 0.15
             },
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [36.4, 22.8],
+              "naar": [
+                36.4,
+                22.8
+              ],
               "manier": "sprint",
               "start": 0.3
             }
@@ -1401,7 +1326,10 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [33, 13],
+              "naar": [
+                33,
+                13
+              ],
               "manier": "sprint",
               "duur": 1.5
             },
@@ -1418,7 +1346,10 @@
             {
               "type": "schot",
               "van": "a1",
-              "naar": [36.9, -0.5],
+              "naar": [
+                36.9,
+                -0.5
+              ],
               "afloop": "goal"
             }
           ]
@@ -1448,7 +1379,11 @@
     "id": "veld-cv-ladder-slalom-schot",
     "soort": "veld",
     "naam": "Ladder, aanname, slalom en schot",
-    "categorieen": ["afwerken", "loopcoordinatie", "techniek"],
+    "categorieen": [
+      "afwerken",
+      "loopcoordinatie",
+      "techniek"
+    ],
     "combinatievorm": true,
     "onderdelen": [
       "Ladder",
@@ -1467,10 +1402,21 @@
     "spelersNodig": 1,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Ladder: op de voorvoet, armen actief, niet naar je voeten kijken", "Aanname in één beweging richting de slalom", "Slalom: kleine tikjes, de bal dicht bij je voet; daarna opkijken en schieten"],
+    "coachpunten": [
+      "Ladder: op de voorvoet, armen actief, niet naar je voeten kijken",
+      "Aanname in één beweging richting de slalom",
+      "Slalom: kleine tikjes, de bal dicht bij je voet; daarna opkijken en schieten"
+    ],
     "variaties": {
-      "makkelijker": ["Zonder ladder, starten met de bal aan de voet", "Pionnen verder uit elkaar"],
-      "moeilijker": ["Aanname met het zwakke been", "Na de slalom een kaats met de trainer en dan pas schieten", "Een verdediger zet druk vanaf de laatste pion"]
+      "makkelijker": [
+        "Zonder ladder, starten met de bal aan de voet",
+        "Pionnen verder uit elkaar"
+      ],
+      "moeilijker": [
+        "Aanname met het zwakke been",
+        "Na de slalom een kaats met de trainer en dan pas schieten",
+        "Een verdediger zet druk vanaf de laatste pion"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1554,7 +1500,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [30, 28.4],
+              "naar": [
+                30,
+                28.4
+              ],
               "manier": "voetenwerk"
             }
           ]
@@ -1574,12 +1523,27 @@
               "type": "dribbel",
               "wie": "a1",
               "via": [
-                [29.6, 25.6],
-                [29.4, 23.5],
-                [30.6, 20.5],
-                [29.4, 17.5]
+                [
+                  29.6,
+                  25.6
+                ],
+                [
+                  29.4,
+                  23.5
+                ],
+                [
+                  30.6,
+                  20.5
+                ],
+                [
+                  29.4,
+                  17.5
+                ]
               ],
-              "naar": [30.6, 14.4]
+              "naar": [
+                30.6,
+                14.4
+              ]
             }
           ]
         },
@@ -1588,7 +1552,10 @@
             {
               "type": "schot",
               "van": "a1",
-              "naar": [32.4, 0.3],
+              "naar": [
+                32.4,
+                0.3
+              ],
               "hoogte": "laag",
               "afloop": "goal"
             }
@@ -1605,7 +1572,10 @@
     "id": "veld-cv-kaats-doordiepen",
     "soort": "veld",
     "naam": "Kaats langs de pop, doordiepen en afronden",
-    "categorieen": ["afwerken", "pass-en-trap"],
+    "categorieen": [
+      "afwerken",
+      "pass-en-trap"
+    ],
     "combinatievorm": true,
     "onderdelen": [
       "Dribbel naar de pop",
@@ -1615,14 +1585,29 @@
     ],
     "uitleg": "De speler dribbelt op de pop (verdediger) af, speelt een eentje-tweetje met zijn medespeler en sprint langs de pop de diepte in. De kaats komt in zijn loop en hij rondt in één keer af.",
     "organisatie": "Pop op 18 m van het doel, kaatser 4 m ernaast. Speler start met bal op 26 m. Na de actie wordt de schutter kaatser en de kaatser sluit aan bij de rij.",
-    "benodigdheden": ["Goal", "1 pop of pion", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "1 pop of pion",
+      "Ballen"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Dribbel de verdediger vast voordat je de kaats speelt", "Na je pass meteen versnellen langs de andere kant van de pop", "Kaatser: in één keer, in de loop vóór de loper"],
+    "coachpunten": [
+      "Dribbel de verdediger vast voordat je de kaats speelt",
+      "Na je pass meteen versnellen langs de andere kant van de pop",
+      "Kaatser: in één keer, in de loop vóór de loper"
+    ],
     "variaties": {
-      "makkelijker": ["Kaats mag met twee aanrakingen", "Schutter mag de bal eerst aannemen"],
-      "moeilijker": ["Echte verdediger in plaats van de pop", "Afronden met het zwakke been", "Na het schot meteen een tweede bal van de trainer: rebound"]
+      "makkelijker": [
+        "Kaats mag met twee aanrakingen",
+        "Schutter mag de bal eerst aannemen"
+      ],
+      "moeilijker": [
+        "Echte verdediger in plaats van de pop",
+        "Afronden met het zwakke been",
+        "Na het schot meteen een tweede bal van de trainer: rebound"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1688,7 +1673,10 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [31.8, 22]
+              "naar": [
+                31.8,
+                22
+              ]
             }
           ]
         },
@@ -1702,8 +1690,16 @@
             {
               "type": "loop",
               "wie": "a1",
-              "via": [[31, 18]],
-              "naar": [32.8, 12.6],
+              "via": [
+                [
+                  31,
+                  18
+                ]
+              ],
+              "naar": [
+                32.8,
+                12.6
+              ],
               "manier": "sprint",
               "start": 0.15
             }
@@ -1724,7 +1720,10 @@
             {
               "type": "schot",
               "van": "a1",
-              "naar": [35.8, 0.3],
+              "naar": [
+                35.8,
+                0.3
+              ],
               "direct": true,
               "hoogte": "grond",
               "afloop": "goal"
@@ -1742,7 +1741,11 @@
     "id": "veld-cv-draaien-voorzet",
     "soort": "veld",
     "naam": "Aannemen, draaien, voorzet en afronden",
-    "categorieen": ["afwerken", "techniek", "pass-en-trap"],
+    "categorieen": [
+      "afwerken",
+      "techniek",
+      "pass-en-trap"
+    ],
     "combinatievorm": true,
     "onderdelen": [
       "Aannemen en draaien",
@@ -1752,14 +1755,29 @@
     ],
     "uitleg": "De buitenspeler krijgt de bal met zijn rug naar het doel, neemt aan en draait in één beweging weg. Hij dribbelt langs de zijlijn en geeft een hoge voorzet. De spits loopt in op de eerste paal en kopt in.",
     "organisatie": "Aangever centraal op 30 m, buitenspeler op de flank op 22 m, spits rond de penaltystip. Na elke aanval doordraaien: aangever → buitenspeler → spits → aangever.",
-    "benodigdheden": ["Goal", "Ballen", "Hoedjes"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen",
+      "Hoedjes"
+    ],
     "spelersNodig": 3,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Aanname met de buitenkant (of binnenkant) weg van de tegenstander, direct in de draai", "Opkijken vóór de voorzet: waar loopt de spits?", "Spits: niet te vroeg, met een curve naar de eerste paal"],
+    "coachpunten": [
+      "Aanname met de buitenkant (of binnenkant) weg van de tegenstander, direct in de draai",
+      "Opkijken vóór de voorzet: waar loopt de spits?",
+      "Spits: niet te vroeg, met een curve naar de eerste paal"
+    ],
     "variaties": {
-      "makkelijker": ["Voorzet laag in plaats van hoog", "Spits staat al in de zestien"],
-      "moeilijker": ["Verdediger in de rug van de buitenspeler", "Tweede spits loopt in op de tweede paal", "Voorzet in één keer na de dribbel"]
+      "makkelijker": [
+        "Voorzet laag in plaats van hoog",
+        "Spits staat al in de zestien"
+      ],
+      "moeilijker": [
+        "Verdediger in de rug van de buitenspeler",
+        "Tweede spits loopt in op de tweede paal",
+        "Voorzet in één keer na de dribbel"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1837,13 +1855,24 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [[52.8, 20.4]],
-              "naar": [53.2, 13]
+              "via": [
+                [
+                  52.8,
+                  20.4
+                ]
+              ],
+              "naar": [
+                53.2,
+                13
+              ]
             },
             {
               "type": "loop",
               "wie": "a3",
-              "naar": [32.4, 11.5],
+              "naar": [
+                32.4,
+                11.5
+              ],
               "start": 0.6
             }
           ]
@@ -1853,14 +1882,25 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [52.6, 7.4],
+              "naar": [
+                52.6,
+                7.4
+              ],
               "manier": "sprint"
             },
             {
               "type": "loop",
               "wie": "a3",
-              "via": [[31.2, 8]],
-              "naar": [34.8, 5.4],
+              "via": [
+                [
+                  31.2,
+                  8
+                ]
+              ],
+              "naar": [
+                34.8,
+                5.4
+              ],
               "manier": "sprint",
               "start": 0.4
             }
@@ -1882,7 +1922,10 @@
             {
               "type": "schot",
               "van": "a3",
-              "naar": [31.6, 0.3],
+              "naar": [
+                31.6,
+                0.3
+              ],
               "direct": true,
               "afloop": "goal"
             }
@@ -1899,7 +1942,10 @@
     "id": "veld-cv-overlap-voorzet",
     "soort": "veld",
     "naam": "Overlap op de flank, lage voorzet en afronden",
-    "categorieen": ["afwerken", "pass-en-trap"],
+    "categorieen": [
+      "afwerken",
+      "pass-en-trap"
+    ],
     "combinatievorm": true,
     "onderdelen": [
       "Pass naar de buitenspeler",
@@ -1909,14 +1955,29 @@
     ],
     "uitleg": "De middenvelder speelt de buitenspeler aan en loopt buitenom (overlap). De buitenspeler legt de bal in zijn loop. Die gaat tot bijna de achterlijn en geeft een lage voorzet op de eerste paal, waar de spits in één keer afrondt.",
     "organisatie": "Middenvelder op 24 m, buitenspeler op de flank op 18 m, spits rond de penaltystip. Na elke aanval doordraaien. Ook van de andere kant.",
-    "benodigdheden": ["Goal", "Ballen", "Hoedjes"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen",
+      "Hoedjes"
+    ],
     "spelersNodig": 3,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Na de pass meteen buitenom, met snelheid", "Buitenspeler: even naar binnen dribbelen trekt de verdediger mee, dan de bal in de loop", "Lage voorzet: hard over de grond tussen keeper en verdedigers"],
+    "coachpunten": [
+      "Na de pass meteen buitenom, met snelheid",
+      "Buitenspeler: even naar binnen dribbelen trekt de verdediger mee, dan de bal in de loop",
+      "Lage voorzet: hard over de grond tussen keeper en verdedigers"
+    ],
     "variaties": {
-      "makkelijker": ["Buitenspeler staat stil en legt de bal klaar", "Spits staat al op de plek"],
-      "moeilijker": ["Verdediger op de buitenspeler", "Tweede spits op de tweede paal", "Voorzet in één keer uit de loop"]
+      "makkelijker": [
+        "Buitenspeler staat stil en legt de bal klaar",
+        "Spits staat al op de plek"
+      ],
+      "moeilijker": [
+        "Verdediger op de buitenspeler",
+        "Tweede spits op de tweede paal",
+        "Voorzet in één keer uit de loop"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1990,8 +2051,20 @@
             {
               "type": "loop",
               "wie": "a1",
-              "via": [[50.5, 22.6], [55.4, 17.6]],
-              "naar": [55.6, 11],
+              "via": [
+                [
+                  50.5,
+                  22.6
+                ],
+                [
+                  55.4,
+                  17.6
+                ]
+              ],
+              "naar": [
+                55.6,
+                11
+              ],
               "manier": "sprint",
               "start": 0.2
             }
@@ -2002,7 +2075,10 @@
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [50.4, 16.6],
+              "naar": [
+                50.4,
+                16.6
+              ],
               "duur": 0.6
             },
             {
@@ -2018,14 +2094,25 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [55, 5.4],
+              "naar": [
+                55,
+                5.4
+              ],
               "manier": "sprint"
             },
             {
               "type": "loop",
               "wie": "a3",
-              "via": [[32, 9]],
-              "naar": [35.4, 5.6],
+              "via": [
+                [
+                  32,
+                  9
+                ]
+              ],
+              "naar": [
+                35.4,
+                5.6
+              ],
               "manier": "sprint",
               "start": 0.3
             }
@@ -2045,7 +2132,10 @@
             {
               "type": "schot",
               "van": "a3",
-              "naar": [33.6, 0.3],
+              "naar": [
+                33.6,
+                0.3
+              ],
               "direct": true,
               "hoogte": "grond",
               "afloop": "goal"

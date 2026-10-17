@@ -1,154 +1,35 @@
 [
   {
-    "id": "keeper-wu-tweetallen-drie-hoogtes",
-    "soort": "keeper",
-    "naam": "Vangen in tweetallen: drie hoogtes",
-    "categorieen": ["warming-up", "bal-verwerken"],
-    "uitleg": "Twee keepers staan tegenover elkaar en gooien elkaar de bal toe op wisselende hoogtes: een rollende bal (schepvangen), een bal op buikhoogte (kommetje), een borstbal en een hoge bal boven het hoofd (W-greep). Wie vangt, gooit meteen terug.",
-    "organisatie": "Twee keepers op 8 m van elkaar, één bal per tweetal. Na 10 ballen de afstand vergroten tot 10–12 m. Meerdere tweetallen naast elkaar met 5 m ertussen.",
-    "benodigdheden": ["1 bal per tweetal", "2 hoedjes per tweetal"],
-    "spelersNodig": 0,
-    "keepersNodig": 2,
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Handen achter de bal: bij een hoge bal duimen bij elkaar (W), bij een lage bal pinken bij elkaar",
-      "Borstbal: ellebogen bij elkaar en de bal tegen de borst klemmen",
-      "Rollende bal: stap ernaartoe, knie achter de bal, schep hem naar je toe",
-      "Kijk de bal in je handen"
-    ],
-    "variaties": {
-      "makkelijker": ["Kortere afstand (5–6 m)", "Steeds dezelfde hoogte tot het goed gaat", "Rustig gooien, geen tempo"],
-      "moeilijker": ["Gooier kiest zelf de hoogte zonder het te zeggen", "Na elke vang een sprintje van 3 m achteruit en terug", "Met twee ballen tegelijk: één hoog, één rollend"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 14,
-        "lengte": 9
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "h1",
-          "soort": "hoedje",
-          "x": 3,
-          "y": 3.4
-        },
-        {
-          "id": "h2",
-          "soort": "hoedje",
-          "x": 11,
-          "y": 3.4
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 3,
-          "y": 4.6,
-          "nummer": 1,
-          "kijkrichting": 0
-        },
-        {
-          "id": "k2",
-          "soort": "keeper",
-          "x": 11,
-          "y": 4.6,
-          "nummer": 2,
-          "kijkrichting": 180
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 3.35,
-          "y": 4.6,
-          "bij": "k1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k1",
-              "naar": "k2",
-              "worp": "onderhands",
-              "hoogte": "grond"
-            }
-          ]
-        },
-        {
-          "duur": 0.3,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k2",
-              "naar": "k1",
-              "worp": "onderhands",
-              "hoogte": 1.2,
-              "eindHoogte": 0.6
-            }
-          ]
-        },
-        {
-          "duur": 0.3,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k1",
-              "naar": "k2",
-              "worp": "onderhands",
-              "hoogte": 1.8
-            }
-          ]
-        },
-        {
-          "duur": 0.3,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k2",
-              "naar": "k1",
-              "worp": "bovenhands",
-              "hoogte": 2.8,
-              "eindHoogte": 2
-            }
-          ]
-        },
-        {
-          "duur": 1,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "keeper-wu-ladder-borstbal",
     "soort": "keeper",
     "naam": "Ladder en een borstbal",
-    "categorieen": ["warming-up"],
+    "categorieen": [
+      "warming-up"
+    ],
     "uitleg": "De keeper loopt met kleine, snelle pasjes door de loopladder (in elk vak één voet), komt aan het eind in basishouding en vangt direct een borstbal van de trainer. Bal terugrollen, buitenom terug naar het begin.",
     "organisatie": "Loopladder van 4 m. De trainer staat 6 m na het eind van de ladder met een paar ballen. Bij meer keepers: om de beurt, op 2 m achter elkaar starten.",
-    "benodigdheden": ["Loopladder", "Ballen"],
+    "benodigdheden": [
+      "Loopladder",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Op de voorvoet, korte pasjes, armen actief mee", "Na de ladder meteen stilstaan in basishouding: voeten op heupbreedte, knieën licht gebogen, handen voor het lijf", "Borstbal: ellebogen bij elkaar, bal tegen de borst klemmen"],
+    "coachpunten": [
+      "Op de voorvoet, korte pasjes, armen actief mee",
+      "Na de ladder meteen stilstaan in basishouding: voeten op heupbreedte, knieën licht gebogen, handen voor het lijf",
+      "Borstbal: ellebogen bij elkaar, bal tegen de borst klemmen"
+    ],
     "variaties": {
-      "makkelijker": ["Eén voet per vak, rustig tempo", "Bal pas gooien als de keeper stilstaat"],
-      "moeilijker": ["Twee voeten per vak, of zijwaarts door de ladder", "Bal komt al terwijl de keeper uit de ladder stapt", "Trainer kiest hoog of laag"]
+      "makkelijker": [
+        "Eén voet per vak, rustig tempo",
+        "Bal pas gooien als de keeper stilstaat"
+      ],
+      "moeilijker": [
+        "Twee voeten per vak, of zijwaarts door de ladder",
+        "Bal komt al terwijl de keeper uit de ladder stapt",
+        "Trainer kiest hoog of laag"
+      ]
     },
     "tekening": {
       "veld": {
@@ -208,7 +89,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [9.8, 4],
+              "naar": [
+                9.8,
+                4
+              ],
               "manier": "voetenwerk"
             }
           ]
@@ -218,7 +102,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [10.2, 4],
+              "naar": [
+                10.2,
+                4
+              ],
               "duur": 0.4
             }
           ]
@@ -252,8 +139,20 @@
             {
               "type": "loop",
               "wie": "k1",
-              "via": [[10, 6.2], [4, 6.2]],
-              "naar": [3.8, 4]
+              "via": [
+                [
+                  10,
+                  6.2
+                ],
+                [
+                  4,
+                  6.2
+                ]
+              ],
+              "naar": [
+                3.8,
+                4
+              ]
             }
           ]
         },
@@ -268,17 +167,35 @@
     "id": "keeper-wu-hordes-ringen-lage-bal",
     "soort": "keeper",
     "naam": "Hordes en ringen, dan een lage bal",
-    "categorieen": ["warming-up", "bal-verwerken"],
+    "categorieen": [
+      "warming-up",
+      "bal-verwerken"
+    ],
     "uitleg": "Keeper 1 springt over drie lage hordes, hinkelt door de ringen en vangt aan het eind een rollende bal van keeper 2 (schepvangen). Daarna wisselen: keeper 1 wordt aangever en keeper 2 loopt terug naar het begin van het parcours.",
     "organisatie": "Drie hordes van 30 cm op 1 m afstand, daarna vier ringen in een zigzag. De aangever staat 5 m na de laatste ring. Na elke bal wisselen van rol.",
-    "benodigdheden": ["3 lage hordes", "4 ringen", "1 bal"],
+    "benodigdheden": [
+      "3 lage hordes",
+      "4 ringen",
+      "1 bal"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 2,
     "doorwisselbaar": true,
-    "coachpunten": ["Over de hordes: knieën hoog, kort contact met de grond", "Na het parcours eerst stilstaan, dan pas vangen", "Lage bal: stap ernaartoe, knie achter de bal, handen met de pinken bij elkaar"],
+    "coachpunten": [
+      "Over de hordes: knieën hoog, kort contact met de grond",
+      "Na het parcours eerst stilstaan, dan pas vangen",
+      "Lage bal: stap ernaartoe, knie achter de bal, handen met de pinken bij elkaar"
+    ],
     "variaties": {
-      "makkelijker": ["Zonder ringen", "Bal pas rollen als de keeper klaarstaat"],
-      "moeilijker": ["Zijwaarts over de hordes", "Aangever rolt de bal schuin, de keeper moet zich verplaatsen", "Hoge bal in plaats van een lage"]
+      "makkelijker": [
+        "Zonder ringen",
+        "Bal pas rollen als de keeper klaarstaat"
+      ],
+      "moeilijker": [
+        "Zijwaarts over de hordes",
+        "Aangever rolt de bal schuin, de keeper moet zich verplaatsen",
+        "Hoge bal in plaats van een lage"
+      ]
     },
     "tekening": {
       "veld": {
@@ -366,7 +283,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [7.8, 4],
+              "naar": [
+                7.8,
+                4
+              ],
               "manier": "hordes"
             }
           ]
@@ -377,12 +297,27 @@
               "type": "loop",
               "wie": "k1",
               "via": [
-                [8.8, 3.6],
-                [9.7, 4.4],
-                [10.6, 3.6],
-                [11.5, 4.4]
+                [
+                  8.8,
+                  3.6
+                ],
+                [
+                  9.7,
+                  4.4
+                ],
+                [
+                  10.6,
+                  3.6
+                ],
+                [
+                  11.5,
+                  4.4
+                ]
               ],
-              "naar": [12.4, 4],
+              "naar": [
+                12.4,
+                4
+              ],
               "manier": "sprong"
             }
           ]
@@ -392,7 +327,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [13.2, 4],
+              "naar": [
+                13.2,
+                4
+              ],
               "duur": 0.5
             }
           ]
@@ -417,13 +355,28 @@
             {
               "type": "loop",
               "wie": "k2",
-              "via": [[17.5, 7.4], [4, 7.4]],
-              "naar": [3.2, 4]
+              "via": [
+                [
+                  17.5,
+                  7.4
+                ],
+                [
+                  4,
+                  7.4
+                ]
+              ],
+              "naar": [
+                3.2,
+                4
+              ]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [18.5, 4],
+              "naar": [
+                18.5,
+                4
+              ],
               "start": 0.6,
               "kijk": 0
             }
@@ -437,148 +390,32 @@
     }
   },
   {
-    "id": "keeper-wu-balgewenning",
-    "soort": "keeper",
-    "naam": "Balgewenning: opgooien, stuit en schepvangen",
-    "categorieen": ["warming-up", "bal-verwerken"],
-    "uitleg": "De keeper werkt alleen met een bal: hoog opgooien en op het hoogste punt in de sprong vangen, de bal voor zich laten stuiten en na de stuit vangen, en de bal wegrollen, erachteraan sprinten en hem oppakken.",
-    "organisatie": "Iedere keeper een eigen bal en 5 × 5 m ruimte. Elke opdracht 5 keer, dan de volgende. Goed als eerste blok, terwijl de trainer de rest klaarzet.",
-    "benodigdheden": ["1 bal per keeper"],
-    "spelersNodig": 0,
-    "keepersNodig": 1,
-    "doorwisselbaar": true,
-    "coachpunten": ["Hoge bal: afzetten op één been, andere knie omhoog, vangen op het hoogste punt", "Na de stuit: lichaam achter de bal, niet alleen de handen", "Rollende bal: met beide handen scheppen, niet met één hand graaien"],
-    "variaties": {
-      "makkelijker": ["Minder hoog opgooien", "Bal na de stuit tegen de borst vangen"],
-      "moeilijker": [
-        "Voor het vangen een keer in de handen klappen",
-        "Bal achter je opgooien, draaien en vangen",
-        "Twee keepers met elk een bal: tegelijk naar elkaar gooien",
-        "Na de serie een lage bal van de trainer: opstaan uit de schepvang en duiken"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 10,
-        "lengte": 11
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 5,
-          "y": 4,
-          "nummer": 1,
-          "kijkrichting": 90
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 5,
-          "y": 4.35,
-          "bij": "k1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k1",
-              "naar": "k1",
-              "worp": "onderhands",
-              "hoogte": 3.2,
-              "eindHoogte": 2.4
-            }
-          ]
-        },
-        {
-          "duur": 0.5,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k1",
-              "naar": "k1",
-              "worp": "bovenhands",
-              "hoogte": 0.4,
-              "stuitOp": [5, 5.4],
-              "eindHoogte": 1
-            }
-          ]
-        },
-        {
-          "duur": 0.5,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k1",
-              "naar": [5, 9],
-              "worp": "onderhands",
-              "hoogte": "grond"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [5, 8.6],
-              "manier": "sprint"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "pak",
-              "wie": "k1"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [5, 4],
-              "manier": "achteruit"
-            }
-          ]
-        },
-        {
-          "duur": 0.5,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "keeper-wu-voetenwerk-vierkant",
     "soort": "keeper",
     "naam": "Voetenwerk in het vierkant",
-    "categorieen": ["warming-up"],
+    "categorieen": [
+      "warming-up"
+    ],
     "uitleg": "In een klein vierkant voor het doel verplaatst de keeper zich langs de vier zijden: kruispassen, kleine pasjes naar voren, schuifpassen opzij en achteruit terug. Steeds blijft hij met zijn gezicht naar het veld. Aan het eind gooit de trainer een bal die hij in basishouding vangt.",
     "organisatie": "Vierkant van 4 × 3,5 m (vier hoedjes) direct voor het doel. De trainer staat op 9 m. Elke ronde andersom beginnen.",
-    "benodigdheden": ["Goal", "4 hoedjes", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "4 hoedjes",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Schouders en heupen blijven naar de bal gericht", "Kruispas: het achterste been kruist vóór langs, niet erachter", "Klein blijven en op de voorvoet; na elke zijde even stilstaan in basishouding"],
+    "coachpunten": [
+      "Schouders en heupen blijven naar de bal gericht",
+      "Kruispas: het achterste been kruist vóór langs, niet erachter",
+      "Klein blijven en op de voorvoet; na elke zijde even stilstaan in basishouding"
+    ],
     "variaties": {
-      "makkelijker": ["Kleiner vierkant", "Alleen schuifpassen"],
+      "makkelijker": [
+        "Kleiner vierkant",
+        "Alleen schuifpassen"
+      ],
       "moeilijker": [
         "Trainer gooit de bal op een willekeurig moment",
         "Op elk hoedje een bal vangen",
@@ -657,7 +494,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [35.2, 2],
+              "naar": [
+                35.2,
+                2
+              ],
               "manier": "kruispas"
             }
           ]
@@ -667,7 +507,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [35.2, 3.8],
+              "naar": [
+                35.2,
+                3.8
+              ],
               "manier": "voetenwerk"
             }
           ]
@@ -677,7 +520,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [32.8, 3.8],
+              "naar": [
+                32.8,
+                3.8
+              ],
               "manier": "zijwaarts"
             }
           ]
@@ -687,7 +533,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [32.8, 2],
+              "naar": [
+                32.8,
+                2
+              ],
               "manier": "achteruit"
             }
           ]
@@ -697,7 +546,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [34, 2.6],
+              "naar": [
+                34,
+                2.6
+              ],
               "manier": "voetenwerk"
             }
           ]
@@ -737,16 +589,28 @@
     "id": "keeper-wu-driehoek",
     "soort": "keeper",
     "naam": "Werpen en vangen in de driehoek",
-    "categorieen": ["warming-up", "passing"],
+    "categorieen": [
+      "warming-up"
+    ],
     "uitleg": "Drie keepers staan in een driehoek en spelen de bal rond met verschillende worpen: onderhands met een boogje, bovenhands hoog en rollend over de grond. Na een rondje draait de richting om, zodat iedereen elke worp en elke vang doet.",
     "organisatie": "Driehoek met zijden van 8 m (hoedjes). Eén bal. Na 6 worpen de richting omdraaien; later de afstand naar 12 m (bovenhands ver gooien).",
-    "benodigdheden": ["3 hoedjes", "1–2 ballen"],
+    "benodigdheden": [
+      "3 hoedjes",
+      "1–2 ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 3,
     "doorwisselbaar": true,
-    "coachpunten": ["Onderhands: stap in met het tegenoverliggende been, bal laag loslaten", "Bovenhands: arm gestrekt achter het hoofd, de bal 'zwiepen' naar het doel", "Draai je lichaam al naar de bal voordat hij komt"],
+    "coachpunten": [
+      "Onderhands: stap in met het tegenoverliggende been, bal laag loslaten",
+      "Bovenhands: arm gestrekt achter het hoofd, de bal 'zwiepen' naar het doel",
+      "Draai je lichaam al naar de bal voordat hij komt"
+    ],
     "variaties": {
-      "makkelijker": ["Alleen onderhands", "Kleinere driehoek (6 m)"],
+      "makkelijker": [
+        "Alleen onderhands",
+        "Kleinere driehoek (6 m)"
+      ],
       "moeilijker": [
         "Twee ballen in de driehoek",
         "Na je worp naar het volgende hoedje sprinten",

@@ -133,9 +133,12 @@ describe('B2 Tactiekbord', () => {
         const t = bordUitOpstelling(wisselFormatie(nieuweOpstelling(s.id, [], 1, 'x'), s.id, f));
         const ps = personen(t);
         expect(ps, `${s.naam} ${f}`).toHaveLength(2 * s.spelers);
-        for (const p of ps) expect(p.x >= 0 && p.x <= 68 && p.y >= 0 && p.y <= 105, `${s.naam} ${f} ${p.id}`).toBe(true);
+        for (const p of ps) expect(p.x >= 0 && p.x <= s.veld.breedte && p.y >= 0 && p.y <= s.veld.lengte, `${s.naam} ${f} ${p.id}`).toBe(true);
         for (let i = 0; i < ps.length; i++)
-          for (let j = i + 1; j < ps.length; j++) expect(Math.hypot(ps[i]!.x - ps[j]!.x, ps[i]!.y - ps[j]!.y), `${s.naam} ${f}: ${ps[i]!.id}/${ps[j]!.id}`).toBeGreaterThan(5);
+          for (let j = i + 1; j < ps.length; j++) expect(Math.hypot(ps[i]!.x - ps[j]!.x, ps[i]!.y - ps[j]!.y), `${s.naam} ${f}: ${ps[i]!.id}/${ps[j]!.id}`).toBeGreaterThan(Math.min(5, s.veld.breedte * 0.15));
+        // Elk team in zijn eigen helft, veld in de maat van de spelvorm.
+        expect(t.veld).toMatchObject({ breedte: s.veld.breedte, lengte: s.veld.lengte });
+        for (const p of ps) expect(p.team === 'B' || p.id === 'k2' ? p.y < s.veld.lengte / 2 : p.y > s.veld.lengte / 2, `${s.naam} ${f} ${p.id}`).toBe(true);
       }
   });
 

@@ -493,7 +493,27 @@ function maakRing(label: string, kleur: string, materialen: Material[], texturen
   return g;
 }
 
-function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Material[], texturen: Texture[], keeperNummer = false): Figuur {
+/** Naam in een donker pilletje (tactiekbord), als sprite onder de voeten. */
+function naamTextuur(naam: string): { tex: CanvasTexture; verhouding: number } {
+  const meet = document.createElement('canvas').getContext('2d')!;
+  meet.font = '650 44px Inter, system-ui, sans-serif';
+  const w = Math.ceil(meet.measureText(naam).width + 40);
+  const teken = (ctx: CanvasRenderingContext2D) => {
+    ctx.clearRect(0, 0, w, 64);
+    ctx.fillStyle = 'rgba(10,25,15,0.8)';
+    ctx.beginPath();
+    ctx.roundRect(2, 4, w - 4, 56, 28);
+    ctx.fill();
+    ctx.font = '650 44px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(naam, w / 2, 34);
+  };
+  return { tex: canvasTextuur(w, 64, teken), verhouding: w / 64 };
+}
+
+function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Material[], texturen: Texture[], keeperNummer = false, naam?: string): Figuur {
   const shirt = new MeshLambertMaterial({ color: kleur });
   const kous = new MeshLambertMaterial({ color: new Color(kleur).multiplyScalar(0.55) });
   materialen.push(shirt, kous);
@@ -558,6 +578,18 @@ function maakFiguur(o: VeldObject, kleur: string, d: Gedeeld, materialen: Materi
   const schaduw = new Mesh(d.schaduw, d.schaduwMat);
   schaduw.rotation.x = -Math.PI / 2;
   schaduw.position.y = 0.012;
+  if (naam) {
+    const { tex, verhouding } = naamTextuur(naam);
+    const mat = new SpriteMaterial({ map: tex, depthTest: false, transparent: true, sizeAttenuation: false });
+    const sprite = new Sprite(mat);
+    sprite.scale.set(0.026 * verhouding, 0.026, 1);
+    sprite.center.set(0.5, 1.25);
+    sprite.position.y = 0.02;
+    sprite.renderOrder = 11;
+    wortel.add(sprite);
+    materialen.push(mat);
+    texturen.push(tex);
+  }
   const ring = keeperNummer && label ? maakRing(label, kleur, materialen, texturen) : undefined;
   return { o, shirt, kous, badge, label, team: o.team, wortel, benen, armen, schaduw, ring, hoek: 0, fase: 0 };
 }
@@ -1157,7 +1189,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const meerKeepers = tekening.objecten.filter((o) => o.soort === 'keeper').length > 1;
   for (const o of tekening.objecten) {
     if (o.soort !== 'speler' && o.soort !== 'keeper' && o.soort !== 'trainer') continue;
-    const f = maakFiguur(o, persoonKleur(o, kleuren), gedeeld, materialen, texturen, o.soort === 'keeper' && meerKeepers);
+    const f = maakFiguur(o, persoonKleur(o, kleuren), gedeeld, materialen, texturen, o.soort === 'keeper' && meerKeepers, tekening.namen ? o.naam : undefined);
     figuren.set(o.id, f);
     scene.add(f.wortel, f.schaduw);
     if (f.ring) scene.add(f.ring);

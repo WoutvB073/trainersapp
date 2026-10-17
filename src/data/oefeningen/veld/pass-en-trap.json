@@ -3,17 +3,34 @@
     "id": "veld-pt-driehoek",
     "soort": "veld",
     "naam": "Passen in de driehoek",
-    "categorieen": ["pass-en-trap", "warming-up"],
+    "categorieen": [
+      "pass-en-trap",
+      "warming-up"
+    ],
     "uitleg": "Pass naar de speler bij de volgende pion en sprint achter je bal aan naar die pion. De ontvanger neemt aan richting de volgende pion en speelt door. Na een paar minuten de draairichting omkeren.",
     "organisatie": "Driehoek van ± 9 m met drie hoedjes. Bij de startpion staan twee spelers met de bal, bij de andere twee één speler.",
-    "benodigdheden": ["3 hoedjes", "1 bal per groep"],
+    "benodigdheden": [
+      "3 hoedjes",
+      "1 bal per groep"
+    ],
     "spelersNodig": 4,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Aannemen met de voet die het verst van de bal is, lichaam open naar de volgende pion", "Pass op de goede voet van je medespeler (de voet waarmee hij wil aannemen)", "Na je pass meteen versnellen"],
+    "coachpunten": [
+      "Aannemen met de voet die het verst van de bal is, lichaam open naar de volgende pion",
+      "Pass op de goede voet van je medespeler (de voet waarmee hij wil aannemen)",
+      "Na je pass meteen versnellen"
+    ],
     "variaties": {
-      "makkelijker": ["Kleinere driehoek (6 m)", "Vrij aantal aanrakingen"],
-      "moeilijker": ["In één keer doorspelen", "Tweede bal erbij", "Aanname met de buitenkant"]
+      "makkelijker": [
+        "Kleinere driehoek (6 m)",
+        "Vrij aantal aanrakingen"
+      ],
+      "moeilijker": [
+        "In één keer doorspelen",
+        "Tweede bal erbij",
+        "Aanname met de buitenkant"
+      ]
     },
     "tekening": {
       "veld": {
@@ -87,21 +104,28 @@
           "x": 3,
           "y": 12,
           "richting": 155,
-          "spelers": ["a1", "a4"]
+          "spelers": [
+            "a1",
+            "a4"
+          ]
         },
         {
           "id": "rB",
           "x": 8,
           "y": 5,
           "richting": -90,
-          "spelers": ["a2"]
+          "spelers": [
+            "a2"
+          ]
         },
         {
           "id": "rC",
           "x": 13,
           "y": 12,
           "richting": 25,
-          "spelers": ["a3"]
+          "spelers": [
+            "a3"
+          ]
         }
       ],
       "animatie": [
@@ -139,144 +163,31 @@
     }
   },
   {
-    "id": "veld-pt-derde-man",
-    "soort": "veld",
-    "naam": "Derde man in de driehoek",
-    "categorieen": ["pass-en-trap"],
-    "uitleg": "A speelt B in. B legt in één keer af op C, de derde man. A sprint ondertussen schuin langs B de diepte in en krijgt de bal van C in de loop. Daarna doordraaien: A wordt B, B wordt C, C sluit aan bij de start.",
-    "organisatie": "A op de startpion, B 8 m recht vooruit, C 6 m rechts naast B. A loopt diep naar de ruimte achter B en C.",
-    "benodigdheden": ["3 pionnen", "1 bal per groep"],
-    "spelersNodig": 3,
-    "keepersNodig": 0,
-    "doorwisselbaar": true,
-    "coachpunten": ["A: na de pass meteen diep gaan, niet blijven kijken", "B: afleggen in één keer, op de loopvoet van C", "C: speel de bal vóór A, in de ruimte waar hij heen loopt"],
-    "variaties": {
-      "makkelijker": ["B mag eerst aannemen", "Kortere afstanden (6 m)"],
-      "moeilijker": ["Alles in één keer", "Een passieve verdediger bij B", "A rondt af op een klein goal"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 15,
-        "lengte": 14
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "pA",
-          "soort": "pion",
-          "x": 3.2,
-          "y": 12.6
-        },
-        {
-          "id": "pB",
-          "soort": "pion",
-          "x": 3.2,
-          "y": 4.6
-        },
-        {
-          "id": "pC",
-          "soort": "pion",
-          "x": 10.8,
-          "y": 6.6
-        },
-        {
-          "id": "a",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 1,
-          "x": 4,
-          "y": 12,
-          "kijkrichting": -90
-        },
-        {
-          "id": "b",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 2,
-          "x": 4,
-          "y": 4,
-          "kijkrichting": 90
-        },
-        {
-          "id": "c",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 3,
-          "x": 10,
-          "y": 6,
-          "kijkrichting": 180
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 4,
-          "y": 11.6,
-          "bij": "a"
-        }
-      ],
-      "animatie": [
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "a",
-              "naar": "b"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "b",
-              "naar": "c"
-            },
-            {
-              "type": "loop",
-              "wie": "a",
-              "naar": [8.5, 2],
-              "manier": "sprint",
-              "start": 0.15
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "c",
-              "naar": "a"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a",
-              "naar": [12.5, 1.4],
-              "duur": 1
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
     "id": "veld-pt-y-vorm",
     "soort": "veld",
     "naam": "Y-vorm met kaats",
-    "categorieen": ["pass-en-trap"],
+    "categorieen": [
+      "pass-en-trap"
+    ],
     "uitleg": "A speelt B in, B kaatst terug en A speelt diep naar C (links) of D (rechts). Daarna doordraaien: A naar de plek van B, B naar C, C dribbelt terug naar de start. De volgende ronde gaat naar de andere kant.",
     "organisatie": "Startpion A; B op 7 m recht vooruit; C en D 6 m verder, 5 m links en rechts (Y-vorm). Begin met 4–6 spelers; extra spelers wachten bij A.",
-    "benodigdheden": ["4 pionnen", "1–2 ballen"],
+    "benodigdheden": [
+      "4 pionnen",
+      "1–2 ballen"
+    ],
     "spelersNodig": 4,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["B: eerst van de pion weg, dan kort komen om aanspeelbaar te zijn", "Kaats op de loopvoet van A, zodat hij in één keer kan doorspelen", "Diepe pass stevig en vóór de ontvanger"],
+    "coachpunten": [
+      "B: eerst van de pion weg, dan kort komen om aanspeelbaar te zijn",
+      "Kaats op de loopvoet van A, zodat hij in één keer kan doorspelen",
+      "Diepe pass stevig en vóór de ontvanger"
+    ],
     "variaties": {
-      "makkelijker": ["Kortere afstanden", "B neemt eerst aan en passt dan terug"],
+      "makkelijker": [
+        "Kortere afstanden",
+        "B neemt eerst aan en passt dan terug"
+      ],
       "moeilijker": [
         "Alles in één keer",
         "C/D kaatst ook nog terug op de inlopende B (derde man)",
@@ -366,7 +277,10 @@
             {
               "type": "loop",
               "wie": "b",
-              "naar": [8, 10.3],
+              "naar": [
+                8,
+                10.3
+              ],
               "duur": 0.5
             },
             {
@@ -386,7 +300,10 @@
             {
               "type": "loop",
               "wie": "a",
-              "naar": [8, 14],
+              "naar": [
+                8,
+                14
+              ],
               "duur": 0.8
             }
           ]
@@ -401,7 +318,10 @@
             {
               "type": "loop",
               "wie": "c",
-              "naar": [3.8, 4.2],
+              "naar": [
+                3.8,
+                4.2
+              ],
               "start": 0.2,
               "duur": 0.6
             }
@@ -412,20 +332,39 @@
             {
               "type": "dribbel",
               "wie": "c",
-              "via": [[1.6, 9]],
-              "naar": [8, 16.6]
+              "via": [
+                [
+                  1.6,
+                  9
+                ]
+              ],
+              "naar": [
+                8,
+                16.6
+              ]
             },
             {
               "type": "loop",
               "wie": "b",
-              "via": [[5.2, 7.4]],
-              "naar": [3, 3],
+              "via": [
+                [
+                  5.2,
+                  7.4
+                ]
+              ],
+              "naar": [
+                3,
+                3
+              ],
               "start": 0.2
             },
             {
               "type": "loop",
               "wie": "a",
-              "naar": [8, 9.6],
+              "naar": [
+                8,
+                9.6
+              ],
               "start": 0.8
             }
           ]
@@ -435,7 +374,10 @@
             {
               "type": "loop",
               "wie": "a",
-              "naar": [8, 10.4],
+              "naar": [
+                8,
+                10.4
+              ],
               "duur": 0.5
             },
             {
@@ -455,7 +397,10 @@
             {
               "type": "loop",
               "wie": "c",
-              "naar": [8, 14.6],
+              "naar": [
+                8,
+                14.6
+              ],
               "duur": 0.8
             }
           ]
@@ -470,7 +415,10 @@
             {
               "type": "loop",
               "wie": "d",
-              "naar": [12.2, 4.2],
+              "naar": [
+                12.2,
+                4.2
+              ],
               "start": 0.2,
               "duur": 0.6
             }
@@ -483,16 +431,30 @@
     "id": "veld-pt-rebounder",
     "soort": "veld",
     "naam": "Kaatsen tegen de rebounder",
-    "categorieen": ["pass-en-trap", "techniek"],
+    "categorieen": [
+      "pass-en-trap",
+      "techniek"
+    ],
     "uitleg": "Pass tegen de rebounder (of een muur) en verplaats je zijwaarts terwijl de bal onderweg is. Neem de terugkomende bal aan met de binnenkant en speel hem met de andere voet weer terug. Zo pendel je tussen twee plekken.",
     "organisatie": "Rebounder of muur op 7 m. Twee hoedjes op 4 m van elkaar geven de breedte aan. Eén speler per rebounder; met meer spelers om de beurt 30 seconden.",
-    "benodigdheden": ["1 rebounder (of muur)", "2 hoedjes", "1 bal"],
+    "benodigdheden": [
+      "1 rebounder (of muur)",
+      "2 hoedjes",
+      "1 bal"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Steeds weer in balans staan vóór je de bal aanneemt", "Binnenkant, enkel vast, standbeen naast de bal", "Om en om links en rechts passen"],
+    "coachpunten": [
+      "Steeds weer in balans staan vóór je de bal aanneemt",
+      "Binnenkant, enkel vast, standbeen naast de bal",
+      "Om en om links en rechts passen"
+    ],
     "variaties": {
-      "makkelijker": ["Op de plaats blijven, afstand 4 m", "Eerst aannemen, dan passen"],
+      "makkelijker": [
+        "Op de plaats blijven, afstand 4 m",
+        "Eerst aannemen, dan passen"
+      ],
       "moeilijker": [
         "In één keer terugspelen",
         "Afstand 10 m en harder",
@@ -555,7 +517,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [7, 9],
+              "naar": [
+                7,
+                9
+              ],
               "manier": "zijwaarts",
               "kijk": -90,
               "start": 0.15,
@@ -573,7 +538,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [5, 9],
+              "naar": [
+                5,
+                9
+              ],
               "manier": "zijwaarts",
               "kijk": -90,
               "start": 0.15,
@@ -591,7 +559,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [7, 9],
+              "naar": [
+                7,
+                9
+              ],
               "manier": "zijwaarts",
               "kijk": -90,
               "start": 0.15,
@@ -609,131 +580,14 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [5, 9],
+              "naar": [
+                5,
+                9
+              ],
               "manier": "zijwaarts",
               "kijk": -90,
               "start": 0.15,
               "duur": 0.7
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "id": "veld-pt-pass-in-de-loop",
-    "soort": "veld",
-    "naam": "Diepe pass in de loop",
-    "categorieen": ["pass-en-trap"],
-    "uitleg": "B maakt een diepe loopactie schuin naar voren; A speelt de bal in de ruimte vóór B, zodat hij hem in de loop kan meenemen. B dribbelt door en speelt daarna A in, die op zijn beurt de diepte in is gegaan. Terug joggen en wisselen.",
-    "organisatie": "Twee spelers naast elkaar op 5 m afstand bij twee pionnen. Ruimte van ± 12 m diep vóór hen.",
-    "benodigdheden": ["2 pionnen", "1 bal per tweetal"],
-    "spelersNodig": 2,
-    "keepersNodig": 0,
-    "doorwisselbaar": true,
-    "coachpunten": ["Passer: kijk naar de loopactie en speel de bal vóór de speler, niet op hem", "Loper: versnel op het moment dat de passer opkijkt", "Aanname in de looprichting, zonder af te remmen"],
-    "variaties": {
-      "makkelijker": ["Kortere loopacties (6 m), rustiger tempo", "Bal mag even stuiten of vaker geraakt worden"],
-      "moeilijker": ["Over een verdediger heen (chip) of tussen twee pionnen door", "Pass met de buitenkant", "Afronden op een goal na de aanname"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 17,
-        "lengte": 18
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "p1",
-          "soort": "pion",
-          "x": 3,
-          "y": 16.8
-        },
-        {
-          "id": "p2",
-          "soort": "pion",
-          "x": 10,
-          "y": 15.8
-        },
-        {
-          "id": "a",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 1,
-          "x": 4,
-          "y": 16,
-          "kijkrichting": -90
-        },
-        {
-          "id": "b",
-          "soort": "speler",
-          "team": "B",
-          "nummer": 2,
-          "x": 9,
-          "y": 15,
-          "kijkrichting": -90
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 4,
-          "y": 15.6,
-          "bij": "a"
-        }
-      ],
-      "animatie": [
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "b",
-              "naar": [13, 5],
-              "manier": "sprint",
-              "duur": 1.9
-            },
-            {
-              "type": "pass",
-              "van": "a",
-              "naar": "b",
-              "start": 0.5
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "b",
-              "naar": [14, 2.4],
-              "duur": 0.9
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "a",
-              "naar": [6.5, 6],
-              "manier": "sprint",
-              "duur": 1.7
-            },
-            {
-              "type": "pass",
-              "van": "b",
-              "naar": "a",
-              "start": 0.6
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a",
-              "naar": [6, 3.4],
-              "duur": 0.8
             }
           ]
         }
@@ -744,17 +598,33 @@
     "id": "veld-pt-lange-bal",
     "soort": "veld",
     "naam": "Lange bal en aannemen",
-    "categorieen": ["pass-en-trap"],
+    "categorieen": [
+      "pass-en-trap"
+    ],
     "uitleg": "A speelt een lange, hoge bal naar B in het vak aan de overkant. B neemt de bal uit de lucht aan, neemt hem mee binnen het vak en speelt hem lang terug. Een bal die in het vak landt, levert een punt op. Geschikt vanaf JO13.",
     "organisatie": "Twee vakken van 6 × 6 m op 25 m van elkaar (jongere spelers 15–20 m). In elk vak één speler; met meer spelers rijen achter de vakken.",
-    "benodigdheden": ["8 hoedjes", "1 bal per tweetal"],
+    "benodigdheden": [
+      "8 hoedjes",
+      "1 bal per tweetal"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Standbeen naast en iets achter de bal, raak de onderkant met de wreef", "Lichaam iets achterover en doortrappen naar je doel", "Ontvanger: lees de baan vroeg en neem aan in de looprichting"],
+    "coachpunten": [
+      "Standbeen naast en iets achter de bal, raak de onderkant met de wreef",
+      "Lichaam iets achterover en doortrappen naar je doel",
+      "Ontvanger: lees de baan vroeg en neem aan in de looprichting"
+    ],
     "variaties": {
-      "makkelijker": ["Afstand 15 m", "Bal mag eerst stuiten"],
-      "moeilijker": ["Afstand 30–35 m", "Aanname direct met één aanraking het vak uit (meenemen)", "Crossbal: van de zijkant naar een speler die inloopt"]
+      "makkelijker": [
+        "Afstand 15 m",
+        "Bal mag eerst stuiten"
+      ],
+      "moeilijker": [
+        "Afstand 30–35 m",
+        "Aanname direct met één aanraking het vak uit (meenemen)",
+        "Crossbal: van de zijkant naar een speler die inloopt"
+      ]
     },
     "tekening": {
       "veld": {
@@ -822,7 +692,10 @@
             {
               "type": "dribbel",
               "wie": "b",
-              "naar": [28.6, 7.2],
+              "naar": [
+                28.6,
+                7.2
+              ],
               "duur": 1
             }
           ]
@@ -842,7 +715,10 @@
             {
               "type": "dribbel",
               "wie": "a",
-              "naar": [5.4, 4.8],
+              "naar": [
+                5.4,
+                4.8
+              ],
               "duur": 1
             }
           ]
@@ -854,16 +730,30 @@
     "id": "veld-pt-poortjesspel",
     "soort": "veld",
     "naam": "Poortjesspel in tweetallen",
-    "categorieen": ["pass-en-trap", "spelletjes"],
+    "categorieen": [
+      "pass-en-trap",
+      "spelletjes"
+    ],
     "uitleg": "Tweetallen spelen de bal naar elkaar door een poortje: elke goede pass door een poortje is een punt. Daarna moet je een ander poortje kiezen. Welk tweetal heeft na 1,5 minuut de meeste punten?",
     "organisatie": "Vak van 18 × 17 m met 5 poortjes van twee hoedjes (1,5 m breed). Tweetallen met één bal; alle tweetallen spelen tegelijk.",
-    "benodigdheden": ["4 pionnen", "10 hoedjes", "1 bal per tweetal"],
+    "benodigdheden": [
+      "4 pionnen",
+      "10 hoedjes",
+      "1 bal per tweetal"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Zonder bal: loop alvast naar de andere kant van een vrij poortje", "Met bal: kijk op en kies een poortje waar je partner al staat", "Pass stevig en over de grond"],
+    "coachpunten": [
+      "Zonder bal: loop alvast naar de andere kant van een vrij poortje",
+      "Met bal: kijk op en kies een poortje waar je partner al staat",
+      "Pass stevig en over de grond"
+    ],
     "variaties": {
-      "makkelijker": ["Bredere poortjes (2,5 m)", "Twee keer hetzelfde poortje mag"],
+      "makkelijker": [
+        "Bredere poortjes (2,5 m)",
+        "Twee keer hetzelfde poortje mag"
+      ],
       "moeilijker": [
         "Maximaal twee aanrakingen",
         "Een tikker of verdediger die passes mag onderscheppen",
@@ -1018,25 +908,64 @@
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [8, 11]
+              "naar": [
+                8,
+                11
+              ]
             },
             {
               "type": "loop",
               "wie": "a1",
-              "via": [[5.2, 8.2], [9, 8.6], [12.5, 9]],
-              "naar": [12.5, 11]
+              "via": [
+                [
+                  5.2,
+                  8.2
+                ],
+                [
+                  9,
+                  8.6
+                ],
+                [
+                  12.5,
+                  9
+                ]
+              ],
+              "naar": [
+                12.5,
+                11
+              ]
             },
             {
               "type": "dribbel",
               "wie": "b2",
-              "via": [[15.5, 11]],
-              "naar": [12.8, 15]
+              "via": [
+                [
+                  15.5,
+                  11
+                ]
+              ],
+              "naar": [
+                12.8,
+                15
+              ]
             },
             {
               "type": "loop",
               "wie": "b1",
-              "via": [[16.5, 4.5], [17.5, 10]],
-              "naar": [17.5, 15]
+              "via": [
+                [
+                  16.5,
+                  4.5
+                ],
+                [
+                  17.5,
+                  10
+                ]
+              ],
+              "naar": [
+                17.5,
+                15
+              ]
             }
           ]
         },
@@ -1061,17 +990,34 @@
     "id": "veld-pt-vierhoek-twee-ballen",
     "soort": "veld",
     "naam": "Vierhoek met twee ballen",
-    "categorieen": ["pass-en-trap", "warming-up"],
+    "categorieen": [
+      "pass-en-trap",
+      "warming-up"
+    ],
     "uitleg": "Vier spelers op de hoeken van een vierkant, twee ballen schuin tegenover elkaar. Beide ballen gaan tegelijk rond: aannemen met de verste voet richting de volgende hoek en doorspelen. Op een fluitsignaal draait de richting om.",
     "organisatie": "Vierkant van 10 × 10 m met een pion op elke hoek. Spelers staan net binnen de pion. Twee ballen bij spelers die schuin tegenover elkaar staan.",
-    "benodigdheden": ["4 pionnen", "2 ballen"],
+    "benodigdheden": [
+      "4 pionnen",
+      "2 ballen"
+    ],
     "spelersNodig": 4,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Open staan: lichaam naar de bal én naar de volgende hoek", "Aannemen met de verste voet, in één beweging naar je passvoet", "Let op de tweede bal: communiceer en speel op tijd"],
+    "coachpunten": [
+      "Open staan: lichaam naar de bal én naar de volgende hoek",
+      "Aannemen met de verste voet, in één beweging naar je passvoet",
+      "Let op de tweede bal: communiceer en speel op tijd"
+    ],
     "variaties": {
-      "makkelijker": ["Eén bal", "Kleiner vierkant (8 m)"],
-      "moeilijker": ["In één keer doorspelen", "Na de pass meelopen naar de volgende hoek", "Derde bal erbij"]
+      "makkelijker": [
+        "Eén bal",
+        "Kleiner vierkant (8 m)"
+      ],
+      "moeilijker": [
+        "In één keer doorspelen",
+        "Na de pass meelopen naar de volgende hoek",
+        "Derde bal erbij"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1220,7 +1166,10 @@
     "id": "veld-cv-derde-man-afronden",
     "soort": "veld",
     "naam": "Driehoek, derde man en afronden",
-    "categorieen": ["pass-en-trap", "afwerken"],
+    "categorieen": [
+      "pass-en-trap",
+      "afwerken"
+    ],
     "combinatievorm": true,
     "onderdelen": [
       "Inspelen",
@@ -1239,10 +1188,21 @@
     "spelersNodig": 3,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Speler 2: kort komen en in één keer terugleggen", "Derde man: pas starten als de bal bij speler 2 is, dan vol versnellen", "Diepe bal in de loop, niet op de man"],
+    "coachpunten": [
+      "Speler 2: kort komen en in één keer terugleggen",
+      "Derde man: pas starten als de bal bij speler 2 is, dan vol versnellen",
+      "Diepe bal in de loop, niet op de man"
+    ],
     "variaties": {
-      "makkelijker": ["Zonder pop", "Speler 3 start al vóór de eerste pass"],
-      "moeilijker": ["Verdediger in plaats van de pop", "Alles in één keer", "Na het schot verdedigt speler 1 tegen een tweede aanval"]
+      "makkelijker": [
+        "Zonder pop",
+        "Speler 3 start al vóór de eerste pass"
+      ],
+      "moeilijker": [
+        "Verdediger in plaats van de pop",
+        "Alles in één keer",
+        "Na het schot verdedigt speler 1 tegen een tweede aanval"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1322,7 +1282,10 @@
             {
               "type": "loop",
               "wie": "a2",
-              "naar": [30, 22.6],
+              "naar": [
+                30,
+                22.6
+              ],
               "duur": 0.6
             }
           ]
@@ -1342,8 +1305,16 @@
             {
               "type": "loop",
               "wie": "a3",
-              "via": [[38.4, 17]],
-              "naar": [36.6, 10.4],
+              "via": [
+                [
+                  38.4,
+                  17
+                ]
+              ],
+              "naar": [
+                36.6,
+                10.4
+              ],
               "manier": "sprint"
             },
             {
@@ -1360,7 +1331,10 @@
             {
               "type": "schot",
               "van": "a3",
-              "naar": [32.2, 0.3],
+              "naar": [
+                32.2,
+                0.3
+              ],
               "hoogte": "grond",
               "afloop": "goal"
             }

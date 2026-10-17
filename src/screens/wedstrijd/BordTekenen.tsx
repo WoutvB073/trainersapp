@@ -19,6 +19,7 @@ export function BordTekenen({ id }: { id: string }) {
             ouder: `/bord/${id}`,
             verder: { label: 'Klaar', naar: `/bord/${id}` },
             wissen: true,
+            namen: true,
           }
         : null,
     [start, id],

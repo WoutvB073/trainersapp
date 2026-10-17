@@ -77,6 +77,8 @@ export interface VeldObject {
    * van het goal), zet zich bij een schot en reageert op schoten met `afloop`.
    */
   verdedigt?: string;
+  /** Persoon: naam (tactiekbord); alleen in beeld als de tekening `namen` aan heeft. Het rugnummer blijft altijd. */
+  naam?: string;
   /** Doelnet: id van het goal waar het in hangt (plek, draaiing en maat volgen dat goal). */
   doel?: string;
   /** Keeper mag buiten het doelgebied komen (bv. 1 tegen keeper). */
@@ -447,6 +449,8 @@ export interface Tekening {
   camera?: CameraStand;
   /** Editor-animatie: het patroon herhalen voor de volgende spelers in de rij (zie src/editor/animatie.ts). */
   herhaalRij?: boolean;
+  /** Tactiekbord: namen van de spelers onder het poppetje tonen. */
+  namen?: boolean;
 }
 
 export interface Oefening {
@@ -475,6 +479,11 @@ export interface Oefening {
   coachpunten: string[];
   variaties: { makkelijker: string[]; moeilijker: string[] };
   tekening: Tekening;
+  /**
+   * Uit de bibliotheek gehaald (src/data/oefeningen/archief.json): niet meer te kiezen, maar trainingen, links, teams en
+   * favorieten die hem bevatten tonen hem nog (met "Niet meer in de bibliotheek").
+   */
+  verwijderd?: boolean;
   /** Eigen oefening (gemaakt in de editor of gekopieerd), badge "Eigen". */
   eigen?: boolean;
   /** Gedeeld in een team (badge met de teamnaam). Id is dan `team-<teamId>-<itemId>`. */

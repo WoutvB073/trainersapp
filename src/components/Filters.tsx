@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Icoon } from './Icoon';
 import { meervoud } from './Labels';
 import { favorieten, useFavorieten } from '../engine/favorieten';
-import { aantalActief, useFilters, wisFilters, zetFilters } from '../engine/filters';
+import { aantalActief, useFilters, wisFilters, zetFilters, laatsteAantallen } from '../engine/filters';
 import { Stapper } from '../screens/training/onderdelen';
 
 /** Hartje: favoriet aan/uit (op een kaart of op de detailpagina). */
@@ -61,7 +61,7 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
           ) : (
             <div className="filter-aantallen">
               <label className="filter-schakel">
-                <input type="checkbox" checked={!!f.aantallen} onChange={() => zetFilters({ aantallen: f.aantallen ? null : { spelers: 12, keepers: 1 } })} />
+                <input type="checkbox" checked={!!f.aantallen} onChange={() => zetFilters({ aantallen: f.aantallen ? null : laatsteAantallen() })} />
                 Alleen wat past bij mijn aantal
               </label>
               {f.aantallen && (

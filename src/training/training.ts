@@ -48,6 +48,16 @@ export function nieuweTraining(nu = Date.now(), id = maakId()): Training {
   return { id, naam: '', spelers: 4, keepers: 1, oefeningen: [], gemaakt: nu, gewijzigd: nu };
 }
 
+/**
+ * Training zonder naam die oefeningen krijgt: automatisch een naam ("Training 17 okt", op de datum van de training of
+ * vandaag), zodat hij altijd herkenbaar is in de lijst.
+ */
+export function metNaam<T extends Pick<Training, 'naam' | 'datum' | 'oefeningen'>>(t: T, nu = new Date()): T {
+  if (t.naam.trim() || !t.oefeningen.length) return t;
+  const d = t.datum ?? `${nu.getFullYear()}-${String(nu.getMonth() + 1).padStart(2, '0')}-${String(nu.getDate()).padStart(2, '0')}`;
+  return { ...t, naam: `Training ${datumTekst(d).replace(/ \d{4}$/, '')}` };
+}
+
 /** Niets ingevuld (geen oefeningen, naam of datum): zo'n training wordt niet bewaard. */
 export function isLeeg(t: Pick<Training, 'naam' | 'datum' | 'oefeningen'>): boolean {
   return t.oefeningen.length === 0 && !t.naam.trim() && !t.datum;

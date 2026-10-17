@@ -21,6 +21,8 @@ import {
   dupliceerOpstelling,
   nieuwBord,
   nieuweOpstelling,
+  opgesteldBord,
+  veldTekening,
   opstellingNaam,
   spelvorm,
   SPELVORMEN,
@@ -261,34 +263,57 @@ function Paneel({ titel, opSluit, children }: { titel: string; opSluit: () => vo
 }
 
 function NieuwTactiekbord({ ops, opSluit }: { ops: Opstelling[]; opSluit: () => void }) {
+  const [vorm, setVorm] = useState<Spelvorm>(laatsteSpelvorm);
+  const info = spelvorm(vorm);
+  const [formA, setFormA] = useState(info.formaties[0]!);
+  const [formB, setFormB] = useState(info.formaties[0]!);
+  const kiesVorm = (v: Spelvorm) => {
+    setVorm(v);
+    setFormA(spelvorm(v).formaties[0]!);
+    setFormB(spelvorm(v).formaties[0]!);
+    try {
+      localStorage.setItem(LAATSTE_SPELVORM, v);
+    } catch {
+      /* niet erg */
+    }
+  };
   const leeg = (type: 'heel' | 'half') => {
-    const t = SITUATIES.find((s) => s.id === 'aftrap')!.maak();
-    // Leeg bord: alleen de goals (en bij heel veld beide teams uit de aftrap kun je zelf neerzetten).
-    const goals = t.objecten.filter((o) => o.soort === 'goal');
-    const tekening: Tekening = { veld: { type }, camera: 'schuin', objecten: type === 'heel' ? goals : goals.filter((g) => g.y < 50), lijnen: [] };
-    bordMaken('tactiek', tekening, '');
+    const t = veldTekening(type);
+    bordMaken('tactiek', t, '');
   };
   return (
     <Paneel titel="Nieuw tactiekbord" opSluit={opSluit}>
-      <div className="wedstrijd-keuzes">
-        <button className="keuze-kaart" onClick={() => leeg('heel')}>
-          <Icoon naam="wedstrijd" maat={28} />
-          <span>
-            <strong>Heel veld</strong>
-            <span className="klein">Leeg veld; zet zelf spelers en een bal neer</span>
-          </span>
-        </button>
-        <button className="keuze-kaart" onClick={() => leeg('half')}>
-          <Icoon naam="tactiek" maat={28} />
-          <span>
-            <strong>Half veld</strong>
-            <span className="klein">Leeg half veld met een goal</span>
-          </span>
-        </button>
+      <h3 className="wedstrijd-sub">Spelvorm</h3>
+      <div className="wedstrijd-chips" role="radiogroup" aria-label="Spelvorm">
+        {SPELVORMEN.map((s) => (
+          <button key={s.id} role="radio" aria-checked={vorm === s.id} className={`gen-chip${vorm === s.id ? ' aan' : ''}`} onClick={() => kiesVorm(s.id)}>
+            {s.naam}
+          </button>
+        ))}
       </div>
+      <h3 className="wedstrijd-sub">Formatie van jouw team</h3>
+      <div className="wedstrijd-chips" role="radiogroup" aria-label="Formatie van jouw team">
+        {info.formaties.map((f) => (
+          <button key={f} role="radio" aria-checked={formA === f} className={`gen-chip${formA === f ? ' aan' : ''}`} onClick={() => setFormA(f)}>
+            {f}
+          </button>
+        ))}
+      </div>
+      <h3 className="wedstrijd-sub">Formatie van de tegenstander</h3>
+      <div className="wedstrijd-chips" role="radiogroup" aria-label="Formatie van de tegenstander">
+        {info.formaties.map((f) => (
+          <button key={f} role="radio" aria-checked={formB === f} className={`gen-chip${formB === f ? ' aan' : ''}`} onClick={() => setFormB(f)}>
+            {f}
+          </button>
+        ))}
+      </div>
+      <button className="knop knop-primair knop-breed wedstrijd-maak" onClick={() => bordMaken('tactiek', opgesteldBord(vorm, formA, formB), `${info.naam} · ${formA}`)}>
+        <Icoon naam="tactiek" maat={20} />
+        Bord met beide teams maken
+      </button>
       <h3 className="wedstrijd-sub">Vanuit een opstelling</h3>
       {ops.length === 0 ? (
-        <p className="klein">Maak eerst een opstelling; de spelers staan dan meteen op hun plek (en de tegenstander ertegenover).</p>
+        <p className="klein">Maak eerst een opstelling; jouw spelers staan dan met hun namen klaar (en de tegenstander ertegenover).</p>
       ) : (
         <div className="wedstrijd-keuzes">
           {ops.map((o) => (
@@ -304,6 +329,23 @@ function NieuwTactiekbord({ ops, opSluit }: { ops: Opstelling[]; opSluit: () => 
           ))}
         </div>
       )}
+      <h3 className="wedstrijd-sub">Leeg bord</h3>
+      <div className="wedstrijd-keuzes wedstrijd-twee">
+        <button className="keuze-kaart" onClick={() => leeg('heel')}>
+          <Icoon naam="wedstrijd" maat={28} />
+          <span>
+            <strong>Heel veld</strong>
+            <span className="klein">Zelf spelers neerzetten</span>
+          </span>
+        </button>
+        <button className="keuze-kaart" onClick={() => leeg('half')}>
+          <Icoon naam="tactiek" maat={28} />
+          <span>
+            <strong>Half veld</strong>
+            <span className="klein">Met één goal</span>
+          </span>
+        </button>
+      </div>
     </Paneel>
   );
 }
@@ -528,6 +570,19 @@ export function BordScherm({ id }: { id: string }) {
             <button className="knop knop-primair" onClick={() => ga(`/bord/${id}/tekenen`)}>
               <Icoon naam="potlood" maat={20} />
               Tekenen
+            </button>
+            <button
+              className={`knop${b.tekening.namen ? ' knop-aan' : ''}`}
+              aria-pressed={!!b.tekening.namen}
+              onClick={() => {
+                const nu2 = nu();
+                const aan = !nu2.tekening.namen;
+                borden.bewaar({ ...nu2, tekening: { ...nu2.tekening, namen: aan } });
+                if (aan && !nu2.tekening.objecten.some((o) => o.naam)) toon('Nog geen namen: tik op Tekenen, kies een speler en vul zijn naam in');
+              }}
+            >
+              <Icoon naam="label" maat={20} />
+              {b.tekening.namen ? 'Namen verbergen' : 'Namen tonen'}
             </button>
             <button
               className="knop"

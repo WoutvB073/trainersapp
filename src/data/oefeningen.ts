@@ -26,6 +26,16 @@ export const OEFENINGEN: Oefening[] = BESTANDEN.flatMap((b) => b.oefeningen);
 
 const opId = new Map(OEFENINGEN.map((o) => [o.id, o]));
 
+/**
+ * Oefeningen die uit de bibliotheek zijn gehaald. Ze staan niet meer in de lijsten en worden niet meer gekozen, maar
+ * een training, deellink, teamtraining of favoriet die ernaar verwijst toont ze nog (met een melding).
+ */
+const archiefBestand = import.meta.glob<Oefening[]>('./oefeningen/archief.json', { eager: true, import: 'default' });
+export const ARCHIEF: Oefening[] = Object.values(archiefBestand)
+  .flat()
+  .map((o) => ({ ...o, verwijderd: true }));
+const archiefOpId = new Map(ARCHIEF.map((o) => [o.id, o]));
+
 /** Ingebouwd, eigen (met naam en categorie) en gedeeld in je teams. */
 export function alleOefeningen(): Oefening[] {
   return [...OEFENINGEN, ...eigenOefeningen.lijst().filter(inBibliotheek), ...teamOefeningen().filter(inBibliotheek)];
@@ -33,7 +43,7 @@ export function alleOefeningen(): Oefening[] {
 
 /** Zoekt ook in de eigen oefeningen (ook als die nog niet af zijn). */
 export function vindOefening(id: string): Oefening | undefined {
-  return opId.get(id) ?? eigenOefeningen.haal(id) ?? vindTeamOefening(id);
+  return opId.get(id) ?? archiefOpId.get(id) ?? eigenOefeningen.haal(id) ?? vindTeamOefening(id);
 }
 
 export function oefeningenVan(soort: Soort, categorie?: string): Oefening[] {

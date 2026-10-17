@@ -21,6 +21,7 @@ export function Labels({ oefening }: { oefening: Oefening }) {
   const { spelersNodig, keepersNodig, soort } = oefening;
   return (
     <div className="labels">
+      {oefening.verwijderd && <span className="label label-verwijderd">Niet meer in de bibliotheek</span>}
       {oefening.team && (
         <span className="label label-team" title={`Gedeeld door ${oefening.team.eigenaarNaam}`}>
           <Icoon naam="spelers" maat={16} />

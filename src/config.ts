@@ -3,4 +3,4 @@
  * opslagsleutels (trainersapp.…) blijven zoals ze zijn: anders werken geïnstalleerde apps en gedeelde links niet meer.
  */
 export const APP_NAAM = 'TopTraining';
-export const VERSIE = '0.18.0';
+export const VERSIE = '0.19.0';

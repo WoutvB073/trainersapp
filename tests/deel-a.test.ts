@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { isLeeg, nieuweTraining, type Training } from '../src/training/training';
+import { isLeeg, metNaam, nieuweTraining, type Training } from '../src/training/training';
+import { leesHash, openTraining } from '../src/router';
 import { apparaatBackend, TrainingStore } from '../src/training/opslag';
 import { andereOefening, genereer, kandidaten, kiesOefening, oefeningenUit, recentGebruikt, type KiesContext, type Onderdeel } from '../src/training/genereren';
 import { EXPORT_SOORT, exportNaam, leesExport, maakExport, voegSamen } from '../src/engine/exporteren';
@@ -38,6 +39,30 @@ describe('A1 Training maken', () => {
     expect(isLeeg(training('a', { naam: '   ' }))).toBe(true);
     expect(isLeeg(training('a', { datum: '2026-10-20' }))).toBe(false);
     expect(isLeeg(training('a', { oefeningen: ['veld-pt-derde-man'] }))).toBe(false);
+  });
+
+  it('training genereren (ook vanuit een training): de training wordt niet als leeg weggehaald (bug 0.18.0)', () => {
+    for (const hash of ['#/training/t1', '#/training/t1/kiezen', '#/training/t1/genereren', '#/training/t1/modus/2']) expect(openTraining(leesHash(hash)), hash).toBe('t1');
+    expect(openTraining(leesHash('#/trainingen'))).toBeUndefined();
+    const s = new TrainingStore(apparaatBackend(geheugen()));
+    s.bewaar(training('t1'));
+    // Van Training bewerken naar genereren: zolang je daar bent, blijft hij staan.
+    s.ruimLegeOp(openTraining(leesHash('#/training/t1/genereren')));
+    expect(s.haal('t1')).toBeDefined();
+    // Gegenereerd (met oefeningen, zonder naam) en daarna weg: blijft staan, met een naam.
+    s.bewaar(metNaam(training('t1', { oefeningen: ['veld-pt-derde-man'] }), new Date(2026, 9, 17)));
+    s.ruimLegeOp();
+    expect(s.haal('t1')).toMatchObject({ naam: 'Training 17 okt' });
+    // Gewoon gemaakt met alleen oefeningen en geen naam: ook niet weggehaald.
+    s.bewaar(training('t2', { oefeningen: ['veld-pt-derde-man'] }));
+    s.ruimLegeOp();
+    expect(s.haal('t2')).toBeDefined();
+  });
+
+  it('automatische naam: alleen als er oefeningen zijn en nog geen naam', () => {
+    expect(metNaam(training('a'), new Date(2026, 9, 17)).naam).toBe('');
+    expect(metNaam(training('a', { naam: 'Dinsdag', oefeningen: ['x'] })).naam).toBe('Dinsdag');
+    expect(metNaam(training('a', { datum: '2026-11-03', oefeningen: ['x'] })).naam).toBe('Training 3 nov');
   });
 
   it('lege trainingen worden opgeruimd, behalve die je open hebt', () => {

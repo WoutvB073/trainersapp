@@ -127,6 +127,8 @@ export interface EditorBron {
   verder: { label: string; naar: string };
   /** Knop om alle lijnen in één keer te wissen (tactiekbord). */
   wissen?: boolean;
+  /** Spelers een naam kunnen geven (tactiekbord). */
+  namen?: boolean;
 }
 
 export function Tekenen({ id }: { id: string }) {
@@ -924,6 +926,21 @@ export function Editor({ bron }: { bron: EditorBron }) {
                     <Icoon naam="plus" maat={16} />
                   </button>
                 </span>
+              )}
+              {bron.namen && (gekozen.soort === 'speler' || gekozen.soort === 'keeper') && (
+                <input
+                  className="editor-tekst"
+                  value={gekozen.naam ?? ''}
+                  maxLength={20}
+                  placeholder="Naam"
+                  aria-label="Naam van de speler"
+                  onChange={(e) => {
+                    const naam = e.target.value;
+                    const nieuw = zetObject(t, gekozen.id, { naam: naam || undefined });
+                    // Een naam invullen zet het tonen van namen aan.
+                    zet(naam ? { ...nieuw, namen: true } : nieuw);
+                  }}
+                />
               )}
               {gekozen.soort === 'tekst' && (
                 <input className="editor-tekst" value={gekozen.tekst ?? ''} maxLength={30} aria-label="Tekst" onChange={(e) => zet(zetObject(t, gekozen.id, { tekst: e.target.value }))} />

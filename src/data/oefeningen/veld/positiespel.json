@@ -1,185 +1,38 @@
 [
   {
-    "id": "veld-ps-rondo-3-1",
-    "soort": "veld",
-    "naam": "Rondo 3 tegen 1 in de driehoek",
-    "categorieen": ["positiespel", "warming-up"],
-    "uitleg": "Drie spelers houden de bal rond in een driehoek, één speler in het midden probeert hem te onderscheppen. Wie de bal verliest, ruilt met de middenman. De buitenspelers bewegen langs de lijnen om steeds aanspeelbaar te blijven.",
-    "organisatie": "Driehoek met zijden van ± 10 m (3 hoedjes). Drie spelers bij de hoeken, één in het midden met een hesje. Wissel elke minuut de middenman als niemand de bal verliest.",
-    "benodigdheden": ["3 hoedjes", "1 bal", "1 hesje"],
-    "spelersNodig": 4,
-    "keepersNodig": 0,
-    "doorwisselbaar": false,
-    "meerSpelers": "Met 5 spelers: 4 tegen 1 in een vierkant. Met 6 of meer: een tweede rondo, of 4 tegen 2.",
-    "coachpunten": ["Altijd twee aanspeelmogelijkheden geven: beweeg weg van de middenman", "Speel de bal naar de speler die de middenman niet afschermt", "Middenman: sluit met je lichaam één passlijn af en dwing de pass naar de andere kant"],
-    "variaties": {
-      "makkelijker": ["Grotere driehoek (12 m)", "Middenman mag alleen onderscheppen, niet tackelen"],
-      "moeilijker": ["Maximaal twee aanrakingen", "Kleinere driehoek (7 m)", "Na 5 passes zonder balverlies een punt; middenman telt onderscheppingen"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 16,
-        "lengte": 15
-      },
-      "camera": "boven",
-      "objecten": [
-        {
-          "id": "h1",
-          "soort": "hoedje",
-          "x": 8,
-          "y": 2.2
-        },
-        {
-          "id": "h2",
-          "soort": "hoedje",
-          "x": 2.4,
-          "y": 12
-        },
-        {
-          "id": "h3",
-          "soort": "hoedje",
-          "x": 13.6,
-          "y": 12
-        },
-        {
-          "id": "a1",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 1,
-          "x": 8,
-          "y": 3.2,
-          "kijkrichting": 90
-        },
-        {
-          "id": "a2",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 2,
-          "x": 3.4,
-          "y": 11.4,
-          "kijkrichting": -45
-        },
-        {
-          "id": "a3",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 3,
-          "x": 12.6,
-          "y": 11.4,
-          "kijkrichting": -135
-        },
-        {
-          "id": "d",
-          "soort": "speler",
-          "team": "B",
-          "nummer": 4,
-          "x": 8,
-          "y": 8.6,
-          "kijkrichting": -90
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 8,
-          "y": 3.6,
-          "bij": "a1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 1.2,
-          "acties": [
-            {
-              "type": "pass",
-              "van": "a1",
-              "naar": "a2"
-            },
-            {
-              "type": "dek",
-              "wie": "d",
-              "tussen": ["a2", "a3"],
-              "fractie": 0.3,
-              "start": 0.15,
-              "manier": "jog"
-            }
-          ]
-        },
-        {
-          "duur": 1.2,
-          "acties": [
-            {
-              "type": "pass",
-              "van": "a2",
-              "naar": "a1"
-            },
-            {
-              "type": "dek",
-              "wie": "d",
-              "tussen": ["a1", "a3"],
-              "fractie": 0.4,
-              "start": 0.15,
-              "manier": "jog"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "a1",
-              "naar": "a3",
-              "onderschept": "d"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "team",
-              "wie": "d",
-              "team": "A"
-            },
-            {
-              "type": "team",
-              "wie": "a1",
-              "team": "B"
-            },
-            {
-              "type": "loop",
-              "wie": "a1",
-              "via": [[6.4, 5.2]],
-              "naar": [7.4, 8.4],
-              "start": 0.3
-            },
-            {
-              "type": "dribbel",
-              "wie": "d",
-              "naar": [9.4, 3.8],
-              "start": 0.6,
-              "duur": 1.2
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
     "id": "veld-ps-rondo-4-2",
     "soort": "veld",
     "naam": "Rondo 4 tegen 2",
-    "categorieen": ["positiespel"],
+    "categorieen": [
+      "positiespel"
+    ],
     "uitleg": "Vier spelers op de lijnen van het vak houden de bal rond tegen twee verdedigers. De ene verdediger zet druk op de balbezitter, de andere loopt een passlijn dicht. Wie de bal verliest (of buiten het vak speelt), ruilt met de verdediger die hem won.",
     "organisatie": "Vak van 10 × 10 m. Op elke zijde één speler, twee verdedigers met hesjes in het midden.",
-    "benodigdheden": ["4 pionnen", "1 bal", "2 hesjes"],
+    "benodigdheden": [
+      "4 pionnen",
+      "1 bal",
+      "2 hesjes"
+    ],
     "spelersNodig": 6,
     "keepersNodig": 0,
     "doorwisselbaar": false,
     "meerSpelers": "Met 7 spelers: een middenman erbij (5 tegen 2). Met meer: een tweede rondo.",
-    "coachpunten": ["Buitenspelers: open staan, en verplaatsen zodat de passlijn niet door een verdediger loopt", "Zoek de 'splitpass' door het midden als de verdedigers te ver uit elkaar staan", "Verdedigers: samenwerken – één zet druk, de ander dekt de gevaarlijkste lijn"],
+    "coachpunten": [
+      "Buitenspelers: open staan, en verplaatsen zodat de passlijn niet door een verdediger loopt",
+      "Zoek de 'splitpass' door het midden als de verdedigers te ver uit elkaar staan",
+      "Verdedigers: samenwerken – één zet druk, de ander dekt de gevaarlijkste lijn"
+    ],
     "variaties": {
-      "makkelijker": ["Groter vak (12 × 12 m)", "Vrij aantal aanrakingen", "4 tegen 1"],
-      "moeilijker": ["Maximaal twee aanrakingen", "Een splitpass telt dubbel", "Kleiner vak (8 × 8 m)"]
+      "makkelijker": [
+        "Groter vak (12 × 12 m)",
+        "Vrij aantal aanrakingen",
+        "4 tegen 1"
+      ],
+      "moeilijker": [
+        "Maximaal twee aanrakingen",
+        "Een splitpass telt dubbel",
+        "Kleiner vak (8 × 8 m)"
+      ]
     },
     "tekening": {
       "veld": {
@@ -299,7 +152,10 @@
             {
               "type": "dek",
               "wie": "d2",
-              "tussen": ["a2", "a1"],
+              "tussen": [
+                "a2",
+                "a1"
+              ],
               "start": 0.15
             }
           ]
@@ -321,7 +177,10 @@
             {
               "type": "dek",
               "wie": "d1",
-              "tussen": ["a4", "a3"],
+              "tussen": [
+                "a4",
+                "a3"
+              ],
               "start": 0.2
             }
           ]
@@ -351,13 +210,19 @@
             {
               "type": "loop",
               "wie": "a4",
-              "naar": [7.2, 8.6],
+              "naar": [
+                7.2,
+                8.6
+              ],
               "start": 0.2
             },
             {
               "type": "dribbel",
               "wie": "d2",
-              "naar": [3.4, 6.2],
+              "naar": [
+                3.4,
+                6.2
+              ],
               "start": 0.6,
               "duur": 1
             }
@@ -370,18 +235,35 @@
     "id": "veld-ps-rondo-5-2",
     "soort": "veld",
     "naam": "Rondo 5 tegen 2 met een middenman",
-    "categorieen": ["positiespel"],
+    "categorieen": [
+      "positiespel"
+    ],
     "uitleg": "Vier spelers op de lijnen en één in het midden houden de bal tegen twee verdedigers. Een pass via de middenman telt dubbel. Wint een verdediger de bal, dan ruilt hij met de speler die de bal verloor.",
     "organisatie": "Vak van 12 × 12 m. Vier spelers op de zijden, één middenman (team A) en twee verdedigers in het vak.",
-    "benodigdheden": ["4 pionnen", "1 bal", "2 hesjes"],
+    "benodigdheden": [
+      "4 pionnen",
+      "1 bal",
+      "2 hesjes"
+    ],
     "spelersNodig": 7,
     "keepersNodig": 0,
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een tweede rondo, of 6 tegen 3 in een groter vak.",
-    "coachpunten": ["Middenman: blijf in de rug van de verdedigers en vraag de bal tussen de lijnen", "Speel de middenman alleen aan als hij open staat; anders eerst de bal verplaatsen", "Verdedigers: dek eerst de middenman af, zet daarna pas druk"],
+    "coachpunten": [
+      "Middenman: blijf in de rug van de verdedigers en vraag de bal tussen de lijnen",
+      "Speel de middenman alleen aan als hij open staat; anders eerst de bal verplaatsen",
+      "Verdedigers: dek eerst de middenman af, zet daarna pas druk"
+    ],
     "variaties": {
-      "makkelijker": ["Vrij aantal aanrakingen", "Groter vak (14 × 14 m)"],
-      "moeilijker": ["Middenman maximaal één aanraking", "Na balverovering scoren de verdedigers door de bal uit het vak te dribbelen", "Kleiner vak (10 × 10 m)"]
+      "makkelijker": [
+        "Vrij aantal aanrakingen",
+        "Groter vak (14 × 14 m)"
+      ],
+      "moeilijker": [
+        "Middenman maximaal één aanraking",
+        "Na balverovering scoren de verdedigers door de bal uit het vak te dribbelen",
+        "Kleiner vak (10 × 10 m)"
+      ]
     },
     "tekening": {
       "veld": {
@@ -504,7 +386,10 @@
             {
               "type": "dek",
               "wie": "d2",
-              "tussen": ["a5", "a3"],
+              "tussen": [
+                "a5",
+                "a3"
+              ],
               "fractie": 0.45,
               "start": 0.15
             }
@@ -528,7 +413,10 @@
             {
               "type": "loop",
               "wie": "a5",
-              "naar": [7.6, 6.2],
+              "naar": [
+                7.6,
+                6.2
+              ],
               "start": 0.3,
               "duur": 0.8
             }
@@ -545,7 +433,10 @@
             {
               "type": "dek",
               "wie": "d2",
-              "tussen": ["a3", "a5"],
+              "tussen": [
+                "a3",
+                "a5"
+              ],
               "fractie": 0.45,
               "start": 0.2
             },
@@ -597,13 +488,19 @@
             {
               "type": "loop",
               "wie": "a4",
-              "naar": [5.6, 7.4],
+              "naar": [
+                5.6,
+                7.4
+              ],
               "start": 0.6
             },
             {
               "type": "dribbel",
               "wie": "d1",
-              "naar": [2.5, 10.8],
+              "naar": [
+                2.5,
+                10.8
+              ],
               "start": 0.1,
               "duur": 1
             }
@@ -616,18 +513,36 @@
     "id": "veld-ps-4-4-2-jokers",
     "soort": "veld",
     "naam": "Positiespel 4 tegen 4 + 2 jokers",
-    "categorieen": ["positiespel"],
+    "categorieen": [
+      "positiespel"
+    ],
     "uitleg": "Twee teams van vier spelen in een vak; twee jokers op de lijnen spelen altijd mee met het team dat de bal heeft (6 tegen 4). Zes passes achter elkaar is een punt. Bij balverlies spelen de jokers direct met het andere team mee.",
     "organisatie": "Vak van 20 × 20 m. Jokers (paars) op het midden van twee tegenover elkaar liggende lijnen. Teams met hesjes in het vak.",
-    "benodigdheden": ["4 pionnen", "1 bal", "hesjes in 2 kleuren + 2 voor de jokers"],
+    "benodigdheden": [
+      "4 pionnen",
+      "1 bal",
+      "hesjes in 2 kleuren + 2 voor de jokers"
+    ],
     "spelersNodig": 10,
     "keepersNodig": 0,
     "doorwisselbaar": false,
     "meerSpelers": "Met 11 of 12 spelers: 5 tegen 5 met 2 jokers. Met meer: extra jokers op de zijlijn.",
-    "coachpunten": ["Maak het veld groot bij balbezit: breed en diep staan", "Gebruik de jokers om de bal te verplaatsen naar de vrije kant", "Bij balverlies direct druk zetten (omschakelen)"],
+    "coachpunten": [
+      "Maak het veld groot bij balbezit: breed en diep staan",
+      "Gebruik de jokers om de bal te verplaatsen naar de vrije kant",
+      "Bij balverlies direct druk zetten (omschakelen)"
+    ],
     "variaties": {
-      "makkelijker": ["Jokers ook in het vak", "Vijf passes is een punt", "Groter vak (25 × 25 m)"],
-      "moeilijker": ["Jokers maximaal één aanraking", "Een pass van joker naar joker telt dubbel", "Teams maximaal twee aanrakingen"]
+      "makkelijker": [
+        "Jokers ook in het vak",
+        "Vijf passes is een punt",
+        "Groter vak (25 × 25 m)"
+      ],
+      "moeilijker": [
+        "Jokers maximaal één aanraking",
+        "Een pass van joker naar joker telt dubbel",
+        "Teams maximaal twee aanrakingen"
+      ]
     },
     "tekening": {
       "veld": {
@@ -777,7 +692,10 @@
             {
               "type": "loop",
               "wie": "a2",
-              "naar": [18, 4.5],
+              "naar": [
+                18,
+                4.5
+              ],
               "duur": 0.8
             }
           ]
@@ -877,18 +795,35 @@
     "id": "veld-ps-5-5-2-jokers",
     "soort": "veld",
     "naam": "Positiespel 5 tegen 5 + 2 jokers: tien passes",
-    "categorieen": ["positiespel"],
+    "categorieen": [
+      "positiespel"
+    ],
     "uitleg": "Twee teams van vijf met twee jokers in het veld (7 tegen 5 bij balbezit). Tien passes achter elkaar is een punt. Gaat de bal over de lijn, dan speelt de trainer direct een nieuwe bal in bij het andere team.",
     "organisatie": "Vak van 28 × 22 m. Jokers (paars) in het midden van het vak. De trainer staat buiten de lijn met een stapel ballen.",
-    "benodigdheden": ["4 pionnen", "8+ ballen", "hesjes in 2 kleuren + 2 voor de jokers"],
+    "benodigdheden": [
+      "4 pionnen",
+      "8+ ballen",
+      "hesjes in 2 kleuren + 2 voor de jokers"
+    ],
     "spelersNodig": 12,
     "keepersNodig": 0,
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: jokers op de zijlijn, of wisselen per blok van 3 minuten.",
-    "coachpunten": ["Zoek de vrije man: wie heeft er geen tegenstander dichtbij?", "Driehoeken maken rond de balbezitter", "Hardop tellen helpt het team om rustig te blijven"],
+    "coachpunten": [
+      "Zoek de vrije man: wie heeft er geen tegenstander dichtbij?",
+      "Driehoeken maken rond de balbezitter",
+      "Hardop tellen helpt het team om rustig te blijven"
+    ],
     "variaties": {
-      "makkelijker": ["Zeven passes is een punt", "Jokers mogen vrij bewegen en onbeperkt raken"],
-      "moeilijker": ["Na tien passes ook nog op een klein goaltje scoren", "Maximaal twee aanrakingen", "Kleiner vak (24 × 18 m)"]
+      "makkelijker": [
+        "Zeven passes is een punt",
+        "Jokers mogen vrij bewegen en onbeperkt raken"
+      ],
+      "moeilijker": [
+        "Na tien passes ook nog op een klein goaltje scoren",
+        "Maximaal twee aanrakingen",
+        "Kleiner vak (24 × 18 m)"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1106,7 +1041,10 @@
             {
               "type": "pass",
               "van": "a5",
-              "naar": [31.5, 20]
+              "naar": [
+                31.5,
+                20
+              ]
             }
           ]
         },
@@ -1139,7 +1077,10 @@
             {
               "type": "loop",
               "wie": "b4",
-              "naar": [24, 18.5],
+              "naar": [
+                24,
+                18.5
+              ],
               "duur": 0.8
             }
           ]
@@ -1161,18 +1102,36 @@
     "id": "veld-ps-eindzone",
     "soort": "veld",
     "naam": "Eindzonespel 4 tegen 4",
-    "categorieen": ["positiespel", "partijvormen"],
+    "categorieen": [
+      "positiespel",
+      "partijvormen"
+    ],
     "uitleg": "Twee teams van vier. Je scoort door de bal in de eindzone van de tegenstander aan te nemen: een medespeler loopt in en krijgt de bal in de zone. Daarna krijgt het andere team de bal en valt het de andere kant op aan.",
     "organisatie": "Veld van 20 × 22 m met aan beide kanten een eindzone van 4 m diep. Teams met hesjes. Spelers mogen pas in de zone als de bal ernaartoe gespeeld wordt.",
-    "benodigdheden": ["8 pionnen", "1 bal", "hesjes"],
+    "benodigdheden": [
+      "8 pionnen",
+      "1 bal",
+      "hesjes"
+    ],
     "spelersNodig": 8,
     "keepersNodig": 0,
     "doorwisselbaar": false,
     "meerSpelers": "Met 9 spelers: een joker. Met meer: 5 tegen 5 in een groter vak, of een tweede veld.",
-    "coachpunten": ["Diepte maken: altijd iemand op de laatste lijn die kan inlopen", "Timing: loop pas in als de balbezitter kan passen", "Verdedigers: dek de ruimte achter je af, niet alleen de balbezitter"],
+    "coachpunten": [
+      "Diepte maken: altijd iemand op de laatste lijn die kan inlopen",
+      "Timing: loop pas in als de balbezitter kan passen",
+      "Verdedigers: dek de ruimte achter je af, niet alleen de balbezitter"
+    ],
     "variaties": {
-      "makkelijker": ["Inlopen met de bal (dribbel) telt ook", "Groter veld (25 × 30 m)"],
-      "moeilijker": ["Bal moet in één keer worden aangenomen in de zone", "Eerst 4 passes, dan pas mag je scoren", "Maximaal drie aanrakingen"]
+      "makkelijker": [
+        "Inlopen met de bal (dribbel) telt ook",
+        "Groter veld (25 × 30 m)"
+      ],
+      "moeilijker": [
+        "Bal moet in één keer worden aangenomen in de zone",
+        "Eerst 4 passes, dan pas mag je scoren",
+        "Maximaal drie aanrakingen"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1320,7 +1279,10 @@
             {
               "type": "loop",
               "wie": "a3",
-              "naar": [4, 8],
+              "naar": [
+                4,
+                8
+              ],
               "manier": "sprint",
               "start": 0.3
             }
@@ -1331,7 +1293,10 @@
             {
               "type": "loop",
               "wie": "a3",
-              "naar": [5, 3.2],
+              "naar": [
+                5,
+                3.2
+              ],
               "manier": "sprint",
               "duur": 1.2
             },
@@ -1360,18 +1325,35 @@
     "id": "veld-ps-omschakelen",
     "soort": "veld",
     "naam": "Omschakelen tussen twee vakken",
-    "categorieen": ["positiespel"],
+    "categorieen": [
+      "positiespel"
+    ],
     "uitleg": "Team rood speelt in vak 1 een rondo tegen twee verdedigers van blauw; de andere twee van blauw wachten in vak 2. Wint blauw de bal, dan speelt het hem direct naar vak 2 en sprinten beide verdedigers mee: blauw houdt daar de bal, en twee spelers van rood moeten zo snel mogelijk druk komen zetten.",
     "organisatie": "Twee vakken van 10 × 10 m met 6 m ertussen. Vier spelers per team. Rood start met vier spelers op de zijden van vak 1, blauw met twee verdedigers in vak 1 en twee wachtende spelers in vak 2.",
-    "benodigdheden": ["8 pionnen", "2–3 ballen", "hesjes"],
+    "benodigdheden": [
+      "8 pionnen",
+      "2–3 ballen",
+      "hesjes"
+    ],
     "spelersNodig": 8,
     "keepersNodig": 0,
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: jokers op de zijlijnen, of 5 tegen 5 in grotere vakken.",
-    "coachpunten": ["Na balwinst: eerste pass meteen naar het andere vak, voor de tegenstander zich herpakt", "Na balverlies: direct omschakelen en met twee spelers sprinten", "In vak 2 eerst breed en open staan, dan pas rustig rondspelen"],
+    "coachpunten": [
+      "Na balwinst: eerste pass meteen naar het andere vak, voor de tegenstander zich herpakt",
+      "Na balverlies: direct omschakelen en met twee spelers sprinten",
+      "In vak 2 eerst breed en open staan, dan pas rustig rondspelen"
+    ],
     "variaties": {
-      "makkelijker": ["Vakken dichter bij elkaar (3 m)", "Eén speler van rood gaat druk zetten in plaats van twee"],
-      "moeilijker": ["De lange bal moet in één keer worden doorgespeeld", "Punt voor rood als het de bal binnen 5 seconden terugwint", "Grotere afstand tussen de vakken (10 m)"]
+      "makkelijker": [
+        "Vakken dichter bij elkaar (3 m)",
+        "Eén speler van rood gaat druk zetten in plaats van twee"
+      ],
+      "moeilijker": [
+        "De lange bal moet in één keer worden doorgespeeld",
+        "Punt voor rood als het de bal binnen 5 seconden terugwint",
+        "Grotere afstand tussen de vakken (10 m)"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1493,7 +1475,10 @@
             {
               "type": "dek",
               "wie": "b2",
-              "tussen": ["a2", "a1"],
+              "tussen": [
+                "a2",
+                "a1"
+              ],
               "start": 0.15
             }
           ]
@@ -1518,32 +1503,64 @@
             {
               "type": "loop",
               "wie": "b2",
-              "via": [[14, 4.5]],
-              "naar": [30.6, 8],
+              "via": [
+                [
+                  14,
+                  4.5
+                ]
+              ],
+              "naar": [
+                30.6,
+                8
+              ],
               "manier": "sprint",
               "start": 0.25
             },
             {
               "type": "loop",
               "wie": "b1",
-              "via": [[16, 12.5]],
-              "naar": [21.4, 8],
+              "via": [
+                [
+                  16,
+                  12.5
+                ]
+              ],
+              "naar": [
+                21.4,
+                8
+              ],
               "manier": "sprint",
               "start": 0.15
             },
             {
               "type": "loop",
               "wie": "a2",
-              "via": [[17, 9.6]],
-              "naar": [24.6, 9.6],
+              "via": [
+                [
+                  17,
+                  9.6
+                ]
+              ],
+              "naar": [
+                24.6,
+                9.6
+              ],
               "manier": "sprint",
               "start": 0.35
             },
             {
               "type": "loop",
               "wie": "a1",
-              "via": [[17, 1.2]],
-              "naar": [27.4, 6.2],
+              "via": [
+                [
+                  17,
+                  1.2
+                ]
+              ],
+              "naar": [
+                27.4,
+                6.2
+              ],
               "manier": "sprint",
               "start": 0.5
             }
@@ -1574,18 +1591,35 @@
     "id": "veld-ps-door-de-linies",
     "soort": "veld",
     "naam": "Door de linies: overspelen van zone naar zone",
-    "categorieen": ["positiespel"],
+    "categorieen": [
+      "positiespel"
+    ],
     "uitleg": "Team rood heeft drie spelers in zone 1 en drie in zone 3; blauw verdedigt met drie spelers in de middenzone. Rood probeert de bal door of langs de middenzone naar de overkant te spelen. Eén blauwe speler mag in de zone met de bal druk zetten. Elke geslaagde pass naar de overkant is een punt.",
     "organisatie": "Veld van 20 × 30 m, verdeeld in drie zones van 10 m. Rood: 3 + 3 in de buitenste zones, blauw: 3 in het midden. Na 2 minuten wisselen de rollen.",
-    "benodigdheden": ["8 pionnen", "ballen", "hesjes"],
+    "benodigdheden": [
+      "8 pionnen",
+      "ballen",
+      "hesjes"
+    ],
     "spelersNodig": 9,
     "keepersNodig": 0,
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een extra speler per zone, of een joker op de zijlijn.",
-    "coachpunten": ["Verplaats de bal snel van links naar rechts om een gat in de middenzone te maken", "Speel door het gat zodra het open is: niet te lang wachten", "Blauw: schuif als blok mee en houd de ruimte tussen elkaar klein"],
+    "coachpunten": [
+      "Verplaats de bal snel van links naar rechts om een gat in de middenzone te maken",
+      "Speel door het gat zodra het open is: niet te lang wachten",
+      "Blauw: schuif als blok mee en houd de ruimte tussen elkaar klein"
+    ],
     "variaties": {
-      "makkelijker": ["Hoge bal over de middenzone mag ook", "Geen blauwe speler in de buitenzone"],
-      "moeilijker": ["Alleen over de grond", "Twee blauwe spelers mogen druk zetten", "Pass naar de overkant moet in één keer verder"]
+      "makkelijker": [
+        "Hoge bal over de middenzone mag ook",
+        "Geen blauwe speler in de buitenzone"
+      ],
+      "moeilijker": [
+        "Alleen over de grond",
+        "Twee blauwe spelers mogen druk zetten",
+        "Pass naar de overkant moet in één keer verder"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1720,21 +1754,30 @@
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [5, 18],
+              "naar": [
+                5,
+                18
+              ],
               "start": 0.2,
               "duur": 0.9
             },
             {
               "type": "loop",
               "wie": "b2",
-              "naar": [8.5, 16.5],
+              "naar": [
+                8.5,
+                16.5
+              ],
               "start": 0.2,
               "duur": 0.9
             },
             {
               "type": "loop",
               "wie": "b3",
-              "naar": [13, 15.5],
+              "naar": [
+                13,
+                15.5
+              ],
               "start": 0.2,
               "duur": 0.9
             }
@@ -1757,7 +1800,10 @@
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [6.5, 16],
+              "naar": [
+                6.5,
+                16
+              ],
               "start": 0.3,
               "duur": 0.9
             }
@@ -1773,14 +1819,20 @@
             {
               "type": "loop",
               "wie": "b3",
-              "naar": [15, 17.5],
+              "naar": [
+                15,
+                17.5
+              ],
               "start": 0.3,
               "duur": 0.9
             },
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [9.5, 16],
+              "naar": [
+                9.5,
+                16
+              ],
               "start": 0.3,
               "duur": 1
             }
@@ -1811,7 +1863,11 @@
     "id": "veld-cv-rondo-uitbreken",
     "soort": "veld",
     "naam": "Rondo 4 tegen 1 en uitbreken naar het doel",
-    "categorieen": ["positiespel", "afwerken", "pass-en-trap"],
+    "categorieen": [
+      "positiespel",
+      "afwerken",
+      "pass-en-trap"
+    ],
     "combinatievorm": true,
     "onderdelen": [
       "Rondo 4 tegen 1",
@@ -1831,10 +1887,21 @@
     "keepersNodig": 1,
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een tweede rondo ernaast, de rondo’s breken om de beurt uit.",
-    "coachpunten": ["Rondo: open staan en in twee aanrakingen spelen", "Uitbreken: pas gaan als de bal aan de juiste kant is, dan vol versnellen", "Steekpass in de loop, niet op de man"],
+    "coachpunten": [
+      "Rondo: open staan en in twee aanrakingen spelen",
+      "Uitbreken: pas gaan als de bal aan de juiste kant is, dan vol versnellen",
+      "Steekpass in de loop, niet op de man"
+    ],
     "variaties": {
-      "makkelijker": ["Rondo 4 tegen 0 (alleen passen)", "Uitbreken zonder tegenstander"],
-      "moeilijker": ["Rondo 4 tegen 2", "Verdediger mag mee terug tegen de uitbreker", "Afronden binnen 6 seconden na het uitbreken"]
+      "makkelijker": [
+        "Rondo 4 tegen 0 (alleen passen)",
+        "Uitbreken zonder tegenstander"
+      ],
+      "moeilijker": [
+        "Rondo 4 tegen 2",
+        "Verdediger mag mee terug tegen de uitbreker",
+        "Afronden binnen 6 seconden na het uitbreken"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1961,8 +2028,16 @@
             {
               "type": "loop",
               "wie": "a4",
-              "via": [[33.6, 19]],
-              "naar": [34.6, 13.6],
+              "via": [
+                [
+                  33.6,
+                  19
+                ]
+              ],
+              "naar": [
+                34.6,
+                13.6
+              ],
               "manier": "sprint"
             },
             {
@@ -1978,7 +2053,10 @@
             {
               "type": "dribbel",
               "wie": "a4",
-              "naar": [34.4, 11]
+              "naar": [
+                34.4,
+                11
+              ]
             }
           ]
         },
@@ -1987,7 +2065,10 @@
             {
               "type": "schot",
               "van": "a4",
-              "naar": [36.4, 0.3],
+              "naar": [
+                36.4,
+                0.3
+              ],
               "hoogte": "grond",
               "afloop": "goal"
             }

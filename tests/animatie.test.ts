@@ -3,7 +3,7 @@ import { afspeelTekening, animatieNaarLijnen, heeftLijnAnimatie, lijnenNaarAnima
 import { maakTijdlijn, standOp } from '../src/anim/timeline';
 import { fysiekeFouten } from '../src/anim/fysiek';
 import type { AnimatieStap, BalActie, Lijn, Tekening, VeldObject } from '../src/model/types';
-import { OEFENINGEN } from '../src/data/oefeningen';
+import { ARCHIEF, OEFENINGEN } from '../src/data/oefeningen';
 
 const speler = (id: string, x: number, y: number, extra: Partial<VeldObject> = {}): VeldObject => ({ id, soort: 'speler', team: 'A', nummer: Number(id.replace(/\D/g, '')) || 1, x, y, ...extra });
 const bal = (id: string, bij: string): VeldObject => ({ id, soort: 'bal', x: 0, y: 0, bij });
@@ -222,11 +222,11 @@ describe('kopie van een ingebouwde oefening: animatie → lijnen met stapnummers
       expect(telBal(terug.tekening)).toBe(telBal(o.tekening));
       expect(maakTijdlijn(terug.tekening).duur).toBeGreaterThan(1);
     }
-    expect(gelukt).toBeGreaterThanOrEqual(25);
+    expect(gelukt).toBeGreaterThanOrEqual(20);
   });
 
   it('stapnummers volgen de volgorde; tegelijk blijft tegelijk', () => {
-    const o = OEFENINGEN.find((x) => x.id === 'veld-pt-derde-man')!;
+    const o = [...OEFENINGEN, ...ARCHIEF].find((x) => x.id === 'veld-pt-derde-man')!;
     const r = animatieNaarLijnen(o.tekening);
     if (!('tekening' in r)) throw new Error(r.reden);
     const nummers = r.tekening.lijnen!.map((l) => l.stap ?? 0).filter(Boolean);

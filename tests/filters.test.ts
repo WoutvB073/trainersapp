@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { aantalActief, bewaarAantallen, filterOefeningen, GEEN_FILTERS, leesAantallen, pastBijFilters, type Filters } from '../src/engine/filters';
+import { aantalActief, bewaarAantallen, laatsteAantallen, filterOefeningen, GEEN_FILTERS, leesAantallen, pastBijFilters, type Filters } from '../src/engine/filters';
 import { apparaatFavorieten, FavorietenStore } from '../src/engine/favorieten';
 import { bewaarKeuze, contrast, leesKeuze, THEMAS, themaVariabelen } from '../src/engine/thema';
 import { OEFENINGEN } from '../src/data/oefeningen';
@@ -78,6 +78,14 @@ describe('filters', () => {
     expect(leesAantallen(plek)).toBeNull();
     plek.setItem('trainersapp.filterAantallen', '{kapot');
     expect(leesAantallen(plek)).toBeNull();
+  });
+
+  it('filter weer aanzetten: de laatst gebruikte aantallen (eerste keer 12 en 1)', () => {
+    const plek = geheugen();
+    expect(laatsteAantallen(plek)).toEqual({ spelers: 12, keepers: 1 });
+    bewaarAantallen({ spelers: 7, keepers: 0 }, plek);
+    bewaarAantallen(null, plek);
+    expect(laatsteAantallen(plek)).toEqual({ spelers: 7, keepers: 0 });
   });
 });
 

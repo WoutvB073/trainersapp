@@ -63,11 +63,11 @@ for (const [naam, vp] of [
 ]) {
   const page = await pagina(vp);
   await page.goto(`${BASE}?r=f${naam}#/`, { waitUntil: 'networkidle0' });
-  await page.evaluate(() => ['trainersapp.favorieten', 'trainersapp.filterAantallen', 'trainersapp.trainingen'].forEach((k) => localStorage.removeItem(k)));
+  await page.evaluate(() => ['trainersapp.favorieten', 'trainersapp.filterAantallen', 'trainersapp.filterAantallenLaatst', 'trainersapp.trainingen'].forEach((k) => localStorage.removeItem(k)));
   await page.goto(`${BASE}?r=f${naam}2#/veld`, { waitUntil: 'networkidle0' });
   await slaap(300);
   const totaal = await status(page);
-  controle(totaal >= 85, `${naam}: categorieën: totaal ${totaal}`);
+  controle(totaal >= 75, `${naam}: categorieën: totaal ${totaal}`);
   const paneelOpen = await page.evaluate(() => !!document.querySelector('.filter-paneel'));
   controle(naam === 'laptop' ? paneelOpen : !paneelOpen, `${naam}: filterpaneel ${paneelOpen ? 'open' : 'dicht'} bij het openen`);
   if (!paneelOpen) await klik(page, 'Filters', '.filter-knop');
@@ -114,9 +114,9 @@ for (const [naam, vp] of [
   await klik(page, 'Filters wissen', '.leeg button');
   controle((await status(page)) === alleAfwerken, `${naam}: na wissen ${await status(page)} (verwacht ${alleAfwerken})`);
   // Zoeken zonder hoofdletters en accenten.
-  await typ(page, 'KEEPER');
+  await typ(page, 'VOORZET');
   const gevonden = await kaarten(page);
-  controle(gevonden.length > 0 && gevonden.every((t) => /keeper/i.test(t)), `${naam}: zoeken op "KEEPER": ${gevonden.join(' | ')}`);
+  controle(gevonden.length > 0 && gevonden.every((t) => /voorzet/i.test(t)), `${naam}: zoeken op "VOORZET": ${gevonden.join(' | ')}`);
   await typ(page, '');
   // Geen combinatievorm-filter of -badge meer.
   if (!(await page.evaluate(() => !!document.querySelector('.filter-paneel')))) await klik(page, 'Filters', '.filter-knop');
@@ -124,7 +124,7 @@ for (const [naam, vp] of [
   controle(!combi, `${naam}: het woord Combinatievorm staat nog in beeld`);
 
   // Detailpagina: hartje.
-  await page.goto(`${BASE}?r=f${naam}4#/oefening/veld-pt-derde-man`, { waitUntil: 'networkidle0' });
+  await page.goto(`${BASE}?r=f${naam}4#/oefening/veld-pt-y-vorm`, { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.querySelector('.hart-groot')?.click());
   await slaap(200);
   const opDetail = await page.evaluate(() => document.querySelector('.hart-groot')?.getAttribute('aria-pressed'));

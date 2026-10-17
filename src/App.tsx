@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { bewaardeScroll, useRoute, type Route } from './router';
+import { bewaardeScroll, openTraining, useRoute, type Route } from './router';
 import { soortUitPad } from './data/categorieen';
 import { useNieuweVersie, werkBij } from './engine/update';
 import { Start } from './screens/Start';
@@ -93,9 +93,6 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
 export function App() {
   const [gekozen, setGekozen] = useState(browserGekozen);
   const route = useRoute();
-  // Training maken en weer weg zonder iets in te vullen: die lege training niet bewaren.
-  const openTraining = route.naam === 'training' || route.naam === 'kiezen' || route.naam === 'genereren' || route.naam === 'modus' ? route.id : undefined;
-  useEffect(() => trainingen.ruimLegeOp(openTraining), [openTraining]);
   const [installatieGetoond, setInstallatieGetoond] = useState(false);
   const scherm = kiesScherm({ standalone: isStandalone(), mobiel: omgeving.mobiel, browserGekozen: gekozen });
   const kies = (aan: boolean) => {
@@ -114,9 +111,9 @@ export function App() {
 
 function AppSchermen({ opInstalleren }: { opInstalleren?: () => void }) {
   const route = useRoute();
-  // Training maken en weer weg zonder iets in te vullen: die lege training niet bewaren.
-  const openTraining = route.naam === 'training' || route.naam === 'kiezen' || route.naam === 'modus' ? route.id : undefined;
-  useEffect(() => trainingen.ruimLegeOp(openTraining), [openTraining]);
+  // Training maken en weer weg zonder iets in te vullen: die lege training niet bewaren (één plek, alle schermen van een training).
+  const open = openTraining(route);
+  useEffect(() => trainingen.ruimLegeOp(open), [open]);
   const nieuweVersie = useNieuweVersie();
   const sleutel = JSON.stringify(route);
 

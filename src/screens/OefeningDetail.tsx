@@ -132,6 +132,12 @@ export function OefeningDetail({ id }: { id: string }) {
             ))}
           </div>
           <Labels oefening={oefening} />
+          {oefening.verwijderd && (
+            <p className="waarschuwing" role="note">
+              Deze oefening staat niet meer in de bibliotheek. Je ziet hem nog omdat hij in een training, gedeelde link, team of je favorieten zit. Wil je hem houden? Kopieer hem
+              naar je eigen oefeningen.
+            </p>
+          )}
           <Acties oefening={oefening} />
 
           {oefening.onderdelen && oefening.onderdelen.length > 0 && (

@@ -12,7 +12,7 @@ import { favorieten } from '../../engine/favorieten';
 import { ga } from '../../router';
 import { trainingen, useTraining } from '../../training/opslag';
 import { andereOefening, genereer, kiesOefening, oefeningenUit, recentGebruikt, type Generator, type KiesContext, type Onderdeel } from '../../training/genereren';
-import { MAX_AANTAL, verplaats, type Training } from '../../training/training';
+import { MAX_AANTAL, metNaam, verplaats, type Training } from '../../training/training';
 import type { Soort } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { Stapper } from './onderdelen';
@@ -38,7 +38,7 @@ function bewaarGenerator(id: string, g: Generator, vorige?: Generator): void {
   if (!t) return;
   const eerder = new Set((vorige?.keuzes ?? []).filter((k): k is string => !!k));
   const zelf = t.oefeningen.filter((o) => !eerder.has(o) && !g.keuzes.includes(o));
-  trainingen.bewaar({ ...t, generator: g, oefeningen: [...oefeningenUit(g), ...zelf] });
+  trainingen.bewaar(metNaam({ ...t, generator: g, oefeningen: [...oefeningenUit(g), ...zelf] }));
 }
 
 /** Eén gegenereerde oefening vervangen door een andere uit hetzelfde onderdeel (ook vanuit Training bewerken). */

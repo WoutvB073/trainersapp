@@ -19,7 +19,7 @@ for (const [naam, ua, w, h, mobiel] of toestellen) {
   const page = await browser.newPage();
   await page.setUserAgent(ua);
   await page.setViewport({ width: w, height: h, deviceScaleFactor: 2, isMobile: mobiel, hasTouch: mobiel });
-  await page.goto(`${BASE}#/oefening/veld-kaatsen-en-afwerken`, { waitUntil: 'networkidle0' });
+  await page.goto(`${BASE}#/oefening/veld-cv-kaats-doordiepen`, { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.fonts.ready);
   const r = await page.evaluate(() => ({
     poort: !!document.querySelector('.poort'),

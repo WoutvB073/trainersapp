@@ -1106,3 +1106,8 @@ h3 {
   text-align: center;
   border-radius: 12px;
 }
+
+.label-verwijderd {
+  background: var(--waarschuwing-licht, #fff1d6);
+  color: var(--waarschuwing);
+}

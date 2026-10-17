@@ -438,3 +438,17 @@
 .bord-pagina .hint {
   margin-top: 0;
 }
+
+.wedstrijd-maak {
+  margin-top: 14px;
+}
+
+.wedstrijd-twee {
+  grid-template-columns: 1fr 1fr;
+}
+
+.knop.knop-aan {
+  border-color: var(--primair);
+  background: var(--primair-licht);
+  color: var(--primair-tekst);
+}

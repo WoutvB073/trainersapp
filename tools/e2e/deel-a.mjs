@@ -279,7 +279,7 @@ for (const [naam, vp, modus] of [
   if (naam === 'telefoon') await foto(page, 'gen-training', 'Het resultaat is een gewone training', true);
 
   // ---------- A3: looplijnen ----------
-  await ga(page, '#/oefening/veld-pt-derde-man', `${naam}4`);
+  await ga(page, '#/oefening/veld-pt-y-vorm', `${naam}4`);
   await wachtOp(page, () => !!document.querySelector('[aria-label="Looplijnen"]'), null, `${naam}: knop Looplijnen`);
   controle((await page.evaluate(() => document.querySelector('[aria-label="Looplijnen"]')?.getAttribute('aria-pressed'))) === 'false', `${naam}: looplijnen staan standaard aan`);
   await klik(page, '2D', '.speler-groep button');
@@ -293,7 +293,7 @@ for (const [naam, vp, modus] of [
   controle(zonder && met && zonder !== met, `${naam}: looplijnen aanzetten verandert het beeld niet`);
   controle((await page.evaluate(() => localStorage.getItem('trainersapp.looplijnen'))) === '1', `${naam}: keuze looplijnen niet onthouden`);
   if (naam === 'telefoon') await foto(page, 'lijnen-aan', 'Animatie: looplijnen aan');
-  await ga(page, '#/oefening/veld-pt-derde-man', `${naam}5`);
+  await ga(page, '#/oefening/veld-pt-y-vorm', `${naam}5`);
   controle((await page.evaluate(() => document.querySelector('[aria-label="Looplijnen"]')?.getAttribute('aria-pressed'))) === 'true', `${naam}: na herladen staan looplijnen niet meer aan`);
   await klik(page, 'Looplijnen');
   // Miniatuur in de lijst houdt de looplijnen (zelfde tekening als voorheen).
@@ -347,7 +347,7 @@ for (const [naam, vp, modus] of [
 
   // ---------- A7: exporteren en importeren ----------
   await page.evaluate(() => {
-    localStorage.setItem('trainersapp.favorieten', JSON.stringify({ versie: 1, ids: ['veld-pt-derde-man'] }));
+    localStorage.setItem('trainersapp.favorieten', JSON.stringify({ versie: 1, ids: ['veld-pt-y-vorm'] }));
   });
   await ga(page, '#/instellingen', `${naam}9`);
   const blok = await page.evaluate(() => [...document.querySelectorAll('.blok h3')].map((h) => h.textContent));

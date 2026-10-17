@@ -3,10 +3,16 @@
     "id": "veld-lc-ladder-enkel",
     "soort": "veld",
     "naam": "Loopladder: één voet per vak",
-    "categorieen": ["loopcoordinatie", "warming-up"],
+    "categorieen": [
+      "loopcoordinatie",
+      "warming-up"
+    ],
     "uitleg": "Loop met kleine, snelle pasjes door de ladder: in elk vak één voet. Na de laatste sport versnel je 5 m naar de pion. Daarna jog je buitenom terug en sluit je achteraan in de rij aan.",
     "organisatie": "Loopladder van 4 m (9 vakken) met 1,5 m ervoor de startplek en 5 m erachter een pion. De spelers staan in een rij voor de ladder; de volgende start als de voorganger halverwege de ladder is.",
-    "benodigdheden": ["1 loopladder (4 m)", "1 pion"],
+    "benodigdheden": [
+      "1 loopladder (4 m)",
+      "1 pion"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
@@ -17,8 +23,15 @@
       "Na de ladder explosief versnellen"
     ],
     "variaties": {
-      "makkelijker": ["Twee voeten per vak, rustig tempo", "Zonder sprint aan het eind"],
-      "moeilijker": ["Op tijd: wie is het snelst zonder fouten?", "Na de ladder een bal aannemen en terugpassen", "Trainer steekt een kleur op: sprint naar die pion"]
+      "makkelijker": [
+        "Twee voeten per vak, rustig tempo",
+        "Zonder sprint aan het eind"
+      ],
+      "moeilijker": [
+        "Op tijd: wie is het snelst zonder fouten?",
+        "Na de ladder een bal aannemen en terugpassen",
+        "Trainer steekt een kleur op: sprint naar die pion"
+      ]
     },
     "tekening": {
       "veld": {
@@ -74,13 +87,21 @@
           "x": 5,
           "y": 4,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 2.4,
             "stappen": [
               {
@@ -88,7 +109,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [10.8, 4],
+                    "naar": [
+                      10.8,
+                      4
+                    ],
                     "manier": "voetenwerk"
                   }
                 ]
@@ -98,7 +122,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [15.5, 4],
+                    "naar": [
+                      15.5,
+                      4
+                    ],
                     "manier": "sprint"
                   }
                 ]
@@ -122,17 +149,33 @@
     "id": "veld-lc-ladder-in-uit",
     "soort": "veld",
     "naam": "Loopladder zijwaarts: in-in-uit-uit",
-    "categorieen": ["loopcoordinatie"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Je staat naast de ladder met je gezicht naar de trainer en verplaatst je zijwaarts langs de ladder: twee voeten in het vak, twee voeten erbuiten, dan het volgende vak. Na de ladder jog je naar de pion en buitenom terug.",
     "organisatie": "Loopladder van 4 m. De spelers staan in een rij naast het begin van de ladder, aan de kant van de trainer. Na de ladder 3,5 m joggen naar een pion; terug aan de andere kant van de rij.",
-    "benodigdheden": ["1 loopladder (4 m)", "1 pion"],
+    "benodigdheden": [
+      "1 loopladder (4 m)",
+      "1 pion"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Heupen en schouders blijven naar de trainer gericht", "Laag en licht op de voorvoet", "Tel hardop mee: in-in-uit-uit"],
+    "coachpunten": [
+      "Heupen en schouders blijven naar de trainer gericht",
+      "Laag en licht op de voorvoet",
+      "Tel hardop mee: in-in-uit-uit"
+    ],
     "variaties": {
-      "makkelijker": ["Eerst wandelend het ritme leren", "Alleen in-in (beide voeten in elk vak)"],
-      "moeilijker": ["Hoger tempo met de armen actief mee", "Na de ladder een bal aannemen", "Terug in-uit achteruit"]
+      "makkelijker": [
+        "Eerst wandelend het ritme leren",
+        "Alleen in-in (beide voeten in elk vak)"
+      ],
+      "moeilijker": [
+        "Hoger tempo met de armen actief mee",
+        "Na de ladder een bal aannemen",
+        "Terug in-uit achteruit"
+      ]
     },
     "tekening": {
       "veld": {
@@ -188,13 +231,21 @@
           "x": 5.4,
           "y": 5,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 3.2,
             "stappen": [
               {
@@ -203,17 +254,47 @@
                     "type": "loop",
                     "wie": "@",
                     "via": [
-                      [7.22, 4],
-                      [7.67, 5],
-                      [8.11, 4],
-                      [8.56, 5],
-                      [9, 4],
-                      [9.44, 5],
-                      [9.89, 4],
-                      [10.33, 5],
-                      [10.78, 4]
+                      [
+                        7.22,
+                        4
+                      ],
+                      [
+                        7.67,
+                        5
+                      ],
+                      [
+                        8.11,
+                        4
+                      ],
+                      [
+                        8.56,
+                        5
+                      ],
+                      [
+                        9,
+                        4
+                      ],
+                      [
+                        9.44,
+                        5
+                      ],
+                      [
+                        9.89,
+                        4
+                      ],
+                      [
+                        10.33,
+                        5
+                      ],
+                      [
+                        10.78,
+                        4
+                      ]
                     ],
-                    "naar": [11.4, 5],
+                    "naar": [
+                      11.4,
+                      5
+                    ],
                     "manier": "voetenwerk",
                     "kijk": 90
                   }
@@ -224,7 +305,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [14.9, 5]
+                    "naar": [
+                      14.9,
+                      5
+                    ]
                   }
                 ]
               },
@@ -233,8 +317,16 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "via": [[14.9, 6.9]],
-                    "naar": [6.2, 6.9],
+                    "via": [
+                      [
+                        14.9,
+                        6.9
+                      ]
+                    ],
+                    "naar": [
+                      6.2,
+                      6.9
+                    ],
                     "spoor": false
                   }
                 ]
@@ -258,10 +350,15 @@
     "id": "veld-lc-lage-hordes",
     "soort": "veld",
     "naam": "Lage hordes: knie hoog",
-    "categorieen": ["loopcoordinatie"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Loop over zes lage hordes met tussen elke twee hordes één pas. Til je knie hoog en zet je voet snel en actief onder je lichaam neer. Na de laatste horde sprint je naar de pion en jog je buitenom terug.",
     "organisatie": "Zes lage hordes (15 cm) op 80 cm van elkaar, 2 m na de startplek. Pion op 5 m na de laatste horde. De volgende start als de voorganger over de derde horde is.",
-    "benodigdheden": ["6 lage hordes (of stokken op pionnen)", "1 pion"],
+    "benodigdheden": [
+      "6 lage hordes (of stokken op pionnen)",
+      "1 pion"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
@@ -272,7 +369,10 @@
       "Na de laatste horde direct versnellen"
     ],
     "variaties": {
-      "makkelijker": ["Hordes op 1 m afstand", "Stokken plat op de grond in plaats van hordes"],
+      "makkelijker": [
+        "Hordes op 1 m afstand",
+        "Stokken plat op de grond in plaats van hordes"
+      ],
       "moeilijker": [
         "Hoge hordes (30 cm)",
         "Zijwaarts over de hordes",
@@ -373,13 +473,21 @@
           "x": 4.5,
           "y": 4,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 2.4,
             "stappen": [
               {
@@ -387,7 +495,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [11.2, 4],
+                    "naar": [
+                      11.2,
+                      4
+                    ],
                     "manier": "hordes"
                   }
                 ]
@@ -397,7 +508,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [15.5, 4],
+                    "naar": [
+                      15.5,
+                      4
+                    ],
                     "manier": "sprint"
                   }
                 ]
@@ -421,10 +535,15 @@
     "id": "veld-lc-slalom",
     "soort": "veld",
     "naam": "Slalom tussen de paaltjes",
-    "categorieen": ["loopcoordinatie"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Loop zo kort mogelijk om zes paaltjes heen, afwisselend links en rechts. Na het laatste paaltje versnel je naar de pion. Terug jog je buiten de baan om.",
     "organisatie": "Zes paaltjes op een rechte lijn, 1,5 m uit elkaar. Pion 4 m na het laatste paaltje. De spelers staan in een rij 2 m voor het eerste paaltje.",
-    "benodigdheden": ["6 paaltjes (of pionnen)", "1 pion"],
+    "benodigdheden": [
+      "6 paaltjes (of pionnen)",
+      "1 pion"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
@@ -435,7 +554,10 @@
       "Na het laatste paaltje versnellen"
     ],
     "variaties": {
-      "makkelijker": ["Paaltjes 2 m uit elkaar", "Rustig tempo, eerst de looplijn leren"],
+      "makkelijker": [
+        "Paaltjes 2 m uit elkaar",
+        "Rustig tempo, eerst de looplijn leren"
+      ],
       "moeilijker": [
         "Met bal: dribbel met binnen- en buitenkant",
         "Twee banen naast elkaar: wie is eerst?",
@@ -524,13 +646,21 @@
           "x": 4.5,
           "y": 3.5,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 2.2,
             "stappen": [
               {
@@ -539,14 +669,35 @@
                     "type": "loop",
                     "wie": "@",
                     "via": [
-                      [6.5, 2.5],
-                      [8, 4.5],
-                      [9.5, 2.5],
-                      [11, 4.5],
-                      [12.5, 2.5],
-                      [14, 4.5]
+                      [
+                        6.5,
+                        2.5
+                      ],
+                      [
+                        8,
+                        4.5
+                      ],
+                      [
+                        9.5,
+                        2.5
+                      ],
+                      [
+                        11,
+                        4.5
+                      ],
+                      [
+                        12.5,
+                        2.5
+                      ],
+                      [
+                        14,
+                        4.5
+                      ]
                     ],
-                    "naar": [17.6, 3.5]
+                    "naar": [
+                      17.6,
+                      3.5
+                    ]
                   }
                 ]
               },
@@ -555,8 +706,16 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "via": [[17.6, 6.2]],
-                    "naar": [6, 6.2],
+                    "via": [
+                      [
+                        17.6,
+                        6.2
+                      ]
+                    ],
+                    "naar": [
+                      6,
+                      6.2
+                    ],
                     "spoor": false
                   }
                 ]
@@ -580,17 +739,33 @@
     "id": "veld-lc-t-test",
     "soort": "veld",
     "naam": "T-test: sprint, zijwaarts, achteruit",
-    "categorieen": ["loopcoordinatie"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Sprint van A naar B, schuif zijwaarts naar C, dan zijwaarts naar D aan de andere kant, terug naar B, en loop achteruit naar A. Tik bij elke pion de pion aan met je hand. Je blijft de hele tijd met je gezicht naar voren kijken.",
     "organisatie": "Vier pionnen in een T: A (start) en B 10 m uit elkaar; C en D 5 m links en rechts van B. Laat de spelers om de beurt lopen; neem de tijd op voor een wedstrijdelement.",
-    "benodigdheden": ["4 pionnen", "stopwatch (optioneel)"],
+    "benodigdheden": [
+      "4 pionnen",
+      "stopwatch (optioneel)"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Bij elke pion laag zakken en aantikken", "Zijwaarts: voeten niet kruisen, heupen blijven naar voren", "Achteruit: kleine pasjes, gewicht boven de voeten"],
+    "coachpunten": [
+      "Bij elke pion laag zakken en aantikken",
+      "Zijwaarts: voeten niet kruisen, heupen blijven naar voren",
+      "Achteruit: kleine pasjes, gewicht boven de voeten"
+    ],
     "variaties": {
-      "makkelijker": ["Halve afstanden (5 m en 2,5 m)", "Zonder aantikken"],
-      "moeilijker": ["Op tijd, met een tweede poging om je tijd te verbeteren", "Trainer roept bij B 'links' of 'rechts' (reageren)", "Na de T-test naar een bal sprinten en scoren op een klein doeltje"]
+      "makkelijker": [
+        "Halve afstanden (5 m en 2,5 m)",
+        "Zonder aantikken"
+      ],
+      "moeilijker": [
+        "Op tijd, met een tweede poging om je tijd te verbeteren",
+        "Trainer roept bij B 'links' of 'rechts' (reageren)",
+        "Na de T-test naar een bal sprinten en scoren op een klein doeltje"
+      ]
     },
     "tekening": {
       "veld": {
@@ -668,7 +843,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [8, 4.8],
+              "naar": [
+                8,
+                4.8
+              ],
               "manier": "sprint"
             }
           ]
@@ -678,7 +856,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [3.7, 4.6],
+              "naar": [
+                3.7,
+                4.6
+              ],
               "manier": "zijwaarts",
               "kijk": -90
             }
@@ -689,7 +870,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [12.3, 4.6],
+              "naar": [
+                12.3,
+                4.6
+              ],
               "manier": "zijwaarts",
               "kijk": -90
             }
@@ -700,7 +884,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [8, 4.8],
+              "naar": [
+                8,
+                4.8
+              ],
               "manier": "zijwaarts",
               "kijk": -90
             }
@@ -711,7 +898,10 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [8, 14.8],
+              "naar": [
+                8,
+                14.8
+              ],
               "manier": "achteruit"
             }
           ]
@@ -723,17 +913,33 @@
     "id": "veld-lc-ringen",
     "soort": "veld",
     "naam": "Ringen: hinkelen en spreidsprong",
-    "categorieen": ["loopcoordinatie"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Spring door de ringen: in een enkele ring land je op één voet, bij twee ringen naast elkaar land je met je voeten gespreid in beide ringen (zoals hinkelen). Na de laatste ring sprint je naar de pion en jog je terug.",
     "organisatie": "Ringen in een rij van ± 7 m: enkel, enkel, enkel, dubbel, enkel, dubbel, enkel, dubbel. Afstand ± 90 cm. Pion 4 m na de laatste ring.",
-    "benodigdheden": ["11 ringen (of hoedjes)", "1 pion"],
+    "benodigdheden": [
+      "11 ringen (of hoedjes)",
+      "1 pion"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Landen op de voorvoet, zacht door de knieën", "Armen helpen mee bij de afzet", "Ritme vasthouden: niet stoppen tussen de ringen"],
+    "coachpunten": [
+      "Landen op de voorvoet, zacht door de knieën",
+      "Armen helpen mee bij de afzet",
+      "Ritme vasthouden: niet stoppen tussen de ringen"
+    ],
     "variaties": {
-      "makkelijker": ["In elke ring met twee voeten landen", "Ringen dichter bij elkaar"],
-      "moeilijker": ["Enkele ringen alleen op het zwakke been", "Zijwaarts door de ringen", "Na de laatste ring reageren op een kleur van de trainer"]
+      "makkelijker": [
+        "In elke ring met twee voeten landen",
+        "Ringen dichter bij elkaar"
+      ],
+      "moeilijker": [
+        "Enkele ringen alleen op het zwakke been",
+        "Zijwaarts door de ringen",
+        "Na de laatste ring reageren op een kleur van de trainer"
+      ]
     },
     "tekening": {
       "veld": {
@@ -852,13 +1058,21 @@
           "x": 4.4,
           "y": 3.5,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 2.6,
             "stappen": [
               {
@@ -866,7 +1080,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [13.5, 3.5],
+                    "naar": [
+                      13.5,
+                      3.5
+                    ],
                     "manier": "sprong"
                   }
                 ]
@@ -876,7 +1093,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [16.6, 3.5],
+                    "naar": [
+                      16.6,
+                      3.5
+                    ],
                     "manier": "sprint"
                   }
                 ]
@@ -886,8 +1106,16 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "via": [[16.6, 5.8]],
-                    "naar": [6, 5.8],
+                    "via": [
+                      [
+                        16.6,
+                        5.8
+                      ]
+                    ],
+                    "naar": [
+                      6,
+                      5.8
+                    ],
                     "spoor": false
                   }
                 ]
@@ -911,10 +1139,15 @@
     "id": "veld-lc-stokken",
     "soort": "veld",
     "naam": "Stokkenloop: paslengte en frequentie",
-    "categorieen": ["loopcoordinatie"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Loop over de stokken met precies één pas tussen elke twee stokken. De stokken liggen steeds iets verder uit elkaar, dus je pas wordt langer en je snelheid hoger. Na de laatste stok sprint je door naar de pion.",
     "organisatie": "Zeven stokken plat op de grond, dwars op de looprichting. Afstanden lopen op van 80 cm tot 1,3 m. Pion 4,5 m na de laatste stok. Terug buitenom joggen.",
-    "benodigdheden": ["7 stokken (of hoedjes als markering)", "1 pion"],
+    "benodigdheden": [
+      "7 stokken (of hoedjes als markering)",
+      "1 pion"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
@@ -925,8 +1158,15 @@
       "Versnel mee met de grotere afstanden"
     ],
     "variaties": {
-      "makkelijker": ["Alle stokken op 80 cm", "Minder stokken (4)"],
-      "moeilijker": ["Afstanden tot 1,5 m (voor JO15+)", "Kleinere afstanden (60 cm) voor hoge frequentie", "Na de stokken een bal meenemen en scoren op een klein goal"]
+      "makkelijker": [
+        "Alle stokken op 80 cm",
+        "Minder stokken (4)"
+      ],
+      "moeilijker": [
+        "Afstanden tot 1,5 m (voor JO15+)",
+        "Kleinere afstanden (60 cm) voor hoge frequentie",
+        "Na de stokken een bal meenemen en scoren op een klein goal"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1029,13 +1269,21 @@
           "x": 4.4,
           "y": 3.5,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 2.4,
             "stappen": [
               {
@@ -1043,7 +1291,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [12.9, 3.5],
+                    "naar": [
+                      12.9,
+                      3.5
+                    ],
                     "manier": "hordes"
                   }
                 ]
@@ -1053,7 +1304,10 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "naar": [16.6, 3.5],
+                    "naar": [
+                      16.6,
+                      3.5
+                    ],
                     "manier": "sprint"
                   }
                 ]
@@ -1063,8 +1317,16 @@
                   {
                     "type": "loop",
                     "wie": "@",
-                    "via": [[16.6, 5.6]],
-                    "naar": [6, 5.6],
+                    "via": [
+                      [
+                        16.6,
+                        5.6
+                      ]
+                    ],
+                    "naar": [
+                      6,
+                      5.6
+                    ],
                     "spoor": false
                   }
                 ]
@@ -1088,20 +1350,30 @@
     "id": "veld-lc-kleurenreactie",
     "soort": "veld",
     "naam": "Kleurenreactie in tweetallen",
-    "categorieen": ["loopcoordinatie", "warming-up"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Twee spelers staan in het midden met hun gezicht naar de trainer. De trainer roept een kleur; beide spelers sprinten naar dat hoedje, tikken het aan en sprinten terug naar het midden. Wie het eerst terug is, wint een punt.",
     "organisatie": "Vier gekleurde hoedjes op 4 m rond een middenpunt (voor, achter, links, rechts). De spelers staan 1,5–2 m naast elkaar in het midden; de trainer staat op 6 m voor hen.",
-    "benodigdheden": ["4 gekleurde hoedjes per tweetal"],
+    "benodigdheden": [
+      "4 gekleurde hoedjes per tweetal"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Licht door de knieën en op de voorvoet: klaar om weg te gaan", "Eerste pas explosief in de goede richting", "Afremmen met kleine pasjes, laag aantikken en snel omdraaien"],
+    "coachpunten": [
+      "Licht door de knieën en op de voorvoet: klaar om weg te gaan",
+      "Eerste pas explosief in de goede richting",
+      "Afremmen met kleine pasjes, laag aantikken en snel omdraaien"
+    ],
     "variaties": {
-      "makkelijker": ["Trainer wijst de kleur ook aan (zien én horen)", "Maar twee kleuren"],
+      "makkelijker": [
+        "Trainer wijst de kleur ook aan (zien én horen)",
+        "Maar twee kleuren"
+      ],
       "moeilijker": [
         "Trainer roept twee kleuren achter elkaar",
         "\"Niet rood\": naar het hoedje tegenover rood",
-        "Met een bal aan de voet",
         "Wie het eerst bij het hoedje is, krijgt een bal van de trainer: 1 tegen 1 op een klein doeltje"
       ]
     },
@@ -1177,13 +1449,19 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [7.2, 3.7],
+              "naar": [
+                7.2,
+                3.7
+              ],
               "manier": "sprint"
             },
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [8.8, 3.7],
+              "naar": [
+                8.8,
+                3.7
+              ],
               "manier": "sprint",
               "start": 0.15
             }
@@ -1194,13 +1472,19 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [7.1, 7],
+              "naar": [
+                7.1,
+                7
+              ],
               "manier": "sprint"
             },
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [8.9, 7],
+              "naar": [
+                8.9,
+                7
+              ],
               "manier": "sprint",
               "start": 0.12
             }
@@ -1215,14 +1499,20 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [7.2, 10.3],
+              "naar": [
+                7.2,
+                10.3
+              ],
               "manier": "sprint",
               "start": 0.1
             },
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [8.8, 10.3],
+              "naar": [
+                8.8,
+                10.3
+              ],
               "manier": "sprint"
             }
           ]
@@ -1232,14 +1522,20 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [7.1, 7],
+              "naar": [
+                7.1,
+                7
+              ],
               "manier": "sprint",
               "start": 0.08
             },
             {
               "type": "loop",
               "wie": "b1",
-              "naar": [8.9, 7],
+              "naar": [
+                8.9,
+                7
+              ],
               "manier": "sprint"
             }
           ]
@@ -1251,7 +1547,9 @@
     "id": "veld-lc-estafette",
     "soort": "veld",
     "naam": "Coördinatie-estafette",
-    "categorieen": ["loopcoordinatie", "warming-up", "spelletjes"],
+    "categorieen": [
+      "loopcoordinatie"
+    ],
     "uitleg": "Twee teams doen tegelijk een parcours: door de ladder (één voet per vak), slalom om drie paaltjes, rechtsom de pion en buiten de baan terugsprinten. Achteraan aansluiten; dan mag de volgende. Welk team is als eerste helemaal rond?",
     "organisatie": "Twee gelijke banen naast elkaar, 7 m uit elkaar: ladder van 4 m, drie paaltjes op 1,5 m, keerpion 3,5 m verder. De teams staan in een rij voor hun eigen baan.",
     "benodigdheden": [
@@ -1263,9 +1561,16 @@
     "spelersNodig": 6,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Techniek gaat voor snelheid: een fout in de ladder is opnieuw", "Kort en laag om de pion draaien", "Moedig je teamgenoten aan en sluit snel aan"],
+    "coachpunten": [
+      "Techniek gaat voor snelheid: een fout in de ladder is opnieuw",
+      "Kort en laag om de pion draaien",
+      "Moedig je teamgenoten aan en sluit snel aan"
+    ],
     "variaties": {
-      "makkelijker": ["Alleen slalom en pion", "Ladder met twee voeten per vak"],
+      "makkelijker": [
+        "Alleen slalom en pion",
+        "Ladder met twee voeten per vak"
+      ],
       "moeilijker": [
         "Met een bal door de slalom",
         "Extra onderdeel met lage hordes",
@@ -1402,14 +1707,22 @@
           "x": 4.5,
           "y": 4,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         },
         {
           "id": "rB",
           "x": 4.5,
           "y": 11,
           "richting": 180,
-          "spelers": ["b1", "b2", "b3"]
+          "spelers": [
+            "b1",
+            "b2",
+            "b3"
+          ]
         }
       ],
       "animatie": [
@@ -1418,14 +1731,20 @@
             [
               {
                 "herhaal": {
-                  "spelers": ["a1", "a2"],
+                  "spelers": [
+                    "a1",
+                    "a2"
+                  ],
                   "stappen": [
                     {
                       "acties": [
                         {
                           "type": "loop",
                           "wie": "@",
-                          "naar": [10.8, 4],
+                          "naar": [
+                            10.8,
+                            4
+                          ],
                           "manier": "voetenwerk"
                         }
                       ]
@@ -1435,10 +1754,26 @@
                         {
                           "type": "loop",
                           "wie": "@",
-                          "via": [[12.5, 3], [14, 5], [15.5, 3]],
+                          "via": [
+                            [
+                              12.5,
+                              3
+                            ],
+                            [
+                              14,
+                              5
+                            ],
+                            [
+                              15.5,
+                              3
+                            ]
+                          ],
                           "om": "pA",
                           "kant": "rechts",
-                          "naar": [17.5, 5.8],
+                          "naar": [
+                            17.5,
+                            5.8
+                          ],
                           "manier": "sprint"
                         }
                       ]
@@ -1460,14 +1795,20 @@
             [
               {
                 "herhaal": {
-                  "spelers": ["b1", "b2"],
+                  "spelers": [
+                    "b1",
+                    "b2"
+                  ],
                   "stappen": [
                     {
                       "acties": [
                         {
                           "type": "loop",
                           "wie": "@",
-                          "naar": [10.8, 11],
+                          "naar": [
+                            10.8,
+                            11
+                          ],
                           "manier": "voetenwerk"
                         }
                       ]
@@ -1477,10 +1818,26 @@
                         {
                           "type": "loop",
                           "wie": "@",
-                          "via": [[12.5, 10], [14, 12], [15.5, 10]],
+                          "via": [
+                            [
+                              12.5,
+                              10
+                            ],
+                            [
+                              14,
+                              12
+                            ],
+                            [
+                              15.5,
+                              10
+                            ]
+                          ],
                           "om": "pB",
                           "kant": "rechts",
-                          "naar": [17.5, 12.8],
+                          "naar": [
+                            17.5,
+                            12.8
+                          ],
                           "manier": "sprint"
                         }
                       ]
@@ -1508,7 +1865,10 @@
     "id": "veld-cv-hordes-sprint-duel",
     "soort": "veld",
     "naam": "Hordes, sprint naar de bal en 1 tegen 1",
-    "categorieen": ["loopcoordinatie", "partijvormen"],
+    "categorieen": [
+      "loopcoordinatie",
+      "partijvormen"
+    ],
     "combinatievorm": true,
     "onderdelen": [
       "Hordes",
@@ -1518,14 +1878,29 @@
     ],
     "uitleg": "Twee spelers gaan tegelijk over hun eigen rij hordes. Aan het eind speelt de trainer een bal tussen hen in: wie hem het eerst heeft, valt aan op een van de twee kleine doeltjes; de ander verdedigt.",
     "organisatie": "Twee rijen van vier hordes, 6 m uit elkaar. Trainer 8 m na de hordes tussen de twee kleine doeltjes. Daarna aansluiten bij de andere rij.",
-    "benodigdheden": ["8 lage hordes", "2 kleine doeltjes", "Ballen"],
+    "benodigdheden": [
+      "8 lage hordes",
+      "2 kleine doeltjes",
+      "Ballen"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Hordes: snel en precies, niet de horde raken", "Sprint: lage start na de laatste horde, kijk naar de bal", "Aanvaller: lichaam tussen bal en verdediger; verdediger: niet duiken"],
+    "coachpunten": [
+      "Hordes: snel en precies, niet de horde raken",
+      "Sprint: lage start na de laatste horde, kijk naar de bal",
+      "Aanvaller: lichaam tussen bal en verdediger; verdediger: niet duiken"
+    ],
     "variaties": {
-      "makkelijker": ["Zonder hordes, starten op een signaal", "Bal dichter bij de aanvaller"],
-      "moeilijker": ["Zijwaarts over de hordes", "2 tegen 2 met vier hordesrijen", "Na een doelpunt direct een tweede bal: omschakelen"]
+      "makkelijker": [
+        "Zonder hordes, starten op een signaal",
+        "Bal dichter bij de aanvaller"
+      ],
+      "moeilijker": [
+        "Zijwaarts over de hordes",
+        "2 tegen 2 met vier hordesrijen",
+        "Na een doelpunt direct een tweede bal: omschakelen"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1644,13 +2019,19 @@
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [8, 11.6],
+              "naar": [
+                8,
+                11.6
+              ],
               "manier": "hordes"
             },
             {
               "type": "loop",
               "wie": "a2",
-              "naar": [14, 11.6],
+              "naar": [
+                14,
+                11.6
+              ],
               "manier": "hordes"
             }
           ]
@@ -1660,12 +2041,18 @@
             {
               "type": "pass",
               "van": "t1",
-              "naar": [10.4, 8]
+              "naar": [
+                10.4,
+                8
+              ]
             },
             {
               "type": "loop",
               "wie": "a1",
-              "naar": [10, 8.8],
+              "naar": [
+                10,
+                8.8
+              ],
               "manier": "sprint",
               "start": 0.2
             },
@@ -1683,8 +2070,16 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [[8.6, 6.4]],
-              "naar": [6.2, 4.4],
+              "via": [
+                [
+                  8.6,
+                  6.4
+                ]
+              ],
+              "naar": [
+                6.2,
+                4.4
+              ],
               "manier": "sprint"
             },
             {
@@ -1701,7 +2096,10 @@
             {
               "type": "schot",
               "van": "a1",
-              "naar": [5, 0.6],
+              "naar": [
+                5,
+                0.6
+              ],
               "hoogte": "grond"
             }
           ]

@@ -134,6 +134,14 @@ export function tekenScene(
     const s = stand.objecten.get(o.id);
     if (s) tekenPersoon(b, o, s, k, meerKeepers);
   }
+  // Namen (tactiekbord) onder de poppetjes.
+  if (tekening.namen) {
+    for (const o of objecten) {
+      if (!o.naam || (o.soort !== 'speler' && o.soort !== 'keeper')) continue;
+      const s = stand.objecten.get(o.id);
+      if (s) tekenNaam(b, o.naam, [s.x, s.y]);
+    }
+  }
   // Een bal bij een persoon komt aan de rand van het poppetje te liggen, niet over het rugnummer.
   const personen: Punt[] = [];
   for (const o of objecten) {
@@ -201,6 +209,22 @@ function tekenGras(b: Beeld, w: number, h: number, k: Kleuren) {
   }
 }
 
+/**
+ * Maten van de veldlijnen. Op een gewoon veld (68 × 105) precies de echte maten; op een kleiner veld (pupillen, 6 of 8
+ * tegen 8) schalen ze mee, zodat het strafschopgebied niet breder wordt dan het veld.
+ */
+export function lijnMaten(B: number, lengteHeel: number) {
+  return {
+    zestienB: Math.min(40.32, B * 0.6),
+    zestienL: Math.min(16.5, lengteHeel * 0.16),
+    doelgebiedB: Math.min(18.32, B * 0.27),
+    doelgebiedL: Math.min(5.5, lengteHeel * 0.055),
+    stip: Math.min(11, lengteHeel * 0.105),
+    cirkel: Math.min(9.15, B * 0.135),
+    hoek: Math.min(1, B * 0.015),
+  };
+}
+
 function tekenLijnen(b: Beeld, t: Tekening, k: Kleuren) {
   if (t.veld.type === 'leeg') return;
   const { ctx } = b;
@@ -230,17 +254,21 @@ function tekenLijnen(b: Beeld, t: Tekening, k: Kleuren) {
 
   rect(0, 0, B, L);
   const m = B / 2;
+  const lm = lijnMaten(B, t.veld.type === 'half' ? L * 2 : L);
   // Aan de kant van het goal bovenaan (y = 0).
   const helft = (gespiegeld: boolean) => {
     const y = (v: number) => (gespiegeld ? L - v : v);
     const r = (x: number, y0: number, w: number, h: number) => rect(x, gespiegeld ? L - y0 - h : y0, w, h);
-    r(m - 20.16, 0, 40.32, 16.5);
-    r(m - 9.16, 0, 18.32, 5.5);
-    stip(m, y(11));
+    r(m - lm.zestienB / 2, 0, lm.zestienB, lm.zestienL);
+    r(m - lm.doelgebiedB / 2, 0, lm.doelgebiedB, lm.doelgebiedL);
+    stip(m, y(lm.stip));
     // Boog van de zestien: het deel van de cirkel (r = 9,15 rond de stip) buiten het strafschopgebied.
-    const a = Math.acos(5.5 / 9.15);
-    if (gespiegeld) boog(m, L - 11, 9.15, -Math.PI / 2 - a, -Math.PI / 2 + a);
-    else boog(m, 11, 9.15, Math.PI / 2 - a, Math.PI / 2 + a);
+    const binnen = lm.zestienL - lm.stip;
+    if (binnen < lm.cirkel) {
+      const a = Math.acos(binnen / lm.cirkel);
+      if (gespiegeld) boog(m, L - lm.stip, lm.cirkel, -Math.PI / 2 - a, -Math.PI / 2 + a);
+      else boog(m, lm.stip, lm.cirkel, Math.PI / 2 - a, Math.PI / 2 + a);
+    }
     // Hoekschopbogen.
     if (gespiegeld) {
       boog(0, L, 1, -Math.PI / 2, 0);
@@ -259,11 +287,11 @@ function tekenLijnen(b: Beeld, t: Tekening, k: Kleuren) {
     ctx.moveTo(a[0], a[1]);
     ctx.lineTo(c[0], c[1]);
     ctx.stroke();
-    boog(m, L / 2, 9.15, 0, Math.PI * 2);
+    boog(m, L / 2, lm.cirkel, 0, Math.PI * 2);
     stip(m, L / 2);
   } else {
     // Half veld: middenlijn is de onderkant, met de halve middencirkel.
-    boog(m, L, 9.15, Math.PI, Math.PI * 2);
+    boog(m, L, lm.cirkel, Math.PI, Math.PI * 2);
     stip(m, L);
   }
   ctx.restore();
@@ -785,6 +813,28 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren, keepe
     ctx.strokeText(label, 0, r * 0.06);
     ctx.fillText(label, 0, r * 0.06);
   }
+  ctx.restore();
+}
+
+/** Naam in een donker pilletje onder een persoon. */
+function tekenNaam(b: Beeld, naam: string, p: Punt) {
+  const { ctx } = b;
+  const r = maat(b, 0.75, 10);
+  const c = px(b, p);
+  const grootte = Math.max(9 * b.dpr, Math.min(r * 0.95, 15 * b.dpr));
+  ctx.save();
+  ctx.font = `650 ${Math.round(grootte)}px Inter, system-ui, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const w = ctx.measureText(naam).width + grootte * 0.9;
+  const h = grootte * 1.45;
+  const y = c[1] + r * 1.15 + h / 2;
+  ctx.fillStyle = 'rgba(10,25,15,0.78)';
+  ctx.beginPath();
+  ctx.roundRect(c[0] - w / 2, y - h / 2, w, h, h / 2);
+  ctx.fill();
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(naam, c[0], y + grootte * 0.04);
   ctx.restore();
 }
 

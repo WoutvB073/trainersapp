@@ -56,6 +56,11 @@ export type Route =
   | { naam: 'gegevens'; id: string }
   | { naam: 'onbekend' };
 
+/** De training waar deze route bij hoort (bewerken, kiezen, genereren, trainingsmodus); die wordt niet als leeg opgeruimd. */
+export function openTraining(route: Route): string | undefined {
+  return route.naam === 'training' || route.naam === 'kiezen' || route.naam === 'genereren' || route.naam === 'modus' ? route.id : undefined;
+}
+
 export function leesHash(hash: string): Route {
   const delen = (hash.replace(/^#/, '') || '/').split('/').filter(Boolean).map(decodeURIComponent);
   const [a, b, c, d] = delen;

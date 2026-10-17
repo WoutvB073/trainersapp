@@ -57,7 +57,7 @@ for (const [thema, modus] of [
   for (const [pad, naam] of [
     ['#/instellingen', 'instellingen'],
     ['#/veld/afwerken', 'lijst'],
-    ['#/oefening/veld-pt-derde-man', 'detail'],
+    ['#/oefening/veld-pt-y-vorm', 'detail'],
   ]) {
     await page.goto(`${BASE}?r=s${thema}${naam}${pad}`, { waitUntil: 'networkidle0' });
     await slaap(naam === 'detail' ? 1500 : 300);

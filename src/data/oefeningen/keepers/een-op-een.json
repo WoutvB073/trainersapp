@@ -1,122 +1,35 @@
 [
   {
-    "id": "keeper-1o1-uitlopen-afremmen",
-    "soort": "keeper",
-    "naam": "Uitlopen en afremmen",
-    "categorieen": ["een-op-een"],
-    "uitleg": "De trainer dribbelt als aanvaller recht op het doel af. De keeper loopt uit om de hoek te verkleinen en remt op tijd af met kleine pasjes, zodat hij in basishouding staat als de aanvaller schiet. Het schot gaat laag naast hem: korte, lage duik.",
-    "organisatie": "Keeper in het doel, trainer met bal op 22 m. De keeper vertrekt als de aanvaller de bal ver voor zich uit speelt of opkijkt; hij staat stil op ± 5–6 m van het doel als de aanvaller op 11 m is.",
-    "benodigdheden": ["Goal", "Ballen"],
-    "spelersNodig": 0,
-    "keepersNodig": 1,
-    "doorwisselbaar": true,
-    "coachpunten": ["Uitlopen op de lijn tussen bal en midden van het doel", "Afremmen met kleine pasjes en stilstaan op het moment van het schot", "In basishouding: gewicht naar voren, handen laag naast het lichaam"],
-    "variaties": {
-      "makkelijker": ["Aanvaller dribbelt langzaam", "Schot pas na een teken van de trainer"],
-      "moeilijker": ["Aanvaller kiest: schieten, passeren of chippen", "Start vanaf de zijkant (schuin)", "Tweede aanvaller loopt mee voor een rebound"]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 23,
-        "y": -3,
-        "breedte": 22,
-        "lengte": 27
-      },
-      "camera": "achter",
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 34,
-          "y": 1.5,
-          "nummer": 1
-        },
-        {
-          "id": "t1",
-          "soort": "trainer",
-          "x": 34.6,
-          "y": 22,
-          "kijkrichting": -90
-        },
-        {
-          "id": "b1",
-          "soort": "bal",
-          "x": 34.6,
-          "y": 21.6,
-          "bij": "t1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.3,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "t1",
-              "naar": [34.6, 12]
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [34.3, 4.8],
-              "manier": "sprint",
-              "start": 1.2
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [34.3, 5.6],
-              "manier": "voetenwerk",
-              "start": 1.9,
-              "duur": 0.8
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "t1",
-              "naar": "k1",
-              "hoogte": "grond",
-              "duikNaar": [32.8, 5.8]
-            }
-          ]
-        },
-        {
-          "duur": 1,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "keeper-1o1-spreidsprong",
     "soort": "keeper",
     "naam": "Spreidsprong: blokken van dichtbij",
-    "categorieen": ["een-op-een"],
+    "categorieen": [
+      "een-op-een"
+    ],
     "uitleg": "Komt de aanvaller vrij voor de keeper en schiet hij van dichtbij, dan is duiken te laat. De keeper maakt zich groot in een spreidsprong (stervorm): armen en benen wijd, lichaam naar voren. De bal kaatst tegen hem af.",
     "organisatie": "Keeper loopt uit tot ± 6 m, de trainer dribbelt tot 4–5 m voor hem en schiet hard op het lichaam of er net naast.",
-    "benodigdheden": ["Goal", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Pas springen als de aanvaller schiet, niet ervoor", "Armen en benen wijd, handen open en naar voren", "Lichaam iets naar voren, zodat de bal weg van het doel kaatst"],
+    "coachpunten": [
+      "Pas springen als de aanvaller schiet, niet ervoor",
+      "Armen en benen wijd, handen open en naar voren",
+      "Lichaam iets naar voren, zodat de bal weg van het doel kaatst"
+    ],
     "variaties": {
-      "makkelijker": ["Zachte schoten, eerst alleen de houding", "Tegen een stilstaande bal: trainer trapt van 4 m"],
-      "moeilijker": ["Aanvaller kiest: schieten of panna", "Hard schieten van 3 m", "Na het blok direct op en de rebound pakken"]
+      "makkelijker": [
+        "Zachte schoten, eerst alleen de houding",
+        "Tegen een stilstaande bal: trainer trapt van 4 m"
+      ],
+      "moeilijker": [
+        "Aanvaller kiest: schieten of panna",
+        "Hard schieten van 3 m",
+        "Na het blok direct op en de rebound pakken"
+      ]
     },
     "tekening": {
       "veld": {
@@ -168,19 +81,28 @@
             {
               "type": "dribbel",
               "wie": "t1",
-              "naar": [34.6, 10.6]
+              "naar": [
+                34.6,
+                10.6
+              ]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [34.4, 5.2],
+              "naar": [
+                34.4,
+                5.2
+              ],
               "manier": "sprint",
               "start": 0.4
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [34.4, 6],
+              "naar": [
+                34.4,
+                6
+              ],
               "manier": "voetenwerk",
               "start": 1.1,
               "duur": 0.7
@@ -192,11 +114,17 @@
             {
               "type": "schot",
               "van": "t1",
-              "naar": [33, 0],
+              "naar": [
+                33,
+                0
+              ],
               "hoogte": 0.6,
               "blokt": "k1",
               "blokSoort": "ster",
-              "afloopNaar": [41, 10]
+              "afloopNaar": [
+                41,
+                10
+              ]
             }
           ]
         },
@@ -211,17 +139,33 @@
     "id": "keeper-1o1-knieblok",
     "soort": "keeper",
     "naam": "Knieblok bij een schot van dichtbij",
-    "categorieen": ["een-op-een"],
+    "categorieen": [
+      "een-op-een"
+    ],
     "uitleg": "Keeper 2 komt als aanvaller schuin op het doel af en schiet laag van dichtbij. Keeper 1 maakt een knieblok: één knie op de grond, het andere been opzij, armen wijd. Zo is de onderkant dicht. Daarna wisselen ze: keeper 1 pakt de bal en wordt aanvaller.",
     "organisatie": "Keeper in het doel, aanvaller start op 12 m schuin voor het doel. Na elk blok wisselen. Twee keepers per doel; bij drie keepers wacht de derde met een bal.",
-    "benodigdheden": ["Goal", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 2,
     "doorwisselbaar": true,
-    "coachpunten": ["Knie zakt naar de kant van het schot, onderbeen dwars achter de bal", "Lichaam rechtop en armen wijd: de keeper is één muur", "Niet te vroeg zakken: blijf in basishouding tot het schot komt"],
+    "coachpunten": [
+      "Knie zakt naar de kant van het schot, onderbeen dwars achter de bal",
+      "Lichaam rechtop en armen wijd: de keeper is één muur",
+      "Niet te vroeg zakken: blijf in basishouding tot het schot komt"
+    ],
     "variaties": {
-      "makkelijker": ["Aanvaller schiet vanuit stilstand van 5 m", "Rustig schieten"],
-      "moeilijker": ["Aanvaller mag ook passeren", "Na het blok direct een tweede bal (rebound)", "Vanaf beide kanten"]
+      "makkelijker": [
+        "Aanvaller schiet vanuit stilstand van 5 m",
+        "Rustig schieten"
+      ],
+      "moeilijker": [
+        "Aanvaller mag ook passeren",
+        "Na het blok direct een tweede bal (rebound)",
+        "Vanaf beide kanten"
+      ]
     },
     "tekening": {
       "veld": {
@@ -274,12 +218,18 @@
             {
               "type": "dribbel",
               "wie": "k2",
-              "naar": [37.2, 6.6]
+              "naar": [
+                37.2,
+                6.6
+              ]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [35.4, 3.4],
+              "naar": [
+                35.4,
+                3.4
+              ],
               "manier": "voetenwerk",
               "start": 0.4,
               "duur": 1
@@ -291,11 +241,17 @@
             {
               "type": "schot",
               "van": "k2",
-              "naar": [33.2, 0],
+              "naar": [
+                33.2,
+                0
+              ],
               "hoogte": "grond",
               "blokt": "k1",
               "blokSoort": "knie",
-              "afloopNaar": [40.6, 6.4]
+              "afloopNaar": [
+                40.6,
+                6.4
+              ]
             }
           ]
         },
@@ -308,13 +264,24 @@
             {
               "type": "loop",
               "wie": "k2",
-              "via": [[32.4, 4.5]],
-              "naar": [34.6, 1.5]
+              "via": [
+                [
+                  32.4,
+                  4.5
+                ]
+              ],
+              "naar": [
+                34.6,
+                1.5
+              ]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [40.1, 6],
+              "naar": [
+                40.1,
+                6
+              ],
               "start": 0.7
             }
           ]
@@ -332,7 +299,10 @@
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [39, 12],
+              "naar": [
+                39,
+                12
+              ],
               "kijk": -110
             }
           ]
@@ -348,17 +318,34 @@
     "id": "keeper-1o1-plukken",
     "soort": "keeper",
     "naam": "Plukken: de bal van de voet halen",
-    "categorieen": ["een-op-een", "laag-duiken"],
+    "categorieen": [
+      "een-op-een",
+      "laag-duiken"
+    ],
     "uitleg": "De trainer dribbelt op de keeper af en speelt de bal net te ver voor zich uit. Dat is het moment: de keeper duikt laag, met de handen eerst, naar de bal en plukt hem weg voordat de aanvaller er weer bij is.",
     "organisatie": "Keeper loopt uit tot ± 6 m, trainer dribbelt vanaf 18 m en neemt op 10 m een te grote aanname. Afwisselend: soms houdt de trainer de bal dicht bij zich (dan afwachten in basishouding).",
-    "benodigdheden": ["Goal", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Wachten op de te grote aanname: dan pas gaan", "Laag en zijwaarts duiken, handen eerst naar de bal, hoofd achter de armen", "Lichaam dwars voor de bal, zodat de aanvaller er niet langs kan"],
+    "coachpunten": [
+      "Wachten op de te grote aanname: dan pas gaan",
+      "Laag en zijwaarts duiken, handen eerst naar de bal, hoofd achter de armen",
+      "Lichaam dwars voor de bal, zodat de aanvaller er niet langs kan"
+    ],
     "variaties": {
-      "makkelijker": ["Trainer speelt de bal duidelijk te ver", "Langzaam dribbelen"],
-      "moeilijker": ["Aanvaller kiest: te ver of dichtbij houden", "Aanvaller van schuin opzij", "Met een tweede aanvaller die de bal kan overnemen"]
+      "makkelijker": [
+        "Trainer speelt de bal duidelijk te ver",
+        "Langzaam dribbelen"
+      ],
+      "moeilijker": [
+        "Aanvaller kiest: te ver of dichtbij houden",
+        "Aanvaller van schuin opzij",
+        "Met een tweede aanvaller die de bal kan overnemen"
+      ]
     },
     "tekening": {
       "veld": {
@@ -410,19 +397,28 @@
             {
               "type": "dribbel",
               "wie": "t1",
-              "naar": [34.6, 11.6]
+              "naar": [
+                34.6,
+                11.6
+              ]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [34.3, 5.2],
+              "naar": [
+                34.3,
+                5.2
+              ],
               "manier": "sprint",
               "start": 0.4
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [34.3, 5.8],
+              "naar": [
+                34.3,
+                5.8
+              ],
               "manier": "voetenwerk",
               "start": 1.1,
               "duur": 0.6
@@ -434,12 +430,18 @@
             {
               "type": "pass",
               "van": "t1",
-              "naar": [34.4, 8.4]
+              "naar": [
+                34.4,
+                8.4
+              ]
             },
             {
               "type": "loop",
               "wie": "t1",
-              "naar": [34.6, 10.6],
+              "naar": [
+                34.6,
+                10.6
+              ],
               "start": 0.1,
               "duur": 0.6
             }
@@ -464,17 +466,33 @@
     "id": "keeper-1o1-steekpass",
     "soort": "keeper",
     "naam": "Steekpass: eerder bij de bal dan de aanvaller",
-    "categorieen": ["een-op-een"],
+    "categorieen": [
+      "een-op-een"
+    ],
     "uitleg": "Keeper 2 rolt een steekpass in de ruimte voor het doel; de trainer sprint als aanvaller achter de bal aan. Keeper 1 beslist meteen: uitkomen, sprinten en zich op de bal werpen voordat de aanvaller er is. Daarna wisselen de keepers.",
     "organisatie": "Aangever (keeper 2) op 25 m, aanvaller (trainer) start op 18 m schuin voor het doel. Bal in de ruimte op 9–11 m van het doel. Na elke bal wisselen keeper 1 en 2.",
-    "benodigdheden": ["Goal", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 2,
     "doorwisselbaar": true,
-    "coachpunten": ["Meteen beslissen: kan ik de bal eerder halen? Dan gaan, zonder twijfel", "Laatste meters: laag worden en met het lichaam dwars op de bal", "Roepen 'keeper!' en de bal vastklemmen"],
+    "coachpunten": [
+      "Meteen beslissen: kan ik de bal eerder halen? Dan gaan, zonder twijfel",
+      "Laatste meters: laag worden en met het lichaam dwars op de bal",
+      "Roepen 'keeper!' en de bal vastklemmen"
+    ],
     "variaties": {
-      "makkelijker": ["Bal dichter bij het doel", "Aanvaller start verder weg"],
-      "moeilijker": ["Bal precies tussen keeper en aanvaller in: soms is blijven staan beter", "Pass harder", "Aanvaller start dichterbij"]
+      "makkelijker": [
+        "Bal dichter bij het doel",
+        "Aanvaller start verder weg"
+      ],
+      "moeilijker": [
+        "Bal precies tussen keeper en aanvaller in: soms is blijven staan beter",
+        "Pass harder",
+        "Aanvaller start dichterbij"
+      ]
     },
     "tekening": {
       "veld": {
@@ -534,21 +552,30 @@
             {
               "type": "pass",
               "van": "k2",
-              "naar": [34.4, 10.6],
+              "naar": [
+                34.4,
+                10.6
+              ],
               "worp": "onderhands",
               "hoogte": "grond"
             },
             {
               "type": "loop",
               "wie": "t1",
-              "naar": [36.4, 13.6],
+              "naar": [
+                36.4,
+                13.6
+              ],
               "manier": "sprint",
               "start": 0.6
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [34.3, 7.8],
+              "naar": [
+                34.3,
+                7.8
+              ],
               "manier": "sprint",
               "start": 0.7
             }
@@ -573,17 +600,33 @@
     "id": "keeper-1o1-aanvaller-opzij",
     "soort": "keeper",
     "naam": "Hoek verkleinen bij een aanvaller van opzij",
-    "categorieen": ["een-op-een"],
+    "categorieen": [
+      "een-op-een"
+    ],
     "uitleg": "De trainer dribbelt schuin van de zijkant naar het doel. De keeper schuift mee en staat steeds op de lijn tussen bal en midden van het doel, iets dichter bij de eerste paal. Het lage schot bij de eerste paal stompt hij met een lage duik naast het doel.",
     "organisatie": "Keeper in het doel, trainer start op de rand van de zestien aan de zijkant (12 m van de achterlijn). Om en om van links en rechts.",
-    "benodigdheden": ["Goal", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["De eerste paal moet dicht: daar mag je nooit gepasseerd worden", "Blijf op de lijn tussen bal en midden van het doel, en kom iets naar voren", "Lage bal bij de paal: wegstompen naast het doel, niet terug voor het doel"],
+    "coachpunten": [
+      "De eerste paal moet dicht: daar mag je nooit gepasseerd worden",
+      "Blijf op de lijn tussen bal en midden van het doel, en kom iets naar voren",
+      "Lage bal bij de paal: wegstompen naast het doel, niet terug voor het doel"
+    ],
     "variaties": {
-      "makkelijker": ["Aanvaller staat stil en schiet", "Alleen schoten op de eerste paal"],
-      "moeilijker": ["Aanvaller kiest: eerste paal, verre hoek of breedtepass", "Tweede aanvaller loopt in op de tweede paal", "Vanaf beide kanten na elkaar"]
+      "makkelijker": [
+        "Aanvaller staat stil en schiet",
+        "Alleen schoten op de eerste paal"
+      ],
+      "moeilijker": [
+        "Aanvaller kiest: eerste paal, verre hoek of breedtepass",
+        "Tweede aanvaller loopt in op de tweede paal",
+        "Vanaf beide kanten na elkaar"
+      ]
     },
     "tekening": {
       "veld": {
@@ -637,8 +680,16 @@
             {
               "type": "dribbel",
               "wie": "t1",
-              "via": [[44, 10]],
-              "naar": [41.6, 7]
+              "via": [
+                [
+                  44,
+                  10
+                ]
+              ],
+              "naar": [
+                41.6,
+                7
+              ]
             }
           ]
         },
@@ -647,10 +698,16 @@
             {
               "type": "schot",
               "van": "t1",
-              "naar": [36.9, 0.3],
+              "naar": [
+                36.9,
+                0.3
+              ],
               "hoogte": "grond",
               "afloop": "stompt",
-              "afloopNaar": [41, -2]
+              "afloopNaar": [
+                41,
+                -2
+              ]
             }
           ]
         },
@@ -665,19 +722,40 @@
     "id": "keeper-cv-knieblok-voorzet",
     "soort": "keeper",
     "naam": "Knieblok, opstaan en voorzet vangen",
-    "categorieen": ["een-op-een", "voorzetten"],
+    "categorieen": [
+      "een-op-een",
+      "voorzetten"
+    ],
     "combinatievorm": true,
-    "onderdelen": ["Knieblok", "Opstaan en positie", "Voorzet vangen"],
+    "onderdelen": [
+      "Knieblok",
+      "Opstaan en positie",
+      "Voorzet vangen"
+    ],
     "uitleg": "Keeper 2 komt schuin op het doel af en schiet laag: keeper 1 maakt een knieblok. Hij komt meteen overeind en kiest positie voor de voorzet van de trainer vanaf de andere kant, komt uit en vangt die in de sprong.",
     "organisatie": "Aanvaller (keeper 2) start op 12 m schuin voor het doel, trainer op de flank aan de andere kant op 11 m van de achterlijn. Na elke ronde wisselen de keepers.",
-    "benodigdheden": ["Goal", "2 ballen"],
+    "benodigdheden": [
+      "Goal",
+      "2 ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 2,
     "doorwisselbaar": true,
-    "coachpunten": ["Knieblok: knie naar de kant van het schot, armen wijd", "Opstaan en meteen kijken waar de volgende bal vandaan komt", "Voorzet: inschatten, uitkomen, vangen op het hoogste punt"],
+    "coachpunten": [
+      "Knieblok: knie naar de kant van het schot, armen wijd",
+      "Opstaan en meteen kijken waar de volgende bal vandaan komt",
+      "Voorzet: inschatten, uitkomen, vangen op het hoogste punt"
+    ],
     "variaties": {
-      "makkelijker": ["Na het knieblok even rust voor de voorzet", "Voorzet met de hand gooien"],
-      "moeilijker": ["Aanvaller loopt na zijn schot in op de voorzet", "Voorzet harder en dichter bij het doel (stompen)", "Na de vang direct uitgooien naar de aanvaller"]
+      "makkelijker": [
+        "Na het knieblok even rust voor de voorzet",
+        "Voorzet met de hand gooien"
+      ],
+      "moeilijker": [
+        "Aanvaller loopt na zijn schot in op de voorzet",
+        "Voorzet harder en dichter bij het doel (stompen)",
+        "Na de vang direct uitgooien naar de aanvaller"
+      ]
     },
     "tekening": {
       "veld": {
@@ -746,12 +824,18 @@
             {
               "type": "dribbel",
               "wie": "k2",
-              "naar": [37.2, 6.6]
+              "naar": [
+                37.2,
+                6.6
+              ]
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [35.4, 3.4],
+              "naar": [
+                35.4,
+                3.4
+              ],
               "manier": "voetenwerk",
               "start": 0.4,
               "duur": 1
@@ -763,12 +847,18 @@
             {
               "type": "schot",
               "van": "k2",
-              "naar": [33.2, 0],
+              "naar": [
+                33.2,
+                0
+              ],
               "worp": "voet",
               "hoogte": "grond",
               "blokt": "k1",
               "blokSoort": "knie",
-              "afloopNaar": [38.6, 8.6]
+              "afloopNaar": [
+                38.6,
+                8.6
+              ]
             }
           ]
         },
@@ -777,7 +867,10 @@
             {
               "type": "loop",
               "wie": "k2",
-              "naar": [42.5, 13]
+              "naar": [
+                42.5,
+                13
+              ]
             }
           ]
         },
@@ -790,7 +883,10 @@
             {
               "type": "pass",
               "van": "t1",
-              "naar": [33, 5.6],
+              "naar": [
+                33,
+                5.6
+              ],
               "hoogte": "hoog",
               "uitkomen": "k1"
             }
@@ -807,19 +903,41 @@
     "id": "keeper-cv-steekpass-uitgooien",
     "soort": "keeper",
     "naam": "Steekpass onderscheppen en snel uitgooien",
-    "categorieen": ["een-op-een", "passing"],
+    "categorieen": [
+      "een-op-een",
+      "passing"
+    ],
     "combinatievorm": true,
-    "onderdelen": ["Steekpass onderscheppen", "Opstaan", "Snel uitgooien"],
+    "onderdelen": [
+      "Steekpass onderscheppen",
+      "Opstaan",
+      "Snel uitgooien"
+    ],
     "uitleg": "Keeper 2 rolt een steekpass, de trainer sprint als aanvaller mee. Keeper 1 is eerder bij de bal en werpt zich erop. Hij staat meteen op en gooit de bal bovenhands vóór keeper 2 uit, die intussen naar de flank sprint: van verdedigen naar aanvallen.",
     "organisatie": "Aangever (keeper 2) op 25 m, aanvaller (trainer) op 18 m schuin voor het doel. Keeper 2 sprint na zijn pass naar een hoedje op de flank. Na elke ronde wisselen de keepers.",
-    "benodigdheden": ["Goal", "2 hoedjes", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "2 hoedjes",
+      "Ballen"
+    ],
     "spelersNodig": 0,
     "keepersNodig": 2,
     "doorwisselbaar": true,
-    "coachpunten": ["Meteen beslissen en zonder twijfel gaan", "Opstaan en opkijken: waar is de vrije medespeler?", "Gooi vóór de loper uit, niet op hem"],
+    "coachpunten": [
+      "Meteen beslissen en zonder twijfel gaan",
+      "Opstaan en opkijken: waar is de vrije medespeler?",
+      "Gooi vóór de loper uit, niet op hem"
+    ],
     "variaties": {
-      "makkelijker": ["Aanvaller start verder weg", "Uitgooien naar een stilstaande medespeler"],
-      "moeilijker": ["Bal tussen keeper en aanvaller in: soms is blijven staan beter", "Uittrap (volley) naar de verre flank", "Trainer zet daarna druk op de ontvanger"]
+      "makkelijker": [
+        "Aanvaller start verder weg",
+        "Uitgooien naar een stilstaande medespeler"
+      ],
+      "moeilijker": [
+        "Bal tussen keeper en aanvaller in: soms is blijven staan beter",
+        "Uittrap (volley) naar de verre flank",
+        "Trainer zet daarna druk op de ontvanger"
+      ]
     },
     "tekening": {
       "veld": {
@@ -885,21 +1003,30 @@
             {
               "type": "pass",
               "van": "k2",
-              "naar": [34.4, 10.6],
+              "naar": [
+                34.4,
+                10.6
+              ],
               "worp": "onderhands",
               "hoogte": "grond"
             },
             {
               "type": "loop",
               "wie": "t1",
-              "naar": [36.4, 13.6],
+              "naar": [
+                36.4,
+                13.6
+              ],
               "manier": "sprint",
               "start": 0.6
             },
             {
               "type": "loop",
               "wie": "k1",
-              "naar": [34.3, 7.8],
+              "naar": [
+                34.3,
+                7.8
+              ],
               "manier": "sprint",
               "start": 0.7
             }
@@ -914,7 +1041,10 @@
             {
               "type": "loop",
               "wie": "k2",
-              "naar": [46.6, 20.4],
+              "naar": [
+                46.6,
+                20.4
+              ],
               "manier": "sprint",
               "start": 0.2
             }
@@ -937,7 +1067,10 @@
             {
               "type": "pass",
               "van": "k1",
-              "naar": [47.6, 21.8],
+              "naar": [
+                47.6,
+                21.8
+              ],
               "worp": "bovenhands",
               "hoogte": "halfhoog"
             }

@@ -1,4 +1,4 @@
-import type { Punt, Tekening, VeldObject } from '../model/types';
+import type { Tekening, VeldObject } from '../model/types';
 import { maakId } from '../model/id';
 import { naarBase64Url, uitBase64Url } from '../training/training';
 
@@ -190,31 +190,57 @@ export function veldTekening(type: 'heel' | 'half'): Tekening {
   return { veld: { type }, camera: 'schuin', objecten, lijnen: [] };
 }
 
+/** Veld in de maat van de spelvorm met de goals die erbij horen (4 tegen 4 kleine doeltjes, 6 en 8 tegen 8 jeugdgoals). */
+export function veldVoorSpelvorm(vorm: Spelvorm): Tekening {
+  const { breedte: B, lengte: L } = spelvorm(vorm).veld;
+  const goal = (id: string, y: number, hoek?: number): VeldObject => {
+    const basis = { id, x: r3(B / 2), y, ...(hoek ? { hoek } : {}) };
+    if (vorm === '4v4') return { ...basis, soort: 'klein-goal' };
+    if (vorm === '11v11') return { ...basis, soort: 'goal' };
+    return { ...basis, soort: 'goal', breedte: 5, hoogte: 2 };
+  };
+  // Camera van boven: dan staan beide teams helemaal in beeld (schuin valt de eigen keeper soms buiten beeld).
+  return { veld: { type: 'heel', breedte: B, lengte: L }, camera: 'boven', objecten: [goal('g1', 0), goal('g2', L, 180)], lijnen: [] };
+}
+
 /**
- * Tactiekbord vanuit een opstelling: jouw spelers (team A) op hun plek op een heel veld (eigen goal onderaan), de
- * tegenstander (team B) in dezelfde spelvorm gespiegeld, keepers in hun goal en de bal op de middenstip.
+ * Tactiekbord met beide teams volledig opgesteld, elk in zijn eigen helft (zoals bij de aftrap): jouw team (A, rood)
+ * onder, de tegenstander (B, blauw) boven, keepers in hun goal en de bal op de middenstip. De onderlinge opstelling
+ * (links/rechts, rijen) komt uit de formatie of uit de opstelling (met de namen, die je op het bord kunt aanzetten).
  */
-export function bordUitOpstelling(o: Opstelling): Tekening {
-  const t = veldTekening('heel');
-  const B = 68;
-  const L = 105;
-  const naar = (p: Pick<Plek, 'x' | 'y'>, spiegel: boolean): Punt => [r3(p.x * B), r3((spiegel ? 1 - p.y : p.y) * L)];
+export function opgesteldBord(vorm: Spelvorm, formatieA: string, formatieB = formatieA, plekkenA?: Plek[]): Tekening {
+  const t = veldVoorSpelvorm(vorm);
+  const info = spelvorm(vorm);
+  const { breedte: B, lengte: L } = info.veld;
+  const helft = L / 2;
+  // Ruimte rond de middenlijn (de tegenstander staat bij de aftrap buiten de middencirkel).
+  const gat = Math.max(1.6, Math.min(9.15, B * 0.135) * 0.6);
+  // Rij-hoogte 0,3 (aanval) … 0,94 (keeper) → tussen de middenlijn en het eigen goal.
+  const diepte = (y: number) => Math.max(0, Math.min(1, (y - 0.3) / 0.64));
+  const yA = (y: number) => r3(Math.min(L - 1.2, helft + gat + diepte(y) * (helft - gat - L * 0.13)));
   const objecten = [...t.objecten];
-  const info = spelvorm(o.spelvorm);
-  for (const p of o.plekken) {
-    const [x, y] = naar(p, false);
-    if (info.keeper && p.nummer === 1) objecten.push({ id: `k1`, soort: 'keeper', nummer: 1, x, y: Math.min(y, 103.5) });
-    else objecten.push({ id: `a${p.nummer}`, soort: 'speler', team: 'A', nummer: p.nummer, x, y, kijkrichting: -90 });
+  const eigen = plekkenA ?? formatiePlekken(vorm, formatieA);
+  for (const p of eigen) {
+    const x = r3(Math.max(1, Math.min(B - 1, p.x * B)));
+    const n = (p as Plek).naam;
+    const naam = n ? { naam: n } : {};
+    if (info.keeper && p.nummer === 1) objecten.push({ id: 'k1', soort: 'keeper', nummer: 1, x, y: r3(L - 1.5), ...naam });
+    else objecten.push({ id: `a${p.nummer}`, soort: 'speler', team: 'A', nummer: p.nummer, x, y: yA(p.y), kijkrichting: -90, ...naam });
   }
-  for (const p of formatiePlekken(o.spelvorm, info.formaties[0]!)) {
-    // Tegenstander in zijn eigen helft: keeper op de lijn, de rijen verdeeld tot ± 38 m (niet op dezelfde hoogte als jouw rijen).
+  for (const p of formatiePlekken(vorm, formatieB)) {
     const x = r3(p.x * B);
-    const y = r3(Math.max(1.5, Math.min(48, 1.5 + ((0.94 - p.y) / 0.64) * 36)));
     if (info.keeper && p.nummer === 1) objecten.push({ id: 'k2', soort: 'keeper', nummer: 2, x, y: 1.5 });
-    else objecten.push({ id: `b${p.nummer}`, soort: 'speler', team: 'B', nummer: p.nummer, x, y, kijkrichting: 90 });
+    else objecten.push({ id: `b${p.nummer}`, soort: 'speler', team: 'B', nummer: p.nummer, x, y: r3(L - yA(p.y)), kijkrichting: 90 });
   }
-  objecten.push({ id: 'bal1', soort: 'bal', x: 34, y: 52.5 });
+  objecten.push({ id: 'bal1', soort: 'bal', x: r3(B / 2), y: r3(helft) });
   return { ...t, objecten };
+}
+
+/** Tactiekbord vanuit een opstelling: zelfde spelvorm en veld, jouw spelers met hun namen, tegenstander in dezelfde formatie. */
+export function bordUitOpstelling(o: Opstelling): Tekening {
+  const info = spelvorm(o.spelvorm);
+  const tegen = info.formaties.includes(o.formatie) ? o.formatie : info.formaties[0]!;
+  return opgesteldBord(o.spelvorm, o.formatie, tegen, o.plekken);
 }
 
 // ---------- delen via een link ----------

@@ -1,12 +1,282 @@
 [
   {
+    "id": "veld-sp-piratenspel",
+    "soort": "veld",
+    "naam": "Piratenspel",
+    "categorieen": [
+      "techniek",
+      "warming-up",
+      "spelletjes"
+    ],
+    "uitleg": "Alle kinderen dribbelen met een bal in het vak. Eén of twee piraten (zonder bal) proberen een bal af te pakken en uit het vak te schieten. Wie zijn bal kwijt is, wordt ook piraat. Wie houdt het langst zijn schat (de bal)?",
+    "organisatie": "Vak van 14 × 14 m. Iedereen een bal, behalve 1 piraat per 6 kinderen (met hesje). Rondes tot er nog 1 of 2 kinderen met bal over zijn. Voor JO7–JO9.",
+    "benodigdheden": [
+      "4 pionnen",
+      "1 bal per kind",
+      "hesjes"
+    ],
+    "spelersNodig": 5,
+    "keepersNodig": 0,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kleine tikjes, de bal dicht bij je voet",
+      "Kijk op: waar is de piraat?",
+      "Draai weg en zet je lichaam tussen de piraat en je bal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Piraat mag de bal alleen aantikken (niet wegschieten)",
+        "Groter vak"
+      ],
+      "moeilijker": [
+        "Meer piraten",
+        "Wie zijn bal kwijt is, mag hem terugwinnen bij een andere piraat",
+        "Alleen dribbelen met je zwakke been"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 18,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 8,
+          "y": 8,
+          "breedte": 14,
+          "lengte": 14
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 4,
+          "y": 4,
+          "kijkrichting": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 12,
+          "y": 4,
+          "kijkrichting": 90
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 11,
+          "y": 11,
+          "kijkrichting": 45
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 4,
+          "y": 12,
+          "kijkrichting": -90
+        },
+        {
+          "id": "p1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 9,
+          "x": 7.5,
+          "y": 8,
+          "kijkrichting": 30
+        },
+        {
+          "id": "bal1",
+          "soort": "bal",
+          "x": 4.4,
+          "y": 4,
+          "bij": "a1"
+        },
+        {
+          "id": "bal2",
+          "soort": "bal",
+          "x": 12,
+          "y": 4.4,
+          "bij": "a2"
+        },
+        {
+          "id": "bal3",
+          "soort": "bal",
+          "x": 11.3,
+          "y": 11.3,
+          "bij": "a3"
+        },
+        {
+          "id": "bal4",
+          "soort": "bal",
+          "x": 4,
+          "y": 11.6,
+          "bij": "a4"
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "via": [
+                [
+                  6.5,
+                  2.6
+                ]
+              ],
+              "naar": [
+                9.5,
+                3
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "via": [
+                [
+                  13.8,
+                  6.5
+                ]
+              ],
+              "naar": [
+                13.4,
+                8.6
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "a3",
+              "naar": [
+                12.4,
+                13.2
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "a4",
+              "via": [
+                [
+                  2.8,
+                  9.5
+                ]
+              ],
+              "naar": [
+                4,
+                6.8
+              ]
+            },
+            {
+              "type": "druk",
+              "wie": "p1",
+              "op": "a3",
+              "afstand": 1.7,
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "verover",
+              "wie": "p1",
+              "van": "a3"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "p1",
+              "naar": [
+                16.5,
+                14.6
+              ]
+            },
+            {
+              "type": "team",
+              "wie": "a3",
+              "team": "B",
+              "start": 0.6
+            },
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                6.6,
+                5.2
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "naar": [
+                13.6,
+                5.2
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "a4",
+              "naar": [
+                3,
+                10.2
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "druk",
+              "wie": "p1",
+              "op": "a2",
+              "afstand": 2
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                7,
+                9.5
+              ],
+              "manier": "sprint",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
     "id": "veld-tq-balgevoel",
     "soort": "veld",
     "naam": "Balgevoel: zoolrollen en slepen",
-    "categorieen": ["techniek", "warming-up"],
+    "categorieen": [
+      "techniek",
+      "warming-up"
+    ],
     "uitleg": "Iedereen werkt op een eigen plekje met een bal. Rol de bal met je zool zijwaarts heen en weer, sleep hem met je zool naar achteren en neem hem met de binnenkant weer mee naar voren. Wissel na een minuut van voet.",
     "organisatie": "Spelers verspreid op 3–4 m van elkaar, ieder met een bal. De trainer staat voor de groep en doet het voor.",
-    "benodigdheden": ["1 bal per speler"],
+    "benodigdheden": [
+      "1 bal per speler"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
@@ -17,8 +287,15 @@
       "Links én rechts oefenen"
     ],
     "variaties": {
-      "makkelijker": ["Op de plaats, langzaam tempo", "Alleen zijwaarts rollen"],
-      "moeilijker": ["Tempo omhoog en wisselen op een signaal", "Slepen en direct een draai (sleep-draai)", "Combinatie: zool, binnenkant, buitenkant in één vloeiende reeks"]
+      "makkelijker": [
+        "Op de plaats, langzaam tempo",
+        "Alleen zijwaarts rollen"
+      ],
+      "moeilijker": [
+        "Tempo omhoog en wisselen op een signaal",
+        "Slepen en direct een draai (sleep-draai)",
+        "Combinatie: zool, binnenkant, buitenkant in één vloeiende reeks"
+      ]
     },
     "tekening": {
       "veld": {
@@ -87,7 +364,10 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [2, 4],
+              "naar": [
+                2,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1.1
@@ -95,7 +375,10 @@
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [6, 4],
+              "naar": [
+                6,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1.1
@@ -103,7 +386,10 @@
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [10, 4],
+              "naar": [
+                10,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1.1
@@ -115,7 +401,10 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [4, 4],
+              "naar": [
+                4,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1.8
@@ -123,7 +412,10 @@
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [8, 4],
+              "naar": [
+                8,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1.8
@@ -131,7 +423,10 @@
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [12, 4],
+              "naar": [
+                12,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1.8
@@ -143,7 +438,10 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [3, 4],
+              "naar": [
+                3,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1
@@ -151,7 +449,10 @@
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [7, 4],
+              "naar": [
+                7,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1
@@ -159,7 +460,10 @@
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [11, 4],
+              "naar": [
+                11,
+                4
+              ],
               "manier": "zijwaarts",
               "kijk": 90,
               "duur": 1
@@ -171,21 +475,30 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [3, 2.8],
+              "naar": [
+                3,
+                2.8
+              ],
               "manier": "achteruit",
               "duur": 1
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [7, 2.8],
+              "naar": [
+                7,
+                2.8
+              ],
               "manier": "achteruit",
               "duur": 1
             },
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [11, 2.8],
+              "naar": [
+                11,
+                2.8
+              ],
               "manier": "achteruit",
               "duur": 1
             }
@@ -196,19 +509,28 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [3, 4],
+              "naar": [
+                3,
+                4
+              ],
               "duur": 0.9
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [7, 4],
+              "naar": [
+                7,
+                4
+              ],
               "duur": 0.9
             },
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [11, 4],
+              "naar": [
+                11,
+                4
+              ],
               "duur": 0.9
             }
           ]
@@ -220,16 +542,29 @@
     "id": "veld-tq-aannemen-meenemen",
     "soort": "veld",
     "naam": "Aannemen en meenemen door een poortje",
-    "categorieen": ["techniek", "pass-en-trap"],
+    "categorieen": [
+      "techniek",
+      "pass-en-trap"
+    ],
     "uitleg": "A passt naar B. B neemt de bal met de eerste aanraking schuin naar voren mee door het linker- of rechterpoortje achter hem, draait en passt terug. Daarna kiest B het andere poortje. Na 6 keer wisselen van rol.",
     "organisatie": "A en B staan 10 m uit elkaar. Achter B, 2,5 m links en rechts, staat een poortje van twee hoedjes (2 m breed).",
-    "benodigdheden": ["4 hoedjes", "1 bal per tweetal"],
+    "benodigdheden": [
+      "4 hoedjes",
+      "1 bal per tweetal"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Al vóór de aanname over je schouder kijken: waar is ruimte?", "Aannemen met de voet die het verst van de bal is (open staan)", "Eerste aanraking stevig genoeg om in één keer door het poortje te gaan"],
+    "coachpunten": [
+      "Al vóór de aanname over je schouder kijken: waar is ruimte?",
+      "Aannemen met de voet die het verst van de bal is (open staan)",
+      "Eerste aanraking stevig genoeg om in één keer door het poortje te gaan"
+    ],
     "variaties": {
-      "makkelijker": ["Poortjes breder (3 m)", "A rolt de bal met de hand toe"],
+      "makkelijker": [
+        "Poortjes breder (3 m)",
+        "A rolt de bal met de hand toe"
+      ],
       "moeilijker": [
         "A roept pas tijdens de pass 'links' of 'rechts'",
         "Aanname met de buitenkant",
@@ -310,8 +645,20 @@
             {
               "type": "dribbel",
               "wie": "b",
-              "via": [[14.6, 4.4], [15.5, 3.4]],
-              "naar": [16.6, 3.2],
+              "via": [
+                [
+                  14.6,
+                  4.4
+                ],
+                [
+                  15.5,
+                  3.4
+                ]
+              ],
+              "naar": [
+                16.6,
+                3.2
+              ],
               "duur": 1.3
             }
           ]
@@ -321,8 +668,16 @@
             {
               "type": "dribbel",
               "wie": "b",
-              "via": [[15.6, 3.4]],
-              "naar": [14, 5.2],
+              "via": [
+                [
+                  15.6,
+                  3.4
+                ]
+              ],
+              "naar": [
+                14,
+                5.2
+              ],
               "duur": 1.2
             }
           ]
@@ -350,8 +705,20 @@
             {
               "type": "dribbel",
               "wie": "b",
-              "via": [[14.6, 7.6], [15.5, 8.6]],
-              "naar": [16.6, 8.8],
+              "via": [
+                [
+                  14.6,
+                  7.6
+                ],
+                [
+                  15.5,
+                  8.6
+                ]
+              ],
+              "naar": [
+                16.6,
+                8.8
+              ],
               "duur": 1.3
             }
           ]
@@ -361,8 +728,16 @@
             {
               "type": "dribbel",
               "wie": "b",
-              "via": [[15.6, 8.6]],
-              "naar": [14, 6.8],
+              "via": [
+                [
+                  15.6,
+                  8.6
+                ]
+              ],
+              "naar": [
+                14,
+                6.8
+              ],
               "duur": 1.2
             }
           ]
@@ -383,17 +758,33 @@
     "id": "veld-tq-kappen-draaien",
     "soort": "veld",
     "naam": "Kappen en draaien bij de pion",
-    "categorieen": ["techniek"],
+    "categorieen": [
+      "techniek"
+    ],
     "uitleg": "Dribbel naar de pion, keer vlak ervoor met een kapbeweging en dribbel versnellend terug. Per ronde een andere draai: binnenkant, buitenkant, zool (sleep-draai) of Cruijff-draai.",
     "organisatie": "Per speler een baan van 8 m met een pion aan het eind; banen 4 m uit elkaar. Iedereen heeft een bal en start tegelijk.",
-    "benodigdheden": ["1 pion per speler", "1 bal per speler"],
+    "benodigdheden": [
+      "1 pion per speler",
+      "1 bal per speler"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Afremmen met kleine pasjes vlak voor de draai", "Laag zakken en het lichaam tussen bal en pion houden", "Na de draai meteen versnellen: de eerste twee meter zijn het belangrijkst"],
+    "coachpunten": [
+      "Afremmen met kleine pasjes vlak voor de draai",
+      "Laag zakken en het lichaam tussen bal en pion houden",
+      "Na de draai meteen versnellen: de eerste twee meter zijn het belangrijkst"
+    ],
     "variaties": {
-      "makkelijker": ["Alleen binnenkantdraai", "Langzaam tempo, draaien bij een lijn in plaats van een pion"],
-      "moeilijker": ["Trainer roept welke draai", "Op tijd: 4 keer heen en weer", "Een verdediger achter de pion die na de draai mag tikken"]
+      "makkelijker": [
+        "Alleen binnenkantdraai",
+        "Langzaam tempo, draaien bij een lijn in plaats van een pion"
+      ],
+      "moeilijker": [
+        "Trainer roept welke draai",
+        "Op tijd: 4 keer heen en weer",
+        "Een verdediger achter de pion die na de draai mag tikken"
+      ]
     },
     "tekening": {
       "veld": {
@@ -476,20 +867,29 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [3, 4.2],
+              "naar": [
+                3,
+                4.2
+              ],
               "duur": 2.3
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [7, 4.2],
+              "naar": [
+                7,
+                4.2
+              ],
               "duur": 2.3,
               "start": 0.3
             },
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [11, 4.2],
+              "naar": [
+                11,
+                4.2
+              ],
               "duur": 2.3,
               "start": 0.6
             }
@@ -500,14 +900,20 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [3, 12],
+              "naar": [
+                3,
+                12
+              ],
               "manier": "sprint",
               "duur": 2
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [7, 12],
+              "naar": [
+                7,
+                12
+              ],
               "manier": "sprint",
               "duur": 2,
               "start": 0.3
@@ -515,7 +921,10 @@
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [11, 12],
+              "naar": [
+                11,
+                12
+              ],
               "manier": "sprint",
               "duur": 2,
               "start": 0.6
@@ -527,20 +936,29 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [3, 4.2],
+              "naar": [
+                3,
+                4.2
+              ],
               "duur": 2.3
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [7, 4.2],
+              "naar": [
+                7,
+                4.2
+              ],
               "duur": 2.3,
               "start": 0.3
             },
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [11, 4.2],
+              "naar": [
+                11,
+                4.2
+              ],
               "duur": 2.3,
               "start": 0.6
             }
@@ -553,17 +971,34 @@
     "id": "veld-tq-schijnbeweging",
     "soort": "veld",
     "naam": "Schijnbeweging en passeren",
-    "categorieen": ["techniek"],
+    "categorieen": [
+      "techniek"
+    ],
     "uitleg": "Dribbel op het paaltje (de 'verdediger') af. Maak op 1,5 m een schijnbeweging naar rechts (lijf en been gaan mee, de bal blijft liggen) en passeer links met versnelling. Jog met de bal buitenom terug en sluit aan.",
     "organisatie": "Een paaltje op 5 m van de startplek, 3,5 m erachter de eindpion. De spelers staan in een rij, ieder met een bal. De volgende start als de voorganger het paaltje voorbij is.",
-    "benodigdheden": ["1 paaltje (of pion)", "1 pion", "1 bal per speler"],
+    "benodigdheden": [
+      "1 paaltje (of pion)",
+      "1 pion",
+      "1 bal per speler"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Schijnbeweging op 1–2 m van de verdediger: niet te vroeg, niet te laat", "Overtuigend: schouder en heup gaan echt mee", "Na de schijnbeweging met de andere voet wegtikken en versnellen"],
+    "coachpunten": [
+      "Schijnbeweging op 1–2 m van de verdediger: niet te vroeg, niet te laat",
+      "Overtuigend: schouder en heup gaan echt mee",
+      "Na de schijnbeweging met de andere voet wegtikken en versnellen"
+    ],
     "variaties": {
-      "makkelijker": ["Eerst zonder bal de beweging voordoen", "Alleen een lichaamsschijnbeweging (schouder)"],
-      "moeilijker": ["Schaar of dubbele schaar", "Een echte verdediger die pas mag bewegen na de schijnbeweging", "Na het passeren afronden op een klein goal"]
+      "makkelijker": [
+        "Eerst zonder bal de beweging voordoen",
+        "Alleen een lichaamsschijnbeweging (schouder)"
+      ],
+      "moeilijker": [
+        "Schaar of dubbele schaar",
+        "Een echte verdediger die pas mag bewegen na de schijnbeweging",
+        "Na het passeren afronden op een klein goal"
+      ]
     },
     "tekening": {
       "veld": {
@@ -637,13 +1072,21 @@
           "x": 5,
           "y": 5,
           "richting": 180,
-          "spelers": ["a1", "a2", "a3"]
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
         }
       ],
       "animatie": [
         {
           "herhaal": {
-            "spelers": ["a1", "a2", "a3"],
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
             "tussen": 3.2,
             "stappen": [
               {
@@ -651,7 +1094,10 @@
                   {
                     "type": "dribbel",
                     "wie": "@",
-                    "naar": [8.4, 5]
+                    "naar": [
+                      8.4,
+                      5
+                    ]
                   }
                 ]
               },
@@ -669,8 +1115,16 @@
                   {
                     "type": "dribbel",
                     "wie": "@",
-                    "via": [[10, 3.6]],
-                    "naar": [13.6, 4.2],
+                    "via": [
+                      [
+                        10,
+                        3.6
+                      ]
+                    ],
+                    "naar": [
+                      13.6,
+                      4.2
+                    ],
                     "manier": "sprint"
                   }
                 ]
@@ -694,16 +1148,29 @@
     "id": "veld-tq-poortjesdribbel",
     "soort": "veld",
     "naam": "Poortjesdribbel",
-    "categorieen": ["techniek"],
+    "categorieen": [
+      "techniek"
+    ],
     "uitleg": "In het vak staan kleine poortjes. Dribbel in 45 seconden door zoveel mogelijk verschillende poortjes; twee keer achter elkaar door hetzelfde poortje telt niet. Wie heeft de meeste poortjes?",
     "organisatie": "Vak van 16 × 16 m met 6 poortjes van twee hoedjes (1,5 m breed), kriskras neergezet. Iedereen een bal.",
-    "benodigdheden": ["4 pionnen", "12 hoedjes", "1 bal per speler"],
+    "benodigdheden": [
+      "4 pionnen",
+      "12 hoedjes",
+      "1 bal per speler"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Kijk op en kies alvast het volgende poortje", "Afremmen en draaien vlak na het poortje, daarna versnellen", "Kleine aanrakingen in de drukte, grotere in de vrije ruimte"],
+    "coachpunten": [
+      "Kijk op en kies alvast het volgende poortje",
+      "Afremmen en draaien vlak na het poortje, daarna versnellen",
+      "Kleine aanrakingen in de drukte, grotere in de vrije ruimte"
+    ],
     "variaties": {
-      "makkelijker": ["Bredere poortjes (2,5 m)", "Geen tijdslimiet"],
+      "makkelijker": [
+        "Bredere poortjes (2,5 m)",
+        "Geen tijdslimiet"
+      ],
       "moeilijker": [
         "Alleen het zwakke been",
         "Na elk poortje een andere draai",
@@ -854,20 +1321,56 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [[5, 6.4], [5, 3.6]],
-              "naar": [8, 3.2]
+              "via": [
+                [
+                  5,
+                  6.4
+                ],
+                [
+                  5,
+                  3.6
+                ]
+              ],
+              "naar": [
+                8,
+                3.2
+              ]
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "via": [[13, 13.4], [13, 10.6]],
-              "naar": [14.5, 9]
+              "via": [
+                [
+                  13,
+                  13.4
+                ],
+                [
+                  13,
+                  10.6
+                ]
+              ],
+              "naar": [
+                14.5,
+                9
+              ]
             },
             {
               "type": "dribbel",
               "wie": "a3",
-              "via": [[5.4, 12], [2.6, 12]],
-              "naar": [2.3, 10]
+              "via": [
+                [
+                  5.4,
+                  12
+                ],
+                [
+                  2.6,
+                  12
+                ]
+              ],
+              "naar": [
+                2.3,
+                10
+              ]
             }
           ]
         },
@@ -876,20 +1379,52 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [[10.6, 4], [13.4, 4]],
-              "naar": [14.5, 6]
+              "via": [
+                [
+                  10.6,
+                  4
+                ],
+                [
+                  13.4,
+                  4
+                ]
+              ],
+              "naar": [
+                14.5,
+                6
+              ]
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "via": [[10.4, 9], [7.6, 9]],
-              "naar": [6.5, 10.5]
+              "via": [
+                [
+                  10.4,
+                  9
+                ],
+                [
+                  7.6,
+                  9
+                ]
+              ],
+              "naar": [
+                6.5,
+                10.5
+              ]
             },
             {
               "type": "dribbel",
               "wie": "a3",
-              "via": [[2.5, 7.2]],
-              "naar": [3.5, 6.2]
+              "via": [
+                [
+                  2.5,
+                  7.2
+                ]
+              ],
+              "naar": [
+                3.5,
+                6.2
+              ]
             }
           ]
         }
@@ -900,16 +1435,27 @@
     "id": "veld-tq-hooghouden",
     "soort": "veld",
     "naam": "Hooghouden",
-    "categorieen": ["techniek"],
+    "categorieen": [
+      "techniek"
+    ],
     "uitleg": "Houd de bal zo vaak mogelijk achter elkaar hoog met je voet (en later dij en hoofd). Tel hardop en probeer je record te verbeteren. Jonge spelers mogen de bal tussendoor één keer laten stuiten.",
     "organisatie": "Iedereen een bal, ruim verspreid (3–4 m uit elkaar). Blokjes van 1 minuut met tussendoor even rust.",
-    "benodigdheden": ["1 bal per speler"],
+    "benodigdheden": [
+      "1 bal per speler"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Raak de bal met de wreef, enkel gestrekt", "Zachte aanraking: de bal komt niet hoger dan je heup", "Standbeen licht gebogen, ogen op de bal"],
+    "coachpunten": [
+      "Raak de bal met de wreef, enkel gestrekt",
+      "Zachte aanraking: de bal komt niet hoger dan je heup",
+      "Standbeen licht gebogen, ogen op de bal"
+    ],
     "variaties": {
-      "makkelijker": ["Bal uit de handen laten vallen, één keer raken en weer vangen", "Tussen elke aanraking één stuit"],
+      "makkelijker": [
+        "Bal uit de handen laten vallen, één keer raken en weer vangen",
+        "Tussen elke aanraking één stuit"
+      ],
       "moeilijker": [
         "Om en om links en rechts",
         "Voet – dij – voet – hoofd",
@@ -1047,17 +1593,32 @@
     "id": "veld-tq-aannemen-uit-de-lucht",
     "soort": "veld",
     "naam": "Aannemen uit de lucht",
-    "categorieen": ["techniek"],
+    "categorieen": [
+      "techniek"
+    ],
     "uitleg": "A gooit de bal met een boog naar B. B neemt de bal uit de lucht aan (wreef, dij of borst), neemt hem een stukje mee opzij en passt over de grond terug. A wisselt de hoogte af. Na 8 keer wisselen van rol.",
     "organisatie": "Tweetallen op 6–7 m van elkaar, één bal per tweetal.",
-    "benodigdheden": ["1 bal per tweetal"],
+    "benodigdheden": [
+      "1 bal per tweetal"
+    ],
     "spelersNodig": 2,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Kom de bal tegemoet en lees de baan vroeg", "Maak het aannamevlak 'zacht': geef mee op het moment van contact", "Neem de bal aan in de richting waar je heen wilt"],
+    "coachpunten": [
+      "Kom de bal tegemoet en lees de baan vroeg",
+      "Maak het aannamevlak 'zacht': geef mee op het moment van contact",
+      "Neem de bal aan in de richting waar je heen wilt"
+    ],
     "variaties": {
-      "makkelijker": ["Bal eerst laten stuiten en dan aannemen", "Lagere worpen, kleinere afstand"],
-      "moeilijker": ["Aanname direct in één beweging opzij meenemen", "A trapt de bal in plaats van te gooien", "Volley of halfvolley direct terug"]
+      "makkelijker": [
+        "Bal eerst laten stuiten en dan aannemen",
+        "Lagere worpen, kleinere afstand"
+      ],
+      "moeilijker": [
+        "Aanname direct in één beweging opzij meenemen",
+        "A trapt de bal in plaats van te gooien",
+        "Volley of halfvolley direct terug"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1109,7 +1670,10 @@
             {
               "type": "dribbel",
               "wie": "b",
-              "naar": [10.3, 6.8],
+              "naar": [
+                10.3,
+                6.8
+              ],
               "duur": 1
             }
           ]
@@ -1138,7 +1702,10 @@
             {
               "type": "dribbel",
               "wie": "b",
-              "naar": [10.3, 3.2],
+              "naar": [
+                10.3,
+                3.2
+              ],
               "duur": 1
             }
           ]
@@ -1159,17 +1726,34 @@
     "id": "veld-tq-indraaien",
     "soort": "veld",
     "naam": "Vrijlopen en indraaien",
-    "categorieen": ["techniek", "pass-en-trap"],
+    "categorieen": [
+      "techniek",
+      "pass-en-trap"
+    ],
     "uitleg": "De middelste speler loopt kort naar A, krijgt de bal, draait in één aanname open naar C en speelt C aan. Daarna loopt hij kort naar C, krijgt de bal en draait weer in naar A. Na 1 minuut wisselt de middenspeler.",
     "organisatie": "Drie spelers op een lijn: A en C op 20 m van elkaar, de middenspeler halverwege. A en C hebben om de beurt de bal.",
-    "benodigdheden": ["2 pionnen (startplek A en C)", "1 bal per drietal"],
+    "benodigdheden": [
+      "2 pionnen (startplek A en C)",
+      "1 bal per drietal"
+    ],
     "spelersNodig": 3,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Eerst van de bal weg, dan kort komen: zo maak je ruimte", "Vóór de aanname over je schouder kijken", "Open staan en aannemen met de voet die het verst van de bal is"],
+    "coachpunten": [
+      "Eerst van de bal weg, dan kort komen: zo maak je ruimte",
+      "Vóór de aanname over je schouder kijken",
+      "Open staan en aannemen met de voet die het verst van de bal is"
+    ],
     "variaties": {
-      "makkelijker": ["Eerst aannemen, dan draaien (twee aanrakingen)", "Afstand 15 m"],
-      "moeilijker": ["Een passieve verdediger in de rug van de middenspeler", "Indraaien met de buitenkant", "Direct doorspelen na de draai (twee aanrakingen in totaal)"]
+      "makkelijker": [
+        "Eerst aannemen, dan draaien (twee aanrakingen)",
+        "Afstand 15 m"
+      ],
+      "moeilijker": [
+        "Een passieve verdediger in de rug van de middenspeler",
+        "Indraaien met de buitenkant",
+        "Direct doorspelen na de draai (twee aanrakingen in totaal)"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1232,8 +1816,16 @@
             {
               "type": "loop",
               "wie": "m",
-              "via": [[13.2, 5.5]],
-              "naar": [10, 5],
+              "via": [
+                [
+                  13.2,
+                  5.5
+                ]
+              ],
+              "naar": [
+                10,
+                5
+              ],
               "duur": 1.1
             },
             {
@@ -1249,7 +1841,10 @@
             {
               "type": "dribbel",
               "wie": "m",
-              "naar": [11.3, 5.6],
+              "naar": [
+                11.3,
+                5.6
+              ],
               "duur": 0.8
             }
           ]
@@ -1268,8 +1863,16 @@
             {
               "type": "loop",
               "wie": "m",
-              "via": [[10.8, 4.6]],
-              "naar": [14, 5],
+              "via": [
+                [
+                  10.8,
+                  4.6
+                ]
+              ],
+              "naar": [
+                14,
+                5
+              ],
               "duur": 1.1
             },
             {
@@ -1285,7 +1888,10 @@
             {
               "type": "dribbel",
               "wie": "m",
-              "naar": [12.7, 4.4],
+              "naar": [
+                12.7,
+                4.4
+              ],
               "duur": 0.8
             }
           ]
@@ -1306,17 +1912,35 @@
     "id": "veld-tq-koning-van-het-vak",
     "soort": "veld",
     "naam": "Koning van het vak",
-    "categorieen": ["techniek", "warming-up", "spelletjes"],
+    "categorieen": [
+      "techniek",
+      "warming-up",
+      "spelletjes"
+    ],
     "uitleg": "Iedereen dribbelt met een eigen bal in het vak. Bescherm je eigen bal en probeer ondertussen ballen van anderen uit het vak te tikken. Is je bal eruit, haal hem dan op, doe 5 keer hooghouden of kappen buiten het vak en doe weer mee.",
     "organisatie": "Vak van 12 × 12 m (kleiner bij weinig spelers). Iedereen een bal. Speel blokjes van 1 minuut.",
-    "benodigdheden": ["4 pionnen", "1 bal per speler"],
+    "benodigdheden": [
+      "4 pionnen",
+      "1 bal per speler"
+    ],
     "spelersNodig": 4,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Lichaam tussen tegenstander en bal (afschermen)", "Kijk op: waar is gevaar en waar is een bal te pakken?", "Bal dicht aan de voet in de drukte"],
+    "coachpunten": [
+      "Lichaam tussen tegenstander en bal (afschermen)",
+      "Kijk op: waar is gevaar en waar is een bal te pakken?",
+      "Bal dicht aan de voet in de drukte"
+    ],
     "variaties": {
-      "makkelijker": ["Groter vak", "Eén speler zonder bal is de 'jager'"],
-      "moeilijker": ["Kleiner vak", "Wie zijn bal kwijt is, is af (laatste over is koning)", "Alleen met het zwakke been dribbelen"]
+      "makkelijker": [
+        "Groter vak",
+        "Eén speler zonder bal is de 'jager'"
+      ],
+      "moeilijker": [
+        "Kleiner vak",
+        "Wie zijn bal kwijt is, is af (laatste over is koning)",
+        "Alleen met het zwakke been dribbelen"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1429,27 +2053,49 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [[6.5, 7]],
-              "naar": [8, 8.6],
+              "via": [
+                [
+                  6.5,
+                  7
+                ]
+              ],
+              "naar": [
+                8,
+                8.6
+              ],
               "duur": 1.8
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "via": [[12.8, 6]],
-              "naar": [12.4, 8],
+              "via": [
+                [
+                  12.8,
+                  6
+                ]
+              ],
+              "naar": [
+                12.4,
+                8
+              ],
               "duur": 1.8
             },
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [10.2, 10.8],
+              "naar": [
+                10.2,
+                10.8
+              ],
               "duur": 1.8
             },
             {
               "type": "dribbel",
               "wie": "a4",
-              "naar": [3.6, 8.5],
+              "naar": [
+                3.6,
+                8.5
+              ],
               "duur": 1.8
             }
           ]
@@ -1460,18 +2106,27 @@
               "type": "pass",
               "van": "a1",
               "bal": "b3",
-              "naar": [15.3, 13.5]
+              "naar": [
+                15.3,
+                13.5
+              ]
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [11.5, 5],
+              "naar": [
+                11.5,
+                5
+              ],
               "duur": 1.2
             },
             {
               "type": "dribbel",
               "wie": "a4",
-              "naar": [5.5, 6.5],
+              "naar": [
+                5.5,
+                6.5
+              ],
               "duur": 1.2
             }
           ]
@@ -1481,26 +2136,43 @@
             {
               "type": "loop",
               "wie": "a3",
-              "naar": [14.6, 12.8],
+              "naar": [
+                14.6,
+                12.8
+              ],
               "manier": "sprint"
             },
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [[7, 10.5]],
-              "naar": [5.5, 12.5],
+              "via": [
+                [
+                  7,
+                  10.5
+                ]
+              ],
+              "naar": [
+                5.5,
+                12.5
+              ],
               "duur": 2.2
             },
             {
               "type": "dribbel",
               "wie": "a2",
-              "naar": [9, 4],
+              "naar": [
+                9,
+                4
+              ],
               "duur": 1.8
             },
             {
               "type": "dribbel",
               "wie": "a4",
-              "naar": [4.5, 4],
+              "naar": [
+                4.5,
+                4
+              ],
               "duur": 1.8
             }
           ]
@@ -1510,7 +2182,10 @@
             {
               "type": "dribbel",
               "wie": "a3",
-              "naar": [11.5, 10],
+              "naar": [
+                11.5,
+                10
+              ],
               "duur": 1.5
             }
           ]
@@ -1522,19 +2197,40 @@
     "id": "veld-cv-aanname-lucht-schot",
     "soort": "veld",
     "naam": "Aanname uit de lucht, meenemen en schot",
-    "categorieen": ["techniek", "afwerken"],
+    "categorieen": [
+      "techniek",
+      "afwerken"
+    ],
     "combinatievorm": true,
-    "onderdelen": ["Aanname uit de lucht", "Meenemen", "Schot"],
+    "onderdelen": [
+      "Aanname uit de lucht",
+      "Meenemen",
+      "Schot"
+    ],
     "uitleg": "De trainer gooit een hoge bal naar de speler. Die neemt hem uit de lucht aan, neemt hem in dezelfde beweging mee richting het doel en schiet binnen drie aanrakingen.",
     "organisatie": "Speler op 22 m van het doel, trainer schuin ervoor op 6 m met ballen. Keeper in het doel. Om en om aannemen met de wreef, de dij en de borst.",
-    "benodigdheden": ["Goal", "Ballen"],
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 1,
     "doorwisselbaar": true,
-    "coachpunten": ["Zachte aanname: geef mee met de bal, zodat hij niet wegspringt", "Neem de bal mee in de richting van het doel, niet stilleggen", "Opkijken vóór het schot: waar staat de keeper?"],
+    "coachpunten": [
+      "Zachte aanname: geef mee met de bal, zodat hij niet wegspringt",
+      "Neem de bal mee in de richting van het doel, niet stilleggen",
+      "Opkijken vóór het schot: waar staat de keeper?"
+    ],
     "variaties": {
-      "makkelijker": ["Bal eerst laten stuiten", "Lagere worp"],
-      "moeilijker": ["Verdediger in de rug", "Aanname en schot in twee aanrakingen", "Daarna nog een terugleg van de trainer: schot in één keer"]
+      "makkelijker": [
+        "Bal eerst laten stuiten",
+        "Lagere worp"
+      ],
+      "moeilijker": [
+        "Verdediger in de rug",
+        "Aanname en schot in twee aanrakingen",
+        "Daarna nog een terugleg van de trainer: schot in één keer"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1608,7 +2304,10 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "naar": [34.6, 17.6]
+              "naar": [
+                34.6,
+                17.6
+              ]
             }
           ]
         },
@@ -1617,7 +2316,10 @@
             {
               "type": "schot",
               "van": "a1",
-              "naar": [31.8, 0.3],
+              "naar": [
+                31.8,
+                0.3
+              ],
               "hoogte": "laag",
               "afloop": "vangt"
             }
@@ -1634,19 +2336,42 @@
     "id": "veld-cv-rebounder-doeltjes",
     "soort": "veld",
     "naam": "Rebounder, draaien en afronden op een doeltje",
-    "categorieen": ["techniek", "pass-en-trap", "afwerken"],
+    "categorieen": [
+      "techniek",
+      "pass-en-trap",
+      "afwerken"
+    ],
     "combinatievorm": true,
-    "onderdelen": ["Kaatsen tegen de rebounder", "Draaien en dribbelen", "Afronden op een doeltje"],
+    "onderdelen": [
+      "Kaatsen tegen de rebounder",
+      "Draaien en dribbelen",
+      "Afronden op een doeltje"
+    ],
     "uitleg": "De speler kaatst twee keer tegen de rebounder, neemt de tweede bal aan met een draai weg van de rebounder, dribbelt naar een van de twee kleine doeltjes en scoort.",
     "organisatie": "Rebounder (of muur) op 4 m van de speler. Twee kleine doeltjes 8 m achter hem, links en rechts. De trainer (of een medespeler) roept welk doeltje.",
-    "benodigdheden": ["Rebounder", "2 kleine doeltjes", "Ballen"],
+    "benodigdheden": [
+      "Rebounder",
+      "2 kleine doeltjes",
+      "Ballen"
+    ],
     "spelersNodig": 1,
     "keepersNodig": 0,
     "doorwisselbaar": true,
-    "coachpunten": ["Kaatsen met de binnenkant, enkel strak", "Aanname in de draai: lichaam open, de bal meenemen naar de kant van het doeltje", "Afronden: plaatsen, niet hard"],
+    "coachpunten": [
+      "Kaatsen met de binnenkant, enkel strak",
+      "Aanname in de draai: lichaam open, de bal meenemen naar de kant van het doeltje",
+      "Afronden: plaatsen, niet hard"
+    ],
     "variaties": {
-      "makkelijker": ["Één keer kaatsen", "Doeltjes dichterbij"],
-      "moeilijker": ["Trainer roept het doeltje pas tijdens de aanname", "Verdediger start vanaf de rebounder", "Kaatsen met links en rechts om en om"]
+      "makkelijker": [
+        "Één keer kaatsen",
+        "Doeltjes dichterbij"
+      ],
+      "moeilijker": [
+        "Trainer roept het doeltje pas tijdens de aanname",
+        "Verdediger start vanaf de rebounder",
+        "Kaatsen met links en rechts om en om"
+      ]
     },
     "tekening": {
       "veld": {
@@ -1722,8 +2447,16 @@
             {
               "type": "dribbel",
               "wie": "a1",
-              "via": [[11, 8.6]],
-              "naar": [14.6, 11.4]
+              "via": [
+                [
+                  11,
+                  8.6
+                ]
+              ],
+              "naar": [
+                14.6,
+                11.4
+              ]
             }
           ]
         },
@@ -1732,7 +2465,10 @@
             {
               "type": "schot",
               "van": "a1",
-              "naar": [16.2, 15.6],
+              "naar": [
+                16.2,
+                15.6
+              ],
               "hoogte": "grond"
             }
           ]
@@ -1740,6 +2476,211 @@
         {
           "duur": 1,
           "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-te-kleurenreactie-bal",
+    "soort": "veld",
+    "naam": "Kleurenreactie met bal",
+    "categorieen": [
+      "techniek",
+      "spelletjes"
+    ],
+    "uitleg": "Twee spelers staan met een bal aan de voet in het midden, met hun gezicht naar de trainer. De trainer roept een kleur; beide spelers dribbelen zo snel mogelijk naar dat hoedje, draaien er met de bal omheen en dribbelen terug naar het midden. Wie het eerst terug is met de bal onder controle, wint een punt.",
+    "organisatie": "Vier gekleurde hoedjes op 4 m rond een middenpunt (voor, achter, links, rechts). De spelers staan met een bal 1,5–2 m naast elkaar in het midden; de trainer staat op 6 m voor hen.",
+    "benodigdheden": [
+      "4 gekleurde hoedjes per tweetal",
+      "1 bal per speler"
+    ],
+    "spelersNodig": 2,
+    "keepersNodig": 0,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kijk op naar de trainer, niet naar de bal",
+      "Kleine tikjes bij het afremmen, de bal dicht bij je voet",
+      "Draai met de bal mee (binnen- of buitenkant) en versnel terug"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Trainer wijst de kleur ook aan (zien én horen)",
+        "Eerst lopend dribbelen, daarna pas sprinten"
+      ],
+      "moeilijker": [
+        "Alleen met je zwakke been",
+        "Trainer roept twee kleuren achter elkaar",
+        "Wie het eerst terug is, mag op een klein doeltje schieten"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 16,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "hR",
+          "soort": "hoedje",
+          "x": 8,
+          "y": 3,
+          "kleur": "#e03131"
+        },
+        {
+          "id": "hB",
+          "soort": "hoedje",
+          "x": 12,
+          "y": 7,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "hG",
+          "soort": "hoedje",
+          "x": 8,
+          "y": 11,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "hW",
+          "soort": "hoedje",
+          "x": 4,
+          "y": 7,
+          "kleur": "#ffffff"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 8,
+          "y": 13.8,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 7.1,
+          "y": 7,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 8.9,
+          "y": 7,
+          "kijkrichting": 90
+        },
+        {
+          "id": "balA",
+          "soort": "bal",
+          "x": 7.1,
+          "y": 7,
+          "bij": "a1"
+        },
+        {
+          "id": "balB",
+          "soort": "bal",
+          "x": 8.9,
+          "y": 7,
+          "bij": "b1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                7.2,
+                4.4
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "b1",
+              "naar": [
+                8.8,
+                4.4
+              ],
+              "start": 0.15
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                7.1,
+                7
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "b1",
+              "naar": [
+                8.9,
+                7
+              ],
+              "start": 0.12
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                7.2,
+                9.6
+              ],
+              "start": 0.1
+            },
+            {
+              "type": "dribbel",
+              "wie": "b1",
+              "naar": [
+                8.8,
+                9.6
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                7.1,
+                7
+              ],
+              "start": 0.08
+            },
+            {
+              "type": "dribbel",
+              "wie": "b1",
+              "naar": [
+                8.9,
+                7
+              ]
+            }
+          ]
         }
       ]
     }

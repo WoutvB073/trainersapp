@@ -15,7 +15,7 @@ const SCHERMEN = [
   { naam: 'start', hash: '#/' },
   { naam: 'veld', hash: '#/veld' },
   { naam: 'lijst', hash: '#/veld/afwerken' },
-  { naam: 'detail-veld', hash: '#/oefening/veld-kaatsen-en-afwerken', moeilijker: true },
+  { naam: 'detail-veld', hash: '#/oefening/veld-cv-kaats-doordiepen', moeilijker: true },
   { naam: 'detail-keeper', hash: '#/oefening/keeper-laag-duiken-kniezit' },
   { naam: 'keepers-leeg', hash: '#/keepers/voorzetten' },
 ];

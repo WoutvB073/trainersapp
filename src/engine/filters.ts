@@ -51,6 +51,8 @@ export function aantalActief(f: Filters, metAantallen = true): number {
 // ---------- gedeelde toestand (zolang de app open is; aantallen ook op het apparaat) ----------
 
 const SLEUTEL = 'trainersapp.filterAantallen';
+/** De laatst gebruikte aantallen (ook als het filter uit staat), om ze bij het aanzetten weer te gebruiken. */
+const LAATST = 'trainersapp.filterAantallenLaatst';
 type Opslagplek = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
 function opslag(): Opslagplek | undefined {
@@ -61,9 +63,9 @@ function opslag(): Opslagplek | undefined {
   }
 }
 
-export function leesAantallen(plek: Opslagplek | undefined = opslag()): Filters['aantallen'] {
+export function leesAantallen(plek: Opslagplek | undefined = opslag(), sleutel = SLEUTEL): Filters['aantallen'] {
   try {
-    const x = JSON.parse(plek?.getItem(SLEUTEL) ?? 'null') as { spelers?: unknown; keepers?: unknown } | null;
+    const x = JSON.parse(plek?.getItem(sleutel) ?? 'null') as { spelers?: unknown; keepers?: unknown } | null;
     if (!x) return null;
     const getal = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(0, Math.min(40, Math.round(v))) : 0);
     return { spelers: getal(x.spelers), keepers: getal(x.keepers) };
@@ -74,11 +76,18 @@ export function leesAantallen(plek: Opslagplek | undefined = opslag()): Filters[
 
 export function bewaarAantallen(a: Filters['aantallen'], plek: Opslagplek | undefined = opslag()): void {
   try {
-    if (a) plek?.setItem(SLEUTEL, JSON.stringify(a));
-    else plek?.removeItem(SLEUTEL);
+    if (a) {
+      plek?.setItem(SLEUTEL, JSON.stringify(a));
+      plek?.setItem(LAATST, JSON.stringify(a));
+    } else plek?.removeItem(SLEUTEL);
   } catch {
     /* niet erg */
   }
+}
+
+/** Aantallen om mee te beginnen als je het filter aanzet: de laatst gebruikte, anders 12 spelers en 1 keeper. */
+export function laatsteAantallen(plek: Opslagplek | undefined = opslag()): { spelers: number; keepers: number } {
+  return leesAantallen(plek, LAATST) ?? leesAantallen(plek) ?? { spelers: 12, keepers: 1 };
 }
 
 let huidig: Filters = { ...GEEN_FILTERS, aantallen: leesAantallen() };

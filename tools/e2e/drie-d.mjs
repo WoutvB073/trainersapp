@@ -37,7 +37,7 @@ const moment = async (naam, tekst) => {
   shots.push([pad, tekst]);
 };
 
-await detail(page, 'veld-kaatsen-en-afwerken');
+await detail(page, 'veld-cv-kaats-doordiepen');
 const info = await page.evaluate(() => ({ webgl: !!document.querySelector('.speler-canvas-3d'), modus: document.querySelector('.speler-groep:last-child .aan')?.textContent }));
 console.log('Veld 3D:', info);
 for (const [t, tekst] of [
@@ -77,7 +77,7 @@ await moment('keeper-boven', 'Camera: Boven (t=5.1)');
 await blad(browser, shots, `${MAP}blad-3d-momenten.png`, 4, 1600);
 
 // ---------- draaien/zoomen: camera blijft boven het gras en binnen bereik ----------
-await detail(page, 'veld-kaatsen-en-afwerken');
+await detail(page, 'veld-cv-kaats-doordiepen');
 const vak = await page.$('.speler-canvas-3d');
 const box = await vak.boundingBox();
 const muis = page.mouse;
@@ -107,7 +107,7 @@ for (const [naam, w, h, ua, mobiel] of formaten) {
   await alsGeinstalleerd(p);
   await p.setUserAgent(ua);
   await p.setViewport({ width: w, height: h, deviceScaleFactor: 1, isMobile: mobiel, hasTouch: mobiel });
-  for (const [id, t] of [['veld-kaatsen-en-afwerken', 6.05], ['keeper-laag-duiken-kniezit', 0.6]]) {
+  for (const [id, t] of [['veld-cv-kaats-doordiepen', 6.05], ['keeper-laag-duiken-kniezit', 0.6]]) {
     await detail(p, id);
     await zetTijd(p, t);
     const pad = `${MAP}3d-${naam}-${id.split('-')[0]}.png`;
@@ -124,7 +124,7 @@ async function meet(cpu) {
   await alsGeinstalleerd(p);
   await p.setUserAgent(UA.android);
   await p.setViewport({ width: 412, height: 915, deviceScaleFactor: 2.6, isMobile: true, hasTouch: true });
-  await detail(p, 'veld-kaatsen-en-afwerken');
+  await detail(p, 'veld-cv-kaats-doordiepen');
   // Pas na het laden vertragen: het gaat om het afspelen.
   const cdp = await p.createCDPSession();
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });

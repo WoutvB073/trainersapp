@@ -35,9 +35,8 @@ describe('oefeningen (databestanden)', () => {
           expect(o.categorieen[0]).toBe(bestand.categorie);
           const geldig = CATEGORIEEN[o.soort].map((c) => c.id);
           for (const c of o.categorieen) expect(geldig).toContain(c);
-          // Precies één hoofdcategorie (de eerste = bestand) en hooguit twee extra: samen maximaal drie, geen dubbele.
+          // Precies één hoofdcategorie (de eerste = bestand); zo min mogelijk extra (geen maximum), geen dubbele.
           expect(o.categorieen.length).toBeGreaterThanOrEqual(1);
-          expect(o.categorieen.length).toBeLessThanOrEqual(3);
           expect(new Set(o.categorieen).size).toBe(o.categorieen.length);
           expect(o.naam.length).toBeGreaterThan(2);
           expect(o.uitleg.length).toBeGreaterThan(10);
