@@ -1,0 +1,74 @@
+{
+  "keeper-bv-harde-ballen": {
+    "naam": "Firm shots straight at the keeper",
+    "uitleg": "Two keepers: one is in goal, the other shoots hard at them from 11 m: first a strike off the ground at chest height, then a volley from the hands at stomach height. Hold it, roll it back and swap roles after two balls.",
+    "organisatie": "Goal, shooting spot at 11 m (disc cone). The keeper who shoots brings the ball with them after the swap. Swap roles after 2–4 balls.",
+    "benodigdheden": ["Goal", "1 disc cone", "Balls"],
+    "coachpunten": ["Ready position before the shot: weight on the balls of your feet, hands ready", "High on the body: chest, elbows together; low: basket catch", "Catch the ball and hold on to it, don't let it spill"],
+    "variaties": { "makkelijker": ["Throw instead of shooting", "Distance 14 m"], "moeilijker": ["Distance 8 m", "The shooter chooses the height", "Ball just wide of the keeper: one step across and hold it", "After the catch, kick it straight back (volley) to the shooter"] }
+  },
+  "keeper-bv-vier-kleuren": {
+    "naam": "Four colours and handling",
+    "uitleg": "Four coloured disc cones are laid round the keeper. The coach calls a colour; the keeper touches that disc cone, gets back into the ready position and deals with a ball from the coach straight away: low, at chest height or high. Ball back and straight on to the next colour. A few in a row, then swap.",
+    "organisatie": "Four disc cones (red, blue, yellow, white) 2 m to the left, right, front and back of the centre of the area, 3 m in front of goal. Coach with balls at 7 m.",
+    "benodigdheden": ["Goal", "4 coloured disc cones", "Balls"],
+    "coachpunten": ["After touching the cone, get set in the ready position first, then the ball", "Small quick steps, don't cross your feet", "Low: scoop; chest height: basket; high: thumbs behind the ball"],
+    "variaties": { "makkelijker": ["The coach also points to the colour", "Only balls at chest height"], "moeilijker": ["Call two colours in a row", "The ball comes while the keeper is still moving back", "A short low dive after the ball"] }
+  },
+  "keeper-bv-midden-voorzet-schot": {
+    "naam": "Central, cross and a shot to the other side",
+    "uitleg": "First the coach throws a ball straight at the keeper's body in the middle. Then the keeper moves across to the near post for a low cross from keeper 2 out wide. Get up, and straight away the coach shoots into the other corner, high or low. Then the keepers swap.",
+    "organisatie": "Coach with balls 10 m out, straight in front of goal; keeper 2 with balls on the edge of the box out wide (about 12 m from the post). At least 2 keepers.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Ball at the body: get behind it, basket or chest catch", "For the cross, stand in front of the near post and attack the ball", "Get up quickly and be set again before the shot"],
+    "variaties": { "makkelijker": ["Throw the cross instead of kicking it", "Low shot"], "moeilijker": ["The coach chooses high or low", "Cross at mid-height", "A rebound after the shot"] }
+  },
+  "keeper-bv-stuitballen": {
+    "naam": "Sideways, bouncing ball and low ball",
+    "uitleg": "The keeper moves sideways past two cones to the other side of the goal. There the coach throws a bouncing ball at them: the keeper gathers it behind the bounce, rolls it back and immediately gets a low ball to the other side, diving to it. Get up, roll it back and the next set goes the other way.",
+    "organisatie": "Two cones 3 m apart, 3.4 m in front of the goal line. The keeper starts beside the left cone; the coach stands with balls at 9–10 m.",
+    "benodigdheden": ["Goal", "2 cones", "Balls"],
+    "coachpunten": ["Sideways with small steps, don't cross your feet, shoulders towards the coach", "Bouncing ball: body behind the ball, hands low, trap the ball against your chest", "Back in the ready position straight after rolling it back: the low ball comes immediately"],
+    "variaties": { "makkelijker": ["Make the bouncing ball bounce higher", "Low ball only after a short pause"], "moeilijker": ["Cones further apart", "The coach chooses the side of the low ball at the last moment", "Bouncing ball harder and bouncing closer to the keeper"] }
+  },
+  "keeper-bv-schuin-midden-schuin": {
+    "naam": "Angle, centre, angle: shots at the body",
+    "uitleg": "The keeper starts in the middle of the goal. They come out at an angle towards the left and face a shot at the body: catch and roll it back. Then to the middle for a shot at the body from the coach straight in front of goal: catch and roll it back. Finally out at an angle to the right for a ball at the body from the keeper there: catch and roll it back. Then the keepers rotate.",
+    "organisatie": "Shooters at about 9 m: angled on the left (keeper), straight in front of goal (coach) and angled on the right (keeper), each with a few balls. With two keepers, the coach also takes one of the side balls.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Come out on the line between the ball and the centre of the goal, then be set for the shot", "Ball at the body: body behind the ball, hands in a basket", "Roll it back and move straight to the next position: keep facing the pitch"],
+    "variaties": { "makkelijker": ["Throw instead of shooting", "More time between the balls"], "moeilijker": ["Harder and just wide of the body", "The shooters choose the order", "After the last ball, one more low ball into the other corner"] }
+  },
+  "keeper-bv-schuin-twee-lage": {
+    "naam": "Come out at an angle, then two low balls",
+    "uitleg": "From the middle, the keeper comes out at an angle to the right and catches a shot at the body from the coach. Straight after, they get a low ball to their left from a second keeper, towards the middle of the goal: dive and catch. Get up, roll it back, take up position on the left and then one more low ball from the keeper on the other side into the near corner on the left. Then the keepers rotate.",
+    "organisatie": "Coach angled on the right at about 9 m, a keeper straight in front of goal at about 11 m and a keeper angled on the left at about 9 m, each with balls. With two keepers, the coach also takes the last ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Coming out: small steps, set at the moment of the shot", "Low ball: fall sideways with your hands going to the ball first", "After getting up, take up position for the near post straight away"],
+    "variaties": { "makkelijker": ["Throw the low balls instead of kicking them", "More time after getting up"], "moeilijker": ["Low balls harder and further from the keeper", "The shooters change the order", "First ball at mid-height beside the body"] }
+  },
+  "keeper-bv-vangen-laag-om-beurt": {
+    "naam": "Catch and low dive in turns",
+    "uitleg": "The keeper catches a head-height ball from the coach and throws it back. Then they get a low ball to their right from keeper 2: dive, catch, get up and return it. Another head-height ball from the coach, then a low ball to their left from keeper 3. Then the keepers rotate.",
+    "organisatie": "Coach straight in front of goal at 9 m, keeper 2 angled on the right and keeper 3 angled on the left at about 8 m, each with a ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["After every ball, back to the middle and into the ready position", "Low ball: don't fall onto your knees but onto your side", "Look at the next server while you're returning the ball"],
+    "variaties": { "makkelijker": ["Roll the low balls", "More time between the balls"], "moeilijker": ["The servers choose the order", "Low balls harder", "High ball beside the head"] }
+  },
+  "keeper-bv-vangen-volley-pion-afstand": {
+    "naam": "Catch, sideways, round the cone and back",
+    "uitleg": "The keeper catches a firm ball from the coach and throws it back. Then they step out to a volley and catch it. Moving sideways to the right, they scoop up a rolling ball, throw it back and curve round a cone back into goal. There a long-range shot from keeper 2 is coming.",
+    "organisatie": "Coach with balls at 9 m, cone 3.5 m to the right in front of goal, keeper 2 with a ball at 16 m.",
+    "benodigdheden": ["Goal", "Cone", "Balls"],
+    "coachpunten": ["Firm ball: body behind the ball, hands first", "Scooping a rolling ball: bend your knees, hands together behind the ball", "Keep the curve round the cone tight and be in the ready position in time for the long shot"],
+    "variaties": { "makkelijker": ["No volley", "Long shot at the body"], "moeilijker": ["Long shot at mid-height into the corner", "Rolling ball further away", "Volley harder"] }
+  },
+  "keeper-bv-paal-twee-poppen": {
+    "naam": "Touch the post and two mannequins",
+    "uitleg": "The keeper moves sideways to the left post and touches it. Then back and a few metres out to narrow the angle: there they catch a head-height ball from the coach. Then a low ball past the left mannequin (dive left) and a high ball past the right mannequin (high dive right).",
+    "organisatie": "Two mannequins 5.5 m apart, 4.6 m in front of goal. Coach with balls at 10 m, straight in front of goal.",
+    "benodigdheden": ["Goal", "2 mannequins", "Balls"],
+    "coachpunten": ["Narrowing the angle: come out on the line between the ball and the centre of the goal", "Ball behind a mannequin: you only see it late, so stay low and react to the ball", "High: take off from the leg on the ball side, hands behind the ball"],
+    "variaties": { "makkelijker": ["No mannequins", "High ball at mid-height"], "moeilijker": ["The coach chooses which mannequin", "Low ball straight after touching the post", "Balls closer past the mannequins"] }
+  }
+}

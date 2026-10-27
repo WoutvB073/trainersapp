@@ -1,0 +1,122 @@
+{
+  "keeper-wu-ladder-borstbal": {
+    "naam": "Ladder and a chest-height ball",
+    "uitleg": "The keeper runs through the agility ladder with small, quick steps (one foot in each square), gets set in the ready position at the end and catches a chest-height ball from the coach straight away. Roll the ball back and return round the outside to the start.",
+    "organisatie": "4 m agility ladder. The coach stands 6 m beyond the end of the ladder with a few balls. With more keepers: take turns, starting 2 m behind each other.",
+    "benodigdheden": ["Agility ladder", "Balls"],
+    "coachpunten": ["On the balls of your feet, short steps, active arms", "After the ladder, stop straight away in the ready position: feet hip-width apart, knees slightly bent, hands in front of your body", "Chest-height ball: elbows together, trap the ball against your chest"],
+    "variaties": { "makkelijker": ["One foot per square, steady pace", "Only throw once the keeper is set"], "moeilijker": ["Two feet per square, or sideways through the ladder", "The ball comes as the keeper steps out of the ladder", "The coach chooses high or low"] }
+  },
+  "keeper-wu-hordes-ringen-lage-bal": {
+    "naam": "Hurdles and rings, then a low ball",
+    "uitleg": "Keeper 1 jumps over three low hurdles, hops through the rings and at the end gathers a rolling ball from keeper 2 (scoop). Then they swap: keeper 1 becomes the server and keeper 2 goes back to the start of the course.",
+    "organisatie": "Three 30 cm hurdles 1 m apart, then four rings in a zigzag. The server stands 5 m beyond the last ring. Swap roles after each ball.",
+    "benodigdheden": ["3 low hurdles", "4 rings", "1 ball"],
+    "coachpunten": ["Over the hurdles: knees high, short ground contact", "After the course, get set first, then catch", "Low ball: step towards it, knee behind the ball, little fingers together"],
+    "variaties": { "makkelijker": ["No rings", "Only roll the ball once the keeper is ready"], "moeilijker": ["Sideways over the hurdles", "The server rolls the ball at an angle, so the keeper has to move", "A high ball instead of a low one"] }
+  },
+  "keeper-wu-voetenwerk-vierkant": {
+    "naam": "Footwork in the square",
+    "uitleg": "In a small square in front of goal, the keeper moves along the four sides: crossover steps, small steps forward, shuffles sideways and backwards to finish. They keep facing the pitch the whole time. At the end the coach throws a ball, which they catch in the ready position.",
+    "organisatie": "4 × 3.5 m square (four disc cones) right in front of goal. The coach stands at 9 m. Start the other way round each time.",
+    "benodigdheden": ["Goal", "4 disc cones", "Balls"],
+    "coachpunten": ["Shoulders and hips stay facing the ball", "Crossover step: the back leg crosses in front, not behind", "Stay compact and on the balls of your feet; get set briefly after each side"],
+    "variaties": { "makkelijker": ["Smaller square", "Shuffles only"], "moeilijker": ["The coach throws the ball at a random moment", "Catch a ball at every disc cone", "Finish with a high ball (catch at full stretch in the air)", "After the catch, the coach rolls a second ball low into the corner: dive"] }
+  },
+  "keeper-wu-driehoek": {
+    "naam": "Throwing and catching in a triangle",
+    "uitleg": "Three keepers stand in a triangle and move the ball round with different throws: underarm with a little arc, overarm and high, and rolled along the ground. After a round the direction changes, so everyone does every throw and every catch.",
+    "organisatie": "Triangle with 8 m sides (disc cones). One ball. Change direction after 6 throws; later increase the distance to 12 m (long overarm throws).",
+    "benodigdheden": ["3 disc cones", "1–2 balls"],
+    "coachpunten": ["Underarm: step in with the opposite leg, release the ball low", "Overarm: arm straight behind your head, 'whip' the ball towards the target", "Turn your body towards the ball before it arrives"],
+    "variaties": { "makkelijker": ["Underarm only", "Smaller triangle (6 m)"], "moeilijker": ["Two balls in the triangle", "Sprint to the next disc cone after your throw", "Kick from hands (volley) instead of throwing", "After your throw, sprint to the middle and catch a ball from the coach"] }
+  },
+  "keeper-wu-grondoefeningen": {
+    "naam": "Seated handling",
+    "uitleg": "The keeper sits on the grass and the coach throws from 3–4 m. Three variations in a row: (1) legs straight: before each ball, touch the ground behind you with both hands, then catch and throw back; (2) legs straight: catch at different heights – chest height, above your head and low beside your body; (3) knees bent, feet flat: catch low, at chest height and high. 6–8 balls per variation.",
+    "organisatie": "The keeper sits on the ground, the coach (or another keeper) stands 3–4 m away with a ball. Stand up and shake out briefly after each variation.",
+    "benodigdheden": ["1 ball per pair"],
+    "coachpunten": ["After touching the ground, get your hands in front of your body straight away (W shape)", "Catch with your fingers and pull the ball into your chest", "Strong core: don't fall backwards for the high ball"],
+    "variaties": { "makkelijker": ["No touching the ground", "Throw more gently and from closer", "Chest height only"], "moeilijker": ["Balls to the left and right of the body", "The coach throws while the keeper is still touching the ground", "Variation 3 with feet off the ground (balancing on your seat)"] }
+  },
+  "keeper-wu-twee-ballen": {
+    "naam": "Two balls at once",
+    "uitleg": "Three keepers stand in a triangle, each with their own ball, and one extra ball goes round. Whoever receives the extra ball first throws their own ball high in the air, catches the extra ball meanwhile, passes it on to the next keeper and then catches their own ball again before it hits the ground. And so it goes round.",
+    "organisatie": "Triangle of about 6 m between the keepers. Each keeper has a ball; the fourth ball goes round. After a few rounds, the other way.",
+    "benodigdheden": ["4 balls"],
+    "coachpunten": ["Throw your own ball straight and high enough: that gives you time", "Eyes on the incoming ball first, then back up", "Pass it on calmly: a good throw beats a quick one"],
+    "variaties": { "makkelijker": ["Let your own ball bounce before you catch it", "With two keepers and no passing on"], "moeilijker": ["Extra ball with a bounce or to feet", "Two extra balls going round at once", "Throw your own ball lower"] }
+  },
+  "keeper-wu-rasterloop-lage-duik": {
+    "naam": "Footwork grid and a low dive",
+    "uitleg": "Four cones form a square in front of goal. The keeper moves sideways and forwards through the grid to the left-hand side and catches a head-height ball from the coach there. They throw it on to keeper 2 on the right. Then sideways back to the middle of the grid, where they get a low ball from keeper 2: dive and catch.",
+    "organisatie": "Four cones in a 3 × 1.8 m square, 3 m in front of goal. Coach at 10 m, keeper 2 diagonally to the right at about 8 m. Then the keepers swap.",
+    "benodigdheden": ["Goal", "4 cones", "Balls"],
+    "coachpunten": ["Sideways: don't cross your feet, face the pitch", "Head-height ball: hands in a W, elbows slightly bent", "Low dive: get low first, then fall sideways with your hands to the ball"],
+    "variaties": { "makkelijker": ["No grid: just the catch and the low ball", "Low ball rolled instead of kicked"], "moeilijker": ["Bigger grid", "Low ball further from the keeper", "After the dive, one more head-height ball"] }
+  },
+  "keeper-wu-zijwaarts-blijven-vangen": {
+    "naam": "Keep moving sideways and catch",
+    "uitleg": "The keeper keeps shuffling sideways between two disc cones. Whenever the coach chooses, they throw a ball to the left or right of the middle: the keeper catches it, throws it back and keeps shuffling. Three rounds in a row: first balls at head height, then bouncing balls and finally balls at stomach height.",
+    "organisatie": "Two disc cones 3 m apart, 2 m in front of the goal line. Coach with balls at 7 m. About 6 balls per round.",
+    "benodigdheden": ["Goal", "2 disc cones", "Balls"],
+    "coachpunten": ["Keep moving, but be set as the ball arrives", "Face and shoulders towards the coach, don't turn away", "Bouncing ball: body behind the ball and trap it against your chest"],
+    "variaties": { "makkelijker": ["Disc cones closer together", "The coach only throws once the keeper is set"], "moeilijker": ["The coach also throws wide of the keeper (short dive)", "Harder and from closer", "Mixed heights"] }
+  },
+  "keeper-wu-drie-aangevers": {
+    "naam": "Three servers in a row",
+    "uitleg": "Three servers stand side by side in front of goal. The keeper steps across to the left-hand server, catches a head-height ball and plays it back. Then back to the middle for the middle server's ball, and finally across to the right. Then a server swaps with the keeper.",
+    "organisatie": "Servers 8 m from goal and 3.5 m apart (coach in the middle, keepers on either side). Keeper 2 m in front of the goal line.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["One big step across and get set before the ball arrives", "Head-height ball: thumbs behind the ball, hold it for a moment", "Ready for the next one as soon as you've played it back"],
+    "variaties": { "makkelijker": ["Balls at chest height", "Servers closer to goal"], "moeilijker": ["The servers choose the order", "Mixed heights", "Throw harder or shoot"] }
+  },
+  "keeper-wu-tennisballen-vangen": {
+    "naam": "Sprint with tennis balls, then catch",
+    "uitleg": "There are tennis balls by a cone. The keeper carries them one at a time to a second cone, then sprints through a gate of two poles and catches a firm head-height ball from the coach straight away. The next keeper starts when the previous one is halfway.",
+    "organisatie": "Cone A with 2 tennis balls and cone B 4 m further on. Gate (2 poles, 2 m wide) 4 m in front of goal. Coach 9 m out from goal.",
+    "benodigdheden": ["Goal", "2 cones", "2 poles", "Tennis balls", "Balls"],
+    "coachpunten": ["Bend your knees at the cone to pick up the tennis ball, don't bend over with straight legs", "After the gate, slow down and be in the ready position before the ball arrives", "Firm ball: hands in front of your body, bring the ball in"],
+    "variaties": { "makkelijker": ["One tennis ball", "Ball at chest height"], "moeilijker": ["Three tennis balls", "The coach throws while the keeper is still in the gate", "A low dive after the catch"] }
+  },
+  "keeper-wu-ladder-voetpass": {
+    "naam": "Ladder jumps and a pass with the feet",
+    "uitleg": "The keeper catches a head-height ball from the coach and throws it back. Then sideways through the ladder, one foot in each square. At the end they get a low pass from keeper 2 on the other side, which they play straight back with the inside of the foot. Then back through the ladder.",
+    "organisatie": "Ladder across the front of goal, 3 m from the goal line. Coach in front of the left end at 8 m, keeper 2 in front of the right end at 8 m.",
+    "benodigdheden": ["Goal", "Ladder", "Balls"],
+    "coachpunten": ["In the ladder: on the balls of your feet and quick, facing the pitch", "Pass with the feet: standing foot next to the ball, ankle locked, inside of the foot", "Back in the ready position straight after the pass"],
+    "variaties": { "makkelijker": ["Run through the ladder instead of jumping", "Stop the ball first, then play it back"], "moeilijker": ["Play it back with the other foot", "Two feet per square", "After the pass, a head-height ball from keeper 2"] }
+  },
+  "keeper-wu-zijwaarts-uitschieten": {
+    "naam": "Sideways, burst forward and stop",
+    "uitleg": "The keeper shuffles sideways back and forth a few times between two cones. On a signal they sprint 5 m forwards, brake hard and stand still in the ready position. Then the coach throws a ball at varying heights: catch, return and back to the cones going backwards.",
+    "organisatie": "Two cones 3 m apart, 2 m in front of the goal line. Coach with balls at 11 m.",
+    "benodigdheden": ["Goal", "2 cones", "Balls"],
+    "coachpunten": ["Brake with small steps and low hips, don't run on", "Get set first, then catch", "Back to the cones going backwards, facing the pitch"],
+    "variaties": { "makkelijker": ["Shorter sprint (3 m)", "Always at chest height"], "moeilijker": ["The coach throws while the keeper is still braking", "After the catch, a low dive to the left or right", "Sprint diagonally forwards"] }
+  },
+  "keeper-wu-voet-uitstappen-vangen": {
+    "naam": "Feet, step out and catch",
+    "uitleg": "The coach plays a low ball to the keeper, who returns it first time with the foot. Then the keeper steps out 3–4 m and catches a ball at head, chest or stomach height. Ball back, back into goal and the next one. After a few goes, the two keepers swap.",
+    "organisatie": "Keeper 1 in goal, keeper 2 waits beside the goal. Coach with balls at 10 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Pass with the feet: look first, then return it cleanly with the inside of the foot", "Stepping out: short and sharp, set before the ball arrives", "The height decides the hands: W grip, basket catch or scoop"],
+    "variaties": { "makkelijker": ["Control the ball first, then play it back", "Always at chest height"], "moeilijker": ["Play it back with the weaker foot", "The coach throws while the keeper is stepping out", "Step out diagonally to the left or right"] }
+  },
+  "keeper-sp-kleurenpion": {
+    "naam": "Grab a coloured cone",
+    "uitleg": "There is a circle of coloured cones round the group. The keepers move round inside the circle throwing balls to each other. When the coach calls a colour, everyone sprints to a cone of that colour. Whoever is last does a small task (e.g. getting up three times from lying on their front). Then carry on throwing.",
+    "organisatie": "Circle of about 12 m with six cones in three colours (two of each). Four keepers with two balls in the circle.",
+    "benodigdheden": ["6 coloured cones", "2 balls"],
+    "coachpunten": ["Keep moving and look around: where is the ball, where are the cones?", "React to the colour straight away, don't wait to see what the others do", "Catch with two hands, even on the move"],
+    "variaties": { "makkelijker": ["Two colours", "Run instead of sprinting"], "moeilijker": ["The coach calls two colours in a row", "With three balls", "Touch the cone with your hand and get back to the middle"] }
+  },
+  "keeper-sp-stompen-eigen-bal": {
+    "naam": "Punching while your own ball is in the air",
+    "uitleg": "The keeper throws their own ball high in the air. While it's up there, they get balls from the left, the middle and the right, which they punch back to the thrower with two fists. Then they catch their own ball before it hits the ground. If that works, throw it lower next time.",
+    "organisatie": "Three throwers in a semicircle at 4–5 m (coach in the middle, two keepers on the sides), each with a ball.",
+    "benodigdheden": ["4 balls"],
+    "coachpunten": ["Throw your own ball straight and high, then look at the first thrower straight away", "Punch with two fists together, arms reaching for the ball", "Look back for your own ball in time"],
+    "variaties": { "makkelijker": ["Two throwers", "Your own ball may bounce once"], "moeilijker": ["The throwers choose the order", "Punch with one fist", "Throw your own ball lower"] }
+  }
+}

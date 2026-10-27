@@ -1,0 +1,171 @@
+{
+  "keeper-ps-terugspeelbal": {
+    "naam": "Back pass: control and play it away",
+    "uitleg": "The coach plays a back pass to the keeper. The first time, the keeper controls it with the inside of the foot, out to the side away from goal, and plays it through the gate on the wing. The second time, they kick it straight (first time) through the other gate.",
+    "organisatie": "Keeper in front of goal, coach at 16 m. Two 3 m gates on the wings, 15 m from the centre. Alternate control-and-pass with first-time passes.",
+    "benodigdheden": ["Goal", "4 cones", "Balls"],
+    "coachpunten": ["Stay open: body side-on so you can see the pitch and aren't facing your own goal", "Control with the inside of the foot, take the ball out to the side (never towards goal)", "Standing foot next to the ball, ankle locked, strike through the ball"],
+    "variaties": { "makkelijker": ["Roll the ball gently, always control it first", "Bigger gates"], "moeilijker": ["First time only", "With the weaker foot", "The coach then presses: see 'Back pass under pressure'"] }
+  },
+  "keeper-ps-terugspeelbal-druk": {
+    "naam": "Back pass under pressure",
+    "uitleg": "The coach plays a back pass and presses straight away from one side. Before the ball arrives, the keeper checks where the pressure is coming from and plays the ball first time to the gate on the other side: away from the pressure.",
+    "organisatie": "Keeper in front of goal, coach at 16 m at an angle to the goal. Gates on the wings. The coach chooses which side to press from.",
+    "benodigdheden": ["Goal", "4 cones", "Balls"],
+    "coachpunten": ["Before the ball arrives: check over your shoulder where the pressure is", "Play away from the pressure, first time", "In doubt? Then long and high, never across your own goal"],
+    "variaties": { "makkelijker": ["The coach only runs once the ball reaches the keeper", "One touch to control is allowed"], "moeilijker": ["The coach presses harder and closer", "Smaller gates", "A third option: long ball to a zone on the halfway line"] }
+  },
+  "keeper-ps-uittrap-handen": {
+    "naam": "Kicking from hands: volley and drop kick",
+    "uitleg": "Two keepers kick the ball from their hands to each other over 35 m. Keeper 1 does a volley (high and long), keeper 2 a drop kick (half-volley: strike it as the ball hits the ground, flatter and quicker). The receiver stands in a zone and catches.",
+    "organisatie": "Two keepers 35 m apart, each in a 10 × 8 m zone. Take turns with a volley and a drop kick. Landing your ball in the other keeper's zone scores a point.",
+    "benodigdheden": ["Disc cones for two zones", "1–2 balls"],
+    "coachpunten": ["Drop the ball straight in front of your kicking leg, don't throw it up", "Volley: ankle locked, strike through the ball; drop kick: strike it as it hits the ground", "After the kick, follow through towards the receiver"],
+    "variaties": { "makkelijker": ["Distance 25 m", "Bigger zones"], "moeilijker": ["Distance 45 m", "Smaller zone or a mini goal as the target", "The receiver runs inside the zone and the ball must land in their path"] }
+  },
+  "keeper-ps-doeltrap": {
+    "naam": "Goal kick to the wing",
+    "uitleg": "The keeper places the ball on the corner of the six-yard box, takes a short run-up and kicks it high and long to a zone on the wing. Then a goal kick from the other corner to the other wing.",
+    "organisatie": "Balls on both corners of the six-yard box. Two 10 × 10 m zones on the wings, 30 m from goal. 6 goal kicks per set, points for a ball in the zone.",
+    "benodigdheden": ["Goal", "Disc cones for two zones", "Balls"],
+    "coachpunten": ["Run-up at an angle from behind, last stride slightly longer", "Standing foot next to the ball, lean back slightly for a high ball", "Strike the ball with your laces just below the middle"],
+    "variaties": { "makkelijker": ["Zones closer (20 m)", "Put the ball on a little tuft of grass or on a disc cone"], "moeilijker": ["Zones further away and smaller", "Low, driven goal kick to a second keeper at 25 m", "Alternate left and right, against the clock"] }
+  },
+  "keeper-ps-uitworpen": {
+    "naam": "Throws: rolling, sidearm and overarm",
+    "uitleg": "The keeper throws three balls at three targets at increasing distances: rolled (underarm) through a gate at 12 m, a sidearm throw (flat) to a zone at 20 m and overarm to a zone at 30 m.",
+    "organisatie": "Keeper on the edge of the six-yard box with three balls. 3 m gate at 12 m, 8 × 8 m zones at 20 and 30 m. A point for each target hit.",
+    "benodigdheden": ["2 cones", "Disc cones for two zones", "3 balls"],
+    "coachpunten": ["Rolling: bend deep at the knees, release the ball low and flat (no bounce)", "Sidearm throw: arm straight out to the side, let the ball 'skim' flat", "Overarm: step in with the other leg, arm straight over the shoulder, release the ball above your head"],
+    "variaties": { "makkelijker": ["Shorter distances (8, 14 and 20 m)", "Bigger gates and zones"], "moeilijker": ["A second keeper runs through the zones and must get the ball in their stride", "Throw out straight after a catch (the coach shoots)", "Smaller targets or mini goals"] }
+  },
+  "keeper-ps-kort-of-lang": {
+    "naam": "Short or long: find the free teammate",
+    "uitleg": "Keeper 2 is short on the wing, keeper 3 far away on the other side. If the short option is free, keeper 1 rolls the ball to them quickly. If they are marked (the coach moves towards them), keeper 1 goes long: a kick from hands to keeper 3.",
+    "organisatie": "Keeper 1 in goal with the ball. Keeper 2 in a zone at 15 m on the wing, keeper 3 in a zone at 35 m on the other side. The coach chooses when to mark the short option. Rotate after 4 balls.",
+    "benodigdheden": ["Goal", "Disc cones for two zones", "2 balls"],
+    "coachpunten": ["Look short first: if there's space, roll it quickly and accurately", "Short option marked? Don't force it: go long", "Once you've decided, do it without hesitation"],
+    "variaties": { "makkelijker": ["The coach says beforehand whether the short option is marked", "The long ball may also be thrown"], "moeilijker": ["The long option can be marked too (second coach or mannequin)", "Decide within 4 seconds of the catch", "Catch a shot first, then choose"] }
+  },
+  "keeper-ps-snel-uitgooien": {
+    "naam": "Catch and throw out quickly on the run",
+    "uitleg": "The coach shoots at the keeper. As soon as they catch it, keeper 2 sprints forward down the wing. Keeper 1 throws the ball overarm ahead of them so they get it in their stride: a quick transition. Then they swap roles.",
+    "organisatie": "Keeper 1 in goal, coach at 12 m. Keeper 2 starts on the wing level with the box and sprints to a disc cone at 28 m. Swap after each throw.",
+    "benodigdheden": ["Goal", "2 disc cones", "Balls"],
+    "coachpunten": ["Look up straight after the catch: where is the free teammate?", "Throw ahead of the runner, not at them", "Speed above all, but the throw does have to arrive"],
+    "variaties": { "makkelijker": ["The runner stands still", "Rolled instead of overarm"], "moeilijker": ["The coach or a mannequin marks the runner: the keeper chooses the other side", "Get up from a dive and throw out", "Kick from hands (volley) instead of a throw"] }
+  },
+  "keeper-cv-terugspeelbal-schot": {
+    "naam": "Back pass, play it away and a shot",
+    "uitleg": "The coach plays a back pass, the keeper controls it with the inside of the foot and plays it through the gate on the wing. Then quickly back into goal: the coach shoots the second ball low into the corner.",
+    "organisatie": "Keeper in front of goal, coach at 16 m with two balls. 3 m gate on the wing, 14 m from the centre.",
+    "benodigdheden": ["Goal", "2 cones", "2 balls"],
+    "coachpunten": ["First touch to the side, away from goal; then look up", "After the pass, back going backwards, facing the ball", "Be ready before the shot: ready position, weight forward"],
+    "variaties": { "makkelijker": ["After the pass the keeper may get back calmly, the shot only once they're set", "Shot at the body"], "moeilijker": ["Play the back pass away first time", "Shot straight after the pass (no time)", "The coach chooses: shot or chip over the keeper"] },
+    "onderdelen": ["Control the back pass", "Play it away", "Deal with the shot"]
+  },
+  "keeper-ps-terugspeelbal-hoge-bal": {
+    "naam": "Back pass and claiming a high ball",
+    "uitleg": "The coach plays a back pass to the keeper. The keeper controls it and plays the ball through a gate on the wing. Straight after, the coach throws a high ball into the box; the keeper comes out and takes it at the highest point.",
+    "organisatie": "Gate of two cones (3 m wide) on the wing 18 m from goal. Coach with two balls at 14 m at an angle to the goal.",
+    "benodigdheden": ["Goal", "2 cones", "Balls"],
+    "coachpunten": ["Control with the foot pointing away from the coach, open up", "Play it on with the inside of the foot: firm and flat through the gate", "Straight back into position after the pass, take the high ball at the highest point (knee up)"],
+    "variaties": { "makkelijker": ["Wider gate", "High ball only after a second"], "moeilijker": ["Back pass with pressure from an attacker", "Play it on with the weaker foot", "High ball with an opponent jumping with you"] }
+  },
+  "keeper-ps-terugspeelbal-geroepen-doeltje": {
+    "naam": "Back pass to the called goal",
+    "uitleg": "Three mini goals stand about 18 m out, each with a coloured disc cone in front. The coach plays a back pass to the keeper. As the keeper controls the ball, the coach calls a colour, and the keeper plays the ball into that goal as quickly as possible. Then the next ball and a different colour.",
+    "organisatie": "Three mini goals in a row at 18 m (red on the left, yellow in the middle, blue on the right). Coach with balls at an angle in front of goal at 10 m.",
+    "benodigdheden": ["Goal", "3 mini goals", "3 coloured disc cones", "Balls"],
+    "coachpunten": ["First touch out of your feet: set the ball up straight away for the pass", "After the colour: look, then play", "Firm along the ground, with the inside of the foot"],
+    "variaties": { "makkelijker": ["The coach calls the colour before the pass", "Goals closer"], "moeilijker": ["First time", "A player presses after the first touch", "Call the colour at the last moment"] }
+  },
+  "keeper-ps-wegwerken-en-terug": {
+    "naam": "Sweeper keeper: clear it and get back",
+    "uitleg": "The coach hits a long ball over the defence. The keeper sprints out to the edge of the box and clears it there with a header. Then they run backwards, facing the pitch, back to their goal, where keeper 2 shoots straight away.",
+    "organisatie": "Coach with balls 35 m from goal, keeper 2 with a ball at an angle on the right at 15 m. Outside the box the keeper may not handle the ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Decide early: go or stay", "Clear it far and wide, with your head or foot", "Back going backwards with small quick steps, be set in time for the shot"],
+    "variaties": { "makkelijker": ["Long ball along the ground (kick it clear)", "The shot only once the keeper is back in goal"], "moeilijker": ["An attacker also goes for the ball", "Shot while the keeper is still getting back (lob)", "Long ball with spin"] }
+  },
+  "keeper-ps-uitspelen-druk-minidoeltjes": {
+    "naam": "Playing out under pressure into mini goals",
+    "uitleg": "The keeper receives the ball from the coach. Straight away, two keepers press. They have to play the ball into one of three mini goals (left, middle or right). If they don't, and one of the two wins the ball, there is an immediate counter-attack on their goal, which they have to defend.",
+    "organisatie": "Three mini goals at about 20 m: left, middle and right. Two keepers as pressers at 12 m. Coach with balls beside the goal.",
+    "benodigdheden": ["Goal", "3 mini goals", "Balls"],
+    "coachpunten": ["Look where the space is before the ball arrives", "First touch away from the pressure", "After losing the ball, straight back into goal and get set"],
+    "variaties": { "makkelijker": ["One presser", "The pressers start further away"], "moeilijker": ["First time", "Smaller goals", "The pressers may shoot straight away after winning the ball"] }
+  },
+  "keeper-ps-scannen-uitspelen-1op1": {
+    "naam": "Scan, play out and 1v1",
+    "uitleg": "The keeper first checks over their shoulder (scanning) and then plays the ball between two mannequins to keeper 2, who shoots at goal straight away. The keeper deals with that shot. Straight after, the coach comes at them with a ball: a 1v1, in which they block.",
+    "organisatie": "Two mannequins 2.5 m apart at 9 m. Keeper 2 at 18 m behind the gap. Coach with a ball at an angle on the right at 14 m.",
+    "benodigdheden": ["Goal", "2 mannequins", "Balls"],
+    "coachpunten": ["Scan before you have the ball: where is the gap?", "Straight back after the pass and get set for the shot", "1v1: come out briefly, small and wide, block"],
+    "variaties": { "makkelijker": ["Wider gap", "The coach waits until the keeper is set"], "moeilijker": ["Narrower gap", "The coach starts dribbling during the shot", "Keeper 2 may also lay it back to the coach"] }
+  },
+  "keeper-ps-uitspelen-hoek-tweede-bal": {
+    "naam": "Play out to the wide area and back",
+    "uitleg": "The keeper plays the ball out to a server at an angle on the right on the edge of the box. They control it and shoot; meanwhile the keeper has got set for a shot from that angle. The other keeper follows in for a possible second ball: if the keeper spills it, they have to gather that too.",
+    "organisatie": "Server (keeper 2) at an angle on the right at 16 m, keeper 3 at 12 m in front of goal following in. The coach plays the first ball in to the keeper.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Play out and get straight back into position: on the line between the ball and the centre of the goal", "Shot from the angle: near post shut, but not too close to the post", "Hold the ball or clear it well away, never into the path of the player following in"],
+    "variaties": { "makkelijker": ["No player following in", "The server controls the ball calmly first"], "moeilijker": ["The server shoots first time", "The player following in may impede the keeper", "Shots at mid-height too"] }
+  },
+  "keeper-ps-terugspeelbal-draaien-schot": {
+    "naam": "Back pass, turn and shot",
+    "uitleg": "Keeper 2 plays a back pass; keeper 3 presses straight away. The keeper controls it, turns away from the pressure and plays the ball to the coach. The coach steps aside and shoots first time: the keeper quickly gets set and dives.",
+    "organisatie": "Keeper 2 at an angle on the left at 14 m, keeper 3 as the presser straight in front of goal at 10 m, coach at an angle on the right at 12 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Take your first touch to the open side, away from the presser", "Straight back to the middle of the goal after the pass", "Low shot: stay low and fall sideways"],
+    "variaties": { "makkelijker": ["The presser only runs alongside", "The coach shoots at the body"], "moeilijker": ["The presser may win the ball", "Play it on first time", "The coach shoots into the far corner"] }
+  },
+  "keeper-ps-aannemen-wegdraaien-pop": {
+    "naam": "Receive and turn away from the mannequin",
+    "uitleg": "A mannequin stands beside the keeper as an opponent. The coach plays a ball in: low, bouncing or at mid-height. The keeper controls it, turns away from the mannequin and plays the ball into a mini goal to the side. Three balls, a different height each time.",
+    "organisatie": "Keeper 5.6 m in front of goal with a mannequin 1.2 m to their right. Mini goal on the left at 8 m. Coach with balls straight in front of goal at 15 m.",
+    "benodigdheden": ["Goal", "Mannequin", "Mini goal", "Balls"],
+    "coachpunten": ["Know where you'll turn before you receive", "First touch away from the mannequin", "Mid-height ball: thigh or laces, kill the ball dead"],
+    "variaties": { "makkelijker": ["Low balls only", "Mannequin further away"], "moeilijker": ["A real opponent instead of the mannequin", "The coach calls which goal", "Two touches"] }
+  },
+  "keeper-ps-uitkomen-een-keer-passen": {
+    "naam": "Come out and pass first time",
+    "uitleg": "There is a cone next to each post. The coach plays a ball into the space between the left cone and the post; the keeper comes out and plays it first time to the keeper on the left wing. Then the same on the right. Finally a central ball: control it and pass it back to the coach.",
+    "organisatie": "Two cones 3 m in front of goal, each 2.6 m inside the post. Keepers on both wings at about 15 m, coach centrally at 14 m.",
+    "benodigdheden": ["Goal", "2 cones", "Balls"],
+    "coachpunten": ["Come out in time: go to meet the ball", "First-time pass: open body shape towards the wing", "Central ball: first touch out of your feet, then pass it back"],
+    "variaties": { "makkelijker": ["Control first, then pass", "Gentler balls"], "moeilijker": ["With the weaker foot", "A presser coming from the coach", "The wide keepers move: pass into their stride"] }
+  },
+  "keeper-ps-lange-bal-lange-worp": {
+    "naam": "Long kick and long throw",
+    "uitleg": "The coach passes to the keeper, who controls it and kicks it long and high to keeper 2 at about 35 m. Keeper 2 catches it and sends it back to the keeper with a long sidearm throw. Then they swap roles.",
+    "organisatie": "Keeper 1 in goal, keeper 2 at about 35 m. Coach with balls beside the goal.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Long kick: standing foot next to the ball, strike through it", "Catch at the highest point, don't wait for it", "Long throw: arm straight, weight from back to front"],
+    "variaties": { "makkelijker": ["Distance 25 m", "Stop the ball first"], "moeilijker": ["Kick it long first time", "Keeper 2 has to catch the ball inside an area", "Throw to feet instead of to hands"] }
+  },
+  "keeper-ps-drie-poorten-dropkicks": {
+    "naam": "Three gates, rotating drop kicks",
+    "uitleg": "Three cone gates stand in a triangle, with a keeper in each gate. The keeper with the ball drop-kicks it to the next gate and then joins the third gate, behind the keeper standing there. The receiver kicks it on and does the same. That way everyone moves on one gate after every action and there is always someone ready to catch.",
+    "organisatie": "Triangle with sides of about 18 m, gates 2 m wide. One ball (two later on).",
+    "benodigdheden": ["6 cones", "Balls"],
+    "coachpunten": ["Drop kick: drop the ball and strike it just as it hits the ground", "Aim for the receiver's chest", "After the kick, move straight on to the next gate"],
+    "variaties": { "makkelijker": ["Volley instead of drop kick", "Smaller triangle"], "moeilijker": ["Two balls at once", "Catch the ball on the move", "Bigger triangle"] }
+  },
+  "keeper-ps-lezen-verdediger": {
+    "naam": "Reading what the defender does",
+    "uitleg": "A mannequin plays the defender between the keeper and a target player. If the defender has dropped off (the mannequin is close to goal and the line to the teammate is open), the keeper plays a firm low pass. If they have pushed up (the mannequin is right in front of the teammate), the keeper plays it at mid-height over the mannequin. Both situations are set out side by side: dropped off on the left, pushed up on the right.",
+    "organisatie": "On the left a mannequin at 7 m at an angle in front of goal with a keeper at 18 m; on the right a mannequin at 14 m right in front of a keeper at 19 m. The coach passes to the keeper.",
+    "benodigdheden": ["Goal", "2 mannequins", "Balls"],
+    "coachpunten": ["Look where the defender is first, then choose", "Low pass: firm and along the ground, past the mannequin", "Over the mannequin: get under the ball, with touch, land it just behind the mannequin"],
+    "variaties": { "makkelijker": ["The coach says which situation it is", "More distance between the mannequin and the teammate"], "moeilijker": ["A real defender who chooses for themselves", "First time", "The teammate moves"] }
+  },
+  "keeper-ps-uitspelen-druk-dan-lang": {
+    "naam": "Play out under pressure, then go long",
+    "uitleg": "First ball: the keeper receives the ball while keeper 2 presses, and plays it out quickly and short to keeper 3 in the goal on the wing. Second ball: no pressure. The keeper controls it, opens up to the pitch and plays the ball long to keeper 4 in the far goal.",
+    "organisatie": "Two small goals with a keeper in each: one on the wing at about 18 m, one far away at about 35 m. Keeper 2 presses from 12 m. Coach with balls beside the goal.",
+    "benodigdheden": ["Goal", "2 small goals", "Balls"],
+    "coachpunten": ["Under pressure: one touch and get rid of it quickly, don't dribble", "No pressure: open body, look, then go long", "Long ball: strike through it, onto the receiver's chest"],
+    "variaties": { "makkelijker": ["The presser only runs alongside", "The far goal closer"], "moeilijker": ["The presser may win the ball", "Long ball along the ground", "The keeper chooses: short or long"] }
+  }
+}

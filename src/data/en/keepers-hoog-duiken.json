@@ -1,0 +1,93 @@
+{
+  "keeper-hd-tippen-over-de-lat": {
+    "naam": "Tipping over the bar",
+    "uitleg": "The coach kicks or throws a high ball that would drop just under the bar. The keeper steps back, takes off and tips the ball over the bar with a straight arm. Then back to their spot for the next ball.",
+    "organisatie": "Keeper in goal, coach at 10 m with a few balls. Balls that drop just under the bar, first central and then slightly to the side.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Step back first, then take off (don't fall backwards)", "Tip with a straight arm and open hand, guiding the ball over the bar", "Keep your eyes on the ball until it's over the bar"],
+    "variaties": { "makkelijker": ["Throw instead of kicking", "The keeper starts 1 m off the line"], "moeilijker": ["The keeper starts further off the line (3 m)", "Volleys from the hands", "Alternate catching and tipping: the coach calls which", "A low ball into the corner straight after the tip"] }
+  },
+  "keeper-cv-hordes-hoge-bal-hoge-duik": {
+    "naam": "Hurdles, high ball and high dive",
+    "uitleg": "Over three low hurdles to the goal, catch a high ball there at full stretch in the air and throw it back. Straight after, the coach throws high into the other corner: take off and make a high dive.",
+    "organisatie": "Three 30 cm hurdles beside the goal. Coach at 9 m. Each set goes the other way.",
+    "benodigdheden": ["Goal", "3 low hurdles", "2 balls"],
+    "coachpunten": ["Over the hurdles: knees high, short ground contact", "High ball: take off from one foot, catch at the highest point", "High dive: a small step towards the ball first, then take off from the leg on the ball side"],
+    "variaties": { "makkelijker": ["No hurdles", "High dive onto a crash mat"], "moeilijker": ["Sideways over the hurdles", "High ball with an opponent jumping with you", "After the high dive, one more low ball into the same corner"] },
+    "onderdelen": ["Hurdles", "Catch the high ball", "High dive"]
+  },
+  "keeper-cv-hoog-dan-laag": {
+    "naam": "High dive, get up and low in the other corner",
+    "uitleg": "The coach throws high into one corner: high dive and catch. The keeper gets straight up, puts the ball down and gets set again. The second ball goes low into the other corner.",
+    "organisatie": "Keeper in goal, coach at 9 m with two balls. Alternate starting left and right. 30 seconds' rest after each set.",
+    "benodigdheden": ["Goal", "2 balls"],
+    "coachpunten": ["Get up through your knees and straight back to the middle", "Get set in the ready position first, then react to the second ball", "Low: dive forwards to the ball, don't fall away sideways"],
+    "variaties": { "makkelijker": ["More time between the two balls", "High ball at chest height (no dive)"], "moeilijker": ["The second ball comes while the keeper is still getting up", "Third ball straight at the keeper", "Shoot instead of throwing"] },
+    "onderdelen": ["High dive", "Get up and put the ball down", "Low dive in the other corner"]
+  },
+  "keeper-cv-tip-en-lage-bal": {
+    "naam": "Tip over the bar, then a low ball",
+    "uitleg": "The coach kicks a high ball that drops just under the bar: the keeper steps back and tips it over. They recover straight away, get set again and the coach shoots the second ball low into the corner.",
+    "organisatie": "Keeper in goal, coach at 10 m with two balls. About 2 seconds between the two balls.",
+    "benodigdheden": ["Goal", "2 balls"],
+    "coachpunten": ["Tipping: step back first, then take off with a straight arm", "After landing, step forward straight away into the ready position", "Low ball: dive forwards, towards the ball"],
+    "variaties": { "makkelijker": ["More time for the second ball", "Catch the high ball instead of tipping it"], "moeilijker": ["The second ball comes straight after landing", "Tip round the post, then low into the other corner", "Third ball: clear a back pass"] },
+    "onderdelen": ["Tip over the bar", "Recover", "Low ball into the corner"]
+  },
+  "keeper-hd-hordes-zijwaarts": {
+    "naam": "Sideways hurdles and a high dive",
+    "uitleg": "The keeper jumps sideways over three low hurdles beside the goal, facing the pitch. After the last hurdle they take one more step and dive on to the same side, to a high shot from the coach. Catch, get up, ball back and the next set to the other side.",
+    "organisatie": "Three 30 cm hurdles in a row beside the goal, 1 m apart, 2 m in front of the goal line. Coach with balls at 9–10 m. Alternate sides.",
+    "benodigdheden": ["Goal", "3 low hurdles", "Balls"],
+    "coachpunten": ["Sideways over the hurdles: short ground contact, knees high, shoulders towards the pitch", "Straight into the ready position after the last hurdle: ready to take off", "Take off from the leg on the ball side, hands in front of the ball"],
+    "variaties": { "makkelijker": ["One or two hurdles", "Mid-height ball instead of high"], "moeilijker": ["Higher hurdles", "The coach only picks the corner after the last hurdle", "After the high dive, one more low ball into the other corner"] }
+  },
+  "keeper-hd-horde-volley-hoog": {
+    "naam": "Over the hurdle and back: volley and high shot",
+    "uitleg": "The keeper stands in the middle of the goal. They jump sideways over a hurdle to one side and straight back, then face a volley at the body: catch and throw it back. Then over the hurdle and back once more, followed by a high shot into that side of the goal: high dive and catch.",
+    "organisatie": "Low hurdle 1.2 m from the centre of the goal, 1.8 m in front of the goal line. Coach with balls at 9–10 m. Alternate the hurdle left and right.",
+    "benodigdheden": ["Goal", "Low hurdle", "Balls"],
+    "coachpunten": ["Over the hurdle: short ground contact, knees high, shoulders towards the coach", "Straight into the ready position after the hurdle: the ball comes immediately", "High dive: take off from the leg on the ball side, hands behind the ball"],
+    "variaties": { "makkelijker": ["Throw the volley and the high ball instead of kicking", "Mid-height ball instead of high"], "moeilijker": ["Twice over and back before each ball", "Higher hurdle", "The coach picks the corner for the high shot at the last moment"] }
+  },
+  "keeper-hd-slalom-pion-duiken": {
+    "naam": "Slalom, touch the cone and dive",
+    "uitleg": "The keeper slaloms through four poles in front of goal, comes into the goal and touches a cone on one side. Straight after, they dive to the other side for a high ball from the coach. Get up, ball back and then the same slalom the other way: touch the cone on that side and dive to the other side, this time low.",
+    "organisatie": "Four poles in a row, 1.4 m apart, 4.6 m in front of the goal line. Two cones in the goal, 2.2 m off the line and 1.5 m inside each post. Coach with balls at 10 m.",
+    "benodigdheden": ["Goal", "4 poles", "2 cones", "Balls"],
+    "coachpunten": ["Slalom with small steps, shoulders towards the coach", "After touching the cone, get set first, then take off", "High dive: take off from the leg on the ball side; low dive: fall sideways, hands first"],
+    "variaties": { "makkelijker": ["No slalom: just touch and dive", "Mid-height ball instead of high"], "moeilijker": ["The coach only chooses high or low after the touch", "Poles closer together", "Touch twice before the dive"] }
+  },
+  "keeper-hd-halfknie-pion-hoog": {
+    "naam": "Half-kneeling catch, cone, high dive",
+    "uitleg": "The keeper is half-kneeling in front of goal and catches a high ball from the coach. Ball back, get up and touch a cone to their left. Then three quick steps to the right and a high dive to a ball in the right-hand corner.",
+    "organisatie": "Keeper half-kneeling 2 m in front of goal, cone 1 m to their left. Coach with balls at 9 m.",
+    "benodigdheden": ["Goal", "Cone", "Balls"],
+    "coachpunten": ["Half-kneeling: straight back, hands in front of the body, catch above your head", "Get up and touch the cone in one smooth movement", "Three steps, then take off from the right leg and stretch high"],
+    "variaties": { "makkelijker": ["Ball at chest height", "Two steps and a mid-height dive"], "moeilijker": ["Switch knees: the other knee on the ground", "The coach only picks the corner after the touch", "Ball high into the far corner"] }
+  },
+  "keeper-hd-hordes-slalom-paal": {
+    "naam": "High hurdles, slalom and post",
+    "uitleg": "The keeper jumps over two high hurdles, slaloms round two cones and then moves backwards, facing the pitch, to the left post. They touch the post and immediately dive high to the other side for a ball from the coach.",
+    "organisatie": "Course in front of the left side of the goal: two 45 cm hurdles, with two cones behind them. Coach with balls at 9 m, straight in front of goal.",
+    "benodigdheden": ["Goal", "2 high hurdles", "2 cones", "Balls"],
+    "coachpunten": ["Over the hurdles: knees high, drive your arms", "Backwards to the post: small steps, keep watching the coach", "After touching the post, get set first, then take off powerfully"],
+    "variaties": { "makkelijker": ["Low hurdles", "Mid-height ball"], "moeilijker": ["Three hurdles", "Ball into the far corner", "The coach throws while the keeper is touching the post"] }
+  },
+  "keeper-hd-kleur-powerduik": {
+    "naam": "Call a colour and power dive",
+    "uitleg": "Three coloured disc cones lie in front of goal. The coach calls a colour; the keeper sprints to that disc cone, takes off powerfully and dives high to a ball from the coach. The coach calls the next colour while the keeper is still on the ground: up and straight off again. Three in a row.",
+    "organisatie": "Red on the left, blue on the right and yellow in the middle, about 2.5 m in front of goal. Coach with balls at 10 m.",
+    "benodigdheden": ["Goal", "3 coloured disc cones", "Balls"],
+    "coachpunten": ["At the disc cone: short last step, then a powerful take-off", "Stretch high and far, hands behind the ball", "Secure the ball as you land, then get up quickly through your knees"],
+    "variaties": { "makkelijker": ["Two disc cones", "A rest after each dive"], "moeilijker": ["Four colours", "The coach calls two colours in a row", "Ball just out of reach: tip instead of catching"] }
+  },
+  "keeper-hd-buiklig-verre-paal": {
+    "naam": "Up from lying on your front and the far post",
+    "uitleg": "The keeper lies on their front by the left post, head towards the pitch. On a signal they get up as fast as they can, sprint to the far post and attack a high ball from the coach there: catch it at full stretch in the air. Then from the other post: on your front again, up and across to the other side, this time with a high dive.",
+    "organisatie": "Keeper lying on their front by the post. Coach with balls at 9 m, straight in front of goal; they throw high to the far post as soon as the keeper gets up.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Getting up: hands under your shoulders, up in one movement", "Sprint with your eyes on the ball", "Attack the high ball: take off from one foot, other knee up, catch at the highest point"],
+    "variaties": { "makkelijker": ["Start kneeling", "Ball lower and closer to the keeper"], "moeilijker": ["The signal is a colour or number", "Start lying on your back", "Ball just under the bar: tip it"] }
+  }
+}

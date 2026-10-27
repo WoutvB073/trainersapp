@@ -1,0 +1,100 @@
+{
+  "veld-tq-balgevoel": {
+    "naam": "Ball mastery: sole rolls and drag-backs",
+    "uitleg": "Everyone works in their own space with a ball. Roll the ball sideways back and forth with your sole, drag it back with your sole and push it forward again with the inside of your foot. Switch feet after a minute.",
+    "organisatie": "Players spread out 3–4 m apart, each with a ball. The coach stands in front of the group and demonstrates.",
+    "benodigdheden": ["1 ball per player"],
+    "coachpunten": ["Light on the balls of your feet, standing leg slightly bent", "Sole on top of the ball, not against it", "Look up as much as possible, not only at the ball", "Practise with both left and right"],
+    "variaties": { "makkelijker": ["On the spot, slow pace", "Sideways rolls only"], "moeilijker": ["Faster, switching on a signal", "Drag back and turn straight away", "Combination: sole, inside, outside in one smooth sequence"] }
+  },
+  "veld-tq-aannemen-meenemen": {
+    "naam": "Receive and go through a gate",
+    "uitleg": "A passes to B. With their first touch, B takes the ball diagonally forwards through the left or right gate behind them, turns and passes back. Then B picks the other gate. Swap roles after 6 goes.",
+    "organisatie": "A and B stand 10 m apart. Behind B, 2.5 m to the left and right, is a gate of two disc cones (2 m wide).",
+    "benodigdheden": ["4 disc cones", "1 ball per pair"],
+    "coachpunten": ["Check over your shoulder before you receive: where is the space?", "Receive with your back foot (stay open)", "First touch firm enough to go straight through the gate"],
+    "variaties": { "makkelijker": ["Wider gates (3 m)", "A rolls the ball by hand"], "moeilijker": ["A only calls 'left' or 'right' as they pass", "Receive with the outside of the foot", "An opponent behind B blocks one gate", "After the gate, keep dribbling and finish on a mini goal"] }
+  },
+  "veld-tq-kappen-draaien": {
+    "naam": "Cuts and turns at the cone",
+    "uitleg": "Dribble to the cone, turn just before it with a cut and accelerate back. A different turn each round: inside, outside, sole (drag-back) or Cruyff turn.",
+    "organisatie": "An 8 m lane per player with a cone at the end; lanes 4 m apart. Everyone has a ball and starts at the same time.",
+    "benodigdheden": ["1 cone per player", "1 ball per player"],
+    "coachpunten": ["Slow down with small steps just before the turn", "Get low and keep your body between the ball and the cone", "Accelerate straight after the turn: the first two metres matter most"],
+    "variaties": { "makkelijker": ["Inside turn only", "Slow pace, turn at a line instead of a cone"], "moeilijker": ["The coach calls which turn", "Against the clock: 4 times there and back", "A defender behind the cone who may tag you after the turn"] }
+  },
+  "veld-tq-schijnbeweging": {
+    "naam": "Feint and beat the defender",
+    "uitleg": "Dribble at the pole (the 'defender'). At 1.5 m, feint to the right (body and leg go with it, the ball stays where it is) and accelerate past on the left. Jog back round the outside with the ball and rejoin the queue.",
+    "organisatie": "A pole 5 m from the start, with the end cone 3.5 m behind it. Players queue, each with a ball. The next one goes when the player ahead has passed the pole.",
+    "benodigdheden": ["1 pole (or cone)", "1 cone", "1 ball per player"],
+    "coachpunten": ["Feint 1–2 m from the defender: not too early, not too late", "Sell it: shoulder and hip really go with it", "After the feint, push the ball away with the other foot and accelerate"],
+    "variaties": { "makkelijker": ["Show the movement without a ball first", "Body feint only (shoulder)"], "moeilijker": ["Step-over or double step-over", "A real defender who may only move after the feint", "Finish on a mini goal after beating the defender"] }
+  },
+  "veld-tq-poortjesdribbel": {
+    "naam": "Gates dribble",
+    "uitleg": "There are small gates in the area. Dribble through as many different gates as you can in 45 seconds; the same gate twice in a row doesn't count. Who gets the most gates?",
+    "organisatie": "16 × 16 m area with 6 gates of two disc cones (1.5 m wide), placed randomly. Everyone has a ball.",
+    "benodigdheden": ["4 cones", "12 disc cones", "1 ball per player"],
+    "coachpunten": ["Look up and choose your next gate in advance", "Slow down and turn just after the gate, then accelerate", "Small touches in crowded areas, bigger touches in open space"],
+    "variaties": { "makkelijker": ["Wider gates (2.5 m)", "No time limit"], "moeilijker": ["Weaker foot only", "A different turn after each gate", "Two players without a ball may 'guard' gates", "After five gates, pass to the coach and get it back into your path"] }
+  },
+  "veld-tq-hooghouden": {
+    "naam": "Keepy-ups",
+    "uitleg": "Keep the ball up as many times in a row as you can with your foot (and later thigh and head). Count out loud and try to beat your record. Young players may let the ball bounce once in between.",
+    "organisatie": "Everyone has a ball, well spread out (3–4 m apart). Blocks of 1 minute with a short rest in between.",
+    "benodigdheden": ["1 ball per player"],
+    "coachpunten": ["Strike the ball with your laces, ankle extended", "Soft touch: the ball shouldn't go higher than your hip", "Standing leg slightly bent, eyes on the ball"],
+    "variaties": { "makkelijker": ["Drop the ball from your hands, touch it once and catch it again", "One bounce between each touch"], "moeilijker": ["Alternate left and right", "Foot – thigh – foot – head", "In pairs: take turns to touch it (keepy-ups together)", "After ten keepy-ups, volley the ball at a mini goal"] }
+  },
+  "veld-tq-aannemen-uit-de-lucht": {
+    "naam": "Controlling the ball out of the air",
+    "uitleg": "A throws the ball in an arc to B. B controls it out of the air (laces, thigh or chest), takes it a short way to the side and passes back along the ground. A varies the height. Swap roles after 8 goes.",
+    "organisatie": "Pairs 6–7 m apart, one ball per pair.",
+    "benodigdheden": ["1 ball per pair"],
+    "coachpunten": ["Move towards the ball and read its flight early", "Make the receiving surface 'soft': cushion it as you make contact", "Take it in the direction you want to go"],
+    "variaties": { "makkelijker": ["Let it bounce first, then control it", "Lower throws, shorter distance"], "moeilijker": ["Take it to the side in one movement", "A kicks the ball instead of throwing it", "Volley or half-volley it straight back"] }
+  },
+  "veld-tq-indraaien": {
+    "naam": "Getting free and turning",
+    "uitleg": "The middle player comes short to A, receives the ball, turns open with one touch towards C and passes to C. Then they come short to C, receive and turn again towards A. Change the middle player after 1 minute.",
+    "organisatie": "Three players in a line: A and C 20 m apart, the middle player halfway. A and C take turns to have the ball.",
+    "benodigdheden": ["2 cones (starting spots A and C)", "1 ball per group of three"],
+    "coachpunten": ["Move away from the ball first, then come short: that creates space", "Check over your shoulder before you receive", "Stay open and receive with your back foot"],
+    "variaties": { "makkelijker": ["Control first, then turn (two touches)", "Distance 15 m"], "moeilijker": ["A passive defender behind the middle player", "Turn with the outside of the foot", "Play on straight after the turn (two touches in total)"] }
+  },
+  "veld-tq-koning-van-het-vak": {
+    "naam": "King of the area",
+    "uitleg": "Everyone dribbles their own ball in the area. Protect your ball and meanwhile try to knock other players' balls out of the area. If your ball goes out, fetch it, do 5 keepy-ups or cuts outside the area and then join in again.",
+    "organisatie": "12 × 12 m area (smaller with fewer players). Everyone has a ball. Play in 1-minute blocks.",
+    "benodigdheden": ["4 cones", "1 ball per player"],
+    "coachpunten": ["Body between opponent and ball (shield it)", "Look up: where is the danger and where is a ball to win?", "Ball close to your foot in crowded areas"],
+    "variaties": { "makkelijker": ["Bigger area", "One player without a ball is the 'hunter'"], "moeilijker": ["Smaller area", "If you lose your ball you're out (last one left is king)", "Dribble with your weaker foot only"] }
+  },
+  "veld-cv-aanname-lucht-schot": {
+    "naam": "Control out of the air, carry and shoot",
+    "uitleg": "The coach throws a high ball to the player. They control it out of the air, take it towards goal in the same movement and shoot within three touches.",
+    "organisatie": "Player 22 m from goal, coach diagonally in front at 6 m with balls. Keeper in goal. Alternate controlling with laces, thigh and chest.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Soft first touch: cushion the ball so it doesn't bounce away", "Take the ball towards goal, don't stop it dead", "Look up before you shoot: where is the keeper?"],
+    "variaties": { "makkelijker": ["Let the ball bounce first", "Lower throw"], "moeilijker": ["A defender behind you", "Control and shot in two touches", "Then a lay-off from the coach: first-time shot"] },
+    "onderdelen": ["Control out of the air", "Carry the ball", "Shot"]
+  },
+  "veld-cv-rebounder-doeltjes": {
+    "naam": "Rebounder, turn and finish in a mini goal",
+    "uitleg": "The player passes against the rebounder twice, takes the second return with a turn away from the rebounder, dribbles to one of the two mini goals and scores.",
+    "organisatie": "Rebounder (or wall) 4 m from the player. Two mini goals 8 m behind them, left and right. The coach (or a teammate) calls which goal.",
+    "benodigdheden": ["Rebounder", "2 mini goals", "Balls"],
+    "coachpunten": ["Pass with the inside of the foot, ankle locked", "First touch on the turn: body open, take the ball towards the goal's side", "Finish: place it, don't blast it"],
+    "variaties": { "makkelijker": ["One pass against the rebounder", "Goals closer"], "moeilijker": ["The coach only calls the goal during the first touch", "A defender starts from the rebounder", "Pass with left and right alternately"] },
+    "onderdelen": ["Passes against the rebounder", "Turn and dribble", "Finish in a mini goal"]
+  },
+  "veld-te-kleurenreactie-bal": {
+    "naam": "Colour reaction with a ball",
+    "uitleg": "Two players stand in the middle with a ball at their feet, facing the coach. The coach calls a colour; both players dribble as fast as they can to that disc cone, turn round it with the ball and dribble back to the middle. First back with the ball under control wins a point.",
+    "organisatie": "Four coloured disc cones 4 m around a centre point (front, back, left, right). The players stand 1.5–2 m apart in the middle with a ball; the coach is 6 m in front of them.",
+    "benodigdheden": ["4 coloured disc cones per pair", "1 ball per player"],
+    "coachpunten": ["Look up at the coach, not at the ball", "Small touches as you slow down, ball close to your foot", "Turn with the ball (inside or outside) and accelerate back"],
+    "variaties": { "makkelijker": ["The coach also points to the colour (see and hear)", "Dribble at walking pace first, then sprint"], "moeilijker": ["Weaker foot only", "The coach calls two colours in a row", "First back may shoot at a mini goal"] }
+  }
+}

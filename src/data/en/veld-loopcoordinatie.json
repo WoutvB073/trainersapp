@@ -1,0 +1,83 @@
+{
+  "veld-lc-ladder-enkel": {
+    "naam": "Agility ladder: one foot in each square",
+    "uitleg": "Run through the ladder with small, quick steps: one foot in each square. After the last rung, accelerate 5 m to the cone. Then jog back round the outside and rejoin the back of the queue.",
+    "organisatie": "4 m agility ladder (9 squares) with the start 1.5 m in front and a cone 5 m beyond it. Players queue in front of the ladder; the next one goes when the player ahead is halfway through.",
+    "benodigdheden": ["1 agility ladder (4 m)", "1 cone"],
+    "coachpunten": ["On the balls of your feet, small quick steps", "One foot in each square, don't step on the rungs", "Drive your arms", "Accelerate explosively after the ladder"],
+    "variaties": { "makkelijker": ["Two feet in each square, steady pace", "No sprint at the end"], "moeilijker": ["Against the clock: who is fastest without mistakes?", "After the ladder, control a ball and pass it back", "The coach holds up a colour: sprint to that cone"] }
+  },
+  "veld-lc-ladder-in-uit": {
+    "naam": "Agility ladder sideways: in-in-out-out",
+    "uitleg": "Stand beside the ladder facing the coach and move sideways along it: both feet into the square, both feet out, then on to the next square. After the ladder, jog to the cone and back round the outside.",
+    "organisatie": "4 m agility ladder. Players queue beside the start of the ladder, on the coach's side. After the ladder, jog 3.5 m to a cone; come back on the other side of the queue.",
+    "benodigdheden": ["1 agility ladder (4 m)", "1 cone"],
+    "coachpunten": ["Hips and shoulders stay facing the coach", "Low and light on the balls of your feet", "Count out loud: in-in-out-out"],
+    "variaties": { "makkelijker": ["Walk it first to learn the rhythm", "Only in-in (both feet in every square)"], "moeilijker": ["Faster, with active arms", "Control a ball after the ladder", "Come back in-out going backwards"] }
+  },
+  "veld-lc-lage-hordes": {
+    "naam": "Low hurdles: knees up",
+    "uitleg": "Run over six low hurdles with one step between each pair. Lift your knee high and put your foot down quickly and actively under your body. After the last hurdle, sprint to the cone and jog back round the outside.",
+    "organisatie": "Six low hurdles (15 cm) 80 cm apart, starting 2 m from the start. Cone 5 m after the last hurdle. The next player goes when the one ahead is over the third hurdle.",
+    "benodigdheden": ["6 low hurdles (or sticks on cones)", "1 cone"],
+    "coachpunten": ["Knee up, toes pulled up", "Land with your foot under your hip, short ground contact", "Upright trunk, arms at 90° driving", "Accelerate straight after the last hurdle"],
+    "variaties": { "makkelijker": ["Hurdles 1 m apart", "Sticks flat on the ground instead of hurdles"], "moeilijker": ["High hurdles (30 cm)", "Sideways over the hurdles", "Two contacts between the hurdles, high tempo", "After the last hurdle, control a pass from the coach and shoot at a mini goal"] }
+  },
+  "veld-lc-slalom": {
+    "naam": "Pole slalom",
+    "uitleg": "Run as tightly as possible round six poles, alternating left and right. After the last pole, accelerate to the cone. Jog back outside the lane.",
+    "organisatie": "Six poles in a straight line, 1.5 m apart. Cone 4 m after the last pole. Players queue 2 m in front of the first pole.",
+    "benodigdheden": ["6 poles (or cones)", "1 cone"],
+    "coachpunten": ["Small steps just before the pole, push off with your outside foot", "Low centre of gravity in the turn", "Stay close to the pole: the shortest route", "Accelerate after the last pole"],
+    "variaties": { "makkelijker": ["Poles 2 m apart", "Steady pace, learn the route first"], "moeilijker": ["With a ball: dribble with the inside and outside of the foot", "Two lanes side by side: who finishes first?", "Back through the slalom going backwards", "After the slalom, shoot a ball from the coach first time at goal"] }
+  },
+  "veld-lc-t-test": {
+    "naam": "T-test: sprint, side-step, backwards",
+    "uitleg": "Sprint from A to B, side-step to C, then side-step across to D on the other side, back to B, and run backwards to A. Touch each cone with your hand. Keep facing forwards the whole time.",
+    "organisatie": "Four cones in a T: A (start) and B 10 m apart; C and D 5 m to the left and right of B. Players take turns; time them to add some competition.",
+    "benodigdheden": ["4 cones", "stopwatch (optional)"],
+    "coachpunten": ["Get low at each cone and touch it", "Sideways: don't cross your feet, hips stay facing forwards", "Backwards: small steps, weight over your feet"],
+    "variaties": { "makkelijker": ["Half distances (5 m and 2.5 m)", "No touching the cones"], "moeilijker": ["Timed, with a second attempt to beat your time", "The coach calls 'left' or 'right' at B (reaction)", "After the T-test, sprint to a ball and score in a mini goal"] }
+  },
+  "veld-lc-ringen": {
+    "naam": "Rings: hopscotch and straddle jumps",
+    "uitleg": "Jump through the rings: in a single ring you land on one foot, where two rings are side by side you land with your feet apart, one in each (like hopscotch). After the last ring, sprint to the cone and jog back.",
+    "organisatie": "Rings in a line of about 7 m: single, single, single, double, single, double, single, double. About 90 cm apart. Cone 4 m after the last ring.",
+    "benodigdheden": ["11 rings (or disc cones)", "1 cone"],
+    "coachpunten": ["Land on the balls of your feet, soft knees", "Use your arms to help the take-off", "Keep the rhythm: don't stop between rings"],
+    "variaties": { "makkelijker": ["Land on two feet in every ring", "Rings closer together"], "moeilijker": ["Single rings on your weaker leg only", "Sideways through the rings", "After the last ring, react to a colour from the coach"] }
+  },
+  "veld-lc-stokken": {
+    "naam": "Stick run: stride length and frequency",
+    "uitleg": "Run over the sticks with exactly one step between each pair. The sticks get slightly further apart, so your stride gets longer and your speed higher. After the last stick, sprint on to the cone.",
+    "organisatie": "Seven sticks flat on the ground, across the running direction. Gaps increase from 80 cm to 1.3 m. Cone 4.5 m after the last stick. Jog back round the outside.",
+    "benodigdheden": ["7 sticks (or disc cones as markers)", "1 cone"],
+    "coachpunten": ["Exactly one step between each pair of sticks", "Put your foot down actively under your body (not far in front)", "Eyes forward, not on your feet", "Speed up as the gaps get bigger"],
+    "variaties": { "makkelijker": ["All sticks 80 cm apart", "Fewer sticks (4)"], "moeilijker": ["Gaps up to 1.5 m (for U15+)", "Smaller gaps (60 cm) for high frequency", "After the sticks, take a ball and score in a mini goal"] }
+  },
+  "veld-lc-kleurenreactie": {
+    "naam": "Colour reaction in pairs",
+    "uitleg": "Two players stand in the middle facing the coach. The coach calls a colour; both players sprint to that disc cone, touch it and sprint back to the middle. First back wins a point.",
+    "organisatie": "Four coloured disc cones 4 m around a centre point (front, back, left, right). The players stand 1.5–2 m apart in the middle; the coach is 6 m in front of them.",
+    "benodigdheden": ["4 coloured disc cones per pair"],
+    "coachpunten": ["Knees slightly bent, on the balls of your feet: ready to go", "Explosive first step in the right direction", "Slow down with small steps, touch it low and turn quickly"],
+    "variaties": { "makkelijker": ["The coach also points to the colour (see and hear)", "Only two colours"], "moeilijker": ["The coach calls two colours in a row", "\"Not red\": go to the disc cone opposite red", "First to the disc cone gets a ball from the coach: 1v1 on a mini goal"] }
+  },
+  "veld-lc-estafette": {
+    "naam": "Coordination relay",
+    "uitleg": "Two teams run a course at the same time: through the ladder (one foot per square), slalom round three poles, round the cone to the right and sprint back outside the lane. Rejoin the back; then the next player goes. Which team gets everyone round first?",
+    "organisatie": "Two identical lanes side by side, 7 m apart: 4 m ladder, three poles 1.5 m apart, turning cone 3.5 m further on. Teams queue in front of their own lane.",
+    "benodigdheden": ["2 agility ladders", "6 poles", "2 cones", "bibs for one team"],
+    "coachpunten": ["Technique before speed: a mistake in the ladder means starting it again", "Turn tight and low round the cone", "Encourage your teammates and rejoin quickly"],
+    "variaties": { "makkelijker": ["Only the slalom and the cone", "Ladder with two feet per square"], "moeilijker": ["With a ball through the slalom", "Extra section with low hurdles", "Two laps per player", "Last section: shoot at a mini goal, only goals count"] }
+  },
+  "veld-cv-hordes-sprint-duel": {
+    "naam": "Hurdles, sprint to the ball and 1v1",
+    "uitleg": "Two players go over their own row of hurdles at the same time. At the end the coach plays a ball between them: whoever gets it first attacks one of the two mini goals; the other defends.",
+    "organisatie": "Two rows of four hurdles, 6 m apart. Coach 8 m beyond the hurdles between the two mini goals. Afterwards join the other queue.",
+    "benodigdheden": ["8 low hurdles", "2 mini goals", "Balls"],
+    "coachpunten": ["Hurdles: quick and precise, don't touch them", "Sprint: low start after the last hurdle, watch the ball", "Attacker: body between ball and defender; defender: don't dive in"],
+    "variaties": { "makkelijker": ["No hurdles, start on a signal", "Ball closer to the attacker"], "moeilijker": ["Sideways over the hurdles", "2v2 with four rows of hurdles", "After a goal, a second ball straight away: transition"] },
+    "onderdelen": ["Hurdles", "Sprint to the ball", "1v1", "Finish"]
+  }
+}

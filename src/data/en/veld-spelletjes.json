@@ -1,0 +1,69 @@
+{
+  "veld-sp-voetbaltennis": {
+    "naam": "Football tennis 2v2",
+    "uitleg": "Two against two over a 1 m net. The ball may bounce once on your side and your team may touch it at most three times (foot, thigh or head) before it has to go back over the net. If you can't, or the ball goes out, the point goes to the other side.",
+    "organisatie": "8 × 14 m court with a net or tape at 1 m height in the middle (between two poles). Take turns to serve from the back line; score like tennis or play to 11.",
+    "benodigdheden": ["Foot volley net or tape with 2 poles", "4 cones", "1 ball"],
+    "coachpunten": ["Soft first touch: set the ball up for your teammate", "Play the ball over the net into the space where nobody is", "After your touch, get back to your own half of the court"],
+    "variaties": { "makkelijker": ["The ball may bounce twice", "Serve by hand (throw)", "Lower net (0.7 m)"], "moeilijker": ["The ball may not bounce", "Each player only touches the ball once", "Headers only over the net"] },
+    "meerSpelers": "With more players: 3v3, or winners stay on with pairs waiting."
+  },
+  "veld-sp-voetvolley": {
+    "naam": "Foot volley 1v1 over the tape",
+    "uitleg": "One against one over a low tape. You may let the ball bounce once and touch it twice: once to control or keep it up, once to play it back. Returning it first time with a volley or header makes it extra hard for your opponent.",
+    "organisatie": "4 × 9 m court with a tape at 0.5 m height in the middle between two poles. Several courts side by side; move on after each game to 5 points.",
+    "benodigdheden": ["Tape or low net with 2 poles", "4 disc cones", "1 ball per pair"],
+    "coachpunten": ["Watch the ball until it touches your foot: ankle locked", "Strike the ball with your laces or the inside of the foot, not your toes", "Aim for the empty corner of the court"],
+    "variaties": { "makkelijker": ["The ball may bounce twice", "Three touches", "Bigger court (5 × 10 m)"], "moeilijker": ["The ball may not bounce: volleys only", "Weaker foot only", "A point won with a header counts double"] },
+    "meerSpelers": "With more players: 2v2 over the same tape, or winners stay on."
+  },
+  "veld-sp-latje-trap": {
+    "naam": "Crossbar challenge",
+    "uitleg": "Everyone takes turns to shoot at the big goal from 16 m. Hit the crossbar for a point; hit the post for half a point. A goal doesn't count. Who has the most points after five rounds?",
+    "organisatie": "Full-size goal with no keeper. Players side by side at 16 m, each with their own ball. Fetch your own ball when it bounces back.",
+    "benodigdheden": ["1 full-size goal", "1 ball per player", "disc cones for the shooting line"],
+    "coachpunten": ["Strike the ball just below the middle with your laces", "Standing foot next to the ball, lean back slightly", "Not hard but accurate: the right height matters more than power"],
+    "variaties": { "makkelijker": ["Shoot from 11 m", "You may set the ball still first or flick it up", "The post also counts as a full point"], "moeilijker": ["From 20 m", "Only first time from a pass", "Miss and you take a step back next round"] }
+  },
+  "veld-sp-pannavoetbal": {
+    "naam": "Panna football in the cage",
+    "uitleg": "One against one in a small cage or marked-out area with two mini goals. A goal is a point, but if you play the ball through your opponent's legs (a panna, or nutmeg) and collect it again, you win the round straight away.",
+    "organisatie": "Panna cage or a 9 × 6 m area (marked with benches or cones) with a mini goal at each short end. 1-minute rounds; the others wait outside and then play the winner.",
+    "benodigdheden": ["Panna cage or 4 benches", "2 mini goals", "1 ball"],
+    "coachpunten": ["Tempt your opponent: show them the ball and they'll step in", "Go for the panna when they open their legs; then get round them quickly", "Defender: don't stand with your feet wide, stay compact on your toes"],
+    "variaties": { "makkelijker": ["A panna counts as a goal, you don't have to collect the ball", "Bigger area"], "moeilijker": ["Only a panna counts", "2v2 in a bigger cage", "5 seconds on the ball maximum"] }
+  },
+  "veld-sp-voetgolf": {
+    "naam": "Foot golf",
+    "uitleg": "A golf course on the pitch: from the tee, play the ball through the gate and into the mini goal (the 'hole') in as few kicks as possible. Take turns to kick; whoever is furthest from the hole goes first. After a round of three holes, the player with the fewest kicks wins.",
+    "organisatie": "For each hole: a tee, a 4 m wide gate at about 15 m and a mini goal at 30–35 m. Set out three holes across the pitch. Players in twos or threes, each with a ball.",
+    "benodigdheden": ["Mini goals or cones as holes", "Cones for the gates", "1 ball per player"],
+    "coachpunten": ["Long ball: laces, ankle locked, strike through the ball", "Short ball: inside of the foot, calm and accurate", "Think ahead: where do you want your ball to stop?"],
+    "variaties": { "makkelijker": ["Wider gate (6 m)", "Bigger goal as the hole", "Shorter holes"], "moeilijker": ["Weaker foot only", "The ball must go through the gate in one kick", "Penalty stroke if the ball goes off the course"] }
+  },
+  "veld-cv-estafette": {
+    "naam": "Relay: slalom, pass and shot",
+    "uitleg": "Two teams against each other. The first player dribbles a slalom through the cones and passes to their teammate by the mini goal, who scores first time. Then they swap places. Which team scores five times first?",
+    "organisatie": "For each team a 15 m lane with three cones and a mini goal at the end. The second player stands 3 m diagonally in front of the goal. After the shot, the shooter runs back to the start with the ball and the dribbler takes their place by the goal.",
+    "benodigdheden": ["6 cones", "2 mini goals", "Balls", "Bibs"],
+    "coachpunten": ["Slalom: quick but with the ball close to your foot", "Pass at the right moment: not too early, not too late", "Shoot first time, place it in the corner"],
+    "variaties": { "makkelijker": ["Fewer cones", "The shooter may control the ball first"], "moeilijker": ["Dribble with your weaker foot", "First-time shots only", "A keeper in each goal"] },
+    "onderdelen": ["Slalom with the ball", "Pass to a teammate", "Shot at the mini goal"]
+  },
+  "veld-pt-pionnen-omschieten": {
+    "naam": "Knock down the cones",
+    "uitleg": "Two teams face each other, each on their own line, with a row of cones in the middle. Try to knock the cones over with a pass along the ground. Balls that roll through can be used by the other team. Which team has knocked over the most cones after 2 minutes?",
+    "organisatie": "Two lines 12 m apart, with 5 cones 3 m apart in the middle. Teams of 2–6 players, everyone with a ball. Don't step over your own line.",
+    "benodigdheden": ["5 cones (tall ones if possible)", "4 disc cones for the lines", "1 ball per player"],
+    "coachpunten": ["Standing foot next to the ball, pointing at your target", "Inside of the foot for accuracy, laces for a hard pass", "Grab the next ball quickly and aim again"],
+    "variaties": { "makkelijker": ["Lines closer together (8 m)", "Bigger targets (tall cones or balls on a cone)"], "moeilijker": ["Weaker foot only", "Lines further apart (16 m)", "First time: play the other team's ball straight back"] }
+  },
+  "veld-sp-piratenspel": {
+    "naam": "Pirates",
+    "uitleg": "All the children dribble a ball inside the area. One or two pirates (without a ball) try to steal a ball and kick it out of the area. If you lose your ball, you become a pirate too. Who can keep their treasure (the ball) the longest?",
+    "organisatie": "14 × 14 m area. Everyone has a ball except 1 pirate per 6 children (in a bib). Play rounds until 1 or 2 children with a ball are left. For U7–U9.",
+    "benodigdheden": ["4 cones", "1 ball per child", "bibs"],
+    "coachpunten": ["Small touches, ball close to your foot", "Look up: where is the pirate?", "Turn away and put your body between the pirate and your ball"],
+    "variaties": { "makkelijker": ["The pirate may only touch the ball (not kick it away)", "Bigger area"], "moeilijker": ["More pirates", "If you lose your ball, you can win one back from another pirate", "Dribble with your weaker foot only"] }
+  }
+}

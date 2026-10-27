@@ -2,7 +2,8 @@ import type { Oefening, Soort } from '../model/types';
 import { eigenOefeningen } from '../eigen/opslag';
 import { inBibliotheek } from '../eigen/eigen';
 import { teamOefeningen, vindTeamOefening } from '../engine/teams';
-import { vergelijk } from '../i18n/t';
+import { vergelijk, TAAL } from '../i18n/t';
+import { laadEngels, pasToe } from './vertaling';
 
 /**
  * Alle ingebouwde oefeningen. Elk bestand in oefeningen/veld en oefeningen/keepers is een lijst oefeningen;
@@ -36,6 +37,12 @@ export const ARCHIEF: Oefening[] = Object.values(archiefBestand)
   .flat()
   .map((o) => ({ ...o, verwijderd: true }));
 const archiefOpId = new Map(ARCHIEF.map((o) => [o.id, o]));
+
+/** In het Engels: de Engelse teksten in de ingebouwde oefeningen zetten (vóór het eerste scherm). */
+export async function laadTaal(): Promise<void> {
+  if (TAAL !== 'en') return;
+  pasToe([OEFENINGEN, ARCHIEF], await laadEngels());
+}
 
 /** Ingebouwd, eigen (met naam en categorie) en gedeeld in je teams. */
 export function alleOefeningen(): Oefening[] {

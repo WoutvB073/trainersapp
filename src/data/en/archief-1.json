@@ -1,0 +1,131 @@
+{
+  "veld-kaatsen-en-afwerken": {
+    "naam": "One-two and finish",
+    "uitleg": "Player 9 passes into the lay-off player (10), sprints past them and gets the ball back in behind. After a short dribble towards the box, they shoot at goal. Then rotate: the shooter becomes the lay-off player, the lay-off player joins the back of the queue.",
+    "organisatie": "On half a pitch. Start cone about 30 m from goal, slightly right of centre; the lay-off player stands by a cone at about 21 m, central. Keeper in goal. The other players wait in a queue with a ball at the start cone.",
+    "benodigdheden": ["1 goal", "2 cones", "Balls (1 per player)"],
+    "coachpunten": ["Pass into the lay-off player's front foot: firm and along the ground", "The lay-off player stays open and plays it back first time into the runner's path", "Accelerate straight after the pass (pass and go)", "First touch towards goal; take a quick look at the keeper before you shoot", "Finish low into the corner, with the inside of the foot for accuracy"],
+    "variaties": { "makkelijker": ["The lay-off player may control the ball first", "Shorter distance to goal", "No keeper, or a small goal"], "moeilijker": ["Shoot first time after the return pass (no dribble)", "A defender who may put you under pressure from the side", "Finish with your weaker foot", "Score within 4 seconds of the return pass"] }
+  },
+  "veld-af-rebound": {
+    "naam": "Following in for the rebound",
+    "uitleg": "Player A shoots from the edge of the box. Player B sets off as the shot is taken and follows in towards goal. If the keeper parries the ball, B puts away the rebound. Then A and B swap roles.",
+    "organisatie": "A with a ball at about 20 m, left of centre. B level with them, 8 m to the right. Keeper in goal. Waiting players with balls behind A.",
+    "benodigdheden": ["1 goal", "1 ball per player", "2 disc cones (starting spots)"],
+    "coachpunten": ["Follower: always follow in, expect the keeper not to hold it", "Get across in front of the ball, finish first time and low", "Shooter: low and on target, then there's always a chance of a rebound"],
+    "variaties": { "makkelijker": ["The coach throws the ball back into the box after the shot", "Distance 14 m"], "moeilijker": ["A defender follows in too", "Finish the rebound within 2 touches", "The shooter may also go for the rebound: who gets there first?"] }
+  },
+  "veld-af-een-tegen-keeper": {
+    "naam": "One against the keeper",
+    "uitleg": "The attacker starts with the ball at 30 m and goes through alone on the keeper. The keeper comes out to narrow the angle. The attacker chooses: shoot low into the corner or go round the keeper. After the shot they rejoin the queue.",
+    "organisatie": "Queue of attackers with balls centrally at 30 m. Keeper in goal; they may come out as far as the penalty spot. Start on the whistle; 8 seconds maximum per attempt.",
+    "benodigdheden": ["1 goal", "1 ball per player"],
+    "coachpunten": ["Full speed to about 16 m, then the ball close to your foot", "Watch the keeper: already set? Shoot. Still coming? Go round them", "Low into the corner, not at the keeper"],
+    "variaties": { "makkelijker": ["The keeper may not come out beyond the six-yard box", "Start at 20 m"], "moeilijker": ["A defender starts 3 m behind the attacker", "5 seconds maximum", "Finish with your weaker foot only"] }
+  },
+  "veld-pt-derde-man": {
+    "naam": "Third man in the triangle",
+    "uitleg": "A passes to B. B lays it off first time to C, the third man. Meanwhile A sprints diagonally past B in behind and receives the ball from C in their stride. Then rotate: A becomes B, B becomes C, C goes back to the start.",
+    "organisatie": "A at the start cone, B 8 m straight ahead, C 6 m to the right of B. A runs in behind into the space beyond B and C.",
+    "benodigdheden": ["3 cones", "1 ball per group"],
+    "coachpunten": ["A: go in behind straight after your pass, don't stand and watch", "B: lay it off first time, onto C's running foot", "C: play the ball ahead of A, into the space they are running into"],
+    "variaties": { "makkelijker": ["B may control the ball first", "Shorter distances (6 m)"], "moeilijker": ["Everything one-touch", "A passive defender on B", "A finishes on a mini goal"] }
+  },
+  "veld-pt-pass-in-de-loop": {
+    "naam": "Through ball into the run",
+    "uitleg": "B makes a run diagonally forward in behind; A plays the ball into the space in front of B so they can take it in their stride. B keeps dribbling and then plays A in, who has made a run in behind in turn. Jog back and swap.",
+    "organisatie": "Two players side by side 5 m apart at two cones. About 12 m of space in front of them.",
+    "benodigdheden": ["2 cones", "1 ball per pair"],
+    "coachpunten": ["Passer: watch the run and play the ball in front of the player, not to them", "Runner: accelerate as the passer looks up", "First touch in your running direction, without slowing down"],
+    "variaties": { "makkelijker": ["Shorter runs (6 m), steadier pace", "The ball may bounce or take extra touches"], "moeilijker": ["Over a defender (chip) or between two cones", "Pass with the outside of the foot", "Finish on a goal after the first touch"] }
+  },
+  "veld-sp-opruimen": {
+    "naam": "Tidy up: balls over the bench",
+    "uitleg": "Two teams, each in their own half with a row of benches in between. Everyone tries to clear their own half by chipping the balls over the bench to the other side. On the whistle everyone stops: the team with the fewest balls in their half wins.",
+    "organisatie": "14 × 12 m area with a row of three benches in the middle. Spread at least one ball per child across both halves. 1-minute rounds. For U7–U9.",
+    "benodigdheden": ["3 benches", "1 ball per child", "4 cones"],
+    "coachpunten": ["Stop the ball first, then kick it", "Get under the ball so it goes up over the bench", "Look for space on the other side: that's where your ball should land"],
+    "variaties": { "makkelijker": ["Under the bench is allowed too", "You may stop the ball with your hand first"], "moeilijker": ["Weaker foot only", "A ball left on the bench counts against your team", "Bench further away: shoot from a line 3 m back"] }
+  },
+  "veld-sp-bankjesvoetbal": {
+    "naam": "Bench football",
+    "uitleg": "A 2v2 (or 3v3) game where each team has a bench as its goal. You score by hitting the other team's bench with the ball. Nobody may stand in front of the bench, so there's no keeper: if you dare to shoot, you score.",
+    "organisatie": "16 × 22 m pitch with a bench on each short side (lying across, seat facing the pitch). Nobody may enter a 2 m zone in front of the bench. 3-minute rounds. For U7–U9.",
+    "benodigdheden": ["2 benches", "4 cones", "balls", "bibs"],
+    "coachpunten": ["Shoot when you can see the bench: don't dribble too long", "Attack together: if you don't have the ball, move forward too", "Defending: stand between the ball and your own bench"],
+    "variaties": { "makkelijker": ["Two benches at each end", "Hitting the bench with a pass also counts"], "moeilijker": ["First-time shots only", "Turn the bench on its side: only the narrow side counts", "Smaller pitch"] },
+    "meerSpelers": "With more players: bigger teams (up to 4v4), or a second pitch."
+  },
+  "veld-af-kleine-doeltjes": {
+    "naam": "Quick shooter on mini goals",
+    "uitleg": "Two teams, each with their own mini goal. On the signal, the front player of each queue dribbles to the shooting line and shoots at their goal. A goal = a point. Then back to the end of the queue. Which team has the most points after 3 minutes?",
+    "organisatie": "Two mini goals (3 m wide) 8 m apart. Shooting line of disc cones 8 m in front of the goals, the queues with balls at 18 m. Suitable for the youngest players.",
+    "benodigdheden": ["2 mini goals", "4 disc cones", "1 ball per player"],
+    "coachpunten": ["Look up before you shoot: where is the goal?", "Placement beats power: inside of the foot", "Rejoin the queue quickly so your team gets its next go sooner"],
+    "variaties": { "makkelijker": ["Shooting line at 5 m", "Bigger goals or two cones as a goal"], "moeilijker": ["With a keeper in each goal (then it's real finishing)", "Weaker foot only", "A cone to dribble round before the shooting line"] }
+  },
+  "keeper-bv-kommetje": {
+    "naam": "Basket catch: balls at stomach height",
+    "uitleg": "The coach volleys the ball from hands at stomach height at the keeper. The keeper catches it in a 'basket': arms under the ball, ball against the stomach, leaning slightly forward. The second ball comes slightly to one side: side-step, then catch.",
+    "organisatie": "Keeper in goal, coach at 9 m with balls. Gentle volleys first, then harder. After 8 balls, swap keepers or rest.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Arms under the ball, palms up", "Lean slightly forward and trap the ball against your body (upper body as a 'lid')", "Body behind the ball: move first, then catch"],
+    "variaties": { "makkelijker": ["Throw instead of kicking", "Only straight at the keeper"], "moeilijker": ["Harder volleys", "Alternate stomach and chest height", "The keeper starts facing away from the coach and turns on a shout", "After the catch, a second ball low into the corner: put the ball down, get up and dive"] }
+  },
+  "keeper-bv-hoge-ballen-sprong": {
+    "naam": "Catching high balls in the air",
+    "uitleg": "The coach throws a high ball above the keeper. The keeper steps in, takes off from one foot and catches the ball at the highest point with a W grip. The second ball goes over their head: back first, then jump and catch.",
+    "organisatie": "Keeper in goal, coach at 9 m with balls. High, gentle balls (overarm). Alternate in front of the keeper and slightly behind them.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Take off from one foot, other knee up (protection against opponents)", "Arms straight, thumbs and index fingers make a W behind the ball", "Catch in front of your head so you can see the ball; after the catch, bring the ball into your chest"],
+    "variaties": { "makkelijker": ["Catch without jumping", "Lower balls (just above head height)"], "moeilijker": ["The coach or a second keeper jumps as an opponent (with a pad)", "Balls further behind the keeper", "After the catch, throw straight out to a disc cone"] }
+  },
+  "keeper-bv-kruispas-vangen": {
+    "naam": "Crossover steps and catch beside the body",
+    "uitleg": "The coach throws the ball 2 m to the side of the keeper. As soon as it's released, the keeper moves with two quick crossover steps and catches the ball in front of their body rather than beside it. Then the other way.",
+    "organisatie": "Keeper in the middle of the goal, coach at 9 m. Balls at chest height, alternating left and right, about 2 m from the keeper.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Move first, then catch: the ball arrives in front of your body, not beside it", "Crossover step: the back leg crosses in front, shoulders stay facing the ball", "Straight back to the middle of the goal after the catch"],
+    "variaties": { "makkelijker": ["Side-steps instead of crossover steps", "Ball 1 m to the side of the keeper"], "moeilijker": ["Ball 3 m to the side (almost a dive)", "The coach kicks instead of throwing", "The keeper starts on a disc cone by the post", "After the catch, a sidearm throw straight out to the wing"] }
+  },
+  "keeper-1o1-uitlopen-afremmen": {
+    "naam": "Come out and brake",
+    "uitleg": "The coach dribbles straight at goal as an attacker. The keeper comes out to narrow the angle and brakes in time with small steps, so they are in the ready position when the attacker shoots. The shot goes low beside them: short, low dive.",
+    "organisatie": "Keeper in goal, coach with a ball at 22 m. The keeper sets off when the attacker pushes the ball well ahead or looks up; they are set about 5–6 m from goal when the attacker is at 11 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Come out on the line between the ball and the centre of the goal", "Brake with small steps and be set as the shot is taken", "Ready position: weight forward, hands low beside the body"],
+    "variaties": { "makkelijker": ["The attacker dribbles slowly", "Shot only after a signal from the coach"], "moeilijker": ["The attacker chooses: shoot, go round or chip", "Start from the side (at an angle)", "A second attacker follows in for a rebound"] }
+  },
+  "keeper-hd-kniezit-kussen": {
+    "naam": "High diving onto the crash mat from kneeling",
+    "uitleg": "First step towards high diving: the keeper kneels next to a crash mat. The coach throws the ball at shoulder height above the mat. The keeper dives up and sideways, catches the ball in the air and lands on their side on the soft mat.",
+    "organisatie": "Two crash mats (or thick mats) to the left and right of the keeper. Coach at 6 m. Alternate left and right.",
+    "benodigdheden": ["2 crash mats or thick mats", "Balls"],
+    "coachpunten": ["Hands to the ball first, arms straight", "Catch the ball in the air, in front of your body (so you can see it)", "Land on your side: ball and upper arm first, then hip and leg"],
+    "variaties": { "makkelijker": ["Throw lower (chest height)", "From sitting with legs straight"], "moeilijker": ["From a crouch or standing", "Throw higher and further", "On grass without a mat", "After landing, get up and a low ball to the other side"] }
+  },
+  "keeper-hd-afzet-landing": {
+    "naam": "Take-off and landing: high diving from standing",
+    "uitleg": "The keeper stands in the ready position between two crash mats. The coach throws a high ball to the side. The keeper takes a small step towards the ball, takes off from the leg on the ball side (other knee up), is horizontal in the air, catches the ball and lands on their side on the mat.",
+    "organisatie": "Two crash mats 1 m to the left and right of the keeper. Coach at 8 m. Alternate left and right; rest after 6 balls.",
+    "benodigdheden": ["2 crash mats", "Balls"],
+    "coachpunten": ["Take-off: small step towards the ball and take off from the leg on the ball side", "Other knee up and stretch your body sideways, not backwards", "Land in order: ball (pinned to the ground), upper arm, hip, leg"],
+    "variaties": { "makkelijker": ["Throw lower", "One mat and only to that side"], "moeilijker": ["Higher and further (corner of the goal)", "The coach kicks (volley) instead of throwing", "After landing, up quickly for a second ball on the other side"] }
+  },
+  "keeper-hd-tippen-om-de-paal": {
+    "naam": "Tipping round the post",
+    "uitleg": "The coach shoots or throws high towards the corner. The keeper dives high to the ball and tips it round the post with the top hand. Get up, back to the middle and then the other corner.",
+    "organisatie": "Keeper in goal, coach at 10 m with balls. High balls into the corners, just inside the post.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Take off from the leg on the ball side, diagonally forwards", "Tip with the top hand (the one that reaches furthest), firm wrist", "Guide the ball wide, not back into play"],
+    "variaties": { "makkelijker": ["Crash mat beside the post", "Throw instead of shooting"], "moeilijker": ["Shoot harder", "Footwork to the other post first", "Alternate catching and tipping (the coach calls it)"] }
+  },
+  "keeper-hd-kruispas-hoge-duik": {
+    "naam": "Crossover steps and a high dive into the corner",
+    "uitleg": "The keeper moves to one post with crossover steps. As they come back, the coach throws a high ball to the other corner. The keeper takes off, dives high and catches the ball in the air.",
+    "organisatie": "Goal, coach at 9 m. A disc cone beside each post. Start the other way after each ball.",
+    "benodigdheden": ["Goal", "2 disc cones", "Balls"],
+    "coachpunten": ["Crossover steps small and quick, shoulders facing the ball", "Take off from the leg on the ball side, don't stop first", "In the air: catch the ball in front of your head, then land on your side"],
+    "variaties": { "makkelijker": ["Get set after the crossover steps, then the ball", "Lower ball"], "moeilijker": ["The ball comes at a random moment", "Volley instead of a throw", "Tip it round the post instead of catching"] }
+  }
+}

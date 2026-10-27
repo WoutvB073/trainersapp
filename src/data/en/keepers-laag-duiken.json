@@ -1,0 +1,132 @@
+{
+  "keeper-ld-voetenwerk-lange-duik": {
+    "naam": "Footwork and then a long low dive",
+    "uitleg": "The keeper shuffles across to the disc cone by the post and comes back to the middle with crossover steps. As they come back, the coach throws a low ball to the far corner: the keeper takes off and makes a long, low dive.",
+    "organisatie": "Goal, two disc cones just in front of the posts. Coach at 8 m. Start the other way after each ball.",
+    "benodigdheden": ["Goal", "2 disc cones", "Balls"],
+    "coachpunten": ["Keep watching the ball (coach) during the footwork", "Take off from the leg on the ball side, the other leg swings through", "Long dive: low and flat, don't jump up first"],
+    "variaties": { "makkelijker": ["Get set first, then the ball", "Shorter dive (ball closer)"], "moeilijker": ["The ball comes at a random moment during the footwork", "Ground ball struck hard", "Straight after the dive, a second ball to the other corner"] }
+  },
+  "keeper-ld-over-de-horde": {
+    "naam": "Low diving over a hurdle",
+    "uitleg": "There is a low hurdle on either side of the keeper. The coach throws the ball just beyond the hurdle. The keeper dives over the hurdle to the ball: that teaches them to dive forwards and along the ground rather than falling backwards.",
+    "organisatie": "Keeper in goal, a 30 cm hurdle 1 m to their left and right. Coach at 7 m. Alternate left and right.",
+    "benodigdheden": ["Goal", "2 low hurdles", "Balls"],
+    "coachpunten": ["Take off and go diagonally forwards over the hurdle, don't fall beside it", "Arms first: your hands get to the ball first", "Land on your side, beyond the hurdle, and secure the ball"],
+    "variaties": { "makkelijker": ["A stick or disc cones instead of a hurdle", "Ball closer to the hurdle"], "moeilijker": ["Higher hurdle (high diving)", "From footwork between the hurdles", "The coach kicks the ball", "After the dive, get up, back over the hurdle and a ball on the other side"] }
+  },
+  "keeper-ld-na-een-draai": {
+    "naam": "Turn and dive low",
+    "uitleg": "The keeper stands with their back to the coach. When the coach shouts 'turn', they turn round while the coach is already throwing the ball. The keeper has to pick up the ball quickly, choose the right side and dive low.",
+    "organisatie": "Keeper 2 m in front of goal with their back to the pitch, coach at 7 m. The coach shouts and throws at the same time, alternating left and right.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Turn on the balls of your feet and land straight in the ready position", "Find the ball with your eyes first, then move", "Don't over-rotate: shoulders square to the ball"],
+    "variaties": { "makkelijker": ["Only throw once the keeper has turned", "The coach also says which side"], "moeilijker": ["The keeper starts lying on their front and springs up", "Ball kicked hard", "Two servers: only the one who shouts throws"] }
+  },
+  "keeper-ld-twee-aangevers": {
+    "naam": "Left and right: two servers",
+    "uitleg": "Two keepers serve from the left and right, each with a ball. First the left one throws a low ball, then the right one: the keeper in goal dives to both sides, gets up quickly and rolls the ball back. Then rotate: the keeper in goal becomes a server, the server on the right goes in goal.",
+    "organisatie": "Goal, servers 8 m in front of goal, 7 m apart. Rotate after 4–6 balls.",
+    "benodigdheden": ["Goal", "2 balls", "2 disc cones"],
+    "coachpunten": ["Up quickly after the first dive: secure the ball first, then get up", "Reposition between the server and the centre of the goal", "Dive forwards to the ball so it doesn't get behind you"],
+    "variaties": { "makkelijker": ["More time between the two balls", "Roll the balls"], "moeilijker": ["The second ball comes while the keeper is still down (get up and dive)", "The servers kick the ball", "The servers decide who throws"] }
+  },
+  "keeper-cv-ladder-vangen-duiken": {
+    "naam": "Ladder, chest-height ball and low dive",
+    "uitleg": "The keeper runs through the ladder with quick steps, moves backwards into goal and catches a chest-height ball. Ball back to the coach, and straight after comes a low ball into the corner which they dive for.",
+    "organisatie": "4 m ladder at an angle in front of goal. Coach at 10 m with two balls. After the set, back to the start of the ladder; alternate the low ball left and right.",
+    "benodigdheden": ["Goal", "Agility ladder", "2 balls"],
+    "coachpunten": ["After the ladder, move back quickly, facing the pitch", "Chest-height ball: elbows together, trap the ball", "Back in the ready position straight after the throw for the low ball"],
+    "variaties": { "makkelijker": ["No ladder: start with quick feet on the spot", "Roll the low ball instead of shooting"], "moeilijker": ["Two feet per square in the ladder", "The low ball comes while the keeper is throwing back the first ball", "Then one more high ball into the other corner"] },
+    "onderdelen": ["Ladder", "Catch the chest-height ball", "Low dive"]
+  },
+  "keeper-cv-circuit-twee-stations": {
+    "naam": "Goalkeeper circuit: ladder, hurdles and diving",
+    "uitleg": "Two stations at the same time. Keeper 2 does footwork through the ladder and over the hurdles, while keeper 1 in goal faces a low and a high ball from the coach. Then they swap stations.",
+    "organisatie": "Station 1 beside the goal: 4 m ladder and three hurdles. Station 2: goal with the coach at 9 m. Each keeper does each station twice, then rest.",
+    "benodigdheden": ["Goal", "Agility ladder", "3 low hurdles", "2 balls"],
+    "coachpunten": ["Station 1: quick and precise, even when you get tired", "Station 2: up quickly after the low dive and ready for the high ball", "Swap without walking: the circuit keeps going"],
+    "variaties": { "makkelijker": ["Only the ladder at station 1", "Two low balls at station 2"], "moeilijker": ["A third station with a reaction ball", "Add a cross at station 2", "Time it: who is fastest through station 1?"] },
+    "onderdelen": ["Station 1: ladder and hurdles", "Station 2: low and high diving", "Swap"]
+  },
+  "keeper-sp-duik-op-de-bal": {
+    "naam": "Dive on the loose ball",
+    "uitleg": "Two young keepers kneel facing each other. The coach rolls a ball between them. Whoever gets hold of the ball first (diving allowed) wins a point. A fun game to teach the youngest keepers to dive without being afraid.",
+    "organisatie": "Keepers kneeling 8 m apart, coach at the side 4 m from the line between them. Roll the ball a bit closer to one or the other each time. For U7–U11; on soft grass or a mat.",
+    "benodigdheden": ["Balls", "2 mats (optional)"],
+    "coachpunten": ["Hands to the ball first, head behind your arms", "Land on your side, not on your stomach", "Secure the ball: it's only yours once you've got hold of it"],
+    "variaties": { "makkelijker": ["Roll the ball gently", "On a mat or soft grass"], "moeilijker": ["From a crouch or standing", "The coach throws the ball (with a bounce)", "Only start on a shout"] }
+  },
+  "keeper-ld-ladder-dubbele-duik": {
+    "naam": "Sideways ladder and a double dive",
+    "uitleg": "The keeper goes sideways through an agility ladder in front of goal, back into goal, and dives to a low ball the coach throws to their left. Get up, and straight away a high ball from keeper 2 on the right. Then the keepers swap.",
+    "organisatie": "Agility ladder across the front of goal at 4.5 m. Coach with balls at 10 m to the left of goal, keeper 2 with balls at 10 m to the right. At least 2 keepers.",
+    "benodigdheden": ["Goal", "Agility ladder", "Balls"],
+    "coachpunten": ["Ladder: small quick steps, shoulders towards the pitch", "Back in goal, get set first, then the ball", "Low dive diagonally forwards; high dive: take off from the leg on the ball side"],
+    "variaties": { "makkelijker": ["No ladder", "Both balls low"], "moeilijker": ["Ladder with two feet per square (in-in-out-out)", "The coach and keeper 2 choose the order"] }
+  },
+  "keeper-ld-kniezit-hurkzit-stand": {
+    "naam": "Low diving: kneeling, crouching, standing",
+    "uitleg": "Progressive low diving from three starting positions: first kneeling, then crouching and finally standing. Each set: a low ball to one side (dive and catch), get up, roll the ball back, sprint round the cone and back to goal, and straight away a second low ball to the other side.",
+    "organisatie": "Keeper in the middle of the goal, 1.7 m in front of the goal line. Cone 5 m in front of goal, slightly to the left. Coach with balls at 9 m. A few of each position, then the next.",
+    "benodigdheden": ["Goal", "Cone", "Balls"],
+    "coachpunten": ["Land on your side, not on your stomach or elbows", "Hands to the ball first: one hand behind, one on top", "After the sprint, get set in the ready position first, then the second ball"],
+    "variaties": { "makkelijker": ["Only kneeling and crouching", "No sprint round the cone"], "moeilijker": ["Ball further from the keeper", "Second ball at mid-height", "Cone further away: less time to get into position"] }
+  },
+  "keeper-ld-drie-pionnen-korte-hoek": {
+    "naam": "Three cones and the near post",
+    "uitleg": "Keeper and coach are both at an angle to the goal. The keeper stands between a cone and the post; beside them are three cones, on the side away from the post. They touch cone 1 and dive straight back into the near corner (the coach chooses low or high). Get up, ball back, then touch cone 2 and dive, and finally cone 3. The further the cone, the longer the dive.",
+    "organisatie": "Three cones 0.9 m apart in a line beside the keeper, 0.7 m in front of their line of movement; the first 1 m from the post. Coach at an angle at 8–9 m, on the near-post side.",
+    "benodigdheden": ["Goal", "3 cones", "Balls"],
+    "coachpunten": ["After touching the cone, get set (ready position) first, then dive", "Take off from the leg on the post side, dive diagonally forwards", "The near post comes first: nothing between you and the post"],
+    "variaties": { "makkelijker": ["Low balls only", "Two cones instead of three"], "moeilijker": ["Cones further apart", "The coach calls the cone: the keeper has to touch that one", "Low and high mixed without warning"] }
+  },
+  "keeper-ld-vier-laag-vier-hoog": {
+    "naam": "Four low, four high",
+    "uitleg": "First four low balls, alternating left and right: dive, catch and play the ball straight back to the coach from the ground, then get up and back to the middle. Then catch and return four balls at head height.",
+    "organisatie": "Keeper in the middle of the goal, 1.6 m off the line. Coach with balls at 8–9 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Low dive: get low first, then fall sideways with your hands to the ball", "Play it back from the ground: calm and accurate, only then get up", "Head height: W grip, hold the ball for a moment"],
+    "variaties": { "makkelijker": ["Two low, two high", "Low balls rolled"], "moeilijker": ["Low balls further from the keeper", "The coach picks the side at the last moment", "High balls beside the head"] }
+  },
+  "keeper-ld-drie-duiken-aangevers": {
+    "naam": "Three dives, three servers",
+    "uitleg": "Three servers, three dives straight after each other: first a low ball to the left, then a mid-height ball to the right and finally a high ball to the right. After each dive, get straight up and back to the middle for the next. Then the keeper swaps with a server.",
+    "organisatie": "Servers at 8–9 m: angled on the left (keeper), centre (coach) and angled on the right (keeper), each with a ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Get up quickly through your knees, straight back into the ready position", "Mid-height and high: take off from the leg on the ball side", "Hands behind the ball, pull it in to secure it as you land"],
+    "variaties": { "makkelijker": ["Two dives", "More time between the balls"], "moeilijker": ["Mixed order", "Balls further from the keeper", "After the high dive, one more low ball to the left"] }
+  },
+  "keeper-ld-zigzag-voor-achteruit": {
+    "naam": "Zigzag forwards and backwards",
+    "uitleg": "Three poles stand one behind the other in front of goal. The keeper zigzags forwards through them and at the end gets a mid-height ball to the left: dive and catch. Get up, ball back, then zigzag backwards to the goal, facing the pitch. There a ball comes to the right: dive again.",
+    "organisatie": "Three poles 1.4 m apart one behind the other, starting 3 m in front of goal. Coach with balls at 13 m.",
+    "benodigdheden": ["Goal", "3 poles", "Balls"],
+    "coachpunten": ["Small quick steps round the poles, shoulders towards the coach", "Backwards: weight on the balls of your feet, don't lean back", "Mid-height: take off and stretch your body towards the ball"],
+    "variaties": { "makkelijker": ["Two poles", "Low balls"], "moeilijker": ["Poles closer together", "The coach picks the side at the last moment", "High ball for the second dive"] }
+  },
+  "keeper-ld-skip-duik-tussen-palen": {
+    "naam": "Skip, low dive and between the poles",
+    "uitleg": "The keeper moves sideways along a row of poles with short skipping steps. At the end they get a low ball: dive and catch. Get up, ball back, then forwards between two poles, where they catch a ball at head height.",
+    "organisatie": "Three poles in a row, 1.6 m apart, 3.4 m in front of goal. Coach with balls at 10 m.",
+    "benodigdheden": ["Goal", "3 poles", "Balls"],
+    "coachpunten": ["Sideways on the balls of your feet, don't cross", "Stay low after the last pole: the ball comes straight away", "Between the poles: straight line, be set for the ball"],
+    "variaties": { "makkelijker": ["Low ball rolled", "No skipping steps"], "moeilijker": ["Low ball further away", "Ball between the poles at mid-height beside the body", "Two rounds without a break"] }
+  },
+  "keeper-ld-paal-duik-andere-kant": {
+    "naam": "Sideways to the post, dive to the other side",
+    "uitleg": "The keeper moves sideways to the left post and then gets a low ball to the right: dive, catch, get up and back to the middle going backwards. Then the mirror image: sideways to the right post and dive to the left. That's one round; do two.",
+    "organisatie": "Keeper in the middle of the goal, 1.4 m off the line. Coach with balls at 9 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["At the post: stop and get set before the ball comes", "Take off from the leg on the diving side, dive diagonally forwards", "Back going backwards, facing the pitch"],
+    "variaties": { "makkelijker": ["Not as far to the post", "Rolling balls"], "moeilijker": ["Mid-height ball", "The coach throws while the keeper is still moving", "Three rounds in a row"] }
+  },
+  "keeper-ld-rondje-hoedje": {
+    "naam": "Round the disc cone",
+    "uitleg": "The keeper does a quick loop round a disc cone just in front of them and immediately gets a low ball: dive and catch. Get up, back and again. On the second go the ball comes with a bounce.",
+    "organisatie": "Disc cone 1 m in front of the keeper, 3 m in front of goal. Coach with balls at 8 m.",
+    "benodigdheden": ["Goal", "Disc cone", "Balls"],
+    "coachpunten": ["Small, quick loop on the balls of your feet", "After the loop, get set in the ready position first", "Bouncing ball: don't dive too early, wait for it to come up"],
+    "variaties": { "makkelijker": ["Walk the loop, then a pause", "Rolling ball"], "moeilijker": ["Two loops", "The coach throws during the loop", "Balls further away"] }
+  }
+}

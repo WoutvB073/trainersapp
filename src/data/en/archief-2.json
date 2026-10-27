@@ -1,0 +1,132 @@
+{
+  "keeper-hd-rouleren-hoge-hoek": {
+    "naam": "High ball into the corner: rotating with two keepers",
+    "uitleg": "Keeper 2 kicks the ball from hands high into the corner; keeper 1 dives high and catches it. Roll the ball back, then swap: keeper 1 goes to the serving spot, keeper 2 goes in goal and gets a high ball into the other corner.",
+    "organisatie": "Goal, serving spot at 11 m (disc cone). Swap after every 2 balls. Two keepers per goal, or three (the third collects balls).",
+    "benodigdheden": ["Goal", "1 disc cone", "Balls"],
+    "coachpunten": ["A small step towards the ball first, then take off and stretch", "Catch the ball at the highest point, in front of your body", "Server: high into the corner, but saveable (not into the top corner)"],
+    "variaties": { "makkelijker": ["Throw instead of kicking", "Distance 8 m"], "moeilijker": ["Distance 16 m, kicked hard", "Alternate catching and tipping", "Straight after landing, a second ball low into the other corner"] }
+  },
+  "keeper-cv-kruispas-vangen-zwaaiworp": {
+    "naam": "Crossover steps, catch and sidearm throw",
+    "uitleg": "The keeper moves from post to post with crossover steps, shuffles back to the middle and catches a chest-height ball from the coach. Straight after, they send the ball flat and long with a sidearm throw to a zone on the wing.",
+    "organisatie": "Disc cones by both posts, coach at 9 m, 8 × 8 m zone on the wing at 20 m. Each set, throw to the other wing.",
+    "benodigdheden": ["Goal", "2 disc cones", "Disc cones for the zone", "Balls"],
+    "coachpunten": ["Crossover step: back leg crosses in front, shoulders stay facing the pitch", "Catch first, then turn towards the direction of the throw", "Sidearm throw: arm straight out to the side, keep the ball flat"],
+    "variaties": { "makkelijker": ["Side-steps instead of crossover steps", "Roll instead of a sidearm throw"], "moeilijker": ["The ball comes during the crossover steps", "Throw to a moving teammate", "After the throw, back again for a low ball"] },
+    "onderdelen": ["Crossover steps", "Catch", "Sidearm throw"]
+  },
+  "keeper-re-via-de-pop": {
+    "naam": "Deflected off the mannequin",
+    "uitleg": "A mannequin stands in front of goal. The coach shoots past or at the mannequin: if the ball goes past, it comes as expected; if it hits the mannequin, it suddenly changes direction. The keeper stays in the ready position until they see the new direction and then reacts.",
+    "organisatie": "Keeper in goal, mannequin 5 m in front of goal, coach at 12 m. The coach chooses: past the mannequin or at it.",
+    "benodigdheden": ["Goal", "1 mannequin or dummy", "Balls"],
+    "coachpunten": ["Don't guess: stay in the ready position until the ball has passed the mannequin", "Weight on the balls of your feet so you can go either way", "Short, explosive push-off in the new direction"],
+    "variaties": { "makkelijker": ["Mannequin further from the keeper (more reaction time)", "Throw instead of shooting"], "moeilijker": ["Two mannequins", "Mannequin closer to the keeper (3 m)", "Shoot harder", "After the save, a second shot past the other side of the mannequin"] }
+  },
+  "keeper-sp-lummelen": {
+    "naam": "Piggy in the middle for keepers",
+    "uitleg": "Two keepers throw the ball to each other; the keeper in the middle tries to intercept it by jumping or diving. Whoever loses the ball goes in the middle. A game of throwing, catching, jumping and reacting.",
+    "organisatie": "10 × 6 m area. Throwers on the short sides, the middle keeper between them. Throws only (underarm or overarm), no kicking. Ball intercepted = swap.",
+    "benodigdheden": ["4 disc cones", "1 ball"],
+    "coachpunten": ["Throwers: fake a throw and release the ball quickly and accurately", "Middle keeper: take off from one foot and take the ball at the highest point", "Catch with two hands, even in the air"],
+    "variaties": { "makkelijker": ["Bigger area", "The middle keeper may only jump, not run"], "moeilijker": ["Two middle keepers", "Throwers may not move", "Rolling balls only: the middle keeper has to dive"] }
+  },
+  "keeper-sp-mikken-in-de-hoepel": {
+    "naam": "Hit the hoop",
+    "uitleg": "Two young keepers take turns to throw their ball into a hoop: underarm with a little arc when it's close, overarm when it's further away. In the hoop is a point; who has the most after 10 throws? A fun way to practise distribution.",
+    "organisatie": "Four hoops 4 to 8 m from the throwing line. Two keepers, each with a ball. After the throw, fetch your own ball and go back to the line.",
+    "benodigdheden": ["4 hoops or rings", "2 disc cones", "2 balls"],
+    "coachpunten": ["Underarm: step in with the other leg and release the ball low", "Overarm: arm straight behind your head, then whip it through", "Look at the hoop, not at the ball"],
+    "variaties": { "makkelijker": ["Hoops closer", "Bigger hoops or a zone"], "moeilijker": ["Hoops further away (10–15 m)", "Rolled through a gate", "A hoop that the coach moves around"] }
+  },
+  "keeper-wu-tweetallen-drie-hoogtes": {
+    "naam": "Catching in pairs: three heights",
+    "uitleg": "Two keepers face each other and throw the ball to each other at different heights: a rolling ball (scoop), a ball at stomach height (basket), a chest-height ball and a high ball above the head (W grip). Whoever catches it throws it straight back.",
+    "organisatie": "Two keepers 8 m apart, one ball per pair. After 10 balls, increase the distance to 10–12 m. Several pairs side by side, 5 m apart.",
+    "benodigdheden": ["1 ball per pair", "2 disc cones per pair"],
+    "coachpunten": ["Hands behind the ball: for a high ball thumbs together (W), for a low ball little fingers together", "Chest-height ball: elbows together and trap the ball against your chest", "Rolling ball: step towards it, knee behind the ball, scoop it in", "Watch the ball into your hands"],
+    "variaties": { "makkelijker": ["Shorter distance (5–6 m)", "The same height until it goes well", "Throw gently, no tempo"], "moeilijker": ["The thrower chooses the height without saying", "After every catch, a 3 m sprint backwards and back", "With two balls at once: one high, one rolling"] }
+  },
+  "keeper-wu-balgewenning": {
+    "naam": "Getting a feel for the ball: throw up, bounce and scoop",
+    "uitleg": "The keeper works alone with a ball: throw it high and catch it at the highest point in the air, let it bounce in front of them and catch it after the bounce, and roll it away, sprint after it and pick it up.",
+    "organisatie": "Each keeper has their own ball and a 5 × 5 m space. Each task 5 times, then the next. Good as a first block while the coach sets up the rest.",
+    "benodigdheden": ["1 ball per keeper"],
+    "coachpunten": ["High ball: take off from one foot, other knee up, catch at the highest point", "After the bounce: body behind the ball, not just your hands", "Rolling ball: scoop it with both hands, don't grab at it with one hand"],
+    "variaties": { "makkelijker": ["Throw it less high", "Catch the ball against your chest after the bounce"], "moeilijker": ["Clap your hands once before catching", "Throw the ball up behind you, turn and catch", "Two keepers with a ball each: throw to each other at the same time", "After the set, a low ball from the coach: get up from the scoop and dive"] }
+  },
+  "keeper-wu-zit-tikken-vangen": {
+    "naam": "Seated: touch the ground and catch",
+    "uitleg": "The keeper sits on the ground with legs straight. Before each ball, they touch the ground behind them with both hands and come back quickly; the coach throws and the keeper catches at chest height and throws it back.",
+    "organisatie": "The keeper sits on the grass, the coach (or another keeper) stands 3–4 m away with a ball. After 6–8 balls, swap or move on to the next variation.",
+    "benodigdheden": ["1 ball per pair"],
+    "coachpunten": ["After touching the ground, hands straight back in front of the body (W shape)", "Catch with your fingers, pull the ball into your chest", "Straight back, core switched on"],
+    "variaties": { "makkelijker": ["No touching the ground", "Softer and closer"], "moeilijker": ["Ball just beside the body", "The coach throws while the keeper is still touching the ground"] }
+  },
+  "keeper-wu-zit-drie-hoogtes": {
+    "naam": "Seated catching at three heights",
+    "uitleg": "The keeper sits with legs straight. The coach alternates throws at chest height, above the head and low beside the body. Catch, secure and throw it back.",
+    "organisatie": "The keeper sits on the grass, the coach (or another keeper) stands 3–4 m away with a ball. After 6–8 balls, swap or move on to the next variation.",
+    "benodigdheden": ["1 ball per pair"],
+    "coachpunten": ["Chest height: basket or chest catch", "Above the head: W shape with thumbs behind the ball, arms straight", "Low: hands to the ball, little fingers together"],
+    "variaties": { "makkelijker": ["Only chest height and high", "The coach calls the height beforehand"], "moeilijker": ["Harder and quicker in succession", "After every ball, roll backwards and come back up"] }
+  },
+  "keeper-wu-zit-knieen-opgetrokken": {
+    "naam": "Seated with knees bent",
+    "uitleg": "The keeper sits with knees bent and feet flat on the ground. The coach throws low, at chest height and high; the keeper catches and throws it back. This trains catching with a strong core.",
+    "organisatie": "The keeper sits on the grass, the coach (or another keeper) stands 3–4 m away with a ball. After 6–8 balls, swap or move on to the next variation.",
+    "benodigdheden": ["1 ball per pair"],
+    "coachpunten": ["Feet flat, knees stay up", "For the high ball, don't fall backwards: core switched on", "Catch in front of your body, not beside it"],
+    "variaties": { "makkelijker": ["Hands on the ground behind you between balls", "Chest height only"], "moeilijker": ["Feet off the ground (balancing on your seat)", "Balls to the left and right of the body"] }
+  },
+  "keeper-bv-grondballen": {
+    "naam": "Ground balls: scooping",
+    "uitleg": "The coach plays the ball along the ground at the keeper. The keeper moves towards the ball with small steps and scoops it up. The second ball comes slightly to one side: shuffle across first, then scoop. Roll the ball back each time.",
+    "organisatie": "Keeper in goal, coach at 10 m with a few balls. Balls straight at the keeper and 1–2 m to the side, alternating left and right.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Step towards the ball, don't wait for it", "Legs together or one knee behind the ball: it mustn't go through you", "Little fingers together, scoop the ball into your chest"],
+    "variaties": { "makkelijker": ["Roll the ball by hand", "Shorter distance (6 m)"], "moeilijker": ["Shoot harder", "Ball 2–3 m to the side of the keeper", "The ball bobbles just in front of the keeper (like a bumpy pitch)", "After the catch, throw straight out to a disc cone on the wing"] }
+  },
+  "keeper-laag-duiken-kniezit": {
+    "naam": "Low diving from kneeling",
+    "uitleg": "The keeper kneels between two disc cones. The coach throws the ball low beside the keeper. The keeper falls sideways onto their side, catches the ball, gets up, kneels again and rolls the ball back. Alternate left and right.",
+    "organisatie": "In the goal or between two poles. Two disc cones 3 m to the left and right of the keeper, in line with where they kneel. The coach stands at 6 m with the balls beside them.",
+    "benodigdheden": ["Goal (or 2 poles)", "2 disc cones", "3–5 balls"],
+    "coachpunten": ["Dive diagonally forwards, towards the ball (not backwards)", "Bottom hand behind the ball, top hand on top; pin the ball to the ground", "Land on your side: hip, thigh and shoulder, not on your elbow", "Eyes on the ball until it's secure"],
+    "variaties": { "makkelijker": ["Roll the ball instead of throwing", "Shorter distance and closer to the body", "Start from sitting with legs apart"], "moeilijker": ["Dive from a crouch or standing", "Ball harder or further from the body", "Straight after getting up, a second ball on the other side", "The coach chooses the side: the keeper has to react"] }
+  },
+  "keeper-ld-hurkzit": {
+    "naam": "Low diving from a crouch",
+    "uitleg": "The next step after kneeling: the keeper crouches with knees deeply bent. The coach plays the ball along the ground beside them. The keeper pushes off from the leg on the ball side, dives diagonally forwards and secures the ball. Get up, back into a crouch, roll the ball back.",
+    "organisatie": "Keeper crouching in goal, coach at 8 m. Balls along the ground 1.5–2 m from the keeper, alternating left and right.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Push off from the leg on the ball side, diagonally forwards", "Hands to the ball first: bottom hand behind, top hand on top", "Land on your side and pin the ball to the ground straight away"],
+    "variaties": { "makkelijker": ["Ball closer to the keeper", "Roll instead of shooting"], "moeilijker": ["Ball further away (2.5 m)", "Shoot harder", "The coach shoots without saying which side", "After the dive, get up and a high ball on the other side straight away"] }
+  },
+  "keeper-ld-stand-twee-keepers": {
+    "naam": "Low diving from standing: two keepers",
+    "uitleg": "Keeper 1 stands in the ready position in goal. Keeper 2 throws a low ball into one corner and then kicks a ground ball into the other corner. Keeper 1 dives, secures the ball and rolls it back. Then the keepers swap places and roles.",
+    "organisatie": "Goal, server at 8 m. Swap after 2–4 balls: the keeper coming out of goal takes the ball to the serving spot.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["From the ready position, a small step towards the ball first, then push off", "Don't bend your knees first and then fall: one movement diagonally forwards", "Up quickly after the dive and back into the ready position"],
+    "variaties": { "makkelijker": ["Ball closer to the keeper", "Throws only"], "moeilijker": ["The server chooses the corner", "Two balls in quick succession (left, then right)", "Distance 11 m, kicked hard"] }
+  },
+  "keeper-cv-drie-schoten-positie": {
+    "naam": "Three shots: take up a new position each time",
+    "uitleg": "The coach shoots from three spots in a row: angled from the left, central and angled from the right. After each save, the keeper quickly takes up a new position on the line between the ball and the centre of the goal before the next shot comes.",
+    "organisatie": "Three balls at 12–17 m: left, centre and right. The coach moves from ball to ball. The keeper punches or catches and resets straight away.",
+    "benodigdheden": ["Goal", "3 balls", "3 disc cones"],
+    "coachpunten": ["After every save: position first, then the ready position", "From an angle: near post shut", "Small quick steps, never cross your feet when the ball is about to come"],
+    "variaties": { "makkelijker": ["The coach waits until the keeper is set", "Throws only"], "moeilijker": ["The coach chooses the order", "Four or five spots", "After the last shot, one more back pass to play away"] },
+    "onderdelen": ["Shot from the left", "Central shot", "Shot from the right"]
+  },
+  "keeper-vz-positie-meeschuiven": {
+    "naam": "Positioning: moving with the ball",
+    "uitleg": "The coach dribbles down the wing from deep towards the byline. The keeper moves with them: while the ball is far away they stand more central and slightly off their line; at the byline they cover the near post. At the end, a low, driven cross comes in which they intercept in front of the near post.",
+    "organisatie": "Keeper in goal, coach with a ball on the wing 20 m from the byline. The coach dribbles steadily to the byline and then delivers a low cross towards the near post. Then from the other side.",
+    "benodigdheden": ["Goal", "Balls", "Disc cones for the wing"],
+    "coachpunten": ["Ball far away: one or two metres off your line and more central", "Ball at the byline: near post shut, but don't hug the post", "Low cross: step towards the ball and take it before the striker"],
+    "variaties": { "makkelijker": ["The coach stands still at three spots instead of dribbling", "Throw the cross by hand"], "moeilijker": ["The coach chooses: low cross, high cross or shot", "A player (or second keeper) attacks the near post", "Harder, more driven cross"] }
+  }
+}

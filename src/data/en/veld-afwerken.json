@@ -1,0 +1,102 @@
+{
+  "veld-af-dribbel-afronden": {
+    "naam": "Dribble through the gate and finish",
+    "uitleg": "Dribble at goal from 30 m, choose the left or right gate in good time, accelerate through it and finish into the far corner inside the box. Then jog back round the outside to the queue (the ball stays in the net).",
+    "organisatie": "Queue with balls 30 m out, central in front of goal. Two cone gates (2.5 m wide) at 19 m, left and right. Keeper in goal.",
+    "benodigdheden": ["1 goal", "4 cones", "1 ball per player"],
+    "coachpunten": ["Ball close to your feet at the gate, then a bigger touch towards goal", "Take a quick look before you shoot: where is the keeper?", "Place it into the far corner, low, with the inside of the foot or your laces"],
+    "variaties": { "makkelijker": ["Gates at 15 m", "Bigger goal or no keeper (keeper plays with hands behind their back)"], "moeilijker": ["The coach only calls which gate at 22 m", "A defender starts at the gate and may put you under pressure", "Finish with your weaker foot"] }
+  },
+  "veld-af-pass-in-de-loop": {
+    "naam": "Pass into the run and finish first time",
+    "uitleg": "The attacker starts from the right and makes a diagonal run towards goal. The coach plays a ball from their pile into the run; the attacker finishes first time. Then back to the queue and the next one goes.",
+    "organisatie": "Coach with a pile of balls centrally at 21 m. Queue of attackers on the right at about 26 m (by the corner of the box). Keeper in goal.",
+    "benodigdheden": ["1 goal", "8+ balls", "1 cone (starting point)"],
+    "coachpunten": ["Timing: accelerate as the coach touches the ball", "Body over the ball keeps your shot low", "First time: inside of the foot for placement, laces for power"],
+    "variaties": { "makkelijker": ["Control first, then shoot", "Shorter run (about 8 m)"], "moeilijker": ["Start on the left: finish with the other foot", "A defender runs with you from the queue", "The coach sometimes plays it in the air: volley or header"] }
+  },
+  "veld-af-voorzetten": {
+    "naam": "Low and high crosses: attack the box and finish",
+    "uitleg": "The winger dribbles to the byline and crosses. Two strikers attack the box: one to the near post, one to the far post. First a low, hard cross that is tapped in at the near post; then a high cross to the far post for a header.",
+    "organisatie": "Winger on the right at about 16 m with a pile of balls. Two strikers centrally at 20–24 m. Keeper in goal. Back to the starting spots after each cross; swap roles regularly.",
+    "benodigdheden": ["1 goal", "6+ balls", "4 disc cones (starting spots)"],
+    "coachpunten": ["Strikers: don't go too early, start your run when the winger looks up", "Near post: get across the defender or keeper, first time with the inside of the foot", "Header: take off from one foot, use your forehead, eyes open, head it down"],
+    "variaties": { "makkelijker": ["The winger may control the ball first", "Throw the cross in by hand (high ball)"], "moeilijker": ["One defender in the box", "A third runner to the edge of the box (cutback)", "Cross first time after a pass from behind"] }
+  },
+  "veld-af-onder-druk": {
+    "naam": "Finishing with a chasing defender",
+    "uitleg": "The coach plays the ball in behind. The attacker sprints onto it; the defender starts diagonally behind and tries to catch up. The attacker takes the ball forward and has to finish before the defender gets there.",
+    "organisatie": "Coach with balls at 30 m. Attacker 3 m diagonally in front, defender 3.5 m diagonally behind (on the other side). Keeper in goal. Attacker and defender swap after each go.",
+    "benodigdheden": ["1 goal", "6+ balls", "bibs for the defenders"],
+    "coachpunten": ["Push your first touch far enough forward to keep your speed", "Body between defender and ball (shield it)", "Don't wait too long: finish as soon as you are in the box"],
+    "variaties": { "makkelijker": ["Defender starts 4 m behind", "The defender may only follow, no tackling"], "moeilijker": ["Defender starts alongside the attacker", "Two attackers against one defender: who gets the ball?", "The ball comes in the air: control it out of the air first"] }
+  },
+  "veld-af-afstandsschot": {
+    "naam": "Lay-off and shoot from distance",
+    "uitleg": "Pass to the coach (or a teammate) on the edge of the box. They lay the ball back first time into your path, and you strike it first time, hard and low, from about 20 m. Alternate power and placement.",
+    "organisatie": "Queue with balls centrally at 29 m. Coach (lay-off player) at 19 m with their back to goal. Keeper in goal.",
+    "benodigdheden": ["1 goal", "1 ball per player"],
+    "coachpunten": ["Standing foot next to the ball, knee and body over it", "Strike through the ball with your laces, ankle locked", "Follow your shot in: there may be a rebound"],
+    "variaties": { "makkelijker": ["Control first, then shoot", "Distance 16 m"], "moeilijker": ["Distance 22–25 m", "The lay-off sometimes goes wide: shoot with your weaker foot", "A defender starts by the lay-off player and may block"] }
+  },
+  "veld-af-duel-twee-rijen": {
+    "naam": "Race for the ball: 1v1 to goal",
+    "uitleg": "The coach plays a ball between two queues. The front player of each queue sprints for it: whoever wins the ball attacks the goal, the other defends. A goal is a point for your team. Which team is ahead after 10 duels?",
+    "organisatie": "Two queues (red team and blue team) at 30 m, 14 m apart. Coach with a pile of balls in the middle between the queues. Keeper in goal.",
+    "benodigdheden": ["1 goal", "8+ balls", "bibs for one team"],
+    "coachpunten": ["Attacker: body between opponent and ball, then get to goal quickly", "Defender: don't dive in, stay between the attacker and the goal", "Switch quickly: if you lose the ball, defend straight away"],
+    "variaties": { "makkelijker": ["Ball closer to the attacking queue", "Defender starts 1 m later"], "moeilijker": ["2v2 (two players from each queue at once)", "If the defender wins the ball, they can score in a mini goal behind the queues", "The ball comes in the air: control it first"] }
+  },
+  "veld-cv-ladder-slalom-schot": {
+    "naam": "Ladder, first touch, slalom and shot",
+    "uitleg": "The player runs through the ladder with quick feet, controls a pass from the coach, dribbles a slalom round three cones and shoots at goal. Then they rejoin the back of the queue.",
+    "organisatie": "4 m ladder 30 m from goal, three cones 3 m apart behind it. Coach beside the ladder with balls. Keeper in goal. The next player starts as the previous one enters the slalom.",
+    "benodigdheden": ["Goal", "Agility ladder", "3 cones", "Balls"],
+    "coachpunten": ["Ladder: on the balls of your feet, active arms, don't look at your feet", "First touch in one movement towards the slalom", "Slalom: small touches, ball close to your foot; then look up and shoot"],
+    "variaties": { "makkelijker": ["No ladder, start with the ball at your feet", "Cones further apart"], "moeilijker": ["First touch with your weaker foot", "After the slalom, a one-two with the coach before shooting", "A defender presses from the last cone"] },
+    "onderdelen": ["Ladder", "First touch", "Slalom", "Shot"]
+  },
+  "veld-cv-kaats-doordiepen": {
+    "naam": "One-two round the mannequin, run in behind and finish",
+    "uitleg": "The player dribbles at the mannequin (defender), plays a one-two with a teammate and sprints past the mannequin in behind. The return pass arrives in their path and they finish first time.",
+    "organisatie": "Mannequin 18 m from goal, lay-off player 4 m beside it. The player starts with a ball at 26 m. After each go the shooter becomes the lay-off player and the lay-off player joins the queue.",
+    "benodigdheden": ["Goal", "1 mannequin or cone", "Balls"],
+    "coachpunten": ["Commit the defender with your dribble before you play the one-two", "Accelerate past the other side of the mannequin straight after your pass", "Lay-off player: first time, into the runner's path"],
+    "variaties": { "makkelijker": ["The return pass may take two touches", "The shooter may control the ball first"], "moeilijker": ["A real defender instead of the mannequin", "Finish with your weaker foot", "Straight after the shot, a second ball from the coach: rebound"] },
+    "onderdelen": ["Dribble at the mannequin", "One-two", "Run in behind", "Finish"]
+  },
+  "veld-cv-draaien-voorzet": {
+    "naam": "Receive, turn, cross and finish",
+    "uitleg": "The wide player receives the ball with their back to goal, controls it and turns away in one movement. They dribble down the touchline and deliver a high cross. The striker attacks the near post and heads it in.",
+    "organisatie": "Passer centrally at 30 m, wide player on the flank at 22 m, striker around the penalty spot. Rotate after each attack: passer → wide player → striker → passer.",
+    "benodigdheden": ["Goal", "Balls", "Disc cones"],
+    "coachpunten": ["First touch with the outside (or inside) of the foot away from the opponent, straight into the turn", "Look up before you cross: where is the striker running?", "Striker: don't go too early, curve your run to the near post"],
+    "variaties": { "makkelijker": ["Low cross instead of high", "The striker starts in the box"], "moeilijker": ["A defender behind the wide player", "A second striker attacks the far post", "Cross first time after the dribble"] },
+    "onderdelen": ["Receive and turn", "Dribble down the line", "Cross", "Attack the box and finish"]
+  },
+  "veld-cv-overlap-voorzet": {
+    "naam": "Overlap on the wing, low cross and finish",
+    "uitleg": "The midfielder passes to the wide player and runs round the outside (overlap). The wide player plays the ball into their path. They go almost to the byline and put in a low cross to the near post, where the striker finishes first time.",
+    "organisatie": "Midfielder at 24 m, wide player on the flank at 18 m, striker around the penalty spot. Rotate after each attack. Also from the other side.",
+    "benodigdheden": ["Goal", "Balls", "Disc cones"],
+    "coachpunten": ["Straight after the pass, go round the outside at speed", "Wide player: a short dribble inside draws the defender, then play it into the run", "Low cross: hard along the ground between keeper and defenders"],
+    "variaties": { "makkelijker": ["The wide player stands still and sets the ball up", "The striker starts in position"], "moeilijker": ["A defender on the wide player", "A second striker at the far post", "Cross first time on the run"] },
+    "onderdelen": ["Pass to the wide player", "Overlap", "Low cross", "Finish"]
+  },
+  "veld-af-kaatsen-verdediger-rug": {
+    "naam": "Lay-off with a defender behind",
+    "uitleg": "The striker has a defender right behind them. They receive the ball from the passer and lay it straight back, spin away from the defender, receive the ball in behind and finish against the keeper.",
+    "organisatie": "Striker 19 m from goal with the defender right behind, passer with balls at 30 m. Full-size goal with keeper. Roles swap after each go.",
+    "benodigdheden": ["Goal", "Balls", "Bibs"],
+    "coachpunten": ["Striker: make contact with the defender first, then ask for the ball", "Lay it off first time, along the ground, back to feet", "Spin away to the side where the defender isn't, and accelerate"],
+    "variaties": { "makkelijker": ["The defender plays at half pace", "The striker may control the ball first"], "moeilijker": ["The defender goes all out", "Finish within 3 seconds of the through ball"] }
+  },
+  "veld-af-dribbelrace-1t1": {
+    "naam": "Dribble race, finish and 1v1",
+    "uitleg": "Two players start a dribbling course at the same time, each with a ball: a slalom through the poles. The right-hand course is deliberately a bit longer. Whoever finishes first shoots at goal straight away, then turns to defend 1v1 against the other player, who finishes just after. Afterwards the players swap courses.",
+    "organisatie": "Two pole slaloms about 20 m from goal: three poles on the left, four on the right (a bit further out). Players in two queues, each with a ball. Keeper in goal.",
+    "benodigdheden": ["Goal", "7 poles", "Balls"],
+    "coachpunten": ["Dribble with small touches, ball close to your foot", "Switch straight after your shot: get between the attacker and the goal", "Attacker: up the tempo and shoot as soon as there is space"],
+    "variaties": { "makkelijker": ["Courses the same length", "The defender may only go on the coach's signal"], "moeilijker": ["Longer slalom with cuts and turns", "Two against one: the first two to finish play together", "Shoot within 3 seconds of the course"] }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "keeper-sp-keepersoorlog": {
+    "naam": "Keeper wars",
+    "uitleg": "Two keepers each stand in a goal, 18 m apart. They take turns trying to score against each other: throwing or kicking from hands, from inside their own goal area. Whoever catches the ball can go straight back. First to 5 goals wins.",
+    "organisatie": "Two (youth) goals facing each other 18 m apart. Shoot from no more than 4 m in front of your own goal. Throws, volleys and drop kicks all count; a caught ball may be played straight back.",
+    "benodigdheden": ["2 (youth) goals", "Balls", "Disc cones for the shooting line"],
+    "coachpunten": ["Straight back into the ready position after your throw: the ball can come straight back", "Catch it where you can, otherwise punch or tip it", "Choose wisely: low into the corner is often harder to save than hard and high"],
+    "variaties": { "makkelijker": ["Smaller goals or a longer distance", "Throws only"], "moeilijker": ["Shorter distance (14 m)", "The ball must go back within 3 seconds", "With two balls at once"] },
+    "meerSpelers": "With more keepers: whoever concedes swaps with a waiting keeper. Or play keeper wars on one goal."
+  },
+  "keeper-sp-keepersvolleybal": {
+    "naam": "Goalkeeper volleyball over the net",
+    "uitleg": "Two keepers play volleyball with their hands over a 2 m net. Throw the ball over the net into the other keeper's court; they must catch it before it hits the ground (diving allowed). If the ball lands in the court, it's a point.",
+    "organisatie": "8 × 14 m court with a net or tape at 2 m in the middle. Throw from where you caught the ball. Play to 11 points.",
+    "benodigdheden": ["Net or tape at 2 m with 2 posts", "4 disc cones", "1 ball"],
+    "coachpunten": ["Throw to the empty space in the other keeper's court", "Straight after your throw, get back to the middle of your court", "Dive forwards, towards the ball"],
+    "variaties": { "makkelijker": ["The ball may bounce once", "Smaller court"], "moeilijker": ["Two against two", "Underarm throws only", "A one-handed catch counts double"] },
+    "meerSpelers": "With more keepers: 2v2 on a slightly bigger court, or winners stay on."
+  },
+  "keeper-sp-keepersrondo": {
+    "naam": "Goalkeeper rondo",
+    "uitleg": "A rondo for keepers. The outside keepers pass the ball round with their feet, the keeper in the middle tries to intercept it and may use their hands: diving, smothering or catching. Whoever loses the ball or whose pass is caught goes in the middle; the interceptor becomes an outside keeper.",
+    "organisatie": "Smallest version: 3v1 in a triangle with 9 m sides (disc cones on the corners). With 3 keepers, the coach joins in as the third outside player. With 4 keepers: 3v1 without the coach or 4v1 in a 9 × 9 m square. With 7 keepers: 5v2 in a 12 × 12 m area.",
+    "benodigdheden": ["3 disc cones", "1 ball (spare balls with the coach)"],
+    "coachpunten": ["Outside: control and look first, then pass cleanly along the ground onto the far foot", "Middle: low in the ready position, cut off the passing lane, only dive once the ball is played", "Swap quickly after an interception: whoever made the mistake goes straight in the middle"],
+    "variaties": { "makkelijker": ["Outside keepers may take two touches", "Bigger triangle (12 m)"], "moeilijker": ["Outside keepers play one touch", "Smaller triangle (7 m): the middle keeper gets to the ball sooner", "Ten passes in a row without losing it is a point"] }
+  },
+  "keeper-sp-keepersoorlog-een-goal": {
+    "naam": "Keeper wars on one goal",
+    "uitleg": "One keeper stands in goal, the others queue on the edge of the box. The coach stands beside the goal and plays the ball in to the front keeper, who takes one touch and shoots, or shoots first time. The keeper in goal tries to save it. With three or more keepers, swap after every go: the shooter goes in goal, the keeper joins the back of the queue.",
+    "organisatie": "Full-size goal. Queue of keepers on the edge of the box (16 m), straight in front of goal. Coach with balls beside the far post, about 2 m from the goal. At least 2 keepers: then they take turns to shoot from the edge of the box and swap places after every go. With 3 or more keepers: swap as in the animation. A save is a point; so is a goal.",
+    "benodigdheden": ["1 full-size goal", "Balls"],
+    "coachpunten": ["As the shooter: first touch out in front of you, a quick look at the keeper and shoot low into the corner", "In goal: get set as the shooter plants their standing foot, only then dive", "After a save, ball straight back to the coach and swap quickly: keep the tempo high"],
+    "variaties": { "makkelijker": ["Shoot from 11 m (penalty spot)", "Only shoot after a first touch"], "moeilijker": ["First-time shots only", "The coach also plays it in the air: volley or header", "Straight after the save, a second ball from the coach (rebound)"] }
+  },
+  "keeper-sp-vier-doeltjes": {
+    "naam": "Goalkeeper game with four goals",
+    "uitleg": "Four small goals in a square. Two keepers each defend their own goal, opposite each other. A server stands by each of the other two goals. A server shoots at one of the keepers. If the keeper catches it, they counter straight away to the other side: throwing or kicking at the other keeper's goal. Catches and saves count; every goal is a point for the shooter. After a few minutes the keepers and servers swap roles.",
+    "organisatie": "22 × 22 m square with a 3 m goal in the middle of each side. Keepers in the north and south goals, servers by the east and west goals.",
+    "benodigdheden": ["4 small goals", "Balls"],
+    "coachpunten": ["Small goal: stay just in front of your line, then everything is within reach", "After the catch: look and play quickly, the other keeper isn't set yet", "Counter firm and low, or with an arc if the keeper is well off their line"],
+    "variaties": { "makkelijker": ["Bigger goals", "Counter by hand only"], "moeilijker": ["The servers also pass to each other before the shot", "Counter with the feet only", "Smaller goals"] }
+  },
+  "keeper-sp-twee-tegen-twee-twee-doelen": {
+    "naam": "Two against two, two goals",
+    "uitleg": "Two goals facing each other, a keeper in each. Two coaches are the attackers: they combine and attack one of the goals together. After a save, the keeper sets up the next attack by throwing the ball to one of the coaches, who then attack the other goal. Which keeper concedes the fewest goals?",
+    "organisatie": "Two goals about 30 m apart (or two small 5 m goals). Coaches with balls in the middle.",
+    "benodigdheden": ["2 goals", "Balls"],
+    "coachpunten": ["Shift with the ball, including when the attackers pass to each other", "Get set as the shot is taken", "After the save: build the next attack quickly and accurately, onto the coach's foot"],
+    "variaties": { "makkelijker": ["One attacker", "The attackers may pass only once"], "moeilijker": ["Counter straight after the save (play it on immediately)", "Headers from crosses too", "Goals closer together"] }
+  },
+  "keeper-sp-een-op-een-competitie": {
+    "naam": "1v1 competition",
+    "uitleg": "One keeper is in goal, the other keepers take turns as the attacker. The attacker passes to the coach, who returns it with a through ball into space. The attacker goes 1v1 at goal. After a round, the keeper who conceded the most goes back in goal.",
+    "organisatie": "Attackers with balls at 22 m, coach at 16 m. One keeper in goal.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Go as the through ball is played: that's the moment to gain ground", "When the attacker has the ball at their feet: get set, small and wide, and block", "As the attacker: keep the tempo up and make the keeper choose"],
+    "variaties": { "makkelijker": ["The coach plays the ball to feet", "The attacker must shoot within 5 seconds"], "moeilijker": ["Through balls in the air too", "A second attacker sprints alongside for the cutback", "A goal counts double after beating the keeper"] }
+  }
+}

@@ -16,6 +16,8 @@ const OVERSLAAN = [
   /^online[\\/](firebase|config|samenvoegen)\.ts$/,
   /\.d\.ts$/,
   /^data[\\/]oefeningen\.ts$/,
+  // Vertaaltabel van tekst-labels in tekeningen (de Engelse waarden zijn zelf al de vertaling; getest in vertaling-oefeningen).
+  /^data[\\/]vertaling\.ts$/,
 ];
 
 /** Functies waarvan de tekstargumenten al vertaald worden of geen tekst voor de gebruiker zijn. */

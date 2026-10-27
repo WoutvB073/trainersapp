@@ -1,0 +1,123 @@
+{
+  "keeper-vz-uitkomen-vangen": {
+    "naam": "Come for the cross and catch at the highest point",
+    "uitleg": "The coach delivers high crosses from the wing: first to the edge of the six-yard box, then towards the penalty spot. The keeper judges the ball, comes out, takes off from one foot with the other knee up and catches the ball at the highest point.",
+    "organisatie": "Keeper in goal, coach on the wing 10–12 m from the byline with a few balls. After each catch, the keeper throws the ball back and returns to their spot.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Look first, then go: only set off once you know where the ball is going", "Take off from one foot, other knee up for protection", "Catch with arms extended in front of your head and bring the ball straight into your chest", "Shout 'keeper!' so everyone knows you're going"],
+    "variaties": { "makkelijker": ["Throw the cross by hand", "Shorter distance, ball into the six-yard box"], "moeilijker": ["Crosses further from goal (up to the penalty spot)", "Inswinging or outswinging crosses", "A second keeper or the coach jumps with you"] }
+  },
+  "keeper-vz-beide-kanten": {
+    "naam": "Crosses from both sides",
+    "uitleg": "Two keepers take turns to cross (kick from hands) from the left and right. The keeper in goal shifts to the near post on the side of the ball each time, comes out and catches. After two crosses the keepers rotate.",
+    "organisatie": "Servers on the wings, 20 m from the centre of the goal and 9 m from the byline. Rotate after two balls: the keeper in goal becomes the server on the right, the server on the right goes in goal.",
+    "benodigdheden": ["Goal", "2 balls", "2 disc cones"],
+    "coachpunten": ["After every ball, adjust your position to the side of the new cross", "Body open to the pitch: stand side-on so you can see the ball and the goal", "Come out and catch at the highest point, with your knee up"],
+    "variaties": { "makkelijker": ["Throw instead of kicking", "Always from the same side"], "moeilijker": ["The servers choose: high to the far post or low to the near post", "After the catch, throw it straight out to the other server", "In quick succession: first ball from the left, straight after from the right"] }
+  },
+  "keeper-vz-stompen-tussen-poppen": {
+    "naam": "Punching clear between the mannequins",
+    "uitleg": "Three mannequins stand in the six-yard box as opponents. The coach delivers high crosses into the crowd. If the keeper can't catch the ball safely, they punch it clear: with two fists back in the direction the ball came from, with one fist on in the direction of the ball (far side).",
+    "organisatie": "Three mannequins in and around the six-yard box. Coach on the wing 12 m from the byline. Alternate a cross to the near post and a cross that curls across the face of goal.",
+    "benodigdheden": ["Goal", "3 mannequins or dummies", "Balls"],
+    "coachpunten": ["Two fists: fists together, arms straight, punch the ball high and far back", "One fist: punch the ball on in the direction it's travelling, to the far side", "When punching too: take off from one foot with your knee up and attack the highest point"],
+    "variaties": { "makkelijker": ["No mannequins, technique only first", "Throw the cross in by hand"], "moeilijker": ["Mannequins closer to the keeper", "A second keeper jumps with you", "The coach calls 'catch' or 'punch' while the ball is in the air"] }
+  },
+  "keeper-vz-met-tegenstander": {
+    "naam": "Coming for crosses with an opponent",
+    "uitleg": "Keeper 2 stands in the box as an opponent and jumps for the cross. Keeper 1 comes out, gets in front and catches the ball in the air, knee up. Then they swap: keeper 1 becomes the opponent, keeper 2 goes in goal.",
+    "organisatie": "Coach on the wing 10 m from the byline. Opponent near the edge of the six-yard box. The keepers swap roles after every cross. The opponent jumps but doesn't push.",
+    "benodigdheden": ["Goal", "Balls", "A tackle pad for the opponent (optional)"],
+    "coachpunten": ["Get in front: the shortest route to the ball is between the opponent and the ball", "Knee up on the opponent's side", "After the catch, ball firmly into your chest and secure it (don't throw it straight out into the crowd)"],
+    "variaties": { "makkelijker": ["The opponent doesn't jump, just gets in the way", "Throw the cross in by hand"], "moeilijker": ["Opponent with a tackle pad", "Two opponents", "Cross further away, so the keeper has to come further"] }
+  },
+  "keeper-vz-verschillende-afstanden": {
+    "naam": "Crosses from different distances",
+    "uitleg": "The coach crosses from three spots on the wing: by the byline (low and driven), level with the box and from deep (high). The keeper adjusts their position each time: near post for a short cross, more central and off the line for a deep cross.",
+    "organisatie": "Three balls on the wing: by the byline, at 16 m and at 28 m. The coach moves from ball to ball. The keeper rolls each caught ball behind the byline next to the goal.",
+    "benodigdheden": ["Goal", "3 balls (or more)", "Disc cones for the spots"],
+    "coachpunten": ["The deeper the cross, the further off your line and the more central you stand", "By the byline: near post shut, intercept the low ball", "Deep cross: wait until you can judge the flight, then accelerate"],
+    "variaties": { "makkelijker": ["Only from two spots", "Throw instead of kicking"], "moeilijker": ["The coach chooses the order", "From the other wing as well", "A striker (second keeper) attacks the near or far post"] }
+  },
+  "keeper-cv-stompen-1op1": {
+    "naam": "Punch the cross, recover and 1v1",
+    "uitleg": "The coach delivers a high cross; the keeper comes out and punches the ball clear. The ball drops to keeper 2 (attacker) on the edge of the box, who goes straight at goal. Keeper 1 recovers, comes out and blocks the shot with a star jump.",
+    "organisatie": "Coach on the wing 11 m from the byline. Keeper 2 as the attacker on the edge of the box. The keepers swap after each round.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Punching: high and far, away from goal", "Don't stand and watch after the punch: recover straight away and position yourself between the ball and the goal", "1v1: come out, slow down and make yourself big"],
+    "variaties": { "makkelijker": ["Catch the ball instead of punching", "The attacker waits 2 seconds"], "moeilijker": ["The attacker may also go round the keeper or chip", "A second attacker for the rebound", "Cross harder and lower (punch with one fist)"] },
+    "onderdelen": ["Punch the cross clear", "Recover", "1v1: block"]
+  },
+  "keeper-vz-claimen-uitgooien-terug": {
+    "naam": "Claim the cross, throw out and get back",
+    "uitleg": "Keeper 2 delivers a high cross from the wing. The keeper comes out, catches the ball at the highest point and throws it straight out into a zone on the other wing. Then back into goal going backwards, where the coach shoots low. Then the keepers swap.",
+    "organisatie": "Keeper 2 with balls on the wing (about 18 m from goal), an 8 × 8 m zone on the other wing at about 25 m, coach with balls 14 m in front of goal. At least 2 keepers.",
+    "benodigdheden": ["Goal", "4 cones (zone)", "Balls"],
+    "coachpunten": ["Set off in time and take the ball at the highest point", "Look straight after the catch: throw quickly (sidearm throw) into the zone", "Back going backwards with your shoulders to the pitch; be set for the shot"],
+    "variaties": { "makkelijker": ["Throw the cross instead of kicking it", "Zone closer"], "moeilijker": ["An opponent jumps for the cross", "Two zones: the coach calls which one", "Shot while the keeper is still getting back"] }
+  },
+  "keeper-vz-cutback": {
+    "naam": "Defending the cutback",
+    "uitleg": "First a low ball from the coach: dive, catch and get up. Meanwhile keeper 2 is on the byline with the ball; the keeper moves to the near post. Keeper 2 cuts the ball back to the coach, who is now at the penalty spot: the keeper quickly adjusts their position and deals with the shot.",
+    "organisatie": "Coach with balls at 9 m, keeper 2 with a ball on the byline on the right, 8 m from the goal. The keepers swap after a few goes.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["At the near post: nothing between you and the post", "On the cutback: move a few metres towards the middle straight away and get set", "Be set in time, only then react to the shot"],
+    "variaties": { "makkelijker": ["No first dive", "The coach controls the ball first"], "moeilijker": ["Keeper 2 chooses: short cross or cutback", "The coach shoots first time", "An opponent at the near post"] }
+  },
+  "keeper-vz-stompen-hoek-dichtzetten": {
+    "naam": "Punch clear and then close the angle",
+    "uitleg": "A high ball comes into the box from the left. The keeper comes out, punches it clear with two fists and lands. Straight after, they narrow the angle against a shooter standing at an angle in front of goal and deal with the shot. Then the same from the other side.",
+    "organisatie": "Coach with balls on the left at the corner of the six-yard box (about 10 m to the side), a keeper on the right as the second crosser. A third keeper is the shooter, at an angle in front of goal at about 9 m, and switches sides.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Punching: two fists together, far and high, ideally towards the side", "Take up position straight after landing: on the line between the ball and the centre of the goal", "Be set as the shot is taken"],
+    "variaties": { "makkelijker": ["Lower and softer cross", "The shooter waits until the keeper is set"], "moeilijker": ["The shooter shoots straight after the landing", "An opponent jumps for the cross", "Punch with one fist"] }
+  },
+  "keeper-vz-hordes-hoge-bal-claimen": {
+    "naam": "Hurdles and claiming a high ball",
+    "uitleg": "The keeper jumps sideways over two low hurdles to the left post and claims a high ball from the coach there: take off from one foot, knee up and catch the ball at the highest point. Ball back, sideways back over the hurdles to the right post and the same again.",
+    "organisatie": "Two low hurdles side by side in the middle of the goal, 2.2 m from the goal line. Coach with balls at 9 m.",
+    "benodigdheden": ["Goal", "2 low hurdles", "Balls"],
+    "coachpunten": ["Over the hurdles: short ground contact, facing the pitch", "Claiming: take off from one foot, other knee up for protection", "Catch at the highest point, ball straight into your chest"],
+    "variaties": { "makkelijker": ["No hurdles", "Throw the ball lower"], "moeilijker": ["Three hurdles", "The coach picks the side during the hurdles", "An opponent jumps with you"] }
+  },
+  "keeper-vz-meelezen-andere-keeper": {
+    "naam": "Reading the other keeper",
+    "uitleg": "A second keeper jumps sideways over hurdles in front of goal with a ball in their hands and chooses a side. The keeper in goal reads it and shifts across, catches the ball the second keeper throws and rolls it back. Then a high ball comes in from the coach out wide, which they claim.",
+    "organisatie": "Three low hurdles side by side 8 m from goal. Coach with balls on the right at the side of the six-yard box.",
+    "benodigdheden": ["Goal", "3 low hurdles", "Balls"],
+    "coachpunten": ["Stay on the line between the ball and the centre of the goal while the other keeper moves", "Small steps, be set in time for the throw", "After rolling it back, look straight away for where the cross is coming from"],
+    "variaties": { "makkelijker": ["Two hurdles", "The second keeper only throws once they're still"], "moeilijker": ["The second keeper kicks instead of throwing", "Cross straight after the throw", "The second keeper may also jump back (feint)"] }
+  },
+  "keeper-vz-claimen-schutter-horen": {
+    "naam": "Claim the high ball and listen for the shooter",
+    "uitleg": "The keeper claims a high ball from the coach and throws it back. As they throw, the coach calls who is going to shoot: the coach, keeper 2 or keeper 3. The keeper has to reset quickly facing that shooter and deal with the shot.",
+    "organisatie": "Coach on the left at the side of the six-yard box, keeper 2 straight in front of goal at 12 m and keeper 3 at an angle on the right at 9 m, each with a ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Claim at the highest point, then throw it back calmly but quickly", "Listen for the name as you throw", "Position first, then get set, only then react"],
+    "variaties": { "makkelijker": ["The coach calls the shooter before the cross", "Shots at the body"], "moeilijker": ["The shooter shoots straight after the call", "Low into the corner too", "Four shooters"] }
+  },
+  "keeper-vz-voorzet-uitworp-doorspelen": {
+    "naam": "Cross, throw-out and play it on",
+    "uitleg": "A cross comes in from the right, which the keeper claims. They throw it straight out to the coach in the middle, who returns it along the ground. The keeper plays it on first time with their foot to the keeper on the other wing.",
+    "organisatie": "Keeper 2 with balls on the right at the corner of the six-yard box, coach centrally at 14 m, keeper 3 on the left wing at about 18 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Look straight after claiming: where is the coach free?", "Throwing out: firm and to the feet or chest", "First time: check where the ball needs to go first, standing foot next to the ball"],
+    "variaties": { "makkelijker": ["Control it, then play it on", "Lower cross"], "moeilijker": ["Play it on with the weaker foot", "The coach chooses which wing", "A player presses after the return pass"] }
+  },
+  "keeper-vz-circuit-stompen-hordes-lob": {
+    "naam": "Circuit: punching, hurdles and a lob",
+    "uitleg": "A circuit with four parts in a row. The keeper punches a high ball clear, jumps sideways over two hurdles, does a spin jump (a full turn in the air) and then gets a low ball: dive and catch. Finally a lob comes through the gap between two mannequins, which they have to read and hold.",
+    "organisatie": "Coach on the left for the cross, two hurdles on the right in front of goal, keeper 2 at an angle on the right for the low ball, keeper 3 at 15 m behind two mannequins (2.4 m gap) for the lob.",
+    "benodigdheden": ["Goal", "2 hurdles", "2 mannequins", "Balls"],
+    "coachpunten": ["Punch high and far, land balanced", "Find the ball straight away after the spin jump", "Lob: a few steps back, catch at the highest point"],
+    "variaties": { "makkelijker": ["No spin jump", "Lower lob"], "moeilijker": ["Lob or low ball: keeper 3 chooses", "Higher hurdles", "Everything without a break"] }
+  },
+  "keeper-vz-een-hand-stompen-paal": {
+    "naam": "One hand, punch and the post",
+    "uitleg": "The keeper kneels with a ball lying still just in front of them. On a signal, they knock it away with one hand. Then they get up and the coach throws a bouncing ball down in front of them: the keeper attacks the rising ball and punches it clear with two fists. Finally they go to the right post for a low shot from keeper 2 into the near corner.",
+    "organisatie": "Keeper kneeling 2.4 m in front of goal, a ball 0.5 m to their front right. Coach with balls at 9 m, keeper 2 at an angle on the right at 8 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Knocking it away: flat hand, push the ball well away to the side", "Bouncing ball: attack it and strike it on the rise, with two fists through the ball", "At the post: near post shut, stay low"],
+    "variaties": { "makkelijker": ["Knock it away from a crouch instead of kneeling", "Bouncing ball gentler and straight at the keeper"], "moeilijker": ["Bouncing ball off to the side, so they have to move first", "Low shot straight after the punch", "Knock it away with the weaker hand"] }
+  }
+}

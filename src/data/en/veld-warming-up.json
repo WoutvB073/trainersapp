@@ -1,0 +1,93 @@
+{
+  "veld-ps-rondo-3-1": {
+    "naam": "3v1 rondo in a triangle",
+    "uitleg": "Three players keep the ball in a triangle while one player in the middle tries to win it. Whoever loses the ball swaps with the defender in the middle. The outside players move along the lines so they can always receive a pass.",
+    "organisatie": "Triangle with sides of about 10 m (3 disc cones). Three players at the corners, one in the middle wearing a bib. Change the middle player every minute if nobody loses the ball.",
+    "benodigdheden": ["3 disc cones", "1 ball", "1 bib"],
+    "coachpunten": ["Always give two passing options: move away from the defender", "Pass to the player the defender isn't screening", "Defender: use your body to cut off one passing lane and force the pass the other way"],
+    "variaties": { "makkelijker": ["Bigger triangle (12 m)", "Defender may only intercept, no tackling"], "moeilijker": ["Two touches maximum", "Smaller triangle (7 m)", "One point for 5 passes without losing it; the defender counts interceptions"] },
+    "meerSpelers": "With 5 players: 4v1 in a square. With 6 or more: a second rondo, or 4v2."
+  },
+  "veld-wu-tikkertje-hesjes": {
+    "naam": "Bib tag",
+    "uitleg": "The tagger holds a bib and tries to tag someone. Whoever is tagged takes the bib and is the new tagger straight away. Running out of the area also counts as being tagged. Play in blocks of 1 to 2 minutes.",
+    "organisatie": "20 × 20 m area marked with 4 cones. One tagger (two with more than 10 players) holding a bib; everyone else spread out in the area.",
+    "benodigdheden": ["4 cones", "1–2 bibs"],
+    "coachpunten": ["Look around and find the space", "Small steps when you turn, then accelerate", "Tagger: cut off the space instead of chasing someone"],
+    "variaties": { "makkelijker": ["Bigger area (25 × 25 m)", "The tagger may only skip or move sideways"], "moeilijker": ["Smaller area (15 × 15 m)", "Two taggers at once", "Everyone dribbles a ball; the tagger tags you by knocking your ball out of the area"] }
+  },
+  "veld-wu-passen-en-volgen": {
+    "naam": "Pass and follow",
+    "uitleg": "The front player passes to the front player of the opposite line and sprints after the ball, joining the back of that line. The receiver controls the ball and passes it back across. Everyone keeps rotating.",
+    "organisatie": "Two lines facing each other 10 m apart, each at a cone. Start with the ball at one line. With more than 8 players: two groups side by side.",
+    "benodigdheden": ["2 cones", "1 ball per group"],
+    "coachpunten": ["Pass with the inside of the foot, standing foot next to the ball", "Accelerate over the first few metres straight after the pass", "Receive with an open body, facing your next pass", "Call for the ball: shout the passer's name"],
+    "variaties": { "makkelijker": ["Distance 6–8 m", "Control first, then pass (two touches)"], "moeilijker": ["One-touch passing", "Weaker foot only", "Add a second ball from the other line"] }
+  },
+  "veld-wu-loopscholing": {
+    "naam": "Running technique in a queue",
+    "uitleg": "Players take turns going across with a running drill: skipping, running backwards, side-steps, high knees or heel flicks. They jog back easily alongside the lane and rejoin the back of the queue. Change the drill every round.",
+    "organisatie": "12 m lane between two cones. Players queue behind the start cone. The next player goes when the one in front is about 4 m away.",
+    "benodigdheden": ["2 cones"],
+    "coachpunten": ["Stay on the balls of your feet, not your heels", "Drive the arms (90° at the elbow)", "Upright trunk, hips high", "Jog back easily: that's your recovery"],
+    "variaties": { "makkelijker": ["8 m lane", "Only skipping and jogging"], "moeilijker": ["After 6 m, go from the running drill into a sprint", "Backwards while looking over your shoulder", "Side-steps with arms crossing above your head", "At the end of the lane, control a ball from the coach and pass it back"] }
+  },
+  "veld-wu-rondo-4-1": {
+    "naam": "4v1 rondo",
+    "uitleg": "Four players on the sides of the square keep the ball; the player in the middle tries to win it. Whoever loses the ball or plays it out goes in the middle. A pass through the middle (between the lines) counts double.",
+    "organisatie": "8 × 8 m square. One player on each side, one player in the middle wearing a bib. Change the middle player every 60–90 seconds if nobody loses the ball.",
+    "benodigdheden": ["4 cones", "1 ball", "1 bib"],
+    "coachpunten": ["Stay open: receive on your back foot so you can go either way", "Move along your line to stay available", "Pass to your teammate's correct foot", "Defender: press and use your body to cut off a passing lane"],
+    "variaties": { "makkelijker": ["5v1", "Bigger square (10 × 10 m)", "The defender may only intercept, no challenges"], "moeilijker": ["Two touches maximum", "Smaller square (6 × 6 m)", "4v2 in a 10 × 10 m square", "After six passes, a through ball to a player who sprints out of the square and shoots at a mini goal"] },
+    "meerSpelers": "With 6 players: 4v2. With more: a second rondo."
+  },
+  "veld-wu-dribbelen-opdrachten": {
+    "naam": "Dribbling with commands",
+    "uitleg": "Everyone dribbles their own ball around the area. When the coach calls a command, you do it: \"turn\" (take the ball the other way), \"stop\" (sole on the ball) or \"swap\" (leave your ball and take another one).",
+    "organisatie": "15 × 15 m area. Every player has a ball. The coach stands at the side and calls the commands.",
+    "benodigdheden": ["4 cones", "1 ball per player"],
+    "coachpunten": ["Ball close to your feet: a touch every step or every other step", "Look up between touches, not only at the ball", "Use the inside and outside, left and right foot", "Accelerate straight after the turn"],
+    "variaties": { "makkelijker": ["Bigger area", "Only stop and start"], "moeilijker": ["Smaller area (10 × 10 m)", "Weaker foot only", "Colours as commands (red = cut, blue = step-over)", "The coach tries to knock balls away", "On the whistle, dribble to one of four mini goals and score"] }
+  },
+  "veld-wu-schatrovers": {
+    "naam": "Treasure raiders",
+    "uitleg": "On the signal both teams run to the middle area and dribble one ball at a time back to their own area. Once the middle is empty, you may raid a ball from the other team's area. After 1 minute, the team with the most balls wins.",
+    "organisatie": "4 × 4 m middle area with 5 or more balls. Two home areas of 3 × 6 m, 8 m to the left and right of the middle. Two teams of 2–5 players, each at their own area.",
+    "benodigdheden": ["12 disc cones or cones", "5+ balls", "bibs for one team"],
+    "coachpunten": ["Decide quickly: which ball do I go for?", "Short dribble with lots of touches, look up", "Talk to your team: who raids and who collects from the middle?"],
+    "variaties": { "makkelijker": ["More balls in the middle", "No raiding from the other team"], "moeilijker": ["One player per team may defend their own area", "Dribble with the weaker foot only", "Home areas further away"] }
+  },
+  "veld-wu-spiegelen": {
+    "naam": "Mirroring in pairs",
+    "uitleg": "Two players face each other, each between two disc cones. The leader moves sideways, forwards or backwards; the follower copies them as quickly as possible like a mirror image. Swap after 20 seconds.",
+    "organisatie": "For each pair, two 8 m lines (disc cones at the ends) 4 m apart. Both players start in the middle of their line.",
+    "benodigdheden": ["4 disc cones per pair"],
+    "coachpunten": ["Low centre of gravity, on the balls of your feet", "Sideways: don't cross your feet", "Follower: watch your partner's hips, not their head"],
+    "variaties": { "makkelijker": ["Sideways only, steady pace", "Shorter lines (5 m)"], "moeilijker": ["The leader may use feints", "First to the disc cone scores a point", "With a ball at your feet", "After the mirroring the coach plays a ball in: 1v1 on two mini goals"] }
+  },
+  "veld-wu-lopend-passen": {
+    "naam": "Passing on the move in pairs",
+    "uitleg": "Two players jog side by side to the far end, passing the ball to each other as they go. Always play the ball in front of your partner so they can take it in their stride. Turn round at the end and come back.",
+    "organisatie": "25 m long lane; players 6 m apart. Cones at the start and end of both lines. Several pairs side by side works fine.",
+    "benodigdheden": ["4 cones per pair", "1 ball per pair"],
+    "coachpunten": ["Play the ball in front of your partner, in their running direction", "Take your first touch forwards, don't stop", "Steady pace: it's a warm-up"],
+    "variaties": { "makkelijker": ["4 m apart, walking pace", "Control, then pass"], "moeilijker": ["One-touch passing", "Pass with the outside of the foot", "10 m apart, or return a thrown ball with your laces", "Finish with a shot at a mini goal at the end of the lane"] }
+  },
+  "veld-wu-overlopertje": {
+    "naam": "British bulldog",
+    "uitleg": "All players stand on the start line, the tagger in the middle. On the signal everyone runs to the other side without being tagged. Whoever is tagged becomes a tagger too. Keep going until one player is left: they are the winner.",
+    "organisatie": "20 × 16 m area. Runners on one short line, one tagger (in a bib) in the middle. After each crossing, wait until everyone is ready.",
+    "benodigdheden": ["4 cones", "bibs for the taggers"],
+    "coachpunten": ["Look ahead and find the gaps between the taggers", "Accelerate and change direction at the right moment", "Taggers: work together and close the space as a group"],
+    "variaties": { "makkelijker": ["Wider area", "Taggers may only move sideways"], "moeilijker": ["Runners dribble a ball; a tag = knocking the ball out of the area", "Narrower area", "Taggers hold hands (chain tag)"] }
+  },
+  "veld-cv-circuit-drie-stations": {
+    "naam": "Circuit: hurdles, slalom and rebounder",
+    "uitleg": "Three stations side by side, with one player (or a small group) working at each. Station 1: over the hurdles. Station 2: slalom dribble through the cones. Station 3: two passes against the rebounder. Then everyone moves on one station.",
+    "organisatie": "Three 10 m lanes, 10 m apart. With bigger groups, a queue at each station. 45 seconds per station, then rotate to the right; the last player runs round the outside back to station 1.",
+    "benodigdheden": ["4 low hurdles", "3 cones", "Rebounder (or wall)", "Balls", "Disc cones"],
+    "coachpunten": ["Hurdles: knees high, short ground contact", "Slalom: small touches, alternating left and right", "Rebounder: inside of the foot, take your first touch towards the next pass"],
+    "variaties": { "makkelijker": ["Two stations", "Slower pace, technique first"], "moeilijker": ["Fourth station: shooting at a mini goal", "Against the clock: who gets the most reps?", "Everything with the weaker foot"] },
+    "onderdelen": ["Station 1: hurdles", "Station 2: slalom", "Station 3: rebounder", "Rotate"]
+  }
+}

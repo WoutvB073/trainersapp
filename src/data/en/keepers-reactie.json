@@ -1,0 +1,147 @@
+{
+  "keeper-re-rebounder": {
+    "naam": "Rebounder: close-range rebounds",
+    "uitleg": "The keeper faces a rebounder 4 m away. The coach stands beside them and throws the ball against the net. The keeper only sees the ball as it rebounds and has to react straight away: catch or dive.",
+    "organisatie": "Rebounder (angled net) 4 m in front of the keeper. Coach 3 m diagonally behind the keeper. Vary the power and angle so the keeper doesn't know where the ball will rebound.",
+    "benodigdheden": ["Rebounder", "Balls"],
+    "coachpunten": ["Ready position with hands low and in front of the body", "Watch the net, not the coach", "A small step to the ball, then dive; secure the ball"],
+    "variaties": { "makkelijker": ["Rebounder further away (6 m)", "Throw more gently"], "moeilijker": ["Rebounder closer (3 m)", "The keeper faces away from the rebounder and turns on 'now'", "The coach shoots instead of throwing"] }
+  },
+  "keeper-re-tweede-keeper-tikt": {
+    "naam": "Second keeper deflects the ball",
+    "uitleg": "Keeper 2 stands 4 m in front of goal as a 'defender'. The coach shoots. Sometimes keeper 2 lets the ball through (keeper 1 simply catches it) and sometimes they deflect it with their foot. Keeper 1 has to react to the deflection. Then swap.",
+    "organisatie": "Keeper 1 in goal, keeper 2 at 4 m (slightly to one side), coach at 12 m. Keeper 2 decides when to deflect. Swap after 4 balls.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Look past the defender: see the ball as early as possible", "Don't go with the first direction: wait until you're sure", "Quick footwork and a short dive"],
+    "variaties": { "makkelijker": ["Keeper 2 stands further from goal", "Throws only"], "moeilijker": ["Keeper 2 may also deflect it with a hand", "Shoot hard", "Two 'defenders'"] }
+  },
+  "keeper-re-reactiebal": {
+    "naam": "Reaction ball in pairs",
+    "uitleg": "Two keepers stand 5 m apart. One throws the reaction ball (a ball with bumps) onto the ground between them; the bumps make it bounce in all directions. The other reacts and catches it, diving if necessary. Then swap.",
+    "organisatie": "Two keepers 5 m apart, one reaction ball. 10 throws per keeper, then change pairs. No reaction ball? Use a tennis ball or a ball on a bumpy patch of grass.",
+    "benodigdheden": ["Reaction ball (or tennis ball)", "2 disc cones"],
+    "coachpunten": ["Low in the ready position, hands in front of the body", "Only move once you see which way the ball bounces", "Catch with two hands, even with a small ball"],
+    "variaties": { "makkelijker": ["Further apart (6–7 m)", "A normal ball bouncing on a bumpy patch of grass"], "moeilijker": ["3 m apart", "Catch one-handed (left and right)", "The keeper starts on their knees or lying on their front", "After the catch, throw straight out to a third keeper at 15 m"] }
+  },
+  "keeper-re-zicht-ontnomen": {
+    "naam": "Unsighted: the ball from behind the mannequins",
+    "uitleg": "Two mannequins stand like a wall in front of goal; the coach shoots from behind them. The keeper only sees the ball late, picks it up between or beside the mannequins and dives to the right corner.",
+    "organisatie": "Two mannequins side by side at 6 m, coach 5 m behind them. Shots through the gap or past them on the right, low into the corner.",
+    "benodigdheden": ["Goal", "2 mannequins or dummies", "Balls"],
+    "coachpunten": ["Position yourself so you can just see the coach: not directly behind the mannequins", "Stay calm until you see the ball, then explode", "Dive forwards, towards the ball"],
+    "variaties": { "makkelijker": ["One mannequin", "The coach always shoots past the mannequins"], "moeilijker": ["Three mannequins", "The coach stands closer behind the mannequins", "Shots at mid-height too"] }
+  },
+  "keeper-re-opvolgende-reddingen": {
+    "naam": "Repeated saves: three balls in quick succession",
+    "uitleg": "The coach shoots three balls in quick succession: low into one corner, mid-height into the other and then straight at the keeper. After each save, the keeper gets up as quickly as possible and is back in the ready position for the next ball.",
+    "organisatie": "Keeper in goal, coach at 9 m with three balls in a row. 30 seconds' rest after each set. 4–6 sets.",
+    "benodigdheden": ["Goal", "3 balls per set"],
+    "coachpunten": ["Get up through your knees and straight back to the middle", "Get into the ready position first, then react to the next ball", "Every ball is a new ball: don't think about the last one"],
+    "variaties": { "makkelijker": ["More time between the balls", "Two balls instead of three"], "moeilijker": ["Four or five balls", "The coach chooses the order", "The next ball comes while the keeper is still getting up"] }
+  },
+  "keeper-cv-uitworp-reactiebal": {
+    "naam": "Throw-out, back into goal and reaction ball",
+    "uitleg": "The keeper throws the ball long overarm to a zone on the wing and sprints back into goal going backwards. There the coach throws a reaction ball onto the ground in front of them, which bounces away unpredictably.",
+    "organisatie": "The keeper starts on the edge of the six-yard box with a ball. 8 × 8 m zone on the wing at 25 m. Coach at 8 m with a reaction ball (or tennis ball).",
+    "benodigdheden": ["Goal", "Disc cones for the zone", "Ball", "Reaction ball or tennis ball"],
+    "coachpunten": ["Throw-out: arm straight, the ball long but low enough to arrive quickly", "Getting back: backwards with small steps, facing the pitch", "Reaction ball: stay low, only move once you see the bounce"],
+    "variaties": { "makkelijker": ["A short pause after getting back before the reaction ball", "A normal bouncing ball instead of a reaction ball"], "moeilijker": ["Throw out to a moving teammate", "The reaction ball comes while they are still getting back", "Two reaction balls in a row"] },
+    "onderdelen": ["Throw out to the wing", "Back into goal", "Reaction ball"]
+  },
+  "keeper-sp-valbal": {
+    "naam": "Drop ball: catch it before the second bounce",
+    "uitleg": "The coach holds the ball at shoulder height with straight arms and drops it unexpectedly. The keeper stands 3 m away and has to get the ball before it hits the ground a second time: a quick start and a dive.",
+    "organisatie": "Keeper 3 m from the coach, in the ready position. The coach drops the ball to their left or right. If the keeper gets it, one step further away. Who reaches the biggest distance?",
+    "benodigdheden": ["1 ball"],
+    "coachpunten": ["Watch the ball, not the coach's face", "First step small and quick, then dive", "Pin the ball to the ground"],
+    "variaties": { "makkelijker": ["Shorter distance (2 m)", "The coach drops the ball straight in front of them"], "moeilijker": ["The coach holds two balls and drops one", "The keeper faces away from the coach and turns on a shout", "4 m or more"] }
+  },
+  "keeper-re-kleuren-voor-de-stuit": {
+    "naam": "Four colours and catch it before the bounce",
+    "uitleg": "The same area with four coloured disc cones. The keeper touches the colours the coach calls. At an unexpected moment the coach throws a ball into the area; the keeper has to get it before it hits the ground, diving if necessary.",
+    "organisatie": "Four disc cones 2 m around the centre of the area, 3 m in front of goal. Coach with balls at 6–7 m.",
+    "benodigdheden": ["Goal", "4 coloured disc cones", "Balls"],
+    "coachpunten": ["Keep watching the coach while you touch the cones", "Low centre of gravity: then you can push off straight away", "Better to hold the ball with a dive than to let it bounce"],
+    "variaties": { "makkelijker": ["Throw the ball higher (more time)", "The coach shouts \"now\" just before the throw"], "moeilijker": ["The ball may only come after the second colour", "Throw further outside the area"] }
+  },
+  "keeper-re-pass-naast-doel": {
+    "naam": "Pass from beside the goal and a short-range shot",
+    "uitleg": "A server stands beside the goal and plays the ball in to the coach, who stands about 5 m out. The coach shoots first time, close to the keeper: low, at the body or at mid-height. The keeper has to react quickly. After a few balls they swap: the server goes in goal, the keeper becomes the server.",
+    "organisatie": "Server (keeper 2) beside the post on the goal line, coach 5 m in front of goal, keeper 1 in goal. Balls with the server. With enough keepers, all roles can be keepers; everyone rotates every few balls.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Don't watch the server but the coach: that's where the shot comes from", "Stay small and compact, hands in front of the body", "Be set as the shot is taken, then react"],
+    "variaties": { "makkelijker": ["Coach at 7 m", "The coach controls the ball first"], "moeilijker": ["Coach at 4 m", "The server chooses: to the coach or a shot themselves", "After the save, a rebound from the coach"] }
+  },
+  "keeper-re-bal-van-achter": {
+    "naam": "Ball from behind the keeper",
+    "uitleg": "The keeper stands in goal facing the pitch. A server stands behind them on the goal line and plays or throws the ball over (or under) the keeper to a shooter at 5 m, who shoots first time from close range. The keeper only sees the ball late and has to react quickly.",
+    "organisatie": "Keeper 1 1.5–2 m in front of the goal line, server (keeper 2) behind them on the line, coach as the shooter at 5 m. Balls with the server. Rotate after a few balls.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Don't look back at the server: watch the shooter", "As soon as you see the ball: get set quickly, weight on the balls of your feet", "Make yourself small and get your body behind the ball"],
+    "variaties": { "makkelijker": ["The shooter controls the ball first", "Shooter at 7 m"], "moeilijker": ["The server chooses over or under the keeper", "Two shooters: the server chooses which one"] }
+  },
+  "keeper-re-drie-schutters-nummers": {
+    "naam": "Three numbered shooters",
+    "uitleg": "Three numbered servers stand in an arc in front of goal. The coach calls a number and that server shoots straight away. The keeper has to keep repositioning quickly: on the line between the ball and the centre of the goal, and set before the shot comes.",
+    "organisatie": "Three servers (players or keepers) with balls in an arc of about 11 m: left, centre and right. Coach beside the goal. The servers can also be keepers or the coach.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["On each number, small steps into the right position", "Be set as the shot is taken", "Low ball: dive diagonally forwards; high ball: take off and get the ball in your hands"],
+    "variaties": { "makkelijker": ["The servers throw instead of shooting", "The coach calls the number earlier"], "moeilijker": ["Two numbers in a row", "The servers move after every shot"] }
+  },
+  "keeper-re-korte-afstand": {
+    "naam": "Reflexes: turn and a close-range shot",
+    "uitleg": "The keeper stands with their back to the coach, facing the goal. On a signal they turn round and immediately face a close-range shot around their body: left or right at hip height, low beside them or at chest height. Catch, roll it back, turn round again and the next one.",
+    "organisatie": "Keeper 2 m in front of the goal line, back to the pitch. Coach with a few balls at 5–6 m. The signal is a shout or a clap.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Turn quickly on the balls of your feet and straight into the ready position", "See the ball first, then react: hands in front of the body", "Close-range ball: don't flinch away, move towards the ball"],
+    "variaties": { "makkelijker": ["The coach waits a second after the signal", "Shots at the body only"], "moeilijker": ["Hands over the eyes, only taken away on the signal", "Coach closer (4 m)", "Two balls in quick succession"] }
+  },
+  "keeper-re-kleurvolgorde-vallende-bal": {
+    "naam": "Colour sequence, hurdles and a dropped ball",
+    "uitleg": "The coach calls three colours; the keeper touches the disc cones in that order and then jumps forwards over two low hurdles. There they stand with their back to the goal facing the coach, who is holding two balls with straight arms. The coach drops one and the keeper dives to that side to get the ball before it bounces a second time.",
+    "organisatie": "Three coloured disc cones in front of goal, two low hurdles behind them. Coach 3–4 m beyond the hurdles, holding a ball in each hand.",
+    "benodigdheden": ["Goal", "3 coloured disc cones", "2 low hurdles", "Balls"],
+    "coachpunten": ["Remember the order and don't keep looking at the coach", "Straight into a low ready position after the hurdles", "React to the ball, not to the coach's arms"],
+    "variaties": { "makkelijker": ["Two colours", "The coach says which ball they will drop"], "moeilijker": ["Four colours", "Coach closer", "The ball may not bounce at all"] }
+  },
+  "keeper-re-dropkick-poppen": {
+    "naam": "Drop kick between the mannequins",
+    "uitleg": "Two mannequins stand in front of goal with a gap between them. From the edge of the box, the coach drop-kicks the ball through the gap. Sometimes it goes straight through, sometimes it hits a mannequin and changes direction: the keeper waits and reacts to the real flight of the ball.",
+    "organisatie": "Two mannequins 2.8 m apart, 6 m in front of goal. Coach with balls at 16 m.",
+    "benodigdheden": ["Goal", "2 mannequins", "Balls"],
+    "coachpunten": ["Don't commit too early: stay set until you see the flight", "Low centre of gravity, weight on the balls of your feet", "Deflected ball: short, quick reaction, hands first"],
+    "variaties": { "makkelijker": ["Mannequins further apart", "The coach throws instead of kicking"], "moeilijker": ["Mannequins closer to goal", "Three mannequins", "The coach kicks harder"] }
+  },
+  "keeper-re-rebounder-zijkant": {
+    "naam": "Rebounder or out wide",
+    "uitleg": "The coach decides what happens each time. Either they play the ball against the rebounder in front of goal, which sends it at goal: the keeper reacts and catches. Or they pass to a keeper out wide, who goes straight at a mini goal: the keeper sprints across and blocks the shot. Then the keepers rotate.",
+    "organisatie": "Rebounder 6.5 m in front of goal. Mini goal to the right of the goal, 8 m from the centre. Coach with balls at 11 m, a keeper on the right at about 9 m and a keeper on the left who brings the balls back.",
+    "benodigdheden": ["Goal", "Rebounder", "Mini goal", "Balls"],
+    "coachpunten": ["Read the coach: watch their body shape and the ball", "Rebound: short reaction, hands to the ball", "1v1: get across to the mini goal quickly, then stay small and wide and block"],
+    "variaties": { "makkelijker": ["The coach says what they will do", "Mini goal closer"], "moeilijker": ["The keeper out wide may also dribble", "Two mini goals", "The coach shoots again straight after the rebound"] }
+  },
+  "keeper-re-draaisprong-voetenblok": {
+    "naam": "Spin jump and a feet-first block",
+    "uitleg": "The keeper stands with their back to the pitch. On a signal they do a 180° spin jump, step out towards the coach who is coming at them with the ball, and block the shot with a feet-first slide. Get up, back into goal going backwards, and the coach throws a second ball to a side the keeper doesn't know: dive and catch.",
+    "organisatie": "Keeper 2 m in front of the goal line, back to the pitch. Coach with two balls at 8 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Spin jump: land in the ready position, look at the ball straight away", "Feet-first block: slide low towards the ball, legs together, hands beside you", "Back going backwards, facing the pitch"],
+    "variaties": { "makkelijker": ["No spin jump (just turn round)", "The coach rolls the ball instead of shooting"], "moeilijker": ["The signal comes at the last moment", "Second ball high", "The coach may also dribble round the keeper"] }
+  },
+  "keeper-re-stuitbal-schuin-lichaam": {
+    "naam": "Bouncing ball, angled shot and a shot at the body",
+    "uitleg": "The keeper goes just beyond the right post and gathers a bouncing ball from the coach there. Ball back, then close the angle against an angled shot from keeper 2. Finally back to the middle of the goal for a hard shot at the body. Then the keepers swap.",
+    "organisatie": "Coach with balls 10 m out, straight in front of goal, keeper 2 at an angle on the right at about 9 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Bouncing ball: body behind the ball, trap it against your chest", "Closing the angle: on the line between the ball and the centre of the goal, not too close to the post", "Hard shot at the body: don't flinch, bring the ball in"],
+    "variaties": { "makkelijker": ["Make the bouncing ball bounce higher", "Softer shots"], "moeilijker": ["Angled shot to the near post", "Last shot just wide of the body", "Higher tempo: no pause between the balls"] }
+  },
+  "keeper-re-pion-voet-achteruit": {
+    "naam": "Two cones and back again",
+    "uitleg": "There is a red cone and a blue cone in front of the keeper. The coach calls a colour: the keeper goes to that cone and touches it with their foot. Then back to the goal going backwards, facing the pitch, and a hard shot comes in: catch or dive.",
+    "organisatie": "Red cone on the left and blue cone on the right, 4 m in front of goal and 3 m apart. Coach with balls at 11 m.",
+    "benodigdheden": ["Goal", "2 coloured cones", "Balls"],
+    "coachpunten": ["React to the colour, don't guess", "Backwards: small steps with your weight forward", "Be set in time before the shot comes"],
+    "variaties": { "makkelijker": ["The coach also points to the colour", "Shot at the body"], "moeilijker": ["Three or four cones", "Shot while the keeper is still moving back", "Alternate touching with hand and foot"] }
+  }
+}

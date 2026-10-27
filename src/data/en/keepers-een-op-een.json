@@ -1,0 +1,108 @@
+{
+  "keeper-1o1-knieblok": {
+    "naam": "Knee block against a close-range shot",
+    "uitleg": "Keeper 2 comes at goal from an angle as an attacker and shoots low from close range. Keeper 1 makes a knee block: one knee on the ground, the other leg out to the side, arms wide. That closes off the bottom of the goal. Then they swap: keeper 1 takes the ball and becomes the attacker.",
+    "organisatie": "Keeper in goal, attacker starts at 12 m at an angle to the goal. Swap after every block. Two keepers per goal; with three keepers, the third waits with a ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["The knee goes down on the side of the shot, shin across behind the ball", "Body upright and arms wide: the keeper is one wall", "Don't go down too early: stay in the ready position until the shot comes"],
+    "variaties": { "makkelijker": ["The attacker shoots from standing at 5 m", "Gentle shots"], "moeilijker": ["The attacker may also go round the keeper", "A second ball straight after the block (rebound)", "From both sides"] }
+  },
+  "keeper-1o1-plukken": {
+    "naam": "Smothering: taking the ball off the attacker's feet",
+    "uitleg": "The coach dribbles at the keeper and pushes the ball just too far ahead. That's the moment: the keeper dives low, hands first, to the ball and smothers it before the attacker can get to it again.",
+    "organisatie": "The keeper comes out to about 6 m, the coach dribbles from 18 m and takes a heavy touch at 10 m. Mix it up: sometimes the coach keeps the ball close (then wait in the ready position).",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Wait for the heavy touch: only go then", "Dive low and sideways, hands to the ball first, head behind your arms", "Body across the ball so the attacker can't get past"],
+    "variaties": { "makkelijker": ["The coach clearly pushes the ball too far", "Dribble slowly"], "moeilijker": ["The attacker chooses: too far or keep it close", "Attacker coming in from an angle", "With a second attacker who can pick up the ball"] }
+  },
+  "keeper-1o1-steekpass": {
+    "naam": "Through ball: beat the attacker to it",
+    "uitleg": "Keeper 2 rolls a through ball into the space in front of goal; the coach chases it as the attacker. Keeper 1 decides straight away: come out, sprint and throw themselves on the ball before the attacker gets there. Then the keepers swap.",
+    "organisatie": "Server (keeper 2) at 25 m, attacker (coach) starts at 18 m at an angle to the goal. Ball into space 9–11 m from goal. Keepers 1 and 2 swap after each ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Decide straight away: can I get there first? Then go, with no hesitation", "Last few metres: get low and get your body across the ball", "Shout 'keeper!' and secure the ball"],
+    "variaties": { "makkelijker": ["Ball closer to goal", "The attacker starts further away"], "moeilijker": ["Ball right between keeper and attacker: sometimes staying put is better", "Harder pass", "The attacker starts closer"] }
+  },
+  "keeper-1o1-aanvaller-opzij": {
+    "naam": "Narrowing the angle against a wide attacker",
+    "uitleg": "The coach dribbles towards goal from an angle out wide. The keeper shifts with them and stays on the line between the ball and the centre of the goal, slightly closer to the near post. They push the low shot at the near post wide with a low dive.",
+    "organisatie": "Keeper in goal, coach starts on the edge of the box out wide (12 m from the byline). Alternate left and right.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["The near post must be shut: you must never be beaten there", "Stay on the line between the ball and the centre of the goal, and come slightly forward", "Low ball at the post: push it wide of the goal, not back in front of it"],
+    "variaties": { "makkelijker": ["The attacker stands still and shoots", "Only shots at the near post"], "moeilijker": ["The attacker chooses: near post, far corner or a square pass", "A second attacker arrives at the far post", "From both sides one after the other"] }
+  },
+  "keeper-cv-knieblok-voorzet": {
+    "naam": "Knee block, get up and catch a cross",
+    "uitleg": "Keeper 2 comes at goal from an angle and shoots low: keeper 1 makes a knee block. They get straight up and take up position for the coach's cross from the other side, come out and catch it at full stretch in the air.",
+    "organisatie": "Attacker (keeper 2) starts at 12 m at an angle to the goal, coach on the wing on the other side, 11 m from the byline. The keepers swap after each round.",
+    "benodigdheden": ["Goal", "2 balls"],
+    "coachpunten": ["Knee block: knee to the side of the shot, arms wide", "Get up and look straight away where the next ball is coming from", "Cross: judge it, come out, catch at the highest point"],
+    "variaties": { "makkelijker": ["A short rest after the knee block before the cross", "Throw the cross by hand"], "moeilijker": ["After shooting, the attacker attacks the cross", "Cross harder and closer to goal (punch it)", "After the catch, throw it straight out to the attacker"] },
+    "onderdelen": ["Knee block", "Get up and position", "Catch the cross"]
+  },
+  "keeper-cv-steekpass-uitgooien": {
+    "naam": "Intercept a through ball and throw out quickly",
+    "uitleg": "Keeper 2 rolls a through ball, the coach chases it as the attacker. Keeper 1 gets there first and throws themselves on it. They get straight up and throw the ball overarm ahead of keeper 2, who has meanwhile sprinted out to the wing: from defending to attacking.",
+    "organisatie": "Server (keeper 2) at 25 m, attacker (coach) at 18 m at an angle to the goal. After their pass, keeper 2 sprints to a disc cone on the wing. The keepers swap after each round.",
+    "benodigdheden": ["Goal", "2 disc cones", "Balls"],
+    "coachpunten": ["Decide straight away and go without hesitating", "Get up and look up: where is the free teammate?", "Throw ahead of the runner, not at them"],
+    "variaties": { "makkelijker": ["The attacker starts further away", "Throw out to a teammate standing still"], "moeilijker": ["Ball between keeper and attacker: sometimes staying put is better", "Kick from hands (volley) to the far wing", "The coach then presses the receiver"] },
+    "onderdelen": ["Intercept the through ball", "Get up", "Quick throw-out"]
+  },
+  "keeper-1o1-inspelen-draaien-kaatsen": {
+    "naam": "Pass in, turn or lay off",
+    "uitleg": "Keeper 2 stands with the ball at an angle to the goal about 15 m out and passes to a middle player standing at an angle at 5 m. The middle player chooses: turn and go 1v1 against the keeper, or lay it back and the passer shoots first time. The keeper doesn't know what's coming. After a number of balls, the keepers rotate.",
+    "organisatie": "Keeper 1 in goal, keeper 2 with balls at about 15 m at an angle to the goal, middle player (coach or keeper) at about 5 m at an angle to the goal. At least 2 keepers and a coach.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["When the pass goes into the middle player, take a step forward: ready for both", "If they turn: come out quickly, block low and wide", "If they lay it off: get back and be set for the shot from further out"],
+    "variaties": { "makkelijker": ["The middle player calls what they will do", "Lay-offs only"], "moeilijker": ["The middle player may also shoot first time", "A defender on the middle player"] }
+  },
+  "keeper-1o1-vijf-keuzes": {
+    "naam": "The goalkeeper coach's five options",
+    "uitleg": "The coach stands with balls in the middle of the box, with a keeper 5 to 10 m to their left and right. The coach keeps choosing: shoot themselves, pass to the left or right keeper's feet (who controls and shoots), or play a ball in behind on the left or right for a keeper to run onto; then the keeper comes out for a 1v1. After a few balls the keepers rotate.",
+    "organisatie": "Coach with balls at 16 m, keepers 2 and 3 at 7 m to their left and right, keeper 1 in goal. At least 3 keepers and a coach.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Always position yourself on the line between the ball and the centre of the goal", "Be set every time the coach touches the ball", "Ball in behind: decide early and come out, block low or smother"],
+    "variaties": { "makkelijker": ["Only three options (shoot, left, right)", "The coach says the option beforehand"], "moeilijker": ["The keepers on the left and right may also shoot first time", "Two options in quick succession"] }
+  },
+  "keeper-1o1-spreidsprong": {
+    "naam": "Star jump: passing and then 1v1",
+    "uitleg": "Keeper and coach both stand at an angle out wide of the goal and pass the ball back and forth a few times (the keeper with their feet). At some point the coach takes a touch forward and goes at goal: now it's 1v1. The keeper comes out briefly, gets set and blocks the shot with a star jump.",
+    "organisatie": "Keeper at an angle in front of the right post, 2–3 m off the line. Coach at an angle at 9–10 m. After 2–4 passes, the coach picks the moment.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Pass with the inside of the foot, then straight back into the ready position", "When the coach takes a touch forward: come out briefly, then stop and get set", "Star jump: arms and legs wide, make yourself as big as possible, eyes open"],
+    "variaties": { "makkelijker": ["The coach calls \"now\" as they take the touch forward", "The coach starts further away (more time)"], "moeilijker": ["The coach may also cut inside and shoot into the far corner", "Pass with alternating feet and tempo"] }
+  },
+  "keeper-1op1-stilliggende-bal-lezen": {
+    "naam": "Step out, catch and read the ball on the ground",
+    "uitleg": "The keeper steps out, catches a ball from the coach and rolls it away to the side. Two balls are lying still 8 m out, one left and one right. The coach sprints to one of them and shoots straight away. The keeper reads which ball it will be, comes out early and meets the coach with a feet-first slide.",
+    "organisatie": "Two balls on the ground 7 m apart, 8 m from goal. Coach at 12 m with a first ball.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Read it: the coach's running line tells you which ball it will be", "Go early, don't let the coach set the ball up calmly", "Feet first: low, wide and with your hands beside your body"],
+    "variaties": { "makkelijker": ["The coach jogs instead of sprinting", "Balls closer to goal"], "moeilijker": ["Three balls on the ground", "The coach may also go round the keeper instead of shooting", "First ball at mid-height or bouncing"] }
+  },
+  "keeper-1op1-hoek-dichtlopen-nieuwe-hoek": {
+    "naam": "Close the angle, then a new angle",
+    "uitleg": "The coach dribbles at goal at an angle from the right. The keeper comes out and closes the angle. Just before shooting, the coach squares the ball to keeper 2, arriving from the left: the keeper has to pick a new angle straight away. They decide themselves: block, smother the ball at the attacker's feet or dive.",
+    "organisatie": "Coach with balls at an angle on the right at 15 m, keeper 2 at an angle on the left at 12 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Come out on the line between the ball and the centre of the goal", "On the square pass: shift across quickly and get set again, don't keep running", "Ball close and at the attacker's feet: smother; ball just away from them: block; shot from distance: dive"],
+    "variaties": { "makkelijker": ["The coach always squares it", "Keeper 2 controls it first"], "moeilijker": ["The coach chooses: shoot or square it", "Keeper 2 may shoot first time", "From both sides"] }
+  },
+  "keeper-1op1-keeper-met-verdediger": {
+    "naam": "Keeper with a defender",
+    "uitleg": "The coach dribbles at goal as an attacker. Keeper 2 plays as a defender: they close the attacker down and try to block the shot. The keeper stays in goal, shifts with the ball and is ready for a shot past the defender. First attack: the defender blocks. Second attack: the coach shoots past them and the keeper dives.",
+    "organisatie": "Coach with balls at 18 m, keeper 2 as the defender at 10 m.",
+    "benodigdheden": ["Goal", "Balls"],
+    "coachpunten": ["Communicate: tell the defender which side to show", "Stay on your line and be set every time the attacker can shoot", "Shot past the defender: don't be caught out, look past them"],
+    "variaties": { "makkelijker": ["The defender stands still", "The attacker only shoots low"], "moeilijker": ["The defender may also win the ball", "A second attacker for the cutback", "The attacker may beat the defender and go 1v1"] }
+  },
+  "keeper-1op1-uitspelen-hoek-verkleinen": {
+    "naam": "Play it out, then narrow the angle",
+    "uitleg": "The keeper plays the ball out to keeper 2, who dribbles round a mannequin as an attacker and goes at goal. The keeper comes out, narrows the angle and blocks. Then they get back quickly, because the coach shoots from distance: the keeper gets set and dives.",
+    "organisatie": "Mannequin at 12 m straight in front of goal, keeper 2 at an angle on the left at 16 m. Coach with a ball at an angle on the right at 20 m.",
+    "benodigdheden": ["Goal", "Mannequin", "Balls"],
+    "coachpunten": ["Play it out firmly and onto the attacker's foot", "Come out while the attacker doesn't have the ball under control; get set when they are about to shoot", "After the save: back going backwards, facing the pitch"],
+    "variaties": { "makkelijker": ["The attacker dribbles more slowly", "The long shot only once the keeper is set"], "moeilijker": ["The attacker may also go round the keeper", "Long shot high into the corner", "The coach shoots while the keeper is still getting back"] }
+  }
+}

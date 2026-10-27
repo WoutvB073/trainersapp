@@ -14,6 +14,7 @@ import { startServiceWorker } from './engine/update';
 import { pasThemaToe } from './engine/thema';
 import { bewaardAccount, online } from './engine/account';
 import { onlineBeschikbaar } from './online/config';
+import { laadTaal } from './data/oefeningen';
 
 // Clubkleuren en licht/donker meteen toepassen (geen kleurflits bij het opstarten).
 pasThemaToe();
@@ -23,8 +24,13 @@ if (bewaardAccount() && onlineBeschikbaar()) void online().then((m) => m.startOn
 
 startServiceWorker();
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+// In het Engels eerst de Engelse oefenteksten laden (een eigen bestand, ook offline beschikbaar).
+void laadTaal()
+  .catch(() => undefined)
+  .then(() =>
+    createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+        <App />
+      </StrictMode>,
+    ),
+  );
