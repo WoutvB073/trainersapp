@@ -2067,10 +2067,10 @@
         "type": "half"
       },
       "weergave": {
-        "x": 22,
+        "x": 20,
         "y": -3,
-        "breedte": 22,
-        "lengte": 16
+        "breedte": 24,
+        "lengte": 18
       },
       "camera": "schuin",
       "objecten": [

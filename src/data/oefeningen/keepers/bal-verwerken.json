@@ -1832,15 +1832,15 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34.4,
-          "y": 9,
-          "kijkrichting": -90
+          "x": 37.2,
+          "y": 8.6,
+          "kijkrichting": -110
         },
         {
           "id": "b1",
           "soort": "bal",
-          "x": 34.4,
-          "y": 8.6,
+          "x": 37.05,
+          "y": 8.25,
           "bij": "t1"
         },
         {

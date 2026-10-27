@@ -33,7 +33,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/components/Illustraties.tsx` — getekende tegelplaatjes (Spelers, Keepers, bal zoals in het logo).
 - `src/wedstrijd/` — opstellingen, borden, spelhervattingen (puur) en opslag; `src/screens/wedstrijd/` (OpstellingVeld met slepen, BordTekenen = `Editor` uit `screens/eigen/Tekenen.tsx` met een `EditorBron`).
 - Keuzes die de gebruiker niet kon beantwoorden: PLAN.md → "Keuzes zonder overleg".
-- Nieuwe ingebouwde oefeningen: als bouwscript in `tools/nieuw/` (zie `keepers-020.cjs`, `spelers-020.cjs`, `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
+- Nieuwe ingebouwde oefeningen: als bouwscript in `tools/nieuw/` (zie `keepers-023a/b/c.cjs`, `spelers-023.cjs`; objecten en stappen uit `bouwstenen.cjs`, opslaan met `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
+- Acties voor personen (bouwstenen): loop/dribbel (via, om, manier, kijk), pass/schot (worp, hoogte, stuitOp, duikNaar, uitkomen+stompNaar, blokt+blokSoort ster/knie/voeten, terug), zitten (kniezit, hurkzit, zit, zit-opgetrokken, buik, halfknie), opstaan, grondtik, pak, springen, draai (kijk/naar, sprong), aantikken (doel of punt, met hand/voet). Een bal naar jezelf opgooien = pass van en naar dezelfde persoon.
 - Weggehaalde ingebouwde oefeningen gaan naar `src/data/oefeningen/archief.json` (`verwijderd: true`): niet in de bibliotheek, wel via `vindOefening`. Nooit echt wissen (oude trainingen/links/teams).
 
 ## Regels voor nieuwe en aangepaste oefeningen

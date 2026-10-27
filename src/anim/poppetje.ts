@@ -1245,7 +1245,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       if (half > 0) {
         // Halfknielend: rechterknie op het gras (wreef op de grond), linkervoet plat voor.
         if (i === 0) {
-          vt.p.lerp(_v.set(-0.12, 0.07, -0.36), half);
+          vt.p.lerp(_v.set(-0.12, 0.07, -0.4), half);
           vt.kantel = mix(vt.kantel, 1.4, half);
         } else vt.p.lerp(_v.set(0.15, MAAT.enkel, 0.46), half);
       }
@@ -1262,7 +1262,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     }
     h.heup = mix(h.heup, 0.5, knie);
     h.heup = mix(h.heup, 0.46, hurk);
-    h.heup = mix(h.heup, 0.55, half);
+    h.heup = mix(h.heup, 0.42, half);
     h.heup = mix(h.heup, MAAT.heup - 0.01, buik);
     h.heup = mix(h.heup, 0.15 + 0.01 * opgetrokken, billen);
     h.romp.x += 0.08 * knie + 0.4 * hurk - 0.1 * billen;

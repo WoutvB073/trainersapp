@@ -2339,5 +2339,273 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-af-dribbelrace-1t1",
+    "soort": "veld",
+    "naam": "Dribbelrace, afronden en 1 tegen 1",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Twee spelers starten tegelijk met een bal aan een dribbelparcours: een slalom om de paaltjes. Het rechterparcours is bewust iets langer. Wie het eerst klaar is, schiet direct op doel en draait zich dan om om de ander, die net later klaar is, in een 1 tegen 1 te verdedigen. Na afloop wisselen de spelers van parcours.",
+    "organisatie": "Twee slaloms van paaltjes op ± 20 m van het doel: links drie paaltjes, rechts vier (iets verder weg). Spelers in twee rijen met elk een bal. Keeper in het doel.",
+    "benodigdheden": [
+      "Goal",
+      "7 paaltjes",
+      "Ballen"
+    ],
+    "spelersNodig": 2,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Dribbelen met kleine tikjes, bal dicht aan de voet",
+      "Na het schot meteen omschakelen: tussen de aanvaller en het doel komen",
+      "Aanvaller: tempo maken en schieten zodra er ruimte is"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Parcoursen even lang",
+        "Verdediger mag pas na een teken van de trainer"
+      ],
+      "moeilijker": [
+        "Langere slalom met kappen en draaien",
+        "Twee tegen één: de eerste twee die klaar zijn spelen samen",
+        "Schot binnen 3 seconden na het parcours"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 18,
+        "y": -3,
+        "breedte": 32,
+        "lengte": 33
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "q1",
+          "soort": "paaltje",
+          "x": 28,
+          "y": 23.6
+        },
+        {
+          "id": "q2",
+          "soort": "paaltje",
+          "x": 28,
+          "y": 21.6
+        },
+        {
+          "id": "q3",
+          "soort": "paaltje",
+          "x": 28,
+          "y": 19.6
+        },
+        {
+          "id": "r1",
+          "soort": "paaltje",
+          "x": 40,
+          "y": 25.6
+        },
+        {
+          "id": "r2",
+          "soort": "paaltje",
+          "x": 40,
+          "y": 23.4
+        },
+        {
+          "id": "r3",
+          "soort": "paaltje",
+          "x": 40,
+          "y": 21.2
+        },
+        {
+          "id": "r4",
+          "soort": "paaltje",
+          "x": 40,
+          "y": 19
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 28,
+          "y": 26,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 9,
+          "x": 40,
+          "y": 28,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 28,
+          "y": 25.6,
+          "bij": "a1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 40,
+          "y": 27.6,
+          "bij": "a2"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "via": [
+                [
+                  28.85,
+                  23.6
+                ],
+                [
+                  27.15,
+                  21.6
+                ],
+                [
+                  28.85,
+                  19.6
+                ]
+              ],
+              "naar": [
+                29.4,
+                17.4
+              ]
+            },
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "via": [
+                [
+                  40.85,
+                  25.6
+                ],
+                [
+                  39.15,
+                  23.4
+                ],
+                [
+                  40.85,
+                  21.2
+                ]
+              ],
+              "naar": [
+                39.15,
+                19
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                31.4,
+                -0.4
+              ],
+              "afloop": "goal"
+            },
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "naar": [
+                38.6,
+                16.2
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                35.4,
+                12.2
+              ],
+              "manier": "sprint"
+            },
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "naar": [
+                37.6,
+                14.4
+              ],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "naar": [
+                36.6,
+                10.6
+              ]
+            },
+            {
+              "type": "druk",
+              "wie": "a1",
+              "op": "a2",
+              "afstand": 2.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                35.6,
+                0.3
+              ],
+              "afloop": "vangt"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

@@ -17,8 +17,15 @@ const oefeningen = [
     spelersNodig: 0,
     keepersNodig: 1,
     doorwisselbaar: true,
-    coachpunten: ['Slalom met kleine pasjes, schouders naar de trainer', 'Na het aantikken eerst zetten, dan pas afzetten', 'Hoge duik: afzetten met het been aan de balkant; lage duik: zijwaarts vallen, handen eerst'],
-    variaties: { makkelijker: ['Zonder slalom: alleen aantikken en duiken', 'Bal halfhoog in plaats van hoog'], moeilijker: ['Trainer kiest pas na het aantikken hoog of laag', 'Paaltjes dichter op elkaar', 'Twee keer aantikken voor de duik'] },
+    coachpunten: [
+      'Slalom met kleine pasjes, schouders naar de trainer',
+      'Na het aantikken eerst zetten, dan pas afzetten',
+      'Hoge duik: afzetten met het been aan de balkant; lage duik: zijwaarts vallen, handen eerst',
+    ],
+    variaties: {
+      makkelijker: ['Zonder slalom: alleen aantikken en duiken', 'Bal halfhoog in plaats van hoog'],
+      moeilijker: ['Trainer kiest pas na het aantikken hoog of laag', 'Paaltjes dichter op elkaar', 'Twee keer aantikken voor de duik'],
+    },
     tekening: {
       ...keeperVeld({ x: 25, y: -3, breedte: 18, lengte: 16 }),
       objecten: [
@@ -35,7 +42,19 @@ const oefeningen = [
       ],
       animatie: [
         pauze(0.5),
-        stap({ type: 'loop', wie: 'k1', via: [[36.4, 3.7], [35.0, 5.5], [33.6, 3.7], [32.2, 5.5]], naar: [31.2, 4.6], manier: 'voetenwerk', kijk: 90 }),
+        stap({
+          type: 'loop',
+          wie: 'k1',
+          via: [
+            [36.4, 3.7],
+            [35.0, 5.5],
+            [33.6, 3.7],
+            [32.2, 5.5],
+          ],
+          naar: [31.2, 4.6],
+          manier: 'voetenwerk',
+          kijk: 90,
+        }),
         stap({ type: 'loop', wie: 'k1', naar: [32.5, 2.2], manier: 'voetenwerk' }),
         stap({ type: 'aantikken', wie: 'k1', doel: 'pL' }),
         stap({ type: 'schot', van: 't1', naar: 'k1', worp: 'bovenhands', hoogte: 2.4, eindHoogte: 1.7, duikNaar: [34.6, 1.6], duikHoogte: 1.7 }),
@@ -43,7 +62,19 @@ const oefeningen = [
         stap({ type: 'opstaan', wie: 'k1' }),
         stap({ type: 'pass', van: 'k1', naar: 't1', worp: 'onderhands', hoogte: 1.8 }),
         stap({ type: 'loop', wie: 'k1', naar: [30.8, 4.6], manier: 'voetenwerk' }),
-        stap({ type: 'loop', wie: 'k1', via: [[32.2, 3.7], [33.6, 5.5], [35.0, 3.7], [36.4, 5.5]], naar: [37.4, 4.6], manier: 'voetenwerk', kijk: 90 }),
+        stap({
+          type: 'loop',
+          wie: 'k1',
+          via: [
+            [32.2, 3.7],
+            [33.6, 5.5],
+            [35.0, 3.7],
+            [36.4, 5.5],
+          ],
+          naar: [37.4, 4.6],
+          manier: 'voetenwerk',
+          kijk: 90,
+        }),
         stap({ type: 'loop', wie: 'k1', naar: [35.5, 2.2], manier: 'voetenwerk' }),
         stap({ type: 'aantikken', wie: 'k1', doel: 'pR' }),
         stap({ type: 'schot', van: 't1', naar: 'k1', hoogte: 'grond', duikNaar: [33.5, 1.8] }),
@@ -68,7 +99,10 @@ const oefeningen = [
     keepersNodig: 3,
     doorwisselbaar: true,
     coachpunten: ['Eigen bal recht en hoog genoeg omhoog: dan heb je tijd', 'Ogen eerst op de bal die aankomt, daarna weer omhoog', 'Rustig doorspelen: liever een goede worp dan een snelle'],
-    variaties: { makkelijker: ['Eigen bal laten stuiten voor je hem vangt', 'Met twee keepers en zonder doorspelen'], moeilijker: ['Extra bal met een stuit of op de voet', 'Twee extra ballen tegelijk rond', 'Eigen bal lager opgooien'] },
+    variaties: {
+      makkelijker: ['Eigen bal laten stuiten voor je hem vangt', 'Met twee keepers en zonder doorspelen'],
+      moeilijker: ['Extra bal met een stuit of op de voet', 'Twee extra ballen tegelijk rond', 'Eigen bal lager opgooien'],
+    },
     tekening: {
       ...leeg(18, 16),
       objecten: [
@@ -111,8 +145,15 @@ const oefeningen = [
     spelersNodig: 0,
     keepersNodig: 2,
     doorwisselbaar: true,
-    coachpunten: ['Zijwaarts: voeten niet kruisen, gezicht naar het veld', 'Bal op hoofdhoogte: handen in een W, ellebogen licht gebogen', 'Lage duik: eerst laag zakken, dan zijwaarts vallen met de handen naar de bal'],
-    variaties: { makkelijker: ['Zonder raster: alleen vangen en de lage bal', 'Lage bal rollend in plaats van getrapt'], moeilijker: ['Raster groter', 'Lage bal verder van de keeper', 'Na de duik nog een bal op hoofdhoogte'] },
+    coachpunten: [
+      'Zijwaarts: voeten niet kruisen, gezicht naar het veld',
+      'Bal op hoofdhoogte: handen in een W, ellebogen licht gebogen',
+      'Lage duik: eerst laag zakken, dan zijwaarts vallen met de handen naar de bal',
+    ],
+    variaties: {
+      makkelijker: ['Zonder raster: alleen vangen en de lage bal', 'Lage bal rollend in plaats van getrapt'],
+      moeilijker: ['Raster groter', 'Lage bal verder van de keeper', 'Na de duik nog een bal op hoofdhoogte'],
+    },
     tekening: {
       ...keeperVeld({ x: 24, y: -3, breedte: 20, lengte: 15 }),
       objecten: [
@@ -155,8 +196,15 @@ const oefeningen = [
     spelersNodig: 0,
     keepersNodig: 1,
     doorwisselbaar: true,
-    coachpunten: ['Blijf bewegen, maar sta stil op het moment dat de bal komt', 'Gezicht en schouders naar de trainer, niet wegdraaien', 'Stuitbal: lichaam achter de bal en de bal tegen je borst klemmen'],
-    variaties: { makkelijker: ['Hoedjes dichter bij elkaar', 'Trainer gooit pas als de keeper stilstaat'], moeilijker: ['Trainer gooit ook naast de keeper (korte duik)', 'Harder en vanaf dichterbij', 'Hoogtes door elkaar'] },
+    coachpunten: [
+      'Blijf bewegen, maar sta stil op het moment dat de bal komt',
+      'Gezicht en schouders naar de trainer, niet wegdraaien',
+      'Stuitbal: lichaam achter de bal en de bal tegen je borst klemmen',
+    ],
+    variaties: {
+      makkelijker: ['Hoedjes dichter bij elkaar', 'Trainer gooit pas als de keeper stilstaat'],
+      moeilijker: ['Trainer gooit ook naast de keeper (korte duik)', 'Harder en vanaf dichterbij', 'Hoogtes door elkaar'],
+    },
     tekening: {
       ...keeperVeld({ x: 26, y: -3, breedte: 16, lengte: 12 }),
       objecten: [goal, hoedje('h1', 32.5, 2.0), hoedje('h2', 35.5, 2.0), keeper('k1', 1, 34, 2.0, { kijkrichting: 90 }), trainer(34.4, 8.6), bal('b1', 34.4, 8.2, 't1')],
@@ -239,10 +287,14 @@ const oefeningen = [
     spelersNodig: 0,
     keepersNodig: 2,
     doorwisselbaar: true,
-    coachpunten: ['Bij de pion door de knieën om de tennisbal te pakken, niet bukken met gestrekte benen', 'Na het poortje afremmen en in basishouding voor de bal komt', 'Harde bal: handen voor het lijf, bal naar je toe halen'],
+    coachpunten: [
+      'Bij de pion door de knieën om de tennisbal te pakken, niet bukken met gestrekte benen',
+      'Na het poortje afremmen en in basishouding voor de bal komt',
+      'Harde bal: handen voor het lijf, bal naar je toe halen',
+    ],
     variaties: { makkelijker: ['Eén tennisbal', 'Bal op borsthoogte'], moeilijker: ['Drie tennisballen', 'Trainer gooit al terwijl de keeper nog in het poortje is', 'Na het vangen een lage duik'] },
     tekening: {
-      ...keeperVeld({ x: 22, y: -3, breedte: 22, lengte: 16 }),
+      ...keeperVeld({ x: 20, y: -3, breedte: 24, lengte: 18 }),
       objecten: [
         goal,
         pion('pA', 27.0, 10.0),
@@ -267,7 +319,19 @@ const oefeningen = [
         stap({ type: 'pak', wie: 'k1', bal: 'tb2' }, { type: 'loop', wie: 'k2', naar: [26.2, 11.4], start: 0.2 }),
         stap({ type: 'loop', wie: 'k1', naar: [27.9, 6.8], manier: 'sprint' }),
         stap({ type: 'pass', van: 'k1', naar: [27.7, 6.5], bal: 'tb2', worp: 'onderhands', hoogte: 'grond' }, { type: 'pak', wie: 'k2', bal: 'tb3', start: 0.2 }),
-        stap({ type: 'loop', wie: 'k1', via: [[30.4, 5.6], [33.0, 4.8]], naar: [33.0, 3.0], manier: 'sprint' }, { type: 'loop', wie: 'k2', via: [[28.4, 11.1]], naar: [27.9, 9.5], manier: 'sprint', start: 0.3 }),
+        stap(
+          {
+            type: 'loop',
+            wie: 'k1',
+            via: [
+              [30.4, 5.6],
+              [33.0, 4.8],
+            ],
+            naar: [33.0, 3.0],
+            manier: 'sprint',
+          },
+          { type: 'loop', wie: 'k2', via: [[28.4, 11.1]], naar: [27.9, 9.5], manier: 'sprint', start: 0.3 },
+        ),
         stap({ type: 'loop', wie: 'k1', naar: [33.2, 2.2], manier: 'voetenwerk', duur: 0.5 }),
         stap({ type: 'pass', van: 't1', naar: 'k1', worp: 'bovenhands', hoogte: 2.2, eindHoogte: 1.8, snelheid: 14 }),
         pauze(0.4),
@@ -290,7 +354,10 @@ const oefeningen = [
     keepersNodig: 2,
     doorwisselbaar: true,
     coachpunten: ['In de ladder op de voorvoeten en snel, gezicht naar het veld', 'Voetpass: standbeen naast de bal, enkel vast, binnenkant voet', 'Na de pass meteen weer in basishouding'],
-    variaties: { makkelijker: ['Ladder lopen in plaats van springen', 'Bal laten stilleggen en dan pas terugspelen'], moeilijker: ['Pass met de andere voet terug', 'Twee voeten per vak', 'Na de voetpass een bal op hoofdhoogte van keeper 2'] },
+    variaties: {
+      makkelijker: ['Ladder lopen in plaats van springen', 'Bal laten stilleggen en dan pas terugspelen'],
+      moeilijker: ['Pass met de andere voet terug', 'Twee voeten per vak', 'Na de voetpass een bal op hoofdhoogte van keeper 2'],
+    },
     tekening: {
       ...keeperVeld({ x: 24, y: -3, breedte: 20, lengte: 14 }),
       objecten: [
@@ -332,7 +399,10 @@ const oefeningen = [
     keepersNodig: 1,
     doorwisselbaar: true,
     coachpunten: ['Afremmen met kleine pasjes en lage heupen, niet doorlopen', 'Eerst stilstaan, dan pas vangen', 'Achteruit terug met het gezicht naar het veld'],
-    variaties: { makkelijker: ['Kortere sprint (3 m)', 'Altijd op borsthoogte'], moeilijker: ['Trainer gooit al tijdens het afremmen', 'Na het vangen een lage duik naar links of rechts', 'Sprint schuin naar voren'] },
+    variaties: {
+      makkelijker: ['Kortere sprint (3 m)', 'Altijd op borsthoogte'],
+      moeilijker: ['Trainer gooit al tijdens het afremmen', 'Na het vangen een lage duik naar links of rechts', 'Sprint schuin naar voren'],
+    },
     tekening: {
       ...keeperVeld({ x: 26, y: -3, breedte: 16, lengte: 16 }),
       objecten: [goal, pion('p1', 32.5, 2.4), pion('p2', 35.5, 2.4), keeper('k1', 1, 33.2, 1.7, { kijkrichting: 90 }), trainer(34.4, 12.0), bal('b1', 34.4, 11.6, 't1')],
@@ -367,8 +437,15 @@ const oefeningen = [
     spelersNodig: 0,
     keepersNodig: 2,
     doorwisselbaar: true,
-    coachpunten: ['Voetpass: eerst kijken, dan zuiver terugspelen met de binnenkant', 'Uitstappen: kort en krachtig, stilstaan voor de bal', 'Hoogte bepaalt de handen: W-greep, kommetje of schepvangen'],
-    variaties: { makkelijker: ['Bal eerst aannemen, dan terugspelen', 'Altijd op borsthoogte'], moeilijker: ['Terugspelen met de zwakke voet', 'Trainer gooit al terwijl de keeper uitstapt', 'Uitstappen schuin naar links of rechts'] },
+    coachpunten: [
+      'Voetpass: eerst kijken, dan zuiver terugspelen met de binnenkant',
+      'Uitstappen: kort en krachtig, stilstaan voor de bal',
+      'Hoogte bepaalt de handen: W-greep, kommetje of schepvangen',
+    ],
+    variaties: {
+      makkelijker: ['Bal eerst aannemen, dan terugspelen', 'Altijd op borsthoogte'],
+      moeilijker: ['Terugspelen met de zwakke voet', 'Trainer gooit al terwijl de keeper uitstapt', 'Uitstappen schuin naar links of rechts'],
+    },
     tekening: {
       ...keeperVeld({ x: 24, y: -3, breedte: 20, lengte: 15 }),
       objecten: [goal, keeper('k1', 1, 34, 1.8, { kijkrichting: 90 }), keeper('k2', 2, 39.6, 1.4, { kijkrichting: 150 }), trainer(34.4, 10.6), bal('b1', 34.4, 10.2, 't1')],
@@ -405,7 +482,10 @@ const oefeningen = [
     keepersNodig: 4,
     doorwisselbaar: true,
     coachpunten: ['Blijf bewegen en kijk rond: waar is de bal, waar zijn de pionnen?', 'Na de kleur meteen reageren, niet eerst kijken wat de anderen doen', 'Vangen met twee handen, ook in beweging'],
-    variaties: { makkelijker: ['Twee kleuren', 'Lopen in plaats van sprinten'], moeilijker: ['Trainer roept twee kleuren na elkaar', 'Met drie ballen', 'Pion aantikken met de hand en terug naar het midden'] },
+    variaties: {
+      makkelijker: ['Twee kleuren', 'Lopen in plaats van sprinten'],
+      moeilijker: ['Trainer roept twee kleuren na elkaar', 'Met drie ballen', 'Pion aantikken met de hand en terug naar het midden'],
+    },
     tekening: {
       ...leeg(20, 18),
       objecten: [
@@ -436,12 +516,7 @@ const oefeningen = [
           { type: 'loop', wie: 'k4', naar: [10.8, 15.0], manier: 'sprint' },
         ),
         pauze(0.6),
-        stap(
-          { type: 'loop', wie: 'k1', naar: [8, 7] },
-          { type: 'loop', wie: 'k2', naar: [12, 7] },
-          { type: 'loop', wie: 'k3', naar: [8, 11] },
-          { type: 'loop', wie: 'k4', naar: [12, 11] },
-        ),
+        stap({ type: 'loop', wie: 'k1', naar: [8, 7] }, { type: 'loop', wie: 'k2', naar: [12, 7] }, { type: 'loop', wie: 'k3', naar: [8, 11] }, { type: 'loop', wie: 'k4', naar: [12, 11] }),
         stap({ type: 'pass', van: 'k3', naar: 'k2', worp: 'onderhands', hoogte: 1.8, eindHoogte: 1.2 }, { type: 'pass', van: 'k1', naar: 'k4', worp: 'onderhands', hoogte: 1.8, eindHoogte: 1.2 }),
         pauze(0.6),
       ],
@@ -460,7 +535,11 @@ const oefeningen = [
     spelersNodig: 0,
     keepersNodig: 3,
     doorwisselbaar: true,
-    coachpunten: ['Eigen bal recht en hoog omhoog, dan meteen naar de eerste gooier kijken', 'Stompen met twee vuisten tegen elkaar, armen strekken naar de bal', 'Op tijd terugkijken naar je eigen bal'],
+    coachpunten: [
+      'Eigen bal recht en hoog omhoog, dan meteen naar de eerste gooier kijken',
+      'Stompen met twee vuisten tegen elkaar, armen strekken naar de bal',
+      'Op tijd terugkijken naar je eigen bal',
+    ],
     variaties: { makkelijker: ['Twee gooiers', 'Eigen bal mag één keer stuiten'], moeilijker: ['Gooiers kiezen zelf de volgorde', 'Stompen met één vuist', 'Eigen bal lager opgooien'] },
     tekening: {
       ...leeg(16, 14),

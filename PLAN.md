@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (27-10-2026, versie 0.22.0)
+## Status (27-10-2026, versie 0.23.0)
 
 | Fase | Status |
 |---|---|
@@ -26,8 +26,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 12. Nieuwe oefeningen: 13 keepers, 8 spelers (0.20.0) | ✅ online, getest en akkoord |
 | 13. Kleine aanpassingen (0.20.1) | ✅ online – **wacht op test**: Grondoefeningen samengevoegd (met echt grond tikken), oplopend overtal op kleine goaltjes, Laag duiken bij Midden/voorzet/schot |
 | 14. Realistischere 3D-animaties (0.21.0) | ✅ online, getest en akkoord |
-| 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online – **wacht op test** |
-| 16. Deel B (volgende prompt) | ⏳ |
+| 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online, getest en akkoord |
+| 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online – **wacht op test** |
 | 17. Deel C – nieuwe keeperoefeningen (volgende prompt) | ⏳ |
 | 18. Deel D – Help en Engels (volgende prompt) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
@@ -882,6 +882,26 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Nieuwe bouwstenen:** `draai` (op de plek omdraaien naar een persoon of richting, bv. op een teken) en `aantikken` (een
   pion/hoedje aantikken met de hand: door de knieën, hand naar het object). Tests: `tests/versie-022.test.ts`.
 
+## Besluiten versie 0.23.0 – rest van deel A en nieuwe keeperoefeningen (deel B)
+- Gebouwd met `tools/nieuw/keepers-023a.cjs` (A3.5 + warming-up), `keepers-023b.cjs` (bal verwerken en duiken),
+  `keepers-023c.cjs` (reactie) en `spelers-023.cjs` (A4); gedeelde objecten/stappen in `tools/nieuw/bouwstenen.cjs`.
+  Alle teksten zelf geschreven, zonder namen van clubs, trainers, apps of websites (getest).
+- **A3.5** Slalom, pion aantikken en duiken (Hoog duiken, Laag duiken) · **A4** Dribbelrace, afronden en 1 tegen 1 (Afwerken).
+- **Warming-up:** Twee ballen tegelijk · Rasterloop en lage duik · Zijwaarts blijven bewegen en vangen · Drie aangevers op
+  een rij · Sprint met tennisballen, dan vangen · Laddersprongen en voetpass · Zijwaarts, uitschieten en afremmen · Voet,
+  uitstappen en vangen · Kleurenpion pakken in de groep · Stompen terwijl je eigen bal in de lucht hangt.
+- **Bal verwerken en duiken:** Vier laag, vier hoog · Vangen en laag duiken om de beurt · Drie duiken, drie aangevers ·
+  Vangen, zijwaarts, om de pion en terug · Paal tikken en twee poppen · Zigzag vooruit en achteruit · Skip, lage duik en
+  tussen de palen · Zijwaarts naar de paal, duiken naar de andere kant · Rondje om het hoedje · Halfknielend vangen, pion,
+  hoge duik · Hoge hordes, slalom en paal · Kleur roepen en powerduik · Twee pionnen en achteruit terug · Opstaan vanuit
+  buiklig en de verre paal.
+- **Reactie:** Kleurvolgorde, hordes en vallende bal · Dropkick tussen de poppen · Rebounder of zijkant · Draaisprong en
+  blokken met de voeten vooruit · Stuitbal, schuin en op het lichaam · Cutback verdedigen.
+- **Nieuwe bouwstenen** (met tests in `tests/versie-023.test.ts`): zithouding `buik` (op de buik, handen onder de
+  schouders) en `halfknie` (halfknielend); opstaan uit een zithouding gaat nu geleidelijk; `draai` met `sprong: true`
+  (draaisprong); `blokSoort: 'voeten'` (glijdend blokken met de voeten vooruit); `aantikken` met `met: 'voet'` en met
+  een `punt` (bv. de doelpaal). Een bal naar jezelf opgooien (`pass` van en naar dezelfde keeper) werkte al.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -895,6 +915,32 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.23.0 – A3.5: pionnen om aan te tikken (je schreef "paal of pion"); vier paaltjes voor de slalom; eerst een hoge, dan een
+  lage duik.
+- 0.23.0 – A4: met een keeper in het doel (keepersNodig 1); het rechterparcours is langer door één paaltje extra en ligt
+  verder weg; de verdediger blijft op ± 2 m (de animatie houdt 1,5 m afstand aan).
+- 0.23.0 – Twee ballen tegelijk: vier ballen (drie eigen + één die rondgaat); de animatie toont één ronde en aan het eind legt
+  keeper 3 de extra bal neer.
+- 0.23.0 – Aangevers zijn in de animatie de trainer en andere keepers; daardoor keepersNodig 3 bij Drie aangevers op een rij,
+  Vangen en laag duiken om de beurt, Drie duiken/drie aangevers, Stompen met eigen bal en Rebounder of zijkant (doorwisselen
+  steeds zichtbaar of beschreven).
+- 0.23.0 – Tennisballen: twee tennisballen in de animatie (in de uitleg "een voor een"); de volgende keeper begint als de
+  vorige halverwege is.
+- 0.23.0 – Kleurenpion: 4 keepers, 3 kleuren × 2 pionnen, twee keepers per pion; "wie het laatst is, doet een opdracht"
+  heb ik toegevoegd.
+- 0.23.0 – Vangen, zijwaarts, om de pion: de trainer speelt de eerste drie ballen (hard, volley, rollend), keeper 2 het
+  afstandsschot van 16 m.
+- 0.23.0 – Zijwaarts naar de paal: de animatie toont één ronde (beide kanten); "twee rondes" staat in de uitleg.
+- 0.23.0 – Hoge hordes: 45 cm.
+- 0.23.0 – Buiklig en verre paal: eerste keer in de sprong vangen, tweede keer (andere kant) een hoge duik.
+- 0.23.0 – Vallende bal: in de uitleg houdt de trainer twee ballen vast; de animatie laat één bal vallen (twee ballen in
+  twee handen kan het poppetje niet tonen).
+- 0.23.0 – Dropkick tussen de poppen: drie dropkicks: recht op de keeper, via een pop van richting veranderd, halfhoog.
+  Teruggooien met een hoge boog over de poppen.
+- 0.23.0 – Rebounder of zijkant: minidoeltje rechts naast het doel; keeper 3 links vangt de kaatsbal-terugworp. De animatie
+  toont beide keuzes van de trainer na elkaar.
+- 0.23.0 – Cutback: keeper 2 legt de bal terug vanaf de achterlijn rechts naar de trainer bij de penaltystip.
+- 0.23.0 – Opstaan uit kniezit/hurkzit/zit gaat nu in ± 0,5 s in plaats van in één keer; dat zie je ook in bestaande oefeningen.
 - 0.22.0 – De opdracht (deel A) hield halverwege A3.4 op ("Minimaal 2 keepers + …"). Gedaan: A1 t/m A3.4; aangenomen dat
   er "+ trainer" stond. Mocht er na A3.4 nog iets staan (A3.5 of een A4), dan staat dat nog open.
 - 0.22.0 – De samengevoegde lage-duikoefening kreeg een nieuw id (`keeper-ld-kniezit-hurkzit-stand`), omdat je vroeg de

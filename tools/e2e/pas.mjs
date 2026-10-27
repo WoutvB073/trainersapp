@@ -67,6 +67,16 @@ SETS.blok022 = [
   ['keeper-1o1-spreidsprong', 'auto:blok', 'schuin', 'spreidsprong na kaatsen'],
   ['keeper-re-korte-afstand', 'k1', 0.3, 1.9, 8, 'zij', 'rug naar trainer, omdraaien'],
 ];
+SETS.k023 = [
+  ['keeper-hd-buiklig-verre-paal', 'k1', 0.2, 1.7, 8, 'zij', 'buiklig en opstaan'],
+  ['keeper-hd-halfknie-pion-hoog', 'k1', 0.3, 1.6, 8, 'gezicht', 'halfknielend vangen'],
+  ['keeper-re-draaisprong-voetenblok', 'k1', 0.7, 1.4, 8, 'zij', 'draaisprong'],
+  ['keeper-re-draaisprong-voetenblok', 'auto:blok', 'zij', 'blok met de voeten vooruit'],
+  ['keeper-re-pion-voet-achteruit', 'auto:aantik', 'schuin', 'pion aantikken met de voet'],
+  ['keeper-sp-stompen-eigen-bal', 'k1', 1.4, 3.6, 8, 'schuin', 'stompen, eigen bal vangen'],
+  ['keeper-wu-twee-ballen', 'k1', 0.3, 2.9, 8, 'schuin', 'twee ballen'],
+  ['keeper-hd-slalom-pion-duiken', 'auto:aantik', 'gezicht', 'pion aantikken en hoge duik'],
+];
 SETS.spelers = [
   ['veld-pt-driehoek', 'auto:trap', 'zij', 'pass'],
   ['veld-pt-driehoek', 'auto:aanname', 'zij', 'aannemen'],
