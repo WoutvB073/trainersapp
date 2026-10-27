@@ -78,7 +78,7 @@ export const EN: Record<string, string> = {
   'Rondo’s en positiespelen': 'Rondos and positional games',
   Partijvormen: 'Small-sided games',
   '1v1, 2v2, overtal uitspelen en meer': '1v1, 2v2, overloads and more',
-  Spelletjes: 'Fun games',
+  Spelletjes: 'Games',
   'Voetvolley en andere spelvormen': 'Foot volley and other games',
   'Opwarmen, vangen en voetenwerk': 'Warming up, handling and footwork',
   'Laag duiken': 'Low diving',

@@ -66,11 +66,11 @@
     "variaties": { "makkelijker": ["Only three options (shoot, left, right)", "The coach says the option beforehand"], "moeilijker": ["The keepers on the left and right may also shoot first time", "Two options in quick succession"] }
   },
   "keeper-1o1-spreidsprong": {
-    "naam": "Star jump: passing and then 1v1",
-    "uitleg": "Keeper and coach both stand at an angle out wide of the goal and pass the ball back and forth a few times (the keeper with their feet). At some point the coach takes a touch forward and goes at goal: now it's 1v1. The keeper comes out briefly, gets set and blocks the shot with a star jump.",
+    "naam": "Wide block: passing and then 1v1",
+    "uitleg": "Keeper and coach both stand at an angle out wide of the goal and pass the ball back and forth a few times (the keeper with their feet). At some point the coach takes a touch forward and goes at goal: now it's 1v1. The keeper comes out briefly, gets set and blocks the shot with a wide block.",
     "organisatie": "Keeper at an angle in front of the right post, 2–3 m off the line. Coach at an angle at 9–10 m. After 2–4 passes, the coach picks the moment.",
     "benodigdheden": ["Goal", "Balls"],
-    "coachpunten": ["Pass with the inside of the foot, then straight back into the ready position", "When the coach takes a touch forward: come out briefly, then stop and get set", "Star jump: arms and legs wide, make yourself as big as possible, eyes open"],
+    "coachpunten": ["Pass with the inside of the foot, then straight back into the ready position", "When the coach takes a touch forward: come out briefly, then stop and get set", "Wide block: arms and legs wide, make yourself as big as possible, eyes open"],
     "variaties": { "makkelijker": ["The coach calls \"now\" as they take the touch forward", "The coach starts further away (more time)"], "moeilijker": ["The coach may also cut inside and shoot into the far corner", "Pass with alternating feet and tempo"] }
   },
   "keeper-1op1-stilliggende-bal-lezen": {

@@ -5,6 +5,8 @@ import { ARCHIEF, OEFENINGEN } from '../src/data/oefeningen';
 import { TEKENING_TEKST, vertaal, type Vertalingen } from '../src/data/vertaling';
 import type { Oefening } from '../src/model/types';
 import { benodigdheden } from '../src/training/training';
+import { EN as EN_APP } from '../src/i18n/en';
+import { HELP_EN } from '../src/help/inhoud';
 import { nederlands } from './nl-woorden';
 
 /**
@@ -87,5 +89,11 @@ describe('vertaling: ingebouwde oefeningen', () => {
     const o = (id: string, b: string[]) => ({ ...OEFENINGEN[0]!, id, naam: id, benodigdheden: b });
     const lijst = benodigdheden([o('a', ['1 cone', '2 balls', '1 goal']), o('b', ['4 cones', '1 ball', 'Bibs', '3 low hurdles'])], 'en').map((x) => x.tekst);
     expect(lijst).toEqual(['2 balls', 'Bibs', '4 cones', '1 goal', '3 low hurdles']);
+  });
+  it('woordkeus 0.25.1: "Games" en "wide block", nergens meer "Fun games" of "star jump"', () => {
+    const alles = [JSON.stringify(EN), JSON.stringify(EN_APP), JSON.stringify(HELP_EN)].join(' ');
+    expect(alles).not.toMatch(/fun games|star[ -]?jumps?/i);
+    expect(EN_APP['Spelletjes']).toBe('Games');
+    expect(EN['keeper-1o1-spreidsprong']!.naam).toMatch(/^Wide block:/);
   });
 });

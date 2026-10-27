@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (27-10-2026, versie 0.25.0)
+## Status (27-10-2026, versie 0.25.1)
 
 | Fase | Status |
 |---|---|
@@ -29,7 +29,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online, getest en akkoord |
 | 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online, getest en akkoord |
 | 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online, getest en akkoord (D0-correctie in 0.25.0) |
-| 18. Deel D: D0 stuitbal stompen, Help, Engels (0.25.0) | ✅ online – **wacht op test** |
+| 18. Deel D: D0 stuitbal stompen, Help, Engels (0.25.0) | ✅ online, getest en akkoord |
+| 19. Engelse woordkeus: Games en wide block (0.25.1) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -935,6 +936,11 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **D3:** browsertest `tools/e2e/taal.mjs`: 17 schermen × 5 formaten × 2 talen, geen Nederlands in het Engels,
   niets afgekapt, geen horizontaal scrollen; taal wisselen, Automatisch en het installatiescherm.
 
+## Besluiten versie 0.25.1 – Engelse woordkeus
+- "Spelletjes" heet in het Engels overal "Games" (categorie, filters, Training genereren, Help); "spreidsprong" (keeper)
+  heet "wide block" in namen, uitleg, coachpunten en variaties. Test: `tests/vertaling-oefeningen.test.ts` (geen "Fun games"
+  of "star jump" meer in de Engelse teksten). iPhone SE in het Engels: `tools/e2e/se-0251.mjs`.
+
 ### Woordenlijst Nederlands–Engels
 | Nederlands | Engels | | Nederlands | Engels |
 |---|---|---|---|---|
@@ -955,7 +961,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 | Warming-up | Warm-up | | Techniek | Technique |
 | Loopcoördinatie | Footwork & coordination | | Pass en trap | Passing & receiving |
 | Afwerken | Finishing | | Positiespel | Possession |
-| Partijvormen | Small-sided games | | Spelletjes | Fun games (keepers: Games) |
+| Partijvormen | Small-sided games | | Spelletjes | Games |
 | Laag / Hoog duiken | Low / High diving | | Bal verwerken | Handling |
 | Voorzetten | Crosses | | Passing (keepers) | Distribution |
 | 1 op 1 | 1v1 | | Reactie | Reactions |
@@ -971,7 +977,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 | uitkomen | come out (for a cross: come for it) | | hoek verkleinen | narrow the angle |
 | claimen | claim | | stompen | punch (clear) |
 | tippen over de lat | tip over the bar | | plukken | smother |
-| knieblok / spreidsprong | knee block / star jump | | blok met de voeten vooruit | feet-first block (slide) |
+| knieblok / spreidsprong (keeper) | knee block / wide block | | blok met de voeten vooruit | feet-first block (slide) |
 | schepvangen / kommetje | scoop / basket catch | | W-greep | W grip |
 | kruispas / schuifpas | crossover step / side-step (shuffle) | | stuitbal | bouncing ball |
 | uittrap uit de handen | kick from hands (volley) | | dropkick | drop kick |
@@ -984,6 +990,8 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.25.1 – "Spreidsprong" als keepersblok heet nu "wide block". In de spelersoefening "Ringen: hinkelen en spreidsprong"
+  betekent spreidsprong een sprong met de benen gespreid (hinkelen); daar blijft het Engels "straddle jumps".
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
   starttegel bleef zoals hij was (ruimte op de iPhone SE).
 - 0.17.0 – Hetzelfde onderdeel mag vaker in de lijst (krijgt dan verschillende oefeningen). Na het genereren krijgt een
@@ -1007,7 +1015,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.25.0 – Help heeft 9 onderwerpen: de 8 gevraagde plus "Taal, kleuren en weergave". "Laat zien" bij animatie opent
   "Passen in de driehoek" als voorbeeld.
 - 0.25.0 – Woordkeus: oefening = drill, training = session ("Plan a session"), Wedstrijd = "Match day", de keepertegel heet
-  "Goalkeepers", Spelletjes = "Fun games". Spelers en keepers zijn in het Engels "they" (geen he/she).
+  "Goalkeepers", Spelletjes = "Games" (in 0.25.0 nog "Fun games"). Spelers en keepers zijn in het Engels "they" (geen he/she).
 - 0.25.0 – Voorbeelden in invulvelden aangepast aan Engeland: "JO11-1" → "U11 Blues", "Zaterdag tegen VVA" → "Saturday
   vs Rovers".
 - 0.25.0 – Datums in het Engels als "27 Oct 2026" (Brits). Het datumveld zelf volgt de taal van de browser.
