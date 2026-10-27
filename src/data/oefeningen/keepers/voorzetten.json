@@ -2843,7 +2843,7 @@
       "laag-duiken",
       "reactie"
     ],
-    "uitleg": "De keeper zit in kniezit met een stilliggende bal vlak voor zich. Op een teken tikt hij die met één hand weg. Dan staat hij op en stompt een hoge bal van de trainer naar voren weg. Tot slot gaat hij naar de rechterpaal voor een laag schot van keeper 2 in de korte hoek.",
+    "uitleg": "De keeper zit in kniezit met een stilliggende bal vlak voor zich. Op een teken tikt hij die met één hand weg. Dan staat hij op en gooit de trainer een stuitbal voor hem neer: de keeper valt de opspringende bal naar voren aan en stompt hem met twee vuisten weg. Tot slot gaat hij naar de rechterpaal voor een laag schot van keeper 2 in de korte hoek.",
     "organisatie": "Keeper in kniezit 2,4 m voor het doel, een bal 0,5 m rechts voor hem. Trainer met ballen op 9 m, keeper 2 schuin rechts op 8 m.",
     "benodigdheden": [
       "Goal",
@@ -2854,17 +2854,17 @@
     "doorwisselbaar": true,
     "coachpunten": [
       "Wegtikken: vlakke hand, de bal ver opzij weg",
-      "Stompen naar voren: armen strekken, vuisten achter de bal",
+      "Stuitbal: naar voren aanvallen en raken terwijl hij opkomt, met twee vuisten door de bal",
       "Bij de paal: korte hoek dicht, laag blijven"
     ],
     "variaties": {
       "makkelijker": [
         "Wegtikken zonder kniezit (gehurkt)",
-        "Hoge bal minder hoog"
+        "Stuitbal rustiger en recht op de keeper"
       ],
       "moeilijker": [
-        "Stuitbal voor het stompen",
-        "Laag schot direct na de landing",
+        "Stuitbal schuin opzij, zodat hij eerst moet verplaatsen",
+        "Laag schot direct na het stompen",
         "Wegtikken met de zwakke hand"
       ]
     },
@@ -2968,16 +2968,19 @@
               "type": "pass",
               "van": "t1",
               "naar": [
-                34.2,
-                3.4
+                34.1,
+                2.4
               ],
               "worp": "bovenhands",
-              "hoogte": 3,
-              "eindHoogte": 2.2,
+              "hoogte": 3.4,
+              "stuitOp": [
+                34.2,
+                5.8
+              ],
               "uitkomen": "k1",
               "stompNaar": [
-                34.6,
-                13
+                33,
+                14
               ],
               "vuisten": 2
             }

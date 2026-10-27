@@ -287,16 +287,20 @@ const oefeningen = [
     naam: 'Eén hand, stompen en de paal',
     categorieen: ['voorzetten', 'laag-duiken', 'reactie'],
     uitleg:
-      'De keeper zit in kniezit met een stilliggende bal vlak voor zich. Op een teken tikt hij die met één hand weg. Dan staat hij op en stompt een hoge bal van de trainer naar voren weg. Tot slot gaat hij naar de rechterpaal voor een laag schot van keeper 2 in de korte hoek.',
+      'De keeper zit in kniezit met een stilliggende bal vlak voor zich. Op een teken tikt hij die met één hand weg. Dan staat hij op en gooit de trainer een stuitbal voor hem neer: de keeper valt de opspringende bal naar voren aan en stompt hem met twee vuisten weg. Tot slot gaat hij naar de rechterpaal voor een laag schot van keeper 2 in de korte hoek.',
     organisatie: 'Keeper in kniezit 2,4 m voor het doel, een bal 0,5 m rechts voor hem. Trainer met ballen op 9 m, keeper 2 schuin rechts op 8 m.',
     benodigdheden: ['Goal', 'Ballen'],
     spelersNodig: 0,
     keepersNodig: 2,
     doorwisselbaar: true,
-    coachpunten: ['Wegtikken: vlakke hand, de bal ver opzij weg', 'Stompen naar voren: armen strekken, vuisten achter de bal', 'Bij de paal: korte hoek dicht, laag blijven'],
+    coachpunten: [
+      'Wegtikken: vlakke hand, de bal ver opzij weg',
+      'Stuitbal: naar voren aanvallen en raken terwijl hij opkomt, met twee vuisten door de bal',
+      'Bij de paal: korte hoek dicht, laag blijven',
+    ],
     variaties: {
-      makkelijker: ['Wegtikken zonder kniezit (gehurkt)', 'Hoge bal minder hoog'],
-      moeilijker: ['Stuitbal voor het stompen', 'Laag schot direct na de landing', 'Wegtikken met de zwakke hand'],
+      makkelijker: ['Wegtikken zonder kniezit (gehurkt)', 'Stuitbal rustiger en recht op de keeper'],
+      moeilijker: ['Stuitbal schuin opzij, zodat hij eerst moet verplaatsen', 'Laag schot direct na het stompen', 'Wegtikken met de zwakke hand'],
     },
     tekening: {
       ...keeperVeld({ x: 24, y: -3, breedte: 20, lengte: 15 }),
@@ -314,7 +318,7 @@ const oefeningen = [
         stap({ type: 'pass', van: 'k1', naar: [30.6, 5.4], bal: 'b0', worp: 'tik' }),
         pauze(0.3),
         op(),
-        stap({ type: 'pass', van: 't1', naar: [34.2, 3.4], worp: 'bovenhands', hoogte: 3.0, eindHoogte: 2.2, uitkomen: 'k1', stompNaar: [34.6, 13.0], vuisten: 2 }),
+        stap({ type: 'pass', van: 't1', naar: [34.1, 2.4], worp: 'bovenhands', hoogte: 3.4, stuitOp: [34.2, 5.8], uitkomen: 'k1', stompNaar: [33.0, 14.0], vuisten: 2 }),
         pauze(0.3),
         naar(36.6, 1.4, 'voetenwerk'),
         stap({ type: 'schot', van: 'k2', naar: 'k1', worp: 'trap', hoogte: 'grond', duikNaar: [37.3, 0.9] }),

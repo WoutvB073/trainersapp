@@ -87,6 +87,11 @@ SETS.k024 = [
   ['keeper-ps-lange-bal-lange-worp', 'auto:worp:zwaai', 'zij', 'lange zwaaiworp'],
   ['keeper-ps-aannemen-wegdraaien-pop', 'auto:keepertrap:1', 'zij', 'aannemen en wegdraaien'],
 ];
+SETS.d0 = [
+  ['keeper-vz-een-hand-stompen-paal', 'k1', 3.45, 4.45, 8, 'zij', 'stuitbal aanvallen en stompen (zij)'],
+  ['keeper-vz-een-hand-stompen-paal', 'k1', 3.45, 4.45, 8, 'gezicht', 'stuitbal aanvallen en stompen (voor)'],
+  ['keeper-ps-wegwerken-en-terug', 'auto:keepertrap', 'zij', 'kopbal buiten de zestien'],
+];
 SETS.spelers = [
   ['veld-pt-driehoek', 'auto:trap', 'zij', 'pass'],
   ['veld-pt-driehoek', 'auto:aanname', 'zij', 'aannemen'],

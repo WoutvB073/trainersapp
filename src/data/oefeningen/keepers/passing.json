@@ -1784,20 +1784,21 @@
         {
           "acties": [
             {
-              "type": "pass",
-              "van": "t1",
-              "naar": "k1",
-              "hoogte": "hoog",
-              "eindHoogte": 1.7
-            },
-            {
               "type": "loop",
               "wie": "k1",
               "naar": [
                 34.2,
-                14.4
+                17.6
               ],
               "manier": "sprint"
+            },
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": "hoog",
+              "eindHoogte": 1.7,
+              "start": 0.6
             }
           ]
         },

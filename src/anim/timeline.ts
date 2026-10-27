@@ -1466,6 +1466,8 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
     const top = balTop(a, start, a.stuitOp);
     const tS = vlucht(tl, bal, start, t0, a.stuitOp, { ...opties, eindHoogte: 0 }, a.van);
     const tweede: VluchtOpties = { type: 'pass', hoogte: Math.max(0.3, top * 0.45), eindHoogte: a.eindHoogte };
+    // Stuitbal wegstompen: de keeper valt de opspringende bal naar voren aan en stompt hem weg.
+    if (a.uitkomen && a.stompNaar) return uitkomen(tl, { ...a, hoogte: tweede.hoogte, duur: undefined }, bal, a.stuitOp, tS, tweede, kijkNaar, t0);
     // Na de stuit duiken (bv. een reactiebal die opzij wegspringt).
     if (a.duikNaar && typeof a.naar === 'string') {
       return naarDuik(tl, { ...a, type: 'pass', hoogte: tweede.hoogte, duur: undefined }, bal, a.stuitOp, tS, tweede, () => {});
@@ -1606,7 +1608,7 @@ function onderschepping(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0:
  * Voorzet waar de keeper voor uitkomt: hij schat de bal in, loopt naar de plek waar de bal op ± 2,5 m hoogte naar
  * beneden komt, zet af op één been en vangt hem op het hoogste punt (of stompt hem weg naar `stompNaar`).
  */
-function uitkomen(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: number, opties: VluchtOpties, kijkNaar: (p: Punt) => void): number {
+function uitkomen(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: number, opties: VluchtOpties, kijkNaar: (p: Punt) => void, stuitVanaf?: number): number {
   const k = tl.objecten.get(a.uitkomen!);
   if (!k || k.soort !== 'keeper') throw new TekeningFout(`Uitkomen: "${a.uitkomen}" is geen keeper`);
   const eind: Punt = typeof a.naar === 'string' ? positie(tl, a.naar, t0 + 1) : a.naar;
@@ -1621,7 +1623,17 @@ function uitkomen(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: numbe
   // Het moment waarop de bal (dalend) op vanghoogte is; een lage voorzet pakt hij laat in de vlucht.
   const doelH = a.vangHoogte ?? 2.5;
   let u = 0.85;
-  if (hoogteOp(0.5) > doelH) {
+  if (stuitVanaf !== undefined) {
+    // Na een stuit: raken terwijl de bal opkomt, op borst- tot hoofdhoogte (vóór het hoogste punt).
+    const raakH = a.vangHoogte ?? Math.min(1.7, boog(top, 0.5) * 0.9);
+    u = 0.5;
+    for (let x = 0.05; x <= 0.5; x += 0.01) {
+      if (hoogteOp(x) >= raakH) {
+        u = x;
+        break;
+      }
+    }
+  } else if (hoogteOp(0.5) > doelH) {
     for (let x = 0.5; x <= 0.97; x += 0.01) {
       if (hoogteOp(x) <= doelH) {
         u = x;
@@ -1634,8 +1646,11 @@ function uitkomen(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: numbe
   const contact = lerp(start, eind, ease('bal', u));
   // Keeper staat net vóór de bal (kant van de voorzetter) en kijkt ernaar.
   const terug = richting(graden(contact, start));
-  const plek: Punt = [contact[0] + terug[0] * 0.35, contact[1] + terug[1] * 0.35];
-  const vertrek = t0 + 0.3; // inschatten
+  // Bij een stuitbal staat hij juist aan de doelkant: hij raakt de bal vóór zich, op borst- of hoofdhoogte.
+  const voor = stuitVanaf !== undefined ? -0.5 : 0.35;
+  const plek: Punt = [contact[0] + terug[0] * voor, contact[1] + terug[1] * voor];
+  // Inschatten; bij een stuitbal vertrekt hij al tijdens de eerste vlucht (de stuit aanvallen).
+  const vertrek = stuitVanaf !== undefined ? stuitVanaf + 0.3 : t0 + 0.3;
   const van = positie(tl, k.id, vertrek);
   const aankomst = Math.max(vertrek + 0.4, tC - 0.15);
   beweeg(tl, k, { pad: [van, plek], t0: vertrek, duur: aankomst - vertrek, manier: 'sprint', kijk: graden(plek, start), spoor: 'loop' });
@@ -1643,9 +1658,11 @@ function uitkomen(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: numbe
   if (a.stompNaar) {
     // Wegstompen: bal tot de vuisten, dan met een boog weg.
     tl.stompen.push({ wie: k.id, t: tC, vuisten: a.vuisten ?? 2 });
-    const hand: Punt = [plek[0] - terug[0] * 0.35, plek[1] - terug[1] * 0.35];
-    vlucht(tl, bal, start, t0, hand, { ...opties, eindHoogte: hC }, a.van, 1, tC - t0);
-    vlucht(tl, bal, hand, tC + 0.01, a.stompNaar, { type: 'pass', hoogte: 2, h0: hC }, k.id, 0.9);
+    const hand: Punt = [plek[0] - terug[0] * voor, plek[1] - terug[1] * voor];
+    // Na een stuit stijgt de bal nog tot de vuisten (hoogste punt bij het contact).
+    vlucht(tl, bal, start, t0, hand, { ...opties, ...(stuitVanaf !== undefined ? { hoogte: hC / 4 } : {}), eindHoogte: hC }, a.van, 1, tC - t0);
+    // Een stuitbal stompt hij op borst-/hoofdhoogte weg zonder te springen.
+    vlucht(tl, bal, hand, tC + 0.01, a.stompNaar, { type: 'pass', hoogte: 2, h0: hC, geenSprong: stuitVanaf !== undefined }, k.id, 0.9);
     return tC;
   }
   return vlucht(tl, bal, start, t0, k.id, { ...opties, eindHoogte: hC }, a.van, 1, tC - t0);

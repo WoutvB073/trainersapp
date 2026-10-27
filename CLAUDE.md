@@ -34,10 +34,13 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/wedstrijd/` — opstellingen, borden, spelhervattingen (puur) en opslag; `src/screens/wedstrijd/` (OpstellingVeld met slepen, BordTekenen = `Editor` uit `screens/eigen/Tekenen.tsx` met een `EditorBron`).
 - Keuzes die de gebruiker niet kon beantwoorden: PLAN.md → "Keuzes zonder overleg".
 - Nieuwe ingebouwde oefeningen: als bouwscript in `tools/nieuw/` (zie `keepers-024a/b/c.cjs`, `keepers-023a/b/c.cjs`, `spelers-023.cjs`; objecten en stappen uit `bouwstenen.cjs`, opslaan met `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
-- Acties voor personen (bouwstenen): loop/dribbel (via, om, manier, kijk), pass/schot (worp — ook `tik` = met één hand wegtikken —, hoogte, stuitOp, duikNaar, uitkomen+stompNaar, blokt+blokSoort ster/knie/voeten, terug; keeper + `worp: 'voet'` + `direct` op een hoge bal = kopbal), zitten (kniezit, hurkzit, zit, zit-opgetrokken, buik, halfknie), opstaan, grondtik, pak, springen, draai (kijk/naar, sprong), aantikken (doel of punt, met hand/voet). Een bal naar jezelf opgooien = pass van en naar dezelfde persoon.
+- Acties voor personen (bouwstenen): loop/dribbel (via, om, manier, kijk), pass/schot (worp — ook `tik` = met één hand wegtikken —, hoogte, stuitOp, duikNaar, uitkomen+stompNaar (met stuitOp: stuitbal naar voren aanvallen en wegstompen), blokt+blokSoort ster/knie/voeten, terug; keeper + `worp: 'voet'` + `direct` op een hoge bal = kopbal), zitten (kniezit, hurkzit, zit, zit-opgetrokken, buik, halfknie), opstaan, grondtik, pak, springen, draai (kijk/naar, sprong), aantikken (doel of punt, met hand/voet). Een bal naar jezelf opgooien = pass van en naar dezelfde persoon.
 - Weggehaalde ingebouwde oefeningen gaan naar `src/data/oefeningen/archief.json` (`verwijderd: true`): niet in de bibliotheek, wel via `vindOefening`. Nooit echt wissen (oude trainingen/links/teams).
 
 ## Regels voor nieuwe en aangepaste oefeningen
+- **Voer een oefening uit zoals de gebruiker hem beschrijft.** Kan het poppetje of de tijdlijn iets nog niet, bouw dat dan bij
+  (als bouwsteen, met tests) in plaats van de oefening te vereenvoudigen. Alleen als het echt niet kan: eerst melden.
+- Een keeper kopt alleen buiten de zestien; binnen de zestien vangt, stompt of tipt hij (getest in `tests/versie-024.test.ts`).
 - Animatie in 2D en 3D, organisatie, benodigdheden, spelersNodig/keepersNodig, doorwisselbaar of vast aantal, 2–4
   coachpunten, Makkelijker en Moeilijker, realistische afstanden en de beste startcamera.
 - Categorieën die de gebruiker noemt; zo min mogelijk, geen maximum.

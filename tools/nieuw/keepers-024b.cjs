@@ -77,7 +77,7 @@ const oefeningen = [
       objecten: [goal, keeper('k1', 1, 34, 2.0), trainer(33.6, 35.0), keeper('k2', 2, 40.8, 15.4, { kijkrichting: -110 }), bal('b1', 33.6, 34.65, 't1'), bal('b2', 40.55, 15.1, 'k2')],
       animatie: [
         pauze(0.5),
-        stap({ type: 'pass', van: 't1', naar: 'k1', hoogte: 'hoog', eindHoogte: 1.7 }, { type: 'loop', wie: 'k1', naar: [34.2, 14.4], manier: 'sprint' }),
+        stap({ type: 'loop', wie: 'k1', naar: [34.2, 17.6], manier: 'sprint' }, { type: 'pass', van: 't1', naar: 'k1', hoogte: 'hoog', eindHoogte: 1.7, start: 0.6 }),
         stap({ type: 'pass', van: 'k1', naar: [24.0, 26.0], worp: 'voet', direct: true, hoogte: 4 }),
         stap({ type: 'loop', wie: 'k1', naar: [34.6, 2.6], manier: 'achteruit' }),
         stap({ type: 'schot', van: 'k2', naar: 'k1', worp: 'trap', hoogte: 1.3, eindHoogte: 1.0 }),

@@ -28,8 +28,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 14. Realistischere 3D-animaties (0.21.0) | ✅ online, getest en akkoord |
 | 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online, getest en akkoord |
 | 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online, getest en akkoord |
-| 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online – **wacht op test** |
-| 18. Deel D – Help en Engels (volgende prompt) | ⏳ |
+| 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online, getest en akkoord (D0-correctie in 0.25.0) |
+| 18. Deel D – D0 (stuitbal stompen) ✅ · D1 Help · D2 Engels → 0.25.0 | ⏳ bezig |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -941,9 +941,8 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   drie de keuzes.
 - 0.24.0 – Circuit: de draaisprong is een hele draai in de lucht; de lage bal komt van keeper 2, de lob van keeper 3 over
   twee poppen.
-- 0.24.0 – Eén hand, stompen en de paal: de stuitbal die je naar voren wilde laten wegstompen, laat de animatie zien als een
-  hoge bal die wordt weggestompt (stompen na een stuit kan het poppetje nog niet); in de uitleg staat "hoge bal", bij
-  Moeilijker "Stuitbal voor het stompen".
+- 0.24.0 – Eén hand, stompen en de paal: eerst een hoge bal in plaats van de stuitbal. **Gecorrigeerd in 0.25.0 (D0):** nu een
+  stuitbal die de keeper naar voren aanvalt en met twee vuisten wegstompt (nieuwe bouwsteen).
 - 0.24.0 – Geroepen doeltje: drie minidoeltjes met een rood, geel en blauw hoedje ervoor; de animatie toont twee ballen.
 - 0.24.0 – Wegwerken en terug: wegwerken met het hoofd (de lange bal komt hoog aan); bij Makkelijker wegtrappen.
 - 0.24.0 – Uitspelen onder druk in minidoeltjes: eerste bal gaat erin, tweede bal wordt onderschept en wordt een counter.

@@ -129,6 +129,81 @@ describe('bouwsteen: kopbal en volley op hoogte', () => {
   });
 });
 
+describe('bouwsteen: stuitbal naar voren aanvallen en wegstompen (0.25.0)', () => {
+  const tekening = (): Tekening =>
+    t(
+      [
+        { id: 'k', soort: 'keeper', x: 10, y: 2, kijkrichting: 90 },
+        { id: 'tr', soort: 'trainer', x: 10, y: 9 },
+        { id: 'b', soort: 'bal', x: 10, y: 8.6, bij: 'tr' },
+      ],
+      [
+        { duur: 0.4, acties: [] },
+        { acties: [{ type: 'pass', van: 'tr', naar: [10, 2], worp: 'bovenhands', hoogte: 3.4, stuitOp: [10, 5.4], uitkomen: 'k', stompNaar: [9, 13], vuisten: 2 }] },
+        { duur: 0.6, acties: [] },
+      ],
+    );
+  it('de bal stuit eerst, de keeper komt naar voren en stompt hem vóór zich weg op borst- tot hoofdhoogte, zonder sprong', () => {
+    const tl = maakTijdlijn(tekening());
+    expect(tl.stompen.length).toBe(1);
+    const tS = tl.stompen[0]!.t;
+    const vluchten = tl.balEvents.get('b')!.filter((e) => e.soort === 'vlucht');
+    // Eerst op de grond (stuit), dan omhoog naar de vuisten, dan weg.
+    expect(vluchten[0]!.h1).toBe(0);
+    const k = standOp(tl, tS - 0.005).objecten.get('k')!;
+    const b = standOp(tl, tS - 0.005).objecten.get('b')!;
+    expect(b.hoogte).toBeGreaterThan(1.0);
+    expect(b.hoogte).toBeLessThan(1.8);
+    expect(k.y).toBeGreaterThan(3); // naar voren gekomen
+    expect(b.y - k.y).toBeGreaterThan(0.3); // bal vóór de keeper
+    for (let tt = tS - 0.4; tt < tS + 0.4; tt += 0.02) expect(standOp(tl, tt).objecten.get('k')!.sprong).toBe(0);
+    // Na de stuit stijgt de bal tot het contact (niet eerst hoger en dan weer omlaag).
+    let vorige = -1;
+    for (let tt = vluchten[1]!.t0; tt < tS - 0.005; tt += 0.02) {
+      const h = standOp(tl, tt).objecten.get('b')!.hoogte;
+      expect(h).toBeGreaterThanOrEqual(vorige - 1e-6);
+      vorige = h;
+    }
+  });
+  it('beide vuisten bij de bal op het moment van stompen', () => {
+    const tl = maakTijdlijn(tekening());
+    const tS = tl.stompen[0]!.t;
+    let d = Infinity;
+    speel(tl, 'k', (tt, sk) => {
+      if (Math.abs(tt - tS) < 0.034) {
+        const bal = wereld(tl, tt, 'b');
+        d = Math.min(d, Math.max(...([0, 1] as const).map((i) => sk.pols[i].localToWorld(new Vector3(0, -0.09, 0)).distanceTo(bal))));
+      }
+    });
+    expect(d).toBeLessThan(0.35);
+  });
+  it('in de oefening "Eén hand, stompen en de paal" en niet meer bij Moeilijker', () => {
+    const o = OEFENINGEN.find((x) => x.id === 'keeper-vz-een-hand-stompen-paal')!;
+    const tl = maakTijdlijn(o.tekening);
+    expect(tl.stompen.length).toBe(1);
+    expect(o.variaties.moeilijker.join(' ')).not.toMatch(/stuitbal voor/i);
+  });
+});
+
+describe('regel: een keeper kopt alleen buiten de zestien', () => {
+  it('in geen enkele oefening kopt een keeper binnen het strafschopgebied', () => {
+    const fout: string[] = [];
+    for (const o of OEFENINGEN) {
+      const goals = o.tekening.objecten.filter((x) => x.soort === 'goal' && !x.hoek);
+      if (!goals.length || !o.tekening.animatie?.length) continue;
+      const tl = maakTijdlijn(o.tekening);
+      for (const x of tl.loslaten) {
+        if (x.soort !== 'voet' || tl.objecten.get(x.wie)?.soort !== 'keeper') continue;
+        const k = standOp(tl, x.t).objecten.get(x.wie)!;
+        if ((k.trap?.hoogte ?? 0) < 1.25) continue;
+        const binnen = goals.some((g) => Math.abs(k.x - g.x) <= 20.16 && k.y - g.y <= 16.5 && k.y >= g.y);
+        if (binnen) fout.push(`${o.id} ${x.wie} t=${x.t.toFixed(1)}`);
+      }
+    }
+    expect(fout).toEqual([]);
+  });
+});
+
 describe('nieuwe oefeningen 0.24.0', () => {
   const VERWACHT: Record<string, [string[], number]> = {
     'keeper-vz-stompen-hoek-dichtzetten': [['voorzetten', 'een-op-een'], 3],
