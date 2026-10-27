@@ -6,6 +6,7 @@ import { ga } from '../../router';
 import { trainingen, useTrainingen } from '../../training/opslag';
 import { datumTekst, nieuweTraining, trainingNaam, type Training } from '../../training/training';
 import { codeUitLink, Toast, useToast } from './onderdelen';
+import { t as vt } from '../../i18n/t';
 
 /** Nieuwe lege training maken en openen. */
 export function maakTraining() {
@@ -49,7 +50,7 @@ function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }
           aria-label={`${trainingNaam(t)} dupliceren`}
           onClick={() => {
             trainingen.dupliceer(t.id);
-            opMelding('Kopie gemaakt');
+            opMelding(vt('Kopie gemaakt'));
           }}
         >
           <Icoon naam="kopieer" maat={20} />
@@ -58,9 +59,9 @@ function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }
           className="icoon-knop gevaar"
           aria-label={`${trainingNaam(t)} verwijderen`}
           onClick={() => {
-            if (window.confirm(`"${trainingNaam(t)}" verwijderen?`)) {
+            if (window.confirm(vt('"{w0}" verwijderen?', { w0: trainingNaam(t) }))) {
               trainingen.verwijder(t.id);
-              opMelding('Training verwijderd');
+              opMelding(vt('Training verwijderd'));
             }
           }}
         >
@@ -80,27 +81,27 @@ export function MijnTrainingen() {
 
   return (
     <div className="pagina">
-      <Kop titel="Mijn trainingen" ouder="/" />
+      <Kop titel={vt('Mijn trainingen')} ouder="/" />
       <main className="inhoud smal">
         <div className="knoppenrij knoppen-twee">
           <button className="knop knop-primair" onClick={maakTraining}>
             <Icoon naam="plus" maat={20} />
-            Training maken
+            {vt('Training maken')}
           </button>
           <button className="knop" onClick={genereerTraining}>
             <Icoon naam="wissel" maat={20} />
-            Training genereren
+            {vt('Training genereren')}
           </button>
         </div>
 
         {lijst.length === 0 ? (
           <div className="leeg">
-            <p className="leeg-titel">Nog geen trainingen</p>
-            <p>Maak een training: vul het aantal spelers en keepers in en kies de oefeningen.</p>
+            <p className="leeg-titel">{vt('Nog geen trainingen')}</p>
+            <p>{vt('Maak een training: vul het aantal spelers en keepers in en kies de oefeningen.')}</p>
           </div>
         ) : (
           <>
-            <h2 className="sectie-titel">Opgeslagen op dit apparaat</h2>
+            <h2 className="sectie-titel">{vt('Opgeslagen op dit apparaat')}</h2>
             <ul className="lijst">
               {lijst.map((t) => (
                 <Regel key={t.id} t={t} opMelding={toon} />
@@ -113,7 +114,7 @@ export function MijnTrainingen() {
           {!linkOpen ? (
             <button className="link-knop" onClick={() => setLinkOpen(true)}>
               <Icoon naam="link" maat={18} />
-              Gedeelde training openen via een link
+              {vt('Gedeelde training openen via een link')}
             </button>
           ) : (
             <form
@@ -123,15 +124,15 @@ export function MijnTrainingen() {
                 if (code) ga(`/t/${code}`);
               }}
             >
-              <label htmlFor="deellink">Plak de link die je hebt gekregen</label>
+              <label htmlFor="deellink">{vt('Plak de link die je hebt gekregen')}</label>
               <input id="deellink" type="url" inputMode="url" placeholder="https://…/#/t/…" value={link} onChange={(e) => setLink(e.target.value)} autoFocus />
               <button className="knop knop-primair" disabled={!code}>
-                Openen
+                {vt('Openen')}
               </button>
             </form>
           )}
         </div>
-        <p className="voetnoot">Trainingen staan op dit apparaat. Met delen stuur je een link naar een andere trainer.</p>
+        <p className="voetnoot">{vt('Trainingen staan op dit apparaat. Met delen stuur je een link naar een andere trainer.')}</p>
       </main>
       <Toast tekst={melding} />
     </div>

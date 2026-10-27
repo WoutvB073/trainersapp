@@ -6,7 +6,11 @@ PWA (Vite + React + TS) voor voetbaltrainers: oefenbibliotheek veld/keepers met 
 fasering en besluiten: **PLAN.md** (eerst lezen).
 
 ## Werkwijze
-- Communiceer in het **Nederlands**; alle app-tekst is Nederlands.
+- Communiceer in het **Nederlands**. De app is tweetalig (0.25.0): Nederlands en Engels.
+- **Alle app-tekst ook in het Engels:** tekst altijd via `t('…')` (of `vt` waar `t` al een variabele is, `zin` voor **vet**)
+  uit `src/i18n/t.ts`; de Engelse vertaling in `src/i18n/en.ts` (woordenlijst in PLAN.md). `tests/vertaling.test.ts` faalt bij
+  tekst buiten t(), een ontbrekende vertaling of Nederlands in het Engels (`tools/i18n/scan.mjs -v` toont waar). Geen
+  vertaling nodig: markeer met `i18n-ok`. Eigen oefeningen, trainings-, team- en spelersnamen worden nooit vertaald.
 - Bouwen in kleine stappen (fases uit PLAN.md); na elke stap test de gebruiker op de telefoon → wachten op akkoord.
 - Per stap: bouwen → zelf testen (`npm test`, `npm run build`, browsertests hieronder) → commit + push →
   korte uitleg, online link, testlijst. PLAN.md-status bijwerken.

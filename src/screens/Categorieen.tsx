@@ -8,6 +8,7 @@ import { useFavorieten } from '../engine/favorieten';
 import { aantalActief, filterOefeningen, useFilters } from '../engine/filters';
 import { useEigenOefeningen } from '../eigen/opslag';
 import type { Soort } from '../model/types';
+import { t } from '../i18n/t';
 
 function Rij({ pad, naam, omschrijving, aantal, gefilterd }: { pad: string; naam: string; omschrijving: string; aantal: number; gefilterd: boolean }) {
   return (
@@ -24,7 +25,7 @@ function Rij({ pad, naam, omschrijving, aantal, gefilterd }: { pad: string; naam
           <span className="rij-titel">{naam}</span>
           <span className="rij-sub">{omschrijving}</span>
         </span>
-        <span className="teller">{aantal === 0 ? (gefilterd ? '0' : 'Nog leeg') : aantal}</span>
+        <span className="teller">{aantal === 0 ? (gefilterd ? '0' : t('Nog leeg')) : aantal}</span>
         <Icoon naam="verder" className="rij-pijl" />
       </a>
     </li>
@@ -45,9 +46,9 @@ export function Categorieen({ soort }: { soort: Soort }) {
       <main className="inhoud">
         <FilterBalk aantal={tel()} />
         <ul className="lijst">
-          <Rij pad={`${basis}/alle`} naam="Alle oefeningen" omschrijving={gefilterd ? 'Alles wat bij je filters past' : 'Alles op een rij'} aantal={tel()} gefilterd={gefilterd} />
+          <Rij pad={`${basis}/alle`} naam={t('Alle oefeningen')} omschrijving={gefilterd ? t('Alles wat bij je filters past') : t('Alles op een rij')} aantal={tel()} gefilterd={gefilterd} />
         </ul>
-        <h2 className="sectie-titel">Categorieën</h2>
+        <h2 className="sectie-titel">{t('Categorieën')}</h2>
         <ul className="lijst">
           {CATEGORIEEN[soort].map((c) => (
             <Rij key={c.id} pad={`${basis}/${c.id}`} naam={c.naam} omschrijving={c.omschrijving} aantal={tel(c.id)} gefilterd={gefilterd} />

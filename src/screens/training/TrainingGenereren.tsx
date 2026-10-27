@@ -16,6 +16,7 @@ import { MAX_AANTAL, metNaam, verplaats, type Training } from '../../training/tr
 import type { Soort } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { Stapper } from './onderdelen';
+import { t as vt } from '../../i18n/t';
 
 /** Gegevens voor het kiezen, altijd vers (aantallen van de training, favorieten, recente trainingen). */
 function context(t: Training): KiesContext {
@@ -78,7 +79,7 @@ function Regel({
   return (
     <li ref={setNodeRef} style={{ transform: CSS.Transform.toString(transform), transition }} className={`gen-regel${isDragging ? ' slepen' : ''}`} data-id={sleutel}>
       <div className="gen-kop">
-        <button ref={setActivatorNodeRef} className="greep" aria-label={`Onderdeel ${nr} verplaatsen`} {...attributes} {...listeners}>
+        <button ref={setActivatorNodeRef} className="greep" aria-label={vt('Onderdeel {nr} verplaatsen', { nr })} {...attributes} {...listeners}>
           <Icoon naam="grip" maat={22} />
         </button>
         <span className="onderdeel-nr">{nr}</span>
@@ -89,9 +90,12 @@ function Regel({
       </div>
       {keuze === null && (
         <p className="waarschuwing gen-geen" role="status">
-          Geen passende oefening in {vindCategorie(onderdeel.soort, onderdeel.categorie)?.naam ?? onderdeel.categorie} voor {meervoud(t.spelers, 'speler', 'spelers')} en{' '}
-          {meervoud(t.keepers, 'keeper', 'keepers')}
-          {onderdeel.soort === 'keeper' && t.keepers === 0 ? ' (vul minstens 1 keeper in)' : ''}.
+          {vt('Geen passende oefening in {categorie} voor {spelers} en {keepers}', {
+            categorie: vindCategorie(onderdeel.soort, onderdeel.categorie)?.naam ?? onderdeel.categorie,
+            spelers: meervoud(t.spelers, 'speler', 'spelers'),
+            keepers: meervoud(t.keepers, 'keeper', 'keepers'),
+          })}
+          {onderdeel.soort === 'keeper' && t.keepers === 0 ? vt(' (vul minstens 1 keeper in)') : ''}.
         </p>
       )}
       {o && (
@@ -112,7 +116,7 @@ function Regel({
           </a>
           <button className="knop knop-klein gen-ander" onClick={opAnder}>
             <Icoon naam="wissel" maat={16} />
-            Andere oefening
+            {vt('Andere oefening')}
           </button>
         </div>
       )}
@@ -169,14 +173,14 @@ export function TrainingGenereren({ id }: { id: string }) {
     // Alles opnieuw: de oefeningen van de training worden de nieuwe keuzes (eigen toevoegingen blijven erachter).
     zet(lijst);
     const mis = lijst.filter((i) => i.keuze === null).length;
-    setMelding(mis ? `${meervoud(mis, 'onderdeel', 'onderdelen')} zonder passende oefening.` : '');
+    setMelding(mis ? vt('{w0} zonder passende oefening.', { w0: meervoud(mis, 'onderdeel', 'onderdelen') }) : '');
   };
 
   const ander = (n: number) => {
     const nu = trainingen.haal(id) ?? t;
     const g = andereOefening(generatorVan(items), n, context(nu), nu.oefeningen);
     if (g.keuzes[n] === items[n]!.keuze) {
-      setMelding('Er is geen andere passende oefening voor dit onderdeel.');
+      setMelding(vt('Er is geen andere passende oefening voor dit onderdeel.'));
       return;
     }
     zet(items.map((i, x) => (x === n ? { ...i, keuze: g.keuzes[n] ?? null } : i)));
@@ -196,15 +200,15 @@ export function TrainingGenereren({ id }: { id: string }) {
 
   return (
     <div className="pagina">
-      <Kop titel="Training genereren" ouder={`/training/${id}`} />
+      <Kop titel={vt('Training genereren')} ouder={`/training/${id}`} />
       <main className="inhoud smal">
         <section className="blok training-gegevens">
-          <Stapper label="Spelers" icoon="spelers" waarde={t.spelers} onStap={(d) => stap('spelers', d)} />
-          <Stapper label="Keepers" icoon="keeper" waarde={t.keepers} onStap={(d) => stap('keepers', d)} />
+          <Stapper label={vt('Spelers')} icoon="spelers" waarde={t.spelers} onStap={(d) => stap('spelers', d)} />
+          <Stapper label={vt('Keepers')} icoon="keeper" waarde={t.keepers} onStap={(d) => stap('keepers', d)} />
         </section>
 
         <section className="blok gen-kiezen">
-          <h3>Tik de onderdelen aan in de volgorde van je training</h3>
+          <h3>{vt('Tik de onderdelen aan in de volgorde van je training')}</h3>
           {(['veld', 'keeper'] as const).map((s) => (
             <div key={s} className="gen-groep">
               <p className="gen-groep-naam">
@@ -224,12 +228,12 @@ export function TrainingGenereren({ id }: { id: string }) {
         </section>
 
         <h2 className="sectie-titel">
-          Onderdelen <span className="teller-klein">{items.length}</span>
+          {vt('Onderdelen')} <span className="teller-klein">{items.length}</span>
         </h2>
         {items.length === 0 ? (
           <div className="leeg">
-            <p className="leeg-titel">Nog geen onderdelen</p>
-            <p>Bijvoorbeeld: Warming-up → Laag duiken → Reactie → 1 op 1 → Spelletjes. De app kiest bij elk onderdeel een oefening die past bij je aantallen.</p>
+            <p className="leeg-titel">{vt('Nog geen onderdelen')}</p>
+            <p>{vt('Bijvoorbeeld: Warming-up → Laag duiken → Reactie → 1 op 1 → Spelletjes. De app kiest bij elk onderdeel een oefening die past bij je aantallen.')}</p>
           </div>
         ) : (
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={sleep}>
@@ -251,7 +255,7 @@ export function TrainingGenereren({ id }: { id: string }) {
             </SortableContext>
           </DndContext>
         )}
-        {items.length > 1 && <p className="hint">Sleep aan het greepje om de volgorde te veranderen.</p>}
+        {items.length > 1 && <p className="hint">{vt('Sleep aan het greepje om de volgorde te veranderen.')}</p>}
         {melding && (
           <p className="waarschuwing" role="status">
             {melding}
@@ -261,16 +265,16 @@ export function TrainingGenereren({ id }: { id: string }) {
         <div className="knoppenrij">
           <button className={`knop${gegenereerd ? '' : ' knop-primair'}`} disabled={!items.length} onClick={genereerAlles}>
             <Icoon naam={gegenereerd ? 'opnieuw' : 'wissel'} maat={20} />
-            {gegenereerd ? 'Alles opnieuw genereren' : 'Genereren'}
+            {gegenereerd ? vt('Alles opnieuw genereren') : vt('Genereren')}
           </button>
           {gegenereerd && (
             <button className="knop knop-primair" onClick={() => ga(`/training/${id}`)}>
               <Icoon naam="vink" maat={20} />
-              Naar de training
+              {vt('Naar de training')}
             </button>
           )}
         </div>
-        <p className="voetnoot">De app kiest afwisselend: liever geen oefening uit je laatste trainingen, je favorieten krijgen voorrang en een oefening komt maar één keer voor.</p>
+        <p className="voetnoot">{vt('De app kiest afwisselend: liever geen oefening uit je laatste trainingen, je favorieten krijgen voorrang en een oefening komt maar één keer voor.')}</p>
       </main>
     </div>
   );

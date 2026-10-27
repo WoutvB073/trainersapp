@@ -18,6 +18,7 @@ import { favorieten, favorietenBackend } from '../engine/favorieten';
 import { bordBackend, borden, opstellingBackend, opstellingen } from '../wedstrijd/opslag';
 import { bordNaam, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
+import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
 import { abonneerFilters, huidigeFilters, zetFilters } from '../engine/filters';
 import { teams, isTeamId, teamOefeningen, type Rol } from '../engine/teams';
 import { voorDelen } from '../eigen/eigen';
@@ -26,6 +27,7 @@ import type { EigenOefening } from '../model/types';
 import { verbind, type Verbinding } from './firebase';
 import { Synchronisatie, type Instellingen, type SyncDoelen } from './sync';
 import * as T from './teamsOnline';
+import { t as vt } from '../i18n/t';
 
 /**
  * Online in de app: inloggen (e-mail en wachtwoord), synchroniseren en teams. Wordt pas geladen als je inlogt of al
@@ -42,25 +44,25 @@ let antwoord: ((ja: boolean) => void) | null = null;
 // ---------- foutmeldingen ----------
 
 const MELDINGEN: Record<string, string> = {
-  'auth/invalid-email': 'Dit is geen geldig e-mailadres.',
-  'auth/missing-email': 'Vul je e-mailadres in.',
-  'auth/email-already-in-use': 'Er bestaat al een account met dit e-mailadres. Log in, of kies "Wachtwoord vergeten".',
-  'auth/weak-password': 'Kies een wachtwoord van minstens 6 tekens.',
-  'auth/missing-password': 'Vul je wachtwoord in.',
-  'auth/invalid-credential': 'E-mailadres of wachtwoord klopt niet.',
-  'auth/wrong-password': 'Het wachtwoord klopt niet.',
-  'auth/user-not-found': 'Er is geen account met dit e-mailadres.',
-  'auth/too-many-requests': 'Te vaak geprobeerd. Wacht even en probeer het opnieuw.',
-  'auth/network-request-failed': 'Geen internet. Probeer het opnieuw als je verbinding hebt.',
-  'auth/requires-recent-login': 'Log opnieuw in en probeer het daarna nog eens.',
-  'permission-denied': 'Dat mag niet (geen toegang).',
-  unavailable: 'Geen verbinding. Probeer het opnieuw als je internet hebt.',
+  'auth/invalid-email': vt('Dit is geen geldig e-mailadres.'),
+  'auth/missing-email': vt('Vul je e-mailadres in.'),
+  'auth/email-already-in-use': vt('Er bestaat al een account met dit e-mailadres. Log in, of kies "Wachtwoord vergeten".'),
+  'auth/weak-password': vt('Kies een wachtwoord van minstens 6 tekens.'),
+  'auth/missing-password': vt('Vul je wachtwoord in.'),
+  'auth/invalid-credential': vt('E-mailadres of wachtwoord klopt niet.'),
+  'auth/wrong-password': vt('Het wachtwoord klopt niet.'),
+  'auth/user-not-found': vt('Er is geen account met dit e-mailadres.'),
+  'auth/too-many-requests': vt('Te vaak geprobeerd. Wacht even en probeer het opnieuw.'),
+  'auth/network-request-failed': vt('Geen internet. Probeer het opnieuw als je verbinding hebt.'),
+  'auth/requires-recent-login': vt('Log opnieuw in en probeer het daarna nog eens.'),
+  'permission-denied': vt('Dat mag niet (geen toegang).'),
+  unavailable: vt('Geen verbinding. Probeer het opnieuw als je internet hebt.'),
 };
 
 export function foutTekst(e: unknown): string {
   if (e instanceof T.TeamFout) return e.message;
   const code = (e as { code?: string })?.code ?? '';
-  return MELDINGEN[code] ?? ((e as Error)?.message?.startsWith('Online') ? (e as Error).message : 'Er ging iets mis. Probeer het opnieuw.');
+  return MELDINGEN[code] ?? ((e as Error)?.message?.startsWith('Online') ? (e as Error).message : vt('Er ging iets mis. Probeer het opnieuw.'));
 }
 
 // ---------- starten ----------
@@ -96,7 +98,7 @@ function verbinding(): Verbinding {
   return v;
 }
 
-const info = (u: User): AccountInfo => ({ uid: u.uid, email: u.email ?? '', naam: u.displayName || (u.email ?? '').split('@')[0] || 'Trainer' });
+const info = (u: User): AccountInfo => ({ uid: u.uid, email: u.email ?? '', naam: u.displayName || (u.email ?? '').split('@')[0] || vt('Trainer') });
 
 function opslag(): Storage | undefined {
   try {
@@ -174,7 +176,7 @@ function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
   let vorigeAantallen = JSON.stringify(huidigeFilters().aantallen);
   const lees = (): Instellingen => {
     const k = leesKeuze();
-    return { thema: k.thema, modus: k.modus, aantallen: huidigeFilters().aantallen, gewijzigd: Number(opslag()?.getItem(sleutel) ?? 0) };
+    return { thema: k.thema, modus: k.modus, taal: leesTaalKeuze(), aantallen: huidigeFilters().aantallen, gewijzigd: Number(opslag()?.getItem(sleutel) ?? 0) };
   };
   return {
     lees,
@@ -183,6 +185,13 @@ function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
       try {
         kiesThema({ thema: i.thema as ThemaId, modus: i.modus as Modus });
         zetFilters({ aantallen: i.aantallen });
+        // Andere taal van een ander apparaat: de app laadt opnieuw in die taal.
+        if (i.taal === 'nl' || i.taal === 'en' || i.taal === 'auto') {
+          if (i.taal !== leesTaalKeuze()) {
+            opslag()?.setItem(sleutel, String(i.gewijzigd));
+            kiesTaal(i.taal);
+          }
+        }
         vorigeAantallen = JSON.stringify(i.aantallen);
         opslag()?.setItem(sleutel, String(i.gewijzigd));
       } finally {
@@ -196,6 +205,7 @@ function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
         cb();
       };
       const a = abonneerThema(gewijzigd);
+      const c = abonneerTaal(gewijzigd);
       const b = abonneerFilters(() => {
         const nu = JSON.stringify(huidigeFilters().aantallen);
         if (nu === vorigeAantallen) return;
@@ -205,6 +215,7 @@ function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
       return () => {
         a();
         b();
+        c();
       };
     },
   };
@@ -284,7 +295,7 @@ export async function maakAccount(naam: string, email: string, wachtwoord: strin
   await startOnline();
   const { auth, db } = verbinding();
   const schoon = naam.trim().slice(0, 60);
-  if (!schoon) throw new T.TeamFout('Vul je naam in (die zien je teamgenoten).');
+  if (!schoon) throw new T.TeamFout(vt('Vul je naam in (die zien je teamgenoten).'));
   const c = await createUserWithEmailAndPassword(auth, email.trim(), wachtwoord);
   await updateProfile(c.user, { displayName: schoon });
   await setDoc(doc(db, 'users', c.user.uid), { naam: schoon, email: email.trim() }, { merge: true });
@@ -355,11 +366,11 @@ export const verwijderItem = (team: string, item: string) => T.verwijderItem(ik(
 export function deelWedstrijd(team: string, soort: 'opstelling' | 'bord', id: string): Promise<void> {
   if (soort === 'opstelling') {
     const x = opstellingen.haal(id);
-    if (!x) throw new T.TeamFout('Opstelling niet gevonden');
+    if (!x) throw new T.TeamFout(vt('Opstelling niet gevonden'));
     return T.deelItem(ik(), team, { id, soort, naam: opstellingNaam(x), data: JSON.stringify(x) });
   }
   const x = borden.haal(id);
-  if (!x) throw new T.TeamFout('Tactiekbord niet gevonden');
+  if (!x) throw new T.TeamFout(vt('Tactiekbord niet gevonden'));
   return T.deelItem(ik(), team, { id, soort, naam: bordNaam(x), data: JSON.stringify(x) });
 }
 
@@ -372,7 +383,7 @@ export function deelOefening(team: string, o: EigenOefening): Promise<void> {
  */
 export function deelTraining(team: string, trainingId: string): Promise<void> {
   const t = trainingen.haal(trainingId);
-  if (!t) throw new T.TeamFout('Training niet gevonden');
+  if (!t) throw new T.TeamFout(vt('Training niet gevonden'));
   const eigen: unknown[] = [];
   const oefeningen = t.oefeningen.map((id) => {
     const eo = eigenOefeningen.haal(id);
@@ -392,5 +403,5 @@ export function deelTraining(team: string, trainingId: string): Promise<void> {
     return id;
   });
   const data = { training: { naam: t.naam, datum: t.datum, spelers: t.spelers, keepers: t.keepers, oefeningen }, eigen };
-  return T.deelItem(ik(), team, { id: t.id, soort: 'training', naam: t.naam || 'Training', data: JSON.stringify(data) });
+  return T.deelItem(ik(), team, { id: t.id, soort: 'training', naam: t.naam || vt('Training'), data: JSON.stringify(data) });
 }

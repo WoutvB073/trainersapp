@@ -12,29 +12,30 @@ import { ga, terug, vervang } from '../router';
 import { eigenOefeningen, useEigenOefeningen } from '../eigen/opslag';
 import { inBibliotheek, kopieerNaarEigen } from '../eigen/eigen';
 import type { EigenOefening, Oefening } from '../model/types';
+import { t } from '../i18n/t';
 
 type Variatie = 'makkelijker' | 'moeilijker';
 
 function Legenda() {
   return (
-    <ul className="legenda" aria-label="Lijnen">
+    <ul className="legenda" aria-label={t('Lijnen')}>
       <li>
         <svg viewBox="0 0 32 8" aria-hidden="true">
           <line x1="1" y1="4" x2="31" y2="4" stroke="var(--legenda-bal)" strokeWidth="2.2" strokeLinecap="round" />
         </svg>
-        Pass / schot
+        {t('Pass / schot')}
       </li>
       <li>
         <svg viewBox="0 0 32 8" aria-hidden="true">
           <line x1="2" y1="4" x2="31" y2="4" stroke="var(--legenda-loop)" strokeWidth="2.2" strokeDasharray="4 4" strokeLinecap="round" />
         </svg>
-        Lopen
+        {t('Lopen')}
       </li>
       <li>
         <svg viewBox="0 0 32 8" aria-hidden="true">
           <path d="M1 4 Q 4.5 0 8 4 T 15 4 T 22 4 T 29 4" fill="none" stroke="var(--legenda-dribbel)" strokeWidth="2" strokeLinecap="round" />
         </svg>
-        Dribbelen
+        {t('Dribbelen')}
       </li>
     </ul>
   );
@@ -53,7 +54,7 @@ function Acties({ oefening }: { oefening: Oefening }) {
           }}
         >
           <Icoon naam="kopieer" maat={18} />
-          Kopiëren naar eigen oefeningen
+          {t('Kopiëren naar eigen oefeningen')}
         </button>
         <TeamItemActies oefening={oefening} />
       </div>
@@ -64,11 +65,11 @@ function Acties({ oefening }: { oefening: Oefening }) {
     <div className="detail-acties">
       <button className="knop" onClick={() => ga(`/eigen/${o.id}/tekenen`)}>
         <Icoon naam="potlood" maat={18} />
-        Tekening
+        {t('Tekening')}
       </button>
       <button className="knop" onClick={() => ga(`/eigen/${o.id}/gegevens`)}>
         <Icoon naam="info" maat={18} />
-        Gegevens
+        {t('Gegevens')}
       </button>
       <button
         className="knop"
@@ -78,19 +79,19 @@ function Acties({ oefening }: { oefening: Oefening }) {
         }}
       >
         <Icoon naam="kopieer" maat={18} />
-        Dupliceren
+        {t('Dupliceren')}
       </button>
       <button
         className="knop"
         onClick={() => {
-          if (window.confirm(`"${o.naam || 'Deze oefening'}" verwijderen?`)) {
+          if (window.confirm(t('"{w0}" verwijderen?', { w0: o.naam || t('Deze oefening') }))) {
             eigenOefeningen.verwijder(o.id);
             terug('/eigen');
           }
         }}
       >
         <Icoon naam="prullenbak" maat={18} />
-        Verwijderen
+        {t('Verwijderen')}
       </button>
       <DeelMetTeam soort="oefening" id={o.id} naam={o.naam} />
     </div>
@@ -134,14 +135,13 @@ export function OefeningDetail({ id }: { id: string }) {
           <Labels oefening={oefening} />
           {oefening.verwijderd && (
             <p className="waarschuwing" role="note">
-              Deze oefening staat niet meer in de bibliotheek. Je ziet hem nog omdat hij in een training, gedeelde link, team of je favorieten zit. Wil je hem houden? Kopieer hem
-              naar je eigen oefeningen.
+              {t('Deze oefening staat niet meer in de bibliotheek. Je ziet hem nog omdat hij in een training, gedeelde link, team of je favorieten zit. Wil je hem houden? Kopieer hem naar je eigen oefeningen.')}
             </p>
           )}
           <Acties oefening={oefening} />
 
           {oefening.onderdelen && oefening.onderdelen.length > 0 && (
-            <ol className="verloop" aria-label="Verloop van de oefening">
+            <ol className="verloop" aria-label={t('Verloop van de oefening')}>
               {oefening.onderdelen.map((d, i) => (
                 <li key={d}>
                   <span className="verloop-nr">{i + 1}</span>
@@ -153,21 +153,21 @@ export function OefeningDetail({ id }: { id: string }) {
 
           {oefening.uitleg && (
             <section className="blok">
-              <h3>Uitleg</h3>
+              <h3>{t('Uitleg')}</h3>
               <p>{oefening.uitleg}</p>
             </section>
           )}
 
           {oefening.organisatie && (
             <section className="blok">
-              <h3>Organisatie</h3>
+              <h3>{t('Organisatie')}</h3>
               <p>{oefening.organisatie}</p>
             </section>
           )}
 
           <section className="blok blok-twee">
             <div>
-              <h3>Benodigdheden</h3>
+              <h3>{t('Benodigdheden')}</h3>
               {oefening.benodigdheden.length ? (
                 <ul className="opsomming">
                   {oefening.benodigdheden.map((b) => (
@@ -175,11 +175,11 @@ export function OefeningDetail({ id }: { id: string }) {
                   ))}
                 </ul>
               ) : (
-                <p className="klein">Niet ingevuld</p>
+                <p className="klein">{t('Niet ingevuld')}</p>
               )}
             </div>
             <div>
-              <h3>Aantal</h3>
+              <h3>{t('Aantal')}</h3>
               <p>{aantalTekst(oefening)}</p>
               {oefening.meerSpelers && <p className="klein">{oefening.meerSpelers}</p>}
             </div>
@@ -187,7 +187,7 @@ export function OefeningDetail({ id }: { id: string }) {
 
           {oefening.coachpunten.length > 0 && (
             <section className="blok">
-              <h3>Coachpunten</h3>
+              <h3>{t('Coachpunten')}</h3>
               <ul className="vinkjes">
                 {oefening.coachpunten.map((c) => (
                   <li key={c}>
@@ -201,15 +201,15 @@ export function OefeningDetail({ id }: { id: string }) {
 
           {(oefening.variaties.makkelijker.length > 0 || oefening.variaties.moeilijker.length > 0) && (
             <section className="blok">
-              <h3>Variaties</h3>
+              <h3>{t('Variaties')}</h3>
               <div className="variatie-knoppen">
                 <button className={`variatie-knop makkelijker${variatie === 'makkelijker' ? ' aan' : ''}`} onClick={() => kies('makkelijker')} aria-expanded={variatie === 'makkelijker'}>
                   <Icoon naam="makkelijker" maat={18} />
-                  Makkelijker
+                  {t('Makkelijker')}
                 </button>
                 <button className={`variatie-knop moeilijker${variatie === 'moeilijker' ? ' aan' : ''}`} onClick={() => kies('moeilijker')} aria-expanded={variatie === 'moeilijker'}>
                   <Icoon naam="moeilijker" maat={18} />
-                  Moeilijker
+                  {t('Moeilijker')}
                 </button>
               </div>
               {variatie && (

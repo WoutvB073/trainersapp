@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { spelvorm, naarBank, verplaatsPlek, zetOpPlek, haalWeg, type Opstelling } from '../../wedstrijd/wedstrijd';
 import { Icoon } from '../../components/Icoon';
+import { t } from '../../i18n/t';
 
 /** Veld in de verhouding van de spelvorm, met lijnen die meeschalen (een klein veld heeft een kleiner strafschopgebied). */
 function VeldLijnen({ B, L }: { B: number; L: number }) {
@@ -150,7 +151,7 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
               className={`opst-plek${p.naam ? '' : ' leeg'}${gekozen(bron) ? ' gekozen' : ''}${info.keeper && p.nummer === 1 ? ' keeper' : ''}`}
               data-plek={p.id}
               style={{ left: `${((m + p.x * B) / (B + 2 * m)) * 100}%`, top: `${((m + p.y * L) / (L + 2 * m)) * 100}%` }}
-              aria-label={p.naam ? `${p.naam} (positie ${p.nummer})` : `Positie ${p.nummer} (leeg)`}
+              aria-label={p.naam ? t('{naam} (positie {nummer})', { naam: p.naam, nummer: p.nummer }) : t('Positie {nummer} (leeg)', { nummer: p.nummer })}
               {...handlers(bron)}
             >
               <span className="opst-nr">{p.nummer}</span>
@@ -162,19 +163,19 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
       <div className={`opst-bank${keuze?.plek && keuze.naam ? ' doel' : ''}`} data-bank onClick={() => keuze?.plek && keuze.naam && zet(naarBank(o, keuze.plek))}>
         <p className="opst-bank-kop">
           <Icoon naam="spelers" maat={18} />
-          Wissels <span className="teller-klein">{o.wissels.length}</span>
+          {t('Wissels')} <span className="teller-klein">{o.wissels.length}</span>
         </p>
         {o.wissels.length === 0 ? (
-          <p className="klein">{bewerkbaar ? 'Sleep een speler hierheen om hem te wisselen.' : 'Geen wissels.'}</p>
+          <p className="klein">{bewerkbaar ? t('Sleep een speler hierheen om hem te wisselen.') : t('Geen wissels.')}</p>
         ) : (
           <div className="opst-wissels">
             {o.wissels.map((n) => (
               <span key={n} className={`opst-wissel${gekozen({ naam: n }) ? ' gekozen' : ''}`}>
-                <button type="button" className="opst-wissel-naam" data-naam={n} aria-label={`${n} (wissel)`} {...handlers({ naam: n })}>
+                <button type="button" className="opst-wissel-naam" data-naam={n} aria-label={t('{n} (wissel)', { n })} {...handlers({ naam: n })}>
                   {n}
                 </button>
                 {bewerkbaar && (
-                  <button type="button" className="opst-wissel-weg" aria-label={`${n} uit de opstelling halen`} onClick={(e) => (e.stopPropagation(), zet(haalWeg(o, n)))}>
+                  <button type="button" className="opst-wissel-weg" aria-label={t('{n} uit de opstelling halen', { n })} onClick={(e) => (e.stopPropagation(), zet(haalWeg(o, n)))}>
                     <Icoon naam="kruis" maat={14} />
                   </button>
                 )}
@@ -186,10 +187,10 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
       {keuze && (
         <p className="opst-hint" role="status">
           {keuze.naam && !keuze.plek
-            ? `Tik op een positie voor ${keuze.naam}.`
+            ? t('Tik op een positie voor {naam}.', { naam: keuze.naam })
             : keuze.naam
-              ? `Tik op een andere positie om te ruilen, of op de wissels.`
-              : 'Tik op een wissel om hem hier neer te zetten.'}
+              ? t('Tik op een andere positie om te ruilen, of op de wissels.')
+              : t('Tik op een wissel om hem hier neer te zetten.')}
         </p>
       )}
       {geest && (

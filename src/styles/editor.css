@@ -1354,3 +1354,91 @@ html.editor-open body {
 .eigen-regel.team-regel .training-acties:empty {
   display: none;
 }
+
+/* ---------- startscherm: knoppen rechtsboven (account, help, instellingen) ---------- */
+
+.start-acties {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.start-kop .start-acties > * {
+  margin-left: 0;
+  color: inherit;
+}
+
+@media (max-width: 359px) {
+  .start-acties .icoon-knop {
+    width: 38px;
+  }
+}
+
+/* ---------- help ---------- */
+
+.help-zoek {
+  margin-bottom: 14px;
+}
+
+.help-lijst {
+  display: grid;
+  gap: 10px;
+}
+
+.help-onderwerp {
+  background: var(--kaart);
+  border-radius: var(--radius);
+  box-shadow: var(--schaduw);
+  overflow: hidden;
+}
+
+.help-onderwerp h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.help-onderwerp h2 button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 0;
+  background: transparent;
+  color: var(--tekst);
+  font: inherit;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+}
+
+.help-pijl {
+  flex: none;
+  color: var(--primair-tekst);
+  transition: transform 0.15s;
+}
+
+.help-onderwerp.open .help-pijl {
+  transform: rotate(90deg);
+}
+
+.help-tekst {
+  padding: 0 16px 14px;
+  line-height: 1.5;
+}
+
+.help-tekst p,
+.help-tekst ul {
+  margin: 0 0 10px;
+}
+
+.help-tekst ul {
+  padding-left: 20px;
+}
+
+.help-tekst li + li {
+  margin-top: 6px;
+}

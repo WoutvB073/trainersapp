@@ -4,6 +4,7 @@ import { HORDE, PERSONEN } from '../model/types';
 import { lijnMidden, lijnPunten } from '../model/lijn';
 import { maakTijdlijn, standOp } from '../anim/timeline';
 import { STANDAARD_MATEN, veldMaten } from '../anim/render2d';
+import { t as vt } from '../i18n/t';
 
 /**
  * Pure editorlogica: een tekening maken en wijzigen. Elke functie geeft een nieuwe tekening terug (de oude blijft
@@ -73,20 +74,20 @@ const speler =
 export const PALET: PaletItem[] = [
   {
     sleutel: 'speler-a',
-    naam: 'Speler team A',
+    naam: vt('Speler team A'),
     groep: 'Spelers',
     maak: speler('A', 'a'),
   },
   {
     sleutel: 'speler-b',
-    naam: 'Speler team B',
+    naam: vt('Speler team B'),
     groep: 'Spelers',
     maak: speler('B', 'b'),
   },
-  { sleutel: 'joker', naam: 'Joker', groep: 'Spelers', maak: speler('J', 'j') },
+  { sleutel: 'joker', naam: vt('Joker'), groep: 'Spelers', maak: speler('J', 'j') },
   {
     sleutel: 'keeper',
-    naam: 'Keeper',
+    naam: vt('Keeper'),
     groep: 'Spelers',
     maak: (t, p) => ({
       id: nieuwId(t, 'k'),
@@ -98,32 +99,32 @@ export const PALET: PaletItem[] = [
   },
   {
     sleutel: 'trainer',
-    naam: 'Trainer',
+    naam: vt('Trainer'),
     groep: 'Spelers',
     maak: ding('trainer', 't'),
   },
-  { sleutel: 'bal', naam: 'Bal', groep: 'Spelers', maak: ding('bal', 'bal') },
+  { sleutel: 'bal', naam: vt('Bal'), groep: 'Spelers', maak: ding('bal', 'bal') },
   {
     sleutel: 'goal',
-    naam: 'Groot goal',
+    naam: vt('Groot goal'),
     groep: 'Doelen',
     maak: ding('goal', 'g'),
   },
   {
     sleutel: 'jeugdgoal',
-    naam: 'Jeugdgoal',
+    naam: vt('Jeugdgoal'),
     groep: 'Doelen',
     maak: ding('goal', 'g', { breedte: 5, hoogte: 2 }),
   },
   {
     sleutel: 'klein-goal',
-    naam: 'Klein goal',
+    naam: vt('Klein goal'),
     groep: 'Doelen',
     maak: ding('klein-goal', 'g'),
   },
   {
     sleutel: 'doelnet',
-    naam: 'Doelnet',
+    naam: vt('Doelnet'),
     groep: 'Doelen',
     // Hangt in het dichtstbijzijnde goal zonder net (in plaats van een keeper).
     maak: (t, p) => {
@@ -133,105 +134,105 @@ export const PALET: PaletItem[] = [
   },
   {
     sleutel: 'pion',
-    naam: 'Pion',
+    naam: vt('Pion'),
     groep: 'Materiaal',
     maak: ding('pion', 'p'),
   },
   {
     sleutel: 'hoedje',
-    naam: 'Hoedje',
+    naam: vt('Hoedje'),
     groep: 'Materiaal',
     maak: ding('hoedje', 'h'),
   },
   {
     sleutel: 'paaltje',
-    naam: 'Paaltje',
+    naam: vt('Paaltje'),
     groep: 'Materiaal',
     maak: ding('paaltje', 'pa'),
   },
   {
     sleutel: 'stok',
-    naam: 'Stok',
+    naam: vt('Stok'),
     groep: 'Materiaal',
     maak: ding('stok', 's', { lengte: 1.5 }),
   },
   {
     sleutel: 'ladder',
-    naam: 'Ladder',
+    naam: vt('Ladder'),
     groep: 'Materiaal',
     maak: ding('ladder', 'l', { lengte: 4, breedte: 0.5 }),
   },
   {
     sleutel: 'horde-laag',
-    naam: 'Horde laag',
+    naam: vt('Horde laag'),
     groep: 'Materiaal',
     maak: ding('horde', 'ho', { hoogte: HORDE.laag }),
   },
   {
     sleutel: 'horde-hoog',
-    naam: 'Horde hoog',
+    naam: vt('Horde hoog'),
     groep: 'Materiaal',
     maak: ding('horde', 'ho', { hoogte: HORDE.hoog }),
   },
   {
     sleutel: 'ring',
-    naam: 'Ring',
+    naam: vt('Ring'),
     groep: 'Materiaal',
     maak: ding('ring', 'r'),
   },
   {
     sleutel: 'bank',
-    naam: 'Bank',
+    naam: vt('Bank'),
     groep: 'Materiaal',
     maak: ding('bank', 'bk', { breedte: 2.5 }),
   },
   {
     sleutel: 'pop',
-    naam: 'Pop / dummy',
+    naam: vt('Pop / dummy'),
     groep: 'Materiaal',
     maak: ding('pop', 'po'),
   },
   {
     sleutel: 'rebounder',
-    naam: 'Rebounder',
+    naam: vt('Rebounder'),
     groep: 'Materiaal',
     maak: ding('rebounder', 'rb'),
   },
   {
     sleutel: 'net',
-    naam: 'Net',
+    naam: vt('Net'),
     groep: 'Materiaal',
     maak: ding('net', 'n', { breedte: 6, hoogte: 1 }),
   },
   {
     sleutel: 'lint',
-    naam: 'Lint',
+    naam: vt('Lint'),
     groep: 'Materiaal',
     maak: ding('net', 'n', { breedte: 6, hoogte: 0.5 }),
   },
   {
     sleutel: 'keepersmat',
-    naam: 'Keepersmat',
+    naam: vt('Keepersmat'),
     groep: 'Materiaal',
     maak: ding('keepersmat', 'm', { breedte: 2, lengte: 1 }),
   },
   {
     sleutel: 'landingskussen',
-    naam: 'Landingskussen',
+    naam: vt('Landingskussen'),
     groep: 'Materiaal',
     maak: ding('keepersmat', 'm', { breedte: 2, lengte: 1.5, hoogte: 0.4 }),
   },
   {
     sleutel: 'zone',
-    naam: 'Vak / zone',
+    naam: vt('Vak / zone'),
     groep: 'Vakken en tekst',
     maak: ding('zone', 'z', { breedte: 10, lengte: 10 }),
   },
   {
     sleutel: 'tekst',
-    naam: 'Tekst',
+    naam: vt('Tekst'),
     groep: 'Vakken en tekst',
-    maak: ding('tekst', 'tx', { tekst: 'Tekst' }),
+    maak: ding('tekst', 'tx', { tekst: vt('Tekst') }),
   },
 ];
 
@@ -798,17 +799,17 @@ export class Geschiedenis<T> {
 // ---------- benodigdheden ----------
 
 const BENODIGD: Record<string, [string, string]> = {
-  goal: ['groot goal', 'grote goals'],
+  goal: [vt('groot goal'), vt('grote goals')],
   jeugdgoal: ['jeugdgoal', 'jeugdgoals'],
-  'klein-goal': ['klein goal', 'kleine goals'],
+  'klein-goal': [vt('klein goal'), vt('kleine goals')],
   doelnet: ['doelnet', 'doelnetten'],
   pion: ['pion', 'pionnen'],
   hoedje: ['hoedje', 'hoedjes'],
   paaltje: ['paaltje', 'paaltjes'],
   stok: ['stok', 'stokken'],
   ladder: ['loopladder', 'loopladders'],
-  'horde-laag': ['lage horde', 'lage hordes'],
-  'horde-hoog': ['hoge horde', 'hoge hordes'],
+  'horde-laag': [vt('lage horde'), vt('lage hordes')],
+  'horde-hoog': [vt('hoge horde'), vt('hoge hordes')],
   ring: ['ring', 'ringen'],
   bank: ['bank', 'banken'],
   pop: ['pop', 'poppen'],
@@ -836,7 +837,7 @@ export function benodigdhedenUit(t: Tekening): string[] {
   }
   // Twee teams of jokers: hesjes.
   const teams = new Set(t.objecten.filter((o) => o.soort === 'speler').map((o) => o.team ?? 'A'));
-  if (teams.size > 1) uit.push('Hesjes');
+  if (teams.size > 1) uit.push(vt('Hesjes'));
   return uit;
 }
 

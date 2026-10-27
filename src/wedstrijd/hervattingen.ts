@@ -1,6 +1,7 @@
 import type { Lijn, Punt, Tekening, VeldObject } from '../model/types';
 import { formatiePlekken } from './wedstrijd';
 import { veldTekening } from './wedstrijd';
+import { t } from '../i18n/t';
 
 /**
  * Spelhervattingen: kant-en-klare beginsituaties (half veld, het goal bovenaan; aftrap op een heel veld) en een paar
@@ -149,14 +150,14 @@ export interface Situatie {
 
 /** Beginsituaties om zelf de lijnen bij te tekenen. */
 export const SITUATIES: Situatie[] = [
-  { id: 'corner-links', naam: 'Corner links', maak: () => corner('links') },
-  { id: 'corner-rechts', naam: 'Corner rechts', maak: () => corner('rechts') },
-  { id: 'vrije-trap-18', naam: 'Vrije trap 18 m', maak: () => vrijeTrap(18, 34) },
-  { id: 'vrije-trap-25', naam: 'Vrije trap 25 m', maak: () => vrijeTrap(25, 28) },
-  { id: 'vrije-trap-30', naam: 'Vrije trap 30 m', maak: () => vrijeTrap(30, 41) },
-  { id: 'inworp', naam: 'Inworp', maak: inworp },
-  { id: 'doeltrap', naam: 'Doeltrap / uittrap', maak: doeltrap },
-  { id: 'aftrap', naam: 'Aftrap', maak: aftrap },
+  { id: 'corner-links', naam: t('Corner links'), maak: () => corner('links') },
+  { id: 'corner-rechts', naam: t('Corner rechts'), maak: () => corner('rechts') },
+  { id: 'vrije-trap-18', naam: t('Vrije trap 18 m'), maak: () => vrijeTrap(18, 34) },
+  { id: 'vrije-trap-25', naam: t('Vrije trap 25 m'), maak: () => vrijeTrap(25, 28) },
+  { id: 'vrije-trap-30', naam: t('Vrije trap 30 m'), maak: () => vrijeTrap(30, 41) },
+  { id: 'inworp', naam: t('Inworp'), maak: inworp },
+  { id: 'doeltrap', naam: t('Doeltrap / uittrap'), maak: doeltrap },
+  { id: 'aftrap', naam: t('Aftrap'), maak: aftrap },
 ];
 
 const lijn = (soort: Lijn['soort'], punten: Punt[], stap: number, extra: Partial<Lijn> = {}): Lijn => ({ soort, punten, stap, ...extra });
@@ -169,8 +170,8 @@ export interface Voorbeeld extends Situatie {
 export const VOORBEELDEN: Voorbeeld[] = [
   {
     id: 'corner-eerste-paal',
-    naam: 'Corner op de eerste paal',
-    uitleg: 'Speler 2 loopt naar de eerste paal, de corner komt hoog op hem en hij kopt hem in de verre hoek.',
+    naam: t('Corner op de eerste paal'),
+    uitleg: t('Speler 2 loopt naar de eerste paal, de corner komt hoog op hem en hij kopt hem in de verre hoek.'),
     maak: () => {
       const t = corner('links');
       return {
@@ -185,8 +186,8 @@ export const VOORBEELDEN: Voorbeeld[] = [
   },
   {
     id: 'korte-corner',
-    naam: 'Korte corner',
-    uitleg: 'Corner kort naar speler 2, die naar binnen dribbelt en voorzet op speler 3, die vanaf de rand de zestien in loopt.',
+    naam: t('Korte corner'),
+    uitleg: t('Corner kort naar speler 2, die naar binnen dribbelt en voorzet op speler 3, die vanaf de rand de zestien in loopt.'),
     maak: () =>
       half(
         [
@@ -215,8 +216,8 @@ export const VOORBEELDEN: Voorbeeld[] = [
   },
   {
     id: 'vrije-trap-kaats',
-    naam: 'Vrije trap via een kaats',
-    uitleg: 'Speler 1 legt de bal opzij op speler 2, loopt langs het muurtje en krijgt de bal terug; schot in de verre hoek.',
+    naam: t('Vrije trap via een kaats'),
+    uitleg: t('Speler 1 legt de bal opzij op speler 2, loopt langs het muurtje en krijgt de bal terug; schot in de verre hoek.'),
     maak: () => {
       const t = vrijeTrap(25, 30);
       const objecten = t.objecten.map((o) => (o.id === 'a2' ? { ...o, x: 26.5, y: 20, kijkrichting: 45 } : o));

@@ -13,6 +13,7 @@ import { NietGevonden } from '../NietGevonden';
 import { FilterBalk, GeenResultaat, Hartje } from '../../components/Filters';
 import { useFavorieten } from '../../engine/favorieten';
 import { filterOefeningen, useFilters } from '../../engine/filters';
+import { t as vt } from '../../i18n/t';
 
 /** Onthoud tab en categorie per training (zodat terug van een oefening op dezelfde plek uitkomt). */
 function bewaard(id: string): { soort?: Soort; categorie?: string } {
@@ -61,7 +62,7 @@ export function TrainingKiezen({ id }: { id: string }) {
 
   return (
     <div className="pagina">
-      <Kop titel="Oefeningen kiezen" ouder={`/training/${id}`} />
+      <Kop titel={vt('Oefeningen kiezen')} ouder={`/training/${id}`} />
       <div className="kies-balk">
         <div className="tabs" role="tablist">
           {(['veld', 'keeper'] as const).map((s) => (
@@ -70,9 +71,9 @@ export function TrainingKiezen({ id }: { id: string }) {
             </button>
           ))}
         </div>
-        <div className="chips" role="group" aria-label="Categorie">
+        <div className="chips" role="group" aria-label={vt('Categorie')}>
           <button className={!categorie ? 'aan' : ''} onClick={() => kiesCategorie(undefined)}>
-            Alle <span>{telling()}</span>
+            {vt('Alle')} <span>{telling()}</span>
           </button>
           {CATEGORIEEN[soort].map((c) => (
             <button key={c.id} className={categorie === c.id ? 'aan' : ''} onClick={() => kiesCategorie(c.id)}>
@@ -82,18 +83,18 @@ export function TrainingKiezen({ id }: { id: string }) {
         </div>
       </div>
       <main className="inhoud">
-        <FilterBalk aantal={lijst.length} aantallenVan={`Passend bij ${meervoud(t.spelers, 'speler', 'spelers')} en ${meervoud(t.keepers, 'keeper', 'keepers')} (van de training)`} />
+        <FilterBalk aantal={lijst.length} aantallenVan={vt('Passend bij {w0} en {w1} (van de training)', { w0: meervoud(t.spelers, 'speler', 'spelers'), w1: meervoud(t.keepers, 'keeper', 'keepers') })} />
         {lijst.length === 0 && zonderFilters > 0 ? (
           <GeenResultaat metFilters />
         ) : lijst.length === 0 ? (
           <div className="leeg">
-            <p className="leeg-titel">Geen passende oefeningen</p>
+            <p className="leeg-titel">{vt('Geen passende oefeningen')}</p>
             <p>
               {soort === 'veld' && t.spelers === 0
-                ? 'Met 0 spelers zijn er alleen keeperoefeningen.'
+                ? vt('Met 0 spelers zijn er alleen keeperoefeningen.')
                 : soort === 'keeper' && t.keepers === 0
-                  ? 'Vul minstens 1 keeper in voor keeperoefeningen.'
-                  : 'Kies een andere categorie of pas de aantallen aan.'}
+                  ? vt('Vul minstens 1 keeper in voor keeperoefeningen.')
+                  : vt('Kies een andere categorie of pas de aantallen aan.')}
             </p>
           </div>
         ) : (
@@ -122,10 +123,10 @@ export function TrainingKiezen({ id }: { id: string }) {
                     className={`toevoeg-knop${gekozen ? ' aan' : ''}`}
                     onClick={() => wissel(o.id)}
                     aria-pressed={gekozen}
-                    aria-label={gekozen ? `${o.naam} uit de training halen` : `${o.naam} toevoegen`}
+                    aria-label={gekozen ? vt('{naam} uit de training halen', { naam: o.naam }) : `${o.naam} toevoegen`}
                   >
                     <Icoon naam={gekozen ? 'vink' : 'plus'} maat={20} />
-                    {gekozen ? 'In training' : 'Toevoegen'}
+                    {gekozen ? vt('In training') : vt('Toevoegen')}
                   </button>
                 </li>
               );
@@ -135,7 +136,7 @@ export function TrainingKiezen({ id }: { id: string }) {
       </main>
       <div className="onderbalk">
         <button className="knop knop-primair knop-breed" onClick={() => terug(`/training/${id}`)}>
-          Klaar · {meervoud(t.oefeningen.length, 'oefening', 'oefeningen')}
+          {vt('Klaar · {wat}', { wat: meervoud(t.oefeningen.length, 'oefening', 'oefeningen') })}
         </button>
       </div>
     </div>

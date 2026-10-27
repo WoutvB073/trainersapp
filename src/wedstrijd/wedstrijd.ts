@@ -1,6 +1,7 @@
 import type { Tekening, VeldObject } from '../model/types';
 import { maakId } from '../model/id';
 import { naarBase64Url, uitBase64Url } from '../training/training';
+import { t } from '../i18n/t';
 
 /**
  * Wedstrijd: opstellingen (spelvorm, formatie, spelers op posities, wissels) en tactiekborden/spelhervattingen
@@ -22,10 +23,10 @@ export interface SpelvormInfo {
 }
 
 export const SPELVORMEN: SpelvormInfo[] = [
-  { id: '4v4', naam: '4 tegen 4', spelers: 4, keeper: false, veld: { breedte: 20, lengte: 30 }, formaties: ['1-2-1', '2-2'] },
-  { id: '6v6', naam: '6 tegen 6', spelers: 6, keeper: true, veld: { breedte: 30, lengte: 42.5 }, formaties: ['1-2-1-2', '1-3-2', '1-2-2-1'] },
-  { id: '8v8', naam: '8 tegen 8', spelers: 8, keeper: true, veld: { breedte: 42.5, lengte: 64 }, formaties: ['1-3-3-1', '1-2-3-2', '1-3-2-2'] },
-  { id: '11v11', naam: '11 tegen 11', spelers: 11, keeper: true, veld: { breedte: 68, lengte: 105 }, formaties: ['1-4-3-3', '1-4-4-2', '1-3-4-3', '1-4-2-3-1'] },
+  { id: '4v4', naam: t('4 tegen 4'), spelers: 4, keeper: false, veld: { breedte: 20, lengte: 30 }, formaties: ['1-2-1', '2-2'] },
+  { id: '6v6', naam: t('6 tegen 6'), spelers: 6, keeper: true, veld: { breedte: 30, lengte: 42.5 }, formaties: ['1-2-1-2', '1-3-2', '1-2-2-1'] },
+  { id: '8v8', naam: t('8 tegen 8'), spelers: 8, keeper: true, veld: { breedte: 42.5, lengte: 64 }, formaties: ['1-3-3-1', '1-2-3-2', '1-3-2-2'] },
+  { id: '11v11', naam: t('11 tegen 11'), spelers: 11, keeper: true, veld: { breedte: 68, lengte: 105 }, formaties: ['1-4-3-3', '1-4-4-2', '1-3-4-3', '1-4-2-3-1'] },
 ];
 
 export const spelvorm = (id: Spelvorm) => SPELVORMEN.find((s) => s.id === id) ?? SPELVORMEN[3]!;
@@ -157,7 +158,7 @@ export function opstellingNaam(o: Pick<Opstelling, 'naam' | 'spelvorm' | 'format
 }
 
 export function dupliceerOpstelling(o: Opstelling, nu = Date.now(), id = maakId()): Opstelling {
-  return { ...structuredClone(o), id, naam: `${opstellingNaam(o)} (kopie)`, gemaakt: nu, gewijzigd: nu };
+  return { ...structuredClone(o), id, naam: t('{w0} (kopie)', { w0: opstellingNaam(o) }), gemaakt: nu, gewijzigd: nu };
 }
 
 // ---------- tactiekborden en spelhervattingen ----------
@@ -173,14 +174,14 @@ export interface Bord {
   gewijzigd: number;
 }
 
-export const bordNaam = (b: Pick<Bord, 'naam' | 'soort'>) => b.naam.trim() || (b.soort === 'hervatting' ? 'Spelhervatting' : 'Tactiekbord');
+export const bordNaam = (b: Pick<Bord, 'naam' | 'soort'>) => b.naam.trim() || (b.soort === 'hervatting' ? t('Spelhervatting') : t('Tactiekbord'));
 
 export function nieuwBord(soort: BordSoort, tekening: Tekening, naam = '', nu = Date.now(), id = maakId()): Bord {
   return { id, naam, soort, tekening, gemaakt: nu, gewijzigd: nu };
 }
 
 export function dupliceerBord(b: Bord, nu = Date.now(), id = maakId()): Bord {
-  return { ...structuredClone(b), id, naam: `${bordNaam(b)} (kopie)`, gemaakt: nu, gewijzigd: nu };
+  return { ...structuredClone(b), id, naam: t('{w0} (kopie)', { w0: bordNaam(b) }), gemaakt: nu, gewijzigd: nu };
 }
 
 /** Heel of half veld met goals (zoals in de editor). */

@@ -39,6 +39,7 @@ import {
   type UitCode,
 } from '../../wedstrijd/wedstrijd';
 import { SITUATIES, VOORBEELDEN } from '../../wedstrijd/hervattingen';
+import { t as vt } from '../../i18n/t';
 
 const LAATSTE_SPELVORM = 'trainersapp.spelvorm';
 function laatsteSpelvorm(): Spelvorm {
@@ -63,7 +64,7 @@ async function deelLink(titel: string, code: string): Promise<string> {
   }
   try {
     await navigator.clipboard.writeText(url);
-    return 'Link gekopieerd';
+    return vt('Link gekopieerd');
   } catch {
     return url;
   }
@@ -110,7 +111,7 @@ function Rij({ icoon, titel, sub, naar, opDupliceer, opVerwijder }: { icoon: Ico
           className="icoon-knop gevaar"
           aria-label={`${titel} verwijderen`}
           onClick={() => {
-            if (window.confirm(`"${titel}" verwijderen?`)) opVerwijder();
+            if (window.confirm(vt('"{titel}" verwijderen?', { titel }))) opVerwijder();
           }}
         >
           <Icoon naam="prullenbak" maat={20} />
@@ -122,7 +123,7 @@ function Rij({ icoon, titel, sub, naar, opDupliceer, opVerwijder }: { icoon: Ico
 
 const bordSub = (b: Bord) => {
   const n = b.tekening.lijnen?.length ?? 0;
-  return n ? meervoud(n, 'lijn', 'lijnen') : 'Nog geen lijnen';
+  return n ? meervoud(n, 'lijn', 'lijnen') : vt('Nog geen lijnen');
 };
 
 /** Wedstrijd: opstellingen, tactiekborden en spelhervattingen. */
@@ -139,15 +140,15 @@ export function Wedstrijd() {
 
   return (
     <div className="pagina">
-      <Kop titel="Wedstrijd" ouder="/" />
+      <Kop titel={vt('Wedstrijd')} ouder="/" />
       <main className="inhoud smal wedstrijd">
         <section className="wedstrijd-deel">
           <h2 className="sectie-titel">
-            <Icoon naam="opstelling" maat={20} /> Opstellingen
+            <Icoon naam="opstelling" maat={20} /> {vt('Opstellingen')}
           </h2>
           <button className="knop knop-primair knop-breed" onClick={nieuweOpstellingMaken}>
             <Icoon naam="plus" maat={20} />
-            Nieuwe opstelling
+            {vt('Nieuwe opstelling')}
           </button>
           {ops.length > 0 && (
             <ul className="lijst">
@@ -158,8 +159,8 @@ export function Wedstrijd() {
                   titel={opstellingNaam(o)}
                   sub={[`${spelvorm(o.spelvorm).naam} · ${o.formatie}`, o.datum ? datumTekst(o.datum) : ''].filter(Boolean).join(' · ')}
                   naar={`/opstelling/${o.id}`}
-                  opDupliceer={() => (opstellingen.bewaar(dupliceerOpstelling(o)), toon('Kopie gemaakt'))}
-                  opVerwijder={() => (opstellingen.verwijder(o.id), toon('Opstelling verwijderd'))}
+                  opDupliceer={() => (opstellingen.bewaar(dupliceerOpstelling(o)), toon(vt('Kopie gemaakt')))}
+                  opVerwijder={() => (opstellingen.verwijder(o.id), toon(vt('Opstelling verwijderd')))}
                 />
               ))}
             </ul>
@@ -168,11 +169,11 @@ export function Wedstrijd() {
 
         <section className="wedstrijd-deel">
           <h2 className="sectie-titel">
-            <Icoon naam="tactiek" maat={20} /> Tactiekborden
+            <Icoon naam="tactiek" maat={20} /> {vt('Tactiekborden')}
           </h2>
           <button className="knop knop-breed" onClick={() => setKies('tactiek')}>
             <Icoon naam="plus" maat={20} />
-            Nieuw tactiekbord
+            {vt('Nieuw tactiekbord')}
           </button>
           {tactiek.length > 0 && (
             <ul className="lijst">
@@ -183,8 +184,8 @@ export function Wedstrijd() {
                   titel={bordNaam(b)}
                   sub={bordSub(b)}
                   naar={`/bord/${b.id}`}
-                  opDupliceer={() => (borden.bewaar(dupliceerBord(b)), toon('Kopie gemaakt'))}
-                  opVerwijder={() => (borden.verwijder(b.id), toon('Tactiekbord verwijderd'))}
+                  opDupliceer={() => (borden.bewaar(dupliceerBord(b)), toon(vt('Kopie gemaakt')))}
+                  opVerwijder={() => (borden.verwijder(b.id), toon(vt('Tactiekbord verwijderd')))}
                 />
               ))}
             </ul>
@@ -193,11 +194,11 @@ export function Wedstrijd() {
 
         <section className="wedstrijd-deel">
           <h2 className="sectie-titel">
-            <Icoon naam="hervatting" maat={20} /> Spelhervattingen
+            <Icoon naam="hervatting" maat={20} /> {vt('Spelhervattingen')}
           </h2>
           <button className="knop knop-breed" onClick={() => setKies('hervatting')}>
             <Icoon naam="plus" maat={20} />
-            Nieuwe spelhervatting
+            {vt('Nieuwe spelhervatting')}
           </button>
           {hervattingen.length > 0 && (
             <ul className="lijst">
@@ -208,8 +209,8 @@ export function Wedstrijd() {
                   titel={bordNaam(b)}
                   sub={bordSub(b)}
                   naar={`/bord/${b.id}`}
-                  opDupliceer={() => (borden.bewaar(dupliceerBord(b)), toon('Kopie gemaakt'))}
-                  opVerwijder={() => (borden.verwijder(b.id), toon('Spelhervatting verwijderd'))}
+                  opDupliceer={() => (borden.bewaar(dupliceerBord(b)), toon(vt('Kopie gemaakt')))}
+                  opVerwijder={() => (borden.verwijder(b.id), toon(vt('Spelhervatting verwijderd')))}
                 />
               ))}
             </ul>
@@ -220,7 +221,7 @@ export function Wedstrijd() {
           {!linkOpen ? (
             <button className="link-knop" onClick={() => setLinkOpen(true)}>
               <Icoon naam="link" maat={18} />
-              Gedeelde opstelling of tactiekbord openen via een link
+              {vt('Gedeelde opstelling of tactiekbord openen via een link')}
             </button>
           ) : (
             <form
@@ -230,10 +231,10 @@ export function Wedstrijd() {
                 if (code) ga(`/w/${code}`);
               }}
             >
-              <label htmlFor="wedstrijdlink">Plak de link die je hebt gekregen</label>
+              <label htmlFor="wedstrijdlink">{vt('Plak de link die je hebt gekregen')}</label>
               <input id="wedstrijdlink" type="url" inputMode="url" placeholder="https://…/#/w/…" value={link} onChange={(e) => setLink(e.target.value)} autoFocus />
               <button className="knop knop-primair" disabled={!code}>
-                Openen
+                {vt('Openen')}
               </button>
             </form>
           )}
@@ -252,7 +253,7 @@ function Paneel({ titel, opSluit, children }: { titel: string; opSluit: () => vo
       <div className="paneel wedstrijd-paneel" role="dialog" aria-label={titel} onClick={(e) => e.stopPropagation()}>
         <div className="paneel-kop">
           <h2>{titel}</h2>
-          <button className="icoon-knop" aria-label="Sluiten" onClick={opSluit}>
+          <button className="icoon-knop" aria-label={vt('Sluiten')} onClick={opSluit}>
             <Icoon naam="kruis" />
           </button>
         </div>
@@ -282,25 +283,25 @@ function NieuwTactiekbord({ ops, opSluit }: { ops: Opstelling[]; opSluit: () => 
     bordMaken('tactiek', t, '');
   };
   return (
-    <Paneel titel="Nieuw tactiekbord" opSluit={opSluit}>
-      <h3 className="wedstrijd-sub">Spelvorm</h3>
-      <div className="wedstrijd-chips" role="radiogroup" aria-label="Spelvorm">
+    <Paneel titel={vt('Nieuw tactiekbord')} opSluit={opSluit}>
+      <h3 className="wedstrijd-sub">{vt('Spelvorm')}</h3>
+      <div className="wedstrijd-chips" role="radiogroup" aria-label={vt('Spelvorm')}>
         {SPELVORMEN.map((s) => (
           <button key={s.id} role="radio" aria-checked={vorm === s.id} className={`gen-chip${vorm === s.id ? ' aan' : ''}`} onClick={() => kiesVorm(s.id)}>
             {s.naam}
           </button>
         ))}
       </div>
-      <h3 className="wedstrijd-sub">Formatie van jouw team</h3>
-      <div className="wedstrijd-chips" role="radiogroup" aria-label="Formatie van jouw team">
+      <h3 className="wedstrijd-sub">{vt('Formatie van jouw team')}</h3>
+      <div className="wedstrijd-chips" role="radiogroup" aria-label={vt('Formatie van jouw team')}>
         {info.formaties.map((f) => (
           <button key={f} role="radio" aria-checked={formA === f} className={`gen-chip${formA === f ? ' aan' : ''}`} onClick={() => setFormA(f)}>
             {f}
           </button>
         ))}
       </div>
-      <h3 className="wedstrijd-sub">Formatie van de tegenstander</h3>
-      <div className="wedstrijd-chips" role="radiogroup" aria-label="Formatie van de tegenstander">
+      <h3 className="wedstrijd-sub">{vt('Formatie van de tegenstander')}</h3>
+      <div className="wedstrijd-chips" role="radiogroup" aria-label={vt('Formatie van de tegenstander')}>
         {info.formaties.map((f) => (
           <button key={f} role="radio" aria-checked={formB === f} className={`gen-chip${formB === f ? ' aan' : ''}`} onClick={() => setFormB(f)}>
             {f}
@@ -309,15 +310,15 @@ function NieuwTactiekbord({ ops, opSluit }: { ops: Opstelling[]; opSluit: () => 
       </div>
       <button className="knop knop-primair knop-breed wedstrijd-maak" onClick={() => bordMaken('tactiek', opgesteldBord(vorm, formA, formB), `${info.naam} · ${formA}`)}>
         <Icoon naam="tactiek" maat={20} />
-        Bord met beide teams maken
+        {vt('Bord met beide teams maken')}
       </button>
-      <h3 className="wedstrijd-sub">Vanuit een opstelling</h3>
+      <h3 className="wedstrijd-sub">{vt('Vanuit een opstelling')}</h3>
       {ops.length === 0 ? (
-        <p className="klein">Maak eerst een opstelling; jouw spelers staan dan met hun namen klaar (en de tegenstander ertegenover).</p>
+        <p className="klein">{vt('Maak eerst een opstelling; jouw spelers staan dan met hun namen klaar (en de tegenstander ertegenover).')}</p>
       ) : (
         <div className="wedstrijd-keuzes">
           {ops.map((o) => (
-            <button key={o.id} className="keuze-kaart" onClick={() => bordMaken('tactiek', bordUitOpstelling(o), `Tactiek – ${opstellingNaam(o)}`)}>
+            <button key={o.id} className="keuze-kaart" onClick={() => bordMaken('tactiek', bordUitOpstelling(o), vt('Tactiek – {w0}', { w0: opstellingNaam(o) }))}>
               <Icoon naam="opstelling" maat={28} />
               <span>
                 <strong>{opstellingNaam(o)}</strong>
@@ -329,20 +330,20 @@ function NieuwTactiekbord({ ops, opSluit }: { ops: Opstelling[]; opSluit: () => 
           ))}
         </div>
       )}
-      <h3 className="wedstrijd-sub">Leeg bord</h3>
+      <h3 className="wedstrijd-sub">{vt('Leeg bord')}</h3>
       <div className="wedstrijd-keuzes wedstrijd-twee">
         <button className="keuze-kaart" onClick={() => leeg('heel')}>
           <Icoon naam="wedstrijd" maat={28} />
           <span>
-            <strong>Heel veld</strong>
-            <span className="klein">Zelf spelers neerzetten</span>
+            <strong>{vt('Heel veld')}</strong>
+            <span className="klein">{vt('Zelf spelers neerzetten')}</span>
           </span>
         </button>
         <button className="keuze-kaart" onClick={() => leeg('half')}>
           <Icoon naam="tactiek" maat={28} />
           <span>
-            <strong>Half veld</strong>
-            <span className="klein">Met één goal</span>
+            <strong>{vt('Half veld')}</strong>
+            <span className="klein">{vt('Met één goal')}</span>
           </span>
         </button>
       </div>
@@ -352,8 +353,8 @@ function NieuwTactiekbord({ ops, opSluit }: { ops: Opstelling[]; opSluit: () => 
 
 function NieuweHervatting({ opSluit }: { opSluit: () => void }) {
   return (
-    <Paneel titel="Nieuwe spelhervatting" opSluit={opSluit}>
-      <h3 className="wedstrijd-sub">Beginsituatie (zelf de lijnen tekenen)</h3>
+    <Paneel titel={vt('Nieuwe spelhervatting')} opSluit={opSluit}>
+      <h3 className="wedstrijd-sub">{vt('Beginsituatie (zelf de lijnen tekenen)')}</h3>
       <div className="wedstrijd-chips">
         {SITUATIES.map((s) => (
           <button key={s.id} className="gen-chip" onClick={() => bordMaken('hervatting', s.maak(), s.naam)}>
@@ -361,7 +362,7 @@ function NieuweHervatting({ opSluit }: { opSluit: () => void }) {
           </button>
         ))}
       </div>
-      <h3 className="wedstrijd-sub">Voorbeelden (spelen meteen af)</h3>
+      <h3 className="wedstrijd-sub">{vt('Voorbeelden (spelen meteen af)')}</h3>
       <div className="wedstrijd-keuzes">
         {VOORBEELDEN.map((v) => (
           <button
@@ -416,12 +417,12 @@ export function OpstellingScherm({ id }: { id: string }) {
           {lege > 0 && o.wissels.length > 0 && (
             <button className="knop knop-primair knop-breed" onClick={() => zet(vulAan(nu()))}>
               <Icoon naam="spelers" maat={20} />
-              Wissels op de lege posities zetten
+              {vt('Wissels op de lege posities zetten')}
             </button>
           )}
           <section className="blok">
-            <h3>Spelvorm</h3>
-            <div className="gen-chips" role="radiogroup" aria-label="Spelvorm">
+            <h3>{vt('Spelvorm')}</h3>
+            <div className="gen-chips" role="radiogroup" aria-label={vt('Spelvorm')}>
               {SPELVORMEN.map((s) => (
                 <button
                   key={s.id}
@@ -441,19 +442,19 @@ export function OpstellingScherm({ id }: { id: string }) {
                 </button>
               ))}
             </div>
-            <h3 className="opst-sub">Formatie</h3>
-            <div className="gen-chips" role="radiogroup" aria-label="Formatie">
+            <h3 className="opst-sub">{vt('Formatie')}</h3>
+            <div className="gen-chips" role="radiogroup" aria-label={vt('Formatie')}>
               {info.formaties.map((f) => (
                 <button key={f} role="radio" aria-checked={o.formatie === f} className={`gen-chip${o.formatie === f ? ' aan' : ''}`} onClick={() => f !== o.formatie && zet(wisselFormatie(nu(), o.spelvorm, f))}>
                   {f}
                 </button>
               ))}
             </div>
-            <p className="klein">Sleep spelers naar een positie of naar de wissels; sleep een lege positie om hem te verplaatsen. Tikken kan ook.</p>
+            <p className="klein">{vt('Sleep spelers naar een positie of naar de wissels; sleep een lege positie om hem te verplaatsen. Tikken kan ook.')}</p>
           </section>
 
           <section className="blok">
-            <h3>Spelers</h3>
+            <h3>{vt('Spelers')}</h3>
             <form
               className="team-form"
               onSubmit={(e) => {
@@ -462,15 +463,15 @@ export function OpstellingScherm({ id }: { id: string }) {
                 setNieuw('');
               }}
             >
-              <input aria-label="Naam van de speler" placeholder="Naam" value={nieuw} maxLength={40} onChange={(e) => setNieuw(e.target.value)} />
+              <input aria-label={vt('Naam van de speler')} placeholder={vt('Naam')} value={nieuw} maxLength={40} onChange={(e) => setNieuw(e.target.value)} />
               <button className="knop" disabled={!nieuw.trim()}>
                 <Icoon naam="plus" maat={18} />
-                Toevoegen
+                {vt('Toevoegen')}
               </button>
             </form>
             {nietIn.length > 0 && (
               <>
-                <p className="klein">Uit je spelerslijst (tik om bij de wissels te zetten):</p>
+                <p className="klein">{vt('Uit je spelerslijst (tik om bij de wissels te zetten):')}</p>
                 <div className="gen-chips">
                   {nietIn.map((n) => (
                     <span key={n} className="naam-chip">
@@ -478,7 +479,7 @@ export function OpstellingScherm({ id }: { id: string }) {
                         <Icoon naam="plus" maat={15} />
                         {n}
                       </button>
-                      <button className="icoon-knop" aria-label={`${n} uit je spelerslijst halen`} onClick={() => spelersnamen.zet(spelersnamen.lijst().filter((x) => x !== n))}>
+                      <button className="icoon-knop" aria-label={vt('{n} uit je spelerslijst halen', { n })} onClick={() => spelersnamen.zet(spelersnamen.lijst().filter((x) => x !== n))}>
                         <Icoon naam="kruis" maat={14} />
                       </button>
                     </span>
@@ -486,28 +487,28 @@ export function OpstellingScherm({ id }: { id: string }) {
                 </div>
               </>
             )}
-            <p className="klein">Namen worden onthouden voor je volgende opstelling.</p>
+            <p className="klein">{vt('Namen worden onthouden voor je volgende opstelling.')}</p>
           </section>
 
           <section className="blok training-gegevens">
             <label className="veld">
-              <span>Naam (optioneel)</span>
-              <input value={o.naam} placeholder="Bijv. Zaterdag tegen VVA" maxLength={80} onChange={(e) => zet({ ...nu(), naam: e.target.value })} />
+              <span>{vt('Naam (optioneel)')}</span>
+              <input value={o.naam} placeholder={vt('Bijv. Zaterdag tegen VVA')} maxLength={80} onChange={(e) => zet({ ...nu(), naam: e.target.value })} />
             </label>
             <label className="veld">
-              <span>Datum (optioneel)</span>
+              <span>{vt('Datum (optioneel)')}</span>
               <input type="date" value={o.datum ?? ''} onChange={(e) => zet({ ...nu(), datum: e.target.value || undefined })} />
             </label>
           </section>
 
           <div className="knoppenrij">
-            <button className="knop knop-primair" onClick={() => bordMaken('tactiek', bordUitOpstelling(nu()), `Tactiek – ${opstellingNaam(nu())}`)}>
+            <button className="knop knop-primair" onClick={() => bordMaken('tactiek', bordUitOpstelling(nu()), vt('Tactiek – {w0}', { w0: opstellingNaam(nu()) }))}>
               <Icoon naam="tactiek" maat={20} />
-              Tactiekbord maken
+              {vt('Tactiekbord maken')}
             </button>
             <button className="knop" onClick={() => void deelLink(opstellingNaam(o), wedstrijdCode({ soort: 'opstelling', opstelling: nu() })).then((m) => m && toon(m))}>
               <Icoon naam="deel" maat={20} />
-              Delen
+              {vt('Delen')}
             </button>
             <button
               className="knop"
@@ -517,7 +518,7 @@ export function OpstellingScherm({ id }: { id: string }) {
               }}
             >
               <Icoon naam="kopieer" maat={20} />
-              Dupliceren
+              {vt('Dupliceren')}
             </button>
           </div>
           <div className="team-delen">
@@ -526,14 +527,14 @@ export function OpstellingScherm({ id }: { id: string }) {
           <button
             className="link-knop gevaar-link"
             onClick={() => {
-              if (window.confirm(`"${opstellingNaam(o)}" verwijderen?`)) {
+              if (window.confirm(vt('"{w0}" verwijderen?', { w0: opstellingNaam(o) }))) {
                 opstellingen.verwijder(o.id);
                 ga('/wedstrijd');
               }
             }}
           >
             <Icoon naam="prullenbak" maat={18} />
-            Opstelling verwijderen
+            {vt('Opstelling verwijderen')}
           </button>
         </div>
       </main>
@@ -559,17 +560,17 @@ export function BordScherm({ id }: { id: string }) {
           <AnimatieSpeler tekening={speel} />
         </div>
         <div className="detail-tekst">
-          {!lijnen && <p className="hint">Tik op Tekenen om looplijnen, passes en dribbels te tekenen. Elke lijn krijgt een stapnummer; zo speelt het af in 2D en 3D.</p>}
+          {!lijnen && <p className="hint">{vt('Tik op Tekenen om looplijnen, passes en dribbels te tekenen. Elke lijn krijgt een stapnummer; zo speelt het af in 2D en 3D.')}</p>}
           <section className="blok training-gegevens">
             <label className="veld">
-              <span>Naam</span>
-              <input value={b.naam} placeholder={b.soort === 'hervatting' ? 'Bijv. Corner eerste paal' : 'Bijv. Druk zetten na balverlies'} maxLength={80} onChange={(e) => borden.bewaar({ ...nu(), naam: e.target.value })} />
+              <span>{vt('Naam')}</span>
+              <input value={b.naam} placeholder={b.soort === 'hervatting' ? vt('Bijv. Corner eerste paal') : vt('Bijv. Druk zetten na balverlies')} maxLength={80} onChange={(e) => borden.bewaar({ ...nu(), naam: e.target.value })} />
             </label>
           </section>
           <div className="knoppenrij">
             <button className="knop knop-primair" onClick={() => ga(`/bord/${id}/tekenen`)}>
               <Icoon naam="potlood" maat={20} />
-              Tekenen
+              {vt('Tekenen')}
             </button>
             <button
               className={`knop${b.tekening.namen ? ' knop-aan' : ''}`}
@@ -578,32 +579,32 @@ export function BordScherm({ id }: { id: string }) {
                 const nu2 = nu();
                 const aan = !nu2.tekening.namen;
                 borden.bewaar({ ...nu2, tekening: { ...nu2.tekening, namen: aan } });
-                if (aan && !nu2.tekening.objecten.some((o) => o.naam)) toon('Nog geen namen: tik op Tekenen, kies een speler en vul zijn naam in');
+                if (aan && !nu2.tekening.objecten.some((o) => o.naam)) toon(vt('Nog geen namen: tik op Tekenen, kies een speler en vul zijn naam in'));
               }}
             >
               <Icoon naam="label" maat={20} />
-              {b.tekening.namen ? 'Namen verbergen' : 'Namen tonen'}
+              {b.tekening.namen ? vt('Namen verbergen') : vt('Namen tonen')}
             </button>
             <button
               className="knop"
               disabled={!lijnen}
               onClick={() => {
-                if (window.confirm('Alle lijnen wissen? De spelers blijven staan.')) {
+                if (window.confirm(vt('Alle lijnen wissen? De spelers blijven staan.'))) {
                   const t = { ...nu().tekening, lijnen: [] };
                   delete t.animatie;
                   borden.bewaar({ ...nu(), tekening: t });
-                  toon('Lijnen gewist');
+                  toon(vt('Lijnen gewist'));
                 }
               }}
             >
               <Icoon naam="gum" maat={20} />
-              Lijnen wissen
+              {vt('Lijnen wissen')}
             </button>
           </div>
           <div className="knoppenrij">
             <button className="knop" onClick={() => void deelLink(bordNaam(b), wedstrijdCode({ soort: 'bord', bord: nu() })).then((m) => m && toon(m))}>
               <Icoon naam="deel" maat={20} />
-              Delen
+              {vt('Delen')}
             </button>
             <button
               className="knop"
@@ -613,7 +614,7 @@ export function BordScherm({ id }: { id: string }) {
               }}
             >
               <Icoon naam="kopieer" maat={20} />
-              Dupliceren
+              {vt('Dupliceren')}
             </button>
           </div>
           <div className="team-delen">
@@ -622,14 +623,14 @@ export function BordScherm({ id }: { id: string }) {
           <button
             className="link-knop gevaar-link"
             onClick={() => {
-              if (window.confirm(`"${bordNaam(b)}" verwijderen?`)) {
+              if (window.confirm(vt('"{w0}" verwijderen?', { w0: bordNaam(b) }))) {
                 borden.verwijder(b.id);
                 ga('/wedstrijd');
               }
             }}
           >
             <Icoon naam="prullenbak" maat={18} />
-            Verwijderen
+            {vt('Verwijderen')}
           </button>
         </div>
       </main>
@@ -662,7 +663,7 @@ function Voorbeeld({ x, titel, ouder, knop }: { x: UitCode; titel: string; ouder
         </div>
         <div className={x.soort === 'opstelling' ? 'opst-rechts' : 'detail-tekst'}>
           <section className="blok">
-            <p className="opst-soort">{x.soort === 'opstelling' ? 'Opstelling' : x.bord.soort === 'hervatting' ? 'Spelhervatting' : 'Tactiekbord'}</p>
+            <p className="opst-soort">{x.soort === 'opstelling' ? vt('Opstelling') : x.bord.soort === 'hervatting' ? vt('Spelhervatting') : vt('Tactiekbord')}</p>
             <h2 className="detail-titel">{naam}</h2>
             {x.soort === 'opstelling' && (
               <p className="klein">
@@ -684,7 +685,7 @@ function Voorbeeld({ x, titel, ouder, knop }: { x: UitCode; titel: string; ouder
 export function GedeeldWedstrijd({ code }: { code: string }) {
   const x = useMemo(() => uitWedstrijdCode(code), [code]);
   if (!x) return <NietGevonden />;
-  return <Voorbeeld x={x} titel={x.soort === 'opstelling' ? 'Gedeelde opstelling' : 'Gedeeld tactiekbord'} ouder="/wedstrijd" knop="Opslaan bij mijn wedstrijd" />;
+  return <Voorbeeld x={x} titel={x.soort === 'opstelling' ? vt('Gedeelde opstelling') : vt('Gedeeld tactiekbord')} ouder="/wedstrijd" knop={vt('Opslaan bij mijn wedstrijd')} />;
 }
 
 export function TeamWedstrijdScherm({ id, item }: { id: string; item: string }) {
@@ -702,5 +703,5 @@ export function TeamWedstrijdScherm({ id, item }: { id: string; item: string }) 
     return null;
   }, [it]);
   if (!team || !x) return <NietGevonden />;
-  return <Voorbeeld x={x} titel={`${team.naam}: ${x.soort === 'opstelling' ? 'opstelling' : 'tactiekbord'}`} ouder={`/team/${id}`} knop="Kopiëren naar mijn wedstrijd" />;
+  return <Voorbeeld x={x} titel={`${team.naam}: ${x.soort === 'opstelling' ? 'opstelling' : 'tactiekbord'}`} ouder={`/team/${id}`} knop={vt('Kopiëren naar mijn wedstrijd')} />;
 }

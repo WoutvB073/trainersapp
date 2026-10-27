@@ -4,6 +4,7 @@ import { eigenIds, MAX_AANTAL, naarCode, trainingNaam, type Training } from '../
 import { eigenOefeningen } from '../../eigen/opslag';
 import { voorDelen } from '../../eigen/eigen';
 import type { EigenOefening } from '../../model/types';
+import { t as vt } from '../../i18n/t';
 
 /** Stapper met − en + (ook 0 mag). */
 export function Stapper({ label, waarde, onStap, icoon }: { label: string; waarde: number; onStap: (stap: 1 | -1) => void; icoon: 'spelers' | 'keeper' }) {
@@ -14,13 +15,13 @@ export function Stapper({ label, waarde, onStap, icoon }: { label: string; waard
         {label}
       </span>
       <div className="stapper-knoppen">
-        <button type="button" onClick={() => onStap(-1)} disabled={waarde <= 0} aria-label={`Eén ${label.toLowerCase()} minder`}>
+        <button type="button" onClick={() => onStap(-1)} disabled={waarde <= 0} aria-label={vt('Eén {w0} minder', { w0: label.toLowerCase() })}>
           <Icoon naam="min" maat={20} />
         </button>
         <output aria-live="polite" aria-label={label}>
           {waarde}
         </output>
-        <button type="button" onClick={() => onStap(1)} disabled={waarde >= MAX_AANTAL} aria-label={`Eén ${label.toLowerCase()} meer`}>
+        <button type="button" onClick={() => onStap(1)} disabled={waarde >= MAX_AANTAL} aria-label={vt('Eén {w0} meer', { w0: label.toLowerCase() })}>
           <Icoon naam="plus" maat={20} />
         </button>
       </div>
@@ -59,7 +60,7 @@ export async function deel(t: Training): Promise<string> {
   }
   try {
     await navigator.clipboard.writeText(url);
-    return 'Link gekopieerd';
+    return vt('Link gekopieerd');
   } catch {
     return url;
   }

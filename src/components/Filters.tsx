@@ -4,6 +4,7 @@ import { meervoud } from './Labels';
 import { favorieten, useFavorieten } from '../engine/favorieten';
 import { aantalActief, useFilters, wisFilters, zetFilters, laatsteAantallen } from '../engine/filters';
 import { Stapper } from '../screens/training/onderdelen';
+import { t } from '../i18n/t';
 
 /** Hartje: favoriet aan/uit (op een kaart of op de detailpagina). */
 export function Hartje({ id, naam, groot }: { id: string; naam: string; groot?: boolean }) {
@@ -13,8 +14,8 @@ export function Hartje({ id, naam, groot }: { id: string; naam: string; groot?: 
     <button
       className={`hart${aan ? ' aan' : ''}${groot ? ' hart-groot' : ''}`}
       aria-pressed={aan}
-      aria-label={aan ? `${naam} uit favorieten halen` : `${naam} als favoriet bewaren`}
-      title={aan ? 'Favoriet' : 'Als favoriet bewaren'}
+      aria-label={aan ? t('{naam} uit favorieten halen', { naam }) : t('{naam} als favoriet bewaren', { naam })}
+      title={aan ? t('Favoriet') : t('Als favoriet bewaren')}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -44,11 +45,11 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
       <div className="filter-rij">
         <label className="zoekveld">
           <Icoon naam="zoek" maat={18} />
-          <input type="search" value={f.zoek} placeholder="Zoek op naam" aria-label="Zoek op naam" onChange={(e) => zetFilters({ zoek: e.target.value })} />
+          <input type="search" value={f.zoek} placeholder={t('Zoek op naam')} aria-label={t('Zoek op naam')} onChange={(e) => zetFilters({ zoek: e.target.value })} />
         </label>
         <button className={`filter-knop${open ? ' open' : ''}`} aria-expanded={open} onClick={() => setOpen(!open)}>
           <Icoon naam="filter" maat={18} />
-          Filters
+          {t('Filters')}
           {extra > 0 && <span className="filter-teller">{extra}</span>}
         </button>
       </div>
@@ -62,18 +63,18 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
             <div className="filter-aantallen">
               <label className="filter-schakel">
                 <input type="checkbox" checked={!!f.aantallen} onChange={() => zetFilters({ aantallen: f.aantallen ? null : laatsteAantallen() })} />
-                Alleen wat past bij mijn aantal
+                {t('Alleen wat past bij mijn aantal')}
               </label>
               {f.aantallen && (
                 <div className="filter-stappers">
                   <Stapper
-                    label="Spelers"
+                    label={t('Spelers')}
                     icoon="spelers"
                     waarde={f.aantallen.spelers}
                     onStap={(d) => zetFilters({ aantallen: { ...f.aantallen!, spelers: Math.max(0, Math.min(40, f.aantallen!.spelers + d)) } })}
                   />
                   <Stapper
-                    label="Keepers"
+                    label={t('Keepers')}
                     icoon="keeper"
                     waarde={f.aantallen.keepers}
                     onStap={(d) => zetFilters({ aantallen: { ...f.aantallen!, keepers: Math.max(0, Math.min(40, f.aantallen!.keepers + d)) } })}
@@ -82,12 +83,12 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
               )}
             </div>
           )}
-          <div className="chips filter-chips" role="group" aria-label="Alleen">
+          <div className="chips filter-chips" role="group" aria-label={t('Alleen')}>
             <button className={f.favorieten ? 'aan' : ''} aria-pressed={f.favorieten} onClick={() => zetFilters({ favorieten: !f.favorieten })}>
-              <Icoon naam="hart" maat={15} gevuld={f.favorieten} /> Favorieten
+              <Icoon naam="hart" maat={15} gevuld={f.favorieten} /> {t('Favorieten')}
             </button>
             <button className={f.eigen ? 'aan' : ''} aria-pressed={f.eigen} onClick={() => zetFilters({ eigen: !f.eigen })}>
-              <Icoon naam="ster" maat={15} /> Eigen
+              <Icoon naam="ster" maat={15} /> {t('Eigen')}
             </button>
           </div>
         </div>
@@ -96,7 +97,7 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
         <span>{meervoud(aantal, 'oefening', 'oefeningen')}</span>
         {actief > 0 && (
           <button className="link-knop" onClick={wisFilters}>
-            Filters wissen
+            {t('Filters wissen')}
           </button>
         )}
       </div>
@@ -108,11 +109,11 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
 export function GeenResultaat({ metFilters, tekst }: { metFilters: boolean; tekst?: string }) {
   return (
     <div className="leeg">
-      <p className="leeg-titel">Geen oefeningen gevonden</p>
-      <p>{metFilters ? 'Er zijn geen oefeningen die bij je filters passen.' : (tekst ?? 'In deze categorie staan nog geen oefeningen.')}</p>
+      <p className="leeg-titel">{t('Geen oefeningen gevonden')}</p>
+      <p>{metFilters ? t('Er zijn geen oefeningen die bij je filters passen.') : (tekst ?? t('In deze categorie staan nog geen oefeningen.'))}</p>
       {metFilters && (
         <button className="knop knop-primair" onClick={wisFilters}>
-          Filters wissen
+          {t('Filters wissen')}
         </button>
       )}
     </div>

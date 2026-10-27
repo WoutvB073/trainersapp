@@ -10,6 +10,7 @@ import { useEigenOefeningen } from '../eigen/opslag';
 import { ga } from '../router';
 import type { Soort } from '../model/types';
 import { NietGevonden } from './NietGevonden';
+import { t } from '../i18n/t';
 
 export function OefenLijst({ soort, categorie }: { soort: Soort; categorie: string }) {
   const filters = useFilters();
@@ -24,7 +25,7 @@ export function OefenLijst({ soort, categorie }: { soort: Soort; categorie: stri
 
   return (
     <div className="pagina">
-      <Kop titel={alle ? `${SOORT_NAAM[soort]}: alle oefeningen` : cat!.naam} ouder={basis} />
+      <Kop titel={alle ? t('{w0}: alle oefeningen', { w0: SOORT_NAAM[soort] }) : cat!.naam} ouder={basis} />
       <main className="inhoud">
         <FilterBalk aantal={oefeningen.length} />
         {oefeningen.length === 0 ? (

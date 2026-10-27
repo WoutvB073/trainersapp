@@ -9,6 +9,7 @@ import { ga, vervang } from '../../router';
 import type { EigenOefening, Soort } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { Stapper } from '../training/onderdelen';
+import { t } from '../../i18n/t';
 
 /** Lijst ↔ tekstvak met één regel per punt. */
 const naarTekst = (l: string[]) => l.join('\n');
@@ -90,23 +91,23 @@ function Formulier({ start }: { start: EigenOefening }) {
 
   return (
     <div className="pagina">
-      <Kop titel="Gegevens" ouder={`/eigen/${start.id}/tekenen`} />
+      <Kop titel={t('Gegevens')} ouder={`/eigen/${start.id}/tekenen`} />
       <main className="inhoud smal formulier">
         {fouten.length > 0 && (
           <div className="waarschuwing" role="alert">
-            {fouten.join(' en ')}. De rest is wel bewaard.
+            {t('{fouten}. De rest is wel bewaard.', { fouten: fouten.join(t(' en ')) })}
           </div>
         )}
         <label className="veld-label">
-          Naam <span className="verplicht">verplicht</span>
-          <input value={naam} onChange={(e) => setNaam(e.target.value)} maxLength={80} placeholder="Bijv. Kaatsen en afronden" />
+          {t('Naam')} <span className="verplicht">{t('verplicht')}</span>
+          <input value={naam} onChange={(e) => setNaam(e.target.value)} maxLength={80} placeholder={t('Bijv. Kaatsen en afronden')} />
         </label>
 
         <fieldset className="veld-groep">
           <legend>
-            Categorieën <span className="verplicht">minstens één</span>
+            {t('Categorieën')} <span className="verplicht">{t('minstens één')}</span>
           </legend>
-          <div className="keuze-twee" role="radiogroup" aria-label="Soort oefening">
+          <div className="keuze-twee" role="radiogroup" aria-label={t('Soort oefening')}>
             {(['veld', 'keeper'] as const).map((s) => (
               <button type="button" key={s} role="radio" aria-checked={soort === s} className={`keuze${soort === s ? ' aan' : ''}`} onClick={() => zetSoort(s)}>
                 <Icoon naam={s === 'veld' ? 'spelers' : 'keeper'} maat={20} />
@@ -122,25 +123,25 @@ function Formulier({ start }: { start: EigenOefening }) {
               </button>
             ))}
           </div>
-          <p className="klein">De eerste die je kiest, is de hoofdcategorie.</p>
+          <p className="klein">{t('De eerste die je kiest, is de hoofdcategorie.')}</p>
         </fieldset>
 
         <label className="veld-label">
-          Uitleg
-          <textarea value={uitleg} onChange={(e) => setUitleg(e.target.value)} rows={4} placeholder="Wat doen de spelers?" />
+          {t('Uitleg')}
+          <textarea value={uitleg} onChange={(e) => setUitleg(e.target.value)} rows={4} placeholder={t('Wat doen de spelers?')} />
         </label>
         <label className="veld-label">
-          Organisatie
-          <textarea value={organisatie} onChange={(e) => setOrganisatie(e.target.value)} rows={3} placeholder="Vakgrootte, afstanden, waar staan de spelers" />
+          {t('Organisatie')}
+          <textarea value={organisatie} onChange={(e) => setOrganisatie(e.target.value)} rows={3} placeholder={t('Vakgrootte, afstanden, waar staan de spelers')} />
         </label>
 
         <label className="veld-label">
-          Benodigdheden <span className="klein">één per regel</span>
+          {t('Benodigdheden')} <span className="klein">{t('één per regel')}</span>
           <textarea value={benodigd} onChange={(e) => setBenodigd(e.target.value)} rows={3} />
         </label>
         {voorstelNieuw.length > 0 && (
           <div className="voorstel">
-            <span className="klein">Uit de tekening:</span>
+            <span className="klein">{t('Uit de tekening:')}</span>
             {voorstelNieuw.map((v) => (
               <button type="button" key={v} className="chip" onClick={() => setBenodigd((b) => naarTekst([...naarLijst(b), v]))}>
                 <Icoon naam="plus" maat={14} />
@@ -148,53 +149,53 @@ function Formulier({ start }: { start: EigenOefening }) {
               </button>
             ))}
             <button type="button" className="link-knop" onClick={() => setBenodigd(naarTekst(voorstel))}>
-              Alles overnemen
+              {t('Alles overnemen')}
             </button>
           </div>
         )}
 
         <fieldset className="veld-groep">
-          <legend>Aantal</legend>
-          {soort === 'veld' && <Stapper label="Spelers" icoon="spelers" waarde={spelers} onStap={(d) => setSpelers((v) => Math.max(0, v + d))} />}
-          <Stapper label="Keepers" icoon="keeper" waarde={keepers} onStap={(d) => setKeepers((v) => Math.max(soort === 'keeper' ? 1 : 0, v + d))} />
-          <div className="keuze-twee" role="radiogroup" aria-label="Doorwisselbaar of vast aantal">
+          <legend>{t('Aantal')}</legend>
+          {soort === 'veld' && <Stapper label={t('Spelers')} icoon="spelers" waarde={spelers} onStap={(d) => setSpelers((v) => Math.max(0, v + d))} />}
+          <Stapper label={t('Keepers')} icoon="keeper" waarde={keepers} onStap={(d) => setKeepers((v) => Math.max(soort === 'keeper' ? 1 : 0, v + d))} />
+          <div className="keuze-twee" role="radiogroup" aria-label={t('Doorwisselbaar of vast aantal')}>
             <button type="button" role="radio" aria-checked={doorwisselbaar} className={`keuze${doorwisselbaar ? ' aan' : ''}`} onClick={() => setDoorwisselbaar(true)}>
-              Doorwisselbaar ({soort === 'veld' ? spelers : keepers}+)
+              {t('Doorwisselbaar ({n}+)', { n: soort === 'veld' ? spelers : keepers })}
             </button>
             <button type="button" role="radio" aria-checked={!doorwisselbaar} className={`keuze${!doorwisselbaar ? ' aan' : ''}`} onClick={() => setDoorwisselbaar(false)}>
-              Vast aantal
+              {t('Vast aantal')}
             </button>
           </div>
-          <p className="klein">{doorwisselbaar ? 'Extra spelers sluiten aan in de rij of wisselen door.' : 'De oefening is gebouwd op precies dit aantal.'}</p>
+          <p className="klein">{doorwisselbaar ? t('Extra spelers sluiten aan in de rij of wisselen door.') : t('De oefening is gebouwd op precies dit aantal.')}</p>
           {!doorwisselbaar && (
             <label className="veld-label">
-              Tip bij meer spelers
-              <input value={meerSpelers} onChange={(e) => setMeerSpelers(e.target.value)} maxLength={160} placeholder="Met meer spelers: joker op de zijlijn of tweede veldje" />
+              {t('Tip bij meer spelers')}
+              <input value={meerSpelers} onChange={(e) => setMeerSpelers(e.target.value)} maxLength={160} placeholder={t('Met meer spelers: joker op de zijlijn of tweede veldje')} />
             </label>
           )}
         </fieldset>
 
         <label className="veld-label">
-          Coachpunten <span className="klein">één per regel</span>
+          {t('Coachpunten')} <span className="klein">{t('één per regel')}</span>
           <textarea value={coach} onChange={(e) => setCoach(e.target.value)} rows={3} />
         </label>
         <label className="veld-label">
-          Makkelijker <span className="klein">één per regel</span>
+          {t('Makkelijker')} <span className="klein">{t('één per regel')}</span>
           <textarea value={makkelijker} onChange={(e) => setMakkelijker(e.target.value)} rows={2} />
         </label>
         <label className="veld-label">
-          Moeilijker <span className="klein">één per regel</span>
+          {t('Moeilijker')} <span className="klein">{t('één per regel')}</span>
           <textarea value={moeilijker} onChange={(e) => setMoeilijker(e.target.value)} rows={2} />
         </label>
 
         <div className="knoppenrij formulier-knoppen">
           <button className="knop knop-primair" onClick={opslaan}>
             <Icoon naam="vink" maat={20} />
-            Opslaan
+            {t('Opslaan')}
           </button>
           <button className="knop" onClick={() => ga(`/eigen/${start.id}/tekenen`)}>
             <Icoon naam="potlood" maat={20} />
-            Tekening
+            {t('Tekening')}
           </button>
         </div>
       </main>

@@ -43,6 +43,7 @@ import { autoUitsnede } from '../../editor/editor';
 import { ga, terug } from '../../router';
 import { NietGevonden } from '../NietGevonden';
 import { eigenNaam } from './EigenOefeningen';
+import { t as vt } from '../../i18n/t';
 
 type Gereedschap = { soort: 'kies' } | { soort: 'plaats'; item: PaletItem } | { soort: 'lijn'; lijn: LijnSoort };
 type Selectie = { soort: 'object'; id: string } | { soort: 'lijn'; index: number } | null;
@@ -67,34 +68,36 @@ const VINGER = 22;
 const DRAAI_AFSTAND = 30;
 
 const LIJN_NAMEN: Record<LijnSoort, { naam: string; icoon: IcoonNaam }> = {
-  bal: { naam: 'Pass', icoon: 'lijnBal' },
-  loop: { naam: 'Lopen', icoon: 'lijnLoop' },
-  dribbel: { naam: 'Dribbel', icoon: 'lijnDribbel' },
+  bal: { naam: vt('Pass'), icoon: 'lijnBal' },
+  loop: { naam: vt('Lopen'), icoon: 'lijnLoop' },
+  dribbel: { naam: vt('Dribbel'), icoon: 'lijnDribbel' },
 };
 
+// i18n-ok (sleutels; de naam staat in GROEP_NAAM)
 const GROEPEN: PaletGroep[] = ['Spelers', 'Doelen', 'Materiaal', 'Vakken en tekst'];
+const GROEP_NAAM: Record<PaletGroep, string> = { Spelers: vt('Spelers'), Doelen: vt('Doelen'), Materiaal: vt('Materiaal'), 'Vakken en tekst': vt('Vakken en tekst') };
 
 const LOOPWIJZEN: { waarde: Lijn['manier']; naam: string }[] = [
-  { waarde: undefined, naam: 'Normaal' },
-  { waarde: 'sprint', naam: 'Sprint' },
-  { waarde: 'zijwaarts', naam: 'Zijwaarts' },
-  { waarde: 'achteruit', naam: 'Achteruit' },
+  { waarde: undefined, naam: vt('Normaal') },
+  { waarde: 'sprint', naam: vt('Sprint') },
+  { waarde: 'zijwaarts', naam: vt('Zijwaarts') },
+  { waarde: 'achteruit', naam: vt('Achteruit') },
 ];
 const HOOGTES: { waarde: Lijn['hoogte']; naam: string }[] = [
-  { waarde: undefined, naam: 'Grond' },
-  { waarde: 'halfhoog', naam: 'Halfhoog' },
-  { waarde: 'hoog', naam: 'Hoog' },
+  { waarde: undefined, naam: vt('Grond') },
+  { waarde: 'halfhoog', naam: vt('Halfhoog') },
+  { waarde: 'hoog', naam: vt('Hoog') },
 ];
 const HOOGTES_SCHOT: { waarde: Lijn['hoogte']; naam: string }[] = [
-  { waarde: 'grond', naam: 'Over de grond' },
-  { waarde: undefined, naam: 'Laag' },
-  { waarde: 'hoog', naam: 'Hoog' },
+  { waarde: 'grond', naam: vt('Over de grond') },
+  { waarde: undefined, naam: vt('Laag') },
+  { waarde: 'hoog', naam: vt('Hoog') },
 ];
 const AFLOPEN: { waarde: Lijn['afloop']; naam: string }[] = [
-  { waarde: 'goal', naam: 'Goal' },
-  { waarde: 'vangt', naam: 'Keeper vangt' },
-  { waarde: 'duikt', naam: 'Keeper duikt' },
-  { waarde: 'naast', naam: 'Naast' },
+  { waarde: 'goal', naam: vt('Goal') },
+  { waarde: 'vangt', naam: vt('Keeper vangt') },
+  { waarde: 'duikt', naam: vt('Keeper duikt') },
+  { waarde: 'naast', naam: vt('Naast') },
 ];
 const WACHTTIJDEN = [0, 0.5, 1, 2];
 const komma = (v: number) => String(v).replace('.', ',');
@@ -143,7 +146,7 @@ export function Tekenen({ id }: { id: string }) {
             naam: () => eigenNaam(eigenOefeningen.haal(start.id) ?? start),
             bewaar: (t) => eigenOefeningen.bewaar(metTekening(eigenOefeningen.haal(start.id) ?? start, t)),
             ouder: '/eigen',
-            verder: { label: 'Gegevens', naar: `/eigen/${start.id}/gegevens` },
+            verder: { label: vt('Gegevens'), naar: `/eigen/${start.id}/gegevens` },
           }
         : null,
     [start],
@@ -166,7 +169,7 @@ function PaletPlaatje({ item }: { item: PaletItem }) {
       objecten: [],
     };
     const o = item.maak(leeg, [0, 0]);
-    if (o.soort === 'tekst') o.tekst = 'Abc';
+    if (o.soort === 'tekst') o.tekst = vt('Abc');
     const v = objectVorm(o);
     const [x0, x1, y0, y1] = v.rechthoek ?? [-(v.straal ?? 0.5), v.straal ?? 0.5, -(v.straal ?? 0.5), v.straal ?? 0.5];
     const marge = Math.max(x1 - x0, y1 - y0) * 0.18 + 0.4;
@@ -821,7 +824,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
       <header className="editor-kop">
         <button
           className="kop-terug"
-          aria-label="Terug"
+          aria-label={vt('Terug')}
           onClick={() => {
             opslaan();
             terug(bron.ouder);
@@ -830,17 +833,17 @@ export function Editor({ bron }: { bron: EditorBron }) {
           <Icoon naam="terug" maat={26} />
         </button>
         <h1 className="editor-titel">{naam}</h1>
-        <button className="editor-knop" onClick={ongedaan} disabled={!gesch.kanTerug} aria-label="Ongedaan maken" title="Ongedaan maken">
+        <button className="editor-knop" onClick={ongedaan} disabled={!gesch.kanTerug} aria-label={vt('Ongedaan maken')} title={vt('Ongedaan maken')}>
           <Icoon naam="ongedaan" />
         </button>
-        <button className="editor-knop" onClick={herdoen} disabled={!gesch.kanVooruit} aria-label="Opnieuw" title="Opnieuw">
+        <button className="editor-knop" onClick={herdoen} disabled={!gesch.kanVooruit} aria-label={vt('Opnieuw')} title={vt('Opnieuw')}>
           <Icoon naam="herdoen" />
         </button>
-        <button className="editor-knop editor-afspelen" onClick={() => setDrieD(true)} aria-label="Afspelen" title="Afspelen (2D en 3D)">
+        <button className="editor-knop editor-afspelen" onClick={() => setDrieD(true)} aria-label={vt('Afspelen')} title={vt('Afspelen (2D en 3D)')}>
           <Icoon naam="afspelen" />
         </button>
         {bron.wissen && (
-          <button className="editor-knop" onClick={lijnenWissen} disabled={!t.lijnen?.length} aria-label="Lijnen wissen" title="Alle lijnen wissen">
+          <button className="editor-knop" onClick={lijnenWissen} disabled={!t.lijnen?.length} aria-label={vt('Lijnen wissen')} title={vt('Alle lijnen wissen')}>
             <Icoon naam="gum" />
           </button>
         )}
@@ -855,7 +858,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
           ref={canvasRef}
           className="editor-canvas"
           role="application"
-          aria-label="Tekenveld: tik om te kiezen, sleep om te verplaatsen, twee vingers om te zoomen"
+          aria-label={vt('Tekenveld: tik om te kiezen, sleep om te verplaatsen, twee vingers om te zoomen')}
           onPointerDown={opNeer}
           onPointerMove={opBeweeg}
           onPointerUp={opOp}
@@ -864,31 +867,31 @@ export function Editor({ bron }: { bron: EditorBron }) {
         />
         {beginMelding ? (
           <button className="editor-melding editor-melding-knop" onClick={() => setBeginMelding(undefined)}>
-            {beginMelding} <span className="editor-melding-weg">OK</span>
+            {beginMelding} <span className="editor-melding-weg">{vt('OK')}</span>
           </button>
         ) : (
-          animatie && <div className="editor-melding">Met animatie. Verschuif je iets, dan wordt het een tekening zonder animatie.</div>
+          animatie && <div className="editor-melding">{vt('Met animatie. Verschuif je iets, dan wordt het een tekening zonder animatie.')}</div>
         )}
         {meldingen.length > 0 && (
           <div className={`editor-waarschuwing${plaatsNaam ? ' hoger' : ''}`} role="status">
             <Icoon naam="info" maat={16} />
             {meldingen.some((m) => m.soort === 'fout')
-              ? `${meldingen.filter((m) => m.soort === 'fout').length === 1 ? 'Eén lijn doet' : `${meldingen.filter((m) => m.soort === 'fout').length} lijnen doen`} niet mee: tik op het rode nummer`
-              : 'Let op: tik op het oranje nummer'}
+              ? vt(meldingen.filter((m) => m.soort === 'fout').length === 1 ? 'Eén lijn doet niet mee: tik op het rode nummer' : '{n} lijnen doen niet mee: tik op het rode nummer', { n: meldingen.filter((m) => m.soort === 'fout').length })
+              : vt('Let op: tik op het oranje nummer')}
           </div>
         )}
-        {hint && !animatie && t.objecten.length === 0 && <div className="editor-melding">Kies onderin wat je wilt toevoegen en tik op het veld. Twee vingers (of het muiswiel): zoomen.</div>}
+        {hint && !animatie && t.objecten.length === 0 && <div className="editor-melding">{vt('Kies onderin wat je wilt toevoegen en tik op het veld. Twee vingers (of het muiswiel): zoomen.')}</div>}
         {plaatsNaam && (
           <div className="editor-plaats" role="status">
             <span>
-              <strong>{plaatsNaam}</strong> – {gereedschap.soort === 'lijn' ? 'sleep over het veld (vanaf een speler zit hij eraan vast)' : 'tik op het veld'}
+              <strong>{plaatsNaam}</strong> – {gereedschap.soort === 'lijn' ? vt('sleep over het veld (vanaf een speler zit hij eraan vast)') : vt('tik op het veld')}
             </span>
-            <button className="icoon-knop" aria-label="Klaar met plaatsen" onClick={() => kiesGereedschap({ soort: 'kies' })}>
+            <button className="icoon-knop" aria-label={vt('Klaar met plaatsen')} onClick={() => kiesGereedschap({ soort: 'kies' })}>
               <Icoon naam="kruis" maat={18} />
             </button>
           </div>
         )}
-        <button className="editor-heel" onClick={heelVeld} aria-label="Heel veld in beeld" title="Heel veld in beeld">
+        <button className="editor-heel" onClick={heelVeld} aria-label={vt('Heel veld in beeld')} title={vt('Heel veld in beeld')}>
           <Icoon naam="kompas" maat={20} />
         </button>
       </div>
@@ -901,7 +904,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
               {gekozen.nummer !== undefined && (
                 <span className="editor-nummer">
                   <button
-                    aria-label="Lager nummer"
+                    aria-label={vt('Lager nummer')}
                     onClick={() =>
                       zet(
                         zetObject(t, gekozen.id, {
@@ -912,9 +915,9 @@ export function Editor({ bron }: { bron: EditorBron }) {
                   >
                     <Icoon naam="min" maat={16} />
                   </button>
-                  <output aria-label="Nummer">{gekozen.nummer}</output>
+                  <output aria-label={vt('Nummer')}>{gekozen.nummer}</output>
                   <button
-                    aria-label="Hoger nummer"
+                    aria-label={vt('Hoger nummer')}
                     onClick={() =>
                       zet(
                         zetObject(t, gekozen.id, {
@@ -932,8 +935,8 @@ export function Editor({ bron }: { bron: EditorBron }) {
                   className="editor-tekst"
                   value={gekozen.naam ?? ''}
                   maxLength={20}
-                  placeholder="Naam"
-                  aria-label="Naam van de speler"
+                  placeholder={vt('Naam')}
+                  aria-label={vt('Naam van de speler')}
                   onChange={(e) => {
                     const naam = e.target.value;
                     const nieuw = zetObject(t, gekozen.id, { naam: naam || undefined });
@@ -943,16 +946,16 @@ export function Editor({ bron }: { bron: EditorBron }) {
                 />
               )}
               {gekozen.soort === 'tekst' && (
-                <input className="editor-tekst" value={gekozen.tekst ?? ''} maxLength={30} aria-label="Tekst" onChange={(e) => zet(zetObject(t, gekozen.id, { tekst: e.target.value }))} />
+                <input className="editor-tekst" value={gekozen.tekst ?? ''} maxLength={30} aria-label={vt('Tekst')} onChange={(e) => zet(zetObject(t, gekozen.id, { tekst: e.target.value }))} />
               )}
               {gekozen.soort === 'zone' && (
-                <span className="editor-kleuren" role="group" aria-label="Kleur">
+                <span className="editor-kleuren" role="group" aria-label={vt('Kleur')}>
                   {[undefined, ...ZONE_KLEUREN].map((k) => (
                     <button
                       key={k ?? 'geen'}
                       className={`kleur${gekozen.kleur === k ? ' aan' : ''}`}
                       style={{ background: k ?? 'transparent' }}
-                      aria-label={k ? `Kleur ${k}` : 'Geen kleur'}
+                      aria-label={k ? vt('Kleur {k}', { k }) : vt('Geen kleur')}
                       onClick={() => metToestemming(() => zet(zetObject(gesch.nu, gekozen.id, { kleur: k })))}
                     />
                   ))}
@@ -961,8 +964,8 @@ export function Editor({ bron }: { bron: EditorBron }) {
               {draaiBaar(gekozen) && (
                 <button
                   className="icoon-knop"
-                  aria-label="Draai 45 graden"
-                  title="Draai 45°"
+                  aria-label={vt('Draai 45 graden')}
+                  title={vt('Draai 45°')}
                   onClick={() => metToestemming(() => zet(draai(gesch.nu, gekozen.id, ((isPersoon(gekozen) ? (gekozen.kijkrichting ?? -90) : (gekozen.hoek ?? 0)) as number) + 45)))}
                 >
                   <Icoon naam="draai" maat={20} />
@@ -970,8 +973,8 @@ export function Editor({ bron }: { bron: EditorBron }) {
               )}
               <button
                 className="icoon-knop"
-                aria-label="Kopiëren"
-                title="Kopiëren"
+                aria-label={vt('Kopiëren')}
+                title={vt('Kopiëren')}
                 onClick={() => {
                   const k = kopieer(gesch.nu, gekozen.id);
                   zet(k.tekening);
@@ -984,21 +987,21 @@ export function Editor({ bron }: { bron: EditorBron }) {
           )}
           {gekozenLijn && sel?.soort === 'lijn' && (
             <>
-              <span className="editor-nummer editor-stap" aria-label="Stapnummer">
-                <span className="editor-stap-label">Stap</span>
+              <span className="editor-nummer editor-stap" aria-label={vt('Stapnummer')}>
+                <span className="editor-stap-label">{vt('Stap')}</span>
                 <button
-                  aria-label="Lager stapnummer"
+                  aria-label={vt('Lager stapnummer')}
                   disabled={(gekozenLijn.stap ?? 1) <= 1}
                   onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, stap: Math.max(1, (gekozenLijn.stap ?? 1) - 1) }))}
                 >
                   <Icoon naam="min" maat={16} />
                 </button>
-                <output aria-label="Stap">{gekozenLijn.stap ?? '–'}</output>
-                <button aria-label="Hoger stapnummer" onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, stap: Math.min(30, (gekozenLijn.stap ?? 0) + 1) }))}>
+                <output aria-label={vt('Stap')}>{gekozenLijn.stap ?? '–'}</output>
+                <button aria-label={vt('Hoger stapnummer')} onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, stap: Math.min(30, (gekozenLijn.stap ?? 0) + 1) }))}>
                   <Icoon naam="plus" maat={16} />
                 </button>
               </span>
-              <span className="editor-lijnsoorten" role="group" aria-label="Soort lijn">
+              <span className="editor-lijnsoorten" role="group" aria-label={vt('Soort lijn')}>
                 {(['bal', 'loop', 'dribbel'] as const).map((s) => (
                   <button
                     key={s}
@@ -1013,24 +1016,24 @@ export function Editor({ bron }: { bron: EditorBron }) {
                 ))}
               </span>
               <button className={`knop editor-klein${meldingen.some((m) => m.lijn === sel.index) ? ' editor-let-op' : ''}`} onClick={() => setOpties(true)}>
-                {meldingen.some((m) => m.lijn === sel.index) ? '! Opties' : 'Opties'}
+                {meldingen.some((m) => m.lijn === sel.index) ? vt('! Opties') : vt('Opties')}
               </button>
             </>
           )}
-          <button className="icoon-knop gevaar" aria-label="Verwijderen" title="Verwijderen" onClick={weg}>
+          <button className="icoon-knop gevaar" aria-label={vt('Verwijderen')} title={vt('Verwijderen')} onClick={weg}>
             <Icoon naam="prullenbak" maat={20} />
           </button>
         </div>
       )}
 
-      <nav className="editor-balk" aria-label="Gereedschap">
+      <nav className="editor-balk" aria-label={vt('Gereedschap')}>
         <button className={gereedschap.soort === 'kies' ? 'aan' : ''} aria-pressed={gereedschap.soort === 'kies'} onClick={() => kiesGereedschap({ soort: 'kies' })}>
           <Icoon naam="wijzer" />
-          <span>Kiezen</span>
+          <span>{vt('Kiezen')}</span>
         </button>
         <button className={gereedschap.soort === 'plaats' ? 'aan' : ''} aria-pressed={gereedschap.soort === 'plaats'} onClick={() => setPaletOpen(true)}>
           <Icoon naam="plus" />
-          <span>Toevoegen</span>
+          <span>{vt('Toevoegen')}</span>
         </button>
         {(['bal', 'loop', 'dribbel'] as const).map((s) => {
           const aan = gereedschap.soort === 'lijn' && gereedschap.lijn === s;
@@ -1045,16 +1048,16 @@ export function Editor({ bron }: { bron: EditorBron }) {
 
       {paletOpen && (
         <div className="paneel-achter" onClick={() => setPaletOpen(false)}>
-          <div className="paneel" role="dialog" aria-label="Toevoegen" onClick={(e) => e.stopPropagation()}>
+          <div className="paneel" role="dialog" aria-label={vt('Toevoegen')} onClick={(e) => e.stopPropagation()}>
             <div className="paneel-kop">
-              <h2>Toevoegen</h2>
-              <button className="icoon-knop" aria-label="Sluiten" onClick={() => setPaletOpen(false)}>
+              <h2>{vt('Toevoegen')}</h2>
+              <button className="icoon-knop" aria-label={vt('Sluiten')} onClick={() => setPaletOpen(false)}>
                 <Icoon naam="kruis" />
               </button>
             </div>
             {GROEPEN.map((g) => (
               <section key={g} className="palet-groep">
-                <h3>{g}</h3>
+                <h3>{GROEP_NAAM[g]}</h3>
                 <div className="palet">
                   {PALET.filter((p) => p.groep === g).map((p) => (
                     <button
@@ -1078,21 +1081,21 @@ export function Editor({ bron }: { bron: EditorBron }) {
 
       {drieD && (
         <div className="paneel-achter editor-3d">
-          <div className="paneel paneel-groot" role="dialog" aria-label="Afspelen">
+          <div className="paneel paneel-groot" role="dialog" aria-label={vt('Afspelen')}>
             <div className="paneel-kop">
-              <h2>{heeftLijnAnimatie(t) || animatie ? 'Afspelen' : 'Bekijken'}</h2>
-              <button className="icoon-knop" aria-label="Sluiten" onClick={() => setDrieD(false)}>
+              <h2>{heeftLijnAnimatie(t) || animatie ? vt('Afspelen') : vt('Bekijken')}</h2>
+              <button className="icoon-knop" aria-label={vt('Sluiten')} onClick={() => setDrieD(false)}>
                 <Icoon naam="kruis" />
               </button>
             </div>
             <AnimatieSpeler tekening={speelTekening} />
-            {!heeftLijnAnimatie(t) && !animatie && <p className="editor-uitleg">Nog geen animatie: teken lijnen (pass, lopen, dribbel). Elke lijn krijgt een stapnummer; zo speelt de oefening af.</p>}
+            {!heeftLijnAnimatie(t) && !animatie && <p className="editor-uitleg">{vt('Nog geen animatie: teken lijnen (pass, lopen, dribbel). Elke lijn krijgt een stapnummer; zo speelt de oefening af.')}</p>}
             {heeftLijnAnimatie(t) && (
               <label className="editor-schakel">
                 <input type="checkbox" checked={!!t.herhaalRij} onChange={() => zet({ ...t, herhaalRij: !t.herhaalRij })} />
                 <span>
-                  <strong>Herhaal voor de volgende spelers in de rij</strong>
-                  <span className="klein">Zet de andere spelers vlak achter de eerste speler (zonder eigen lijnen). Iedereen doet het patroon na elkaar en sluit daarna achteraan aan.</span>
+                  <strong>{vt('Herhaal voor de volgende spelers in de rij')}</strong>
+                  <span className="klein">{vt('Zet de andere spelers vlak achter de eerste speler (zonder eigen lijnen). Iedereen doet het patroon na elkaar en sluit daarna achteraan aan.')}</span>
                 </span>
               </label>
             )}
@@ -1100,7 +1103,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
               <ul className="editor-meldingen">
                 {meldingen.map((m, i) => (
                   <li key={i} className={m.soort === 'fout' ? 'fout' : ''}>
-                    {m.lijn >= 0 ? <strong>Stap {t.lijnen?.[m.lijn]?.stap ?? '?'}: </strong> : null}
+                    {m.lijn >= 0 ? <strong>{vt('Stap')} {t.lijnen?.[m.lijn]?.stap ?? '?'}: </strong> : null}
                     {m.tekst}
                   </li>
                 ))}
@@ -1108,7 +1111,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
             )}
             <button className="knop knop-primair knop-breed" onClick={() => setDrieD(false)}>
               <Icoon naam="potlood" maat={18} />
-              Terug naar tekenen
+              {vt('Terug naar tekenen')}
             </button>
           </div>
         </div>
@@ -1116,12 +1119,12 @@ export function Editor({ bron }: { bron: EditorBron }) {
 
       {opties && gekozenLijn && sel?.soort === 'lijn' && (
         <div className="paneel-achter" onClick={() => setOpties(false)}>
-          <div className="paneel" role="dialog" aria-label="Opties van de lijn" onClick={(e) => e.stopPropagation()}>
+          <div className="paneel" role="dialog" aria-label={vt('Opties van de lijn')} onClick={(e) => e.stopPropagation()}>
             <div className="paneel-kop">
               <h2>
-                {gekozenLijn.soort === 'bal' ? (isSchotLijn(t, gekozenLijn) ? 'Schot' : 'Pass') : gekozenLijn.soort === 'loop' ? 'Looplijn' : 'Dribbel'} – stap {gekozenLijn.stap ?? '–'}
+                {gekozenLijn.soort === 'bal' ? (isSchotLijn(t, gekozenLijn) ? vt('Schot') : vt('Pass')) : gekozenLijn.soort === 'loop' ? vt('Looplijn') : vt('Dribbel')} {vt('– stap {n}', { n: gekozenLijn.stap ?? '–' })}
               </h2>
-              <button className="icoon-knop" aria-label="Sluiten" onClick={() => setOpties(false)}>
+              <button className="icoon-knop" aria-label={vt('Sluiten')} onClick={() => setOpties(false)}>
                 <Icoon naam="kruis" />
               </button>
             </div>
@@ -1131,7 +1134,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
                   .filter((m) => m.lijn === sel.index)
                   .map((m, i) => (
                     <li key={i} className={m.soort === 'fout' ? 'fout' : ''}>
-                      {m.soort === 'fout' ? 'Doet niet mee: ' : 'Let op: '}
+                      {m.soort === 'fout' ? vt('Doet niet mee: ') : vt('Let op: ')}
                       {m.tekst}
                     </li>
                   ))}
@@ -1139,7 +1142,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
             )}
             {gekozenLijn.soort === 'loop' && (
               <section className="optie-groep">
-                <h3>Loopwijze</h3>
+                <h3>{vt('Loopwijze')}</h3>
                 <div className="chips">
                   {LOOPWIJZEN.map((w) => (
                     <button
@@ -1152,12 +1155,12 @@ export function Editor({ bron }: { bron: EditorBron }) {
                     </button>
                   ))}
                 </div>
-                <p className="klein">Over een ladder, horde of ring loopt hij vanzelf met voetenwerk of sprongen.</p>
+                <p className="klein">{vt('Over een ladder, horde of ring loopt hij vanzelf met voetenwerk of sprongen.')}</p>
               </section>
             )}
             {gekozenLijn.soort === 'bal' && (
               <section className="optie-groep">
-                <h3>Hoogte van de bal</h3>
+                <h3>{vt('Hoogte van de bal')}</h3>
                 <div className="chips">
                   {(isSchotLijn(t, gekozenLijn) ? HOOGTES_SCHOT : HOOGTES).map((w) => (
                     <button
@@ -1173,16 +1176,16 @@ export function Editor({ bron }: { bron: EditorBron }) {
             )}
             {doelnetUitkomst(t, gekozenLijn) && (
               <section className="optie-groep">
-                <h3>Doelnet</h3>
+                <h3>{vt('Doelnet')}</h3>
                 <p className="melding-goed doelnet-uitkomst" role="status">
-                  {doelnetUitkomst(t, gekozenLijn) === 'gat' ? 'Raak: de bal gaat door het gat het goal in.' : 'De bal raakt het net en kaatst terug.'}
+                  {doelnetUitkomst(t, gekozenLijn) === 'gat' ? vt('Raak: de bal gaat door het gat het goal in.') : vt('De bal raakt het net en kaatst terug.')}
                 </p>
-                <p className="klein">Mik in een hoek: laag of over de grond voor de onderste gaten, hoog voor de bovenste. Daartussen kaatst de bal terug.</p>
+                <p className="klein">{vt('Mik in een hoek: laag of over de grond voor de onderste gaten, hoog voor de bovenste. Daartussen kaatst de bal terug.')}</p>
               </section>
             )}
             {isSchotLijn(t, gekozenLijn) && !doelnetUitkomst(t, gekozenLijn) && (
               <section className="optie-groep">
-                <h3>Afloop van het schot</h3>
+                <h3>{vt('Afloop van het schot')}</h3>
                 <div className="chips">
                   {AFLOPEN.map((w) => {
                     const nu = gekozenLijn.afloop ?? (heeftKeeperBijGoal(t) ? 'vangt' : 'goal');
@@ -1193,15 +1196,15 @@ export function Editor({ bron }: { bron: EditorBron }) {
                     );
                   })}
                 </div>
-                {!heeftKeeperBijGoal(t) && <p className="klein">Zet een keeper in het goal: die kiest dan vanzelf positie en vangt of duikt.</p>}
+                {!heeftKeeperBijGoal(t) && <p className="klein">{vt('Zet een keeper in het goal: die kiest dan vanzelf positie en vangt of duikt.')}</p>}
               </section>
             )}
             <section className="optie-groep">
-              <h3>Wachten vóór deze stap</h3>
+              <h3>{vt('Wachten vóór deze stap')}</h3>
               <div className="chips">
                 {WACHTTIJDEN.map((w) => (
                   <button key={w} className={(gekozenLijn.wacht ?? 0) === w ? 'aan' : ''} onClick={() => zet(zetLijn(t, sel.index, { ...gekozenLijn, wacht: w || undefined }))}>
-                    {w ? `${komma(w)} s` : 'Niet'}
+                    {w ? `${komma(w)} s` : vt('Niet')}
                   </button>
                 ))}
               </div>
@@ -1210,8 +1213,8 @@ export function Editor({ bron }: { bron: EditorBron }) {
               <label className="editor-schakel">
                 <input type="checkbox" checked={!!t.herhaalRij} onChange={() => zet({ ...t, herhaalRij: !t.herhaalRij })} />
                 <span>
-                  <strong>Herhaal voor de volgende spelers in de rij</strong>
-                  <span className="klein">Geldt voor de hele oefening.</span>
+                  <strong>{vt('Herhaal voor de volgende spelers in de rij')}</strong>
+                  <span className="klein">{vt('Geldt voor de hele oefening.')}</span>
                 </span>
               </label>
             </section>
@@ -1225,13 +1228,13 @@ export function Editor({ bron }: { bron: EditorBron }) {
                     zet(zetLijn(t, sel.index, recht));
                   }}
                 >
-                  Recht maken
+                  {vt('Recht maken')}
                 </button>
               ) : (
                 <span />
               )}
               <button className="knop knop-primair" onClick={() => setOpties(false)}>
-                Klaar
+                {vt('Klaar')}
               </button>
             </div>
           </div>
@@ -1240,9 +1243,9 @@ export function Editor({ bron }: { bron: EditorBron }) {
 
       {vraag && (
         <div className="paneel-achter">
-          <div className="paneel paneel-vraag" role="alertdialog" aria-label="Animatie laten vervallen?">
-            <h2>Animatie laten vervallen?</h2>
-            <p>Deze oefening is een kopie met animatie. Als je iets verschuift, draait of weghaalt, wordt het een tekening zonder animatie. Iedereen blijft op zijn beginplek staan.</p>
+          <div className="paneel paneel-vraag" role="alertdialog" aria-label={vt('Animatie laten vervallen?')}>
+            <h2>{vt('Animatie laten vervallen?')}</h2>
+            <p>{vt('Deze oefening is een kopie met animatie. Als je iets verschuift, draait of weghaalt, wordt het een tekening zonder animatie. Iedereen blijft op zijn beginplek staan.')}</p>
             <div className="knoppenrij">
               <button
                 className="knop knop-primair"
@@ -1251,10 +1254,10 @@ export function Editor({ bron }: { bron: EditorBron }) {
                   setVraag(null);
                 }}
               >
-                Ja, aanpassen
+                {vt('Ja, aanpassen')}
               </button>
               <button className="knop" onClick={() => setVraag(null)}>
-                Annuleren
+                {vt('Annuleren')}
               </button>
             </div>
           </div>

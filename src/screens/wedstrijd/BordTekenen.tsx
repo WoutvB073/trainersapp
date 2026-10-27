@@ -3,6 +3,7 @@ import { Editor, type EditorBron } from '../eigen/Tekenen';
 import { borden, useBord } from '../../wedstrijd/opslag';
 import { bordNaam } from '../../wedstrijd/wedstrijd';
 import { NietGevonden } from '../NietGevonden';
+import { t } from '../../i18n/t';
 
 /** Tactiekbord of spelhervatting tekenen: dezelfde editor als bij eigen oefeningen (met een knop om de lijnen te wissen). */
 export function BordTekenen({ id }: { id: string }) {
@@ -17,7 +18,7 @@ export function BordTekenen({ id }: { id: string }) {
             naam: () => bordNaam(borden.haal(id) ?? start),
             bewaar: (t) => borden.bewaar({ ...(borden.haal(id) ?? start), tekening: t }),
             ouder: `/bord/${id}`,
-            verder: { label: 'Klaar', naar: `/bord/${id}` },
+            verder: { label: t('Klaar'), naar: `/bord/${id}` },
             wissen: true,
             namen: true,
           }

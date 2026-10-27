@@ -8,6 +8,7 @@ import { vervang } from '../../router';
 import { useTraining } from '../../training/opslag';
 import { trainingNaam } from '../../training/training';
 import { NietGevonden } from '../NietGevonden';
+import { t as vt } from '../../i18n/t';
 
 /** Trainingsmodus: de training op het veld doorlopen, oefening voor oefening (knoppen of vegen over de tekst). */
 export function TrainingModus({ id, nr }: { id: string; nr: number }) {
@@ -26,7 +27,7 @@ export function TrainingModus({ id, nr }: { id: string; nr: number }) {
       <Kop titel={trainingNaam(t)} ouder={`/training/${id}`} />
       <div className="modus-stap" aria-live="polite">
         <span>
-          Oefening {i + 1} van {totaal}
+          {vt('Oefening {nr} van {totaal}', { nr: i + 1, totaal })}
         </span>
         <div className="modus-punten" aria-hidden="true">
           {t.oefeningen.map((oid, k) => (
@@ -37,8 +38,8 @@ export function TrainingModus({ id, nr }: { id: string; nr: number }) {
       {!o ? (
         <main className="inhoud">
           <div className="leeg">
-            <p className="leeg-titel">Onbekende oefening</p>
-            <p>Deze oefening staat niet in deze versie van de app.</p>
+            <p className="leeg-titel">{vt('Onbekende oefening')}</p>
+            <p>{vt('Deze oefening staat niet in deze versie van de app.')}</p>
           </div>
         </main>
       ) : (
@@ -76,18 +77,18 @@ export function TrainingModus({ id, nr }: { id: string; nr: number }) {
               </ol>
             )}
             <section className="blok">
-              <h3>Uitleg</h3>
+              <h3>{vt('Uitleg')}</h3>
               <p>{o.uitleg}</p>
             </section>
             {o.organisatie && (
               <section className="blok">
-                <h3>Organisatie</h3>
+                <h3>{vt('Organisatie')}</h3>
                 <p>{o.organisatie}</p>
               </section>
             )}
             <section className="blok blok-twee">
               <div>
-                <h3>Benodigdheden</h3>
+                <h3>{vt('Benodigdheden')}</h3>
                 <ul className="opsomming">
                   {o.benodigdheden.map((b) => (
                     <li key={b}>{b}</li>
@@ -95,13 +96,13 @@ export function TrainingModus({ id, nr }: { id: string; nr: number }) {
                 </ul>
               </div>
               <div>
-                <h3>Aantal</h3>
+                <h3>{vt('Aantal')}</h3>
                 <p>{aantalTekst(o)}</p>
                 {o.meerSpelers && <p className="klein">{o.meerSpelers}</p>}
               </div>
             </section>
             <section className="blok">
-              <h3>Coachpunten</h3>
+              <h3>{vt('Coachpunten')}</h3>
               <ul className="vinkjes">
                 {o.coachpunten.map((c) => (
                   <li key={c}>
@@ -117,10 +118,10 @@ export function TrainingModus({ id, nr }: { id: string; nr: number }) {
       <div className="onderbalk modus-knoppen">
         <button className="knop" onClick={() => naar(i)} disabled={i === 0}>
           <Icoon naam="terug" maat={20} />
-          Vorige
+          {vt('Vorige')}
         </button>
         <button className="knop knop-primair" onClick={() => naar(i + 2)} disabled={i === totaal - 1}>
-          Volgende
+          {vt('Volgende')}
           <Icoon naam="verder" maat={20} />
         </button>
       </div>

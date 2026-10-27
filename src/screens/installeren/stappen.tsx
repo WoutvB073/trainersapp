@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Omgeving } from '../../engine/platform';
 import type { IcoonNaam } from '../../components/Icoon';
-import { APP_NAAM } from '../../config';
+import { t } from '../../i18n/t';
 
 export interface Stap {
   icoon: IcoonNaam;
@@ -22,7 +22,11 @@ export interface Uitleg {
   tip?: ReactNode;
 }
 
-const OPEN_APP: Stap = { icoon: 'huis', tekst: <>Open {APP_NAAM} voortaan via het nieuwe icoon.</> };
+import { zin } from '../../i18n/zin';
+
+export { zin };
+
+const OPEN_APP: Stap = { icoon: 'huis', tekst: zin('Open {app} voortaan via het nieuwe icoon.') };
 
 /** Kiest de juiste uitleg voor dit toestel en deze browser. */
 export function kiesUitleg(o: Omgeving): Uitleg {
@@ -30,27 +34,24 @@ export function kiesUitleg(o: Omgeving): Uitleg {
   if (o.browser === 'inapp') {
     const doel = o.os === 'ios' ? 'Safari' : 'Chrome';
     return {
-      titel: `Open deze pagina in ${doel}`,
-      intro: (
-        <>
-          Je bekijkt deze pagina in {o.appNaam ? <>de browser van <strong>{o.appNaam}</strong></> : 'de browser van een app'}.
-          Daar kun je {APP_NAAM} niet installeren.
-        </>
-      ),
+      titel: t('Open deze pagina in {doel}', { doel }),
+      intro: o.appNaam
+        ? zin('Je bekijkt deze pagina in de browser van **{appNaam}**. Daar kun je {app} niet installeren.', { appNaam: o.appNaam })
+        : zin('Je bekijkt deze pagina in de browser van een app. Daar kun je {app} niet installeren.'),
       stappen:
         o.os === 'ios'
           ? [
-              { icoon: 'meer', tekst: <>Tik op <strong>•••</strong> of het kompas-icoon.</> },
-              { icoon: 'kompas', tekst: <>Kies <strong>Open in Safari</strong> (of <strong>Open in browser</strong>).</> },
-              { icoon: 'deel', tekst: <>In Safari zie je deze pagina weer, met de stappen om te installeren.</> },
+              { icoon: 'meer', tekst: zin('Tik op **•••** of het kompas-icoon.') },
+              { icoon: 'kompas', tekst: zin('Kies **Open in Safari** (of **Open in browser**).') },
+              { icoon: 'deel', tekst: zin('In Safari zie je deze pagina weer, met de stappen om te installeren.') },
             ]
           : [
-              { icoon: 'puntjes', tekst: <>Tik rechtsboven op <strong>⋮</strong>.</> },
-              { icoon: 'kompas', tekst: <>Kies <strong>Openen in Chrome</strong> (of <strong>Openen in browser</strong>).</> },
-              { icoon: 'download', tekst: <>In Chrome zie je deze pagina weer, met de knop om te installeren.</> },
+              { icoon: 'puntjes', tekst: zin('Tik rechtsboven op **⋮**.') },
+              { icoon: 'kompas', tekst: zin('Kies **Openen in Chrome** (of **Openen in browser**).') },
+              { icoon: 'download', tekst: zin('In Chrome zie je deze pagina weer, met de knop om te installeren.') },
             ],
       kopieerLink: true,
-      tip: <>Lukt dat niet? Kopieer de link en plak hem in de adresbalk van {doel}.</>,
+      tip: zin('Lukt dat niet? Kopieer de link en plak hem in de adresbalk van {doel}.', { doel }),
     };
   }
 
@@ -58,12 +59,12 @@ export function kiesUitleg(o: Omgeving): Uitleg {
   if (o.os === 'ios') {
     if (o.browser !== 'safari') {
       return {
-        titel: 'Open deze pagina in Safari',
-        intro: <>Op {o.tablet ? 'de iPad' : 'de iPhone'} zet je {APP_NAAM} op je beginscherm via <strong>Safari</strong>.</>,
+        titel: t('Open deze pagina in Safari'),
+        intro: o.tablet ? zin('Op de iPad zet je {app} op je beginscherm via **Safari**.') : zin('Op de iPhone zet je {app} op je beginscherm via **Safari**.'),
         stappen: [
-          { icoon: 'kopieer', tekst: <>Tik hieronder op <strong>Kopieer link</strong>.</> },
-          { icoon: 'kompas', tekst: <>Open de app <strong>Safari</strong>.</> },
-          { icoon: 'plusVierkant', tekst: <>Tik op de adresbalk, kies <strong>Plak en ga</strong> en volg daar de stappen.</> },
+          { icoon: 'kopieer', tekst: zin('Tik hieronder op **Kopieer link**.') },
+          { icoon: 'kompas', tekst: zin('Open de app **Safari**.') },
+          { icoon: 'plusVierkant', tekst: zin('Tik op de adresbalk, kies **Plak en ga** en volg daar de stappen.') },
         ],
         kopieerLink: true,
       };
@@ -71,20 +72,20 @@ export function kiesUitleg(o: Omgeving): Uitleg {
     const nieuw = (o.safariVersie ?? 0) >= 26;
     const stappen: Stap[] = nieuw
       ? [
-          { icoon: 'meer', tekst: <>Tik {o.tablet ? 'rechtsboven' : 'rechtsonder'} op <strong>•••</strong>.</> },
-          { icoon: 'deel', tekst: <>Tik op <strong>Deel</strong>.</> },
-          { icoon: 'plusVierkant', tekst: <>Kies <strong>Zet op beginscherm</strong> (zie je het niet? Scroll omlaag).</> },
-          { icoon: 'schakelaar', tekst: <>Laat <strong>Open als webapp</strong> aan staan en tik op <strong>Voeg toe</strong>.</> },
+          { icoon: 'meer', tekst: o.tablet ? zin('Tik rechtsboven op **•••**.') : zin('Tik rechtsonder op **•••**.') },
+          { icoon: 'deel', tekst: zin('Tik op **Deel**.') },
+          { icoon: 'plusVierkant', tekst: zin('Kies **Zet op beginscherm** (zie je het niet? Scroll omlaag).') },
+          { icoon: 'schakelaar', tekst: zin('Laat **Open als webapp** aan staan en tik op **Voeg toe**.') },
           OPEN_APP,
         ]
       : [
-          { icoon: 'deel', tekst: <>Tik {o.tablet ? 'rechtsboven' : 'onderin'} op de <strong>Deel</strong>-knop.</> },
-          { icoon: 'plusVierkant', tekst: <>Kies <strong>Zet op beginscherm</strong> (zie je het niet? Scroll omlaag).</> },
-          { icoon: 'plus', tekst: <>Tik rechtsboven op <strong>Voeg toe</strong>.</> },
+          { icoon: 'deel', tekst: o.tablet ? zin('Tik rechtsboven op de **Deel**-knop.') : zin('Tik onderin op de **Deel**-knop.') },
+          { icoon: 'plusVierkant', tekst: zin('Kies **Zet op beginscherm** (zie je het niet? Scroll omlaag).') },
+          { icoon: 'plus', tekst: zin('Tik rechtsboven op **Voeg toe**.') },
           OPEN_APP,
         ];
     return {
-      titel: 'Zet de app op je beginscherm',
+      titel: t('Zet de app op je beginscherm'),
       stappen,
       pijl: o.tablet ? 'boven-rechts' : nieuw ? 'onder-rechts' : 'onder-midden',
     };
@@ -94,11 +95,11 @@ export function kiesUitleg(o: Omgeving): Uitleg {
   if (o.os === 'android') {
     if (o.browser === 'chrome') {
       return {
-        titel: 'Zet de app op je startscherm',
+        titel: t('Zet de app op je startscherm'),
         stappen: [
-          { icoon: 'puntjes', tekst: <>Tik rechtsboven op <strong>⋮</strong>.</> },
-          { icoon: 'download', tekst: <>Kies <strong>App installeren</strong> of <strong>Toevoegen aan startscherm</strong>.</> },
-          { icoon: 'vink', tekst: <>Tik op <strong>Installeren</strong>.</> },
+          { icoon: 'puntjes', tekst: zin('Tik rechtsboven op **⋮**.') },
+          { icoon: 'download', tekst: zin('Kies **App installeren** of **Toevoegen aan startscherm**.') },
+          { icoon: 'vink', tekst: zin('Tik op **Installeren**.') },
           OPEN_APP,
         ],
         installeerKnop: true,
@@ -106,11 +107,11 @@ export function kiesUitleg(o: Omgeving): Uitleg {
       };
     }
     return {
-      titel: 'Zet de app op je startscherm',
-      intro: <>Installeren werkt het best via <strong>Chrome</strong>. Kopieer de link en open hem in Chrome, of gebruik het menu van deze browser:</>,
+      titel: t('Zet de app op je startscherm'),
+      intro: zin('Installeren werkt het best via **Chrome**. Kopieer de link en open hem in Chrome, of gebruik het menu van deze browser:'),
       stappen: [
-        { icoon: 'puntjes', tekst: <>Open het menu van je browser (<strong>⋮</strong> of <strong>☰</strong>).</> },
-        { icoon: 'plusVierkant', tekst: <>Kies <strong>App installeren</strong> of <strong>Toevoegen aan startscherm</strong>.</> },
+        { icoon: 'puntjes', tekst: zin('Open het menu van je browser (**⋮** of **☰**).') },
+        { icoon: 'plusVierkant', tekst: zin('Kies **App installeren** of **Toevoegen aan startscherm**.') },
         OPEN_APP,
       ],
       installeerKnop: true,
@@ -120,12 +121,8 @@ export function kiesUitleg(o: Omgeving): Uitleg {
 
   // ── Onbekend mobiel toestel ──
   return {
-    titel: 'Zet de app op je beginscherm',
-    stappen: [
-      { icoon: 'puntjes', tekst: <>Open het menu van je browser.</> },
-      { icoon: 'plusVierkant', tekst: <>Kies <strong>App installeren</strong> of <strong>Toevoegen aan beginscherm</strong>.</> },
-      OPEN_APP,
-    ],
+    titel: t('Zet de app op je beginscherm'),
+    stappen: [{ icoon: 'puntjes', tekst: zin('Open het menu van je browser.') }, { icoon: 'plusVierkant', tekst: zin('Kies **App installeren** of **Toevoegen aan beginscherm**.') }, OPEN_APP],
     installeerKnop: true,
   };
 }
@@ -135,29 +132,29 @@ export function kiesUitlegComputer(o: Omgeving): Uitleg {
   if (o.browser === 'chrome' || o.browser === 'edge') {
     const chrome = o.browser === 'chrome';
     return {
-      titel: 'Installeer de app op je computer',
+      titel: t('Installeer de app op je computer'),
       stappen: [
-        { icoon: 'computer', tekst: <>Klik rechts in de <strong>adresbalk</strong> op het installatie-icoon.</> },
-        { icoon: 'vink', tekst: <>Klik op <strong>Installeren</strong>. {APP_NAAM} opent in een eigen venster.</> },
+        { icoon: 'computer', tekst: zin('Klik rechts in de **adresbalk** op het installatie-icoon.') },
+        { icoon: 'vink', tekst: zin('Klik op **Installeren**. {app} opent in een eigen venster.') },
         chrome
-          ? { icoon: 'puntjes', tekst: <>Geen icoon? Menu <strong>⋮</strong> → <strong>Casten, opslaan en delen</strong> → <strong>{APP_NAAM} installeren</strong>.</> }
-          : { icoon: 'meer', tekst: <>Geen icoon? Menu <strong>•••</strong> → <strong>Apps</strong> → <strong>{APP_NAAM} installeren</strong>.</> },
+          ? { icoon: 'puntjes', tekst: zin('Geen icoon? Menu **⋮** → **Casten, opslaan en delen** → **{app} installeren**.') }
+          : { icoon: 'meer', tekst: zin('Geen icoon? Menu **•••** → **Apps** → **{app} installeren**.') },
       ],
       installeerKnop: true,
     };
   }
   if (o.browser === 'safari') {
     return {
-      titel: 'Zet de app in je Dock',
+      titel: t('Zet de app in je Dock'),
       stappen: [
-        { icoon: 'browser', tekst: <>Kies in de menubalk <strong>Archief</strong> → <strong>Voeg toe aan Dock</strong>.</> },
-        { icoon: 'vink', tekst: <>Klik op <strong>Voeg toe</strong>. {APP_NAAM} staat nu in je Dock.</> },
+        { icoon: 'browser', tekst: zin('Kies in de menubalk **Archief** → **Voeg toe aan Dock**.') },
+        { icoon: 'vink', tekst: zin('Klik op **Voeg toe**. {app} staat nu in je Dock.') },
       ],
     };
   }
   return {
-    titel: 'Installeren via Chrome of Edge',
-    intro: <>Deze browser kan {APP_NAAM} niet als app installeren. Open deze pagina in <strong>Chrome</strong> of <strong>Edge</strong>, of gebruik hem gewoon in de browser.</>,
+    titel: t('Installeren via Chrome of Edge'),
+    intro: zin('Deze browser kan {app} niet als app installeren. Open deze pagina in **Chrome** of **Edge**, of gebruik hem gewoon in de browser.'),
     stappen: [],
     kopieerLink: true,
   };

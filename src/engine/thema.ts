@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { t } from '../i18n/t';
 
 /**
  * Clubkleuren en licht/donker. De kleuren van de app (koppen, knoppen, badges, tegels) komen uit CSS-variabelen die hier
@@ -36,7 +37,7 @@ export interface Thema {
 export const THEMAS: Thema[] = [
   {
     id: 'standaard',
-    naam: 'Groen (standaard)',
+    naam: t('Groen (standaard)'),
     licht: { primair: '#0f6b3a', opPrimair: '#ffffff', primairTekst: '#0f6b3a', primairLicht: '#e3f2e8', primairDonker: '#0a5229', accent: '#c2410c', opAccent: '#ffffff', accentLicht: '#fff0e6' },
     donker: { primair: '#16733f', opPrimair: '#ffffff', primairTekst: '#6fd59a', primairLicht: '#1d3a29', primairDonker: '#b8f0cf', accent: '#ff9a5c', opAccent: '#1a0f08', accentLicht: '#3a2418' },
   },
@@ -60,20 +61,20 @@ export const THEMAS: Thema[] = [
   },
   {
     id: 'groen',
-    naam: 'Groen-wit (fris)',
+    naam: t('Groen-wit (fris)'),
     // Fris lichtgroen met donkere tekst (duidelijk anders dan het standaard donkergroen).
     licht: { primair: '#3fd07a', opPrimair: '#0b2614', primairTekst: '#15803d', primairLicht: '#e3f9ec', primairDonker: '#0f5f2d', accent: '#0369a1', opAccent: '#ffffff', accentLicht: '#e0f2fe' },
     donker: { primair: '#3fd07a', opPrimair: '#0b2614', primairTekst: '#74e3a4', primairLicht: '#163826', primairDonker: '#c6f6d8', accent: '#7dd3fc', opAccent: '#06202e', accentLicht: '#10303f' },
   },
   {
     id: 'oranje',
-    naam: 'Oranje',
+    naam: t('Oranje'),
     licht: { primair: '#c2410c', opPrimair: '#ffffff', primairTekst: '#b23c0b', primairLicht: '#ffedd5', primairDonker: '#8a2f09', accent: '#1f2a33', opAccent: '#ffffff', accentLicht: '#e9eef1' },
     donker: { primair: '#c2410c', opPrimair: '#ffffff', primairTekst: '#ffa066', primairLicht: '#3d2414', primairDonker: '#ffe0c7', accent: '#a9bccf', opAccent: '#101820', accentLicht: '#1f2a33' },
   },
   {
     id: 'paars',
-    naam: 'Paars',
+    naam: t('Paars'),
     licht: { primair: '#6d28d9', opPrimair: '#ffffff', primairTekst: '#6d28d9', primairLicht: '#efe7fd', primairDonker: '#4c1d95', accent: '#c2410c', opAccent: '#ffffff', accentLicht: '#fff0e6' },
     donker: { primair: '#7c3aed', opPrimair: '#ffffff', primairTekst: '#c4a8ff', primairLicht: '#2b1f47', primairDonker: '#e9ddff', accent: '#ff9a5c', opAccent: '#1a0f08', accentLicht: '#3a2418' },
   },

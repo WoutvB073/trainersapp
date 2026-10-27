@@ -1,6 +1,7 @@
 import { arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, query, setDoc, updateDoc, writeBatch, type CollectionReference, type Firestore, type Unsubscribe } from 'firebase/firestore';
 import type { Rol, Team, TeamItem, TeamLid } from '../engine/teams';
 import { isGeldigeCode, nieuweCode, normaliseerCode } from './samenvoegen';
+import { t as vt, vergelijk } from '../i18n/t';
 
 /**
  * Teams in Firestore (zie firestore.rules voor wat wie mag). Alle functies krijgen de database en wie je bent mee,
@@ -21,7 +22,7 @@ const itemPad = (db: Firestore, team: string, item: string) => doc(db, 'teams', 
 /** Team aanmaken: jij bent beheerder en krijgt een code (bij een botsing een nieuwe code). */
 export async function maakTeam(ik: Ik, naam: string, toeval: () => number = Math.random): Promise<{ id: string; code: string }> {
   const schoon = naam.trim().slice(0, 60);
-  if (!schoon) throw new TeamFout('Geef het team een naam');
+  if (!schoon) throw new TeamFout(vt('Geef het team een naam'));
   for (let poging = 0; poging < 6; poging++) {
     const id = doc(collection(ik.db, 'teams')).id;
     const code = nieuweCode(toeval);
@@ -38,15 +39,15 @@ export async function maakTeam(ik: Ik, naam: string, toeval: () => number = Math
     await setDoc(doc(ik.db, 'users', ik.uid), { teams: arrayUnion(id) }, { merge: true });
     return { id, code };
   }
-  throw new TeamFout('Team aanmaken lukte niet. Probeer het nog eens.');
+  throw new TeamFout(vt('Team aanmaken lukte niet. Probeer het nog eens.'));
 }
 
 /** Team joinen met een code. */
 export async function joinTeam(ik: Ik, invoer: string): Promise<string> {
   const code = normaliseerCode(invoer);
-  if (!isGeldigeCode(code)) throw new TeamFout('Een teamcode heeft 6 tekens (letters en cijfers)');
+  if (!isGeldigeCode(code)) throw new TeamFout(vt('Een teamcode heeft 6 tekens (letters en cijfers)'));
   const c = await getDoc(doc(ik.db, 'teamCodes', code));
-  if (!c.exists()) throw new TeamFout('Deze code bestaat niet (meer). Vraag de beheerder om de nieuwe code.');
+  if (!c.exists()) throw new TeamFout(vt('Deze code bestaat niet (meer). Vraag de beheerder om de nieuwe code.'));
   const team = (c.data() as { team: string }).team;
   const bestaand = await getDoc(lidPad(ik.db, team, ik.uid)).catch(() => null);
   if (!bestaand?.exists()) await setDoc(lidPad(ik.db, team, ik.uid), { rol: 'lid', naam: ik.naam, sinds: Date.now(), code });
@@ -93,7 +94,7 @@ export async function verlaatAlleTeams(ik: Ik): Promise<void> {
 /** Team opheffen (beheerder): items, leden, code en team weg; jezelf als laatste. */
 export async function hefTeamOp(ik: Ik, team: string): Promise<void> {
   const t = await getDoc(teamPad(ik.db, team));
-  if (!t.exists()) throw new TeamFout('Team niet gevonden');
+  if (!t.exists()) throw new TeamFout(vt('Team niet gevonden'));
   const code = (t.data() as { code: string }).code;
   const items = await eenmalig(collection(ik.db, 'teams', team, 'items'));
   const leden = await eenmalig(collection(ik.db, 'teams', team, 'leden'));
@@ -135,7 +136,7 @@ export async function vernieuwCode(ik: Ik, team: string, toeval: () => number = 
       continue;
     }
   }
-  throw new TeamFout('Nieuwe code maken lukte niet');
+  throw new TeamFout(vt('Nieuwe code maken lukte niet'));
 }
 
 export const zetRol = (ik: Ik, team: string, uid: string, rol: Rol) => updateDoc(lidPad(ik.db, team, uid), { rol });
@@ -146,7 +147,7 @@ export async function deelItem(ik: Ik, team: string, item: { id: string; soort: 
   await setDoc(itemPad(ik.db, team, item.id), {
     soort: item.soort,
     data: item.data,
-    naam: (item.naam || 'Zonder naam').slice(0, 120),
+    naam: (item.naam || vt('Zonder naam')).slice(0, 120),
     eigenaar: ik.uid,
     eigenaarNaam: ik.naam,
     gewijzigd: Date.now(),
@@ -190,7 +191,7 @@ export function volgTeams(ik: Ik, opLijst: (teams: Team[]) => void, opFout: () =
       if (!ikLid) continue;
       lijst.push({ ...x.team, id, rol: ikLid.rol, leden: [...x.leden].sort((a, b) => a.sinds - b.sinds), items: [...x.items].sort((a, b) => b.gewijzigd - a.gewijzigd) });
     }
-    opLijst(lijst.sort((a, b) => a.naam.localeCompare(b.naam, 'nl')));
+    opLijst(lijst.sort((a, b) => vergelijk(a.naam, b.naam)));
   };
   const weg = (id: string, ookUitLijst: boolean) => {
     const x = per.get(id);

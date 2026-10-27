@@ -29,7 +29,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online, getest en akkoord |
 | 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online, getest en akkoord |
 | 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online, getest en akkoord (D0-correctie in 0.25.0) |
-| 18. Deel D – D0 (stuitbal stompen) ✅ · D1 Help · D2 Engels → 0.25.0 | ⏳ bezig |
+| 18. Deel D – D0 (stuitbal stompen) ✅ · D1 Help ✅ · D2 Engels: schermen ✅, oefeningen ⏳ → 0.25.0 | ⏳ bezig |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze

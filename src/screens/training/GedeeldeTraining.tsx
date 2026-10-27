@@ -3,7 +3,6 @@ import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { Labels, meervoud } from '../../components/Labels';
 import { Miniatuur } from '../../components/Miniatuur';
-import { APP_NAAM } from '../../config';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
 import { trainingen } from '../../training/opslag';
@@ -11,6 +10,8 @@ import { eigenOefeningen } from '../../eigen/opslag';
 import { benodigdheden, datumTekst, trainingNaam, uitCode } from '../../training/training';
 import type { Oefening } from '../../model/types';
 import { Toast, useToast } from './onderdelen';
+import { t as vt } from '../../i18n/t';
+import { zin } from '../../i18n/zin';
 
 /**
  * Gedeelde training (link): bekijken en met één knop opslaan. Werkt ook als de app (nog) niet is geïnstalleerd;
@@ -27,11 +28,11 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
   if (!g) {
     return (
       <div className="pagina">
-        <Kop titel="Gedeelde training" ouder="/" />
+        <Kop titel={vt('Gedeelde training')} ouder="/" />
         <main className="inhoud smal">
           <div className="leeg">
-            <p className="leeg-titel">Deze link klopt niet</p>
-            <p>Vraag de trainer om de link opnieuw te sturen.</p>
+            <p className="leeg-titel">{vt('Deze link klopt niet')}</p>
+            <p>{vt('Vraag de trainer om de link opnieuw te sturen.')}</p>
           </div>
         </main>
       </div>
@@ -47,16 +48,16 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
       ...rest,
       oefeningen: [...new Set(g.oefeningen.map((id) => ids.get(id) ?? id))],
     });
-    if (nietGeinstalleerd) toon('Opgeslagen in deze browser');
+    if (nietGeinstalleerd) toon(vt('Opgeslagen in deze browser'));
     else ga(`/training/${t.id}`);
   };
 
   return (
     <div className="pagina">
-      <Kop titel="Gedeelde training" ouder={nietGeinstalleerd ? undefined : '/'} />
+      <Kop titel={vt('Gedeelde training')} ouder={nietGeinstalleerd ? undefined : '/'} />
       <main className="inhoud smal">
         <section className="blok gedeeld-kop">
-          <p className="klein">Je hebt een training gekregen</p>
+          <p className="klein">{vt('Je hebt een training gekregen')}</p>
           <h2 className="detail-titel">{trainingNaam(g)}</h2>
           <p>
             {[meervoud(oefeningen.length, 'oefening', 'oefeningen'), meervoud(g.spelers, 'speler', 'spelers'), meervoud(g.keepers, 'keeper', 'keepers'), g.datum ? datumTekst(g.datum) : undefined]
@@ -66,16 +67,16 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
           {!nietGeinstalleerd && (
             <button className="knop knop-primair knop-breed" onClick={opslaan}>
               <Icoon naam="download" maat={20} />
-              Opslaan in mijn trainingen
+              {vt('Opslaan in mijn trainingen')}
             </button>
           )}
         </section>
 
         {nietGeinstalleerd && (
           <section className="blok gedeeld-uitleg">
-            <h3>In de app openen</h3>
+            <h3>{vt('In de app openen')}</h3>
             <p>
-              Heb je {APP_NAAM} al op je beginscherm? Kopieer deze link, open de app en kies <strong>Mijn trainingen → Gedeelde training openen via een link</strong>.
+              {zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Mijn trainingen → Gedeelde training openen via een link**.')}
             </p>
             <div className="knoppenrij">
               <button
@@ -83,25 +84,25 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
                 onClick={() =>
                   void navigator.clipboard
                     .writeText(location.href)
-                    .then(() => toon('Link gekopieerd'))
-                    .catch(() => toon('Kopiëren lukte niet: houd de adresbalk ingedrukt'))
+                    .then(() => toon(vt('Link gekopieerd')))
+                    .catch(() => toon(vt('Kopiëren lukte niet: houd de adresbalk ingedrukt')))
                 }
               >
                 <Icoon naam="kopieer" maat={20} />
-                Kopieer link
+                {vt('Kopieer link')}
               </button>
               {opInstalleren && (
                 <button className="knop" onClick={opInstalleren}>
                   <Icoon naam="plusVierkant" maat={20} />
-                  App installeren
+                  {vt('App installeren')}
                 </button>
               )}
             </div>
           </section>
         )}
 
-        <h2 className="sectie-titel">Oefeningen</h2>
-        {onbekend > 0 && <p className="waarschuwing">{meervoud(onbekend, 'oefening staat', 'oefeningen staan')} niet in deze versie van de app. Werk de app bij.</p>}
+        <h2 className="sectie-titel">{vt('Oefeningen')}</h2>
+        {onbekend > 0 && <p className="waarschuwing">{vt(onbekend === 1 ? '1 oefening staat niet in deze versie van de app. Werk de app bij.' : '{n} oefeningen staan niet in deze versie van de app. Werk de app bij.', { n: onbekend })}</p>}
         <ol className="onderdelen alleen-lezen">
           {oefeningen.map((o, i) => (
             <li key={o.id} className="onderdeel">
@@ -119,7 +120,7 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
 
         {spullen.length > 0 && (
           <section className="blok">
-            <h3>Klaarzetten</h3>
+            <h3>{vt('Klaarzetten')}</h3>
             <ul className="klaarzetten">
               {spullen.map((b) => (
                 <li key={b.tekst}>

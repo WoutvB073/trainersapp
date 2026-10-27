@@ -19,11 +19,13 @@ import { EigenOefeningen, NieuweOefening } from './screens/eigen/EigenOefeningen
 import { Tekenen } from './screens/eigen/Tekenen';
 import { Gegevens } from './screens/eigen/Gegevens';
 import { Instellingen } from './screens/Instellingen';
+import { Help } from './screens/Help';
 import { BordScherm, GedeeldWedstrijd, OpstellingScherm, TeamWedstrijdScherm, Wedstrijd } from './screens/wedstrijd/Wedstrijd';
 import { BordTekenen } from './screens/wedstrijd/BordTekenen';
 import { Account, SamenvoegenVraag } from './screens/online/Account';
 import { Teams, TeamScherm, TeamTrainingScherm } from './screens/online/Teams';
 import { browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen } from './engine/platform';
+import { t } from './i18n/t';
 
 function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => void }) {
   switch (route.naam) {
@@ -61,6 +63,8 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <Gegevens key={route.id} id={route.id} />;
     case 'instellingen':
       return <Instellingen />;
+    case 'help':
+      return <Help key={route.onderwerp ?? ''} open={route.onderwerp} />;
     case 'wedstrijd':
       return <Wedstrijd />;
     case 'opstelling':
@@ -129,8 +133,8 @@ function AppSchermen({ opInstalleren }: { opInstalleren?: () => void }) {
       <SamenvoegenVraag />
       {nieuweVersie && (
         <div className="melding" role="status">
-          <span>Er is een nieuwe versie</span>
-          <button onClick={werkBij}>Bijwerken</button>
+          <span>{t('Er is een nieuwe versie')}</span>
+          <button onClick={werkBij}>{t('Bijwerken')}</button>
         </div>
       )}
     </>

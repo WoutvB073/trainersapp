@@ -7,13 +7,14 @@ import { maakWeergave2D, type Weergave } from './weergave';
 import type { CameraStand, Weergave3D } from './render3d';
 import { Icoon } from '../components/Icoon';
 import { poppetjes, usePoppetjes } from '../engine/poppetjes';
+import { t } from '../i18n/t';
 
 export const SNELHEDEN = [0.5, 1, 2] as const;
 const snelheidTekst = (s: number) => `${String(s).replace('.', ',')}×`;
 const CAMERAS: { stand: CameraStand; naam: string }[] = [
-  { stand: 'boven', naam: 'Boven' },
-  { stand: 'schuin', naam: 'Schuin' },
-  { stand: 'achter', naam: 'Achter goal' },
+  { stand: 'boven', naam: t('Boven') },
+  { stand: 'schuin', naam: t('Schuin') },
+  { stand: 'achter', naam: t('Achter goal') },
 ];
 
 type Modus = '3d' | '2d';
@@ -105,7 +106,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
     const zet = (w: Weergave) => {
       weergaveRef.current = w;
       w.element.setAttribute('role', 'img');
-      w.element.setAttribute('aria-label', 'Animatie van de oefening (tik om te pauzeren of af te spelen)');
+      w.element.setAttribute('aria-label', t('Animatie van de oefening (tik om te pauzeren of af te spelen)'));
       vak.prepend(w.element);
       pasMaatAan();
     };
@@ -122,7 +123,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
                 setUitleg(false);
                 schrijf(UITLEG, '1');
               },
-              opFout: () => naar2D('3D viel weg; je ziet nu de 2D-weergave.'),
+              opFout: () => naar2D(t('3D viel weg; je ziet nu de 2D-weergave.')),
               looplijnen: looplijnenRef.current,
               eenvoudig,
             });
@@ -131,10 +132,10 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             setKlaar3d(true);
             if (lees(UITLEG) !== '1') setUitleg(true);
           } catch {
-            naar2D('3D werkt niet op dit toestel; je ziet de 2D-weergave.');
+            naar2D(t('3D werkt niet op dit toestel; je ziet de 2D-weergave.'));
           }
         })
-        .catch(() => naar2D('3D kon niet worden geladen; je ziet de 2D-weergave.'));
+        .catch(() => naar2D(t('3D kon niet worden geladen; je ziet de 2D-weergave.')));
     }
     return () => {
       weg = true;
@@ -188,10 +189,10 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
           const mediaan = rest[Math.floor(rest.length / 2)]!;
           // Onder ± 28 beelden per seconde: eerst eenvoudige poppetjes; is het dan nog te traag, dan 2D.
           if (!eenvoudig && mediaan > 36 && poppetjes.automatisch()) {
-            setMelding('3D liep niet soepel; je ziet nu eenvoudige poppetjes (aan te passen bij Instellingen).');
+            setMelding(t('3D liep niet soepel; je ziet nu eenvoudige poppetjes (aan te passen bij Instellingen).'));
           } else if (mediaan > 45) {
             schrijf(TRAAG, '1');
-            naar2D('Dit toestel is te traag voor 3D; je ziet de 2D-weergave.');
+            naar2D(t('Dit toestel is te traag voor 3D; je ziet de 2D-weergave.'));
           }
         }
       }
@@ -260,10 +261,10 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
   return (
     <div className="speler">
       <div ref={vakRef} className={`speler-vak${modus === '3d' ? ' is-3d' : ''}`} onPointerDown={tikBegin} onClick={tik}>
-        {modus === '3d' && !klaar3d && <div className="speler-laden">3D laden…</div>}
+        {modus === '3d' && !klaar3d && <div className="speler-laden">{t('3D laden…')}</div>}
         <div className="speler-boven">
           {modus === '3d' && klaar3d ? (
-            <div className="speler-groep" role="group" aria-label="Camera">
+            <div className="speler-groep" role="group" aria-label={t('Camera')}>
               {CAMERAS.map((c) => (
                 <button key={c.stand} className={c.stand === camera ? 'aan' : ''} aria-pressed={c.stand === camera} onClick={() => kiesCamera(c.stand)}>
                   {c.naam}
@@ -273,7 +274,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
           ) : (
             <span />
           )}
-          <div className="speler-groep" role="group" aria-label="Weergave">
+          <div className="speler-groep" role="group" aria-label={t('Weergave')}>
             {(['3d', '2d'] as const).map((m) => (
               <button key={m} className={m === modus ? 'aan' : ''} aria-pressed={m === modus} onClick={() => kiesModus(m)}>
                 {m.toUpperCase()}
@@ -281,7 +282,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             ))}
           </div>
         </div>
-        {uitleg && modus === '3d' && klaar3d && <div className="speler-uitleg">{aanraak ? 'Veeg om te draaien · knijp om te zoomen' : 'Sleep om te draaien · scroll om te zoomen'}</div>}
+        {uitleg && modus === '3d' && klaar3d && <div className="speler-uitleg">{aanraak ? t('Veeg om te draaien · knijp om te zoomen') : t('Sleep om te draaien · scroll om te zoomen')}</div>}
         {melding && (
           <div className="speler-melding" role="status">
             {melding}
@@ -298,32 +299,32 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             max={totaal}
             step={0.01}
             defaultValue={0}
-            aria-label="Voortgang"
+            aria-label={t('Voortgang')}
             onInput={(e) => {
               tRef.current = Number(e.currentTarget.value);
               teken(true);
             }}
           />
           <div className="speler-knoppen">
-            <button className="knop-rond" onClick={opnieuw} aria-label="Opnieuw vanaf het begin">
+            <button className="knop-rond" onClick={opnieuw} aria-label={t('Opnieuw vanaf het begin')}>
               <Icoon naam="opnieuw" />
             </button>
-            <button className="knop-rond knop-hoofd" onClick={afspelenPauze} aria-label={speelt ? 'Pauze' : 'Afspelen'}>
+            <button className="knop-rond knop-hoofd" onClick={afspelenPauze} aria-label={speelt ? t('Pauze') : t('Afspelen')}>
               <Icoon naam={speelt ? 'pauze' : 'afspelen'} maat={26} />
             </button>
-            <button className={`knop-rond${herhalen ? ' aan' : ''}`} onClick={() => setHerhalen(!herhalen)} aria-pressed={herhalen} aria-label="Herhalen" title="Herhalen">
+            <button className={`knop-rond${herhalen ? ' aan' : ''}`} onClick={() => setHerhalen(!herhalen)} aria-pressed={herhalen} aria-label={t('Herhalen')} title={t('Herhalen')}>
               <Icoon naam="herhalen" />
             </button>
             <button
               className={`knop-rond${looplijnen ? ' aan' : ''}`}
               onClick={wisselLooplijnen}
               aria-pressed={looplijnen}
-              aria-label="Looplijnen"
-              title={looplijnen ? 'Looplijnen verbergen' : 'Looplijnen tonen'}
+              aria-label={t('Looplijnen')}
+              title={looplijnen ? t('Looplijnen verbergen') : t('Looplijnen tonen')}
             >
               <Icoon naam="looplijn" />
             </button>
-            <div className="snelheid" role="group" aria-label="Snelheid">
+            <div className="snelheid" role="group" aria-label={t('Snelheid')}>
               {SNELHEDEN.map((s) => (
                 <button key={s} className={s === snelheid ? 'aan' : ''} onClick={() => setSnelheid(s)} aria-pressed={s === snelheid}>
                   {snelheidTekst(s)}

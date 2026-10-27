@@ -10,8 +10,9 @@ import { nieuweTekening } from '../../editor/editor';
 import { SOORT_NAAM } from '../../data/categorieen';
 import type { EigenOefening, Soort, VeldType } from '../../model/types';
 import { Toast, useToast } from '../training/onderdelen';
+import { lijstTekst, t } from '../../i18n/t';
 
-export const eigenNaam = (o: Pick<EigenOefening, 'naam'>) => o.naam.trim() || 'Naamloze oefening';
+export const eigenNaam = (o: Pick<EigenOefening, 'naam'>) => o.naam.trim() || t('Naamloze oefening');
 
 function Regel({ o, opMelding }: { o: EigenOefening; opMelding: (s: string) => void }) {
   const af = inBibliotheek(o);
@@ -28,7 +29,7 @@ function Regel({ o, opMelding }: { o: EigenOefening; opMelding: (s: string) => v
         <Miniatuur tekening={o.tekening} className="eigen-plaatje" />
         <span className="kaart-tekst">
           <span className="kaart-titel">{eigenNaam(o)}</span>
-          <span className="kaart-uitleg">{af ? `${SOORT_NAAM[o.soort]} · ${o.uitleg || 'Eigen oefening'}` : `Nog niet in de bibliotheek: ${ontbreekt(o).join(' en ').toLowerCase()}.`}</span>
+          <span className="kaart-uitleg">{af ? `${SOORT_NAAM[o.soort]} · ${o.uitleg || t('Eigen oefening')}` : t('Nog niet in de bibliotheek: {wat}.', { wat: lijstTekst(ontbreekt(o)).toLowerCase() })}</span>
           {af && <Labels oefening={o} />}
         </span>
       </a>
@@ -41,7 +42,7 @@ function Regel({ o, opMelding }: { o: EigenOefening; opMelding: (s: string) => v
           aria-label={`${eigenNaam(o)} dupliceren`}
           onClick={() => {
             eigenOefeningen.dupliceer(o.id);
-            opMelding('Kopie gemaakt');
+            opMelding(t('Kopie gemaakt'));
           }}
         >
           <Icoon naam="kopieer" maat={20} />
@@ -50,9 +51,9 @@ function Regel({ o, opMelding }: { o: EigenOefening; opMelding: (s: string) => v
           className="icoon-knop gevaar"
           aria-label={`${eigenNaam(o)} verwijderen`}
           onClick={() => {
-            if (window.confirm(`"${eigenNaam(o)}" verwijderen?`)) {
+            if (window.confirm(t('"{w0}" verwijderen?', { w0: eigenNaam(o) }))) {
               eigenOefeningen.verwijder(o.id);
-              opMelding('Oefening verwijderd');
+              opMelding(t('Oefening verwijderd'));
             }
           }}
         >
@@ -68,16 +69,16 @@ export function EigenOefeningen() {
   const [melding, toon] = useToast();
   return (
     <div className="pagina">
-      <Kop titel="Eigen oefeningen" ouder="/" />
+      <Kop titel={t('Eigen oefeningen')} ouder="/" />
       <main className="inhoud smal">
         <button className="knop knop-primair knop-breed" onClick={() => ga('/eigen/nieuw')}>
           <Icoon naam="plus" maat={20} />
-          Nieuwe oefening
+          {t('Nieuwe oefening')}
         </button>
         {lijst.length === 0 ? (
           <div className="leeg">
-            <p className="leeg-titel">Nog geen eigen oefeningen</p>
-            <p>Teken je eigen oefening, of kopieer een oefening uit de bibliotheek (knop onder de oefening) en pas hem aan.</p>
+            <p className="leeg-titel">{t('Nog geen eigen oefeningen')}</p>
+            <p>{t('Teken je eigen oefening, of kopieer een oefening uit de bibliotheek (knop onder de oefening) en pas hem aan.')}</p>
           </div>
         ) : (
           <ul className="eigen-lijst">
@@ -86,7 +87,7 @@ export function EigenOefeningen() {
             ))}
           </ul>
         )}
-        <p className="voetnoot">Eigen oefeningen staan op dit toestel. Zit er een eigen oefening in een training die je deelt, dan gaat hij mee in de link.</p>
+        <p className="voetnoot">{t('Eigen oefeningen staan op dit toestel. Zit er een eigen oefening in een training die je deelt, dan gaat hij mee in de link.')}</p>
       </main>
       <Toast tekst={melding} />
     </div>
@@ -96,15 +97,15 @@ export function EigenOefeningen() {
 const VELDEN: { type: VeldType; naam: string; uitleg: string }[] = [
   {
     type: 'leeg',
-    naam: 'Leeg veld',
-    uitleg: 'Een vak zonder lijnen, de maat kies je zelf',
+    naam: t('Leeg veld'),
+    uitleg: t('Een vak zonder lijnen, de maat kies je zelf'),
   },
   {
     type: 'half',
-    naam: 'Half veld',
-    uitleg: '68 × 52,5 m, met goal en zestien',
+    naam: t('Half veld'),
+    uitleg: t('68 × 52,5 m, met goal en zestien'),
   },
-  { type: 'heel', naam: 'Heel veld', uitleg: '68 × 105 m' },
+  { type: 'heel', naam: t('Heel veld'), uitleg: '68 × 105 m' },
 ];
 
 function Maat({ label, waarde, zet }: { label: string; waarde: number; zet: (v: number) => void }) {
@@ -112,11 +113,11 @@ function Maat({ label, waarde, zet }: { label: string; waarde: number; zet: (v: 
     <div className="stapper">
       <span className="stapper-label">{label}</span>
       <div className="stapper-knoppen">
-        <button type="button" onClick={() => zet(Math.max(5, waarde - 5))} disabled={waarde <= 5} aria-label={`${label} 5 meter kleiner`}>
+        <button type="button" onClick={() => zet(Math.max(5, waarde - 5))} disabled={waarde <= 5} aria-label={t('{label} 5 meter kleiner', { label })}>
           <Icoon naam="min" maat={20} />
         </button>
         <output aria-label={label}>{waarde} m</output>
-        <button type="button" onClick={() => zet(Math.min(100, waarde + 5))} disabled={waarde >= 100} aria-label={`${label} 5 meter groter`}>
+        <button type="button" onClick={() => zet(Math.min(100, waarde + 5))} disabled={waarde >= 100} aria-label={t('{label} 5 meter groter', { label })}>
           <Icoon naam="plus" maat={20} />
         </button>
       </div>
@@ -140,11 +141,11 @@ export function NieuweOefening() {
 
   return (
     <div className="pagina">
-      <Kop titel="Nieuwe oefening" ouder="/eigen" />
+      <Kop titel={t('Nieuwe oefening')} ouder="/eigen" />
       <main className="inhoud smal">
         <section className="blok">
-          <h3>Voor</h3>
-          <div className="keuze-twee" role="radiogroup" aria-label="Soort oefening">
+          <h3>{t('Voor')}</h3>
+          <div className="keuze-twee" role="radiogroup" aria-label={t('Soort oefening')}>
             {(['veld', 'keeper'] as const).map((s) => (
               <button key={s} role="radio" aria-checked={soort === s} className={`keuze${soort === s ? ' aan' : ''}`} onClick={() => setSoort(s)}>
                 <Icoon naam={s === 'veld' ? 'spelers' : 'keeper'} maat={20} />
@@ -154,8 +155,8 @@ export function NieuweOefening() {
           </div>
         </section>
         <section className="blok">
-          <h3>Veld</h3>
-          <div className="veld-keuzes" role="radiogroup" aria-label="Veld">
+          <h3>{t('Veld')}</h3>
+          <div className="veld-keuzes" role="radiogroup" aria-label={t('Veld')}>
             {VELDEN.map((v) => (
               <button key={v.type} role="radio" aria-checked={veld === v.type} className={`veld-keuze${veld === v.type ? ' aan' : ''}`} onClick={() => setVeld(v.type)}>
                 <span className={`veld-icoon veld-icoon-${v.type}`} aria-hidden="true" />
@@ -168,14 +169,14 @@ export function NieuweOefening() {
           </div>
           {veld === 'leeg' && (
             <div className="veld-maat">
-              <Maat label="Breedte" waarde={breedte} zet={setBreedte} />
-              <Maat label="Lengte" waarde={lengte} zet={setLengte} />
+              <Maat label={t('Breedte')} waarde={breedte} zet={setBreedte} />
+              <Maat label={t('Lengte')} waarde={lengte} zet={setLengte} />
             </div>
           )}
         </section>
         <button className="knop knop-primair knop-breed" onClick={maak}>
           <Icoon naam="potlood" maat={20} />
-          Beginnen met tekenen
+          {t('Beginnen met tekenen')}
         </button>
       </main>
     </div>

@@ -2,6 +2,7 @@ import type { Oefening, Soort } from '../model/types';
 import { eigenOefeningen } from '../eigen/opslag';
 import { inBibliotheek } from '../eigen/eigen';
 import { teamOefeningen, vindTeamOefening } from '../engine/teams';
+import { vergelijk } from '../i18n/t';
 
 /**
  * Alle ingebouwde oefeningen. Elk bestand in oefeningen/veld en oefeningen/keepers is een lijst oefeningen;
@@ -49,5 +50,5 @@ export function vindOefening(id: string): Oefening | undefined {
 export function oefeningenVan(soort: Soort, categorie?: string): Oefening[] {
   return alleOefeningen()
     .filter((o) => o.soort === soort && (!categorie || o.categorieen.includes(categorie)))
-    .sort((a, b) => a.naam.localeCompare(b.naam, 'nl'));
+    .sort((a, b) => vergelijk(a.naam, b.naam));
 }

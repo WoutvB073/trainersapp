@@ -6,6 +6,7 @@ import { exportNaam, leesExport, maakExport, voegSamen } from '../engine/exporte
 import { favorieten, useFavorieten } from '../engine/favorieten';
 import { omgeving } from '../engine/platform';
 import { trainingen, useTrainingen } from '../training/opslag';
+import { lijstTekst, t } from '../i18n/t';
 
 /** Een bestand aanbieden: op een telefoon/tablet via het deelmenu (bewaren in Bestanden e.d.), anders downloaden. */
 async function bied(naam: string, tekst: string): Promise<'gedeeld' | 'gedownload' | 'geannuleerd'> {
@@ -45,8 +46,8 @@ export function GegevensBlok() {
     setMelding(null);
     const bestand = maakExport({ eigen: eigenOefeningen.lijst(), trainingen: trainingen.lijst(), favorieten: [...favorieten.alle()] });
     const hoe = await bied(exportNaam(), JSON.stringify(bestand, null, 1));
-    if (hoe === 'gedownload') setMelding({ goed: true, tekst: `Bestand ${exportNaam()} staat bij je downloads.` });
-    else if (hoe === 'gedeeld') setMelding({ goed: true, tekst: 'Bestand gemaakt. Bewaar het op een plek die je terugvindt (bijv. Bestanden of je mail).' });
+    if (hoe === 'gedownload') setMelding({ goed: true, tekst: t('Bestand {w0} staat bij je downloads.', { w0: exportNaam() }) });
+    else if (hoe === 'gedeeld') setMelding({ goed: true, tekst: t('Bestand gemaakt. Bewaar het op een plek die je terugvindt (bijv. Bestanden of je mail).') });
   };
 
   const importeer = async (f: File | undefined) => {
@@ -54,7 +55,7 @@ export function GegevensBlok() {
     if (!f) return;
     const bestand = leesExport(await f.text());
     if (!bestand) {
-      setMelding({ goed: false, tekst: 'Dit is geen TopTraining-bestand (of het is beschadigd).' });
+      setMelding({ goed: false, tekst: t('Dit is geen TopTraining-bestand (of het is beschadigd).') });
       return;
     }
     const s = voegSamen({ eigen: eigenOefeningen.lijst(), trainingen: trainingen.lijst(), favorieten: [...favorieten.alle()] }, bestand);
@@ -66,33 +67,32 @@ export function GegevensBlok() {
       s.trainingen.length ? meervoud(s.trainingen.length, 'training', 'trainingen') : '',
       s.favorieten.length ? meervoud(s.favorieten.length, 'favoriet', 'favorieten') : '',
     ].filter(Boolean);
-    const erbij = delen.length ? `Erbij gekomen: ${delen.join(', ').replace(/, ([^,]*)$/, ' en $1')}.` : 'Er kwam niets bij: alles stond er al.';
-    setMelding({ goed: true, tekst: s.overgeslagen && delen.length ? `${erbij} ${s.overgeslagen} stond${s.overgeslagen === 1 ? '' : 'en'} er al.` : erbij });
+    const erbij = delen.length ? t('Erbij gekomen: {w0}.', { w0: delen.join(', ').replace(/, ([^,]*)$/, ' en $1') }) : t('Er kwam niets bij: alles stond er al.');
+    setMelding({ goed: true, tekst: s.overgeslagen && delen.length ? t(s.overgeslagen === 1 ? '{erbij} 1 stond er al.' : '{erbij} {overgeslagen} stonden er al.', { erbij, overgeslagen: s.overgeslagen }) : erbij });
   };
 
   const inhoud = [meervoud(eigen.length, 'eigen oefening', 'eigen oefeningen'), meervoud(lijst.length, 'training', 'trainingen'), meervoud(favs.size, 'favoriet', 'favorieten')];
   return (
     <section className="blok">
-      <h3>Je gegevens</h3>
+      <h3>{t('Je gegevens')}</h3>
       <p className="klein">
-        Bewaar je {inhoud.join(', ').replace(/, ([^,]*)$/, ' en $1')} in een bestand, of zet ze over naar een ander apparaat. Importeren voegt samen: er wordt
-        niets overschreven en niets komt dubbel.
+        {t('Bewaar je {inhoud} in een bestand, of zet ze over naar een ander apparaat. Importeren voegt samen: er wordt niets overschreven en niets komt dubbel.', { inhoud: lijstTekst(inhoud) })}
       </p>
       <div className="knoppenrij">
         <button className="knop" onClick={() => void exporteer()}>
           <Icoon naam="deel" maat={18} />
-          Exporteren
+          {t('Exporteren')}
         </button>
         <button className="knop" onClick={() => kiezer.current?.click()}>
           <Icoon naam="importeer" maat={18} />
-          Importeren
+          {t('Importeren')}
         </button>
         <input
           ref={kiezer}
           type="file"
           accept=".json,application/json,text/plain"
           hidden
-          aria-label="Bestand om te importeren"
+          aria-label={t('Bestand om te importeren')}
           onChange={(e) => {
             void importeer(e.target.files?.[0]);
             e.target.value = '';

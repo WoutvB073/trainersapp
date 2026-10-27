@@ -6,14 +6,15 @@ import { onlineBeschikbaar } from '../../online/config';
 import { ga } from '../../router';
 import { meervoud } from '../../components/Labels';
 import { APP_NAAM } from '../../config';
+import { lijstTekst, t } from '../../i18n/t';
 
 const SYNC_TEKST: Record<SyncStatus, string> = {
-  uit: 'Niet ingelogd',
-  bezig: 'Synchroniseren…',
-  klaar: 'Alles staat online',
-  wacht: 'Nog niet alles staat online',
-  offline: 'Offline: wordt bewaard tot je weer internet hebt',
-  fout: 'Synchroniseren lukt nu niet; je gegevens blijven op dit apparaat',
+  uit: t('Niet ingelogd'),
+  bezig: t('Synchroniseren…'),
+  klaar: t('Alles staat online'),
+  wacht: t('Nog niet alles staat online'),
+  offline: t('Offline: wordt bewaard tot je weer internet hebt'),
+  fout: t('Synchroniseren lukt nu niet; je gegevens blijven op dit apparaat'),
 };
 
 /** Onopvallende regel: is alles gesynchroniseerd? */
@@ -64,11 +65,11 @@ export function Account() {
   if (!onlineBeschikbaar()) {
     return (
       <div className="pagina">
-        <Kop titel="Account" ouder="/instellingen" />
+        <Kop titel={t('Account')} ouder="/instellingen" />
         <main className="inhoud smal">
           <div className="leeg">
-            <p className="leeg-titel">Online opslag komt eraan</p>
-            <p>Inloggen en teams worden nog ingesteld. Alles werkt gewoon op dit apparaat.</p>
+            <p className="leeg-titel">{t('Online opslag komt eraan')}</p>
+            <p>{t('Inloggen en teams worden nog ingesteld. Alles werkt gewoon op dit apparaat.')}</p>
           </div>
         </main>
       </div>
@@ -94,7 +95,7 @@ export function Account() {
   if (s.account) {
     return (
       <div className="pagina">
-        <Kop titel="Account" ouder="/instellingen" />
+        <Kop titel={t('Account')} ouder="/instellingen" />
         <main className="inhoud smal formulier">
           <section className="blok account-blok">
             <span className="account-icoon" aria-hidden="true">
@@ -106,15 +107,15 @@ export function Account() {
               <SyncRegel />
             </div>
           </section>
-          <p className="klein">Je eigen oefeningen, trainingen, favorieten en instellingen staan online en zijn op al je apparaten gelijk. Zonder internet werkt alles gewoon; wijzigingen gaan mee zodra je weer online bent.</p>
+          <p className="klein">{t('Je eigen oefeningen, trainingen, favorieten en instellingen staan online en zijn op al je apparaten gelijk. Zonder internet werkt alles gewoon; wijzigingen gaan mee zodra je weer online bent.')}</p>
           <div className="knoppenrij">
             <button className="knop knop-primair" onClick={() => ga('/teams')}>
               <Icoon naam="team" maat={20} />
-              Teams
+              {t('Teams')}
             </button>
             <button className="knop" disabled={bezig} onClick={() => void doe((m) => m.uitloggen())}>
               <Icoon naam="uitloggen" maat={20} />
-              Uitloggen
+              {t('Uitloggen')}
             </button>
           </div>
           {fout && (
@@ -123,27 +124,27 @@ export function Account() {
             </p>
           )}
           <section className="blok gevaar-blok">
-            <h3>Account verwijderen</h3>
+            <h3>{t('Account verwijderen')}</h3>
             {!verwijderen ? (
               <>
-                <p className="klein">Je account en al je online gegevens worden verwijderd. Je teams verlaat je (ben je de enige, dan wordt het team opgeheven).</p>
+                <p className="klein">{t('Je account en al je online gegevens worden verwijderd. Je teams verlaat je (ben je de enige, dan wordt het team opgeheven).')}</p>
                 <button className="knop knop-gevaar" onClick={() => setVerwijderen(true)}>
                   <Icoon naam="prullenbak" maat={18} />
-                  Account verwijderen…
+                  {t('Account verwijderen…')}
                 </button>
               </>
             ) : (
               <>
                 <label className="veld-label">
-                  Typ ter controle je wachtwoord
+                  {t('Typ ter controle je wachtwoord')}
                   <input type="password" autoComplete="current-password" value={wachtwoord} onChange={(e) => setWachtwoord(e.target.value)} />
                 </label>
                 <div className="knoppenrij">
-                  <button className="knop knop-gevaar" disabled={bezig || !wachtwoord} onClick={() => void doe((m) => m.verwijderAccount(wachtwoord), 'Je account is verwijderd.')}>
-                    Definitief verwijderen
+                  <button className="knop knop-gevaar" disabled={bezig || !wachtwoord} onClick={() => void doe((m) => m.verwijderAccount(wachtwoord), t('Je account is verwijderd.'))}>
+                    {t('Definitief verwijderen')}
                   </button>
                   <button className="knop" onClick={() => setVerwijderen(false)}>
-                    Annuleren
+                    {t('Annuleren')}
                   </button>
                 </div>
               </>
@@ -157,17 +158,17 @@ export function Account() {
   const maken = tab === 'maken';
   return (
     <div className="pagina">
-      <Kop titel="Account" ouder="/instellingen" />
+      <Kop titel={t('Account')} ouder="/instellingen" />
       <main className="inhoud smal formulier">
         <p className="klein">
-          Inloggen is niet nodig: {APP_NAAM} werkt ook zonder account. Met een account staan je oefeningen en trainingen op al je apparaten en kun je ze met je team delen.
+          {t('Inloggen is niet nodig: {app} werkt ook zonder account. Met een account staan je oefeningen en trainingen op al je apparaten en kun je ze met je team delen.', { app: APP_NAAM })}
         </p>
         <div className="keuze-twee" role="tablist">
           <button role="tab" aria-selected={!maken} className={`keuze${!maken ? ' aan' : ''}`} onClick={() => setTab('inloggen')}>
-            Inloggen
+            {t('Inloggen')}
           </button>
           <button role="tab" aria-selected={maken} className={`keuze${maken ? ' aan' : ''}`} onClick={() => setTab('maken')}>
-            Account maken
+            {t('Account maken')}
           </button>
         </div>
         <form
@@ -179,16 +180,16 @@ export function Account() {
         >
           {maken && (
             <label className="veld-label">
-              Naam <span className="klein">(zien je teamgenoten)</span>
+              {t('Naam')} <span className="klein">{t('(zien je teamgenoten)')}</span>
               <input value={naam} onChange={(e) => setNaam(e.target.value)} autoComplete="name" maxLength={60} required />
             </label>
           )}
           <label className="veld-label">
-            E-mailadres
+            {t('E-mailadres')}
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" inputMode="email" required />
           </label>
           <label className="veld-label">
-            Wachtwoord {maken && <span className="klein">(minstens 6 tekens)</span>}
+            {t('Wachtwoord')} {maken && <span className="klein">{t('(minstens 6 tekens)')}</span>}
             <input type="password" value={wachtwoord} onChange={(e) => setWachtwoord(e.target.value)} autoComplete={maken ? 'new-password' : 'current-password'} minLength={6} required />
           </label>
           {fout && (
@@ -203,18 +204,18 @@ export function Account() {
           )}
           <button className="knop knop-primair knop-breed" type="submit" disabled={bezig}>
             <Icoon naam="persoon" maat={20} />
-            {bezig ? 'Even geduld…' : maken ? 'Account maken' : 'Inloggen'}
+            {bezig ? t('Even geduld…') : maken ? t('Account maken') : t('Inloggen')}
           </button>
           {!maken && (
             <button
               type="button"
               className="link-knop"
               onClick={() => {
-                if (!email.trim()) return setFout('Vul eerst je e-mailadres in.');
-                void doe((m) => m.wachtwoordVergeten(email), 'Als er een account is met dit adres, krijg je een e-mail om een nieuw wachtwoord te kiezen. De link opent in de browser; kom daarna terug in de app en log in met je nieuwe wachtwoord.');
+                if (!email.trim()) return setFout(t('Vul eerst je e-mailadres in.'));
+                void doe((m) => m.wachtwoordVergeten(email), t('Als er een account is met dit adres, krijg je een e-mail om een nieuw wachtwoord te kiezen. De link opent in de browser; kom daarna terug in de app en log in met je nieuwe wachtwoord.'));
               }}
             >
-              Wachtwoord vergeten?
+              {t('Wachtwoord vergeten?')}
             </button>
           )}
         </form>
@@ -237,18 +238,18 @@ export function SamenvoegenVraag() {
   const antwoord = (ja: boolean) => void online().then((m) => m.beantwoordSamenvoegen(ja));
   return (
     <div className="paneel-achter">
-      <div className="paneel paneel-vraag" role="alertdialog" aria-label="Gegevens naar je account?">
-        <h2>Gegevens van dit apparaat meenemen?</h2>
+      <div className="paneel paneel-vraag" role="alertdialog" aria-label={t('Gegevens naar je account?')}>
+        <h2>{t('Gegevens van dit apparaat meenemen?')}</h2>
         <p>
-          Op dit apparaat staan {delen.join(', ').replace(/, ([^,]*)$/, ' en $1')}. Wil je die bij je account zetten? Dan staan ze ook op je andere apparaten. Dubbele worden samengevoegd.
+          {t('Op dit apparaat staan {wat}. Wil je die bij je account zetten? Dan staan ze ook op je andere apparaten. Dubbele worden samengevoegd.', { wat: lijstTekst(delen) })}
         </p>
-        <p className="klein">Kies je "Nee", dan blijven ze gewoon op dit apparaat staan en zie je ze weer als je uitlogt.</p>
+        <p className="klein">{t('Kies je "Nee", dan blijven ze gewoon op dit apparaat staan en zie je ze weer als je uitlogt.')}</p>
         <div className="knoppenrij">
           <button className="knop knop-primair" onClick={() => antwoord(true)}>
-            Ja, meenemen
+            {t('Ja, meenemen')}
           </button>
           <button className="knop" onClick={() => antwoord(false)}>
-            Nee
+            {t('Nee')}
           </button>
         </div>
       </div>

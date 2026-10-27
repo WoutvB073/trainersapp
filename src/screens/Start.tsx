@@ -10,6 +10,7 @@ import { maakTraining } from './training/MijnTrainingen';
 import type { Soort } from '../model/types';
 import { KeepersPlaatje, SpelersPlaatje, WedstrijdPlaatje } from '../components/Illustraties';
 import { useOpstellingen, useBorden } from '../wedstrijd/opslag';
+import { t } from '../i18n/t';
 
 function Tegel({ soort }: { soort: Soort }) {
   const aantal = OEFENINGEN.filter((o) => o.soort === soort).length;
@@ -25,7 +26,7 @@ function Tegel({ soort }: { soort: Soort }) {
     >
       {soort === 'veld' ? <SpelersPlaatje /> : <KeepersPlaatje />}
       <span className="tegel-tekst">
-        <span className="tegel-titel">{soort === 'veld' ? 'Spelers' : 'Keepers'}</span>
+        <span className="tegel-titel">{soort === 'veld' ? t('Spelers') : t('Keepers')}</span>
         <span className="tegel-sub">{meervoud(aantal, 'oefening', 'oefeningen')}</span>
       </span>
       <Icoon naam="verder" className="tegel-pijl" />
@@ -47,15 +48,15 @@ function TrainingTegel() {
         </g>
       </svg>
       <span className="tegel-tekst">
-        <span className="tegel-titel">Training</span>
-        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'training opgeslagen', 'trainingen opgeslagen') : 'Stel je training samen'}</span>
+        <span className="tegel-titel">{t('Training')}</span>
+        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'training opgeslagen', 'trainingen opgeslagen') : t('Stel je training samen')}</span>
         <span className="tegel-knoppen">
           <button className="knop knop-primair" onClick={maakTraining}>
             <Icoon naam="plus" maat={18} />
-            Training maken
+            {t('Training maken')}
           </button>
           <button className="knop" onClick={() => ga('/trainingen')}>
-            Mijn trainingen
+            {t('Mijn trainingen')}
           </button>
         </span>
       </span>
@@ -80,15 +81,15 @@ function EigenTegel() {
         </g>
       </svg>
       <span className="tegel-tekst">
-        <span className="tegel-titel">Eigen oefeningen</span>
-        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'eigen oefening', 'eigen oefeningen') : 'Teken je eigen oefening'}</span>
+        <span className="tegel-titel">{t('Eigen oefeningen')}</span>
+        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'eigen oefening', 'eigen oefeningen') : t('Teken je eigen oefening')}</span>
         <span className="tegel-knoppen">
           <button className="knop knop-primair" onClick={() => ga('/eigen/nieuw')}>
             <Icoon naam="plus" maat={18} />
-            Nieuwe oefening
+            {t('Nieuwe oefening')}
           </button>
           <button className="knop" onClick={() => ga('/eigen')}>
-            Mijn oefeningen
+            {t('Mijn oefeningen')}
           </button>
         </span>
       </span>
@@ -109,8 +110,8 @@ function WedstrijdTegel() {
     >
       <WedstrijdPlaatje />
       <span className="tegel-tekst">
-        <span className="tegel-titel">Wedstrijd</span>
-        <span className="tegel-sub">{n ? meervoud(n, 'opstelling of bord', 'opstellingen en borden') : 'Opstelling, tactiekbord, spelhervattingen'}</span>
+        <span className="tegel-titel">{t('Wedstrijd')}</span>
+        <span className="tegel-sub">{n ? meervoud(n, 'opstelling of bord', 'opstellingen en borden') : t('Opstelling, tactiekbord, spelhervattingen')}</span>
       </span>
       <Icoon naam="verder" className="tegel-pijl" />
     </a>
@@ -125,12 +126,17 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
         <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="start-logo" width={56} height={56} />
         <div>
           <h1 className="start-titel">{APP_NAAM}</h1>
-          <p className="start-sub">Oefeningen voor spelers en keepers</p>
+          <p className="start-sub">{t('Oefeningen voor spelers en keepers')}</p>
         </div>
-        <SyncIcoon />
-        <button className="icoon-knop start-instellingen" aria-label="Instellingen" title="Instellingen" onClick={() => ga('/instellingen')}>
-          <Icoon naam="instellingen" maat={26} />
-        </button>
+        <div className="start-acties">
+          <SyncIcoon />
+          <button className="icoon-knop start-help" aria-label={t('Help')} title={t('Help')} onClick={() => ga('/help')}>
+            <Icoon naam="vraag" maat={25} />
+          </button>
+          <button className="icoon-knop start-instellingen" aria-label={t('Instellingen')} title={t('Instellingen')} onClick={() => ga('/instellingen')}>
+            <Icoon naam="instellingen" maat={26} />
+          </button>
+        </div>
       </header>
       <main className="inhoud">
         <div className="tegels">
@@ -143,10 +149,10 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
         {opInstalleren && (
           <button className="link-knop" onClick={opInstalleren}>
             <Icoon naam="computer" maat={18} />
-            {APP_NAAM} als app installeren
+            {t('{app} als app installeren', { app: APP_NAAM })}
           </button>
         )}
-        <p className="voetnoot start-voet">Versie {VERSIE}</p>
+        <p className="voetnoot start-voet">{t('Versie')} {VERSIE}</p>
       </main>
     </div>
   );

@@ -4,6 +4,8 @@ import { useInstallatie, vraagInstallatie } from '../../engine/installeren';
 import { Icoon } from '../../components/Icoon';
 import { APP_NAAM } from '../../config';
 import { kiesUitleg, kiesUitlegComputer, type Stap } from './stappen';
+import { t } from '../../i18n/t';
+import { zin } from '../../i18n/zin';
 
 const link = () => location.href.split('#')[0]!;
 
@@ -37,13 +39,13 @@ export function Installeren({ computer = false, opBrowserGekozen }: { computer?:
           <div className="poort-gelukt">
             <Icoon naam="vink" maat={44} />
           </div>
-          <h1 className="poort-titel">Gelukt!</h1>
+          <h1 className="poort-titel">{t('Gelukt!')}</h1>
           <p className="poort-lead">
             {computer ? (
-              <>{APP_NAAM} staat nu als app op je computer.</>
+              <>{t('{app} staat nu als app op je computer.', { app: APP_NAAM })}</>
             ) : (
               <>
-                Open de app nu via het icoon <strong>{APP_NAAM}</strong> op je startscherm.
+                {zin('Open de app nu via het icoon **{app}** op je startscherm.')}
               </>
             )}
           </p>
@@ -59,22 +61,22 @@ export function Installeren({ computer = false, opBrowserGekozen }: { computer?:
       <header className="poort-kop">
         <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="poort-logo" width={72} height={72} />
         <h1 className="poort-titel">{APP_NAAM}</h1>
-        <p className="poort-lead">Voetbaloefeningen voor spelers en keepers, met bewegende uitleg.</p>
+        <p className="poort-lead">{t('Voetbaloefeningen voor spelers en keepers, met bewegende uitleg.')}</p>
       </header>
 
       <section className="poort-kaart" aria-labelledby="poort-stappen">
         <h2 id="poort-stappen" className="poort-kaart-titel">
-          {knop ? 'Installeer de app' : uitleg.titel}
+          {knop ? t('Installeer de app') : uitleg.titel}
         </h2>
 
         {knop ? (
           <>
             <button className="poort-knop" onClick={installeer}>
               <Icoon naam="download" />
-              Installeren
+              {t('Installeren')}
             </button>
             <details className="poort-zelf">
-              <summary>Lukt het niet? Zo doe je het zelf</summary>
+              <summary>{t('Lukt het niet? Zo doe je het zelf')}</summary>
               <Stappen stappen={uitleg.stappen} />
             </details>
           </>
@@ -92,10 +94,10 @@ export function Installeren({ computer = false, opBrowserGekozen }: { computer?:
               onClick={async () => setGekopieerd(await kopieer(link()))}
             >
               <Icoon naam="kopieer" />
-              {gekopieerd ? 'Link gekopieerd' : 'Kopieer link'}
+              {gekopieerd ? t('Link gekopieerd') : t('Kopieer link')}
             </button>
             {gekopieerd === false && (
-              <input className="poort-link" readOnly value={link()} aria-label="Link naar deze pagina" onFocus={(e) => e.currentTarget.select()} />
+              <input className="poort-link" readOnly value={link()} aria-label={t('Link naar deze pagina')} onFocus={(e) => e.currentTarget.select()} />
             )}
           </div>
         )}
@@ -106,18 +108,18 @@ export function Installeren({ computer = false, opBrowserGekozen }: { computer?:
         <div className="poort-browser">
           <button className="poort-knop poort-knop-tweede" onClick={opBrowserGekozen}>
             <Icoon naam="browser" />
-            Gewoon in de browser gebruiken
+            {t('Gewoon in de browser gebruiken')}
           </button>
-          <p className="poort-voet">Deze keuze wordt onthouden. Installeren kan later altijd nog via het startscherm.</p>
+          <p className="poort-voet">{t('Deze keuze wordt onthouden. Installeren kan later altijd nog via het startscherm.')}</p>
         </div>
       ) : (
-        <p className="poort-voet">Heb je {APP_NAAM} al op je beginscherm? Open hem dan via het icoon.</p>
+        <p className="poort-voet">{t('Heb je {app} al op je beginscherm? Open hem dan via het icoon.', { app: APP_NAAM })}</p>
       )}
 
       {uitleg.pijl && !knop && (
         <div className={`poort-pijl poort-pijl--${uitleg.pijl}`} aria-hidden="true">
           <div className="poort-pijl-binnen">
-            <span className="poort-pijl-label">Begin hier</span>
+            <span className="poort-pijl-label">{t('Begin hier')}</span>
             <svg viewBox="0 0 24 24" width="34" height="34">
               <path d="M12 3v17M5 13l7 7 7-7" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

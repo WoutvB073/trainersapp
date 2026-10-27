@@ -1,6 +1,7 @@
 import type { EigenOefening, Oefening, Soort, Tekening } from '../model/types';
 import { maakId } from '../model/id';
 import { autoUitsnede, bevries } from '../editor/editor';
+import { t } from '../i18n/t';
 
 /** Eigen oefeningen hebben een id die met "eigen-" begint (zo zie je in een training meteen wat eigen is). */
 export const EIGEN_VOORVOEGSEL = 'eigen-';
@@ -48,7 +49,7 @@ export function dupliceerEigen(o: EigenOefening, nu = Date.now(), id = EIGEN_VOO
   return {
     ...kloon(o),
     id,
-    naam: o.naam ? `${o.naam} (kopie)` : '',
+    naam: o.naam ? t('{naam} (kopie)', { naam: o.naam }) : '',
     gemaakt: nu,
     gewijzigd: nu,
   };
@@ -57,8 +58,8 @@ export function dupliceerEigen(o: EigenOefening, nu = Date.now(), id = EIGEN_VOO
 /** Wat ontbreekt er nog om de oefening in de bibliotheek te zetten? (Alleen naam en een categorie zijn verplicht.) */
 export function ontbreekt(o: Pick<Oefening, 'naam' | 'categorieen'>): string[] {
   const uit: string[] = [];
-  if (!o.naam.trim()) uit.push('Geef de oefening een naam');
-  if (!o.categorieen.length) uit.push('Kies minstens één categorie');
+  if (!o.naam.trim()) uit.push(t('Geef de oefening een naam'));
+  if (!o.categorieen.length) uit.push(t('Kies minstens één categorie'));
   return uit;
 }
 

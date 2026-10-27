@@ -5,7 +5,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { DeelMetTeam } from '../online/Teams';
-import { Labels, meervoud } from '../../components/Labels';
+import { Labels } from '../../components/Labels';
 import { Miniatuur } from '../../components/Miniatuur';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
@@ -15,13 +15,14 @@ import type { Oefening } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { deel, Stapper, Toast, useToast } from './onderdelen';
 import { andereVoor } from './TrainingGenereren';
+import { t as vt } from '../../i18n/t';
 
 function Onderdeel({ id, nr, oefening, past, opVerwijder, opAnder }: { id: string; nr: number; oefening?: Oefening; past: boolean; opVerwijder: () => void; opAnder?: () => void }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id });
   const stijl = { transform: CSS.Transform.toString(transform), transition };
   return (
     <li ref={setNodeRef} style={stijl} className={`onderdeel${isDragging ? ' slepen' : ''}${past ? '' : ' past-niet'}`} data-id={id}>
-      <button ref={setActivatorNodeRef} className="greep" aria-label={`Oefening ${nr} verplaatsen`} {...attributes} {...listeners}>
+      <button ref={setActivatorNodeRef} className="greep" aria-label={vt('Oefening {nr} verplaatsen', { nr })} {...attributes} {...listeners}>
         <Icoon naam="grip" maat={22} />
       </button>
       <span className="onderdeel-nr">{nr}</span>
@@ -37,19 +38,19 @@ function Onderdeel({ id, nr, oefening, past, opVerwijder, opAnder }: { id: strin
           <Miniatuur tekening={oefening.tekening} className="onderdeel-plaatje" />
           <span className="onderdeel-info">
             <span className="onderdeel-naam">{oefening.naam}</span>
-            {!past && <span className="label label-waarschuwing">Past niet bij deze aantallen</span>}
+            {!past && <span className="label label-waarschuwing">{vt('Past niet bij deze aantallen')}</span>}
             <Labels oefening={oefening} />
           </span>
         </a>
       ) : (
-        <span className="onderdeel-tekst onderdeel-onbekend">Onbekende oefening (niet in deze versie van de app)</span>
+        <span className="onderdeel-tekst onderdeel-onbekend">{vt('Onbekende oefening (niet in deze versie van de app)')}</span>
       )}
       {opAnder && (
-        <button className="icoon-knop" onClick={opAnder} aria-label={`Andere oefening in plaats van ${oefening?.naam ?? 'deze'}`} title="Andere oefening">
+        <button className="icoon-knop" onClick={opAnder} aria-label={vt('Andere oefening in plaats van {w0}', { w0: oefening?.naam ?? vt('Deze oefening') })} title={vt('Andere oefening')}>
           <Icoon naam="wissel" maat={20} />
         </button>
       )}
-      <button className="icoon-knop" onClick={opVerwijder} aria-label={`${oefening?.naam ?? 'Oefening'} uit de training halen`}>
+      <button className="icoon-knop" onClick={opVerwijder} aria-label={vt('{w0} uit de training halen', { w0: oefening?.naam ?? vt('Oefening') })}>
         <Icoon naam="kruis" maat={20} />
       </button>
     </li>
@@ -62,9 +63,9 @@ function Klaarzetten({ oefeningen }: { oefeningen: Oefening[] }) {
   return (
     <section className="blok">
       <h3>
-        <Icoon naam="materiaal" maat={20} /> Klaarzetten
+        <Icoon naam="materiaal" maat={20} /> {vt('Klaarzetten')}
       </h3>
-      <p className="klein">Per soort materiaal het meeste dat één oefening nodig heeft (daarna gebruik je het opnieuw).</p>
+      <p className="klein">{vt('Per soort materiaal het meeste dat één oefening nodig heeft (daarna gebruik je het opnieuw).')}</p>
       <ul className="klaarzetten">
         {lijst.map((b) => (
           <li key={b.tekst}>
@@ -107,32 +108,32 @@ export function TrainingBewerk({ id }: { id: string }) {
       <main className="inhoud smal">
         <section className="blok training-gegevens">
           <label className="veld">
-            <span>Naam (optioneel)</span>
-            <input value={t.naam} placeholder="Bijv. Dinsdag JO11-1" maxLength={80} onChange={(e) => zet({ naam: e.target.value })} />
+            <span>{vt('Naam (optioneel)')}</span>
+            <input value={t.naam} placeholder={vt('Bijv. Dinsdag JO11-1')} maxLength={80} onChange={(e) => zet({ naam: e.target.value })} />
           </label>
           <label className="veld">
-            <span>Datum (optioneel)</span>
+            <span>{vt('Datum (optioneel)')}</span>
             <input type="date" value={t.datum ?? ''} onChange={(e) => zet({ datum: e.target.value || undefined })} />
           </label>
-          <Stapper label="Spelers" icoon="spelers" waarde={t.spelers} onStap={(d) => stap('spelers', d)} />
-          <Stapper label="Keepers" icoon="keeper" waarde={t.keepers} onStap={(d) => stap('keepers', d)} />
+          <Stapper label={vt('Spelers')} icoon="spelers" waarde={t.spelers} onStap={(d) => stap('spelers', d)} />
+          <Stapper label={vt('Keepers')} icoon="keeper" waarde={t.keepers} onStap={(d) => stap('keepers', d)} />
         </section>
 
         <h2 className="sectie-titel">
-          Oefeningen <span className="teller-klein">{t.oefeningen.length}</span>
+          {vt('Oefeningen')} <span className="teller-klein">{t.oefeningen.length}</span>
         </h2>
         {nietPassend > 0 && (
           <p className="waarschuwing" role="status">
-            {meervoud(nietPassend, 'oefening past', 'oefeningen passen')} niet bij {t.spelers} spelers en {t.keepers} keepers. Pas de aantallen aan of haal ze weg.
+            {vt(nietPassend === 1 ? '1 oefening past niet bij {s} spelers en {k} keepers. Pas de aantallen aan of haal hem weg.' : '{n} oefeningen passen niet bij {s} spelers en {k} keepers. Pas de aantallen aan of haal ze weg.', { n: nietPassend, s: t.spelers, k: t.keepers })}
           </p>
         )}
         {t.oefeningen.length === 0 ? (
           <div className="leeg">
-            <p className="leeg-titel">Nog geen oefeningen</p>
-            <p>Kies zelf oefeningen die passen bij je aantallen spelers en keepers, of laat de app een training samenstellen.</p>
+            <p className="leeg-titel">{vt('Nog geen oefeningen')}</p>
+            <p>{vt('Kies zelf oefeningen die passen bij je aantallen spelers en keepers, of laat de app een training samenstellen.')}</p>
             <button className="knop" onClick={() => ga(`/training/${t.id}/genereren`)}>
               <Icoon naam="wissel" maat={20} />
-              Training genereren
+              {vt('Training genereren')}
             </button>
           </div>
         ) : (
@@ -147,29 +148,29 @@ export function TrainingBewerk({ id }: { id: string }) {
                     oefening={vindOefening(oid)}
                     past={passen[i]!}
                     opVerwijder={() => zet({ oefeningen: (trainingen.haal(t.id) ?? t).oefeningen.filter((x) => x !== oid) })}
-                    opAnder={t.generator?.keuzes.includes(oid) ? () => (andereVoor(t.id, oid) ? undefined : toon('Geen andere passende oefening')) : undefined}
+                    opAnder={t.generator?.keuzes.includes(oid) ? () => (andereVoor(t.id, oid) ? undefined : toon(vt('Geen andere passende oefening'))) : undefined}
                   />
                 ))}
               </ol>
             </SortableContext>
           </DndContext>
         )}
-        {t.oefeningen.length > 1 && <p className="hint">Sleep aan het greepje om de volgorde te veranderen.</p>}
+        {t.oefeningen.length > 1 && <p className="hint">{vt('Sleep aan het greepje om de volgorde te veranderen.')}</p>}
         {t.generator && t.oefeningen.length > 0 && (
           <button className="link-knop" onClick={() => ga(`/training/${t.id}/genereren`)}>
             <Icoon naam="wissel" maat={18} />
-            Gegenereerd: onderdelen aanpassen of alles opnieuw
+            {vt('Gegenereerd: onderdelen aanpassen of alles opnieuw')}
           </button>
         )}
 
         <div className="knoppenrij">
           <button className="knop" onClick={() => ga(`/training/${t.id}/kiezen`)}>
             <Icoon naam="plus" maat={20} />
-            Oefeningen toevoegen
+            {vt('Oefeningen toevoegen')}
           </button>
           <button className="knop knop-primair" disabled={t.oefeningen.length === 0} onClick={() => ga(`/training/${t.id}/modus/1`)}>
             <Icoon naam="afspelen" maat={20} />
-            Start training
+            {vt('Start training')}
           </button>
         </div>
 
@@ -181,7 +182,7 @@ export function TrainingBewerk({ id }: { id: string }) {
         <div className="knoppenrij">
           <button className="knop" disabled={t.oefeningen.length === 0} onClick={() => void deel(t).then((m) => m && toon(m))}>
             <Icoon naam="deel" maat={20} />
-            Delen
+            {vt('Delen')}
           </button>
           <button
             className="knop"
@@ -191,7 +192,7 @@ export function TrainingBewerk({ id }: { id: string }) {
             }}
           >
             <Icoon naam="kopieer" maat={20} />
-            Dupliceren
+            {vt('Dupliceren')}
           </button>
         </div>
       </main>

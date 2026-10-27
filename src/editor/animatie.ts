@@ -5,6 +5,7 @@ import { maakTijdlijn, standOp, TekeningFout, type Tijdlijn } from '../anim/time
 import { fysiekeMeldingen } from '../anim/fysiek';
 import { lokaal, wereld } from './editor';
 import { doelnetGaten, goalMaten, netVan } from '../anim/doelnet';
+import { t as vt } from '../i18n/t';
 
 /**
  * Animatie uit de editor: de getekende lijnen met een stapnummer worden gewone animatiestappen voor de bestaande
@@ -131,15 +132,15 @@ function tussenpunten(pad: Punt[]): Punt[] {
 const persoonNaam = (o: VeldObject, alle: VeldObject[]) =>
   o.soort === 'keeper'
     ? alle.filter((x) => x.soort === 'keeper').length > 1 && o.nummer
-      ? `Keeper ${o.nummer}`
-      : 'De keeper'
+      ? vt('Keeper {nummer}', { nummer: o.nummer })
+      : vt('De keeper')
     : o.soort === 'trainer'
-      ? 'De trainer'
+      ? vt('De trainer')
       : o.nummer
-        ? `Speler ${o.nummer}`
+        ? vt('Speler {nummer}', { nummer: o.nummer })
         : o.team === 'J'
-          ? 'De joker'
-          : 'Deze speler';
+          ? vt('De joker')
+          : vt('Deze speler');
 
 const hoogteVan = (l: Lijn, schot: boolean): BalHoogte => {
   if (schot) return l.hoogte === 'hoog' ? 'halfhoog' : l.hoogte === 'halfhoog' ? 'laag' : l.hoogte === 'grond' ? 'grond' : 'laag';
@@ -222,12 +223,12 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
       const pad = lijnPunten(l, (id) => opId.get(id) && [opId.get(id)!.x, opId.get(id)!.y]);
       const wie = wieBegint(l, pad);
       if (!wie) {
-        fout(i, l.soort === 'loop' ? 'Deze looplijn begint niet bij een speler' : 'Deze dribbel begint niet bij een speler');
+        fout(i, l.soort === 'loop' ? vt('Deze looplijn begint niet bij een speler') : vt('Deze dribbel begint niet bij een speler'));
         continue;
       }
       const o = opId.get(wie)!;
       if (bewegers.has(wie)) {
-        fout(i, `${persoonNaam(o, objecten)} loopt in deze stap al: geef deze lijn een ander nummer`);
+        fout(i, vt('{w0} loopt in deze stap al: geef deze lijn een ander nummer', { w0: persoonNaam(o, objecten) }));
         continue;
       }
       const naar = rond(l.naar && opId.get(l.naar) ? [opId.get(l.naar)!.x, opId.get(l.naar)!.y] : pad[pad.length - 1]!);
@@ -235,7 +236,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
       if (l.soort === 'dribbel') {
         const bal = balVan(wie) ?? losseBal(nu.get(wie)!);
         if (!bal) {
-          fout(i, `${persoonNaam(o, objecten)} heeft hier geen bal om mee te dribbelen`);
+          fout(i, vt('{w0} heeft hier geen bal om mee te dribbelen', { w0: persoonNaam(o, objecten) }));
           continue;
         }
         houder.set(bal, wie);
@@ -265,7 +266,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
         const wie = wieBegint(l, pad);
         if (!wie) {
           gedaan.add(i);
-          fout(i, 'Deze ballijn begint niet bij een speler');
+          fout(i, vt('Deze ballijn begint niet bij een speler'));
           continue;
         }
         const o = opId.get(wie)!;
@@ -274,12 +275,12 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
           // Misschien krijgt hij hem nog in deze stap (dan in één keer doorspelen): volgende ronde opnieuw proberen.
           if (ronde < ballijnen.length) continue;
           gedaan.add(i);
-          fout(i, `${persoonNaam(o, objecten)} heeft de bal niet: eerst moet hij hem krijgen (geef deze lijn een hoger nummer dan de pass naar hem)`);
+          fout(i, vt('{w0} heeft de bal niet: eerst moet hij hem krijgen (geef deze lijn een hoger nummer dan de pass naar hem)', { w0: persoonNaam(o, objecten) }));
           continue;
         }
         gedaan.add(i);
         if (bewegers.has(wie)) {
-          fout(i, `${persoonNaam(o, objecten)} loopt of dribbelt in deze stap ook: geef de ballijn een hoger nummer`);
+          fout(i, vt('{w0} loopt of dribbelt in deze stap ook: geef de ballijn een hoger nummer', { w0: persoonNaam(o, objecten) }));
           continue;
         }
         const eind = pad[pad.length - 1]!;
@@ -375,7 +376,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
   try {
     maakTijdlijn(tekening);
   } catch (e) {
-    meldingen.push({ lijn: -1, tekst: e instanceof TekeningFout ? `Afspelen lukt niet: ${e.message}` : 'Afspelen lukt niet', soort: 'fout' });
+    meldingen.push({ lijn: -1, tekst: e instanceof TekeningFout ? vt('Afspelen lukt niet: {message}', { message: e.message }) : vt('Afspelen lukt niet'), soort: 'fout' });
     tekening = { ...basis, animatie: undefined };
     delete tekening.animatie;
   }
@@ -389,7 +390,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
  */
 function herhaalVoorRij(t: Tekening, stappen: AnimatieStap[], eerste: string | undefined): Tekening | string {
   const o = eerste ? t.objecten.find((x) => x.id === eerste) : undefined;
-  if (!o || o.soort !== 'speler') return 'Herhalen voor de rij: de eerste lijn moet bij een speler beginnen';
+  if (!o || o.soort !== 'speler') return vt('Herhalen voor de rij: de eerste lijn moet bij een speler beginnen');
   const gebruikt = new Set<string>();
   for (const s of stappen)
     for (const a of s.acties) {
@@ -410,7 +411,7 @@ function herhaalVoorRij(t: Tekening, stappen: AnimatieStap[], eerste: string | u
     if (!volgende) break;
     rij.push(volgende.x);
   }
-  if (rij.length < 2) return 'Herhalen voor de rij: zet de volgende spelers vlak achter de eerste speler (binnen 3 m), zonder eigen lijnen';
+  if (rij.length < 2) return vt('Herhalen voor de rij: zet de volgende spelers vlak achter de eerste speler (binnen 3 m), zonder eigen lijnen');
   const afstanden = rij.slice(1).map((x, i) => afstand([x.x, x.y], [rij[i]!.x, rij[i]!.y]));
   const tweede = rij[1]!;
   const r: Rij = {
@@ -537,25 +538,25 @@ const BAL_VELDEN = new Set(['type', 'van', 'naar', 'hoogte', 'hoog', 'afloop', '
  */
 export function animatieNaarLijnen(t: Tekening): { tekening: Tekening } | { reden: string } {
   const stappen = t.animatie ?? [];
-  if (!stappen.length) return { reden: 'Er is geen animatie' };
-  if (t.rijen?.length) return { reden: 'De spelers staan in een rij' };
+  if (!stappen.length) return { reden: vt('Er is geen animatie') };
+  if (t.rijen?.length) return { reden: vt('De spelers staan in een rij') };
   for (const s of stappen) {
-    if (!('acties' in s)) return { reden: 'De animatie herhaalt stappen of speelt reeksen tegelijk af' };
+    if (!('acties' in s)) return { reden: vt('De animatie herhaalt stappen of speelt reeksen tegelijk af') };
     for (const a of s.acties) {
       if (a.type === 'loop' || a.type === 'dribbel') {
-        if (Object.keys(a).some((k) => !LOOP_VELDEN.has(k))) return { reden: 'Er zit een bijzondere beweging in (bv. om een pion draaien)' };
+        if (Object.keys(a).some((k) => !LOOP_VELDEN.has(k))) return { reden: vt('Er zit een bijzondere beweging in (bv. om een pion draaien)') };
       } else if (a.type === 'pass' || a.type === 'schot') {
-        if (Object.keys(a).some((k) => !BAL_VELDEN.has(k))) return { reden: 'Er zit een bijzondere bal- of keeperactie in (bv. duiken, uitkomen, blokken)' };
-        if (a.afloop && a.afloop !== 'goal' && a.afloop !== 'vangt' && a.afloop !== 'naast') return { reden: 'De keeper stompt of tipt de bal' };
-        if (a.terug !== undefined && (a.terug !== a.van || typeof a.naar !== 'string')) return { reden: 'Er kaatst een bal naar iemand anders' };
-      } else return { reden: `Er zit een actie in die je nog niet kunt tekenen (${a.type})` };
+        if (Object.keys(a).some((k) => !BAL_VELDEN.has(k))) return { reden: vt('Er zit een bijzondere bal- of keeperactie in (bv. duiken, uitkomen, blokken)') };
+        if (a.afloop && a.afloop !== 'goal' && a.afloop !== 'vangt' && a.afloop !== 'naast') return { reden: vt('De keeper stompt of tipt de bal') };
+        if (a.terug !== undefined && (a.terug !== a.van || typeof a.naar !== 'string')) return { reden: vt('Er kaatst een bal naar iemand anders') };
+      } else return { reden: vt('Er zit een actie in die je nog niet kunt tekenen ({type})', { type: a.type }) };
     }
   }
   let tl: Tijdlijn;
   try {
     tl = maakTijdlijn(t);
   } catch {
-    return { reden: 'De animatie kan niet worden afgespeeld' };
+    return { reden: vt('De animatie kan niet worden afgespeeld') };
   }
   void tl;
   // Begintijd van elke stap (voor de plekken van de spelers op dat moment).
@@ -685,8 +686,8 @@ export function heeftKeeperBijGoal(t: Tekening): boolean {
 export function editorBegin(t: Tekening): { tekening: Tekening; melding?: string } {
   if (t.animatie?.length) {
     const r = animatieNaarLijnen(t);
-    if ('tekening' in r) return { tekening: r.tekening, melding: 'De animatie is omgezet naar lijnen met stapnummers. Tik op een lijn om hem aan te passen.' };
-    return { tekening: t, melding: `Deze animatie kan niet worden omgezet naar lijnen (${r.reden.charAt(0).toLowerCase()}${r.reden.slice(1)}). Verschuif je iets, dan vervalt de animatie.` };
+    if ('tekening' in r) return { tekening: r.tekening, melding: vt('De animatie is omgezet naar lijnen met stapnummers. Tik op een lijn om hem aan te passen.') };
+    return { tekening: t, melding: vt('Deze animatie kan niet worden omgezet naar lijnen ({w0}{w1}). Verschuif je iets, dan vervalt de animatie.', { w0: r.reden.charAt(0).toLowerCase(), w1: r.reden.slice(1) }) };
   }
   const l = t.lijnen ?? [];
   if (l.length && !l.some((x) => x.stap)) return { tekening: { ...t, lijnen: l.map((x, i) => ({ ...x, stap: i + 1 })) } };

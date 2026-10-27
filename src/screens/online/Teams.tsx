@@ -14,6 +14,7 @@ import { ga, terug, vervang } from '../../router';
 import type { Oefening } from '../../model/types';
 import { Toast, useToast } from '../training/onderdelen';
 import { NietGevonden } from '../NietGevonden';
+import { t as vt } from '../../i18n/t';
 
 type OnlineModule = Awaited<ReturnType<typeof online>>;
 
@@ -41,15 +42,15 @@ function useActie(toon: (t: string) => void) {
 function NietIngelogd() {
   return (
     <div className="leeg">
-      <p className="leeg-titel">Teams</p>
-      <p>Met een team deel je oefeningen en trainingen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).</p>
+      <p className="leeg-titel">{vt('Teams')}</p>
+      <p>{vt('Met een team deel je oefeningen en trainingen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).')}</p>
       {onlineBeschikbaar() ? (
         <button className="knop knop-primair" onClick={() => ga('/account')}>
           <Icoon naam="persoon" maat={20} />
-          Inloggen of account maken
+          {vt('Inloggen of account maken')}
         </button>
       ) : (
-        <p className="klein">Online opslag wordt nog ingesteld.</p>
+        <p className="klein">{vt('Online opslag wordt nog ingesteld.')}</p>
       )}
     </div>
   );
@@ -73,7 +74,7 @@ export function Teams() {
   if (!s.account)
     return (
       <div className="pagina">
-        <Kop titel="Teams" ouder="/instellingen" />
+        <Kop titel={vt('Teams')} ouder="/instellingen" />
         <main className="inhoud smal">
           <NietIngelogd />
         </main>
@@ -81,7 +82,7 @@ export function Teams() {
     );
   return (
     <div className="pagina">
-      <Kop titel="Teams" ouder="/instellingen" />
+      <Kop titel={vt('Teams')} ouder="/instellingen" />
       <main className="inhoud smal formulier">
         {lijst.length > 0 ? (
           <ul className="lijst">
@@ -108,10 +109,10 @@ export function Teams() {
             ))}
           </ul>
         ) : (
-          <p className="klein">Je zit nog niet in een team. Maak er een, of vul de code in die je van een andere trainer kreeg.</p>
+          <p className="klein">{vt('Je zit nog niet in een team. Maak er een, of vul de code in die je van een andere trainer kreeg.')}</p>
         )}
         <section className="blok">
-          <h3>Team joinen</h3>
+          <h3>{vt('Team joinen')}</h3>
           <form
             className="team-form"
             onSubmit={(e) => {
@@ -123,14 +124,14 @@ export function Teams() {
               });
             }}
           >
-            <input className="code-invoer" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="CODE" maxLength={8} autoCapitalize="characters" autoComplete="off" aria-label="Teamcode" />
+            <input className="code-invoer" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="CODE" maxLength={8} autoCapitalize="characters" autoComplete="off" aria-label={vt('Teamcode')} />
             <button className="knop knop-primair" type="submit" disabled={bezig || code.trim().length < 6}>
-              Joinen
+              {vt('Joinen')}
             </button>
           </form>
         </section>
         <section className="blok">
-          <h3>Team maken</h3>
+          <h3>{vt('Team maken')}</h3>
           <form
             className="team-form"
             onSubmit={(e) => {
@@ -142,12 +143,12 @@ export function Teams() {
               });
             }}
           >
-            <input value={naam} onChange={(e) => setNaam(e.target.value)} placeholder="Bijv. JO11-1 of Keeperstrainers" maxLength={60} aria-label="Naam van het team" />
+            <input value={naam} onChange={(e) => setNaam(e.target.value)} placeholder={vt('Bijv. JO11-1 of Keeperstrainers')} maxLength={60} aria-label={vt('Naam van het team')} />
             <button className="knop knop-primair" type="submit" disabled={bezig || !naam.trim()}>
-              Maken
+              {vt('Maken')}
             </button>
           </form>
-          <p className="klein">Je wordt beheerder en krijgt een code van 6 tekens om te delen.</p>
+          <p className="klein">{vt('Je wordt beheerder en krijgt een code van 6 tekens om te delen.')}</p>
         </section>
       </main>
       <Toast tekst={melding} />
@@ -165,7 +166,7 @@ export function TeamScherm({ id }: { id: string }) {
   if (!s.account)
     return (
       <div className="pagina">
-        <Kop titel="Team" ouder="/teams" />
+        <Kop titel={vt('Team')} ouder="/teams" />
         <main className="inhoud smal">
           <NietIngelogd />
         </main>
@@ -178,7 +179,7 @@ export function TeamScherm({ id }: { id: string }) {
   const trainingenTeam = t.items.filter((i) => i.soort === 'training');
   const wedstrijdTeam = t.items.filter((i) => i.soort === 'opstelling' || i.soort === 'bord');
   const deelCode = async () => {
-    const tekst = `Kom in mijn team "${t.naam}" in TopTraining: open de app, ga naar Instellingen → Teams en vul de code ${t.code} in.`;
+    const tekst = vt('Kom in mijn team "{naam}" in TopTraining: open de app, ga naar Instellingen → Teams en vul de code {code} in.', { naam: t.naam, code: t.code });
     try {
       if (navigator.share) return void (await navigator.share({ title: t.naam, text: tekst }));
     } catch {
@@ -186,7 +187,7 @@ export function TeamScherm({ id }: { id: string }) {
     }
     try {
       await navigator.clipboard.writeText(t.code);
-      toon('Code gekopieerd');
+      toon(vt('Code gekopieerd'));
     } catch {
       toon(`Code: ${t.code}`);
     }
@@ -194,18 +195,18 @@ export function TeamScherm({ id }: { id: string }) {
   const itemKnoppen = (it: TeamItem) => (
     <>
       {it.eigenaar === ik && (
-        <button className="icoon-knop" aria-label={`${it.naam} terugtrekken`} title="Terugtrekken" disabled={bezig} onClick={() => void doe((m) => m.verwijderItem(t.id, it.id), 'Teruggetrokken uit het team')}>
+        <button className="icoon-knop" aria-label={`${it.naam} terugtrekken`} title={vt('Terugtrekken')} disabled={bezig} onClick={() => void doe((m) => m.verwijderItem(t.id, it.id), vt('Teruggetrokken uit het team'))}>
           <Icoon naam="kruis" maat={20} />
         </button>
       )}
       {it.eigenaar !== ik && beheerder && (
         <button
           className="icoon-knop gevaar"
-          aria-label={`${it.naam} uit het team verwijderen`}
-          title="Uit het team verwijderen"
+          aria-label={vt('{naam} uit het team verwijderen', { naam: it.naam })}
+          title={vt('Uit het team verwijderen')}
           disabled={bezig}
           onClick={() => {
-            if (window.confirm(`"${it.naam}" van ${it.eigenaarNaam} uit het team verwijderen?`)) void doe((m) => m.verwijderItem(t.id, it.id), 'Verwijderd uit het team');
+            if (window.confirm(vt('"{naam}" van {eigenaarNaam} uit het team verwijderen?', { naam: it.naam, eigenaarNaam: it.eigenaarNaam }))) void doe((m) => m.verwijderItem(t.id, it.id), vt('Verwijderd uit het team'));
           }}
         >
           <Icoon naam="prullenbak" maat={20} />
@@ -219,32 +220,32 @@ export function TeamScherm({ id }: { id: string }) {
       <main className="inhoud smal">
         <section className="blok team-code">
           <div>
-            <p className="klein">Teamcode</p>
+            <p className="klein">{vt('Teamcode')}</p>
             <p className="code">{t.code}</p>
           </div>
           <div className="team-code-knoppen">
             <button className="knop" onClick={() => void deelCode()}>
               <Icoon naam="deel" maat={18} />
-              Delen
+              {vt('Delen')}
             </button>
             {beheerder && (
               <button
                 className="knop"
                 disabled={bezig}
                 onClick={() => {
-                  if (window.confirm('Nieuwe code maken? De oude code werkt dan niet meer (wie al lid is, blijft lid).')) void doe((m) => m.vernieuwCode(t.id), 'Nieuwe code gemaakt');
+                  if (window.confirm(vt('Nieuwe code maken? De oude code werkt dan niet meer (wie al lid is, blijft lid).'))) void doe((m) => m.vernieuwCode(t.id), vt('Nieuwe code gemaakt'));
                 }}
               >
                 <Icoon naam="opnieuw" maat={18} />
-                Nieuwe code
+                {vt('Nieuwe code')}
               </button>
             )}
           </div>
         </section>
 
-        <h2 className="sectie-titel">Gedeelde oefeningen</h2>
+        <h2 className="sectie-titel">{vt('Gedeelde oefeningen')}</h2>
         {oefeningen.length === 0 ? (
-          <p className="klein">Nog niets gedeeld. Open een eigen oefening en kies "Delen met team".</p>
+          <p className="klein">{vt('Nog niets gedeeld. Open een eigen oefening en kies "Delen met team".')}</p>
         ) : (
           <ul className="eigen-lijst">
             {oefeningen.map((it) => {
@@ -262,7 +263,7 @@ export function TeamScherm({ id }: { id: string }) {
                     {o && <Miniatuur tekening={o.tekening} className="eigen-plaatje" />}
                     <span className="kaart-tekst">
                       <span className="kaart-titel">{it.naam}</span>
-                      <span className="kaart-uitleg">Gedeeld door {it.eigenaar === ik ? 'jou' : it.eigenaarNaam}</span>
+                      <span className="kaart-uitleg">{it.eigenaar === ik ? vt('Gedeeld door jou') : vt('Gedeeld door {naam}', { naam: it.eigenaarNaam })}</span>
                     </span>
                   </a>
                   <div className="training-acties">{itemKnoppen(it)}</div>
@@ -272,9 +273,9 @@ export function TeamScherm({ id }: { id: string }) {
           </ul>
         )}
 
-        <h2 className="sectie-titel">Gedeelde trainingen</h2>
+        <h2 className="sectie-titel">{vt('Gedeelde trainingen')}</h2>
         {trainingenTeam.length === 0 ? (
-          <p className="klein">Nog niets gedeeld. Open een training en kies "Delen met team".</p>
+          <p className="klein">{vt('Nog niets gedeeld. Open een training en kies "Delen met team".')}</p>
         ) : (
           <ul className="lijst">
             {trainingenTeam.map((it) => (
@@ -290,7 +291,7 @@ export function TeamScherm({ id }: { id: string }) {
                   <Icoon naam="training" maat={24} className="training-icoon" />
                   <span className="rij-tekst">
                     <span className="rij-titel">{it.naam}</span>
-                    <span className="rij-sub">Gedeeld door {it.eigenaar === ik ? 'jou' : it.eigenaarNaam}</span>
+                    <span className="rij-sub">{it.eigenaar === ik ? vt('Gedeeld door jou') : vt('Gedeeld door {naam}', { naam: it.eigenaarNaam })}</span>
                   </span>
                 </a>
                 <div className="training-acties">{itemKnoppen(it)}</div>
@@ -299,9 +300,9 @@ export function TeamScherm({ id }: { id: string }) {
           </ul>
         )}
 
-        <h2 className="sectie-titel">Gedeelde opstellingen en tactiekborden</h2>
+        <h2 className="sectie-titel">{vt('Gedeelde opstellingen en tactiekborden')}</h2>
         {wedstrijdTeam.length === 0 ? (
-          <p className="klein">Nog niets gedeeld. Open een opstelling, tactiekbord of spelhervatting en kies "Delen met team".</p>
+          <p className="klein">{vt('Nog niets gedeeld. Open een opstelling, tactiekbord of spelhervatting en kies "Delen met team".')}</p>
         ) : (
           <ul className="lijst">
             {wedstrijdTeam.map((it) => (
@@ -318,7 +319,7 @@ export function TeamScherm({ id }: { id: string }) {
                   <span className="rij-tekst">
                     <span className="rij-titel">{it.naam}</span>
                     <span className="rij-sub">
-                      {it.soort === 'opstelling' ? 'Opstelling' : 'Tactiekbord'} · gedeeld door {it.eigenaar === ik ? 'jou' : it.eigenaarNaam}
+                      {it.soort === 'opstelling' ? vt('Opstelling') : vt('Tactiekbord')} · {it.eigenaar === ik ? vt('gedeeld door jou') : vt('gedeeld door {naam}', { naam: it.eigenaarNaam })}
                     </span>
                   </span>
                 </a>
@@ -328,7 +329,7 @@ export function TeamScherm({ id }: { id: string }) {
           </ul>
         )}
 
-        <h2 className="sectie-titel">Leden</h2>
+        <h2 className="sectie-titel">{vt('Leden')}</h2>
         <ul className="lijst">
           {t.leden.map((l) => (
             <li key={l.uid} className="training-regel lid-regel">
@@ -339,20 +340,20 @@ export function TeamScherm({ id }: { id: string }) {
                     {l.naam}
                     {l.uid === ik ? ' (jij)' : ''}
                   </span>
-                  <span className="rij-sub">{l.rol === 'beheerder' ? 'Beheerder' : 'Lid'}</span>
+                  <span className="rij-sub">{l.rol === 'beheerder' ? vt('Beheerder') : vt('Lid')}</span>
                 </span>
               </span>
               {beheerder && l.uid !== ik && (
                 <div className="training-acties">
                   <button className="knop knop-klein" disabled={bezig} onClick={() => void doe((m) => m.zetRol(t.id, l.uid, l.rol === 'beheerder' ? 'lid' : 'beheerder'))}>
-                    {l.rol === 'beheerder' ? 'Lid maken' : 'Beheerder maken'}
+                    {l.rol === 'beheerder' ? vt('Lid maken') : vt('Beheerder maken')}
                   </button>
                   <button
                     className="icoon-knop gevaar"
-                    aria-label={`${l.naam} uit het team verwijderen`}
+                    aria-label={vt('{naam} uit het team verwijderen', { naam: l.naam })}
                     disabled={bezig}
                     onClick={() => {
-                      if (window.confirm(`${l.naam} uit het team verwijderen?`)) void doe((m) => m.verwijderLid(t.id, l.uid), `${l.naam} is verwijderd`);
+                      if (window.confirm(vt('{naam} uit het team verwijderen?', { naam: l.naam }))) void doe((m) => m.verwijderLid(t.id, l.uid), vt('{naam} is verwijderd', { naam: l.naam }));
                     }}
                   >
                     <Icoon naam="prullenbak" maat={20} />
@@ -368,28 +369,28 @@ export function TeamScherm({ id }: { id: string }) {
             className="knop"
             disabled={bezig}
             onClick={() => {
-              if (window.confirm(`Team "${t.naam}" verlaten?`))
+              if (window.confirm(vt('Team "{naam}" verlaten?', { naam: t.naam })))
                 void doe((m) => m.verlaatTeam(t.id)).then((ok) => {
                   if (ok) vervang('/teams');
                 });
             }}
           >
             <Icoon naam="uitloggen" maat={18} />
-            Team verlaten
+            {vt('Team verlaten')}
           </button>
           {beheerder && (
             <button
               className="knop knop-gevaar"
               disabled={bezig}
               onClick={() => {
-                if (window.confirm(`Team "${t.naam}" opheffen? Alle gedeelde items en leden verdwijnen uit het team (ieders eigen oefeningen en trainingen blijven).`))
+                if (window.confirm(vt('Team "{naam}" opheffen? Alle gedeelde items en leden verdwijnen uit het team (ieders eigen oefeningen en trainingen blijven).', { naam: t.naam })))
                   void doe((m) => m.hefTeamOp(t.id)).then((ok) => {
                     if (ok) vervang('/teams');
                   });
               }}
             >
               <Icoon naam="prullenbak" maat={18} />
-              Team opheffen
+              {vt('Team opheffen')}
             </button>
           )}
         </div>
@@ -418,12 +419,12 @@ export function TeamTrainingScherm({ id, item }: { id: string; item: string }) {
       <Kop titel={t.naam} ouder={`/team/${t.id}`} />
       <main className="inhoud smal">
         <section className="blok gedeeld-kop">
-          <p className="klein">Gedeeld door {it.eigenaarNaam}</p>
-          <h2 className="detail-titel">{tt.training.naam || 'Training'}</h2>
+          <p className="klein">{vt('Gedeeld door {naam}', { naam: it.eigenaarNaam })}</p>
+          <h2 className="detail-titel">{tt.training.naam || vt('Training')}</h2>
           <p>{[meervoud(oefeningen.length, 'oefening', 'oefeningen'), meervoud(tt.training.spelers, 'speler', 'spelers'), meervoud(tt.training.keepers, 'keeper', 'keepers')].join(' · ')}</p>
           <button className="knop knop-primair knop-breed" onClick={kopieer}>
             <Icoon naam="kopieer" maat={20} />
-            Kopiëren naar mijn trainingen
+            {vt('Kopiëren naar mijn trainingen')}
           </button>
         </section>
         <ol className="onderdelen alleen-lezen">
@@ -442,7 +443,7 @@ export function TeamTrainingScherm({ id, item }: { id: string; item: string }) {
         </ol>
         {spullen.length > 0 && (
           <section className="blok">
-            <h3>Klaarzetten</h3>
+            <h3>{vt('Klaarzetten')}</h3>
             <ul className="klaarzetten">
               {spullen.map((b) => (
                 <li key={b.tekst}>
@@ -454,7 +455,7 @@ export function TeamTrainingScherm({ id, item }: { id: string; item: string }) {
           </section>
         )}
         <button className="link-knop" onClick={() => terug(`/team/${t.id}`)}>
-          Terug naar het team
+          {vt('Terug naar het team')}
         </button>
       </main>
     </div>
@@ -481,30 +482,30 @@ export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training
         await m.deelOefening(t.id, o);
       } else if (soort === 'training') await m.deelTraining(t.id, id);
       else await m.deelWedstrijd(t.id, soort, id);
-    }, `Gedeeld met ${t.naam}`);
+    }, vt('Gedeeld met {naam}', { naam: t.naam }));
   };
   const gedeeld = lijst.filter((t) => t.items.some((it) => it.id === id && it.eigenaar === s.account!.uid));
   return (
     <>
       <button className="knop" disabled={bezig} onClick={() => (lijst.length === 1 ? deel(lijst[0]!) : setOpen(true))}>
         <Icoon naam="team" maat={18} />
-        Delen met team
+        {vt('Delen met team')}
       </button>
-      {gedeeld.length > 0 && <p className="klein gedeeld-met">Gedeeld met {gedeeld.map((t) => t.naam).join(', ')}</p>}
+      {gedeeld.length > 0 && <p className="klein gedeeld-met">{vt('Gedeeld met {teams}', { teams: gedeeld.map((t) => t.naam).join(', ') })}</p>}
       {open && (
         <div className="paneel-achter" onClick={() => setOpen(false)}>
-          <div className="paneel" role="dialog" aria-label="Delen met team" onClick={(e) => e.stopPropagation()}>
+          <div className="paneel" role="dialog" aria-label={vt('Delen met team')} onClick={(e) => e.stopPropagation()}>
             <div className="paneel-kop">
-              <h2>"{naam || 'Zonder naam'}" delen met</h2>
-              <button className="icoon-knop" aria-label="Sluiten" onClick={() => setOpen(false)}>
+              <h2>{vt('"{naam}" delen met', { naam: naam || vt('Zonder naam') })}</h2>
+              <button className="icoon-knop" aria-label={vt('Sluiten')} onClick={() => setOpen(false)}>
                 <Icoon naam="kruis" />
               </button>
             </div>
             {lijst.length === 0 ? (
               <div className="leeg">
-                <p>Je zit nog niet in een team.</p>
+                <p>{vt('Je zit nog niet in een team.')}</p>
                 <button className="knop knop-primair" onClick={() => ga('/teams')}>
-                  Naar Teams
+                  {vt('Naar Teams')}
                 </button>
               </div>
             ) : (
@@ -541,21 +542,21 @@ export function TeamItemActies({ oefening }: { oefening: Oefening }) {
   return (
     <>
       <p className="klein gedeeld-met">
-        Gedeeld in {oefening.team.naam} door {mijn ? 'jou' : oefening.team.eigenaarNaam}
+        {mijn ? vt('Gedeeld in {team} door jou', { team: oefening.team.naam }) : vt('Gedeeld in {team} door {naam}', { team: oefening.team.naam, naam: oefening.team.eigenaarNaam })}
       </p>
       {(mijn || t.rol === 'beheerder') && (
         <button
           className="knop"
           disabled={bezig}
           onClick={() => {
-            if (mijn || window.confirm(`"${oefening.naam}" uit het team verwijderen?`))
-              void doe((m) => m.verwijderItem(t.id, oefening.team!.itemId), mijn ? 'Teruggetrokken' : 'Verwijderd uit het team').then((ok) => {
+            if (mijn || window.confirm(vt('"{naam}" uit het team verwijderen?', { naam: oefening.naam })))
+              void doe((m) => m.verwijderItem(t.id, oefening.team!.itemId), mijn ? vt('Teruggetrokken') : vt('Verwijderd uit het team')).then((ok) => {
                 if (ok) terug(`/team/${t.id}`);
               });
           }}
         >
           <Icoon naam="kruis" maat={18} />
-          {mijn ? 'Terugtrekken uit team' : 'Verwijderen uit team'}
+          {mijn ? vt('Terugtrekken uit team') : vt('Verwijderen uit team')}
         </button>
       )}
       <Toast tekst={melding} />

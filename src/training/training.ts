@@ -2,6 +2,8 @@ import type { Oefening, Soort } from '../model/types';
 import { maakId } from '../model/id';
 import { geldigeEigen, isEigenId } from '../eigen/eigen';
 import type { Generator } from './genereren';
+import { t as vt, TAAL, LOCALE } from '../i18n/t';
+import type { Taal } from '../i18n/taal';
 
 /**
  * Een training: aantallen, optioneel naam en datum, en de gekozen oefeningen (id's) in volgorde.
@@ -55,7 +57,7 @@ export function nieuweTraining(nu = Date.now(), id = maakId()): Training {
 export function metNaam<T extends Pick<Training, 'naam' | 'datum' | 'oefeningen'>>(t: T, nu = new Date()): T {
   if (t.naam.trim() || !t.oefeningen.length) return t;
   const d = t.datum ?? `${nu.getFullYear()}-${String(nu.getMonth() + 1).padStart(2, '0')}-${String(nu.getDate()).padStart(2, '0')}`;
-  return { ...t, naam: `Training ${datumTekst(d).replace(/ \d{4}$/, '')}` };
+  return { ...t, naam: vt('Training {w0}', { w0: datumTekst(d).replace(/ \d{4}$/, '') }) };
 }
 
 /** Niets ingevuld (geen oefeningen, naam of datum): zo'n training wordt niet bewaard. */
@@ -64,21 +66,22 @@ export function isLeeg(t: Pick<Training, 'naam' | 'datum' | 'oefeningen'>): bool
 }
 
 export function dupliceer(t: Training, nu = Date.now(), id = maakId()): Training {
-  return { ...t, id, naam: `${trainingNaam(t)} (kopie)`, oefeningen: [...t.oefeningen], gemaakt: nu, gewijzigd: nu };
+  return { ...t, id, naam: vt('{w0} (kopie)', { w0: trainingNaam(t) }), oefeningen: [...t.oefeningen], gemaakt: nu, gewijzigd: nu };
 }
 
-const MAANDEN = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+// i18n-ok (maandnamen per taal)
+const MAANDEN = { nl: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'], en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] };
 
-/** "16 okt 2026" (zonder tijdzonegedoe: de datum is een kalenderdag). */
-export function datumTekst(datum: string): string {
+/** "16 okt 2026" / "16 Oct 2026" (zonder tijdzonegedoe: de datum is een kalenderdag). */
+export function datumTekst(datum: string, taal: Taal = TAAL): string {
   const [j, m, d] = datum.split('-').map(Number);
   if (!j || !m || !d) return datum;
-  return `${d} ${MAANDEN[m - 1]} ${j}`;
+  return `${d} ${MAANDEN[taal][m - 1]} ${j}`;
 }
 
 export function trainingNaam(t: Pick<Training, 'naam' | 'datum'>): string {
   if (t.naam.trim()) return t.naam.trim();
-  return t.datum ? `Training ${datumTekst(t.datum)}` : 'Training zonder naam';
+  return t.datum ? vt('Training {w0}', { w0: datumTekst(t.datum) }) : vt('Training zonder naam');
 }
 
 // ---------- delen via een link ----------
@@ -226,5 +229,5 @@ export function benodigdheden(oefeningen: Oefening[]): Benodigdheid[] {
       const tekst = v.aantal !== undefined ? metAantal(k, v.aantal) : v.tekst.charAt(0).toUpperCase() + v.tekst.slice(1);
       return { tekst, aantal: v.aantal, oefeningen: [...v.oefeningen] };
     })
-    .sort((a, b) => a.tekst.replace(/^\d+ /, '').localeCompare(b.tekst.replace(/^\d+ /, ''), 'nl'));
+    .sort((a, b) => a.tekst.replace(/^\d+ /, '').localeCompare(b.tekst.replace(/^\d+ /, ''), LOCALE));
 }
