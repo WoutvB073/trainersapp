@@ -2283,5 +2283,241 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-re-pion-voet-achteruit",
+    "soort": "keeper",
+    "naam": "Twee pionnen en achteruit terug",
+    "categorieen": [
+      "reactie",
+      "laag-duiken"
+    ],
+    "uitleg": "Voor de keeper staan een rode en een blauwe pion. De trainer roept een kleur: de keeper loopt naar die pion en tikt hem aan met de voet. Daarna achteruit terug naar het doel, met het gezicht naar het veld, en dan komt er een hard schot: vangen of duiken.",
+    "organisatie": "Rode pion links en blauwe pion rechts, 4 m voor het doel en 3 m uit elkaar. Trainer met ballen op 11 m.",
+    "benodigdheden": [
+      "Goal",
+      "2 gekleurde pionnen",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Reageren op de kleur, niet raden",
+      "Achteruit: kleine pasjes en het gewicht naar voren",
+      "Op tijd stilstaan voor het schot komt"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Trainer wijst de kleur ook aan",
+        "Schot op het lichaam"
+      ],
+      "moeilijker": [
+        "Drie of vier pionnen",
+        "Schot al tijdens het achteruitlopen",
+        "Aantikken met de hand en de voet om en om"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 25,
+        "y": -3,
+        "breedte": 18,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "pR",
+          "soort": "pion",
+          "x": 32.5,
+          "y": 4,
+          "kleur": "#e03131"
+        },
+        {
+          "id": "pB",
+          "soort": "pion",
+          "x": 35.5,
+          "y": 4,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.6
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34.4,
+          "y": 11.4,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 34.4,
+          "y": 11,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                32.9,
+                3.4
+              ],
+              "manier": "sprint"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "aantikken",
+              "wie": "k1",
+              "doel": "pR",
+              "met": "voet"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34,
+                1.6
+              ],
+              "manier": "achteruit"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": "grond",
+              "duikNaar": [
+                32.9,
+                1.7
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 1.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                35.1,
+                3.4
+              ],
+              "manier": "sprint"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "aantikken",
+              "wie": "k1",
+              "doel": "pB",
+              "met": "voet"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34,
+                1.6
+              ],
+              "manier": "achteruit"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": 1.3,
+              "eindHoogte": 1.1,
+              "snelheid": 16
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 1.6
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

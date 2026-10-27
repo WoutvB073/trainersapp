@@ -809,6 +809,8 @@ interface Houding {
   vooruit: number;
   /** 0 = alleen niet door de grond, 1 = het laagste punt raakt de grond (zitten, liggen). */
   grond: number;
+  /** 0–1: op de buik (het hele lijf kantelt voorover). */
+  buik: number;
 }
 
 function nieuweHouding(): Houding {
@@ -826,6 +828,7 @@ function nieuweHouding(): Houding {
     lift: 0,
     vooruit: 0,
     grond: 0,
+    buik: 0,
   };
 }
 
@@ -1094,6 +1097,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   h.hoofd.set(0, 0, 0);
   h.vooruit = 0;
   h.grond = 0;
+  h.buik = 0;
   for (const a of h.arm) a.ik = 0;
   const l = s.liggen;
   const m = s.manier;
@@ -1222,6 +1226,8 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   if (zit > 0) {
     const knie = zitS === 'kniezit' ? zit : 0;
     const hurk = zitS === 'hurkzit' ? zit : 0;
+    const half = zitS === 'halfknie' ? zit : 0;
+    const buik = zitS === 'buik' ? zit : 0;
     const vorigOp = s.zitVorig === 'zit-opgetrokken' ? 1 : 0;
     const mixZ = s.zitVorig ? (s.zitMix ?? 1) : 1;
     const opgetrokken = ((zitS === 'zit-opgetrokken' ? 1 : 0) * mixZ + vorigOp * (1 - mixZ)) * billen;
@@ -1236,6 +1242,18 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
         vt.p.lerp(_v.set(kant(i) * 0.23, MAAT.enkel, 0.04), hurk);
         vt.draai = kant(i) * 0.35;
       }
+      if (half > 0) {
+        // Halfknielend: rechterknie op het gras (wreef op de grond), linkervoet plat voor.
+        if (i === 0) {
+          vt.p.lerp(_v.set(-0.12, 0.07, -0.36), half);
+          vt.kantel = mix(vt.kantel, 1.4, half);
+        } else vt.p.lerp(_v.set(0.15, MAAT.enkel, 0.46), half);
+      }
+      if (buik > 0) {
+        // Op de buik: benen gestrekt (het lijf kantelt verderop helemaal voorover), voeten op de tenen.
+        vt.p.lerp(_v.set(kant(i) * 0.13, MAAT.enkel, 0), buik);
+        vt.kantel = mix(vt.kantel, 0.2, buik);
+      }
       if (billen > 0) {
         vt.p.lerp(_v.set(kant(i) * 0.13, MAAT.enkel, mix(0.84, 0.44, opgetrokken / Math.max(billen, 1e-6))), billen);
         vt.kantel = mix(vt.kantel, mix(0.15, 0, opgetrokken), billen);
@@ -1244,6 +1262,8 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     }
     h.heup = mix(h.heup, 0.5, knie);
     h.heup = mix(h.heup, 0.46, hurk);
+    h.heup = mix(h.heup, 0.55, half);
+    h.heup = mix(h.heup, MAAT.heup - 0.01, buik);
     h.heup = mix(h.heup, 0.15 + 0.01 * opgetrokken, billen);
     h.romp.x += 0.08 * knie + 0.4 * hurk - 0.1 * billen;
     h.bekken.x += 0.25 * hurk - 0.05 * billen;
@@ -1253,7 +1273,16 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       ar.x = mix(ar.x, -0.35, zit * 0.6);
       ar.z = mix(ar.z, kant(i) * 0.3, zit * 0.6);
       ar.elleboog = mix(ar.elleboog, 0.9, zit * 0.6);
+      // Op de buik: handen onder de schouders (klaar om je op te drukken).
+      if (buik > 0) {
+        ar.x = mix(ar.x, -1.45, buik);
+        ar.z = mix(ar.z, kant(i) * 0.45, buik);
+        ar.elleboog = mix(ar.elleboog, 1.5, buik);
+      }
     }
+    h.buik = buik;
+    // Op de buik: hoofd omhoog, kijkt vooruit.
+    h.hoofd.x -= 0.9 * buik;
     // Grond tikken: achterover en met beide handen achter je naar het gras.
     if (billen > 0 && s.tik > 0) {
       h.romp.x -= 0.4 * s.tik;
@@ -1281,6 +1310,17 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       }
       h.heup = mix(h.heup, MAAT.heup - 0.04, blokK);
       h.romp.x += 0.1 * blokK;
+    } else if (bl.soort === 'voeten') {
+      // Glijdend met de voeten vooruit: op de heup, benen gestrekt naar de bal, handen achter op het gras.
+      for (const i of [0, 1] as const) {
+        h.voet[i].p.lerp(_v.set(kant(i) * 0.14, MAAT.enkel + 0.06, 0.88), blokK);
+        h.voet[i].kantel = mix(h.voet[i].kantel, -0.2, blokK);
+        h.arm[i].doel.set(kant(i) * 0.38, 0.06, -0.12);
+        h.arm[i].ik = blokK;
+      }
+      h.heup = mix(h.heup, 0.2, blokK);
+      h.romp.x -= 0.45 * blokK;
+      h.grond = Math.max(h.grond, blokK);
     } else {
       // Rechterknie op de grond, linkerbeen breed opzij.
       h.voet[0].p.lerp(_v.set(-0.1, 0.07, -0.36), blokK);
@@ -1463,12 +1503,23 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     const lx = ddx * Math.cos(st.hoek) - ddz * Math.sin(st.hoek);
     const lz = ddx * Math.sin(st.hoek) + ddz * Math.cos(st.hoek);
     const i = lx > 0 ? 1 : 0;
-    h.heup -= 0.3 * w;
-    h.romp.x += 0.7 * w;
-    h.romp.z += -kant(i) * 0.15 * w;
-    for (const j of [0, 1] as const) h.voet[j].p.x = mix(h.voet[j].p.x, kant(j) * 0.2, w);
-    h.arm[i].doel.set(lx, 0.22, lz);
-    h.arm[i].ik = Math.max(h.arm[i].ik, w);
+    if (at.voet) {
+      // Met de voet: de voet aan die kant gaat naar de pion (net ervoor).
+      const d = Math.hypot(lx, lz) || 1;
+      const vt = h.voet[i];
+      vt.p.lerp(_v.set(lx - (lx / d) * 0.16, MAAT.enkel + 0.04, lz - (lz / d) * 0.16), w);
+      vt.steun = Math.min(vt.steun, 1 - w);
+      vt.kantel = mix(vt.kantel, 0.3, w);
+      h.heup -= 0.05 * w;
+      h.arm[1 - i]!.z = mix(h.arm[1 - i]!.z, kant(1 - i) * 0.5, w);
+    } else {
+      h.heup -= 0.3 * w;
+      h.romp.x += 0.7 * w;
+      h.romp.z += -kant(i) * 0.15 * w;
+      for (const j of [0, 1] as const) h.voet[j].p.x = mix(h.voet[j].p.x, kant(j) * 0.2, w);
+      h.arm[i].doel.set(lx, 0.22, lz);
+      h.arm[i].ik = Math.max(h.arm[i].ik, w);
+    }
   }
 
   // ---- worp of trap uit de handen ----
@@ -1573,9 +1624,10 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   const kantel = l > 0 ? _q2.setFromAxisAngle(_w.set(dz, 0, -dx), l * 1.5) : _q2.identity();
   _q.setFromAxisAngle(Y, st.hoek);
   sk.wortel.quaternion.copy(kantel).multiply(_q);
-  // Naar voren stappen (trap): in de kijkrichting.
-  const vx = Math.sin(st.hoek) * h.vooruit;
-  const vz = Math.cos(st.hoek) * h.vooruit;
+  if (h.buik > 0) sk.wortel.quaternion.multiply(_q2.setFromAxisAngle(_w.set(1, 0, 0), (Math.PI / 2) * 0.96 * h.buik));
+  // Naar voren stappen (trap): in de kijkrichting. Op de buik: de voeten achter de plek, het bekken erop.
+  const vx = Math.sin(st.hoek) * (h.vooruit - 0.9 * h.buik);
+  const vz = Math.cos(st.hoek) * (h.vooruit - 0.9 * h.buik);
   sk.wortel.position.set(s.x - dx * 1.45 * l + vx, h.lift + s.zweef + l * 0.2, s.y - dz * 1.45 * l + vz);
 
   // Heupen: zo hoog als gewenst, maar de voeten moeten erbij kunnen (geen gestrekte benen die te kort zijn).

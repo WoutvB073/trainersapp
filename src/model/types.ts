@@ -193,11 +193,12 @@ export interface BalActie extends ActieBasis {
   uitkomen?: string;
   vangHoogte?: number;
   /**
-   * 1 op 1: de keeper blokt het schot met zijn lichaam (`blokSoort`: `ster` = spreidsprong/stervorm, `knie` = knieblok);
+   * 1 op 1: de keeper blokt het schot met zijn lichaam (`blokSoort`: `ster` = spreidsprong/stervorm, `knie` = knieblok,
+   * `voeten` = glijdend met de voeten vooruit);
    * de bal kaatst af naar `afloopNaar`.
    */
   blokt?: string;
-  blokSoort?: 'ster' | 'knie';
+  blokSoort?: 'ster' | 'knie' | 'voeten';
   /** Bij `afloop: "vangt"`: de keeper houdt de bal vast (bv. keepersoorlog: hij gooit hem zelf terug). */
   vasthouden?: boolean;
   stompNaar?: Punt;
@@ -280,9 +281,10 @@ export interface BeweegActie extends ActieBasis {
 
 /**
  * Kniezit, hurkzit, of op de billen: `zit` (benen gestrekt naar voren) of `zit-opgetrokken` (knieën opgetrokken),
- * bv. grondoefeningen in de warming-up van keepers.
+ * bv. grondoefeningen in de warming-up van keepers. `buik` = op de buik liggen (gezicht naar beneden, in de kijkrichting),
+ * `halfknie` = halfknielend (rechterknie op de grond, linkervoet voor). Opstaan met `opstaan` gaat geleidelijk.
  */
-export type Zithouding = 'kniezit' | 'hurkzit' | 'zit' | 'zit-opgetrokken';
+export type Zithouding = 'kniezit' | 'hurkzit' | 'zit' | 'zit-opgetrokken' | 'buik' | 'halfknie';
 
 /** Keeper gaat (weer) in kniezit of hurkzit zitten, bv. na een duik voor de volgende bal. */
 export interface ZitActie extends ActieBasis {
@@ -310,14 +312,20 @@ export interface DraaiActie extends ActieBasis {
   wie: string;
   kijk?: number;
   naar?: string;
+  /** Draaisprong: omdraaien in de lucht (bv. 180° met de rug naar het veld beginnen). */
+  sprong?: boolean;
 }
 
 /** Een pion, hoedje of paaltje aantikken met de hand (door de knieën, hand naar het object), standaard 0,6 s. */
 export interface AantikActie extends ActieBasis {
   type: 'aantikken';
   wie: string;
-  /** Id van het object dat hij aantikt. */
-  doel: string;
+  /** Id van het object dat hij aantikt … */
+  doel?: string;
+  /** … of een punt (bv. de doelpaal). */
+  punt?: Punt;
+  /** Met de hand (standaard) of met de voet. */
+  met?: 'hand' | 'voet';
 }
 
 /** Achteraan een rij aansluiten (loopt buitenom, zonder door de rij te lopen). */

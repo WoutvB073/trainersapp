@@ -172,11 +172,11 @@ export interface Tijdlijn {
   /** Grond achter je aantikken (zittende keeper). */
   tikken: Map<string, { t0: number; t1: number }[]>;
   /** Een pion/hoedje aantikken met de hand. */
-  aantikken: Map<string, { t0: number; t1: number; punt: Punt }[]>;
+  aantikken: Map<string, { t0: number; t1: number; punt: Punt; voet: boolean }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
   /** Keeper blokt een schot met zijn lichaam (moment van contact). */
-  blokken: { wie: string; t: number; soort: 'ster' | 'knie' }[];
+  blokken: { wie: string; t: number; soort: 'ster' | 'knie' | 'voeten' }[];
 }
 
 export interface ObjectStand {
@@ -228,7 +228,7 @@ export interface ObjectStand {
   /** Keeper stompt: armen gestrekt naar de bal met één of twee vuisten (u: 0–1 rond het contact). */
   stomp?: { vuisten: 1 | 2; u: number };
   /** Keeper blokt: spreidsprong (ster) of knieblok (u: 0–1 rond het contact). */
-  blok?: { soort: 'ster' | 'knie'; u: number };
+  blok?: { soort: 'ster' | 'knie' | 'voeten'; u: number };
   /**
    * Personen in beweging (voor de 3D-poppetjes): looprichting (graden), seconden sinds het begin van deze beweging,
    * afgelegde weg (m) en versnelling (m/s², negatief = afremmen).
@@ -247,7 +247,7 @@ export interface ObjectStand {
   /** Opstaan na een duik: 0–1 (alleen tijdens het opstaan). */
   opstaan?: number;
   /** Een pion/hoedje aantikken: u 0–1 (hand bij het object op u = 0,5) en waar het object staat. */
-  aantik?: { u: number; x: number; y: number };
+  aantik?: { u: number; x: number; y: number; voet?: boolean };
 }
 
 /** Een bal die net in een goal is gegaan: het net bolt op die plek even uit. */
@@ -607,7 +607,8 @@ function zitOp(tl: Tijdlijn, id: string, t: number): { zit: number; soort?: Zith
     if (b.t0 > e.t + 1e-6 && b.t0 <= t && b.ease !== 'duik') w = Math.min(w, 1 - ease('mens', klem((t - b.t0) / 0.3)));
   }
   for (const h of tl.houdingen.get(id) ?? []) {
-    if (h.t > e.t + 1e-6 && h.t <= t && h.houding === 'staan') w = 0;
+    // Opstaan uit een zithouding (of buikligging): geleidelijk.
+    if (h.t > e.t + 1e-6 && h.t <= t && h.houding === 'staan') w = Math.min(w, 1 - ease('mens', klem((t - h.t) / Math.max(0.05, h.t1 - h.t))));
   }
   w *= 1 - ligging(tl, id, t).liggen;
   if (doorzitten) return { zit: w, soort: e.soort, vorig: vorige!.soort, mix: ease('mens', klem((t - e.t) / 0.5)) };
@@ -628,7 +629,7 @@ function tikOp(tl: Tijdlijn, id: string, t: number): number {
 /** Hoeveel lager de handen zijn in kniezit (0,45 m) of hurkzit (0,4 m). */
 const zitLager = (tl: Tijdlijn, id: string, t: number) => {
   const z = zitOp(tl, id, t);
-  return z.zit * (z.soort === 'kniezit' ? 0.45 : z.soort === 'zit' || z.soort === 'zit-opgetrokken' ? 0.75 : 0.4);
+  return z.zit * (z.soort === 'kniezit' || z.soort === 'halfknie' ? 0.45 : z.soort === 'zit' || z.soort === 'zit-opgetrokken' ? 0.75 : z.soort === 'buik' ? 0.85 : 0.4);
 };
 
 /** Hoogte van een landingskussen op deze plek (0 = gras). */
@@ -1219,14 +1220,17 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
       const hoek = d ? graden(p, d) : a.kijk;
       if (hoek === undefined) throw new TekeningFout(`Draai: geef "kijk" of "naar" voor "${o.id}"`);
       voegToe(tl.kijk, o.id, { t: t0, hoek }, (e) => e.t);
-      eind = Math.max(eind, t0 + (a.duur ?? DRAAI));
+      // Draaisprong: hoogste punt halverwege de draai.
+      if (a.sprong) voegToe(tl.sprongen, o.id, t0 + 0.2, (x) => x);
+      eind = Math.max(eind, t0 + (a.duur ?? (a.sprong ? 0.55 : DRAAI)));
       continue;
     }
     if (a.type === 'aantikken') {
-      const doel = tl.objecten.get(a.doel);
-      if (!doel) throw new TekeningFout(`Aantikken: onbekend object "${a.doel}"`);
+      const doel = a.doel ? tl.objecten.get(a.doel) : undefined;
+      const punt: Punt | undefined = a.punt ?? (doel ? [doel.x, doel.y] : undefined);
+      if (!punt) throw new TekeningFout(`Aantikken: geen object of punt ("${a.doel ?? ''}")`);
       const t1 = t0 + (a.duur ?? 0.6);
-      voegToe(tl.aantikken, o.id, { t0, t1, punt: [doel.x, doel.y] }, (e) => e.t0);
+      voegToe(tl.aantikken, o.id, { t0, t1, punt, voet: a.met === 'voet' }, (e) => e.t0);
       eind = Math.max(eind, t1);
       continue;
     }
@@ -1957,7 +1961,7 @@ function sprongOp(tl: Tijdlijn, id: string, t: number): number {
 /** Alleen de velden die er zijn (dan blijven standen zonder deze bewegingen precies zoals ze waren). */
 /** Aantikken van een pion of hoedje op tijdstip t. */
 function aantikOp(tl: Tijdlijn, id: string, t: number): ObjectStand['aantik'] {
-  for (const e of tl.aantikken.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return { u: (t - e.t0) / (e.t1 - e.t0), x: e.punt[0], y: e.punt[1] };
+  for (const e of tl.aantikken.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return { u: (t - e.t0) / (e.t1 - e.t0), x: e.punt[0], y: e.punt[1], ...(e.voet ? { voet: true } : {}) };
   return undefined;
 }
 
