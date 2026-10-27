@@ -152,7 +152,7 @@ export interface Benodigdheid {
 }
 
 /** Meervoud → enkelvoud (alleen de woorden die in de oefeningen voorkomen). */
-const ENKELVOUD: Record<string, string> = {
+const ENKELVOUD_NL: Record<string, string> = {
   pionnen: 'pion',
   hoedjes: 'hoedje',
   ballen: 'bal',
@@ -177,10 +177,33 @@ const ENKELVOUD: Record<string, string> = {
   rebounders: 'rebounder',
   stokken: 'stok',
 };
-const MEERVOUD: Record<string, string> = Object.fromEntries(Object.entries(ENKELVOUD).map(([m, e]) => [e, m]));
-const KLEIN: Record<string, string> = { kleine: 'klein', grote: 'groot', lage: 'laag', hoge: 'hoog', dikke: 'dik' };
+/** Hetzelfde voor de Engelse benodigdheden (0.25.0); Engelse bijvoeglijke naamwoorden veranderen niet. */
+// i18n-ok (woorden uit de Engelse oefenteksten)
+const ENKELVOUD_EN: Record<string, string> = {
+  cones: 'cone',
+  balls: 'ball',
+  goals: 'goal',
+  bibs: 'bib',
+  hurdles: 'hurdle',
+  rings: 'ring',
+  poles: 'pole',
+  mannequins: 'mannequin',
+  dummies: 'dummy',
+  benches: 'bench',
+  ladders: 'ladder',
+  mats: 'mat',
+  hoops: 'hoop',
+  sticks: 'stick',
+  rebounders: 'rebounder',
+  nets: 'net',
+};
+const MAPPEN: Record<Taal, { enkelvoud: Record<string, string>; klein: Record<string, string> }> = {
+  nl: { enkelvoud: ENKELVOUD_NL, klein: { kleine: 'klein', grote: 'groot', lage: 'laag', hoge: 'hoog', dikke: 'dik' } },
+  en: { enkelvoud: ENKELVOUD_EN, klein: {} },
+};
 
-function sleutel(naam: string): string {
+function sleutel(naam: string, taal: Taal): string {
+  const { enkelvoud: ENKELVOUD, klein: KLEIN } = MAPPEN[taal];
   return naam
     .toLowerCase()
     .replace(/\s*\(.*?\)\s*/g, ' ')
@@ -191,7 +214,9 @@ function sleutel(naam: string): string {
     .trim();
 }
 
-function metAantal(s: string, aantal: number): string {
+function metAantal(s: string, aantal: number, taal: Taal): string {
+  const { enkelvoud, klein: KLEIN } = MAPPEN[taal];
+  const MEERVOUD: Record<string, string> = Object.fromEntries(Object.entries(enkelvoud).map(([m, e]) => [e, m]));
   const woorden = s.split(' ');
   if (aantal !== 1) {
     // Bijvoeglijke naamwoorden terug naar "kleine", "lage" … en het zelfstandig naamwoord in het meervoud.
@@ -209,14 +234,14 @@ function metAantal(s: string, aantal: number): string {
  * Alles wat je voor de training moet klaarzetten. De oefeningen komen na elkaar, dus per soort materiaal telt het
  * grootste aantal dat één oefening nodig heeft (dat materiaal gebruik je daarna opnieuw).
  */
-export function benodigdheden(oefeningen: Oefening[]): Benodigdheid[] {
+export function benodigdheden(oefeningen: Oefening[], taal: Taal = TAAL): Benodigdheid[] {
   const per = new Map<string, { aantal?: number; tekst: string; oefeningen: Set<string> }>();
   for (const o of oefeningen) {
     for (const b of o.benodigdheden) {
       const m = /^(\d+)\+?(?:\s*[–-]\s*(\d+))?\s+(.+)$/.exec(b.trim());
       const aantal = m ? Math.max(Number(m[1]), Number(m[2] ?? 0)) : undefined;
       const naam = m ? m[3]! : b.trim();
-      const k = sleutel(naam);
+      const k = sleutel(naam, taal);
       if (!k) continue;
       const nu = per.get(k) ?? { tekst: naam.replace(/\s*\(.*?\)/g, '').trim(), oefeningen: new Set<string>() };
       if (aantal !== undefined) nu.aantal = Math.max(nu.aantal ?? 0, aantal);
@@ -226,7 +251,7 @@ export function benodigdheden(oefeningen: Oefening[]): Benodigdheid[] {
   }
   return [...per.entries()]
     .map(([k, v]) => {
-      const tekst = v.aantal !== undefined ? metAantal(k, v.aantal) : v.tekst.charAt(0).toUpperCase() + v.tekst.slice(1);
+      const tekst = v.aantal !== undefined ? metAantal(k, v.aantal, taal) : v.tekst.charAt(0).toUpperCase() + v.tekst.slice(1);
       return { tekst, aantal: v.aantal, oefeningen: [...v.oefeningen] };
     })
     .sort((a, b) => a.tekst.replace(/^\d+ /, '').localeCompare(b.tekst.replace(/^\d+ /, ''), LOCALE));

@@ -104,12 +104,12 @@ function Rij({ icoon, titel, sub, naar, opDupliceer, opVerwijder }: { icoon: Ico
         </span>
       </a>
       <div className="training-acties">
-        <button className="icoon-knop" aria-label={`${titel} dupliceren`} onClick={opDupliceer}>
+        <button className="icoon-knop" aria-label={vt('{titel} dupliceren', { titel })} onClick={opDupliceer}>
           <Icoon naam="kopieer" maat={20} />
         </button>
         <button
           className="icoon-knop gevaar"
-          aria-label={`${titel} verwijderen`}
+          aria-label={vt('{titel} verwijderen', { titel })}
           onClick={() => {
             if (window.confirm(vt('"{titel}" verwijderen?', { titel }))) opVerwijder();
           }}
@@ -445,7 +445,13 @@ export function OpstellingScherm({ id }: { id: string }) {
             <h3 className="opst-sub">{vt('Formatie')}</h3>
             <div className="gen-chips" role="radiogroup" aria-label={vt('Formatie')}>
               {info.formaties.map((f) => (
-                <button key={f} role="radio" aria-checked={o.formatie === f} className={`gen-chip${o.formatie === f ? ' aan' : ''}`} onClick={() => f !== o.formatie && zet(wisselFormatie(nu(), o.spelvorm, f))}>
+                <button
+                  key={f}
+                  role="radio"
+                  aria-checked={o.formatie === f}
+                  className={`gen-chip${o.formatie === f ? ' aan' : ''}`}
+                  onClick={() => f !== o.formatie && zet(wisselFormatie(nu(), o.spelvorm, f))}
+                >
                   {f}
                 </button>
               ))}
@@ -564,7 +570,12 @@ export function BordScherm({ id }: { id: string }) {
           <section className="blok training-gegevens">
             <label className="veld">
               <span>{vt('Naam')}</span>
-              <input value={b.naam} placeholder={b.soort === 'hervatting' ? vt('Bijv. Corner eerste paal') : vt('Bijv. Druk zetten na balverlies')} maxLength={80} onChange={(e) => borden.bewaar({ ...nu(), naam: e.target.value })} />
+              <input
+                value={b.naam}
+                placeholder={b.soort === 'hervatting' ? vt('Bijv. Corner eerste paal') : vt('Bijv. Druk zetten na balverlies')}
+                maxLength={80}
+                onChange={(e) => borden.bewaar({ ...nu(), naam: e.target.value })}
+              />
             </label>
           </section>
           <div className="knoppenrij">

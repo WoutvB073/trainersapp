@@ -37,7 +37,7 @@ export function SyncIcoon() {
   if (!s.account) return null;
   const let_op = s.sync === 'wacht' || s.sync === 'offline' || s.sync === 'fout';
   return (
-    <button className={`icoon-knop sync-icoon${let_op ? ' let-op' : ''}`} aria-label={`Account: ${SYNC_TEKST[s.sync]}`} title={SYNC_TEKST[s.sync]} onClick={() => ga('/account')}>
+    <button className={`icoon-knop sync-icoon${let_op ? ' let-op' : ''}`} aria-label={t('Account: {w0}', { w0: SYNC_TEKST[s.sync] })} title={SYNC_TEKST[s.sync]} onClick={() => ga('/account')}>
       <Icoon naam={s.sync === 'offline' || s.sync === 'fout' ? 'wolkUit' : 'wolk'} maat={24} />
     </button>
   );
@@ -107,7 +107,11 @@ export function Account() {
               <SyncRegel />
             </div>
           </section>
-          <p className="klein">{t('Je eigen oefeningen, trainingen, favorieten en instellingen staan online en zijn op al je apparaten gelijk. Zonder internet werkt alles gewoon; wijzigingen gaan mee zodra je weer online bent.')}</p>
+          <p className="klein">
+            {t(
+              'Je eigen oefeningen, trainingen, favorieten en instellingen staan online en zijn op al je apparaten gelijk. Zonder internet werkt alles gewoon; wijzigingen gaan mee zodra je weer online bent.',
+            )}
+          </p>
           <div className="knoppenrij">
             <button className="knop knop-primair" onClick={() => ga('/teams')}>
               <Icoon naam="team" maat={20} />
@@ -212,7 +216,12 @@ export function Account() {
               className="link-knop"
               onClick={() => {
                 if (!email.trim()) return setFout(t('Vul eerst je e-mailadres in.'));
-                void doe((m) => m.wachtwoordVergeten(email), t('Als er een account is met dit adres, krijg je een e-mail om een nieuw wachtwoord te kiezen. De link opent in de browser; kom daarna terug in de app en log in met je nieuwe wachtwoord.'));
+                void doe(
+                  (m) => m.wachtwoordVergeten(email),
+                  t(
+                    'Als er een account is met dit adres, krijg je een e-mail om een nieuw wachtwoord te kiezen. De link opent in de browser; kom daarna terug in de app en log in met je nieuwe wachtwoord.',
+                  ),
+                );
               }}
             >
               {t('Wachtwoord vergeten?')}
@@ -240,9 +249,7 @@ export function SamenvoegenVraag() {
     <div className="paneel-achter">
       <div className="paneel paneel-vraag" role="alertdialog" aria-label={t('Gegevens naar je account?')}>
         <h2>{t('Gegevens van dit apparaat meenemen?')}</h2>
-        <p>
-          {t('Op dit apparaat staan {wat}. Wil je die bij je account zetten? Dan staan ze ook op je andere apparaten. Dubbele worden samengevoegd.', { wat: lijstTekst(delen) })}
-        </p>
+        <p>{t('Op dit apparaat staan {wat}. Wil je die bij je account zetten? Dan staan ze ook op je andere apparaten. Dubbele worden samengevoegd.', { wat: lijstTekst(delen) })}</p>
         <p className="klein">{t('Kies je "Nee", dan blijven ze gewoon op dit apparaat staan en zie je ze weer als je uitlogt.')}</p>
         <div className="knoppenrij">
           <button className="knop knop-primair" onClick={() => antwoord(true)}>

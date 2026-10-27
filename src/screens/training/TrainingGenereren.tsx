@@ -84,7 +84,7 @@ function Regel({
         </button>
         <span className="onderdeel-nr">{nr}</span>
         <span className={`gen-naam gen-${onderdeel.soort}`}>{onderdeelNaam(onderdeel)}</span>
-        <button className="icoon-knop" onClick={opWeg} aria-label={`${onderdeelNaam(onderdeel)} weghalen`}>
+        <button className="icoon-knop" onClick={opWeg} aria-label={vt('{w0} weghalen', { w0: onderdeelNaam(onderdeel) })}>
           <Icoon naam="kruis" maat={20} />
         </button>
       </div>
@@ -139,10 +139,7 @@ export function TrainingGenereren({ id }: { id: string }) {
     return (g?.onderdelen ?? []).map((o, i) => ({ ...o, k: nieuweSleutel(), keuze: g!.keuzes[i] ?? null }));
   });
   const [melding, setMelding] = useState('');
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
   if (!t) return <NietGevonden />;
 
   const gegenereerd = items.some((i) => i.keuze !== undefined);
@@ -240,16 +237,7 @@ export function TrainingGenereren({ id }: { id: string }) {
             <SortableContext items={items.map((i) => i.k)} strategy={verticalListSortingStrategy}>
               <ol className="gen-lijst">
                 {items.map((i, n) => (
-                  <Regel
-                    key={i.k}
-                    sleutel={i.k}
-                    nr={n + 1}
-                    onderdeel={i}
-                    keuze={i.keuze}
-                    t={t}
-                    opAnder={() => ander(n)}
-                    opWeg={() => zet(items.filter((x) => x.k !== i.k))}
-                  />
+                  <Regel key={i.k} sleutel={i.k} nr={n + 1} onderdeel={i} keuze={i.keuze} t={t} opAnder={() => ander(n)} opWeg={() => zet(items.filter((x) => x.k !== i.k))} />
                 ))}
               </ol>
             </SortableContext>

@@ -125,7 +125,7 @@
     "uitleg": "The keeper stands with their back to the pitch. On a signal they do a 180° spin jump, step out towards the coach who is coming at them with the ball, and block the shot with a feet-first slide. Get up, back into goal going backwards, and the coach throws a second ball to a side the keeper doesn't know: dive and catch.",
     "organisatie": "Keeper 2 m in front of the goal line, back to the pitch. Coach with two balls at 8 m.",
     "benodigdheden": ["Goal", "Balls"],
-    "coachpunten": ["Spin jump: land in the ready position, look at the ball straight away", "Feet-first block: slide low towards the ball, legs together, hands beside you", "Back going backwards, facing the pitch"],
+    "coachpunten": ["Spin jump: land in the ready position, look at the ball straight away", "Feet-first block: slide low towards the ball, legs together, hands beside you", "Back-pedal into position, facing the pitch"],
     "variaties": { "makkelijker": ["No spin jump (just turn round)", "The coach rolls the ball instead of shooting"], "moeilijker": ["The signal comes at the last moment", "Second ball high", "The coach may also dribble round the keeper"] }
   },
   "keeper-re-stuitbal-schuin-lichaam": {

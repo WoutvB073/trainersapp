@@ -9,7 +9,7 @@ export interface Categorie {
 
 export const CATEGORIEEN: Record<Soort, Categorie[]> = {
   veld: [
-    { id: 'warming-up', naam: 'Warming-up', omschrijving: t('Opwarmen met en zonder bal') },
+    { id: 'warming-up', naam: t('Warming-up'), omschrijving: t('Opwarmen met en zonder bal') },
     { id: 'techniek', naam: t('Techniek'), omschrijving: t('Balbeheersing, aannemen, kappen en draaien') },
     { id: 'loopcoordinatie', naam: t('Loopcoördinatie'), omschrijving: t('Ladders, hordes en voetenwerk') },
     { id: 'pass-en-trap', naam: t('Pass en trap'), omschrijving: t('Passen, aannemen en meenemen') },
@@ -19,7 +19,7 @@ export const CATEGORIEEN: Record<Soort, Categorie[]> = {
     { id: 'spelletjes', naam: t('Spelletjes'), omschrijving: t('Voetvolley en andere spelvormen') },
   ],
   keeper: [
-    { id: 'warming-up', naam: 'Warming-up', omschrijving: t('Opwarmen, vangen en voetenwerk') },
+    { id: 'warming-up', naam: t('Warming-up'), omschrijving: t('Opwarmen, vangen en voetenwerk') },
     { id: 'laag-duiken', naam: t('Laag duiken'), omschrijving: t('Duiken naar lage ballen') },
     { id: 'hoog-duiken', naam: t('Hoog duiken'), omschrijving: t('Duiken naar hoge ballen') },
     { id: 'bal-verwerken', naam: t('Bal verwerken'), omschrijving: t('Lage en hoge ballen, met stuit') },

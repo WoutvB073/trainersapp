@@ -124,7 +124,16 @@ export function Teams() {
               });
             }}
           >
-            <input className="code-invoer" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="CODE" maxLength={8} autoCapitalize="characters" autoComplete="off" aria-label={vt('Teamcode')} />
+            <input
+              className="code-invoer"
+              value={code}
+              onChange={(e) => setCode(e.target.value.toUpperCase())}
+              placeholder="CODE"
+              maxLength={8}
+              autoCapitalize="characters"
+              autoComplete="off"
+              aria-label={vt('Teamcode')}
+            />
             <button className="knop knop-primair" type="submit" disabled={bezig || code.trim().length < 6}>
               {vt('Joinen')}
             </button>
@@ -195,7 +204,13 @@ export function TeamScherm({ id }: { id: string }) {
   const itemKnoppen = (it: TeamItem) => (
     <>
       {it.eigenaar === ik && (
-        <button className="icoon-knop" aria-label={`${it.naam} terugtrekken`} title={vt('Terugtrekken')} disabled={bezig} onClick={() => void doe((m) => m.verwijderItem(t.id, it.id), vt('Teruggetrokken uit het team'))}>
+        <button
+          className="icoon-knop"
+          aria-label={vt('{naam} terugtrekken', { naam: it.naam })}
+          title={vt('Terugtrekken')}
+          disabled={bezig}
+          onClick={() => void doe((m) => m.verwijderItem(t.id, it.id), vt('Teruggetrokken uit het team'))}
+        >
           <Icoon naam="kruis" maat={20} />
         </button>
       )}
@@ -206,7 +221,8 @@ export function TeamScherm({ id }: { id: string }) {
           title={vt('Uit het team verwijderen')}
           disabled={bezig}
           onClick={() => {
-            if (window.confirm(vt('"{naam}" van {eigenaarNaam} uit het team verwijderen?', { naam: it.naam, eigenaarNaam: it.eigenaarNaam }))) void doe((m) => m.verwijderItem(t.id, it.id), vt('Verwijderd uit het team'));
+            if (window.confirm(vt('"{naam}" van {eigenaarNaam} uit het team verwijderen?', { naam: it.naam, eigenaarNaam: it.eigenaarNaam })))
+              void doe((m) => m.verwijderItem(t.id, it.id), vt('Verwijderd uit het team'));
           }}
         >
           <Icoon naam="prullenbak" maat={20} />
@@ -475,14 +491,17 @@ export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training
   if (!s.account || !onlineBeschikbaar()) return null;
   const deel = (t: Team) => {
     setOpen(false);
-    void doe(async (m) => {
-      if (soort === 'oefening') {
-        const o = eigenOefeningen.haal(id);
-        if (!o) throw new Error('Online: oefening niet gevonden');
-        await m.deelOefening(t.id, o);
-      } else if (soort === 'training') await m.deelTraining(t.id, id);
-      else await m.deelWedstrijd(t.id, soort, id);
-    }, vt('Gedeeld met {naam}', { naam: t.naam }));
+    void doe(
+      async (m) => {
+        if (soort === 'oefening') {
+          const o = eigenOefeningen.haal(id);
+          if (!o) throw new Error('Online: oefening niet gevonden');
+          await m.deelOefening(t.id, o);
+        } else if (soort === 'training') await m.deelTraining(t.id, id);
+        else await m.deelWedstrijd(t.id, soort, id);
+      },
+      vt('Gedeeld met {naam}', { naam: t.naam }),
+    );
   };
   const gedeeld = lijst.filter((t) => t.items.some((it) => it.id === id && it.eigenaar === s.account!.uid));
   return (

@@ -60,7 +60,7 @@
     "uitleg": "The coach plays a back pass, the keeper controls it with the inside of the foot and plays it through the gate on the wing. Then quickly back into goal: the coach shoots the second ball low into the corner.",
     "organisatie": "Keeper in front of goal, coach at 16 m with two balls. 3 m gate on the wing, 14 m from the centre.",
     "benodigdheden": ["Goal", "2 cones", "2 balls"],
-    "coachpunten": ["First touch to the side, away from goal; then look up", "After the pass, back going backwards, facing the ball", "Be ready before the shot: ready position, weight forward"],
+    "coachpunten": ["First touch to the side, away from goal; then look up", "After the pass, back-pedal into goal, facing the ball", "Be ready before the shot: ready position, weight forward"],
     "variaties": { "makkelijker": ["After the pass the keeper may get back calmly, the shot only once they're set", "Shot at the body"], "moeilijker": ["Play the back pass away first time", "Shot straight after the pass (no time)", "The coach chooses: shot or chip over the keeper"] },
     "onderdelen": ["Control the back pass", "Play it away", "Deal with the shot"]
   },
@@ -85,7 +85,7 @@
     "uitleg": "The coach hits a long ball over the defence. The keeper sprints out to the edge of the box and clears it there with a header. Then they run backwards, facing the pitch, back to their goal, where keeper 2 shoots straight away.",
     "organisatie": "Coach with balls 35 m from goal, keeper 2 with a ball at an angle on the right at 15 m. Outside the box the keeper may not handle the ball.",
     "benodigdheden": ["Goal", "Balls"],
-    "coachpunten": ["Decide early: go or stay", "Clear it far and wide, with your head or foot", "Back going backwards with small quick steps, be set in time for the shot"],
+    "coachpunten": ["Decide early: go or stay", "Clear it far and wide, with your head or foot", "Back-pedal to your goal with small quick steps and be set in time for the shot"],
     "variaties": { "makkelijker": ["Long ball along the ground (kick it clear)", "The shot only once the keeper is back in goal"], "moeilijker": ["An attacker also goes for the ball", "Shot while the keeper is still getting back (lob)", "Long ball with spin"] }
   },
   "keeper-ps-uitspelen-druk-minidoeltjes": {
@@ -149,7 +149,7 @@
     "uitleg": "Three cone gates stand in a triangle, with a keeper in each gate. The keeper with the ball drop-kicks it to the next gate and then joins the third gate, behind the keeper standing there. The receiver kicks it on and does the same. That way everyone moves on one gate after every action and there is always someone ready to catch.",
     "organisatie": "Triangle with sides of about 18 m, gates 2 m wide. One ball (two later on).",
     "benodigdheden": ["6 cones", "Balls"],
-    "coachpunten": ["Drop kick: drop the ball and strike it just as it hits the ground", "Aim for the receiver's chest", "After the kick, move straight on to the next gate"],
+    "coachpunten": ["Drop kick: drop the ball and strike it just as it hits the ground", "Aim for the receiver's chest", "After the kick, move straight on to the third gate"],
     "variaties": { "makkelijker": ["Volley instead of drop kick", "Smaller triangle"], "moeilijker": ["Two balls at once", "Catch the ball on the move", "Bigger triangle"] }
   },
   "keeper-ps-lezen-verdediger": {

@@ -29,17 +29,19 @@ function Regel({ o, opMelding }: { o: EigenOefening; opMelding: (s: string) => v
         <Miniatuur tekening={o.tekening} className="eigen-plaatje" />
         <span className="kaart-tekst">
           <span className="kaart-titel">{eigenNaam(o)}</span>
-          <span className="kaart-uitleg">{af ? `${SOORT_NAAM[o.soort]} · ${o.uitleg || t('Eigen oefening')}` : t('Nog niet in de bibliotheek: {wat}.', { wat: lijstTekst(ontbreekt(o)).toLowerCase() })}</span>
+          <span className="kaart-uitleg">
+            {af ? `${SOORT_NAAM[o.soort]} · ${o.uitleg || t('Eigen oefening')}` : t('Nog niet in de bibliotheek: {wat}.', { wat: lijstTekst(ontbreekt(o)).toLowerCase() })}
+          </span>
           {af && <Labels oefening={o} />}
         </span>
       </a>
       <div className="training-acties">
-        <button className="icoon-knop" aria-label={`${eigenNaam(o)} bewerken`} onClick={() => ga(`/eigen/${o.id}/tekenen`)}>
+        <button className="icoon-knop" aria-label={t('{w0} bewerken', { w0: eigenNaam(o) })} onClick={() => ga(`/eigen/${o.id}/tekenen`)}>
           <Icoon naam="potlood" maat={20} />
         </button>
         <button
           className="icoon-knop"
-          aria-label={`${eigenNaam(o)} dupliceren`}
+          aria-label={t('{w0} dupliceren', { w0: eigenNaam(o) })}
           onClick={() => {
             eigenOefeningen.dupliceer(o.id);
             opMelding(t('Kopie gemaakt'));
@@ -49,7 +51,7 @@ function Regel({ o, opMelding }: { o: EigenOefening; opMelding: (s: string) => v
         </button>
         <button
           className="icoon-knop gevaar"
-          aria-label={`${eigenNaam(o)} verwijderen`}
+          aria-label={t('{w0} verwijderen', { w0: eigenNaam(o) })}
           onClick={() => {
             if (window.confirm(t('"{w0}" verwijderen?', { w0: eigenNaam(o) }))) {
               eigenOefeningen.verwijder(o.id);

@@ -43,7 +43,7 @@ import { autoUitsnede } from '../../editor/editor';
 import { ga, terug } from '../../router';
 import { NietGevonden } from '../NietGevonden';
 import { eigenNaam } from './EigenOefeningen';
-import { t as vt } from '../../i18n/t';
+import { getal, t as vt } from '../../i18n/t';
 
 type Gereedschap = { soort: 'kies' } | { soort: 'plaats'; item: PaletItem } | { soort: 'lijn'; lijn: LijnSoort };
 type Selectie = { soort: 'object'; id: string } | { soort: 'lijn'; index: number } | null;
@@ -100,7 +100,7 @@ const AFLOPEN: { waarde: Lijn['afloop']; naam: string }[] = [
   { waarde: 'naast', naam: vt('Naast') },
 ];
 const WACHTTIJDEN = [0, 0.5, 1, 2];
-const komma = (v: number) => String(v).replace('.', ',');
+const komma = (v: number) => getal(v);
 
 const isPersoon = (o: VeldObject) => PERSONEN.includes(o.soort);
 
@@ -876,7 +876,9 @@ export function Editor({ bron }: { bron: EditorBron }) {
           <div className={`editor-waarschuwing${plaatsNaam ? ' hoger' : ''}`} role="status">
             <Icoon naam="info" maat={16} />
             {meldingen.some((m) => m.soort === 'fout')
-              ? vt(meldingen.filter((m) => m.soort === 'fout').length === 1 ? 'Eén lijn doet niet mee: tik op het rode nummer' : '{n} lijnen doen niet mee: tik op het rode nummer', { n: meldingen.filter((m) => m.soort === 'fout').length })
+              ? vt(meldingen.filter((m) => m.soort === 'fout').length === 1 ? 'Eén lijn doet niet mee: tik op het rode nummer' : '{n} lijnen doen niet mee: tik op het rode nummer', {
+                  n: meldingen.filter((m) => m.soort === 'fout').length,
+                })
               : vt('Let op: tik op het oranje nummer')}
           </div>
         )}
@@ -1089,7 +1091,9 @@ export function Editor({ bron }: { bron: EditorBron }) {
               </button>
             </div>
             <AnimatieSpeler tekening={speelTekening} />
-            {!heeftLijnAnimatie(t) && !animatie && <p className="editor-uitleg">{vt('Nog geen animatie: teken lijnen (pass, lopen, dribbel). Elke lijn krijgt een stapnummer; zo speelt de oefening af.')}</p>}
+            {!heeftLijnAnimatie(t) && !animatie && (
+              <p className="editor-uitleg">{vt('Nog geen animatie: teken lijnen (pass, lopen, dribbel). Elke lijn krijgt een stapnummer; zo speelt de oefening af.')}</p>
+            )}
             {heeftLijnAnimatie(t) && (
               <label className="editor-schakel">
                 <input type="checkbox" checked={!!t.herhaalRij} onChange={() => zet({ ...t, herhaalRij: !t.herhaalRij })} />
@@ -1103,7 +1107,11 @@ export function Editor({ bron }: { bron: EditorBron }) {
               <ul className="editor-meldingen">
                 {meldingen.map((m, i) => (
                   <li key={i} className={m.soort === 'fout' ? 'fout' : ''}>
-                    {m.lijn >= 0 ? <strong>{vt('Stap')} {t.lijnen?.[m.lijn]?.stap ?? '?'}: </strong> : null}
+                    {m.lijn >= 0 ? (
+                      <strong>
+                        {vt('Stap')} {t.lijnen?.[m.lijn]?.stap ?? '?'}:{' '}
+                      </strong>
+                    ) : null}
                     {m.tekst}
                   </li>
                 ))}
@@ -1122,7 +1130,8 @@ export function Editor({ bron }: { bron: EditorBron }) {
           <div className="paneel" role="dialog" aria-label={vt('Opties van de lijn')} onClick={(e) => e.stopPropagation()}>
             <div className="paneel-kop">
               <h2>
-                {gekozenLijn.soort === 'bal' ? (isSchotLijn(t, gekozenLijn) ? vt('Schot') : vt('Pass')) : gekozenLijn.soort === 'loop' ? vt('Looplijn') : vt('Dribbel')} {vt('– stap {n}', { n: gekozenLijn.stap ?? '–' })}
+                {gekozenLijn.soort === 'bal' ? (isSchotLijn(t, gekozenLijn) ? vt('Schot') : vt('Pass')) : gekozenLijn.soort === 'loop' ? vt('Looplijn') : vt('Dribbel')}{' '}
+                {vt('– stap {n}', { n: gekozenLijn.stap ?? '–' })}
               </h2>
               <button className="icoon-knop" aria-label={vt('Sluiten')} onClick={() => setOpties(false)}>
                 <Icoon naam="kruis" />

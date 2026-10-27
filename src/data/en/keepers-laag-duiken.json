@@ -118,7 +118,7 @@
     "uitleg": "The keeper moves sideways to the left post and then gets a low ball to the right: dive, catch, get up and back to the middle going backwards. Then the mirror image: sideways to the right post and dive to the left. That's one round; do two.",
     "organisatie": "Keeper in the middle of the goal, 1.4 m off the line. Coach with balls at 9 m.",
     "benodigdheden": ["Goal", "Balls"],
-    "coachpunten": ["At the post: stop and get set before the ball comes", "Take off from the leg on the diving side, dive diagonally forwards", "Back going backwards, facing the pitch"],
+    "coachpunten": ["At the post: stop and get set before the ball comes", "Take off from the leg on the diving side, dive diagonally forwards", "Back-pedal into position, facing the pitch"],
     "variaties": { "makkelijker": ["Not as far to the post", "Rolling balls"], "moeilijker": ["Mid-height ball", "The coach throws while the keeper is still moving", "Three rounds in a row"] }
   },
   "keeper-ld-rondje-hoedje": {

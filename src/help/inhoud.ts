@@ -251,7 +251,7 @@ export const HELP_EN: HelpOnderwerp[] = [
     tekst: [
       "- **Taal / Language**: Nederlands, English or Automatic (follows your phone's language). Your own drills, sessions and names are never translated; a shared link opens in the other person's own language.",
       '- **Club colours**: choose the colours of the app. The pitch and the team colours in the animations always stay the same.',
-      '- **Display**: light, dark or automatic.',
+      '- **View**: light, dark or automatic.',
     ],
     laatZien: [{ tekst: 'Go to Settings', pad: '/instellingen' }],
   },

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { ARCHIEF, OEFENINGEN } from '../src/data/oefeningen';
 import { TEKENING_TEKST, vertaal, type Vertalingen } from '../src/data/vertaling';
 import type { Oefening } from '../src/model/types';
+import { benodigdheden } from '../src/training/training';
 import { nederlands } from './nl-woorden';
 
 /**
@@ -81,5 +82,10 @@ describe('vertaling: ingebouwde oefeningen', () => {
     expect(v.tekening.animatie).toBe(o.tekening.animatie);
     expect(v.id).toBe(o.id);
     expect(v.categorieen).toBe(o.categorieen);
+  });
+  it('klaarzetten in het Engels voegt enkelvoud en meervoud samen ("1 cone" + "4 cones" = 4 cones)', () => {
+    const o = (id: string, b: string[]) => ({ ...OEFENINGEN[0]!, id, naam: id, benodigdheden: b });
+    const lijst = benodigdheden([o('a', ['1 cone', '2 balls', '1 goal']), o('b', ['4 cones', '1 ball', 'Bibs', '3 low hurdles'])], 'en').map((x) => x.tekst);
+    expect(lijst).toEqual(['2 balls', 'Bibs', '4 cones', '1 goal', '3 low hurdles']);
   });
 });

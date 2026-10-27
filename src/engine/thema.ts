@@ -43,19 +43,19 @@ export const THEMAS: Thema[] = [
   },
   {
     id: 'rood',
-    naam: 'Rood-wit',
+    naam: t('Rood-wit'),
     licht: { primair: '#c8102e', opPrimair: '#ffffff', primairTekst: '#b00e28', primairLicht: '#fde8eb', primairDonker: '#8f0b20', accent: '#1f3a5f', opAccent: '#ffffff', accentLicht: '#e8eef6' },
     donker: { primair: '#b40f29', opPrimair: '#ffffff', primairTekst: '#ff8f9f', primairLicht: '#3d1a20', primairDonker: '#ffd0d7', accent: '#9cc0f0', opAccent: '#0c1726', accentLicht: '#1d2a3d' },
   },
   {
     id: 'blauw',
-    naam: 'Blauw-wit',
+    naam: t('Blauw-wit'),
     licht: { primair: '#1b4fbf', opPrimair: '#ffffff', primairTekst: '#1b4fbf', primairLicht: '#e5edfb', primairDonker: '#133a8c', accent: '#b45309', opAccent: '#ffffff', accentLicht: '#fef3e2' },
     donker: { primair: '#2556c4', opPrimair: '#ffffff', primairTekst: '#93b4ff', primairLicht: '#1a2742', primairDonker: '#d4e1ff', accent: '#ffb547', opAccent: '#1f1405', accentLicht: '#3a2c14' },
   },
   {
     id: 'geel',
-    naam: 'Geel-zwart',
+    naam: t('Geel-zwart'),
     licht: { primair: '#ffd100', opPrimair: '#141414', primairTekst: '#6e5600', primairLicht: '#fff6cc', primairDonker: '#4f3e00', accent: '#141414', opAccent: '#ffd100', accentLicht: '#ececec' },
     donker: { primair: '#ffd100', opPrimair: '#141414', primairTekst: '#ffd84d', primairLicht: '#3a3210', primairDonker: '#fff1b3', accent: '#ffd100', opAccent: '#141414', accentLicht: '#2e2e2e' },
   },
@@ -80,7 +80,7 @@ export const THEMAS: Thema[] = [
   },
   {
     id: 'zwart',
-    naam: 'Zwart-goud',
+    naam: t('Zwart-goud'),
     licht: { primair: '#161616', opPrimair: '#f2c14e', primairTekst: '#161616', primairLicht: '#f8edcc', primairDonker: '#5c4500', accent: '#8a6400', opAccent: '#ffffff', accentLicht: '#fbf3dc' },
     donker: { primair: '#f2c14e', opPrimair: '#161616', primairTekst: '#f2c14e', primairLicht: '#3a2f12', primairDonker: '#fbe6ad', accent: '#f2c14e', opAccent: '#161616', accentLicht: '#2b2617' },
   },

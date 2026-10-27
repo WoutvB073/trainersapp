@@ -7,10 +7,10 @@ import { maakWeergave2D, type Weergave } from './weergave';
 import type { CameraStand, Weergave3D } from './render3d';
 import { Icoon } from '../components/Icoon';
 import { poppetjes, usePoppetjes } from '../engine/poppetjes';
-import { t } from '../i18n/t';
+import { getal, t } from '../i18n/t';
 
 export const SNELHEDEN = [0.5, 1, 2] as const;
-const snelheidTekst = (s: number) => `${String(s).replace('.', ',')}×`;
+const snelheidTekst = (s: number) => `${getal(s)}×`;
 const CAMERAS: { stand: CameraStand; naam: string }[] = [
   { stand: 'boven', naam: t('Boven') },
   { stand: 'schuin', naam: t('Schuin') },

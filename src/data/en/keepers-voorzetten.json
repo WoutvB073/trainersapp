@@ -53,7 +53,7 @@
     "uitleg": "Keeper 2 delivers a high cross from the wing. The keeper comes out, catches the ball at the highest point and throws it straight out into a zone on the other wing. Then back into goal going backwards, where the coach shoots low. Then the keepers swap.",
     "organisatie": "Keeper 2 with balls on the wing (about 18 m from goal), an 8 × 8 m zone on the other wing at about 25 m, coach with balls 14 m in front of goal. At least 2 keepers.",
     "benodigdheden": ["Goal", "4 cones (zone)", "Balls"],
-    "coachpunten": ["Set off in time and take the ball at the highest point", "Look straight after the catch: throw quickly (sidearm throw) into the zone", "Back going backwards with your shoulders to the pitch; be set for the shot"],
+    "coachpunten": ["Set off in time and take the ball at the highest point", "Look straight after the catch: throw quickly (sidearm throw) into the zone", "Back-pedal into position with your shoulders to the pitch; be set for the shot"],
     "variaties": { "makkelijker": ["Throw the cross instead of kicking it", "Zone closer"], "moeilijker": ["An opponent jumps for the cross", "Two zones: the coach calls which one", "Shot while the keeper is still getting back"] }
   },
   "keeper-vz-cutback": {

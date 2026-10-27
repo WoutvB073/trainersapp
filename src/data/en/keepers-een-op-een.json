@@ -102,7 +102,7 @@
     "uitleg": "The keeper plays the ball out to keeper 2, who dribbles round a mannequin as an attacker and goes at goal. The keeper comes out, narrows the angle and blocks. Then they get back quickly, because the coach shoots from distance: the keeper gets set and dives.",
     "organisatie": "Mannequin at 12 m straight in front of goal, keeper 2 at an angle on the left at 16 m. Coach with a ball at an angle on the right at 20 m.",
     "benodigdheden": ["Goal", "Mannequin", "Balls"],
-    "coachpunten": ["Play it out firmly and onto the attacker's foot", "Come out while the attacker doesn't have the ball under control; get set when they are about to shoot", "After the save: back going backwards, facing the pitch"],
+    "coachpunten": ["Play it out firmly and onto the attacker's foot", "Come out while the attacker doesn't have the ball under control; get set when they are about to shoot", "After the save: back-pedal into position, facing the pitch"],
     "variaties": { "makkelijker": ["The attacker dribbles more slowly", "The long shot only once the keeper is set"], "moeilijker": ["The attacker may also go round the keeper", "Long shot high into the corner", "The coach shoots while the keeper is still getting back"] }
   }
 }

@@ -15,6 +15,10 @@ import { pasThemaToe } from './engine/thema';
 import { bewaardAccount, online } from './engine/account';
 import { onlineBeschikbaar } from './online/config';
 import { laadTaal } from './data/oefeningen';
+import { TAAL } from './i18n/taal';
+
+// Taal van de pagina (voorlezen, afbreken van woorden).
+document.documentElement.lang = TAAL;
 
 // Clubkleuren en licht/donker meteen toepassen (geen kleurflits bij het opstarten).
 pasThemaToe();

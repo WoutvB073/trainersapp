@@ -21,13 +21,7 @@ export function genereerTraining() {
 }
 
 function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }) {
-  const sub = [
-    meervoud(t.oefeningen.length, 'oefening', 'oefeningen'),
-    `${t.spelers} sp. · ${t.keepers} kp.`,
-    t.datum ? datumTekst(t.datum) : undefined,
-  ]
-    .filter(Boolean)
-    .join(' · ');
+  const sub = [meervoud(t.oefeningen.length, 'oefening', 'oefeningen'), `${t.spelers} sp. · ${t.keepers} kp.`, t.datum ? datumTekst(t.datum) : undefined].filter(Boolean).join(' · ');
   return (
     <li className="training-regel">
       <a
@@ -47,7 +41,7 @@ function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }
       <div className="training-acties">
         <button
           className="icoon-knop"
-          aria-label={`${trainingNaam(t)} dupliceren`}
+          aria-label={vt('{w0} dupliceren', { w0: trainingNaam(t) })}
           onClick={() => {
             trainingen.dupliceer(t.id);
             opMelding(vt('Kopie gemaakt'));
@@ -57,7 +51,7 @@ function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }
         </button>
         <button
           className="icoon-knop gevaar"
-          aria-label={`${trainingNaam(t)} verwijderen`}
+          aria-label={vt('{w0} verwijderen', { w0: trainingNaam(t) })}
           onClick={() => {
             if (window.confirm(vt('"{w0}" verwijderen?', { w0: trainingNaam(t) }))) {
               trainingen.verwijder(t.id);

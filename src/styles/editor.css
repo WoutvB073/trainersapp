@@ -349,6 +349,13 @@ html.editor-open body {
   }
 }
 
+/* Heel smal (320 px): geen ruimte voor de naam naast de knoppen; het vak blijft als tussenruimte staan. */
+@media (max-width: 359px) {
+  .editor-titel {
+    font-size: 0;
+  }
+}
+
 .editor-knop {
   flex: none;
   display: grid;
@@ -1441,4 +1448,10 @@ html.editor-open body {
 
 .help-tekst li + li {
   margin-top: 6px;
+}
+
+/* Knoppen in de help: zo breed als hun tekst, naast elkaar zolang het past. */
+.help-tekst .knoppenrij {
+  display: flex;
+  flex-wrap: wrap;
 }

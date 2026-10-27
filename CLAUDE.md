@@ -11,6 +11,11 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
   uit `src/i18n/t.ts`; de Engelse vertaling in `src/i18n/en.ts` (woordenlijst in PLAN.md). `tests/vertaling.test.ts` faalt bij
   tekst buiten t(), een ontbrekende vertaling of Nederlands in het Engels (`tools/i18n/scan.mjs -v` toont waar). Geen
   vertaling nodig: markeer met `i18n-ok`. Eigen oefeningen, trainings-, team- en spelersnamen worden nooit vertaald.
+- **Elke ingebouwde oefening ook in het Engels** (ook in het archief): naam, uitleg, organisatie, benodigdheden, coachpunten,
+  Makkelijker, Moeilijker, `meerSpelers` en `onderdelen` per id in `src/data/en/<map>-<categorie>.json` (archief: `archief-*.json`).
+  `tests/vertaling-oefeningen.test.ts` faalt als een oefening of tekst geen Engels heeft of als er Nederlands in staat.
+  Natuurlijke Engelse voetbaltaal volgens de woordenlijst in PLAN.md (drill, session, cones, disc cones, mannequin, bibs …).
+  Tekst-labels in tekeningen: `TEKENING_TEKST` in `src/data/vertaling.ts`.
 - Bouwen in kleine stappen (fases uit PLAN.md); na elke stap test de gebruiker op de telefoon → wachten op akkoord.
 - Per stap: bouwen → zelf testen (`npm test`, `npm run build`, browsertests hieronder) → commit + push →
   korte uitleg, online link, testlijst. PLAN.md-status bijwerken.
@@ -37,7 +42,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/components/Illustraties.tsx` — getekende tegelplaatjes (Spelers, Keepers, bal zoals in het logo).
 - `src/wedstrijd/` — opstellingen, borden, spelhervattingen (puur) en opslag; `src/screens/wedstrijd/` (OpstellingVeld met slepen, BordTekenen = `Editor` uit `screens/eigen/Tekenen.tsx` met een `EditorBron`).
 - Keuzes die de gebruiker niet kon beantwoorden: PLAN.md → "Keuzes zonder overleg".
-- Nieuwe ingebouwde oefeningen: als bouwscript in `tools/nieuw/` (zie `keepers-024a/b/c.cjs`, `keepers-023a/b/c.cjs`, `spelers-023.cjs`; objecten en stappen uit `bouwstenen.cjs`, opslaan met `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
+- Nieuwe ingebouwde oefeningen (met Engelse tekst, zie Werkwijze): als bouwscript in `tools/nieuw/` (zie `keepers-024a/b/c.cjs`, `keepers-023a/b/c.cjs`, `spelers-023.cjs`; objecten en stappen uit `bouwstenen.cjs`, opslaan met `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
 - Acties voor personen (bouwstenen): loop/dribbel (via, om, manier, kijk), pass/schot (worp — ook `tik` = met één hand wegtikken —, hoogte, stuitOp, duikNaar, uitkomen+stompNaar (met stuitOp: stuitbal naar voren aanvallen en wegstompen), blokt+blokSoort ster/knie/voeten, terug; keeper + `worp: 'voet'` + `direct` op een hoge bal = kopbal), zitten (kniezit, hurkzit, zit, zit-opgetrokken, buik, halfknie), opstaan, grondtik, pak, springen, draai (kijk/naar, sprong), aantikken (doel of punt, met hand/voet). Een bal naar jezelf opgooien = pass van en naar dezelfde persoon.
 - Weggehaalde ingebouwde oefeningen gaan naar `src/data/oefeningen/archief.json` (`verwijderd: true`): niet in de bibliotheek, wel via `vindOefening`. Nooit echt wissen (oude trainingen/links/teams).
 

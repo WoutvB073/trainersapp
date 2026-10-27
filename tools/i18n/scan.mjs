@@ -73,8 +73,8 @@ const GEEN_TEKST = new Set([
 export function isTekst(s) {
   const kaal = s.replace(/\$\{[^}]*\}/g, ' ').trim();
   if (!/[a-zA-Zà-ÿ]{2}/.test(kaal)) return false;
-  if (/^[a-z0-9_.:/#?=&-]+$/i.test(kaal) && !/^[A-Z][a-zà-ÿ]+$/.test(kaal)) {
-    // Eén "woord" zonder spaties: id, pad, css-klasse … behalve een los woord met hoofdletter ("Training").
+  if (/^[a-z0-9_.:/#?=&-]+$/i.test(kaal) && !/^[A-Z][a-zà-ÿ]+(-[a-zà-ÿ]+)*$/.test(kaal)) {
+    // Eén "woord" zonder spaties: id, pad, css-klasse … behalve een los woord met hoofdletter ("Training", "Warming-up").
     return false;
   }
   if (/^[a-z][a-z0-9-]*( [a-z][a-z0-9-]*)*$/.test(kaal) && kaal.includes('-')) return false; // css-klassen
@@ -181,7 +181,14 @@ export function onvertaald(metNodes = false) {
       if (ts.isStringLiteral(node) && node.parent && (ts.isPropertyAssignment(node.parent) || ts.isPropertySignature(node.parent)) && node.parent.name === node) return; // sleutel van een object
       if (ts.isStringLiteralLike(node) || ts.isTemplateExpression(node)) {
         const tekst = ts.isTemplateExpression(node) ? node.getText().slice(1, -1) : node.text;
-        if (isTekst(tekst) && /\s/.test(tekst.trim()) ? true : /^[A-Z][a-zà-ÿ]{2,}/.test(tekst.trim()) && isTekst(tekst)) meld(node, tekst);
+        // Direct zichtbaar (JSX-inhoud of een tekst-attribuut zoals aria-label): elk woord telt, ook "`${naam} dupliceren`".
+        const LEESBAAR = ['aria-label', 'title', 'placeholder', 'alt'];
+        const p = node.parent;
+        const attr = p && ts.isJsxAttribute(p) ? p : p && ts.isJsxExpression(p) && p.parent && ts.isJsxAttribute(p.parent) ? p.parent : null;
+        const zichtbaar = attr ? LEESBAAR.includes(attr.name.getText()) : !!p && ts.isJsxExpression(p) && !!p.parent && (ts.isJsxElement(p.parent) || ts.isJsxFragment(p.parent));
+        const kaal = tekst.replace(/\$\{[^}]*\}/g, ' ').trim();
+        if (zichtbaar && /[a-zA-Zà-ÿ]{2}/.test(kaal) && !/^[#/.]/.test(kaal) && !/^https?:/.test(kaal) && !/^[A-Z]+$/.test(kaal) && !/[0-9]+px/.test(kaal)) meld(node, tekst);
+        else if (isTekst(tekst) && /\s/.test(tekst.trim()) ? true : /^[A-Z][a-zà-ÿ]{2,}/.test(tekst.trim()) && isTekst(tekst)) meld(node, tekst);
         if (ts.isTemplateExpression(node)) node.templateSpans.forEach((s) => bezoek(s.expression, binnenT));
         return;
       }
