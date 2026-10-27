@@ -48,6 +48,8 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['tests/**/*.test.ts'],
+    // Altijd Nederlands, ongeacht de taal van de computer (de Engelse versie heeft eigen tests).
+    setupFiles: ['tests/setup-taal.ts'],
     // Online-tests (Firebase-emulator) apart: npm run test:online.
     exclude: ['tests/online/**', 'node_modules/**'],
   },
