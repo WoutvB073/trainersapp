@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (27-10-2026, versie 0.24.0)
+## Status (27-10-2026, versie 0.25.0)
 
 | Fase | Status |
 |---|---|
@@ -29,7 +29,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online, getest en akkoord |
 | 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online, getest en akkoord |
 | 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online, getest en akkoord (D0-correctie in 0.25.0) |
-| 18. Deel D – D0 (stuitbal stompen) ✅ · D1 Help ✅ · D2 Engels: schermen ✅, oefeningen ⏳ → 0.25.0 | ⏳ bezig |
+| 18. Deel D: D0 stuitbal stompen, Help, Engels (0.25.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -920,6 +920,68 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   `direct` doorspeelt, kopt hem weg (vanaf ± 1,25 m, met een sprongetje, zonder beenzwaai); een halfhoge bal wordt een
   volley (de trapvoet gaat mee omhoog naar de bal). Close-ups: `tools/e2e/pas.mjs set k024` (ook `auto:keepertrap`).
 
+## Besluiten versie 0.25.0 – correctie D0, Help en Engels (deel D)
+- **D0:** "Eén hand, stompen en de paal" heeft nu echt een stuitbal: de keeper valt de opspringende bal naar voren aan en
+  stompt hem met twee vuisten weg (nieuwe bouwsteen: `uitkomen` + `stompNaar` + `stuitOp`, getest in
+  `tests/versie-024.test.ts`). Regel: een keeper kopt alleen buiten de zestien (test over alle oefeningen). Regel in
+  CLAUDE.md: een oefening uitvoeren zoals beschreven; ontbreekt een beweging, dan die bijbouwen.
+- **D1 Help:** `#/help` (vanuit Instellingen en het vraagteken op het startscherm), 9 uitklapbare onderwerpen met
+  zoekveld en "Laat zien"-knoppen; inhoud in `src/help/inhoud.ts` (NL en EN, test `tests/help.test.ts`).
+- **D2 Engels:** alle schermteksten via `t()` (`src/i18n/`), woordenlijst `src/i18n/en.ts`; alle ingebouwde oefeningen
+  (ook het archief) in `src/data/en/*.json`, alleen geladen in het Engels. Taal / Language bij Instellingen: Nederlands,
+  English, Automatisch; onthouden en via het account gesynchroniseerd (veld `taal` in de instellingen). Datums, getallen
+  (0.5×), sorteren en Klaarzetten (enkelvoud/meervoud) per taal. Tests: `tests/vertaling.test.ts` (tekst buiten t(),
+  ontbrekende vertaling, Nederlands in het Engels, ongebruikte vertalingen) en `tests/vertaling-oefeningen.test.ts`.
+- **D3:** browsertest `tools/e2e/taal.mjs`: 17 schermen × 5 formaten × 2 talen, geen Nederlands in het Engels,
+  niets afgekapt, geen horizontaal scrollen; taal wisselen, Automatisch en het installatiescherm.
+
+### Woordenlijst Nederlands–Engels
+| Nederlands | Engels | | Nederlands | Engels |
+|---|---|---|---|---|
+| oefening | drill | | training | session |
+| Training maken | Plan a session | | Mijn trainingen | My sessions |
+| trainingsmodus | session mode | | Training genereren | Generate a session |
+| Klaarzetten | Equipment to set out | | onderdeel (genereren) | part |
+| Eigen oefeningen | My drills | | Eigen (label) | Custom |
+| Spelers / Keepers (tegels) | Players / Goalkeepers | | keeper (labels) | keeper |
+| trainer | coach | | Wedstrijd | Match day |
+| opstelling | line-up | | tactiekbord | tactics board |
+| spelhervatting | set piece | | spelvorm | format (4v4 … 11v11) |
+| formatie | formation | | wissels | subs |
+| Uitleg | Description | | Organisatie | Set-up |
+| Benodigdheden | Equipment | | Coachpunten | Coaching points |
+| Makkelijker / Moeilijker | Easier / Harder | | Verloop | Sequence |
+| Doorwisselbaar / Vast aantal | Rotating / Fixed numbers | | rij | queue |
+| Warming-up | Warm-up | | Techniek | Technique |
+| Loopcoördinatie | Footwork & coordination | | Pass en trap | Passing & receiving |
+| Afwerken | Finishing | | Positiespel | Possession |
+| Partijvormen | Small-sided games | | Spelletjes | Fun games (keepers: Games) |
+| Laag / Hoog duiken | Low / High diving | | Bal verwerken | Handling |
+| Voorzetten | Crosses | | Passing (keepers) | Distribution |
+| 1 op 1 | 1v1 | | Reactie | Reactions |
+| pion | cone | | hoedje | disc cone |
+| paaltje | pole | | pop | mannequin |
+| hesjes | bibs | | horde | hurdle |
+| loopladder | agility ladder | | landingskussen | crash mat |
+| klein doeltje / minidoeltje | mini goal | | jeugdgoal | youth goal |
+| groot goal | full-size goal | | doelnet | target net |
+| zestien | (penalty) box | | doelgebied | six-yard box |
+| eerste / tweede paal | near / far post | | korte / verre hoek | near / far corner |
+| basishouding | ready position | | zetten | get set |
+| uitkomen | come out (for a cross: come for it) | | hoek verkleinen | narrow the angle |
+| claimen | claim | | stompen | punch (clear) |
+| tippen over de lat | tip over the bar | | plukken | smother |
+| knieblok / spreidsprong | knee block / star jump | | blok met de voeten vooruit | feet-first block (slide) |
+| schepvangen / kommetje | scoop / basket catch | | W-greep | W grip |
+| kruispas / schuifpas | crossover step / side-step (shuffle) | | stuitbal | bouncing ball |
+| uittrap uit de handen | kick from hands (volley) | | dropkick | drop kick |
+| zwaaiworp | sidearm throw | | terugspeelbal | back pass |
+| kaats / kaatser | one-two, lay-off / lay-off player | | steekpass | through ball |
+| derde man | third man | | overtal | overload |
+| afleggen / terugleggen | lay off / cutback | | omschakelen | transition |
+| looplijnen | movement lines | | eenvoudige poppetjes | simple figures |
+| JO11 | U11 | | Instellingen | Settings |
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -933,6 +995,30 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.25.0 – D0: de keeper raakt de stuitbal terwijl hij opkomt, op borst- tot hoofdhoogte (± 1,4 m), zonder sprong; hij
+  start al tijdens de eerste vlucht.
+- 0.25.0 – D0: bij "Meevoetballende keeper" stond de keeper bij het koppen op 14,4 m, net binnen de zestien. Hij komt nu
+  tot 17,6 m (buiten de zestien), passend bij de nieuwe regel.
+- 0.25.0 – Een andere taal kiezen laadt de app opnieuw (dan staat echt alles in de nieuwe taal). Ook als een ander toestel
+  via het account een andere taal doorgeeft.
+- 0.25.0 – Automatisch kijkt naar de eerste voorkeurstaal van het toestel: Engels → English, anders Nederlands.
+- 0.25.0 – De kop "Taal / Language" en de namen "Nederlands" en "English" staan altijd in beide talen (zo vind je hem terug).
+- 0.25.0 – Het vraagteken staat op het startscherm links van het tandwiel; Help staat bij Instellingen bovenaan (na Account).
+- 0.25.0 – Help heeft 9 onderwerpen: de 8 gevraagde plus "Taal, kleuren en weergave". "Laat zien" bij animatie opent
+  "Passen in de driehoek" als voorbeeld.
+- 0.25.0 – Woordkeus: oefening = drill, training = session ("Plan a session"), Wedstrijd = "Match day", de keepertegel heet
+  "Goalkeepers", Spelletjes = "Fun games". Spelers en keepers zijn in het Engels "they" (geen he/she).
+- 0.25.0 – Voorbeelden in invulvelden aangepast aan Engeland: "JO11-1" → "U11 Blues", "Zaterdag tegen VVA" → "Saturday
+  vs Rovers".
+- 0.25.0 – Datums in het Engels als "27 Oct 2026" (Brits). Het datumveld zelf volgt de taal van de browser.
+- 0.25.0 – Kopieer je in het Engels een ingebouwde oefening, dan krijgt de kopie de Engelse tekst; daarna is hij van jou en
+  wordt hij niet meer vertaald. In een gedeelde link of team zie je ingebouwde oefeningen in je eigen taal, eigen
+  oefeningen in de taal van de maker.
+- 0.25.0 – De taal gaat mee in het bestaande instellingenveld in Firebase; de Firebase-regels zijn niet gewijzigd.
+- 0.25.0 – Op 320 px breed is er naast de knoppen geen ruimte voor de naam in de editor; die wordt daar verborgen
+  (was in het Nederlands al "N a").
+- 0.25.0 – Klaarzetten heet in het Engels "Equipment to set out"; "Weergave" (licht/donker) heet "View", net als bij de
+  animatie.
 - 0.24.0 – Aangevers en schutters zijn in de animatie de trainer en andere keepers; keepersNodig telt die keepers mee
   (de trainer niet). Bij Lezen wat de verdediger doet en Uitspelen onder druk en dan lang staan de medespelers als keepers
   in de tekening (3 en 4 keepers); met veldspelers kan het ook.

@@ -24,7 +24,8 @@ export async function start() {
     executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
     headless: true,
     // Echte videokaart gebruiken (anders rekent Chrome 3D op de processor uit en is het veel trager dan op een telefoon).
-    args: ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'],
+    // Nederlandse browser: de app staat dan op Automatisch in het Nederlands (taal.mjs test het Engels apart).
+    args: ['--lang=nl-NL', '--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'],
   });
 }
 
