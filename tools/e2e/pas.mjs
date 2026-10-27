@@ -36,7 +36,7 @@ SETS.keeper = [
   ['keeper-ld-voetenwerk-lange-duik', 'auto:opstaan', 'gezicht', 'opstaan'],
   ['keeper-cv-hoog-dan-laag', 'auto:duik', 'gezicht', 'hoge duik'],
   ['keeper-hd-hordes-zijwaarts', 'auto:duik', 'gezicht', 'hoge duik 2'],
-  ['keeper-bv-grondballen', 'auto:vang', 'schuin', 'vangen laag'],
+  ['keeper-bv-stuitballen', 'auto:vang', 'schuin', 'vangen laag'],
   ['keeper-wu-ladder-borstbal', 'auto:vang', 'schuin', 'vangen borst'],
   ['keeper-ps-uitworpen', 'auto:worp:onderhands', 'zij', 'uitrollen'],
   ['keeper-ps-uitworpen', 'auto:worp:bovenhands', 'zij', 'bovenhands'],
@@ -46,12 +46,26 @@ SETS.keeper = [
   ['keeper-1o1-spreidsprong', 'auto:blok', 'voor', 'spreidsprong'],
   ['keeper-1o1-knieblok', 'auto:blok', 'voor', 'knieblok'],
   ['keeper-vz-stompen-tussen-poppen', 'auto:stomp', 'voor', 'stompen'],
-  ['keeper-laag-duiken-kniezit', 'auto:duik', 'gezicht', 'duik vanuit kniezit'],
+  ['keeper-ld-kniezit-hurkzit-stand', 'auto:duik', 'gezicht', 'duik vanuit kniezit'],
 ];
 SETS.kort = [
   ['veld-wu-loopscholing', 'a5', 10.0, 10.7, 8, 'zij', 'hakken-billen'],
   ['veld-pt-driehoek', 'auto:aanname', 'zij', 'aannemen'],
-  ['keeper-bv-grondballen', 'auto:vang', 'gezicht', 'basishouding en vangen'],
+  ['keeper-bv-stuitballen', 'auto:vang', 'gezicht', 'basishouding en vangen'],
+];
+SETS.k022 = [
+  ['keeper-bv-stuitballen', 'auto:vang', 'gezicht', 'stuitbal'],
+  ['keeper-bv-stuitballen', 'auto:duik', 'gezicht', 'lage bal na stuitbal'],
+  ['keeper-ld-kniezit-hurkzit-stand', 'auto:duik', 'gezicht', 'duik vanuit kniezit'],
+  ['keeper-re-korte-afstand', 'auto:draai', 'schuin', 'omdraaien en schot'],
+  ['keeper-1o1-spreidsprong', 'auto:blok', 'schuin', 'spreidsprong na kaatsen'],
+  ['keeper-ld-drie-pionnen-korte-hoek', 'auto:aantik', 'gezicht', 'pion aantikken en duik'],
+  ['keeper-hd-horde-volley-hoog', 'auto:duik', 'gezicht', 'hoge duik na horde'],
+  ['keeper-bv-schuin-twee-lage', 'auto:duik', 'gezicht', 'lage bal richting midden'],
+];
+SETS.blok022 = [
+  ['keeper-1o1-spreidsprong', 'auto:blok', 'schuin', 'spreidsprong na kaatsen'],
+  ['keeper-re-korte-afstand', 'k1', 0.3, 1.9, 8, 'zij', 'rug naar trainer, omdraaien'],
 ];
 SETS.spelers = [
   ['veld-pt-driehoek', 'auto:trap', 'zij', 'pass'],
@@ -104,6 +118,14 @@ function automatisch(tl, wat) {
   if (soort === 'stomp') {
     const x = tl.stompen[0];
     return x ? [x.wie, x.t - 0.4, x.t + 0.4] : null;
+  }
+  if (soort === 'aantik') {
+    const [id, l] = [...(tl.aantikken ?? new Map())].find(([, l]) => l.length) ?? [];
+    return l ? [id, l[0].t0 - 0.3, l[0].t1 + 1.4] : null;
+  }
+  if (soort === 'draai') {
+    const e = vluchten.find((e) => keepers.has(e.daarna));
+    return e ? [e.daarna, e.t0 - 0.6, e.t1 + 0.3] : null;
   }
   if (soort === 'rij') return [[...personen].at(-1), 0.2, 2.0];
   if (soort === 'dribbel') {

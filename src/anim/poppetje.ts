@@ -1454,6 +1454,23 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     h.romp.x += 0.06 * w;
   }
 
+  // ---- pion of hoedje aantikken: door de knieën, voorover, hand naar het object ----
+  const at = s.aantik;
+  if (at && l < 0.3) {
+    const w = Math.sin(Math.PI * klem(at.u));
+    const ddx = at.x - s.x;
+    const ddz = at.y - s.y;
+    const lx = ddx * Math.cos(st.hoek) - ddz * Math.sin(st.hoek);
+    const lz = ddx * Math.sin(st.hoek) + ddz * Math.cos(st.hoek);
+    const i = lx > 0 ? 1 : 0;
+    h.heup -= 0.3 * w;
+    h.romp.x += 0.7 * w;
+    h.romp.z += -kant(i) * 0.15 * w;
+    for (const j of [0, 1] as const) h.voet[j].p.x = mix(h.voet[j].p.x, kant(j) * 0.2, w);
+    h.arm[i].doel.set(lx, 0.22, lz);
+    h.arm[i].ik = Math.max(h.arm[i].ik, w);
+  }
+
   // ---- worp of trap uit de handen ----
   const wp = s.worp;
   let werpHand = 0;

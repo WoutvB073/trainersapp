@@ -798,168 +798,6 @@
     }
   },
   {
-    "id": "keeper-re-korte-afstand",
-    "soort": "keeper",
-    "naam": "Reflexen: schoten van korte afstand",
-    "categorieen": [
-      "reactie"
-    ],
-    "uitleg": "Keeper 2 schiet van 7 m drie ballen kort na elkaar op het doel. Keeper 1 heeft weinig tijd: reflexen met handen (en voeten), de bal wegstompen naast het doel of vastpakken als het kan. Daarna wisselen.",
-    "organisatie": "Keeper 1 in het doel, keeper 2 op 7 m met drie ballen op een rij. Na drie ballen wisselen van rol.",
-    "benodigdheden": [
-      "Goal",
-      "3 ballen"
-    ],
-    "spelersNodig": 0,
-    "keepersNodig": 2,
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Klein en breed staan, handen naast de heupen",
-      "Op deze afstand niet vangen als het niet kan: stomp de bal naast het doel",
-      "Direct weer klaar voor de volgende bal"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Afstand 9 m",
-        "Gooien in plaats van schieten"
-      ],
-      "moeilijker": [
-        "Afstand 5 m",
-        "Na een tik tegen de paal starten",
-        "Schutter mag ook naar de rebound"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 25,
-        "y": -3,
-        "breedte": 18,
-        "lengte": 14
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 34,
-          "y": 1.5,
-          "nummer": 1,
-          "verdedigt": "g1"
-        },
-        {
-          "id": "k2",
-          "soort": "keeper",
-          "x": 35.4,
-          "y": 7.6,
-          "nummer": 2,
-          "kijkrichting": -100
-        },
-        {
-          "id": "b1",
-          "soort": "bal",
-          "x": 35.3,
-          "y": 7.2
-        },
-        {
-          "id": "b2",
-          "soort": "bal",
-          "x": 36.4,
-          "y": 7.3
-        },
-        {
-          "id": "b3",
-          "soort": "bal",
-          "x": 34.4,
-          "y": 7.3
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.4,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "k2",
-              "naar": [
-                32.4,
-                0.3
-              ],
-              "bal": "b1",
-              "worp": "trap",
-              "hoogte": "laag",
-              "afloop": "stompt",
-              "afloopNaar": [
-                28.5,
-                -1.5
-              ]
-            }
-          ]
-        },
-        {
-          "duur": 1.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "k2",
-              "naar": [
-                35.8,
-                0.3
-              ],
-              "bal": "b2",
-              "worp": "trap",
-              "hoogte": 1.2,
-              "afloop": "stompt",
-              "afloopNaar": [
-                40,
-                -1.2
-              ]
-            }
-          ]
-        },
-        {
-          "duur": 1.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "k2",
-              "naar": [
-                34.3,
-                0.3
-              ],
-              "bal": "b3",
-              "worp": "trap",
-              "hoogte": "laag",
-              "afloop": "vangt",
-              "vasthouden": true
-            }
-          ]
-        },
-        {
-          "duur": 1,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "keeper-cv-uitworp-reactiebal",
     "soort": "keeper",
     "naam": "Uitworp, terug in het doel en reactiebal",
@@ -1111,204 +949,6 @@
         },
         {
           "duur": 0.8,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
-    "id": "keeper-cv-drie-schoten-positie",
-    "soort": "keeper",
-    "naam": "Drie schoten: steeds opnieuw positie kiezen",
-    "categorieen": [
-      "reactie",
-      "laag-duiken",
-      "een-op-een"
-    ],
-    "combinatievorm": true,
-    "onderdelen": [
-      "Schot van links",
-      "Schot centraal",
-      "Schot van rechts"
-    ],
-    "uitleg": "De trainer schiet achter elkaar vanaf drie plekken: schuin links, centraal en schuin rechts. Na elke redding kiest de keeper snel opnieuw positie op de lijn tussen bal en midden van het doel, voordat het volgende schot komt.",
-    "organisatie": "Drie ballen op 12–17 m: links, midden en rechts. De trainer loopt van bal naar bal. De keeper stompt of vangt en zet zich meteen opnieuw.",
-    "benodigdheden": [
-      "Goal",
-      "3 ballen",
-      "3 hoedjes"
-    ],
-    "spelersNodig": 0,
-    "keepersNodig": 1,
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Na elke redding: eerst positie, dan pas basishouding",
-      "Schuin van opzij: de eerste paal dicht",
-      "Kleine snelle pasjes, nooit kruisen als de bal er bijna is"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Trainer wacht tot de keeper stilstaat",
-        "Alleen gooien"
-      ],
-      "moeilijker": [
-        "Trainer kiest de volgorde zelf",
-        "Vier of vijf plekken",
-        "Na het laatste schot nog een terugspeelbal wegspelen"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 22,
-        "y": -3,
-        "breedte": 24,
-        "lengte": 23
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 34,
-          "y": 1.5,
-          "nummer": 1,
-          "verdedigt": "g1"
-        },
-        {
-          "id": "t1",
-          "soort": "trainer",
-          "x": 27.4,
-          "y": 11.8,
-          "kijkrichting": -60
-        },
-        {
-          "id": "b1",
-          "soort": "bal",
-          "x": 27.6,
-          "y": 11.4,
-          "bij": "t1"
-        },
-        {
-          "id": "b2",
-          "soort": "bal",
-          "x": 34.6,
-          "y": 17
-        },
-        {
-          "id": "b3",
-          "soort": "bal",
-          "x": 41,
-          "y": 18
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "t1",
-              "naar": [
-                31.4,
-                0.3
-              ],
-              "hoogte": "grond",
-              "afloop": "stompt",
-              "afloopNaar": [
-                27.5,
-                -1.5
-              ]
-            }
-          ]
-        },
-        {
-          "duur": 0.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "t1",
-              "naar": [
-                34.4,
-                17.6
-              ],
-              "manier": "sprint"
-            }
-          ]
-        },
-        {
-          "duur": 0.4,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "t1",
-              "naar": [
-                36.4,
-                0.4
-              ],
-              "hoogte": "laag",
-              "afloop": "stompt",
-              "afloopNaar": [
-                40.5,
-                -1.4
-              ]
-            }
-          ]
-        },
-        {
-          "duur": 0.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "t1",
-              "naar": [
-                40.6,
-                18.6
-              ],
-              "manier": "sprint"
-            }
-          ]
-        },
-        {
-          "duur": 0.4,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "t1",
-              "naar": [
-                33.2,
-                0.3
-              ],
-              "hoogte": "laag",
-              "afloop": "vangt"
-            }
-          ]
-        },
-        {
-          "duur": 1,
           "acties": []
         }
       ]
@@ -2406,6 +2046,239 @@
         },
         {
           "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-re-korte-afstand",
+    "soort": "keeper",
+    "naam": "Reflexen: omdraaien en schot van dichtbij",
+    "categorieen": [
+      "reactie"
+    ],
+    "uitleg": "De keeper staat met zijn rug naar de trainer, met zijn gezicht naar het doel. Op een teken draait hij om en krijgt hij meteen een schot van dichtbij rond zijn lichaam: links of rechts op heuphoogte, laag naast hem of op borsthoogte. Vangen, terugrollen, weer omdraaien en de volgende.",
+    "organisatie": "Keeper 2 m voor de doellijn, rug naar het veld. Trainer met een paar ballen op 5–6 m. Het teken is een roep of een klap.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Snel omdraaien op de voorvoeten en meteen in basishouding",
+      "Eerst de bal zien, dan reageren: handen vóór het lichaam",
+      "Bal van dichtbij: niet terugdeinzen, naar de bal toe bewegen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Trainer wacht na het teken een tel",
+        "Schoten alleen op het lichaam"
+      ],
+      "moeilijker": [
+        "Handen voor de ogen en pas op het teken wegnemen",
+        "Trainer dichterbij (4 m)",
+        "Twee ballen kort na elkaar"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 26,
+        "y": -3,
+        "breedte": 16,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34.4,
+          "y": 7.4,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 34.4,
+          "y": 7,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "k1",
+              "naar": "t1"
+            },
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": 1,
+              "eindHoogte": 0.9,
+              "start": 0.25
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "k1",
+              "kijk": -90,
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "k1",
+              "naar": "t1"
+            },
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": "grond",
+              "duikNaar": [
+                32.9,
+                2.1
+              ],
+              "start": 0.25
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34,
+                2
+              ],
+              "manier": "voetenwerk"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "k1",
+              "kijk": -90,
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "k1",
+              "naar": "t1"
+            },
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": 1.5,
+              "eindHoogte": 1.3,
+              "start": 0.25
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
           "acties": []
         }
       ]

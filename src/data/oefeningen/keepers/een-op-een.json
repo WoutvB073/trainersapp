@@ -1,141 +1,5 @@
 [
   {
-    "id": "keeper-1o1-spreidsprong",
-    "soort": "keeper",
-    "naam": "Spreidsprong: blokken van dichtbij",
-    "categorieen": [
-      "een-op-een"
-    ],
-    "uitleg": "Komt de aanvaller vrij voor de keeper en schiet hij van dichtbij, dan is duiken te laat. De keeper maakt zich groot in een spreidsprong (stervorm): armen en benen wijd, lichaam naar voren. De bal kaatst tegen hem af.",
-    "organisatie": "Keeper loopt uit tot ± 6 m, de trainer dribbelt tot 4–5 m voor hem en schiet hard op het lichaam of er net naast.",
-    "benodigdheden": [
-      "Goal",
-      "Ballen"
-    ],
-    "spelersNodig": 0,
-    "keepersNodig": 1,
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Pas springen als de aanvaller schiet, niet ervoor",
-      "Armen en benen wijd, handen open en naar voren",
-      "Lichaam iets naar voren, zodat de bal weg van het doel kaatst"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Zachte schoten, eerst alleen de houding",
-        "Tegen een stilstaande bal: trainer trapt van 4 m"
-      ],
-      "moeilijker": [
-        "Aanvaller kiest: schieten of panna",
-        "Hard schieten van 3 m",
-        "Na het blok direct op en de rebound pakken"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 23,
-        "y": -3,
-        "breedte": 22,
-        "lengte": 22
-      },
-      "camera": "achter",
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "x": 34,
-          "y": 1.5,
-          "nummer": 1
-        },
-        {
-          "id": "t1",
-          "soort": "trainer",
-          "x": 34.6,
-          "y": 17,
-          "kijkrichting": -90
-        },
-        {
-          "id": "b1",
-          "soort": "bal",
-          "x": 34.6,
-          "y": 16.6,
-          "bij": "t1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.3,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "t1",
-              "naar": [
-                34.6,
-                10.6
-              ]
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [
-                34.4,
-                5.2
-              ],
-              "manier": "sprint",
-              "start": 0.4
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [
-                34.4,
-                6
-              ],
-              "manier": "voetenwerk",
-              "start": 1.1,
-              "duur": 0.7
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "t1",
-              "naar": [
-                33,
-                0
-              ],
-              "hoogte": 0.6,
-              "blokt": "k1",
-              "blokSoort": "ster",
-              "afloopNaar": [
-                41,
-                10
-              ]
-            }
-          ]
-        },
-        {
-          "duur": 1.2,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "keeper-1o1-knieblok",
     "soort": "keeper",
     "naam": "Knieblok bij een schot van dichtbij",
@@ -1687,6 +1551,169 @@
         },
         {
           "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-1o1-spreidsprong",
+    "soort": "keeper",
+    "naam": "Spreidsprong: kaatsen en dan 1 op 1",
+    "categorieen": [
+      "een-op-een"
+    ],
+    "uitleg": "Keeper en trainer staan allebei schuin aan de zijkant van het doel en kaatsen de bal een paar keer heen en weer (de keeper met de voet). Op een gegeven moment neemt de trainer de bal vooruit aan en gaat hij op het doel af: nu is het 1 op 1. De keeper komt kort uit, zet zich en blokt het schot met een spreidsprong.",
+    "organisatie": "Keeper schuin voor de rechterpaal, 2–3 m uit het doel. Trainer schuin op 9–10 m. Na 2–4 keer kaatsen kiest de trainer zelf het moment.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kaatsen met de binnenkant voet, daarna meteen terug in basishouding",
+      "Als de trainer vooruit aanneemt: kort uitkomen, dan stilstaan en zetten",
+      "Spreidsprong: armen en benen wijd, zo groot mogelijk maken, ogen open"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Trainer roept \"nu\" als hij vooruit aanneemt",
+        "Trainer begint verder weg (meer tijd)"
+      ],
+      "moeilijker": [
+        "Trainer mag ook afdraaien en schieten in de verre hoek",
+        "Kaatsen met wisselende voet en tempo"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 26,
+        "y": -3,
+        "breedte": 20,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 36.6,
+          "y": 2.6,
+          "kijkrichting": 55
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 41.2,
+          "y": 10.4,
+          "kijkrichting": -120
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 41,
+          "y": 10.05,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "voet"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "voet"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "t1",
+              "naar": [
+                38.9,
+                6.4
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                37.4,
+                3.7
+              ],
+              "manier": "voetenwerk",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": [
+                36.4,
+                0
+              ],
+              "hoogte": 0.6,
+              "blokt": "k1",
+              "blokSoort": "ster",
+              "afloopNaar": [
+                42.5,
+                4.5
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 1.2,
           "acties": []
         }
       ]

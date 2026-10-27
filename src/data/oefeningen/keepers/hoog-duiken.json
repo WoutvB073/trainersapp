@@ -817,5 +817,234 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-hd-horde-volley-hoog",
+    "soort": "keeper",
+    "naam": "Horde heen en terug: volley en hoog schot",
+    "categorieen": [
+      "hoog-duiken",
+      "bal-verwerken"
+    ],
+    "uitleg": "De keeper staat midden in het doel. Hij springt zijwaarts over een horde naar één kant en direct terug, en krijgt dan een volley op het lichaam: vangen en teruggooien. Daarna nog een keer over de horde en terug, en dan komt er een hoog schot in die kant van het doel: hoog duiken en vangen.",
+    "organisatie": "Lage horde 1,2 m naast het midden van het doel, 1,8 m voor de doellijn. Trainer met ballen op 9–10 m. Om de beurt de horde links en rechts.",
+    "benodigdheden": [
+      "Goal",
+      "Lage horde",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Over de horde: kort grondcontact, knieën hoog, schouders naar de trainer",
+      "Na de horde meteen in basishouding: de bal komt direct",
+      "Hoge duik: afzetten met het been aan de balkant, handen achter de bal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Volley en hoge bal gooien in plaats van trappen",
+        "Halfhoge bal in plaats van hoog"
+      ],
+      "moeilijker": [
+        "Twee keer heen en terug voor elke bal",
+        "Hogere horde",
+        "Trainer kiest pas op het laatst de hoek van het hoge schot"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 25,
+        "y": -3,
+        "breedte": 18,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "h1",
+          "soort": "horde",
+          "x": 35.2,
+          "y": 1.8,
+          "hoek": 90,
+          "hoogte": 0.3
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.8,
+          "kijkrichting": 90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34.4,
+          "y": 10.2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 34.4,
+          "y": 9.8,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                36.3,
+                1.8
+              ],
+              "manier": "hordes",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34.1,
+                1.8
+              ],
+              "manier": "hordes",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "volley",
+              "hoogte": 1.6,
+              "eindHoogte": 1.1
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                36.3,
+                1.8
+              ],
+              "manier": "hordes",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34.1,
+                1.8
+              ],
+              "manier": "hordes",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "volley",
+              "hoogte": 2.6,
+              "eindHoogte": 2,
+              "duikNaar": [
+                36.2,
+                1
+              ],
+              "duikHoogte": 1.9
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34,
+                1.8
+              ],
+              "manier": "voetenwerk"
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

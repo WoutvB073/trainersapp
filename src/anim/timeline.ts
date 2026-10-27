@@ -171,6 +171,8 @@ export interface Tijdlijn {
   sprongen: Map<string, number[]>;
   /** Grond achter je aantikken (zittende keeper). */
   tikken: Map<string, { t0: number; t1: number }[]>;
+  /** Een pion/hoedje aantikken met de hand. */
+  aantikken: Map<string, { t0: number; t1: number; punt: Punt }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
   /** Keeper blokt een schot met zijn lichaam (moment van contact). */
@@ -244,6 +246,8 @@ export interface ObjectStand {
   aanname?: { u: number; hoogte: number; richting: number };
   /** Opstaan na een duik: 0–1 (alleen tijdens het opstaan). */
   opstaan?: number;
+  /** Een pion/hoedje aantikken: u 0–1 (hand bij het object op u = 0,5) en waar het object staat. */
+  aantik?: { u: number; x: number; y: number };
 }
 
 /** Een bal die net in een goal is gegaan: het net bolt op die plek even uit. */
@@ -1051,6 +1055,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     zitten: new Map(),
     sprongen: new Map(),
     tikken: new Map(),
+    aantikken: new Map(),
     stompen: [],
     blokken: [],
   };
@@ -1203,6 +1208,25 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
     if (a.type === 'grondtik') {
       const t1 = t0 + (a.duur ?? 0.8);
       voegToe(tl.tikken, o.id, { t0, t1 }, (e) => e.t0);
+      eind = Math.max(eind, t1);
+      continue;
+    }
+    if (a.type === 'draai') {
+      const p = positie(tl, o.id, t0);
+      const doel = a.naar ? tl.objecten.get(a.naar) : undefined;
+      if (a.naar && !doel) throw new TekeningFout(`Draai: onbekend object "${a.naar}"`);
+      const d: Punt | undefined = doel ? (isPersoon(doel) ? positie(tl, doel.id, t0) : [doel.x, doel.y]) : undefined;
+      const hoek = d ? graden(p, d) : a.kijk;
+      if (hoek === undefined) throw new TekeningFout(`Draai: geef "kijk" of "naar" voor "${o.id}"`);
+      voegToe(tl.kijk, o.id, { t: t0, hoek }, (e) => e.t);
+      eind = Math.max(eind, t0 + (a.duur ?? DRAAI));
+      continue;
+    }
+    if (a.type === 'aantikken') {
+      const doel = tl.objecten.get(a.doel);
+      if (!doel) throw new TekeningFout(`Aantikken: onbekend object "${a.doel}"`);
+      const t1 = t0 + (a.duur ?? 0.6);
+      voegToe(tl.aantikken, o.id, { t0, t1, punt: [doel.x, doel.y] }, (e) => e.t0);
       eind = Math.max(eind, t1);
       continue;
     }
@@ -1931,8 +1955,15 @@ function sprongOp(tl: Tijdlijn, id: string, t: number): number {
 }
 
 /** Alleen de velden die er zijn (dan blijven standen zonder deze bewegingen precies zoals ze waren). */
-function extra(trap: ObjectStand['trap'], aanname: ObjectStand['aanname'], opstaan: number | undefined): Partial<ObjectStand> {
+/** Aantikken van een pion of hoedje op tijdstip t. */
+function aantikOp(tl: Tijdlijn, id: string, t: number): ObjectStand['aantik'] {
+  for (const e of tl.aantikken.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return { u: (t - e.t0) / (e.t1 - e.t0), x: e.punt[0], y: e.punt[1] };
+  return undefined;
+}
+
+function extra(trap: ObjectStand['trap'], aanname: ObjectStand['aanname'], opstaan: number | undefined, aantik?: ObjectStand['aantik']): Partial<ObjectStand> {
   const x: Partial<ObjectStand> = {};
+  if (aantik) x.aantik = aantik;
   if (trap) x.trap = trap;
   if (aanname) x.aanname = aanname;
   if (opstaan !== undefined) x.opstaan = opstaan;
@@ -2007,7 +2038,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         tik: tikOp(tl, o.id, t),
         stomp: stompOp(tl, o.id, t),
         blok: blokOp(tl, o.id, t),
-        ...extra(trapOp(tl, o.id, t), aannameOp(tl, o, t), l.opstaan),
+        ...extra(trapOp(tl, o.id, t), aannameOp(tl, o, t), l.opstaan, aantikOp(tl, o.id, t)),
       });
     } else {
       objecten.set(o.id, { ...rust, x: o.x, y: o.y, hoek: o.hoek ?? 0 });

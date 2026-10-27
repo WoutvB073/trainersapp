@@ -16,7 +16,7 @@ const SCHERMEN = [
   { naam: 'veld', hash: '#/veld' },
   { naam: 'lijst', hash: '#/veld/afwerken' },
   { naam: 'detail-veld', hash: '#/oefening/veld-cv-kaats-doordiepen', moeilijker: true },
-  { naam: 'detail-keeper', hash: '#/oefening/keeper-laag-duiken-kniezit' },
+  { naam: 'detail-keeper', hash: '#/oefening/keeper-ld-kniezit-hurkzit-stand' },
   { naam: 'keepers-leeg', hash: '#/keepers/voorzetten' },
 ];
 
@@ -53,7 +53,7 @@ await page.goto(`${BASE}#/`, { waitUntil: 'networkidle0' });
 await page.evaluate(() => navigator.serviceWorker.ready);
 await slaap(2000);
 await page.setOfflineMode(true);
-await page.goto(`${BASE}#/oefening/keeper-laag-duiken-kniezit`, { waitUntil: 'load' });
+await page.goto(`${BASE}#/oefening/keeper-ld-kniezit-hurkzit-stand`, { waitUntil: 'load' });
 await page.waitForSelector('.speler-canvas-3d', { timeout: 10000 }).catch(() => {});
 const offline = await page.evaluate(() => ({ titel: document.querySelector('.detail-titel')?.textContent ?? '', drieD: !!document.querySelector('.speler-canvas-3d') }));
 console.log(`Offline: ${offline.titel ? `OK ("${offline.titel}")` : 'MISLUKT'} · 3D (Three.js) offline: ${offline.drieD ? 'OK' : 'MISLUKT'}`);

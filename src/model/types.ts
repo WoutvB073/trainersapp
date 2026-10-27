@@ -301,6 +301,25 @@ export interface PersoonActie extends ActieBasis {
   bal?: string;
 }
 
+/**
+ * Op de plek omdraaien (bv. op een teken van de trainer): naar een vaste kijkrichting (`kijk`, graden) of naar een persoon
+ * of object (`naar`). Standaard snel (0,3 s); met `duur` langzamer.
+ */
+export interface DraaiActie extends ActieBasis {
+  type: 'draai';
+  wie: string;
+  kijk?: number;
+  naar?: string;
+}
+
+/** Een pion, hoedje of paaltje aantikken met de hand (door de knieën, hand naar het object), standaard 0,6 s. */
+export interface AantikActie extends ActieBasis {
+  type: 'aantikken';
+  wie: string;
+  /** Id van het object dat hij aantikt. */
+  doel: string;
+}
+
 /** Achteraan een rij aansluiten (loopt buitenom, zonder door de rij te lopen). */
 export interface AansluitActie extends ActieBasis {
   type: 'aansluiten';
@@ -381,18 +400,7 @@ export interface TeamActie extends ActieBasis {
 }
 
 export type Actie =
-  | BalActie
-  | BeweegActie
-  | PersoonActie
-  | AansluitActie
-  | TeamActie
-  | SchijnActie
-  | DrukActie
-  | DekActie
-  | VeroverActie
-  | PannaActie
-  | ZitActie
-  | PlukActie;
+  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie;
 
 export interface AnimatieStap {
   acties: Actie[];

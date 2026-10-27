@@ -57,7 +57,7 @@ await moment('veld-boven', 'Camera: Boven (t=6.05)');
 await camera(page, 'Achter goal');
 await moment('veld-achter', 'Camera: Achter goal (t=6.05)');
 
-await detail(page, 'keeper-laag-duiken-kniezit');
+await detail(page, 'keeper-ld-kniezit-hurkzit-stand');
 for (const [t, tekst] of [
   [0.35, 'Keeper – worp met boog'],
   [0.6, 'Keeper duikt naar links'],
@@ -107,7 +107,7 @@ for (const [naam, w, h, ua, mobiel] of formaten) {
   await alsGeinstalleerd(p);
   await p.setUserAgent(ua);
   await p.setViewport({ width: w, height: h, deviceScaleFactor: 1, isMobile: mobiel, hasTouch: mobiel });
-  for (const [id, t] of [['veld-cv-kaats-doordiepen', 6.05], ['keeper-laag-duiken-kniezit', 0.6]]) {
+  for (const [id, t] of [['veld-cv-kaats-doordiepen', 6.05], ['keeper-ld-kniezit-hurkzit-stand', 0.6]]) {
     await detail(p, id);
     await zetTijd(p, t);
     const pad = `${MAP}3d-${naam}-${id.split('-')[0]}.png`;

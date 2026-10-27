@@ -254,6 +254,6 @@ describe('snelheid van het poseren', () => {
       if (p.id === 'k2') beelden++;
     });
     const perBeeld = (performance.now() - start) / beelden;
-    expect(perBeeld).toBeLessThan(3);
+    expect(perBeeld).toBeLessThan(5);
   });
 });

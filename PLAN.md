@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (17-10-2026, versie 0.21.0)
+## Status (27-10-2026, versie 0.22.0)
 
 | Fase | Status |
 |---|---|
@@ -25,7 +25,11 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 11. Fixes, opruimen, categorieën, tactiekbord (0.19.0) | ✅ online – **wacht op test** |
 | 12. Nieuwe oefeningen: 13 keepers, 8 spelers (0.20.0) | ✅ online, getest en akkoord |
 | 13. Kleine aanpassingen (0.20.1) | ✅ online – **wacht op test**: Grondoefeningen samengevoegd (met echt grond tikken), oplopend overtal op kleine goaltjes, Laag duiken bij Midden/voorzet/schot |
-| 14. Realistischere 3D-animaties (0.21.0) | ✅ online – **wacht op test**: nieuw poppetje (verhoudingen, gewrichten, natuurlijk lopen/trappen/duiken/gooien), snelheid 0,5×/1×/2×, Eenvoudige poppetjes (Instellingen, ook automatisch), hakken-billen |
+| 14. Realistischere 3D-animaties (0.21.0) | ✅ online, getest en akkoord |
+| 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online – **wacht op test** |
+| 16. Deel B (volgende prompt) | ⏳ |
+| 17. Deel C – nieuwe keeperoefeningen (volgende prompt) | ⏳ |
+| 18. Deel D – Help en Engels (volgende prompt) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -864,6 +868,20 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   oefening, 4752 → 4652 ms tot 3D; snel 3G 8028 → 7940 ms en 11788 → 11899 ms.
   Een echte telefoon heeft een andere videokaart; de automatische terugval vangt een te trage telefoon op.
 
+## Besluiten versie 0.22.0 – opruimen, aanpassen en eigen keeperoefeningen (deel A)
+- Gebouwd met `tools/nieuw/keepers-022.cjs`; weggehaald met `tools/nieuw/archiveer.cjs` (archief, blijft werken in
+  trainingen, links, teams en favorieten).
+- **Weg (A1):** Drie schoten: steeds opnieuw positie kiezen · Grondballen: schepvangen · Positie kiezen: meeschuiven met de bal.
+- **Aangepast (A2, zelfde id):** `keeper-bv-stuitballen` → "Zijwaarts, stuitbal en lage bal" (Bal verwerken, Laag duiken) ·
+  `keeper-re-korte-afstand` → "Reflexen: omdraaien en schot van dichtbij" (Reactie; trainer schiet, 1 keeper) ·
+  `keeper-1o1-spreidsprong` → "Spreidsprong: kaatsen en dan 1 op 1" (1 op 1).
+- **Samengevoegd (A2.2):** "Laag duiken: kniezit, hurkzit, stand" (`keeper-ld-kniezit-hurkzit-stand`, Laag duiken, Warming-up);
+  de drie losse (kniezit, hurkzit, stand met twee keepers) staan in het archief.
+- **Nieuw (A3):** Drie pionnen en de korte hoek · Horde heen en terug: volley en hoog schot · Schuin, midden, schuin: ballen op
+  het lichaam · Schuin uit, dan twee lage ballen.
+- **Nieuwe bouwstenen:** `draai` (op de plek omdraaien naar een persoon of richting, bv. op een teken) en `aantikken` (een
+  pion/hoedje aantikken met de hand: door de knieën, hand naar het object). Tests: `tests/versie-022.test.ts`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -877,6 +895,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.22.0 – De opdracht (deel A) hield halverwege A3.4 op ("Minimaal 2 keepers + …"). Gedaan: A1 t/m A3.4; aangenomen dat
+  er "+ trainer" stond. Mocht er na A3.4 nog iets staan (A3.5 of een A4), dan staat dat nog open.
+- 0.22.0 – De samengevoegde lage-duikoefening kreeg een nieuw id (`keeper-ld-kniezit-hurkzit-stand`), omdat je vroeg de
+  drie losse naar het archief te doen; oude trainingen met een van de drie blijven werken.
+- 0.22.0 – "Zijwaarts over twee pionnen": de keeper gaat zijwaarts langs de twee pionnen (op 0,8 m), want over een pion
+  heen stappen keurt de controle af (niemand door materiaal). In de uitleg staat "langs twee pionnen".
+- 0.22.0 – Ballen met een stuit: de lage bal na het terugrollen gaat naar de andere kant van de keeper (± 2 m), niet helemaal
+  naar de verre hoek (dat is vanaf de paal te ver om te duiken).
+- 0.22.0 – Reflexen: nu met de trainer als schutter en 1 keeper (was 2 keepers); drie schoten: heuphoogte, laag naast hem
+  (korte duik) en borsthoogte. "Handen voor de ogen" staat bij Moeilijker.
+- 0.22.0 – Schuin, midden, schuin en Schuin uit + twee lage ballen: de animatie toont 3 keepers + trainer (drie schutters
+  en doorwisselen); keepersNodig = 2, want met twee keepers neemt de trainer ook een tweede positie (staat in de organisatie).
+- 0.22.0 – Drie pionnen en de korte hoek: rechterpaal, pionnen op 0,9 m van elkaar; tweede duik hoog, eerste en derde laag.
 - 0.21.0 – Eigen figuur in code in plaats van een vrij 3D-model (zie besluiten 0.21.0): de keepers- en voetbalbewegingen
   moesten toch zelf gemaakt worden en zo blijft de app klein en snel.
 - 0.21.0 – Hakken-billen bestond nog niet als loopwijze: toegevoegd (`hakbil`) en in "Loopscholing in de rij" als vijfde

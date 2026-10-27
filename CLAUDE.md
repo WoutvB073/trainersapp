@@ -36,6 +36,18 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - Nieuwe ingebouwde oefeningen: als bouwscript in `tools/nieuw/` (zie `keepers-020.cjs`, `spelers-020.cjs`, `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
 - Weggehaalde ingebouwde oefeningen gaan naar `src/data/oefeningen/archief.json` (`verwijderd: true`): niet in de bibliotheek, wel via `vindOefening`. Nooit echt wissen (oude trainingen/links/teams).
 
+## Regels voor nieuwe en aangepaste oefeningen
+- Animatie in 2D en 3D, organisatie, benodigdheden, spelersNodig/keepersNodig, doorwisselbaar of vast aantal, 2–4
+  coachpunten, Makkelijker en Moeilijker, realistische afstanden en de beste startcamera.
+- Categorieën die de gebruiker noemt; zo min mogelijk, geen maximum.
+- Meerdere keepers: laat het doorwisselen zien. De trainer telt niet mee bij keepersNodig.
+- Nieuwe poppetjes (0.21.0): duiken, opstaan, vangen, stompen en blokken moeten er natuurlijk uitzien. Ontbreekt een houding
+  of actie, voeg die toe als bouwsteen, met tests (zo kwamen `draai` en `aantikken` erbij in 0.22.0).
+- Alle tests slagen (afstand, balbezit, keeper, fysieke check, poppetje). Screenshots en close-ups in 3D en 2D van elke
+  nieuwe of aangepaste oefening (`tools/e2e/nieuw.mjs`, `tools/e2e/pas.mjs`), kritisch bekijken en verbeteren.
+- Aanpassen = zelfde id houden. Weghalen alleen via het archief (`tools/nieuw/archiveer.cjs`), zodat trainingen, links,
+  teamitems en favorieten blijven werken.
+
 ## Browsertests (`tools/e2e/`, preview op poort 4184 moet draaien; geef een URL mee om online te testen)
 - `schermen.mjs` — alle schermen op 5 formaten (als geïnstalleerde app), offline (ook 3D), 2D/3D-knop.
 - `installeren.mjs` — installatiescherm per toestel, standalone = app, computerkeuze onthouden.
