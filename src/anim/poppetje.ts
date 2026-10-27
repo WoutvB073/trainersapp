@@ -1395,8 +1395,22 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   // ---- trap (pass, schot) ----
   const tr = s.trap;
   let trapBeen: 0 | 1 | -1 = -1;
-  if (tr && l < 0.5) {
+  // Kopbal: de bal komt hoog (± 1,3 m of meer) en gaat met het hoofd weg; geen beenzwaai.
+  const kop = !!tr && (tr.hoogte ?? 0) >= 1.25;
+  if (tr && kop && l < 0.5) {
     const w = venster(tr.u, 0.25, 0.85);
+    h.hoofd.x += 0.55 * Math.sin(Math.PI * klem((tr.u - 0.3) / 0.4));
+    h.romp.x += mix(-0.25, 0.25, glad(tr.u)) * w;
+    for (const i of [0, 1] as const) {
+      h.arm[i].x = mix(h.arm[i].x, -0.6, w);
+      h.arm[i].z = mix(h.arm[i].z, kant(i) * 0.75, w);
+      h.arm[i].elleboog = mix(h.arm[i].elleboog, 0.9, w);
+    }
+  }
+  if (tr && !kop && l < 0.5) {
+    const w = venster(tr.u, 0.25, 0.85);
+    // Bal op hoogte (volley): het raakpunt gaat mee omhoog.
+    const raakY = klem((tr.hoogte ?? 0) - 0.1, 0.11, 1.0);
     const kr = tr.kracht;
     // Richting van de trap t.o.v. het lijf; naar links met rechts (binnenkant), naar rechts met links.
     const [rx, rz] = tr.richting !== undefined ? lokaal(tr.richting, st.hoek) : [0, 1];
@@ -1427,19 +1441,19 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     } else if (u < 0.5) {
       const a = glad((u - 0.3) / 0.2);
       px = mix(zij * 0.12, contactX, a);
-      py = mix(MAAT.enkel + 0.18 + 0.14 * kr, 0.11, a);
+      py = mix(MAAT.enkel + 0.18 + 0.14 * kr, raakY, a);
       pz = mix(-0.22 - 0.18 * kr, contactZ, a);
     } else if (u < 0.72) {
       const a = glad((u - 0.5) / 0.22);
       const ver = 0.35 + 0.45 * kr;
       px = mix(contactX, contactX + rx * ver, a);
-      py = mix(0.11, 0.12 + 0.3 * kr + (tr.hoog ? 0.3 : 0), a);
+      py = mix(raakY, raakY + 0.01 + 0.3 * kr + (tr.hoog ? 0.3 : 0), a);
       pz = mix(contactZ, contactZ + rz * ver, a);
     } else {
       const a = glad((u - 0.72) / 0.28);
       const ver = 0.35 + 0.45 * kr;
       px = mix(contactX + rx * ver, zij * 0.12, a);
-      py = mix(0.12 + 0.3 * kr + (tr.hoog ? 0.3 : 0), MAAT.enkel, a);
+      py = mix(raakY + 0.01 + 0.3 * kr + (tr.hoog ? 0.3 : 0), MAAT.enkel, a);
       pz = mix(contactZ + rz * ver, bz - 0.25, a);
     }
     vt.p.lerp(_v.set(px, py, pz), w);
@@ -1595,6 +1609,16 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
         h.voet[0].p.lerp(_v.set(-0.14, MAAT.enkel, -0.25), venster(u, 0.3, 0.9));
         h.arm[1].x = mix(h.arm[1].x, -1.35, w);
         h.arm[1].elleboog = mix(h.arm[1].elleboog, 0.2, w);
+      } else if (wp.soort === 'tik') {
+        // Wegtikken met één hand: hand laag naar de bal (rechts voor) en er doorheen zwaaien.
+        p = [
+          [-0.3, 0.6, 0.05],
+          [-0.34, 0.22, 0.22],
+          [-0.22, 0.12, 0.48],
+          [0.05, 0.35, 0.7],
+        ];
+        h.romp.x += 0.45 * Math.sin(Math.PI * klem(u));
+        h.romp.z += 0.15 * Math.sin(Math.PI * klem(u));
       } else {
         // Zwaaiworp: arm laag opzij, van achteren in een grote boog naar voren.
         p = [
@@ -1615,7 +1639,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       const pb = p[seg + 1]!;
       h.arm[ri].doel.set(mix(pa[0], pb[0], a), mix(pa[1], pb[1], a), mix(pa[2], pb[2], a));
       h.arm[ri].ik = w;
-      st.balInHand = u < los ? 1 : 0;
+      st.balInHand = u < los && wp.soort !== 'tik' ? 1 : 0;
     }
   }
   if (!wp || !werpHand) st.balInHand = 0;

@@ -77,6 +77,16 @@ SETS.k023 = [
   ['keeper-wu-twee-ballen', 'k1', 0.3, 2.9, 8, 'schuin', 'twee ballen'],
   ['keeper-hd-slalom-pion-duiken', 'auto:aantik', 'gezicht', 'pion aantikken en hoge duik'],
 ];
+SETS.k024 = [
+  ['keeper-vz-een-hand-stompen-paal', 'auto:worp:tik', 'schuin', 'wegtikken met één hand'],
+  ['keeper-vz-een-hand-stompen-paal', 'auto:stomp', 'zij', 'stompen'],
+  ['keeper-ps-wegwerken-en-terug', 'auto:keepertrap', 'zij', 'kopbal wegwerken'],
+  ['keeper-1op1-stilliggende-bal-lezen', 'auto:blok', 'zij', 'voeten vooruit'],
+  ['keeper-sp-een-op-een-competitie', 'auto:blok', 'zij', 'knieblok'],
+  ['keeper-ps-drie-poorten-dropkicks', 'auto:worp:dropkick', 'zij', 'dropkick'],
+  ['keeper-ps-lange-bal-lange-worp', 'auto:worp:zwaai', 'zij', 'lange zwaaiworp'],
+  ['keeper-ps-aannemen-wegdraaien-pop', 'auto:keepertrap:1', 'zij', 'aannemen en wegdraaien'],
+];
 SETS.spelers = [
   ['veld-pt-driehoek', 'auto:trap', 'zij', 'pass'],
   ['veld-pt-driehoek', 'auto:aanname', 'zij', 'aannemen'],
@@ -112,6 +122,11 @@ function automatisch(tl, wat) {
     const lijst = tl.loslaten.filter((l) => l.soort === 'voet' && !keepers.has(l.wie) && l.t > 0.5);
     const x = soort === 'trap' ? lijst[0] : lijst.at(-1);
     return x ? [x.wie, x.t - 0.35, x.t + 0.35] : null;
+  }
+  if (soort === 'keepertrap') {
+    // Keeper speelt met de voet (of het hoofd); extra = welke (0 = eerste).
+    const x = tl.loslaten.filter((l) => l.soort === 'voet' && keepers.has(l.wie))[Number(extra ?? 0)];
+    return x ? [x.wie, x.t - 0.45, x.t + 0.35] : null;
   }
   if (soort === 'aanname') {
     const e = vluchten.find((e) => e.t1 > 0.5 && personen.has(e.daarna) && standOp(tl, e.t1).objecten.get(e.daarna).aanname);

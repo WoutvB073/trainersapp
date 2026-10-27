@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (27-10-2026, versie 0.23.0)
+## Status (27-10-2026, versie 0.24.0)
 
 | Fase | Status |
 |---|---|
@@ -27,8 +27,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 13. Kleine aanpassingen (0.20.1) | ✅ online – **wacht op test**: Grondoefeningen samengevoegd (met echt grond tikken), oplopend overtal op kleine goaltjes, Laag duiken bij Midden/voorzet/schot |
 | 14. Realistischere 3D-animaties (0.21.0) | ✅ online, getest en akkoord |
 | 15. Opruimen, aanpassen en eigen keeperoefeningen (0.22.0, deel A) | ✅ online, getest en akkoord |
-| 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online – **wacht op test** |
-| 17. Deel C – nieuwe keeperoefeningen (volgende prompt) | ⏳ |
+| 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online, getest en akkoord |
+| 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online – **wacht op test** |
 | 18. Deel D – Help en Engels (volgende prompt) | ⏳ |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
@@ -902,6 +902,24 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   (draaisprong); `blokSoort: 'voeten'` (glijdend blokken met de voeten vooruit); `aantikken` met `met: 'voet'` en met
   een `punt` (bv. de doelpaal). Een bal naar jezelf opgooien (`pass` van en naar dezelfde keeper) werkte al.
 
+## Besluiten versie 0.24.0 – nieuwe keeperoefeningen, deel 2 (deel C)
+- Gebouwd met `tools/nieuw/keepers-024a.cjs` (voorzetten), `keepers-024b.cjs` (passing) en `keepers-024c.cjs`
+  (1 op 1 en spelletjes). Alle teksten zelf geschreven, zonder namen van clubs, trainers, apps of websites (getest).
+- **Voorzetten:** Wegstompen en daarna de hoek dichtzetten · Hordes en hoge bal claimen · Meelezen met de andere keeper ·
+  Hoge bal claimen en de schutter horen · Voorzet, uitworp en doorspelen · Circuit: stompen, hordes en lob · Eén hand,
+  stompen en de paal.
+- **Passing:** Terugspeelbal naar het geroepen doeltje · Meevoetballende keeper: wegwerken en terug · Uitspelen onder druk
+  in minidoeltjes · Scannen, uitspelen en 1 op 1 · Uitspelen naar de hoek en terug · Terugspeelbal, draaien en schot ·
+  Aannemen en wegdraaien van de pop · Uitkomen en in één keer passen · Lange bal en lange worp · Drie poorten, roterende
+  dropkicks · Lezen wat de verdediger doet · Uitspelen onder druk en dan lang.
+- **1 op 1:** Uitstappen, vangen en de stilliggende bal lezen · Hoek dichtlopen, nieuwe hoek · Keeper met verdediger ·
+  Uitspelen, dan hoek verkleinen.
+- **Spelletjes:** Keepersspel met vier doeltjes · Twee tegen twee, twee doelen · Eén-op-één-competitie.
+- **Nieuwe bouwstenen** (tests in `tests/versie-024.test.ts`): `worp: 'tik'` = een (stil)liggende bal met één hand
+  wegtikken (bv. vanuit kniezit, de bal komt niet in de handen); een keeper die een hoge bal met `worp: 'voet'` en
+  `direct` doorspeelt, kopt hem weg (vanaf ± 1,25 m, met een sprongetje, zonder beenzwaai); een halfhoge bal wordt een
+  volley (de trapvoet gaat mee omhoog naar de bal). Close-ups: `tools/e2e/pas.mjs set k024` (ook `auto:keepertrap`).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
@@ -915,6 +933,32 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.17.0 – Doelnet is geel; per goal één net; staat er ook een keeper, dan gaat het net voor. "Halfhoog" bestaat niet bij
   een schot, dus de middelste hoogte kaatst altijd terug.
 - 0.17.0 – Het woord "Veld" blijft bij het veldtype in de editor (leeg/half/heel veld); alleen de soort heet nu Spelers.
+- 0.24.0 – Aangevers en schutters zijn in de animatie de trainer en andere keepers; keepersNodig telt die keepers mee
+  (de trainer niet). Bij Lezen wat de verdediger doet en Uitspelen onder druk en dan lang staan de medespelers als keepers
+  in de tekening (3 en 4 keepers); met veldspelers kan het ook.
+- 0.24.0 – Wegstompen en hoek dichtzetten: de tweede voorzet komt van een keeper rechts, een derde keeper is de schutter.
+- 0.24.0 – Hoge bal claimen en de schutter horen: de animatie toont één keer roepen (keeper 3 schiet); de uitleg noemt alle
+  drie de keuzes.
+- 0.24.0 – Circuit: de draaisprong is een hele draai in de lucht; de lage bal komt van keeper 2, de lob van keeper 3 over
+  twee poppen.
+- 0.24.0 – Eén hand, stompen en de paal: de stuitbal die je naar voren wilde laten wegstompen, laat de animatie zien als een
+  hoge bal die wordt weggestompt (stompen na een stuit kan het poppetje nog niet); in de uitleg staat "hoge bal", bij
+  Moeilijker "Stuitbal voor het stompen".
+- 0.24.0 – Geroepen doeltje: drie minidoeltjes met een rood, geel en blauw hoedje ervoor; de animatie toont twee ballen.
+- 0.24.0 – Wegwerken en terug: wegwerken met het hoofd (de lange bal komt hoog aan); bij Makkelijker wegtrappen.
+- 0.24.0 – Uitspelen onder druk in minidoeltjes: eerste bal gaat erin, tweede bal wordt onderschept en wordt een counter.
+- 0.24.0 – Uitspelen naar de hoek en terug: de aangever staat schuin rechts aan de rand van het strafschopgebied (niet in de
+  hoek zelf, dan valt hij buiten beeld); keeper 3 is de naloper voor de tweede bal.
+- 0.24.0 – Aannemen en wegdraaien: drie ballen (laag, stuit, halfhoog), steeds naar hetzelfde kleine doeltje links.
+- 0.24.0 – Drie poorten: met drie keepers en drie poorten loopt de keeper na zijn trap naar de derde poort (achter de
+  keeper die daar staat), anders staat er bij de laatste poort niemand om te vangen.
+- 0.24.0 – Lezen wat de verdediger doet: beide situaties staan naast elkaar (links ingezakt, rechts doorgedekt).
+- 0.24.0 – Stilliggende bal lezen: de trainer kiest in de animatie de rechterbal; de eerste bal rolt de keeper opzij weg.
+- 0.24.0 – Keeper met verdediger: eerste aanval blokt de verdediger, tweede aanval schiet de trainer langs hem.
+- 0.24.0 – Vier doeltjes: vier keepers (twee in de doeltjes, twee aangevers); na een paar minuten wisselen de rollen.
+  Puntentelling: elk doelpunt een punt voor de schutter.
+- 0.24.0 – Twee tegen twee: doelen van 6 m breed op 32 m van elkaar; de keeper gooit na een redding naar een trainer.
+- 0.24.0 – Eén-op-één-competitie: drie keepers (één in het doel, twee aanvallers); blok met de knie en met de voeten.
 - 0.23.0 – A3.5: pionnen om aan te tikken (je schreef "paal of pion"); vier paaltjes voor de slalom; eerst een hoge, dan een
   lage duik.
 - 0.23.0 – A4: met een keeper in het doel (keepersNodig 1); het rechterparcours is langer door één paaltje extra en ligt

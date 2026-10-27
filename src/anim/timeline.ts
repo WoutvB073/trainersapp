@@ -241,7 +241,7 @@ export interface ObjectStand {
    * Trap tegen de bal (pass of schot met de voet): u 0–1, de voet raakt de bal op u = 0,5. Kracht 0–1 (uit de
    * balsnelheid), richting van de bal (graden) en of hij hoog gaat.
    */
-  trap?: { u: number; kracht: number; richting?: number; hoog: boolean };
+  trap?: { u: number; kracht: number; richting?: number; hoog: boolean; hoogte?: number };
   /** Bal aannemen (niet met de handen): u 0–1, de bal komt aan op u = 0,5, op deze hoogte (m), uit deze richting (graden). */
   aanname?: { u: number; hoogte: number; richting: number };
   /** Opstaan na een duik: 0–1 (alleen tijdens het opstaan). */
@@ -729,6 +729,8 @@ function loslaatHoogte(x: Pick<Loslaten, 'soort' | 'rollend'>): number {
       return 0.45;
     case 'dropkick':
       return 0.05;
+    case 'tik':
+      return 0.1;
     default:
       return 0;
   }
@@ -768,7 +770,13 @@ function trapOp(tl: Tijdlijn, id: string, t: number): ObjectStand['trap'] {
     const u = (t - (x.t - TRAP)) / (2 * TRAP);
     if (!e || e.soort !== 'vlucht') return { u, kracht: 0.5, hoog: false };
     const v = afstand(e.van, e.naar) / Math.max(0.05, e.t1 - e.t0);
-    return { u, kracht: klem((v - 6) / 14) * 0.85 + 0.15, richting: afstand(e.van, e.naar) > 0.2 ? graden(e.van, e.naar) : undefined, hoog: e.top > 1 };
+    return {
+      u,
+      kracht: klem((v - 6) / 14) * 0.85 + 0.15,
+      richting: afstand(e.van, e.naar) > 0.2 ? graden(e.van, e.naar) : undefined,
+      hoog: e.top > 1,
+      ...(e.h0 > 0.25 ? { hoogte: e.h0 } : {}),
+    };
   }
   return undefined;
 }
