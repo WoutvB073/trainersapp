@@ -634,19 +634,19 @@ function langeBal(): Tekening {
   const o = new Opzet('11v11')
     .blauw(1, 34, 3)
     .blauw(2, 12, 42)
-    .blauw(3, 29, 45)
-    .blauw(4, 37, 44)
+    .blauw(3, 27.5, 44)
+    .blauw(4, 40.5, 43.5)
     .blauw(5, 56, 42)
-    .blauw(6, 34, 54)
+    .blauw(6, 34, 57.5)
     .blauw(8, 24, 62)
     .blauw(10, 46, 62)
     .blauw(7, 12, 66)
     .blauw(11, 56, 66)
     .blauw(9, 34, 72)
     .rood(1, 34, 100)
-    .rood(9, 34, 49)
-    .rood(10, 28, 58)
-    .rood(8, 40, 58)
+    .rood(9, 34, 48)
+    .rood(10, 27, 59)
+    .rood(8, 41, 59)
     .rood(6, 34, 66)
     .rood(11, 10, 52)
     .rood(7, 58, 52)
@@ -656,7 +656,7 @@ function langeBal(): Tekening {
     .rood(2, 60, 78)
     .bal('k1');
   // 1. Lange bal op de spits; de middenvelders sluiten aan voor de tweede bal.
-  o.pass('k1', 'a9', 1, { hoog: true }).loop('a10', [30, 51.4], 1).loop('a8', [39, 51.4], 1);
+  o.pass('k1', 'a9', 1, { hoog: true }).loop('a10', [27.4, 51.6], 1).loop('a8', [40.6, 51.6], 1);
   // 2. De spits kopt in één keer terug op de aansluitende middenvelder.
   o.pass('a9', 'a10', 2);
   // 3. De spits draait in de diepte en krijgt de bal terug.
