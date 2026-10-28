@@ -25,7 +25,10 @@ import { TactiekenScherm, TactiekScherm } from './screens/wedstrijd/Tactieken';
 import { BordTekenen } from './screens/wedstrijd/BordTekenen';
 import { Account, SamenvoegenVraag } from './screens/online/Account';
 import { Teams, TeamScherm, TeamTrainingScherm } from './screens/online/Teams';
-import { browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen } from './engine/platform';
+import { alGeinstalleerd, browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen, zetGeinstalleerd } from './engine/platform';
+
+// Als app geopend: onthouden, zodat de link in de browser later "Je hebt de app al" toont (0.29.1).
+if (isStandalone()) zetGeinstalleerd(true);
 import { t } from './i18n/t';
 
 function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => void }) {
@@ -100,14 +103,14 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
 }
 
 /**
- * Geïnstalleerd: de app. Telefoon/tablet in de browser: alleen het installatiescherm.
- * Computer: installatie-uitleg met "Gewoon in de browser gebruiken" (keuze wordt onthouden).
+ * Geïnstalleerd: de app. In de browser: het installatiescherm (of "Je hebt de app al"), altijd met
+ * "Gewoon in de browser gebruiken" (keuze wordt onthouden, ook op een telefoon sinds 0.29.1).
  */
 export function App() {
   const [gekozen, setGekozen] = useState(browserGekozen);
   const route = useRoute();
   const [installatieGetoond, setInstallatieGetoond] = useState(false);
-  const scherm = kiesScherm({ standalone: isStandalone(), mobiel: omgeving.mobiel, browserGekozen: gekozen });
+  const scherm = kiesScherm({ standalone: isStandalone(), mobiel: omgeving.mobiel, browserGekozen: gekozen, geinstalleerd: alGeinstalleerd() });
   const kies = (aan: boolean) => {
     zetBrowserGekozen(aan);
     setGekozen(aan);
@@ -117,8 +120,7 @@ export function App() {
   if (scherm !== 'app' && route.naam === 'gedeeld' && !installatieGetoond) {
     return <GedeeldeTraining code={route.code} nietGeinstalleerd opInstalleren={() => setInstallatieGetoond(true)} />;
   }
-  if (scherm === 'installeren') return <Installeren />;
-  if (scherm === 'installeren-computer') return <Installeren computer opBrowserGekozen={() => kies(true)} />;
+  if (scherm !== 'app') return <Installeren alGeinstalleerd={scherm === 'al-geinstalleerd'} computer={!omgeving.mobiel} opBrowserGekozen={() => kies(true)} />;
   return <AppSchermen opInstalleren={isStandalone() ? undefined : () => kies(false)} />;
 }
 

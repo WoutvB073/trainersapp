@@ -15,3 +15,6 @@ ui-debug.log
 # Metingen van tools/e2e/animaties.mjs
 tools/e2e/anim-*.json
 tools/tmp/
+
+# Tabel van tools/e2e/installeren.mjs
+tools/e2e/inst-tabel.json

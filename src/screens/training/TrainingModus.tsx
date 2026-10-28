@@ -65,7 +65,7 @@ export function TrainingModus({ id, nr }: { id: string; nr: number }) {
             }}
           >
             <h2 className="detail-titel">{o.naam}</h2>
-            <Labels oefening={o} />
+            <Labels oefening={o} keepers={t.keepers} />
             {o.onderdelen && (
               <ol className="verloop">
                 {o.onderdelen.map((d, k) => (

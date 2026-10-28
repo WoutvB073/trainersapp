@@ -111,7 +111,7 @@ function Regel({
             <Miniatuur tekening={o.tekening} className="onderdeel-plaatje" />
             <span className="onderdeel-info">
               <span className="onderdeel-naam">{o.naam}</span>
-              <Labels oefening={o} />
+              <Labels oefening={o} keepers={t.keepers} />
             </span>
           </a>
           <button className="knop knop-klein gen-ander" onClick={opAnder}>

@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (28-10-2026, versie 0.29.0)
+## Status (28-10-2026, versie 0.29.1)
 
 | Fase | Status |
 |---|---|
@@ -35,6 +35,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 21. Deel B: 15 spelersoefeningen (verdedigen en omschakelen, partijvormen, spelletjes), verdedigende houding (0.27.0) | ✅ online, getest en akkoord |
 | 22. Deel C: voorbeeldtactieken op het tactiekbord, 17 tactieken / 25 borden (0.28.0) | ✅ online, getest en akkoord |
 | 23. Deel D: ingestudeerde spelhervattingen, 20 hervattingen / 27 borden (0.29.0) | ✅ online – **wacht op test** |
+| 24. Installeren op elke telefoon en browser, filter op aantal keepers (0.29.1) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1073,8 +1074,61 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   vangen; de inworp). Browsertest `tools/e2e/tactieken.mjs hschermen` en `hborden` (bladen `blad-hervattingen.png`,
   `blad-hervatting-<groep>.png`, `blad-hervatting-se.png`); `deel-b.mjs` volgt de nieuwe weg naar een voorbeeld.
 
+## Besluiten versie 0.29.1 – installeren op elke telefoon en browser, filter op aantal keepers
+- **Herkenning** (`src/engine/platform.ts`): ook Xiaomi- en Huawei-browser, iOS-versie (`iosVersie`), ingebouwde browsers van
+  WhatsApp, Instagram, Facebook, Messenger (vóór Facebook herkend), Gmail, Outlook, LinkedIn, TikTok, Snapchat, Telegram en X.
+  Andere Android-browsers met een eigen naam (UC, Vivo, Oppo, Yandex, DuckDuckGo …) tellen als "andere browser".
+- **Stappen per combinatie** (`src/screens/installeren/stappen.tsx`): een sleutel per toestel + browser (`sleutelVoor`),
+  stappen met de knopnamen van die browser (`uitlegVoor`), andere mogelijke stappen (`alternatieven`, knop "Lukt het niet?")
+  en een keuzelijst (`HANDMATIG`, knop "Andere browser of telefoon"). iPhone/iPad vanaf iOS 16.4: in Chrome, Edge en Firefox
+  de stappen via Delen → Zet op beginscherm; ouder: "Open in Safari" met Kopieer link. Android: Chrome (knop Installeren via
+  het installatieverzoek, anders ⋮), Samsung Internet, Firefox, Edge, Opera, Xiaomi/Huawei/andere (menu + Openen in Chrome).
+  In een app: de menuknop en keuze van die app, Kopieer link en op Android **Openen in Chrome** (intent-link met dezelfde
+  pagina als terugval). Laptop: Chrome/Edge (adresbalk/menu), Safari (Archief → Voeg toe aan Dock), Firefox (gewoon in de
+  browser). Onbekend: algemene stappen. Pijl "Begin hier" naar de juiste knop (tablet: bovenin).
+- **Nooit vastzitten**: op elk installatiescherm (ook telefoon) **Gewoon in de browser gebruiken** (onthouden); terug via
+  "TopTraining als app installeren" onderaan het startscherm en uitgelegd in de Help. **Je hebt de app al** als de app op
+  dit toestel al als app geopend of geïnstalleerd is (`trainersapp.geinstalleerd`), met "Toch in de browser gebruiken" en
+  "Opnieuw installeren". **Gelukt!** na het installeren (`appinstalled` of het installatieverzoek geaccepteerd).
+- **Help** "App installeren en bijwerken": stappen per browser en per app, Lukt het niet?, uitleg later terugvinden (NL/EN).
+- **Keeperfilter** (`keeperNodig` in `src/training/training.ts`): een spelersoefening met keeper heeft de keeper alleen echt
+  nodig bij twee grote doelen (partijvormen) of met `keeperVerplicht` (opbouw met de keeper). Alle andere (afwerken,
+  combinatievormen, positiespel op één groot doel …) blijven staan bij 0 keepers, met het label **Zonder keeper: net of
+  trainer in het doel**; met keepers staat er **Met keeper**. Partijvormen op minidoeltjes hadden al geen keeper. Geldt in de
+  bibliotheek, Training maken (ook de oranje markering) en Training genereren (allemaal via `pastBij`).
+- **Tests**: `tests/installeren.test.ts` (47 echte user-agents uit `tools/e2e/useragents.json`, stappen per browser, Lukt het
+  niet?, keuzelijst, intent-link, kiesScherm), `tests/versie-0291.test.ts` (keeperindeling, 6 spelers/0 keepers in bibliotheek,
+  Training maken en genereren). Browsertest `tools/e2e/installeren.mjs`: alle combinaties op telefoon-/tabletformaat in NL en
+  EN (pijl in beeld, niets afgekapt, geen andere taal), Lukt het niet?, kiezen, browserkeuze onthouden, al geïnstalleerd,
+  Gelukt. Bladen `blad-inst-{ios,android,inapp,computer}-{nl,en}.png`, `blad-inst-hulp.png`, `blad-inst-status.png`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.29.1 – "Gewoon in de browser gebruiken" staat nu ook op de telefoon en wordt onthouden (zoals op de laptop). De uitleg
+  vind je terug via "TopTraining als app installeren" onderaan het startscherm (nu met een download-icoon) en in de Help.
+- 0.29.1 – Of Chrome/Edge/Firefox op de iPhone kan installeren, beslist de iOS-versie uit de user-agent (vanaf 16.4). Een
+  iPad die zich als Mac voordoet geeft geen versie door: dan gaan we uit van een nieuwe iOS.
+- 0.29.1 – Plaats van de knoppen per browser (menunamen verschillen per versie, daarom altijd "Lukt het niet?"): Chrome op de
+  iPhone: Deel-knop rechts in de adresbalk; Edge: ••• onderin; Firefox: ☰ rechtsonder; op de iPad zitten ze rechtsboven.
+  Samsung Internet: ☰ rechtsonder (tablet rechtsboven); Edge op Android: ••• onderin.
+- 0.29.1 – Ingebouwde browsers: per app de menuknop (••• op de iPhone, ⋮ op Android) en de keuze zoals die app hem noemt
+  (bijv. Instagram "Openen in externe browser", Gmail "Openen in Chrome"); bij WhatsApp en Telegram op de iPhone het
+  kompas-icoon rechtsonder. De titel zegt "Open deze pagina in Safari/Chrome", ook als je een andere standaardbrowser hebt.
+- 0.29.1 – "Openen in Chrome" (directe link) alleen op Android: in een app en in browsers die niet goed installeren
+  (Xiaomi, Huawei, onbekend). Is Chrome er niet, dan opent dezelfde pagina gewoon opnieuw.
+- 0.29.1 – "Je hebt de app al" werkt alleen waar browser en app dezelfde opslag delen (Android en computer). Op de iPhone kan
+  de browser niet zien dat de app er al is; daar zie je de gewone uitleg. Extra knop "Opnieuw installeren" (als je hem
+  verwijderd hebt).
+- 0.29.1 – Na het installeren: op de computer opent Chrome/Edge de app zelf in een eigen venster. Op Android kan een website
+  de app niet openen; daar staat "Open de app nu via het icoon" met de knop "Verder in de browser". Op de iPhone meldt Safari
+  het installeren niet, dus daar is geen bevestiging mogelijk.
+- 0.29.1 – Firefox op de laptop: titel "Gewoon in de browser gebruiken" met een bladwijzer-tip en Kopieer link (om in Chrome
+  of Edge te installeren).
+- 0.29.1 – Keeper nodig of niet: twee grote doelen = partijvorm met keepers → keeper nodig. Daardoor hebben ook "5 tegen 5
+  met schietzones" en "4 tegen 4 met wingers" (die ook in Afwerken staan) bij 0 keepers geen plek; het zijn partijvormen.
+  De opbouw "4 + keeper tegen 2" heeft de keeper echt nodig (hij speelt mee) en kreeg `keeperVerplicht`.
+- 0.29.1 – Label bij een spelersoefening waarbij de keeper niet nodig is: bij 0 keepers "Zonder keeper: net of trainer in het
+  doel", anders "Met keeper" (in plaats van "Keeper nodig"). "Keeper nodig" blijft bij partijvormen en keeperoefeningen.
 - 0.29.0 – Spelhervattingen op een half veld: van het aanvallende team staan de 10 veldspelers erop (de eigen keeper staat op de
   andere helft), van het verdedigende team 10 veldspelers en de keeper. Bij de aftrap staat iedereen op een heel veld.
 - 0.29.0 – Startcamera "Achter goal" voor hervattingen bij het doel: de zestien is dan groot en leesbaar. De cornernemer of

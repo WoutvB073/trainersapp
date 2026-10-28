@@ -115,7 +115,7 @@ export function TrainingKiezen({ id }: { id: string }) {
                     <span className="kaart-tekst">
                       <span className="kaart-titel">{o.naam}</span>
                       <span className="kaart-uitleg">{o.uitleg}</span>
-                      <Labels oefening={o} />
+                      <Labels oefening={o} keepers={t.keepers} />
                     </span>
                   </a>
                   <Hartje id={o.id} naam={o.naam} />

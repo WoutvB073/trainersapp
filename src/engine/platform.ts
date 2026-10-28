@@ -5,7 +5,7 @@
  */
 
 export type Besturingssysteem = 'ios' | 'android' | 'anders';
-export type Browser = 'safari' | 'chrome' | 'samsung' | 'firefox' | 'edge' | 'opera' | 'inapp' | 'anders';
+export type Browser = 'safari' | 'chrome' | 'samsung' | 'firefox' | 'edge' | 'opera' | 'xiaomi' | 'huawei' | 'inapp' | 'anders';
 
 export interface Omgeving {
   os: Besturingssysteem;
@@ -14,6 +14,8 @@ export interface Omgeving {
   appNaam?: string;
   /** Safari-versie (hoofdnummer) op iPhone/iPad, bv. 26. */
   safariVersie?: number;
+  /** iOS-versie op iPhone/iPad, bv. 18.5 (een iPad die zich als Mac voordoet: onbekend). */
+  iosVersie?: number;
   tablet: boolean;
   /** Telefoon of tablet. */
   mobiel: boolean;
@@ -29,12 +31,16 @@ interface Invoer {
 const IN_APP: [RegExp, string][] = [
   [/WhatsApp/i, 'WhatsApp'],
   [/Instagram/, 'Instagram'],
+  // Messenger vóór Facebook: Messenger zet ook FBAN/FB_IAB in de user-agent.
+  [/Messenger|MESSENGER|Orca-Android/, 'Messenger'],
   [/FBAN|FBAV|FB_IAB|FBIOS|\[FB/, 'Facebook'],
-  [/Messenger|MESSENGER/, 'Messenger'],
   [/musical_ly|BytedanceWebview|TikTok/i, 'TikTok'],
   [/Snapchat/, 'Snapchat'],
   [/LinkedInApp/, 'LinkedIn'],
   [/Twitter|TwitterAndroid/, 'X'],
+  [/Telegram/i, 'Telegram'],
+  [/\bGmail\b|GoogleMail/i, 'Gmail'], // i18n-ok
+  [/Outlook-(iOS|Android)|\bOutlook\//i, 'Outlook'], // i18n-ok
 ];
 
 export function herkenOmgeving({ ua, platform = '', maxTouchPoints = 0, grofAanwijzen = false }: Invoer): Omgeving {
@@ -62,36 +68,42 @@ export function herkenOmgeving({ ua, platform = '', maxTouchPoints = 0, grofAanw
     else if (/Safari\//.test(ua) && /Version\//.test(ua)) browser = 'safari';
     else browser = 'inapp'; // geen "Safari/" = ingebouwde browser van een onbekende app
   } else if (/SamsungBrowser/.test(ua)) browser = 'samsung';
+  else if (/MiuiBrowser|XiaoMi\/MiuiBrowser|Mint Browser/i.test(ua)) browser = 'xiaomi';
+  else if (/HuaweiBrowser|HuaweiBrowser\//i.test(ua)) browser = 'huawei';
   else if (/Edg(A|e)?\//.test(ua)) browser = 'edge';
   else if (/OPR\/|Opera/.test(ua)) browser = 'opera';
   else if (/Firefox\//.test(ua)) browser = 'firefox';
+  else if (/UCBrowser|VivoBrowser|HeyTapBrowser|OppoBrowser|YaBrowser|DuckDuckGo|Silk\//.test(ua)) browser = 'anders';
   else if (/Chrome\//.test(ua)) browser = 'chrome';
   else if (/Safari\//.test(ua)) browser = 'safari';
   else browser = 'anders';
 
   const v = ios && browser === 'safari' ? /Version\/(\d+)/.exec(ua) : null;
+  const iv = ios ? /OS (\d+)[_.](\d+)/.exec(ua) : null;
   return {
     os,
     browser,
     ...(appNaam ? { appNaam } : {}),
     ...(v ? { safariVersie: Number(v[1]) } : {}),
+    ...(iv ? { iosVersie: Number(iv[1]) + Number(iv[2]) / 10 } : {}),
     tablet,
     mobiel,
   };
 }
 
-export type Scherm = 'app' | 'installeren' | 'installeren-computer';
+export type Scherm = 'app' | 'installeren' | 'installeren-computer' | 'al-geinstalleerd';
 
 /**
  * Wat tonen we?
  * - Geïnstalleerd (vanaf het beginscherm): altijd de app.
- * - Telefoon/tablet in een gewone browser: alleen het installatiescherm.
- * - Computer in de browser: installatie-uitleg, tenzij eerder gekozen voor "Gewoon in de browser gebruiken".
+ * - Eerder gekozen voor "Gewoon in de browser gebruiken" (telefoon, tablet of computer, 0.29.1): de app.
+ * - De app is al geïnstalleerd, maar de link opent in de browser: "Je hebt de app al" (met "toch in de browser").
+ * - Anders het installatiescherm (op de computer met de uitleg voor de computer).
  */
-export function kiesScherm({ standalone, mobiel, browserGekozen }: { standalone: boolean; mobiel: boolean; browserGekozen: boolean }): Scherm {
-  if (standalone) return 'app';
-  if (mobiel) return 'installeren';
-  return browserGekozen ? 'app' : 'installeren-computer';
+export function kiesScherm({ standalone, mobiel, browserGekozen, geinstalleerd = false }: { standalone: boolean; mobiel: boolean; browserGekozen: boolean; geinstalleerd?: boolean }): Scherm {
+  if (standalone || browserGekozen) return 'app';
+  if (geinstalleerd) return 'al-geinstalleerd';
+  return mobiel ? 'installeren' : 'installeren-computer';
 }
 
 export const omgeving: Omgeving =
@@ -117,8 +129,30 @@ export function isStandalone(): boolean {
 }
 
 const KEUZE = 'trainersapp.browserGekozen';
+const GEINSTALLEERD = 'trainersapp.geinstalleerd';
 
-/** Computer: eerder gekozen voor "Gewoon in de browser gebruiken"? */
+/**
+ * Is de app op dit toestel al eens als app geopend of geïnstalleerd (0.29.1)? Op Android en de computer delen browser en
+ * app dezelfde opslag; op de iPhone niet (daar zie je dit scherm dus niet).
+ */
+export function alGeinstalleerd(): boolean {
+  try {
+    return localStorage.getItem(GEINSTALLEERD) === '1';
+  } catch {
+    return false;
+  }
+}
+
+export function zetGeinstalleerd(aan: boolean): void {
+  try {
+    if (aan) localStorage.setItem(GEINSTALLEERD, '1');
+    else localStorage.removeItem(GEINSTALLEERD);
+  } catch {
+    /* niet erg */
+  }
+}
+
+/** Eerder gekozen voor "Gewoon in de browser gebruiken" (telefoon, tablet of computer)? */
 export function browserGekozen(): boolean {
   try {
     return localStorage.getItem(KEUZE) === '1';

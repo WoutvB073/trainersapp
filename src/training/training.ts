@@ -25,9 +25,27 @@ export interface Training {
 
 export const MAX_AANTAL = 40;
 
-/** Past een oefening bij deze aantallen? Minder nodig is altijd prima. */
-export function pastBij(o: Pick<Oefening, 'spelersNodig' | 'keepersNodig'>, spelers: number, keepers: number): boolean {
-  return o.spelersNodig <= spelers && o.keepersNodig <= keepers;
+type MetKeeper = Pick<Oefening, 'spelersNodig' | 'keepersNodig'> & Partial<Pick<Oefening, 'soort' | 'tekening' | 'keeperVerplicht'>>;
+
+/**
+ * Is de keeper echt nodig (0.29.1)? Keeperoefeningen: ja. Spelersoefeningen met één groot doel (afwerken, positiespel met
+ * afronding, omschakelen op doel): nee, dan hang je een net op of staat de trainer in het doel. Partijvormen op twee grote
+ * doelen en oefeningen met `keeperVerplicht` (de keeper speelt mee): ja. Partijvormen op minidoeltjes hebben geen keeper.
+ */
+export function keeperNodig(o: MetKeeper): boolean {
+  if (o.keepersNodig <= 0) return false;
+  if (o.soort !== 'veld' || !o.tekening || o.keeperVerplicht) return true;
+  return o.tekening.objecten.filter((x) => x.soort === 'goal').length >= 2;
+}
+
+/** Spelersoefening met een keeper die ook zonder kan (label "Zonder keeper: net of trainer in het doel"). */
+export function zonderKeeperMogelijk(o: MetKeeper): boolean {
+  return o.soort === 'veld' && o.keepersNodig > 0 && !keeperNodig(o);
+}
+
+/** Past een oefening bij deze aantallen? Minder nodig is altijd prima; een keeper die niet nodig is, telt niet mee. */
+export function pastBij(o: MetKeeper, spelers: number, keepers: number): boolean {
+  return o.spelersNodig <= spelers && (o.keepersNodig <= keepers || !keeperNodig(o));
 }
 
 /** Oefeningen die je kunt kiezen: van deze soort (en categorie) én passend bij de aantallen. */

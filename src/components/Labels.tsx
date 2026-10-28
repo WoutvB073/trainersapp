@@ -1,6 +1,7 @@
 import type { Oefening } from '../model/types';
 import { Icoon } from './Icoon';
 import { aantal, t } from '../i18n/t';
+import { keeperNodig } from '../training/training';
 
 /** "3 spelers" in de gekozen taal (de woorden gaan via t). */
 const meervoud = aantal;
@@ -18,8 +19,11 @@ export function keepersLabel(o: Aantallen): string {
   return `${o.keepersNodig}${plus} ${t(o.keepersNodig === 1 && !plus ? 'keeper' : 'keepers')}`;
 }
 
-/** Spelers / keepers / "Keeper nodig". */
-export function Labels({ oefening }: { oefening: Oefening }) {
+/**
+ * Spelers / keepers / "Keeper nodig" of "Met keeper". `keepers` = het aantal keepers dat je hebt (filter of training):
+ * bij 0 en een keeper die niet nodig is "Zonder keeper: net of trainer in het doel".
+ */
+export function Labels({ oefening, keepers }: { oefening: Oefening; keepers?: number }) {
   const { spelersNodig, keepersNodig, soort } = oefening;
   return (
     <div className="labels">
@@ -49,9 +53,9 @@ export function Labels({ oefening }: { oefening: Oefening }) {
         </span>
       )}
       {soort === 'veld' && keepersNodig > 0 && (
-        <span className="label label-keeper">
+        <span className={`label label-keeper${!keeperNodig(oefening) && keepers === 0 ? ' label-zonder-keeper' : ''}`}>
           <Icoon naam="keeper" maat={16} />
-          {t('Keeper nodig')}
+          {keeperNodig(oefening) ? t('Keeper nodig') : keepers === 0 ? t('Zonder keeper: net of trainer in het doel') : t('Met keeper')}
         </span>
       )}
     </div>

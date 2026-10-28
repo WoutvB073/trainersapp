@@ -454,6 +454,7 @@ const oefeningen = [
     benodigdheden: ['Goal', '2 kleine doeltjes', '4 pionnen', 'Ballen', '2 hesjes'],
     spelersNodig: 6,
     keepersNodig: 1,
+    keeperVerplicht: true, // 0.29.1: de keeper speelt mee in de opbouw
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: twee backs erbij (6 + keeper tegen 3), of een derde aanvaller.',
     coachpunten: [

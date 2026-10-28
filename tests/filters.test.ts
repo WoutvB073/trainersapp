@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { keeperNodig } from '../src/training/training';
 import { aantalActief, bewaarAantallen, laatsteAantallen, filterOefeningen, GEEN_FILTERS, leesAantallen, pastBijFilters, type Filters } from '../src/engine/filters';
 import { apparaatFavorieten, FavorietenStore } from '../src/engine/favorieten';
 import { bewaarKeuze, contrast, leesKeuze, THEMAS, themaVariabelen } from '../src/engine/thema';
@@ -33,17 +34,21 @@ describe('filters', () => {
     oef('b', { naam: 'Rondo 4 tegen 2', spelersNodig: 6, combinatievorm: true, onderdelen: ['x', 'y'] }),
     oef('c', { naam: 'Afwerken met keeper', spelersNodig: 3, keepersNodig: 1 }),
     oef('eigen-d', { naam: 'Mijn coördinatieparcours', spelersNodig: 1, eigen: true }),
+    // 0.29.1: partijvorm op twee grote doelen: de keepers zijn wel nodig.
+    oef('e', { naam: 'Partij met keepers', spelersNodig: 2, keepersNodig: 2, tekening: { veld: { type: 'heel' }, objecten: [{ id: 'g1', soort: 'goal', x: 34, y: 0 }, { id: 'g2', soort: 'goal', x: 34, y: 105, hoek: 180 }] } }),
   ];
   const ids = (l: Oefening[]) => l.map((o) => o.id);
 
   it('zonder filters: alles', () => {
-    expect(ids(filterOefeningen(lijst, GEEN_FILTERS, new Set()))).toEqual(['a', 'b', 'c', 'eigen-d']);
+    expect(ids(filterOefeningen(lijst, GEEN_FILTERS, new Set()))).toEqual(['a', 'b', 'c', 'eigen-d', 'e']);
     expect(aantalActief(GEEN_FILTERS)).toBe(0);
   });
 
   it('aantallen: alleen wat past (minder nodig is prima)', () => {
-    expect(ids(filterOefeningen(lijst, f({ aantallen: { spelers: 3, keepers: 0 } }), new Set()))).toEqual(['a', 'eigen-d']);
+    // Afwerken met keeper kan ook zonder keeper (net of trainer); de partij op grote doelen niet.
+    expect(ids(filterOefeningen(lijst, f({ aantallen: { spelers: 3, keepers: 0 } }), new Set()))).toEqual(['a', 'c', 'eigen-d']);
     expect(ids(filterOefeningen(lijst, f({ aantallen: { spelers: 6, keepers: 1 } }), new Set()))).toEqual(['a', 'b', 'c', 'eigen-d']);
+    expect(ids(filterOefeningen(lijst, f({ aantallen: { spelers: 6, keepers: 2 } }), new Set()))).toEqual(['a', 'b', 'c', 'eigen-d', 'e']);
   });
 
   it('favorieten, eigen, zoeken (zonder hoofdletters en accenten, alle woorden)', () => {
@@ -65,7 +70,7 @@ describe('filters', () => {
   it('werkt op de echte oefeningen: aantallen zoals bij Training maken', () => {
     const met = filterOefeningen(OEFENINGEN, f({ aantallen: { spelers: 4, keepers: 0 } }), new Set());
     expect(met.length).toBeGreaterThan(20);
-    expect(met.every((o) => o.spelersNodig <= 4 && o.keepersNodig === 0)).toBe(true);
+    expect(met.every((o) => o.spelersNodig <= 4 && !keeperNodig(o))).toBe(true);
     expect(pastBijFilters(OEFENINGEN[0]!, f({ zoek: OEFENINGEN[0]!.naam.slice(0, 5) }), new Set())).toBe(true);
   });
 

@@ -4189,6 +4189,7 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 1,
+    "keeperVerplicht": true,
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: twee backs erbij (6 + keeper tegen 3), of een derde aanvaller.",
     "coachpunten": [

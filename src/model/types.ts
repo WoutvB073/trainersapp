@@ -505,6 +505,11 @@ export interface Oefening {
   doorwisselbaar: boolean;
   /** Alleen bij een vast aantal: korte tip voor als je er meer hebt ("Met meer spelers: …"). */
   meerSpelers?: string;
+  /**
+   * Spelersoefening waarbij de keeper echt meespeelt (0.29.1), bv. in de opbouw. Zonder dit veld is een keeper bij één groot
+   * doel niet nodig (net of trainer in het doel); bij twee grote doelen (partijvorm) wel. Zie `keeperNodig`.
+   */
+  keeperVerplicht?: boolean;
   /** Combinatievorm: 2–4 onderdelen achter elkaar (bv. voetenwerk → vangen → duiken). Niet meer als badge getoond. */
   combinatievorm?: boolean;
   /** Combinatievorm: de onderdelen in volgorde (2–4 korte namen), getoond als genummerd verloop. */

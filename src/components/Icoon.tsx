@@ -34,6 +34,7 @@ const PADEN = {
   computer: 'M3 4h18v12H3zM8 20h8M12 16v4M12 7v5.5M9.5 10L12 12.5l2.5-2.5',
   browser: 'M3 5h18v14H3zM3 9h18M6 7h.01M8.5 7h.01',
   plus: 'M12 5v14M5 12h14',
+  menu: 'M4 7h16M4 12h16M4 17h16',
   combi: 'M3.5 8.5h5v7h-5zM15.5 8.5h5v7h-5zM8.5 12h7M12.5 9.5L15 12l-2.5 2.5',
   min: 'M5 12h14',
   kruis: 'M6.5 6.5l11 11M17.5 6.5l-11 11',

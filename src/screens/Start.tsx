@@ -118,7 +118,7 @@ function WedstrijdTegel() {
   );
 }
 
-/** `opInstalleren`: alleen op de computer in de browser (terug naar de installatie-uitleg). */
+/** `opInstalleren`: in de browser (telefoon, tablet of computer): terug naar de installatie-uitleg. */
 export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
   return (
     <div className="pagina pagina-start">
@@ -148,7 +148,7 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
         </div>
         {opInstalleren && (
           <button className="link-knop" onClick={opInstalleren}>
-            <Icoon naam="computer" maat={18} />
+            <Icoon naam="download" maat={18} />
             {t('{app} als app installeren', { app: APP_NAAM })}
           </button>
         )}

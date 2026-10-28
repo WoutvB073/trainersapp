@@ -64,7 +64,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 
 ## Browsertests (`tools/e2e/`, preview op poort 4184 moet draaien; geef een URL mee om online te testen)
 - `schermen.mjs` — alle schermen op 5 formaten (als geïnstalleerde app), offline (ook 3D), 2D/3D-knop.
-- `installeren.mjs` — installatiescherm per toestel, standalone = app, computerkeuze onthouden.
+- `installeren.mjs [url]` — 0.29.1: installatiescherm met de echte user-agents uit `useragents.json` (iPhone/iPad/Android/in-app/laptop, telefoon- en tabletformaat, NL en EN: pijl in beeld, niets afgekapt), Lukt het niet?, Andere browser of telefoon, browserkeuze onthouden, Je hebt de app al, Gelukt, standalone = app. Bladen: `blad-inst-<groep>-<taal>.png`, `blad-inst-hulp.png`, `blad-inst-status.png`. Nieuwe browser of app: user-agent in `useragents.json` + sleutel in `stappen.tsx`.
 - `drie-d.mjs` — 3D-momenten van beide oefeningen + camerastanden (`blad-3d-*.png`), cameragrenzen, beeldsnelheid.
 - `training.mjs [url]` — Training maken: hele flow op telefoon/tablet/laptop (kiezen, slepen met de vinger, trainingsmodus met vegen, delen, opslaan, dupliceren, verwijderen, offline). Blad: `blad-training.png`.
 - `editor.mjs [url]` — editor op telefoon/tablet (vinger, ook twee vingers) en laptop (muis), gegevens, bibliotheek, delen naar een ander toestel, kopie met animatie. Blad: `blad-editor.png`. Testhaakje `window.__editor` alleen met localStorage `trainersapp.testEditor=1`.

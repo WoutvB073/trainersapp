@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { OEFENINGEN } from '../src/data/oefeningen';
 import { apparaatBackend, TrainingStore } from '../src/training/opslag';
-import { benodigdheden, dupliceer, kiesbaar, naarCode, nieuweTraining, pastBij, trainingNaam, uitCode, verplaats, type Training } from '../src/training/training';
+import { benodigdheden, dupliceer, keeperNodig, kiesbaar, naarCode, nieuweTraining, pastBij, trainingNaam, uitCode, verplaats, type Training } from '../src/training/training';
 import type { Oefening } from '../src/model/types';
 
 const oef = (id: string, extra: Partial<Oefening> = {}): Oefening =>
@@ -15,20 +15,21 @@ describe('filter op aantallen', () => {
     expect(pastBij({ spelersNodig: 4, keepersNodig: 1 }, 8, 0)).toBe(false);
   });
 
-  it('0 spelers: alleen keeperoefeningen; 0 keepers: geen oefening met "Keeper nodig"', () => {
+  it('0 spelers: alleen keeperoefeningen; 0 keepers: geen oefening waarbij de keeper echt nodig is', () => {
     expect(kiesbaar(OEFENINGEN, 'veld', undefined, 0, 2)).toHaveLength(0);
     expect(kiesbaar(OEFENINGEN, 'keeper', undefined, 0, 2).length).toBeGreaterThan(20);
     const zonderKeeper = kiesbaar(OEFENINGEN, 'veld', undefined, 20, 0);
     expect(zonderKeeper.length).toBeGreaterThan(30);
-    expect(zonderKeeper.every((o) => o.keepersNodig === 0)).toBe(true);
+    expect(zonderKeeper.every((o) => !keeperNodig(o))).toBe(true);
     expect(kiesbaar(OEFENINGEN, 'keeper', undefined, 20, 0)).toHaveLength(0);
   });
 
   it('per categorie en precies volgens de aantallen', () => {
     const lijst = [oef('a', { spelersNodig: 1 }), oef('b', { spelersNodig: 6 }), oef('c', { categorieen: ['techniek'] }), oef('d', { keepersNodig: 1 })];
-    expect(kiesbaar(lijst, 'veld', 'afwerken', 4, 0).map((o) => o.id)).toEqual(['a']);
+    // d heeft een keeper maar geen twee grote doelen: die kan ook zonder keeper (0.29.1).
+    expect(kiesbaar(lijst, 'veld', 'afwerken', 4, 0).map((o) => o.id)).toEqual(['a', 'd']);
     expect(kiesbaar(lijst, 'veld', 'afwerken', 6, 1).map((o) => o.id)).toEqual(['a', 'b', 'd']);
-    expect(kiesbaar(lijst, 'veld', undefined, 2, 0).map((o) => o.id)).toEqual(['a', 'c']);
+    expect(kiesbaar(lijst, 'veld', undefined, 2, 0).map((o) => o.id)).toEqual(['a', 'c', 'd']);
   });
 });
 
