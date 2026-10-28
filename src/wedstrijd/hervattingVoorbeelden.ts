@@ -997,7 +997,7 @@ export const HERVATTINGEN: Tactiek[] = [
     kort: t('Elke verdediger een vaste tegenstander'),
     wat: t('Elke verdediger heeft een vaste tegenstander en loopt met hem mee, steeds tussen hem en het doel. Eén speler staat bij de eerste paal. In het voorbeeld komt de keeper en vangt de bal.'),
     wanneer: t('Tegen teams met één of twee sterke koppers die je vast wilt zetten.'),
-    punten: [t('Goalside blijven: tussen je man en het doel'), t('Bal en man zien, half gedraaid'), t('Keeper roept luid "keeper" als hij komt')],
+    punten: [t('Altijd tussen je man en het doel blijven'), t('Bal en man zien, half gedraaid'), t('Keeper roept luid "keeper" als hij komt')],
     versies: [elf(mandekking)],
   },
   {
