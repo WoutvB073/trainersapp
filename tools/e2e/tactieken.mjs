@@ -4,9 +4,15 @@
 //     Blad: blad-tactieken.png.
 //   node tools/e2e/tactieken.mjs borden [url] [filter]  – alle borden in 3D (drie momenten) en 2D (eind), bladen
 //     blad-tactiek-<groep>.png; plus een iPhone-SE-blad (blad-tactiek-se.png) met het hele voorbeeldscherm.
+//   hschermen / hborden: hetzelfde voor de voorbeeldhervattingen (0.29.0): Nieuwe spelhervatting → Voorbeeldhervatting;
+//     bladen blad-hervattingen.png, blad-hervatting-<groep>.png en blad-hervatting-se.png.
 import { alsGeinstalleerd, blad, MAP, slaap, start, zetTijd } from './hulp.mjs';
 
 const deel = process.argv[2] ?? 'schermen';
+const H = deel.startsWith('h');
+const SOORT = H
+  ? { lijst: '#/hervattingen', voorbeeld: 'hervatting', aanpassen: 'corner-rugzak', help: 'hervattingen', aantal: 20, blad: 'hervatting', module: '../../src/wedstrijd/hervattingVoorbeelden.ts', export: 'HERVATTINGEN', groepen: ['corners', 'vrije-trappen', 'inworp-aftrap', 'verdedigen'], se: [['corner-tweede-paal', '11v11'], ['muur-opstellen', '11v11'], ['aftrap', '11v11'], ['corner-zonedekking', '8v8']] }
+  : { lijst: '#/tactieken', voorbeeld: 'tactiek', aanpassen: 'fuik-flank', help: 'tactieken', aantal: 17, blad: 'tactiek', module: '../../src/wedstrijd/tactieken.ts', export: 'TACTIEKEN', groepen: ['druk', 'opbouw', 'aanval'], se: [['hoog-druk-433', '11v11'], ['middenblok-442', '11v11'], ['counter', '8v8'], ['opbouw-8v8', '1-3-3-1']] };
 const BASIS = process.argv[3] ?? 'http://localhost:4184/trainersapp/';
 const FILTER = process.argv[4] ?? '';
 const browser = await start();
@@ -40,9 +46,14 @@ const klik = (page, tekst, sel = 'button, a') =>
     sel,
   );
 
-if (deel === 'schermen') {
+if (deel === 'schermen' || deel === 'hschermen') {
   const shots = [];
-  const TEKST = {
+  const TEKST = H
+    ? {
+        nl: { nieuw: 'Nieuwe spelhervatting', keuze: 'Kies een voorbeeldhervatting', lijst: 'Voorbeeldhervattingen', groepen: ['Corners', 'Vrije trappen', 'Inworp en aftrap', 'Verdedigen bij standaardsituaties'], t1: 'Corner op de tweede paal', acht: '8 tegen 8', elf: '11 tegen 11', opslaan: 'Opslaan als eigen bord', aanpassen: 'Aanpassen', uitleg: 'Uitleg bij deze spelhervatting', kopjes: ['Wat', 'Wanneer gebruiken', 'Aandachtspunten'], help: 'Voorbeeldhervattingen', zoek: 'rugzak' },
+        en: { nieuw: 'New set piece', keuze: 'Choose an example set piece', lijst: 'Example set pieces', groepen: ['Corners', 'Free kicks', 'Throw-ins & kick-offs', 'Defending set pieces'], t1: 'Corner to the far post', acht: '8v8', elf: '11v11', opslaan: 'Save as my own board', aanpassen: 'Edit', uitleg: 'About this set piece', kopjes: ['What', 'When to use it', 'Key points'], help: 'Example set pieces', zoek: 'stack' },
+      }
+    : {
     nl: { nieuw: 'Nieuw tactiekbord', keuze: 'Kies een voorbeeldtactiek', lijst: 'Voorbeeldtactieken', groepen: ['Druk zetten', 'Opbouwen', 'Aanvallen en omschakelen'], t1: 'Hoog druk zetten in een 1-4-3-3', acht: '8 tegen 8', elf: '11 tegen 11', opslaan: 'Opslaan als eigen bord', aanpassen: 'Aanpassen', uitleg: 'Uitleg bij deze tactiek', kopjes: ['Wat', 'Wanneer gebruiken', 'Aandachtspunten'], help: 'Voorbeeldtactieken', zoek: 'fuik' },
     en: { nieuw: 'New tactics board', keuze: 'Choose an example tactic', lijst: 'Example tactics', groepen: ['Pressing', 'Build-up', 'Attacking & transition'], t1: 'High press in a 1-4-3-3', acht: '8v8', elf: '11v11', opslaan: 'Save as my own board', aanpassen: 'Edit', uitleg: 'About this tactic', kopjes: ['What', 'When to use it', 'Key points'], help: 'Example tactics', zoek: 'trap' },
   };
@@ -81,13 +92,13 @@ if (deel === 'schermen') {
         await foto('paneel', false);
       }
       await klik(page, T.keuze, '.keuze-kaart');
-      await page.waitForFunction(() => location.hash === '#/tactieken', { timeout: 5000 }).catch(() => fouten.push(`${waar}: niet naar #/tactieken`));
+      await page.waitForFunction((l) => location.hash === l, { timeout: 5000 }, SOORT.lijst).catch(() => fouten.push(`${waar}: niet naar ${SOORT.lijst}`));
       await slaap(300);
       // 2. De lijst: drie groepen, 17 tactieken.
       const lijst = await controleer(page, `${waar} lijst`);
       for (const g of T.groepen) if (!lijst.toLowerCase().includes(g.toLowerCase())) fouten.push(`${waar} lijst: groep "${g}" ontbreekt`);
       const rijen = await page.evaluate(() => document.querySelectorAll('.lijst .rij').length);
-      if (rijen !== 17) fouten.push(`${waar} lijst: ${rijen} tactieken (verwacht 17)`);
+      if (rijen !== SOORT.aantal) fouten.push(`${waar} lijst: ${rijen} voorbeelden (verwacht ${SOORT.aantal})`);
       if (taal === 'en' && NL_WOORDEN.test(lijst)) fouten.push(`${waar} lijst: Nederlands in het Engels: ${lijst.match(NL_WOORDEN)[0]}`);
       await foto('lijst');
       // 3. Het voorbeeld: 11/8-keuze bovenaan, animatie, uitleg open.
@@ -119,14 +130,14 @@ if (deel === 'schermen') {
       if (!naam?.startsWith(T.t1)) fouten.push(`${waar} bord: naam "${naam}"`);
       await foto('eigen-bord');
       // 5. Aanpassen opent de editor met een eigen kopie; het voorbeeld blijft gelijk.
-      await page.goto(`${BASIS}?r=${n++}#/tactiek/fuik-flank`, { waitUntil: 'networkidle0' });
+      await page.goto(`${BASIS}?r=${n++}#/${SOORT.voorbeeld}/${SOORT.aanpassen}`, { waitUntil: 'networkidle0' });
       await slaap(400);
       await klik(page, T.aanpassen);
       await page.waitForFunction(() => /^#\/bord\/[^/]+\/tekenen$/.test(location.hash), { timeout: 5000 }).catch(() => fouten.push(`${waar}: Aanpassen opent de editor niet`));
       await slaap(500);
       if (formaat === 'laptop') await foto('aanpassen', false);
       // 6. Help: onderwerp en zoeken.
-      await page.goto(`${BASIS}?r=${n++}#/help/tactieken`, { waitUntil: 'networkidle0' });
+      await page.goto(`${BASIS}?r=${n++}#/help/${SOORT.help}`, { waitUntil: 'networkidle0' });
       await slaap(300);
       const help = await controleer(page, `${waar} help`);
       if (!help.includes(T.help)) fouten.push(`${waar} help: onderwerp ontbreekt`);
@@ -137,23 +148,23 @@ if (deel === 'schermen') {
       await page.close();
     }
   }
-  await blad(browser, shots, `${MAP}blad-tactieken.png`, 6, 2600);
+  await blad(browser, shots, `${MAP}blad-${H ? 'hervattingen' : 'tactieken'}.png`, 6, 2600);
 } else {
   // Alle borden.
   const fs = await import('node:fs');
   const { createJiti } = await import('jiti');
   const jiti = createJiti(import.meta.url);
-  const { TACTIEKEN } = await jiti.import('../../src/wedstrijd/tactieken.ts');
+  const TACTIEKEN = (await jiti.import(SOORT.module))[SOORT.export];
   const page = await browser.newPage();
   await alsGeinstalleerd(page);
   page.on('pageerror', (e) => fouten.push(e.message));
   await page.setViewport({ width: 560, height: 900, deviceScaleFactor: 1.5, isMobile: true, hasTouch: true });
   const kies = (tekst) => page.evaluate((tekst) => [...document.querySelectorAll('.speler-groep button')].find((b) => b.textContent === tekst)?.click(), tekst);
-  for (const groep of ['druk', 'opbouw', 'aanval']) {
+  for (const groep of SOORT.groepen) {
     const shots = [];
     for (const x of TACTIEKEN.filter((t) => t.groep === groep && t.id.includes(FILTER))) {
       for (const v of x.versies) {
-        await page.goto(`${BASIS}?r=b${n++}#/tactiek/${x.id}/${v.id}`, { waitUntil: 'networkidle0' });
+        await page.goto(`${BASIS}?r=b${n++}#/${SOORT.voorbeeld}/${x.id}/${v.id}`, { waitUntil: 'networkidle0' });
         const ok = await page.waitForSelector('.speler-canvas-3d', { timeout: 15000 }).catch(() => null);
         if (!ok) {
           fouten.push(`${x.id}/${v.id}: geen 3D`);
@@ -177,7 +188,7 @@ if (deel === 'schermen') {
         await kies('3D');
       }
     }
-    if (shots.length) await blad(browser, shots, `${MAP}blad-tactiek-${groep}.png`, 4, 2400);
+    if (shots.length) await blad(browser, shots, `${MAP}blad-${SOORT.blad}-${groep}.png`, 4, 2400);
     for (const [p] of shots) fs.rmSync(p, { force: true });
   }
   // iPhone SE: hele voorbeeldscherm (passen 22 spelers, lijnen en uitleg?).
@@ -185,13 +196,8 @@ if (deel === 'schermen') {
   await alsGeinstalleerd(se);
   await se.setViewport({ width: 375, height: 667, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   const seShots = [];
-  for (const [id, versie] of [
-    ['hoog-druk-433', '11v11'],
-    ['middenblok-442', '11v11'],
-    ['counter', '8v8'],
-    ['opbouw-8v8', '1-3-3-1'],
-  ]) {
-    await se.goto(`${BASIS}?r=s${n++}#/tactiek/${id}/${versie}`, { waitUntil: 'networkidle0' });
+  for (const [id, versie] of SOORT.se) {
+    await se.goto(`${BASIS}?r=s${n++}#/${SOORT.voorbeeld}/${id}/${versie}`, { waitUntil: 'networkidle0' });
     await se.waitForSelector('.speler-vak', { timeout: 15000 }).catch(() => null);
     await slaap(500);
     await se.evaluate(() => [...document.querySelectorAll('.speler-groep button')].find((b) => b.textContent === '2D')?.click());
@@ -201,7 +207,7 @@ if (deel === 'schermen') {
     await se.screenshot({ path: pad, fullPage: true });
     seShots.push([pad, `iPhone SE: ${id} (${versie})`]);
   }
-  await blad(browser, seShots, `${MAP}blad-tactiek-se.png`, 4, 1800);
+  await blad(browser, seShots, `${MAP}blad-${SOORT.blad}-se.png`, 4, 1800);
 }
 await browser.close();
 console.log(fouten.length ? `Problemen:\n- ${[...new Set(fouten)].join('\n- ')}` : 'Geen problemen gevonden.');

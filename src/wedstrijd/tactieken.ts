@@ -47,7 +47,7 @@ const r2 = (v: number) => Math.round(v * 100) / 100;
 /**
  * Bouwhulp: spelers neerzetten en lijnen tekenen zoals in de editor (startpunt = waar de speler op dat moment staat).
  * Heel veld (zoals een opgesteld tactiekbord) of half veld met het goal bovenaan (spelhervattingen, 0.29.0); 8 tegen 8 in
- * de veldmaat van die spelvorm (half: 42,5 × 32 m) met een jeugdgoal.
+ * de veldmaat van die spelvorm (half: 42,5 × 32 m) met een jeugdgoal. Half veld start met de camera achter het goal.
  */
 export class Opzet {
   private objecten: VeldObject[];
@@ -59,7 +59,7 @@ export class Opzet {
     else {
       const acht = vorm === '8v8';
       const goal: VeldObject = acht ? { id: 'g1', soort: 'goal', x: 21.25, y: 0, breedte: 5, hoogte: 2 } : { id: 'g1', soort: 'goal', x: 34, y: 0 };
-      this.veld = { veld: acht ? { type: 'half', breedte: 42.5, lengte: 32 } : { type: 'half' }, camera: 'schuin', objecten: [goal], lijnen: [] };
+      this.veld = { veld: acht ? { type: 'half', breedte: 42.5, lengte: 32 } : { type: 'half' }, camera: 'achter', objecten: [goal], lijnen: [] };
     }
     this.objecten = [...this.veld.objecten];
   }
@@ -87,6 +87,11 @@ export class Opzet {
   /** Losse bal op een plek (bv. bij een vrije trap); wie er binnen 1,5 m staat, kan hem spelen. */
   balOp(x: number, y: number) {
     this.objecten.push({ id: 'bal1', soort: 'bal', x: r2(x), y: r2(y) });
+    return this;
+  }
+  /** Startcamera (half veld: standaard achter het goal, zodat de zestien groot in beeld is). */
+  camera(c: Tekening['camera']) {
+    this.veld = { ...this.veld, camera: c };
     return this;
   }
   /** Waar een speler nu staat (na zijn laatste lijn). */

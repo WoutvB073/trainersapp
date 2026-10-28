@@ -528,6 +528,7 @@ function langeInworp(): Tekening {
 
 function inworpKaats11(): Tekening {
   const o = new Opzet('11v11', 'half')
+    .camera('schuin')
     .rood(5, 0.3, 34, 0)
     .rood(11, 5.5, 29, 160)
     .rood(10, 16, 30)
@@ -560,6 +561,7 @@ function inworpKaats11(): Tekening {
 
 function inworpKaats8(): Tekening {
   const o = new Opzet('8v8', 'half')
+    .camera('schuin')
     .rood(5, 0.3, 24, 0)
     .rood(11, 5.5, 19, 160)
     .rood(6, 16, 20)
@@ -584,6 +586,7 @@ function inworpKaats8(): Tekening {
 
 function inworpRug(): Tekening {
   const o = new Opzet('11v11', 'half')
+    .camera('schuin')
     .rood(2, 67.7, 30, 180)
     .rood(7, 62, 24)
     .rood(8, 57, 27)
