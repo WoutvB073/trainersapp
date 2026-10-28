@@ -98,11 +98,24 @@ export const HELP_NL: HelpOnderwerp[] = [
     titel: 'Wedstrijd: opstelling, tactiekbord en spelhervattingen',
     tekst: [
       '- **Opstelling**: kies de spelvorm (4 tegen 4 tot 11 tegen 11) en een formatie. Sleep spelers naar een positie of naar de wissels; tikken kan ook. Namen worden onthouden voor je volgende opstelling.',
-      '- **Tactiekbord**: maak een bord vanuit een opstelling (jouw spelers met namen en de tegenstander ertegenover) of een leeg bord. Kies de spelvorm en de formatie van beide teams. Met **Tekenen** zet je looplijnen, passes en dribbels met stapnummers, net als bij eigen oefeningen.',
+      '- **Tactiekbord**: maak een bord vanuit een opstelling (jouw spelers met namen en de tegenstander ertegenover) of een leeg bord, of kies een **Voorbeeldtactiek**. Kies de spelvorm en de formatie van beide teams. Met **Tekenen** zet je looplijnen, passes en dribbels met stapnummers, net als bij eigen oefeningen.',
       '- **Namen tonen**: laat de namen van de spelers zien in 2D en 3D, of verberg ze.',
       '- **Spelhervattingen**: corners, vrije trappen, inworp, doeltrap en aftrap. Kies een voorbeeld dat meteen afspeelt, of een beginsituatie waarbij je zelf de lijnen tekent.',
     ],
     laatZien: [{ tekst: 'Naar Wedstrijd', pad: '/wedstrijd' }],
+  },
+  {
+    id: 'tactieken',
+    titel: 'Voorbeeldtactieken',
+    tekst: [
+      'Bij **Wedstrijd → Nieuw tactiekbord → Voorbeeldtactiek** staan 17 kant-en-klare tactieken met beide teams, looplijnen en een animatie die meteen afspeelt. Jouw team is rood, de tegenstander blauw.',
+      '- **Druk zetten**: hoog druk zetten in een 1-4-3-3, middenblok in een 1-4-4-2, laag blok, druk op de terugspeelbal naar de keeper, de fuik op de flank en tegenpressing na balverlies.',
+      '- **Opbouwen**: opbouw vanaf de keeper, opbouw met drie (de 6 zakt in), opbouw via de back en de derde man, lange bal op de spits en de tweede bal, en opbouw in 8 tegen 8 (1-3-2-2 en 1-3-3-1).',
+      '- **Aanvallen en omschakelen**: overlap op de flank, underlap, wisselen van kant, diepte achter de verdediging, counter na balwinst en terugleggen vanaf de achterlijn.',
+      'Bij veel tactieken kies je bovenaan tussen **11 tegen 11** en **8 tegen 8**. Onder de animatie staat de uitleg: wat het is, wanneer je het gebruikt en de aandachtspunten.',
+      'Met **Opslaan als eigen bord** of **Aanpassen** maak je een eigen kopie die je zelf kunt veranderen, delen en met je team kunt delen. Het voorbeeld blijft altijd zoals het is. In je eigen bord kun je de uitleg openklappen.',
+    ],
+    laatZien: [{ tekst: 'Naar de voorbeeldtactieken', pad: '/tactieken' }],
   },
   {
     id: 'delen',
@@ -217,11 +230,24 @@ export const HELP_EN: HelpOnderwerp[] = [
     titel: 'Match day: line-up, tactics board and set pieces',
     tekst: [
       '- **Line-up**: choose the format (4v4 up to 11v11) and a formation. Drag players to a position or to the subs; tapping works too. Names are remembered for your next line-up.',
-      "- **Tactics board**: create a board from a line-up (your players with their names and the opponent facing them) or an empty board. Choose the format and both teams' formations. With **Draw** you add runs, passes and dribbles with step numbers, just like your own drills.",
+      "- **Tactics board**: create a board from a line-up (your players with their names and the opponent facing them) or an empty board, or pick an **Example tactic**. Choose the format and both teams' formations. With **Draw** you add runs, passes and dribbles with step numbers, just like your own drills.",
       "- **Show names**: show or hide the players' names in 2D and 3D.",
       '- **Set pieces**: corners, free kicks, throw-ins, goal kicks and kick-offs. Choose an example that plays straight away, or a starting position where you draw the lines yourself.',
     ],
     laatZien: [{ tekst: 'Go to Match day', pad: '/wedstrijd' }],
+  },
+  {
+    id: 'tactieken',
+    titel: 'Example tactics',
+    tekst: [
+      'Under **Match day → New tactics board → Example tactic** you will find 17 ready-made tactics with both teams, runs and an animation that plays straight away. Your team is red, the opponents are blue.',
+      '- **Pressing**: high press in a 1-4-3-3, mid block in a 1-4-4-2, low block, pressing the back pass to the keeper, the pressing trap on the wing and counter-pressing after losing the ball.',
+      '- **Build-up**: building up from the keeper, building up with three (the 6 drops in), build-up through the full-back and the third player, long ball to the striker and the second ball, and building up in 8v8 (1-3-2-2 and 1-3-3-1).',
+      '- **Attacking & transition**: overlap on the wing, underlap, switching play, running in behind the defence, counter-attack after winning the ball and the cutback from the byline.',
+      'For many tactics you can choose between **11v11** and **8v8** at the top. Below the animation you will find what it is, when to use it and the key points.',
+      'With **Save as my own board** or **Edit** you make your own copy that you can change and share, also with your team. The example itself always stays as it is. In your own board you can open the explanation.',
+    ],
+    laatZien: [{ tekst: 'Go to the example tactics', pad: '/tactieken' }],
   },
   {
     id: 'delen',

@@ -97,7 +97,7 @@ export function TactiekScherm({ id, versie }: { id: string; versie?: string }) {
   const maakBord = () => borden.bewaar({ ...nieuwBord('tactiek', v.maak(), naam), tactiek: x.id });
   return (
     <div className="pagina">
-      <Kop titel={x.naam} ouder="/tactieken" />
+      <Kop titel={TACTIEK_GROEPEN.find((g) => g.id === x.groep)?.naam ?? vt('Voorbeeldtactieken')} ouder="/tactieken" />
       <main className="inhoud detail bord-pagina">
         {x.versies.length > 1 && (
           <div className="wedstrijd-chips tactiek-versies" role="radiogroup" aria-label={vt('Spelvorm')}>
@@ -121,6 +121,7 @@ export function TactiekScherm({ id, versie }: { id: string; versie?: string }) {
           <AnimatieSpeler key={v.id} tekening={speel} />
         </div>
         <div className="detail-tekst">
+          <h2 className="detail-titel">{x.naam}</h2>
           <TactiekUitleg tactiek={x} open />
           <div className="knoppenrij">
             <button
