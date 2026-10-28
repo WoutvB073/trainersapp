@@ -257,7 +257,12 @@ for (const [naam, vp, modus] of [
   await ga(page, '#/wedstrijd', `${naam}2`);
   await klik(page, 'Nieuwe spelhervatting');
   if (naam === 'telefoon') await foto(page, 'hervatting-kiezen', 'Nieuwe spelhervatting: beginsituaties en voorbeelden');
-  await klik(page, 'Corner op de eerste paal', '.keuze-kaart');
+  // 0.29.0: de voorbeelden staan in de bibliotheek (Voorbeeldhervatting → lijst → voorbeeld → eigen bord).
+  await klik(page, 'Kies een voorbeeldhervatting', '.keuze-kaart');
+  await wachtOp(page, () => location.hash === '#/hervattingen', null, `${naam}: lijst voorbeeldhervattingen`);
+  await klik(page, 'Corner op de eerste paal', '.rij');
+  await wachtOp(page, () => location.hash.startsWith('#/hervatting/') && !!document.querySelector('.speler-balk'), null, `${naam}: voorbeeld corner`);
+  await klik(page, 'Opslaan als eigen bord');
   await wachtOp(page, () => location.hash.startsWith('#/bord/') && Number(document.querySelector('.speler-balk')?.max ?? 0) > 2, null, `${naam}: voorbeeld corner speelt af`);
   if (naam !== 'laptop') {
     await klik(page, '2D', '.speler-groep button');

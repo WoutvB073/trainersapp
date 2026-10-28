@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (28-10-2026, versie 0.28.0)
+## Status (28-10-2026, versie 0.29.0)
 
 | Fase | Status |
 |---|---|
@@ -33,7 +33,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 19. Engelse woordkeus: Games en wide block (0.25.1) | ✅ online, getest en akkoord |
 | 20. Deel A: categorie Verdedigen en omschakelen, 20 spelersoefeningen (0.26.0) | ✅ online, getest en akkoord |
 | 21. Deel B: 15 spelersoefeningen (verdedigen en omschakelen, partijvormen, spelletjes), verdedigende houding (0.27.0) | ✅ online, getest en akkoord |
-| 22. Deel C: voorbeeldtactieken op het tactiekbord, 17 tactieken / 25 borden (0.28.0) | ✅ online – **wacht op test**. Deel D volgt met een eigen opdracht |
+| 22. Deel C: voorbeeldtactieken op het tactiekbord, 17 tactieken / 25 borden (0.28.0) | ✅ online, getest en akkoord |
+| 23. Deel D: ingestudeerde spelhervattingen, 20 hervattingen / 27 borden (0.29.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -999,6 +1000,10 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 | hoog druk zetten | high press | | tegenpressing | counter-pressing |
 | de fuik | pressing trap | | uitwaaieren | split wide |
 | derde man | third player | | terugleggen (vanaf de achterlijn) | cutback (from the byline) |
+| voorbeeldhervatting | example set piece | | standaardsituatie | set piece |
+| doorkoppen | flick-on | | rugzak (corner) | stack |
+| overstapje | dummy (step-over) | | zonedekking | zonal marking |
+| afschermen (keeper) | screen (the keeper) | | snel nemen | quick free kick |
 
 ## Besluiten versie 0.26.0 – Verdedigen en omschakelen, 20 spelersoefeningen (deel A)
 - **A1:** nieuwe spelerscategorie `verdedigen-omschakelen`: "Verdedigen en omschakelen" / "Defending & transition"
@@ -1050,8 +1055,46 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   `tools/e2e/tactieken.mjs borden [url] [filter]` (3D op drie momenten + 2D, bladen `blad-tactiek-druk/opbouw/aanval.png`,
   iPhone SE `blad-tactiek-se.png`).
 
+## Besluiten versie 0.29.0 – ingestudeerde spelhervattingen (deel D)
+- **Bibliotheek** `src/wedstrijd/hervattingVoorbeelden.ts`: 20 spelhervattingen in vier groepen (Corners 7, Vrije trappen 6,
+  Inworp en aftrap 4, Verdedigen bij standaardsituaties 3), met uitleg (wat, wanneer, 3 aandachtspunten). De drie oude
+  voorbeelden (corner op de eerste paal, korte corner, vrije trap via een kaats) staan erin onder hun oude id, nu met beide
+  teams, rugnummers per positie en uitleg; `VOORBEELDEN` in `hervattingen.ts` verwijst ernaar. 8 tegen 8 bij S1, S4, S8,
+  S10, S12, S14 en S15: 27 borden. Half veld met het goal bovenaan (8 tegen 8: 42,5 × 32 m met jeugdgoal); de aftrap op een
+  heel veld. Startcamera "Achter goal" (de zestien groot in beeld); bij de inworpen op het middenveld "Schuin".
+- **Zelfde schermen als de tactieken** (`src/wedstrijd/bibliotheken.ts`, `screens/wedstrijd/Tactieken.tsx` generiek):
+  Nieuwe spelhervatting → **Voorbeeldhervatting** → `#/hervattingen` → `#/hervatting/<id>/<versie>`; versiekeuze, uitleg,
+  Opslaan als eigen bord, Aanpassen, delen; de uitleg in een eigen bord (`Bord.tactiek` = id van tactiek of hervatting).
+  In de kop staat nu de naam van de bibliotheek en de groep als label boven de titel (lange groepsnamen pasten niet).
+- **Inworp met lijnen**: een pass van een speler op of buiten de zijlijn wordt vanzelf een inworp met twee handen (ook bij
+  zelf getekende borden). **Muur**: spelers in een muur (`TactiekVersie.muur`) mogen ± 0,8 m van elkaar staan.
+- **Help**: onderwerp "Voorbeeldhervattingen" (NL/EN). **Tests**: `tests/versie-029.test.ts` (27 borden: teams compleet, geen
+  meldingen, geen fysieke fouten, afstand ≥ 1,5 m (muur ≥ 0,6 m), aanvallend eindigt in het goal, verdedigend met wegwerken of
+  vangen; de inworp). Browsertest `tools/e2e/tactieken.mjs hschermen` en `hborden` (bladen `blad-hervattingen.png`,
+  `blad-hervatting-<groep>.png`, `blad-hervatting-se.png`); `deel-b.mjs` volgt de nieuwe weg naar een voorbeeld.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.29.0 – Spelhervattingen op een half veld: van het aanvallende team staan de 10 veldspelers erop (de eigen keeper staat op de
+  andere helft), van het verdedigende team 10 veldspelers en de keeper. Bij de aftrap staat iedereen op een heel veld.
+- 0.29.0 – Startcamera "Achter goal" voor hervattingen bij het doel: de zestien is dan groot en leesbaar. De cornernemer of
+  ingooier staat dan net buiten beeld; in 2D en met "Schuin" zie je alles. De inworpen op het middenveld starten met "Schuin".
+- 0.29.0 – De drie bestaande voorbeelden zijn opnieuw opgebouwd (beide teams, rugnummers per positie, uitleg); id en naam bleven
+  gelijk. Oude eigen borden die je ervan gemaakt hebt, veranderen niet.
+- 0.29.0 – Bij Nieuwe spelhervatting staan de voorbeelden niet meer los in het paneel, maar achter "Voorbeeldhervatting" (zoals
+  bij de tactieken); de beginsituaties om zelf te tekenen staan er nog.
+- 0.29.0 – Inworp: een pass vanaf de zijlijn is automatisch een inworp, ook als je zelf tekent; een aparte keuze was niet nodig.
+- 0.29.0 – Corners komen van de linker hoekvlag (uitzondering: zonedekking 11 tegen 11 en 8 tegen 8 van rechts); de vrije
+  trappen centraal op ± 22 m, de muur van 4 (8 tegen 8: 3) op 9,15 m, iets buiten de lijn naar de korte paal.
+- 0.29.0 – S5 Afschermen: de afschermer staat schuin voor de keeper aan de kant van de eerste paal; de bal gaat net over hem heen
+  naar het midden van de korte kant van het doelgebied.
+- 0.29.0 – S7 Speler in de muur: de eigen speler sluit de muur aan de binnenkant af; hij stapt weg vlak voor het schot (de
+  animatie toont eerst het wegstappen, dan het schot door het gat naar de korte hoek).
+- 0.29.0 – S10 Snel nemen: op ± 40 m van het doel; twee tegenstanders lopen nog naar hun plek.
+- 0.29.0 – S12: de kaats gaat terug naar de ingooier op de lijn; daarna dribbelt die het veld in en speelt naar binnen.
+- 0.29.0 – S14 Aftrap: na de lange bal zet de buitenspeler voor op de spits, die met de aftrap meeliep (kans: kopbal).
+- 0.29.0 – S16 Mandekking eindigt met de keeper die de corner vangt; S15 Zonedekking met wegkoppen naar de hoge spits; S17 met de
+  keeper die het schot in de lange hoek vangt.
 - 0.28.0 – Rugnummers per positie (2 rechtsback, 3/4 centrale verdedigers, 5 linksback, 6 controlerende middenvelder, 8/10
   middenvelders, 7/11 buitenspelers, 9 spits), zoals "de 6" in de opdracht; niet van links naar rechts zoals bij de opstelling.
 - 0.28.0 – Een voorbeeld opent eerst een voorbeeldscherm (niet meteen een opgeslagen bord), zodat de 11/8-keuze bovenaan
