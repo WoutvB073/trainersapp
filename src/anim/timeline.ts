@@ -21,6 +21,7 @@ const SNELHEID: Record<Manier, number> = {
   voetenwerk: 2.2,
   hordes: 2.8,
   kruispas: 3,
+  verdedigend: 2.2,
   schijn: 1.5,
 };
 const ZWAARTEKRACHT = 9.81;
@@ -41,12 +42,13 @@ export const RITME: Record<Manier, number> = {
   voetenwerk: Math.PI / 0.45,
   hordes: Math.PI / 0.8,
   kruispas: Math.PI / 0.6,
+  verdedigend: 8,
   schijn: 6,
 };
 /** Hoe lang een draai (nieuwe kijkrichting) duurt: de bal aan de voet draait mee, springt niet. */
 const DRAAI = 0.3;
 /** Kijkrichting t.o.v. de looprichting. */
-const KIJK_VERSCHIL: Partial<Record<Manier, number>> = { zijwaarts: -90, achteruit: 180 };
+const KIJK_VERSCHIL: Partial<Record<Manier, number>> = { zijwaarts: -90, achteruit: 180, verdedigend: 145 };
 /** Loopwijzen waarbij het spoor losse pasjes toont. */
 export const PASJES: readonly Manier[] = ['voetenwerk', 'hordes', 'kniehef', 'sprong', 'kruispas'];
 

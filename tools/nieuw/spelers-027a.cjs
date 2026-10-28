@@ -57,7 +57,7 @@ const oefeningen = [
     },
     tekening: {
       veld: { type: 'half' },
-      weergave: { x: 16, y: -3, breedte: 42, lengte: 52 },
+      weergave: { x: 15, y: -3, breedte: 44, lengte: 57 },
       camera: 'schuin',
       objecten: [
         goal,
@@ -80,7 +80,7 @@ const oefeningen = [
         stap({ type: 'pass', van: 'a1', naar: 'a2' }, { type: 'loop', wie: 'b2', naar: [41.4, 40.4], start: 0.4 }),
         stap({ type: 'pass', van: 'a2', naar: 'a3' }, { type: 'loop', wie: 'b3', naar: [36.4, 37.8], start: 0.5 }),
         // Fase 3: volledig druk, blauw onderschept.
-        stap({ type: 'pass', van: 'a3', naar: 'a1', onderschept: 'b1' }, { type: 'druk', wie: 'b3', op: 'a3', afstand: 1.8, manier: 'sprint', start: 0.1 }),
+        stap({ type: 'pass', van: 'a3', naar: 'a1', onderschept: 'b1' }, { type: 'loop', wie: 'b3', naar: [36, 34.4], manier: 'sprint', start: 0.1 }),
         stap(
           { type: 'dribbel', wie: 'b1', naar: [29.6, 27], manier: 'sprint' },
           { type: 'loop', wie: 'b3', via: [[37.6, 31]], naar: [38.4, 22.6], manier: 'sprint', start: 0.2 },
@@ -164,14 +164,15 @@ const oefeningen = [
         pauze(0.8),
         stap(
           { type: 'pass', van: 'a2', naar: 'a3' },
-          { type: 'loop', wie: 'b3', naar: [20.6, 13.6], start: 0.3 },
+          { type: 'loop', wie: 'b3', naar: [19.6, 13.2], start: 0.3 },
           { type: 'loop', wie: 'b2', naar: [16.4, 16.6], start: 0.4 },
           { type: 'loop', wie: 'b1', naar: [10.4, 19.6], start: 0.4 },
         ),
         pauze(0.8),
-        stap({ type: 'dribbel', wie: 'a3', naar: [19.4, 15.2] }, { type: 'loop', wie: 'b3', naar: [18.8, 16.8], manier: 'achteruit', kijk: -110, start: 0.1 }),
-        stap({ type: 'verover', wie: 'b2', van: 'a3' }),
-        stap({ type: 'dribbel', wie: 'b2', naar: [17, 5.4], manier: 'sprint' }, { type: 'loop', wie: 'a2', naar: [15.4, 3.6], manier: 'sprint', start: 0.3 }),
+        stap({ type: 'dribbel', wie: 'a3', naar: [23.6, 15.6] }, { type: 'loop', wie: 'b3', naar: [21.6, 16.4], manier: 'verdedigend', kijk: -60, start: 0.1 }),
+        stap({ type: 'verover', wie: 'b3', van: 'a3' }),
+        stap({ type: 'pass', van: 'b3', naar: 'b2' }),
+        stap({ type: 'dribbel', wie: 'b2', naar: [17, 5.4], manier: 'sprint' }, { type: 'loop', wie: 'a2', naar: [13.4, 4.6], manier: 'sprint', start: 0.3 }),
         stap({ type: 'schot', van: 'b2', naar: [18.4, 0.6] }),
         pauze(1.0),
       ],
@@ -231,9 +232,9 @@ const oefeningen = [
       ],
       animatie: [
         pauze(0.6),
-        stap({ type: 'pass', van: 'd', naar: 'a' }, { type: 'loop', wie: 'd', naar: [8.6, 10.6], manier: 'sprint', start: 0.25 }),
-        stap({ type: 'dribbel', wie: 'a', naar: [10.6, 7.8] }, { type: 'loop', wie: 'd', naar: [9.2, 11.4], manier: 'achteruit', kijk: -70, start: 0.1 }),
-        stap({ type: 'dribbel', wie: 'a', via: [[12.6, 10.6]], naar: [13.2, 13.4] }, { type: 'loop', wie: 'd', via: [[10.6, 13.2]], naar: [11.4, 15.4], manier: 'achteruit', kijk: -75, start: 0.15 }),
+        stap({ type: 'pass', van: 'd', naar: 'a' }, { type: 'loop', wie: 'd', naar: [8.6, 10.6], manier: 'sprint', start: 0.25, duur: 1.8 }),
+        stap({ type: 'dribbel', wie: 'a', naar: [10.6, 7.8] }, { type: 'loop', wie: 'd', naar: [9.2, 11.4], manier: 'verdedigend', kijk: -40, start: 0.1 }),
+        stap({ type: 'dribbel', wie: 'a', via: [[12.6, 10.6]], naar: [13.2, 13.4] }, { type: 'loop', wie: 'd', via: [[10.6, 13.2]], naar: [11.4, 15.4], manier: 'verdedigend', kijk: -25, start: 0.15 }),
         stap({ type: 'dribbel', wie: 'a', naar: [13.6, 15.8], duur: 0.5 }),
         stap({ type: 'verover', wie: 'd', van: 'a' }),
         stap({ type: 'dribbel', wie: 'd', naar: [9.4, 19.2] }, { type: 'loop', wie: 'a', naar: [12.6, 17.4], start: 0.3 }),
@@ -305,7 +306,7 @@ const oefeningen = [
       ],
       animatie: [
         pauze(0.6),
-        stap({ type: 'pass', van: 'b2', naar: 'b3' }, { type: 'druk', wie: 'a3', op: 'b3', afstand: 2, manier: 'sprint', start: 0.35 }, { type: 'loop', wie: 'a2', naar: [22.6, 37.2], start: 0.4 }),
+        stap({ type: 'pass', van: 'b2', naar: 'b3' }, { type: 'loop', wie: 'a3', naar: [19.8, 31.6], manier: 'sprint', start: 0.35 }, { type: 'loop', wie: 'a2', naar: [22.6, 37.2], start: 0.4 }),
         stap({ type: 'pass', van: 'b3', naar: 'b1', onderschept: 'a1' }),
         stap({ type: 'dribbel', wie: 'a1', naar: [15.4, 41.6], manier: 'sprint' }, { type: 'druk', wie: 'b1', op: 'a1', afstand: 2, manier: 'sprint', start: 0.2 }),
         stap({ type: 'schot', van: 'a1', naar: [16.6, 47.7], afloop: 'goal' }),
@@ -356,7 +357,9 @@ const oefeningen = [
     },
     tekening: {
       ...leeg(30, 40),
+      weergave: { x: -2, y: -1, breedte: 34, lengte: 46 },
       objecten: [
+        zone('z', 15, 20, 28, 38),
         doeltje('t1', 9, 1, 0),
         doeltje('t2', 21, 1, 0),
         doeltje('o1', 9, 39, 180),
@@ -377,8 +380,8 @@ const oefeningen = [
         pauze(0.6),
         stap({ type: 'pass', van: 'a1', naar: 'a2', onderschept: 'b1' }),
         stap(
-          { type: 'dribbel', wie: 'b1', naar: [9.4, 25.4] },
-          { type: 'druk', wie: 'a2', op: 'b1', afstand: 1.9, manier: 'sprint', start: 0.1 },
+          { type: 'dribbel', wie: 'b1', naar: [8.4, 25.6] },
+          { type: 'loop', wie: 'a2', naar: [5.8, 26.4], manier: 'sprint', start: 0.1 },
           { type: 'druk', wie: 'a1', op: 'b1', afstand: 2, manier: 'sprint', start: 0.15 },
         ),
         stap({ type: 'verover', wie: 'a1', van: 'b1' }),
@@ -450,7 +453,7 @@ const oefeningen = [
         speler('a2', 8, 13, 12, { kijkrichting: 90 }),
         speler('a3', 10, 27, 13.4, { kijkrichting: 90 }),
         speler('a4', 9, 12, 29.4, { kijkrichting: 90 }),
-        speler('a5', 4, 19, 37, { kijkrichting: -90 }),
+        speler('a5', 4, 12.5, 40, { kijkrichting: -90 }),
         bal('bal', 16.4, 29.6, 'b1'),
       ],
       animatie: [

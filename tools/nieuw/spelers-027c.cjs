@@ -79,7 +79,7 @@ const oefeningen = [
         paaltje('s2', 9, 8),
         paaltje('s3', 9, 10),
         paaltje('s4', 9, 12),
-        tekst('dob', 12.4, 18.6, 'dobbelsteen'),
+        tekst('dob', 13.8, 18.6, 'dobbelsteen'),
         trainer(9, 18.2, -90),
         speler('p1', 1, 2.2, 2.2, { kijkrichting: 45 }),
         B('p2', 2, 15.8, 2.2, { kijkrichting: 135 }),

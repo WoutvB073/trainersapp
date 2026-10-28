@@ -453,6 +453,9 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
       const tekst = o.tekst;
       const tex = canvasTextuur(512, 128, (ctx) => {
         ctx.font = '700 72px "Barlow Condensed", system-ui, sans-serif';
+        // Lange tekst kleiner, zodat hij altijd op het label past.
+        const past = Math.min(72, Math.floor((72 * 488) / ctx.measureText(tekst).width));
+        if (past < 72) ctx.font = `700 ${past}px "Barlow Condensed", system-ui, sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.lineWidth = 12;
@@ -462,8 +465,9 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
         ctx.fillText(tekst, 256, 66);
       });
       const s = new Sprite(new SpriteMaterial({ map: tex, transparent: true }));
-      s.scale.set(4, 1, 1);
-      s.position.set(o.x, 0.8, o.y);
+      const w = o.breedte ?? 4;
+      s.scale.set(w, w / 4, 1);
+      s.position.set(o.x, 0.2 + w * 0.15, o.y);
       return s;
     }
     default:
@@ -603,6 +607,7 @@ const VOL: Record<Manier, number> = {
   voetenwerk: 1.8,
   hordes: 2.4,
   kruispas: 2.4,
+  verdedigend: 1.2,
   schijn: 1,
 };
 
@@ -641,6 +646,12 @@ export function pose(manier: Manier | undefined, snelheid: number, fase: number,
     case 'achteruit':
       loop(0.5, 0.4);
       p.voorover = -0.08 * k;
+      break;
+    case 'verdedigend':
+      // Laag en breed, kleine pasjes, armen iets opzij.
+      loop(0.3, 0.2);
+      p.voorover = 0.3 * k;
+      p.armenOpzij = 0.35 * k;
       break;
     case 'voetenwerk':
       loop(0.5, 0.55);

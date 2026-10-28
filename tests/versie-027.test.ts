@@ -1,4 +1,7 @@
+import { Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
+import { maakTijdlijn, standOp } from '../src/anim/timeline';
+import { BAL_R, balInvoer, laagste, maakSkelet, nieuweStaat, persoonInvoer, poseer } from '../src/anim/poppetje';
 import { OEFENINGEN, vindOefening } from '../src/data/oefeningen';
 import { TEKENING_TEKST } from '../src/data/vertaling';
 import engelsVerdedigen from '../src/data/en/veld-verdedigen-omschakelen.json';
@@ -65,5 +68,51 @@ describe('nieuwe spelersoefeningen 0.27.0', () => {
     const lijst = OEFENINGEN.filter((x) => x.soort === 'veld' && x.categorieen.includes('verdedigen-omschakelen'));
     expect(lijst.length).toBeGreaterThanOrEqual(15);
     expect(OEFENINGEN.filter((x) => x.categorieen[0] === 'verdedigen-omschakelen')).toHaveLength(6);
+  });
+});
+
+/** Gemiddelde heuphoogte, laagste punt en armbreedte van een speler die 3 m terugzakt met een bepaalde loopwijze. */
+function terugzakken(manier: 'verdedigend' | 'achteruit') {
+  const tl = maakTijdlijn({
+    veld: { type: 'leeg', breedte: 12, lengte: 12 },
+    objecten: [{ id: 'd', soort: 'speler', x: 6, y: 4, kijkrichting: -90 }],
+    animatie: [{ acties: [{ type: 'loop', wie: 'd', naar: [7, 7], manier, kijk: -100 }] }],
+  });
+  const sk = maakSkelet();
+  const staat = nieuweStaat();
+  let heup = 0;
+  let n = 0;
+  let laag = Infinity;
+  let armen = 0;
+  for (let i = 0; i <= Math.round(tl.duur * 30); i++) {
+    const tt = i / 30;
+    const s = standOp(tl, tt);
+    const st = s.objecten.get('d')!;
+    poseer(sk, staat, { s: st, soort: 'speler', t: tt, dtEcht: 1 / 30, dtAnim: 1 / 30, sprong: i === 0, zaad: 0.3, ...persoonInvoer('d', 'speler', st, s, balInvoer(s, [], BAL_R)) });
+    laag = Math.min(laag, laagste(sk));
+    if (tt > tl.duur * 0.3 && tt < tl.duur * 0.7) {
+      heup += sk.bekken.getWorldPosition(new Vector3()).y;
+      armen += sk.pols[0].getWorldPosition(new Vector3()).distanceTo(sk.pols[1].getWorldPosition(new Vector3()));
+      n++;
+    }
+  }
+  return { heup: heup / n, laag, armen: armen / n, duur: tl.duur };
+}
+
+describe('bouwsteen: verdedigende houding (1 tegen 1)', () => {
+  const v = terugzakken('verdedigend');
+  const a = terugzakken('achteruit');
+  it('laag door de knieën: de heupen zakken duidelijk verder dan bij gewoon achteruitlopen', () => {
+    expect(a.heup - v.heup).toBeGreaterThan(0.08);
+  });
+  it('armen iets opzij voor het evenwicht, en de voeten blijven op de grond', () => {
+    expect(v.armen).toBeGreaterThan(a.armen);
+    expect(v.laag).toBeGreaterThan(-0.01);
+  });
+  it('kleine pasjes: terugzakken gaat rustiger dan achteruitlopen', () => {
+    expect(v.duur).toBeGreaterThan(a.duur);
+  });
+  it('wordt gebruikt bij 1 tegen 1 verdedigen en de eerste verdediger', () => {
+    for (const id of ['veld-vo-1-1-wegdrukken', 'veld-vo-drie-verdedigers']) expect(JSON.stringify(vindOefening(id)!.tekening.animatie)).toContain('"verdedigend"');
   });
 });

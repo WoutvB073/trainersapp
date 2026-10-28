@@ -891,7 +891,7 @@ function tekenTekst(b: Beeld, o: VeldObject) {
   const { ctx } = b;
   const c = px(b, [o.x, o.y]);
   ctx.save();
-  ctx.font = `700 ${Math.round(maat(b, 1.2, 12))}px "Barlow Condensed", system-ui, sans-serif`;
+  ctx.font = `700 ${Math.round(maat(b, 1.2 * Math.min(1.4, Math.max(0.6, (o.breedte ?? 4) / 4)), 12))}px "Barlow Condensed", system-ui, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.lineWidth = 3 * b.dpr;

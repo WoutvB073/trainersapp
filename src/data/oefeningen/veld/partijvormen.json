@@ -5102,7 +5102,7 @@
           "soort": "speler",
           "team": "A",
           "nummer": 3,
-          "x": 1.8,
+          "x": 2.6,
           "y": 13,
           "kijkrichting": 0
         },
@@ -5111,7 +5111,7 @@
           "soort": "speler",
           "team": "A",
           "nummer": 4,
-          "x": 1.8,
+          "x": 2.6,
           "y": 17,
           "kijkrichting": 0
         },
@@ -5120,7 +5120,7 @@
           "soort": "speler",
           "team": "A",
           "nummer": 5,
-          "x": 1.8,
+          "x": 2.6,
           "y": 21,
           "kijkrichting": 0
         },
@@ -5129,7 +5129,7 @@
           "soort": "speler",
           "team": "B",
           "nummer": 3,
-          "x": 30.2,
+          "x": 29.4,
           "y": 13,
           "kijkrichting": 180
         },
@@ -5138,7 +5138,7 @@
           "soort": "speler",
           "team": "B",
           "nummer": 4,
-          "x": 30.2,
+          "x": 29.4,
           "y": 17,
           "kijkrichting": 180
         },
@@ -5147,7 +5147,7 @@
           "soort": "speler",
           "team": "B",
           "nummer": 5,
-          "x": 30.2,
+          "x": 29.4,
           "y": 21,
           "kijkrichting": 180
         },
@@ -5487,9 +5487,9 @@
           "soort": "speler",
           "team": "B",
           "nummer": 7,
-          "x": 10.6,
-          "y": 23,
-          "kijkrichting": -90
+          "x": 11.4,
+          "y": 28.6,
+          "kijkrichting": 180
         },
         {
           "id": "b2",
@@ -5707,6 +5707,12 @@
         "lengte": 48
       },
       "camera": "schuin",
+      "weergave": {
+        "x": -4,
+        "y": -2,
+        "breedte": 48,
+        "lengte": 54
+      },
       "objecten": [
         {
           "id": "veld",
@@ -6012,6 +6018,12 @@
         "lengte": 44
       },
       "camera": "schuin",
+      "weergave": {
+        "x": -3,
+        "y": -2,
+        "breedte": 46,
+        "lengte": 49
+      },
       "objecten": [
         {
           "id": "fL",
@@ -6301,9 +6313,10 @@
         {
           "id": "stand",
           "soort": "tekst",
-          "x": 31,
-          "y": 3.4,
-          "tekst": "Rood 0 – 2 Blauw"
+          "x": 27.6,
+          "y": 40.4,
+          "tekst": "Rood 0 – 2 Blauw",
+          "breedte": 9
         },
         {
           "id": "gA",
@@ -6479,10 +6492,12 @@
               ]
             },
             {
-              "type": "druk",
+              "type": "loop",
               "wie": "b3",
-              "op": "a3",
-              "afstand": 2.2,
+              "naar": [
+                29.4,
+                29.6
+              ],
               "start": 0.2
             }
           ]
@@ -6763,8 +6778,8 @@
               "type": "dribbel",
               "wie": "b2",
               "naar": [
-                9.6,
-                18.4
+                12,
+                17.8
               ],
               "manier": "sprint"
             },
@@ -6833,49 +6848,49 @@
     "tekening": {
       "veld": {
         "type": "leeg",
-        "breedte": 30,
-        "lengte": 36
+        "breedte": 36,
+        "lengte": 30
       },
       "camera": "schuin",
       "objecten": [
         {
           "id": "z",
           "soort": "zone",
-          "x": 15,
-          "y": 18,
-          "breedte": 26,
-          "lengte": 34
+          "x": 18,
+          "y": 15,
+          "breedte": 34,
+          "lengte": 26
         },
         {
           "id": "t1",
           "soort": "klein-goal",
-          "x": 9,
-          "y": 1,
-          "hoek": 0,
+          "x": 1,
+          "y": 21,
+          "hoek": -90,
           "breedte": 3
         },
         {
           "id": "t2",
           "soort": "klein-goal",
-          "x": 21,
-          "y": 1,
-          "hoek": 0,
+          "x": 1,
+          "y": 9,
+          "hoek": -90,
           "breedte": 3
         },
         {
           "id": "o1",
           "soort": "klein-goal",
-          "x": 9,
-          "y": 35,
-          "hoek": 180,
+          "x": 35,
+          "y": 21,
+          "hoek": 90,
           "breedte": 3
         },
         {
           "id": "o2",
           "soort": "klein-goal",
-          "x": 21,
-          "y": 35,
-          "hoek": 180,
+          "x": 35,
+          "y": 9,
+          "hoek": 90,
           "breedte": 3
         },
         {
@@ -6883,78 +6898,78 @@
           "soort": "speler",
           "team": "A",
           "nummer": 4,
-          "x": 15,
-          "y": 26,
-          "kijkrichting": -90
+          "x": 26,
+          "y": 15,
+          "kijkrichting": -180
         },
         {
           "id": "a2",
           "soort": "speler",
           "team": "A",
           "nummer": 6,
-          "x": 8,
-          "y": 16,
-          "kijkrichting": -90
+          "x": 16,
+          "y": 22,
+          "kijkrichting": -180
         },
         {
           "id": "a3",
           "soort": "speler",
           "team": "A",
           "nummer": 7,
-          "x": 22,
-          "y": 15,
-          "kijkrichting": -90
+          "x": 15,
+          "y": 8,
+          "kijkrichting": -180
         },
         {
           "id": "a4",
           "soort": "speler",
           "team": "A",
           "nummer": 9,
-          "x": 15,
-          "y": 10,
-          "kijkrichting": -90
+          "x": 10,
+          "y": 15,
+          "kijkrichting": -180
         },
         {
           "id": "b1",
           "soort": "speler",
           "team": "B",
           "nummer": 4,
-          "x": 15,
-          "y": 23.6,
-          "kijkrichting": 90
+          "x": 23.6,
+          "y": 15,
+          "kijkrichting": 0
         },
         {
           "id": "b2",
           "soort": "speler",
           "team": "B",
           "nummer": 6,
-          "x": 8.4,
-          "y": 13.6,
-          "kijkrichting": 90
+          "x": 13.6,
+          "y": 21.6,
+          "kijkrichting": 0
         },
         {
           "id": "b3",
           "soort": "speler",
           "team": "B",
           "nummer": 7,
-          "x": 21.6,
-          "y": 12.6,
-          "kijkrichting": 90
+          "x": 12.6,
+          "y": 8.4,
+          "kijkrichting": 0
         },
         {
           "id": "b4",
           "soort": "speler",
           "team": "B",
           "nummer": 9,
-          "x": 15,
-          "y": 7.6,
-          "kijkrichting": 90
+          "x": 7.6,
+          "y": 15,
+          "kijkrichting": 0
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 15,
-          "y": 25.45,
+          "x": 25.45,
+          "y": 15,
           "bij": "a1"
         }
       ],
@@ -6969,16 +6984,16 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                23.4,
-                10.6
+                10.6,
+                6.6
               ]
             },
             {
               "type": "loop",
               "wie": "b3",
               "naar": [
-                22.6,
-                8.2
+                8.2,
+                7.4
               ],
               "start": 0.1
             }
@@ -6990,8 +7005,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                26,
-                17
+                17,
+                4
               ],
               "manier": "sprint"
             },
@@ -6999,8 +7014,8 @@
               "type": "loop",
               "wie": "b3",
               "naar": [
-                24.6,
-                12.8
+                12.8,
+                5.4
               ],
               "start": 0.35
             }
@@ -7022,13 +7037,13 @@
               "wie": "a3",
               "via": [
                 [
-                  27.8,
-                  13.2
+                  13.2,
+                  2.2
                 ]
               ],
               "naar": [
-                27.2,
-                9.2
+                9.2,
+                2.8
               ]
             },
             {
@@ -7046,8 +7061,8 @@
               "type": "schot",
               "van": "a3",
               "naar": [
-                21.4,
-                0.6
+                0.6,
+                8.6
               ]
             }
           ]

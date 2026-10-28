@@ -87,7 +87,7 @@ export interface VeldObject {
   variant?: 'reactiebal' | 'tennisbal';
   /** Keeper: begint in kniezit of hurkzit (tot hij beweegt of duikt). */
   houding?: Zithouding;
-  /** Zone, ladder, muurtje, mat, stok: afmetingen in meters. */
+  /** Zone, ladder, muurtje, mat, stok: afmetingen in meters. Tekst: breedte van het label in 3D (standaard 4 m). */
   breedte?: number;
   lengte?: number;
   /**
@@ -255,6 +255,11 @@ export type Manier =
   | 'hordes'
   /** Keeper: zijwaarts met kruispassen (het achterste been kruist voor langs). */
   | 'kruispas'
+  /**
+   * Verdedigen in een 1 tegen 1 (0.27.0): laag door de knieën, voeten breed en licht schuin, kleine snelle pasjes, armen
+   * iets opzij. Zonder `kijk` staat het lijf half zijwaarts, met de rug schuin naar de looprichting (terugzakken).
+   */
+  | 'verdedigend'
   /** Intern: schijnbeweging (zie SchijnActie). */
   | 'schijn';
 

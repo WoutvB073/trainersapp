@@ -40,10 +40,10 @@
         "type": "half"
       },
       "weergave": {
-        "x": 16,
+        "x": 15,
         "y": -3,
-        "breedte": 42,
-        "lengte": 52
+        "breedte": 44,
+        "lengte": 57
       },
       "camera": "schuin",
       "objecten": [
@@ -208,10 +208,12 @@
               "onderschept": "b1"
             },
             {
-              "type": "druk",
+              "type": "loop",
               "wie": "b3",
-              "op": "a3",
-              "afstand": 1.8,
+              "naar": [
+                36,
+                34.4
+              ],
               "manier": "sprint",
               "start": 0.1
             }
@@ -498,8 +500,8 @@
               "type": "loop",
               "wie": "b3",
               "naar": [
-                20.6,
-                13.6
+                19.6,
+                13.2
               ],
               "start": 0.3
             },
@@ -533,19 +535,19 @@
               "type": "dribbel",
               "wie": "a3",
               "naar": [
-                19.4,
-                15.2
+                23.6,
+                15.6
               ]
             },
             {
               "type": "loop",
               "wie": "b3",
               "naar": [
-                18.8,
-                16.8
+                21.6,
+                16.4
               ],
-              "manier": "achteruit",
-              "kijk": -110,
+              "manier": "verdedigend",
+              "kijk": -60,
               "start": 0.1
             }
           ]
@@ -554,8 +556,17 @@
           "acties": [
             {
               "type": "verover",
-              "wie": "b2",
+              "wie": "b3",
               "van": "a3"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b3",
+              "naar": "b2"
             }
           ]
         },
@@ -574,8 +585,8 @@
               "type": "loop",
               "wie": "a2",
               "naar": [
-                15.4,
-                3.6
+                13.4,
+                4.6
               ],
               "manier": "sprint",
               "start": 0.3
@@ -729,7 +740,8 @@
                 10.6
               ],
               "manier": "sprint",
-              "start": 0.25
+              "start": 0.25,
+              "duur": 1.8
             }
           ]
         },
@@ -750,8 +762,8 @@
                 9.2,
                 11.4
               ],
-              "manier": "achteruit",
-              "kijk": -70,
+              "manier": "verdedigend",
+              "kijk": -40,
               "start": 0.1
             }
           ]
@@ -785,8 +797,8 @@
                 11.4,
                 15.4
               ],
-              "manier": "achteruit",
-              "kijk": -75,
+              "manier": "verdedigend",
+              "kijk": -25,
               "start": 0.15
             }
           ]
@@ -1054,10 +1066,12 @@
               "naar": "b3"
             },
             {
-              "type": "druk",
+              "type": "loop",
               "wie": "a3",
-              "op": "b3",
-              "afstand": 2,
+              "naar": [
+                19.8,
+                31.6
+              ],
               "manier": "sprint",
               "start": 0.35
             },
@@ -1166,7 +1180,21 @@
         "lengte": 40
       },
       "camera": "schuin",
+      "weergave": {
+        "x": -2,
+        "y": -1,
+        "breedte": 34,
+        "lengte": 46
+      },
       "objecten": [
+        {
+          "id": "z",
+          "soort": "zone",
+          "x": 15,
+          "y": 20,
+          "breedte": 28,
+          "lengte": 38
+        },
         {
           "id": "t1",
           "soort": "klein-goal",
@@ -1318,15 +1346,17 @@
               "type": "dribbel",
               "wie": "b1",
               "naar": [
-                9.4,
-                25.4
+                8.4,
+                25.6
               ]
             },
             {
-              "type": "druk",
+              "type": "loop",
               "wie": "a2",
-              "op": "b1",
-              "afstand": 1.9,
+              "naar": [
+                5.8,
+                26.4
+              ],
               "manier": "sprint",
               "start": 0.1
             },
@@ -1595,8 +1625,8 @@
           "soort": "speler",
           "team": "A",
           "nummer": 4,
-          "x": 19,
-          "y": 37,
+          "x": 12.5,
+          "y": 40,
           "kijkrichting": -90
         },
         {

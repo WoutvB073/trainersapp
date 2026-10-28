@@ -10,6 +10,27 @@ const jeugdgoal = (id, x, y, hoek = 0) => ({ id, soort: 'goal', x, y, breedte: 5
 const tekst = (id, x, y, t) => ({ id, soort: 'tekst', x, y, tekst: t });
 const leeg = (breedte, lengte, camera = 'schuin') => ({ veld: { type: 'leeg', breedte, lengte }, camera });
 const GEEL = '#ffd23f';
+
+/** Draai een tekening op een leeg veld een kwartslag: (x, y) → (y, breedte − x), hoeken −90°. */
+function draaiKwart(t) {
+  const b = t.veld.breedte;
+  const p = ([x, y]) => [y, +(b - x).toFixed(2)];
+  const objecten = t.objecten.map((o) => {
+    const n = { ...o, x: o.y, y: +(b - o.x).toFixed(2) };
+    if (o.hoek !== undefined) n.hoek = o.hoek - 90;
+    if (o.kijkrichting !== undefined) n.kijkrichting = o.kijkrichting - 90;
+    if (o.soort === 'zone') Object.assign(n, { breedte: o.lengte, lengte: o.breedte });
+    return n;
+  });
+  const actie = (a) => {
+    const n = { ...a };
+    for (const k of ['naar', 'terugNaar', 'afloopNaar']) if (Array.isArray(a[k]) && typeof a[k][0] === 'number') n[k] = p(a[k]);
+    if (a.via) n.via = a.via.map(p);
+    if (a.kijk !== undefined) n.kijk = a.kijk - 90;
+    return n;
+  };
+  return { ...t, veld: { ...t.veld, breedte: t.veld.lengte, lengte: b }, objecten, animatie: t.animatie.map((st) => ({ ...st, acties: st.acties.map(actie) })) };
+}
 const ROOD = '#e03131';
 
 const oefeningen = [
@@ -63,12 +84,12 @@ const oefeningen = [
         keeper('kB', 1, 16, 31.6, { verdedigt: 'gB' }),
         speler('a1', 2, 13, 13, { kijkrichting: 90 }),
         B('b1', 2, 15.6, 18.6, { kijkrichting: -90 }),
-        speler('a2', 3, 1.8, 13, { kijkrichting: 0 }),
-        speler('a3', 4, 1.8, 17, { kijkrichting: 0 }),
-        speler('a4', 5, 1.8, 21, { kijkrichting: 0 }),
-        B('b2', 3, 30.2, 13, { kijkrichting: 180 }),
-        B('b3', 4, 30.2, 17, { kijkrichting: 180 }),
-        B('b4', 5, 30.2, 21, { kijkrichting: 180 }),
+        speler('a2', 3, 2.6, 13, { kijkrichting: 0 }),
+        speler('a3', 4, 2.6, 17, { kijkrichting: 0 }),
+        speler('a4', 5, 2.6, 21, { kijkrichting: 0 }),
+        B('b2', 3, 29.4, 13, { kijkrichting: 180 }),
+        B('b3', 4, 29.4, 17, { kijkrichting: 180 }),
+        B('b4', 5, 29.4, 21, { kijkrichting: 180 }),
         bal('bal', 13, 13.55, 'a1'),
         bal('bal2', 18.4, 32.6),
       ],
@@ -151,7 +172,7 @@ const oefeningen = [
         speler('a4', 11, 38.4, 30, { kijkrichting: 180 }),
         speler('a5', 9, 12, 46, { kijkrichting: 90 }),
         speler('a6', 10, 31, 47, { kijkrichting: 90 }),
-        B('b1', 7, 10.6, 23, { kijkrichting: -90 }),
+        B('b1', 7, 11.4, 28.6, { kijkrichting: 180 }),
         B('b2', 11, 33, 22, { kijkrichting: -90 }),
         B('b3', 4, 11, 38, { kijkrichting: -90 }),
         B('b4', 2, 34.4, 38, { kijkrichting: -90 }),
@@ -220,6 +241,7 @@ const oefeningen = [
     },
     tekening: {
       ...leeg(40, 48),
+      weergave: { x: -4, y: -2, breedte: 48, lengte: 54 },
       objecten: [
         zone('veld', 20, 24, 34, 48),
         zone('sA', 20, 6, 20, 12, GEEL),
@@ -297,6 +319,7 @@ const oefeningen = [
     },
     tekening: {
       ...leeg(40, 44),
+      weergave: { x: -3, y: -2, breedte: 46, lengte: 49 },
       objecten: [
         zone('fL', 3, 22, 6, 44, GEEL),
         zone('fR', 37, 22, 6, 44, GEEL),
@@ -375,7 +398,7 @@ const oefeningen = [
       ...leeg(40, 44),
       objecten: [
         zone('z', 20, 22, 34, 44),
-        tekst('stand', 31, 3.4, 'Rood 0 – 2 Blauw'),
+        { ...tekst('stand', 27.6, 40.4, 'Rood 0 – 2 Blauw'), breedte: 9 },
         jeugdgoal('gA', 20, 0.5),
         jeugdgoal('gB', 20, 43.5, 180),
         keeper('kA', 1, 20, 1.9, { verdedigt: 'gA' }),
@@ -396,7 +419,7 @@ const oefeningen = [
         pauze(0.6),
         stap({ type: 'pass', van: 'a1', naar: 'a2' }),
         stap({ type: 'pass', van: 'a2', naar: 'a3' }, { type: 'loop', wie: 'b4', naar: [18.6, 29.4], start: 0.5 }),
-        stap({ type: 'dribbel', wie: 'a3', naar: [27, 28.6] }, { type: 'druk', wie: 'b3', op: 'a3', afstand: 2.2, start: 0.2 }),
+        stap({ type: 'dribbel', wie: 'a3', naar: [27, 28.6] }, { type: 'loop', wie: 'b3', naar: [29.4, 29.6], start: 0.2 }),
         stap({ type: 'schot', van: 'a3', naar: [19, 43.7], afloop: 'vangt', vasthouden: true }),
         stap({ type: 'loop', wie: 'b5', naar: [26, 25.6], start: 0.2 }),
         stap({ type: 'pass', van: 'kB', naar: 'b5', worp: 'bovenhands' }),
@@ -470,7 +493,7 @@ const oefeningen = [
         stap({ type: 'pass', van: 'a2', naar: 'ta' }),
         stap({ type: 'pass', van: 'ta', naar: 'a1', direct: true }, { type: 'druk', wie: 'b2', op: 'a1', afstand: 1.7, manier: 'sprint', start: 0.3 }),
         stap({ type: 'verover', wie: 'b2', van: 'a1' }),
-        stap({ type: 'dribbel', wie: 'b2', naar: [9.6, 18.4], manier: 'sprint' }, { type: 'druk', wie: 'a1', op: 'b2', afstand: 2, manier: 'sprint', start: 0.3 }),
+        stap({ type: 'dribbel', wie: 'b2', naar: [12, 17.8], manier: 'sprint' }, { type: 'druk', wie: 'a1', op: 'b2', afstand: 2, manier: 'sprint', start: 0.3 }),
         stap({ type: 'pass', van: 'b2', naar: 'tb' }),
         pauze(1.0),
       ],
@@ -516,7 +539,7 @@ const oefeningen = [
         moeilijker: ['Three touches maximum', 'If your opponent scores, you do a 5-rep task (e.g. squats)', 'Smaller pitch'],
       },
     },
-    tekening: {
+    tekening: draaiKwart({
       ...leeg(30, 36),
       objecten: [
         zone('z', 15, 18, 26, 34),
@@ -545,7 +568,7 @@ const oefeningen = [
         stap({ type: 'schot', van: 'a3', naar: [21.4, 0.6] }),
         pauze(1.0),
       ],
-    },
+    }),
   },
 ];
 

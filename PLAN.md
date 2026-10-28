@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (28-10-2026, versie 0.26.0)
+## Status (28-10-2026, versie 0.27.0)
 
 | Fase | Status |
 |---|---|
@@ -31,7 +31,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online, getest en akkoord (D0-correctie in 0.25.0) |
 | 18. Deel D: D0 stuitbal stompen, Help, Engels (0.25.0) | ✅ online, getest en akkoord |
 | 19. Engelse woordkeus: Games en wide block (0.25.1) | ✅ online, getest en akkoord |
-| 20. Deel A: categorie Verdedigen en omschakelen, 20 spelersoefeningen (0.26.0) | ✅ online – **wacht op test**. Deel B t/m D (meer spelersoefeningen, vaste tactieken, ingestudeerde spelhervattingen) volgen elk met een eigen opdracht |
+| 20. Deel A: categorie Verdedigen en omschakelen, 20 spelersoefeningen (0.26.0) | ✅ online, getest en akkoord |
+| 21. Deel B: 15 spelersoefeningen (verdedigen en omschakelen, partijvormen, spelletjes), verdedigende houding (0.27.0) | ✅ online – **wacht op test**. Deel C en D volgen elk met een eigen opdracht |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -989,6 +990,9 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 | looplijnen | movement lines | | eenvoudige poppetjes | simple figures |
 | JO11 | U11 | | Instellingen | Settings |
 | Verdedigen en omschakelen | Defending & transition | | inworp | throw-in |
+| kaatser (neutraal) | bounce player | | schietzone | shooting zone |
+| druk zetten na balverlies | counter-pressing | | mandekking | man-marking |
+| wegdrukken (1 tegen 1) | show away | | zijwaartse houding | side-on stance |
 | doelspeler | target player | | diepe spits | striker in behind |
 
 ## Besluiten versie 0.26.0 – Verdedigen en omschakelen, 20 spelersoefeningen (deel A)
@@ -1008,8 +1012,48 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - Browsertest `tools/e2e/versie-026.mjs`: categorielijst met plaatjes, de categorie, Training genereren en Help in NL en EN
   op een iPhone SE en een laptop. Bladen: `blad-026.png`; close-ups `blad-026-ps1/ps2/a1–a4.png` (`nieuw.mjs`).
 
+## Besluiten versie 0.27.0 – deel B: verdedigen en omschakelen, partijvormen, spelletjes
+- 15 nieuwe spelersoefeningen (bouwscripts `tools/nieuw/spelers-027a/b/c.cjs`, met Engels). Verdedigen en omschakelen
+  heeft nu een eigen bestand (`veld/verdedigen-omschakelen.json`) en 15 oefeningen.
+- **Niet gebouwd:** #27 Druk zetten of balbezit is vrijwel gelijk aan "Positiespel 4 tegen 4 met doelspelers" (0.26.0);
+  die kreeg in plaats daarvan de categorie Verdedigen en omschakelen en een coachpunt voor het drukzettende team.
+  #37 Wie is de beste? is vrijwel gelijk aan "Koning van het veld" (veldjes naast elkaar, winnaar schuift op).
+- Nieuwe bouwsteen **verdedigend** (loopwijze): laag door de knieën, voeten breed, kleine snelle pasjes, armen iets opzij;
+  zonder `kijk` half zijwaarts terugzakkend. Gebruikt bij 1 tegen 1 verdedigen en de eerste verdediger. Test in
+  `tests/versie-027.test.ts`; close-up: `tools/e2e/pas.mjs veld-vo-1-1-wegdrukken d 2.4 6`.
+- Tekstlabels in een tekening kunnen een `breedte` krijgen (3D-maat, standaard 4 m); lange tekst krimpt zodat hij past
+  (scorebord "Rood 0 – 2 Blauw" bij Partijspel met voorsprong). Nieuwe labels staan in `TEKENING_TEKST`.
+- Close-ups: `blad-027-b1…b4.png` en na verbeteren `blad-027-c1…c5.png` (`nieuw.mjs`). Verbeterd na het bekijken:
+  drukzetters schuin opzij in plaats van recht achter de balbezitter (3D-overlap), Mandekking-partijtje een kwartslag
+  gedraaid (duo's naast elkaar), ruimer beeld bij schietzones/wingers/pressen, scorebord groter.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.27.0 – #27 niet gebouwd maar de bestaande 4 tegen 4 met doelspelers kreeg de categorie Verdedigen en omschakelen en
+  een vierde coachpunt (samen druk zetten, de lijn naar de doelspeler dicht). #37 niet gebouwd.
+- 0.27.0 – Een zijwaartse, lage verdedigende houding bestond nog niet: bijgebouwd als loopwijze `verdedigend`.
+- 0.27.0 – Druk zetten in drie fases: bij de aanval verdedigen twee spelers van het team dat de bal kwijtraakte (de derde
+  blijft bij het vak); de animatie toont fase 1 (passief) en fase 3 (volle druk, onderschepping, 3 tegen 2, doelpunt).
+- 0.27.0 – Eerste, tweede en derde verdediger: op vier kleine doeltjes, zodat de verdedigers na balwinst kunnen scoren.
+- 0.27.0 – 1 tegen 1 verdedigen: strook van 12 × 20 m, de verdediger speelt de bal zelf in en sluit dan aan bij de andere rij.
+- 0.27.0 – Hoog druk zetten loont: de punten gelden voor een doelpunt, afhankelijk van waar de bal veroverd werd (laatste
+  vak 3, middenvak 2, eigen helft 1); 5 tegen 5 met keepers. De animatie toont een onderschepte terugspeelbal.
+- 0.27.0 – Pressen na balverlies: 5 tegen 5 op vier kleine doeltjes (zonder keepers); de trainer telt de 5 seconden af.
+- 0.27.0 – Omschakelen met kaatsers: gewoon doelpunt 1, binnen 10 seconden na balwinst 2, en met een assist van een kaatser
+  3 punten.
+- 0.27.0 – Van 1 tegen 1 naar 4 tegen 4: na 4 tegen 4 begint een nieuwe ronde met 1 tegen 1; wie de goal tegen kreeg (of bij
+  bal uit wie aan de bal komt) begint via de keeper.
+- 0.27.0 – Verboden middenvak: de strook loopt in de lengte (8 m breed, van 12 tot 48 m); bij de doelen mag je er wel komen.
+- 0.27.0 – 5 tegen 5 met schietzones: vier neutralen (twee per zijlijn, max. twee keer raken), schietzone 20 × 12 m.
+- 0.27.0 – 4 tegen 4 met wingers: twee neutrale wingers die met het balbezittende team meespelen en niet aangevallen mogen
+  worden (variant: per team een eigen winger).
+- 0.27.0 – Partijspel met voorsprong: 5 tegen 5 met keepers; scorebord als tekst in de tekening.
+- 0.27.0 – 2 tegen 2 met een doelspeler: elke bal bij de doelspeler is een punt; hij kaatst de bal terug naar zijn team,
+  zodat het spel doorgaat.
+- 0.27.0 – Mandekking-partijtje: 4 tegen 4 op vier kleine doeltjes, duo's hebben hetzelfde rugnummer.
+- 0.27.0 – Ludo met de bal: 16 hoedjes, dobbelsteen 1–6 (1–2 hooghouden, 3–4 slalom, 5–6 pass door een poortje), wie op
+  het hoedje van een ander komt stuurt die terug naar zijn hoek. De vierde kleur is paars (de jokerkleur van de app).
+- 0.27.0 – Uit het vak rennen: twee kleuren in de animatie; wie het eerst bij een pion is, krijgt een punt.
 - 0.26.0 – Niet alleen de nieuwe categorie, maar alle categorieën (spelers en keepers) kregen een eigen plaatje; anders
   was de nieuwe de enige met een plaatje.
 - 0.26.0 – #9 Afstandsschot na een kaats niet gebouwd: vrijwel gelijk aan "Kaats en schieten van afstand".
