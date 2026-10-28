@@ -53,7 +53,7 @@ const oefeningen = [
         goal,
         kp(),
         speler('a', 9, 34, 19, { kijkrichting: -60 }),
-        B('d', 4, 34.6, 22.2, { kijkrichting: -90 }),
+        B('d', 4, 30.8, 22.4, { kijkrichting: -90 }),
         speler('s', 7, 46, 18, { kijkrichting: 180 }),
         bal('b1', 45.45, 18, 's'),
         bal('b2', 46.8, 18.8),
@@ -64,7 +64,7 @@ const oefeningen = [
         stap({ type: 'dribbel', wie: 'a', naar: [33.2, 17.6], duur: 0.45 }),
         stap({ type: 'schot', van: 'a', naar: [30.9, -0.3], afloop: 'goal' }),
         pauze(0.4),
-        stap({ type: 'loop', wie: 'a', naar: [34, 19] }, { type: 'loop', wie: 'd', naar: [34.6, 22.2] }, { type: 'pak', wie: 's', bal: 'b2', start: 0.4 }),
+        stap({ type: 'loop', wie: 'a', naar: [34, 19] }, { type: 'loop', wie: 'd', naar: [30.8, 22.4] }, { type: 'pak', wie: 's', bal: 'b2', start: 0.4 }),
         // Tweede bal: te veel aanrakingen, de verdediger is er.
         stap({ type: 'pass', van: 's', naar: 'a', bal: 'b2' }, { type: 'druk', wie: 'd', op: 'a', afstand: 1.7, manier: 'sprint', start: 0.35 }),
         stap({ type: 'dribbel', wie: 'a', naar: [32.6, 17.2] }),
@@ -239,7 +239,7 @@ const oefeningen = [
       },
     },
     tekening: {
-      ...half({ x: 24, y: -3, breedte: 46, lengte: 38 }),
+      ...half({ x: 21, y: -3, breedte: 52, lengte: 38 }),
       objecten: [
         goal,
         kp(),
@@ -307,7 +307,7 @@ const oefeningen = [
       },
     },
     tekening: {
-      ...half({ x: 6, y: -3, breedte: 56, lengte: 30 }),
+      ...half({ x: 2, y: -3, breedte: 64, lengte: 34 }),
       objecten: [
         goal,
         kp(),

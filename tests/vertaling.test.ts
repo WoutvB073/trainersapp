@@ -16,7 +16,7 @@ describe('vertaling: app-teksten', () => {
   it('alle tekst in de broncode loopt via t() (of is gemarkeerd met i18n-ok)', () => {
     const lijst = (onvertaald() as { bestand: string; regel: number; tekst: string }[]).map((x) => `${x.bestand}:${x.regel} ${x.tekst}`);
     expect(lijst).toEqual([]);
-  });
+  }, 30_000); // scant alle broncode: traag als er tegelijk een build draait
   it('elke t()-tekst heeft een Engelse vertaling', () => {
     const missen = (sleutels() as string[]).filter((s) => !(s in EN));
     expect(missen).toEqual([]);
@@ -35,7 +35,7 @@ describe('vertaling: app-teksten', () => {
     const gebruikt = new Set(sleutels() as string[]);
     const over = Object.keys(EN).filter((k) => !gebruikt.has(k));
     expect(over).toEqual([]);
-  });
+  }, 30_000);
 });
 
 describe('taalkeuze', () => {

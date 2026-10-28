@@ -1614,8 +1614,8 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
         // Inworp: met twee handen, bal achter het hoofd en er in één beweging overheen; beide voeten blijven staan.
         p = [
           [0, 1.15, 0.35],
-          [0, 2.0, -0.2],
-          [0, 2.15, 0.28],
+          [0, 1.82, -0.14],
+          [0, 1.9, 0.22],
           [0, 1.35, 0.6],
         ];
         tweeHanden = true;

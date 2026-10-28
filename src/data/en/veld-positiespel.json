@@ -3,91 +3,500 @@
     "naam": "4v2 rondo",
     "uitleg": "Four players on the sides of the square keep the ball against two defenders. One defender presses the ball carrier, the other cuts off a passing lane. Whoever loses the ball (or plays it out) swaps with the defender who won it.",
     "organisatie": "10 × 10 m square. One player on each side, two defenders in bibs in the middle.",
-    "benodigdheden": ["4 cones", "1 ball", "2 bibs"],
-    "coachpunten": ["Outside players: stay open and move so the passing lane doesn't run through a defender", "Look for the split pass through the middle when the defenders are too far apart", "Defenders: work together – one presses, the other covers the most dangerous lane"],
-    "variaties": { "makkelijker": ["Bigger square (12 × 12 m)", "Unlimited touches", "4v1"], "moeilijker": ["Two touches maximum", "A split pass counts double", "Smaller square (8 × 8 m)"] },
+    "benodigdheden": [
+      "4 cones",
+      "1 ball",
+      "2 bibs"
+    ],
+    "coachpunten": [
+      "Outside players: stay open and move so the passing lane doesn't run through a defender",
+      "Look for the split pass through the middle when the defenders are too far apart",
+      "Defenders: work together – one presses, the other covers the most dangerous lane"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger square (12 × 12 m)",
+        "Unlimited touches",
+        "4v1"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "A split pass counts double",
+        "Smaller square (8 × 8 m)"
+      ]
+    },
     "meerSpelers": "With 7 players: add a middle player (5v2). With more: a second rondo."
   },
   "veld-ps-rondo-5-2": {
     "naam": "5v2 rondo with a middle player",
     "uitleg": "Four players on the sides and one in the middle keep the ball against two defenders. A pass through the middle player counts double. If a defender wins the ball, they swap with the player who lost it.",
     "organisatie": "12 × 12 m square. Four players on the sides, one middle player (team A) and two defenders inside the square.",
-    "benodigdheden": ["4 cones", "1 ball", "2 bibs"],
-    "coachpunten": ["Middle player: stay behind the defenders and ask for the ball between the lines", "Only pass to the middle player when they are open; otherwise move the ball first", "Defenders: cover the middle player first, then press"],
-    "variaties": { "makkelijker": ["Unlimited touches", "Bigger square (14 × 14 m)"], "moeilijker": ["Middle player one touch maximum", "When the defenders win it, they score by dribbling the ball out of the square", "Smaller square (10 × 10 m)"] },
+    "benodigdheden": [
+      "4 cones",
+      "1 ball",
+      "2 bibs"
+    ],
+    "coachpunten": [
+      "Middle player: stay behind the defenders and ask for the ball between the lines",
+      "Only pass to the middle player when they are open; otherwise move the ball first",
+      "Defenders: cover the middle player first, then press"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Unlimited touches",
+        "Bigger square (14 × 14 m)"
+      ],
+      "moeilijker": [
+        "Middle player one touch maximum",
+        "When the defenders win it, they score by dribbling the ball out of the square",
+        "Smaller square (10 × 10 m)"
+      ]
+    },
     "meerSpelers": "With more players: a second rondo, or 6v3 in a bigger square."
   },
   "veld-ps-4-4-2-jokers": {
     "naam": "4v4 + 2 jokers possession",
     "uitleg": "Two teams of four play inside a square; two jokers on the lines always play for the team in possession (6v4). Six passes in a row is a point. When the ball is lost, the jokers immediately play for the other team.",
     "organisatie": "20 × 20 m square. Jokers (purple) in the middle of two opposite lines. Teams in bibs inside the square.",
-    "benodigdheden": ["4 cones", "1 ball", "bibs in 2 colours + 2 for the jokers"],
-    "coachpunten": ["Make the pitch big when you have the ball: get wide and deep", "Use the jokers to switch the ball to the free side", "Press straight away when you lose the ball (transition)"],
-    "variaties": { "makkelijker": ["Jokers also inside the square", "Five passes is a point", "Bigger square (25 × 25 m)"], "moeilijker": ["Jokers one touch maximum", "A pass from joker to joker counts double", "Teams two touches maximum"] },
+    "benodigdheden": [
+      "4 cones",
+      "1 ball",
+      "bibs in 2 colours + 2 for the jokers"
+    ],
+    "coachpunten": [
+      "Make the pitch big when you have the ball: get wide and deep",
+      "Use the jokers to switch the ball to the free side",
+      "Press straight away when you lose the ball (transition)"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Jokers also inside the square",
+        "Five passes is a point",
+        "Bigger square (25 × 25 m)"
+      ],
+      "moeilijker": [
+        "Jokers one touch maximum",
+        "A pass from joker to joker counts double",
+        "Teams two touches maximum"
+      ]
+    },
     "meerSpelers": "With 11 or 12 players: 5v5 with 2 jokers. With more: extra jokers on the touchline."
   },
   "veld-ps-5-5-2-jokers": {
     "naam": "5v5 + 2 jokers possession: ten passes",
     "uitleg": "Two teams of five with two jokers on the pitch (7v5 in possession). Ten passes in a row is a point. If the ball goes out, the coach immediately plays a new ball to the other team.",
     "organisatie": "28 × 22 m area. Jokers (purple) in the middle of the area. The coach stands outside the line with a pile of balls.",
-    "benodigdheden": ["4 cones", "8+ balls", "bibs in 2 colours + 2 for the jokers"],
-    "coachpunten": ["Find the free player: who has no opponent close by?", "Make triangles around the ball carrier", "Counting out loud helps the team stay calm"],
-    "variaties": { "makkelijker": ["Seven passes is a point", "Jokers can move freely and take unlimited touches"], "moeilijker": ["After ten passes, also score in a mini goal", "Two touches maximum", "Smaller area (24 × 18 m)"] },
+    "benodigdheden": [
+      "4 cones",
+      "8+ balls",
+      "bibs in 2 colours + 2 for the jokers"
+    ],
+    "coachpunten": [
+      "Find the free player: who has no opponent close by?",
+      "Make triangles around the ball carrier",
+      "Counting out loud helps the team stay calm"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Seven passes is a point",
+        "Jokers can move freely and take unlimited touches"
+      ],
+      "moeilijker": [
+        "After ten passes, also score in a mini goal",
+        "Two touches maximum",
+        "Smaller area (24 × 18 m)"
+      ]
+    },
     "meerSpelers": "With more players: jokers on the touchline, or rotate in 3-minute blocks."
   },
   "veld-ps-eindzone": {
     "naam": "End-zone possession game 4v4",
     "uitleg": "Two teams of four. You score by receiving the ball in the other team's end zone: a teammate runs in and receives it in the zone. Then the other team gets the ball and attacks the other way.",
     "organisatie": "20 × 22 m pitch with a 4 m deep end zone at each end. Teams in bibs. Players may only enter the zone once the ball is played into it.",
-    "benodigdheden": ["8 cones", "1 ball", "bibs"],
-    "coachpunten": ["Give depth: always someone on the last line who can run in", "Timing: only make your run when the ball carrier can pass", "Defenders: cover the space behind you, not just the ball carrier"],
-    "variaties": { "makkelijker": ["Dribbling into the zone also counts", "Bigger pitch (25 × 30 m)"], "moeilijker": ["The ball must be controlled with one touch in the zone", "4 passes first, then you can score", "Three touches maximum"] },
+    "benodigdheden": [
+      "8 cones",
+      "1 ball",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Give depth: always someone on the last line who can run in",
+      "Timing: only make your run when the ball carrier can pass",
+      "Defenders: cover the space behind you, not just the ball carrier"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dribbling into the zone also counts",
+        "Bigger pitch (25 × 30 m)"
+      ],
+      "moeilijker": [
+        "The ball must be controlled with one touch in the zone",
+        "4 passes first, then you can score",
+        "Three touches maximum"
+      ]
+    },
     "meerSpelers": "With 9 players: a joker. With more: 5v5 in a bigger area, or a second pitch."
   },
   "veld-ps-omschakelen": {
     "naam": "Transition between two squares",
     "uitleg": "The red team plays a rondo in square 1 against two blue defenders; the other two blues wait in square 2. When blue wins the ball, they play it straight into square 2 and both defenders sprint over: blue keeps the ball there, and two red players have to get across and press as quickly as possible.",
     "organisatie": "Two 10 × 10 m squares with 6 m between them. Four players per team. Red starts with four players on the sides of square 1, blue with two defenders in square 1 and two waiting players in square 2.",
-    "benodigdheden": ["8 cones", "2–3 balls", "bibs"],
-    "coachpunten": ["After winning the ball: first pass straight to the other square, before the opponents recover", "After losing the ball: switch straight away and sprint across with two players", "In square 2, get wide and open first, then keep it calmly"],
-    "variaties": { "makkelijker": ["Squares closer together (3 m)", "One red player presses instead of two"], "moeilijker": ["The long ball must be played on first time", "A point for red if they win the ball back within 5 seconds", "Squares further apart (10 m)"] },
+    "benodigdheden": [
+      "8 cones",
+      "2–3 balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "After winning the ball: first pass straight to the other square, before the opponents recover",
+      "After losing the ball: switch straight away and sprint across with two players",
+      "In square 2, get wide and open first, then keep it calmly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Squares closer together (3 m)",
+        "One red player presses instead of two"
+      ],
+      "moeilijker": [
+        "The long ball must be played on first time",
+        "A point for red if they win the ball back within 5 seconds",
+        "Squares further apart (10 m)"
+      ]
+    },
     "meerSpelers": "With more players: jokers on the touchlines, or 5v5 in bigger squares."
   },
   "veld-ps-door-de-linies": {
     "naam": "Through the lines: playing from zone to zone",
     "uitleg": "The red team has three players in zone 1 and three in zone 3; blue defends with three players in the middle zone. Red tries to play the ball through or round the middle zone to the other side. One blue player may press in the zone with the ball. Every successful pass to the other side is a point.",
     "organisatie": "20 × 30 m pitch divided into three 10 m zones. Red: 3 + 3 in the outside zones, blue: 3 in the middle. Swap roles after 2 minutes.",
-    "benodigdheden": ["8 cones", "balls", "bibs"],
-    "coachpunten": ["Move the ball quickly from left to right to open a gap in the middle zone", "Play through the gap as soon as it opens: don't wait too long", "Blue: shift across as a unit and keep the distances between you small"],
-    "variaties": { "makkelijker": ["A lofted ball over the middle zone is also allowed", "No blue player in the outside zone"], "moeilijker": ["Along the ground only", "Two blue players may press", "The pass to the other side must be played on first time"] },
+    "benodigdheden": [
+      "8 cones",
+      "balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Move the ball quickly from left to right to open a gap in the middle zone",
+      "Play through the gap as soon as it opens: don't wait too long",
+      "Blue: shift across as a unit and keep the distances between you small"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A lofted ball over the middle zone is also allowed",
+        "No blue player in the outside zone"
+      ],
+      "moeilijker": [
+        "Along the ground only",
+        "Two blue players may press",
+        "The pass to the other side must be played on first time"
+      ]
+    },
     "meerSpelers": "With more players: an extra player per zone, or a joker on the touchline."
   },
   "veld-cv-rondo-uitbreken": {
     "naam": "4v1 rondo and break out to goal",
     "uitleg": "Four players keep the ball in a square against one defender. After a few passes, the player on the goal side sprints out of the square, receives a through ball and finishes on the big goal.",
     "organisatie": "8 × 8 m square 26 m from goal, keeper in goal. After 3–5 passes, the front player may break out. Whoever makes a mistake goes in the middle.",
-    "benodigdheden": ["Goal", "4 disc cones", "Balls", "Bibs"],
-    "coachpunten": ["Rondo: stay open and play in two touches", "Breaking out: only go when the ball is on the right side, then go flat out", "Through ball into the run, not to feet"],
-    "variaties": { "makkelijker": ["Rondo 4v0 (just passing)", "Break out with no opponent"], "moeilijker": ["4v2 rondo", "The defender may chase the runner", "Finish within 6 seconds of breaking out"] },
+    "benodigdheden": [
+      "Goal",
+      "4 disc cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Rondo: stay open and play in two touches",
+      "Breaking out: only go when the ball is on the right side, then go flat out",
+      "Through ball into the run, not to feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Rondo 4v0 (just passing)",
+        "Break out with no opponent"
+      ],
+      "moeilijker": [
+        "4v2 rondo",
+        "The defender may chase the runner",
+        "Finish within 6 seconds of breaking out"
+      ]
+    },
     "meerSpelers": "With more players: a second rondo next to it, and the rondos take turns to break out.",
-    "onderdelen": ["4v1 rondo", "Through ball", "Break out", "Finish"]
+    "onderdelen": [
+      "4v1 rondo",
+      "Through ball",
+      "Break out",
+      "Finish"
+    ]
   },
   "veld-ps-rondo-4-2-uitbraak": {
     "naam": "4v2 rondo with a breakaway",
     "uitleg": "A 4v2 rondo in a square in front of goal. After 8 passes without losing the ball, the striker is played in behind and finishes against the keeper. If the defenders win the ball, they can score in a mini goal behind the square.",
     "organisatie": "10 × 10 m square about 28 m from goal, mini goal 4 m behind the square. The striker waits diagonally in front of the square, on the goal side. Full-size goal with keeper.",
-    "benodigdheden": ["Goal", "1 mini goal", "4 cones", "Balls", "Bibs"],
-    "coachpunten": ["Rondo: stay open, ball along the ground, in one or two touches", "Through ball into the striker's path, not to feet", "Striker: time your run (not too early), finish into the corner"],
-    "variaties": { "makkelijker": ["The striker after 5 passes", "5v2 rondo"], "moeilijker": ["4v3 rondo", "A defender may chase the striker"] },
+    "benodigdheden": [
+      "Goal",
+      "1 mini goal",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Rondo: stay open, ball along the ground, in one or two touches",
+      "Through ball into the striker's path, not to feet",
+      "Striker: time your run (not too early), finish into the corner"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The striker after 5 passes",
+        "5v2 rondo"
+      ],
+      "moeilijker": [
+        "4v3 rondo",
+        "A defender may chase the striker"
+      ]
+    },
     "meerSpelers": "With more players: two rondos side by side that take turns to play the striker in, or two strikers."
   },
   "veld-ps-3-3-3-spits": {
     "naam": "3v3 + 3 possession and play into the striker",
     "uitleg": "Three teams of three in a square. The team in possession plays with the neutral team (6v3) against the third team. After 6 passes the ball may go into the striker, who waits outside the square and finishes against the keeper. When a team loses the ball, the team that wins it becomes the team in possession.",
     "organisatie": "16 × 16 m square about 22 m from goal. Three teams of three in different bibs, striker between the square and the goal. Full-size goal with keeper.",
-    "benodigdheden": ["Goal", "4 cones", "Balls", "3 colours of bibs"],
-    "coachpunten": ["Get wide and deep: make the square big", "Look before the ball arrives: where is the free player, where is the striker?", "Striker: keep moving and get free as the sixth pass is played"],
-    "variaties": { "makkelijker": ["The striker after 4 passes", "Neutral players can't be tackled"], "moeilijker": ["Two touches maximum", "A defender on the striker"] },
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls",
+      "3 colours of bibs"
+    ],
+    "coachpunten": [
+      "Get wide and deep: make the square big",
+      "Look before the ball arrives: where is the free player, where is the striker?",
+      "Striker: keep moving and get free as the sixth pass is played"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The striker after 4 passes",
+        "Neutral players can't be tackled"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "A defender on the striker"
+      ]
+    },
     "meerSpelers": "With more players: 4v4 + 4, or two strikers who take turns."
+  },
+  "veld-ps-5-tegen-3": {
+    "naam": "Possession 5v3",
+    "uitleg": "Five players keep the ball in the area against three defenders. Ten passes in a row is a point. If the defenders win the ball, they try to dribble it over one of the short sides: if they manage it, the point is theirs. Then the overload starts again.",
+    "organisatie": "16 × 22 m area. Five players in one colour, three defenders in bibs. 3-minute rounds; then three players swap roles.",
+    "benodigdheden": [
+      "4 cones",
+      "Balls",
+      "3 bibs"
+    ],
+    "meerSpelers": "With more players: 6v3 in a bigger area, or a second area with the same game.",
+    "coachpunten": [
+      "Make the area big: wide and deep, never two players in a line",
+      "Pass to the player furthest from a defender",
+      "Defenders: shift together, one presses and the others close the passing lanes"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger area (20 × 26 m)",
+        "Eight passes is a point"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "Smaller area",
+        "The defenders already score by playing the ball over a touchline"
+      ]
+    }
+  },
+  "veld-ps-4-4-doelspelers": {
+    "naam": "Possession 4v4 with target players",
+    "uitleg": "Four against four in the area. Each team has two target players behind the lines: one at each end. Get the ball from one of your target players, through your teammates, to your other target player and it’s a point. The player who made the last pass swaps straight away with that target player: they go behind the line and the target player comes into the area.",
+    "organisatie": "18 × 26 m area. At both short ends, two target players stand behind the line, one from each team. 4-minute rounds.",
+    "benodigdheden": [
+      "4 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "meerSpelers": "With more players: 5v5 with target players in a bigger area, or a neutral joker in the area.",
+    "coachpunten": [
+      "Target player: shuffle along your line so you stay available",
+      "In the area: only play into the target player once you are facing them, not with your back to them",
+      "Join in straight after the swap: the new player has to be available immediately"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Target players may also move inside the area",
+        "Every pass to a target player is a point"
+      ],
+      "moeilijker": [
+        "Target players one touch",
+        "Only a point once everyone in the area has had the ball",
+        "Smaller area"
+      ]
+    }
+  },
+  "veld-ps-vier-zones": {
+    "naam": "Possession with four zones",
+    "uitleg": "The area is split into four equal zones. The team in possession (four players, one per zone) tries to get the ball into all four zones: do it without losing the ball and it’s a point. Three defenders can go anywhere. The players in possession may switch zones, as long as there is always someone in every zone.",
+    "organisatie": "24 × 24 m area in four 12 × 12 m zones (marked with different coloured disc cones or cones). Four players against three defenders. 3-minute rounds.",
+    "benodigdheden": [
+      "9 cones or disc cones",
+      "Balls",
+      "3 bibs"
+    ],
+    "meerSpelers": "With more players: 5v3 with a joker who can go anywhere, or 6v4 in a bigger area.",
+    "coachpunten": [
+      "Before your first touch, check which zone is still missing",
+      "Move the ball to the zone furthest from the defenders",
+      "Defenders: shutting off one zone is often enough"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two defenders",
+        "A point after three zones"
+      ],
+      "moeilijker": [
+        "Zones in a fixed order (round the square)",
+        "Two touches maximum",
+        "Four defenders"
+      ]
+    }
+  },
+  "veld-ps-7-tegen-5-opbouw": {
+    "naam": "Possession 7v5 with a build-up structure",
+    "uitleg": "Seven against five with a fixed build-up shape: two centre-backs, two full-backs out wide, two midfielders and a striker at the far end. The overload builds from the back and tries to reach the striker: every pass into the striker’s feet is a point. Fixed agreement: first use the centre-backs and full-backs to make the opponents shift, then go forwards through a midfielder.",
+    "organisatie": "40 × 36 m area. Centre-backs on the back line, full-backs on the sides at 12 m, midfielders at 16 m, striker at 30 m. Five opponents in bibs. After a point or losing the ball, the ball starts again with a centre-back.",
+    "benodigdheden": [
+      "4 cones",
+      "Balls",
+      "5 bibs"
+    ],
+    "meerSpelers": "With more players: a keeper behind the centre-backs (8v5), or a second striker against an extra defender.",
+    "coachpunten": [
+      "Keep width and depth: full-backs on the line, midfielders between the opponents",
+      "Move the ball until a midfielder is free, only then go forwards",
+      "Midfielder: receive half-turned so you can see the striker straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Four opponents",
+        "The full-backs may not be pressed"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "After winning the ball, the opponents score on two mini goals",
+        "Six opponents"
+      ]
+    }
+  },
+  "veld-ps-rondo-4-2-wisselen": {
+    "naam": "4v2 rondo with rotating positions",
+    "uitleg": "A 4v2 rondo, but the outside players don’t stay put: after every pass, the passer swaps places with the outside player next to them who didn’t receive the ball. The passer goes round the outside, the other player cuts inside. That way everyone keeps having to look where the passing options are.",
+    "organisatie": "10 × 10 m square. Four outside players on the sides, two defenders in bibs in the middle. Whoever loses the ball swaps with the defender who won it.",
+    "benodigdheden": [
+      "4 cones",
+      "1 ball",
+      "2 bibs"
+    ],
+    "meerSpelers": "With 7 players: add a middle player (5v2). With more: a second rondo.",
+    "coachpunten": [
+      "Swap straight after your pass, round the outside and quickly",
+      "If you cut inside: don’t run through the passing lane, check where the ball is first",
+      "The receiver checks where their teammates are now before the first touch"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Swap every two passes",
+        "Bigger square (12 m)"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "The passer chooses who to swap with",
+        "Smaller square (8 m)"
+      ]
+    }
+  },
+  "veld-ps-rondo-3-1-plus-1-1": {
+    "naam": "3v1 rondo plus a 1v1",
+    "uitleg": "Three players keep the ball in a triangle against one defender. If the defender wins the ball, it immediately becomes a 1v1: they attack the mini goal, and the player who lost the ball has to defend it. Then they swap roles and the rondo starts again.",
+    "organisatie": "Triangle with 9 m sides (disc cones). Mini goal 8 m from the triangle. Three players and one defender in a bib.",
+    "benodigdheden": [
+      "3 disc cones",
+      "1 mini goal",
+      "Balls",
+      "1 bib"
+    ],
+    "meerSpelers": "With more players: two triangles, each with a mini goal, or 4v1 in a square.",
+    "coachpunten": [
+      "Rondo: give two passing options, the ball in one or two touches",
+      "After losing the ball, switch straight away: you defend the goal",
+      "Defender: after winning it, dribble straight at the goal, don’t look round first"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger triangle",
+        "The defender may only intercept"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "After winning it, the defender attacks two mini goals (choice)",
+        "Goal further away"
+      ]
+    }
+  },
+  "veld-ps-opbouw-4-keeper-2": {
+    "naam": "Build-up with 4 + keeper against 2",
+    "uitleg": "The keeper starts with the ball. Two centre-backs and two midfielders build up together with the keeper against two opposing attackers. They score by passing or dribbling the ball into one of the two mini goals on the halfway line. If the attackers win the ball, they can shoot at the big goal straight away.",
+    "organisatie": "40 × 32 m area with a full-size goal and keeper at one end and two mini goals on the other line (16 m apart). Centre-backs wide at 6 m, midfielders at 15 m, two attackers in bibs.",
+    "benodigdheden": [
+      "Goal",
+      "2 mini goals",
+      "4 cones",
+      "Balls",
+      "2 bibs"
+    ],
+    "meerSpelers": "With more players: add two full-backs (6 + keeper against 3), or a third attacker.",
+    "coachpunten": [
+      "Centre-backs: split wide so the attackers can’t screen both",
+      "Keeper: pass to the free defender, onto their far foot",
+      "Midfielder: get free behind the attackers and receive half-turned"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One attacker",
+        "The attackers may not press the keeper"
+      ],
+      "moeilijker": [
+        "Three attackers",
+        "Score in a mini goal within 10 seconds",
+        "The keeper may only use their feet"
+      ]
+    }
+  },
+  "veld-ps-linies-diepe-spits": {
+    "naam": "Through the lines to a striker in behind",
+    "uitleg": "Two centre-backs build up and have to get the ball through the middle zone to the striker. In the middle zone, two midfielders play against two opponents. The centre-backs move the ball until a midfielder is free; they open up and play the striker in behind, who takes on their defender and finishes.",
+    "organisatie": "On half a pitch, in three zones: back zone (40–50 m) with two centre-backs, middle zone (26–40 m) with 2v2, front zone with the striker against one defender and a keeper. Players stay in their own zone, only the ball goes through the lines.",
+    "benodigdheden": [
+      "Goal",
+      "8 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 3v2 in the middle zone, or a second striker in the front zone.",
+    "coachpunten": [
+      "Centre-backs: move the ball quickly until the line to a midfielder opens",
+      "Midfielder: stand in the gap between the opponents and open up",
+      "Striker: make your run as the midfielder looks up, deep into the space"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One opponent in the middle zone",
+        "Striker without a defender"
+      ],
+      "moeilijker": [
+        "The midfielder must play it on first time",
+        "An opponent from the middle zone may track back",
+        "Finish within 10 seconds"
+      ]
+    }
   }
 }

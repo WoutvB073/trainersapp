@@ -2682,8 +2682,8 @@
           "soort": "speler",
           "team": "B",
           "nummer": 4,
-          "x": 34.6,
-          "y": 22.2,
+          "x": 30.8,
+          "y": 22.4,
           "kijkrichting": -90
         },
         {
@@ -2775,8 +2775,8 @@
               "type": "loop",
               "wie": "d",
               "naar": [
-                34.6,
-                22.2
+                30.8,
+                22.4
               ]
             },
             {
@@ -3274,9 +3274,9 @@
         "type": "half"
       },
       "weergave": {
-        "x": 24,
+        "x": 21,
         "y": -3,
-        "breedte": 46,
+        "breedte": 52,
         "lengte": 38
       },
       "camera": "schuin",
@@ -3494,10 +3494,10 @@
         "type": "half"
       },
       "weergave": {
-        "x": 6,
+        "x": 2,
         "y": -3,
-        "breedte": 56,
-        "lengte": 30
+        "breedte": 64,
+        "lengte": 34
       },
       "camera": "schuin",
       "objecten": [

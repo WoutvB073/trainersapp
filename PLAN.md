@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (27-10-2026, versie 0.25.1)
+## Status (28-10-2026, versie 0.26.0)
 
 | Fase | Status |
 |---|---|
@@ -30,7 +30,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 16. Rest deel A (A3.5, A4) + deel B: 30 nieuwe keeperoefeningen (0.23.0) | ✅ online, getest en akkoord |
 | 17. Deel C: 26 nieuwe keeperoefeningen (0.24.0) | ✅ online, getest en akkoord (D0-correctie in 0.25.0) |
 | 18. Deel D: D0 stuitbal stompen, Help, Engels (0.25.0) | ✅ online, getest en akkoord |
-| 19. Engelse woordkeus: Games en wide block (0.25.1) | ✅ online – **wacht op test** |
+| 19. Engelse woordkeus: Games en wide block (0.25.1) | ✅ online, getest en akkoord |
+| 20. Deel A: categorie Verdedigen en omschakelen, 20 spelersoefeningen (0.26.0) | ✅ online – **wacht op test**. Deel B t/m D (meer spelersoefeningen, vaste tactieken, ingestudeerde spelhervattingen) volgen elk met een eigen opdracht |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -987,9 +988,57 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 | afleggen / terugleggen | lay off / cutback | | omschakelen | transition |
 | looplijnen | movement lines | | eenvoudige poppetjes | simple figures |
 | JO11 | U11 | | Instellingen | Settings |
+| Verdedigen en omschakelen | Defending & transition | | inworp | throw-in |
+| doelspeler | target player | | diepe spits | striker in behind |
+
+## Besluiten versie 0.26.0 – Verdedigen en omschakelen, 20 spelersoefeningen (deel A)
+- **A1:** nieuwe spelerscategorie `verdedigen-omschakelen`: "Verdedigen en omschakelen" / "Defending & transition"
+  ("Druk zetten, de bal veroveren en snel omschakelen"), tussen Positiespel en Partijvormen; dus ook in de filters,
+  Training genereren en Help. Alle categorieën (spelers en keepers) kregen een klein plaatje in de categorielijst
+  (`src/components/CategoriePlaatje.tsx`).
+- Bestaande oefeningen die de categorie erbij kregen (achteraan; het bestand blijft gelijk): 3 tegen 2 met omschakeling,
+  Omschakelen tussen twee vakken, 2 tegen 1 met inhalende verdediger, Duel om de bal: 1 tegen 1 naar doel, Oplopend
+  overtal: 1v1, 2v1, 3v2, 3v3. Met Snel afronden na balwinst staan er 6 oefeningen in.
+- **A2–A4:** 20 nieuwe spelersoefeningen (bouwscripts `tools/nieuw/spelers-026a/b/c.cjs`; Engels in een `en`-blok dat
+  `hulp.cjs` naar `src/data/en/` schrijft). **#9 Afstandsschot na een kaats is niet gebouwd:** vrijwel gelijk aan de
+  bestaande "Kaats en schieten van afstand" (`veld-af-afstandsschot`).
+- Nieuwe bouwsteen **inworp** (`worp: 'inworp'` op een pass): twee handen, bal achter het hoofd en er in één beweging
+  overheen, beide voeten op de grond; de bal gaat los op ± 1,95 m. Getest in `tests/versie-026.test.ts` (ook categorie,
+  plaatjes, aantallen en categorieën van alle nieuwe oefeningen). Close-up: `tools/e2e/pas.mjs veld-af-golven-na-inworp t 0.5 2`.
+- Browsertest `tools/e2e/versie-026.mjs`: categorielijst met plaatjes, de categorie, Training genereren en Help in NL en EN
+  op een iPhone SE en een laptop. Bladen: `blad-026.png`; close-ups `blad-026-ps1/ps2/a1–a4.png` (`nieuw.mjs`).
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.26.0 – Niet alleen de nieuwe categorie, maar alle categorieën (spelers en keepers) kregen een eigen plaatje; anders
+  was de nieuwe de enige met een plaatje.
+- 0.26.0 – #9 Afstandsschot na een kaats niet gebouwd: vrijwel gelijk aan "Kaats en schieten van afstand".
+- 0.26.0 – Verdedigen en omschakelen staat tussen Positiespel en Partijvormen. Erbij gekregen: alleen oefeningen waarin
+  balwinst/balverlies en meteen omschakelen of terug verdedigen de kern is (5 stuks); rondo's en partijvormen waarin
+  omschakelen alleen een spelregel is, niet.
+- 0.26.0 – Een inworp kon het poppetje nog niet: bijgebouwd als bouwsteen.
+- 0.26.0 – Vierhoek met een verdediger: vast 5 spelers, drie fases (passief, half, vol) van ± 1 minuut.
+- 0.26.0 – Pentagon: 7 spelers, twee ballen tegelijk, buitenom naar een zelfgekozen pion.
+- 0.26.0 – Y-vorm: de drie varianten na elkaar in één animatie (overlap, derde man, lange bal).
+- 0.26.0 – Gerichte aanname naar voren en Vrijlopen uit de rug: met een spits en keeper erbij, zodat de actie eindigt met
+  een doelpoging; bij Gerichte aanname is de tegenstander een pop.
+- 0.26.0 – Schieten onder druk: de animatie toont één snelle afronding en één keer een tikje te veel (bal kwijt).
+- 0.26.0 – Snel afronden na balwinst: 8 seconden om te scoren; 2 tegen 2 in een middenvak (ook in Verdedigen en omschakelen).
+- 0.26.0 – Aanvallen in golven: inworp op 22 m van de achterlijn; twee aanvallers in de eerste golf, één in de tweede; de
+  ontvanger legt terug op de derde loper.
+- 0.26.0 – Kopballen na een voorzet: om en om van rechts (eerste paal) en links (tweede paal).
+- 0.26.0 – Wedstrijdje schieten: twee teams, laag in de hoek = 2 punten, vijf rondes.
+- 0.26.0 – 5 tegen 3: vier spelers rondom en één in het midden; de verdedigers scoren door over een korte zijde te dribbelen.
+- 0.26.0 – 4 tegen 4 met doelspelers: aan elke korte kant één doelspeler van elk team (12 spelers).
+- 0.26.0 – Vier zones: 4 tegen 3, één balbezitter per zone (wisselen mag als elke zone bezet blijft); een punt = binnen één
+  balbezit in alle vier de zones.
+- 0.26.0 – 7 tegen 5: opbouwstructuur 2 centrale verdedigers, 2 backs, 2 middenvelders en een spits; een punt = de bal in de
+  voeten van de spits.
+- 0.26.0 – Rondo 4 tegen 2: de passer wisselt met de buitenspeler naast hem die de bal níét kreeg; de passer buitenom, de
+  ander binnendoor.
+- 0.26.0 – Rondo 3 tegen 1 plus 1 tegen 1: wie de bal verloor, verdedigt het doeltje.
+- 0.26.0 – Opbouw met 4 + keeper tegen 2: na balwinst mogen de twee aanvallers meteen op het grote doel scoren.
+- 0.26.0 – Door de linies: 2 tegen 2 in het middenvak, de spits tegen één verdediger en een keeper; spelers blijven in hun zone.
 - 0.25.1 – "Spreidsprong" als keepersblok heet nu "wide block". In de spelersoefening "Ringen: hinkelen en spreidsprong"
   betekent spreidsprong een sprong met de benen gespreid (hinkelen); daar blijft het Engels "straddle jumps".
 - 0.17.0 – Training genereren start vanuit Mijn trainingen (knop naast Training maken) en vanuit een lege training; de
