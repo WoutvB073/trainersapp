@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (28-10-2026, versie 0.27.0)
+## Status (28-10-2026, versie 0.28.0)
 
 | Fase | Status |
 |---|---|
@@ -32,7 +32,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 18. Deel D: D0 stuitbal stompen, Help, Engels (0.25.0) | ✅ online, getest en akkoord |
 | 19. Engelse woordkeus: Games en wide block (0.25.1) | ✅ online, getest en akkoord |
 | 20. Deel A: categorie Verdedigen en omschakelen, 20 spelersoefeningen (0.26.0) | ✅ online, getest en akkoord |
-| 21. Deel B: 15 spelersoefeningen (verdedigen en omschakelen, partijvormen, spelletjes), verdedigende houding (0.27.0) | ✅ online – **wacht op test**. Deel C en D volgen elk met een eigen opdracht |
+| 21. Deel B: 15 spelersoefeningen (verdedigen en omschakelen, partijvormen, spelletjes), verdedigende houding (0.27.0) | ✅ online, getest en akkoord |
+| 22. Deel C: voorbeeldtactieken op het tactiekbord, 17 tactieken / 25 borden (0.28.0) | ✅ online – **wacht op test**. Deel D volgt met een eigen opdracht |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -994,6 +995,10 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 | druk zetten na balverlies | counter-pressing | | mandekking | man-marking |
 | wegdrukken (1 tegen 1) | show away | | zijwaartse houding | side-on stance |
 | doelspeler | target player | | diepe spits | striker in behind |
+| voorbeeldtactiek | example tactic | | middenblok / laag blok | mid block / low block |
+| hoog druk zetten | high press | | tegenpressing | counter-pressing |
+| de fuik | pressing trap | | uitwaaieren | split wide |
+| derde man | third player | | terugleggen (vanaf de achterlijn) | cutback (from the byline) |
 
 ## Besluiten versie 0.26.0 – Verdedigen en omschakelen, 20 spelersoefeningen (deel A)
 - **A1:** nieuwe spelerscategorie `verdedigen-omschakelen`: "Verdedigen en omschakelen" / "Defending & transition"
@@ -1027,26 +1032,43 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   drukzetters schuin opzij in plaats van recht achter de balbezitter (3D-overlap), Mandekking-partijtje een kwartslag
   gedraaid (duo's naast elkaar), ruimer beeld bij schietzones/wingers/pressen, scorebord groter.
 
-## Deel C (0.28.0) – tussenstand, NOG NIET AF (branch `deel-c-tussenstand`)
-- Klaar: `src/wedstrijd/tactieken.ts` met alle 17 tactieken in 3 groepen (25 borden: 11 tegen 11, de 8-tegen-8-versies van
-  T1, T4, T6, T7, T12, T15, T16 en T11 in 1-3-2-2 en 1-3-3-1), uitleg (wat, wanneer, 2–3 aandachtspunten).
-  `tests/versie-028.test.ts`: alle borden spelen af zonder meldingen, zonder fysieke fouten en met ≥ 1,5 m afstand.
-  `Bord.tactiek` (id, ook in de deellink `tk`). Scherm `src/screens/wedstrijd/Tactieken.tsx` (lijst + voorbeeld met
-  11/8-keuze, uitleg, Opslaan als eigen bord, Aanpassen) – nog niet aangesloten en nog niet getypecheckt.
-- Nog te doen:
-  1. Engelse vertalingen van alle nieuwe t()-teksten in `src/i18n/en.ts` (`node tools/i18n/scan.mjs -v`).
-  2. Router (`#/tactieken`, `#/tactiek/<id>/<versie>`) en App.tsx; in Wedstrijd → Nieuw tactiekbord een keuze
-     "Voorbeeldtactiek" naar `/tactieken`; in BordScherm `<TactiekUitleg>` als `b.tactiek` gezet is; CSS `.tactiek-uitleg`.
-  3. Help: onderwerp "Voorbeeldtactieken" (NL/EN) met alle namen, Laat zien → `/tactieken`.
-  4. Screenshots 2D/3D van elke tactiek (ook iPhone SE) kritisch bekijken; browsertest; versie 0.28.0; mergen naar main.
-- Keuzes tot nu toe: rugnummers per positie (2 rechtsback … 11 linksbuiten, zoals "de 6"), niet links-naar-rechts zoals
-  in de opstelling; T7 in 8 tegen 8 in de 1-2-3-2 (de buitenste middenvelders doen wat de backs in 11 tegen 11 doen);
-  T11 als één tactiek met twee versies (1-3-2-2 en 1-3-3-1); een voorbeeld opent eerst een voorbeeldscherm (niet meteen
-  een opgeslagen bord), zodat de 11/8-keuze bovenaan kan en het voorbeeld ongewijzigd blijft. Borden kun je niet aan een
-  training toevoegen (dat kon al niet); "zichtbaar zoals andere borden" = in Wedstrijd, delen via link en team.
+## Besluiten versie 0.28.0 – voorbeeldtactieken op het tactiekbord (deel C)
+- **Bibliotheek** `src/wedstrijd/tactieken.ts`: 17 tactieken in drie groepen (Druk zetten 6, Opbouwen 5, Aanvallen en
+  omschakelen 6), elk met wat, wanneer en 3 aandachtspunten, en één of meer versies: 16 in 11 tegen 11, een 8-tegen-8-versie
+  van T1, T4, T6, T7, T12, T15 en T16, en T11 (alleen 8 tegen 8) in 1-3-2-2 en 1-3-3-1 = 25 borden. Elk bord is een gewone
+  tekening met beide teams en lijnen met stapnummers (bouwhulp `Opzet`: `rood`, `blauw`, `loop`, `dribbel`, `pass`), dus
+  daarna gewoon aan te passen in de editor. Rood = eigen team (eigen goal onderaan), blauw = tegenstander.
+- **Schermen** (`src/screens/wedstrijd/Tactieken.tsx`): Wedstrijd → Nieuw tactiekbord → **Voorbeeldtactiek** → `#/tactieken`
+  (lijst per groep, met "11 tegen 11 en 8 tegen 8") → `#/tactiek/<id>/<versie>`: versiekeuze bovenaan, animatie die meteen
+  afspeelt, de naam als titel en de uitleg; **Opslaan als eigen bord** of **Aanpassen** (editor) maakt een eigen bord. Het
+  voorbeeld zelf verandert nooit. Een eigen bord onthoudt de tactiek (`Bord.tactiek`, ook in de deellink `tk`); de uitleg
+  is daar in te klappen. Delen via link en team zoals andere borden.
+- **Help**: onderwerp "Voorbeeldtactieken" (NL/EN) met alle namen (zoekbaar), Laat zien → `/tactieken`.
+- **Tests**: `tests/versie-028.test.ts` (alle 25 borden: beide teams compleet, binnen het veld, geen meldingen, geen fysieke
+  fouten, iedereen ≥ 1,5 m uit elkaar; de deellink onthoudt de tactiek; het voorbeeld blijft gelijk). Browsertest
+  `tools/e2e/tactieken.mjs schermen` (iPhone SE en laptop, NL en EN; blad `blad-tactieken.png`) en
+  `tools/e2e/tactieken.mjs borden [url] [filter]` (3D op drie momenten + 2D, bladen `blad-tactiek-druk/opbouw/aanval.png`,
+  iPhone SE `blad-tactiek-se.png`).
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.28.0 – Rugnummers per positie (2 rechtsback, 3/4 centrale verdedigers, 5 linksback, 6 controlerende middenvelder, 8/10
+  middenvelders, 7/11 buitenspelers, 9 spits), zoals "de 6" in de opdracht; niet van links naar rechts zoals bij de opstelling.
+- 0.28.0 – Een voorbeeld opent eerst een voorbeeldscherm (niet meteen een opgeslagen bord), zodat de 11/8-keuze bovenaan
+  kan en je lijst met borden niet volloopt; pas Opslaan als eigen bord of Aanpassen maakt een eigen bord.
+- 0.28.0 – In het voorbeeldscherm staat de groepsnaam in de kop en de tactieknaam als titel onder de animatie (een lange naam
+  past op een iPhone SE niet in de kop). In een eigen bord staat de naam (met "· 8 tegen 8") in de kop en voluit in het naamveld.
+- 0.28.0 – T11 Opbouw in 8 tegen 8 is één tactiek met twee versies (1-3-2-2 en 1-3-3-1), net als de 11/8-keuze.
+- 0.28.0 – T7 in 8 tegen 8 in de 1-2-3-2: de buitenste middenvelders gaan hoog en breed (wat de backs in 11 tegen 11 doen).
+- 0.28.0 – Balveroveringen tonen we met een pass van blauw die bij een rode speler aankomt (onderschepping), omdat het
+  tactiekbord met lijnen werkt; de animatie blijft zo in de editor aan te passen.
+- 0.28.0 – T2 Middenblok: de tegenstander bouwt op via links, de bal wisselt van kant en komt dan over de middenlijn; het blok
+  schuift twee keer mee en zet dan pas druk. T3 Laag blok eindigt met wegkoppen naar de hoge spits (counter).
+- 0.28.0 – Elke aanvalstactiek eindigt met een doelpunt; de drukzettactieken eindigen met de balverovering.
+- 0.28.0 – Tactiekborden kun je (nog) niet aan een training toevoegen; dat kon met andere borden ook niet. "Zichtbaar zoals
+  andere borden" = in Wedstrijd, delen via een link en met je team.
+- 0.28.0 – In 3D van boven (heel veld) vallen rugnummers bij een groepje spelers rond de bal soms over elkaar; 2D is dan beter
+  leesbaar. Waar het echt onleesbaar was (lange bal op de spits) staan de spelers iets ruimer.
 - 0.27.0 – #27 niet gebouwd maar de bestaande 4 tegen 4 met doelspelers kreeg de categorie Verdedigen en omschakelen en
   een vierde coachpunt (samen druk zetten, de lijn naar de doelspeler dicht). #37 niet gebouwd.
 - 0.27.0 – Een zijwaartse, lage verdedigende houding bestond nog niet: bijgebouwd als loopwijze `verdedigend`.
