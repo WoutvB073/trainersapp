@@ -26,7 +26,7 @@ const NIEUW: Record<string, { categorieen: string[]; spelers: number; keepers: n
   'veld-af-kopballen-voorzet': { categorieen: ['afwerken'], spelers: 4, keepers: 1 },
   'veld-af-wedstrijdje-schieten': { categorieen: ['afwerken', 'spelletjes'], spelers: 4, keepers: 1 },
   'veld-ps-5-tegen-3': { categorieen: ['positiespel'], spelers: 8, keepers: 0 },
-  'veld-ps-4-4-doelspelers': { categorieen: ['positiespel'], spelers: 12, keepers: 0 },
+  'veld-ps-4-4-doelspelers': { categorieen: ['positiespel', 'verdedigen-omschakelen'], spelers: 12, keepers: 0 }, // + 0.27.0
   'veld-ps-vier-zones': { categorieen: ['positiespel'], spelers: 7, keepers: 0 },
   'veld-ps-7-tegen-5-opbouw': { categorieen: ['positiespel'], spelers: 12, keepers: 0 },
   'veld-ps-rondo-4-2-wisselen': { categorieen: ['positiespel', 'warming-up'], spelers: 6, keepers: 0 },

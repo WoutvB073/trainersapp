@@ -2973,7 +2973,8 @@
     "soort": "veld",
     "naam": "Positiespel 4 tegen 4 met doelspelers",
     "categorieen": [
-      "positiespel"
+      "positiespel",
+      "verdedigen-omschakelen"
     ],
     "uitleg": "Vier tegen vier in het vak. Elk team heeft twee doelspelers achter de lijnen: één aan elke kant. Speel je de bal van je ene doelspeler via je teamgenoten naar je andere doelspeler, dan is dat een punt. De speler die de laatste pass gaf, wisselt meteen met die doelspeler: hij gaat achter de lijn staan en de doelspeler komt het vak in.",
     "organisatie": "Vak van 18 × 26 m. Aan beide korte zijden staan twee doelspelers achter de lijn, één van elk team. Rondes van 4 minuten.",
@@ -2989,7 +2990,8 @@
     "coachpunten": [
       "Doelspeler: kort je lijn op en neer bewegen, zodat je aanspeelbaar blijft",
       "In het vak: speel de doelspeler pas in als je ervoor staat, niet met je rug ernaar",
-      "Na de wissel meteen meedoen: de nieuwe speler moet direct aanspeelbaar zijn"
+      "Na de wissel meteen meedoen: de nieuwe speler moet direct aanspeelbaar zijn",
+      "Zonder bal: samen druk zetten en de lijn naar de doelspeler dichtzetten, zodat het andere team breed moet blijven spelen"
     ],
     "variaties": {
       "makkelijker": [

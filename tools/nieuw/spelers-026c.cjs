@@ -22,7 +22,11 @@ const oefeningen = [
     keepersNodig: 0,
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: 6 tegen 3 in een groter vak, of een tweede vak met dezelfde vorm.',
-    coachpunten: ['Maak het vak groot: breed en diep, nooit twee spelers op één lijn', 'Speel naar de speler die het verst van een verdediger staat', 'Verdedigers: samen schuiven, één zet druk en de anderen sluiten de passlijnen'],
+    coachpunten: [
+      'Maak het vak groot: breed en diep, nooit twee spelers op één lijn',
+      'Speel naar de speler die het verst van een verdediger staat',
+      'Verdedigers: samen schuiven, één zet druk en de anderen sluiten de passlijnen',
+    ],
     variaties: {
       makkelijker: ['Groter vak (20 × 26 m)', 'Acht passes is een punt'],
       moeilijker: ['Maximaal twee aanrakingen', 'Kleiner vak', 'Verdedigers scoren al door de bal over een zijlijn te spelen'],
@@ -34,7 +38,11 @@ const oefeningen = [
       organisatie: '16 × 22 m area. Five players in one colour, three defenders in bibs. 3-minute rounds; then three players swap roles.',
       benodigdheden: ['4 cones', 'Balls', '3 bibs'],
       meerSpelers: 'With more players: 6v3 in a bigger area, or a second area with the same game.',
-      coachpunten: ['Make the area big: wide and deep, never two players in a line', 'Pass to the player furthest from a defender', 'Defenders: shift together, one presses and the others close the passing lanes'],
+      coachpunten: [
+        'Make the area big: wide and deep, never two players in a line',
+        'Pass to the player furthest from a defender',
+        'Defenders: shift together, one presses and the others close the passing lanes',
+      ],
       variaties: {
         makkelijker: ['Bigger area (20 × 26 m)', 'Eight passes is a point'],
         moeilijker: ['Two touches maximum', 'Smaller area', 'The defenders already score by playing the ball over a touchline'],
@@ -75,7 +83,7 @@ const oefeningen = [
   {
     id: 'veld-ps-4-4-doelspelers',
     naam: 'Positiespel 4 tegen 4 met doelspelers',
-    categorieen: ['positiespel'],
+    categorieen: ['positiespel', 'verdedigen-omschakelen'], // + 0.27.0 (idee #27)
     uitleg:
       'Vier tegen vier in het vak. Elk team heeft twee doelspelers achter de lijnen: één aan elke kant. Speel je de bal van je ene doelspeler via je teamgenoten naar je andere doelspeler, dan is dat een punt. De speler die de laatste pass gaf, wisselt meteen met die doelspeler: hij gaat achter de lijn staan en de doelspeler komt het vak in.',
     organisatie: 'Vak van 18 × 26 m. Aan beide korte zijden staan twee doelspelers achter de lijn, één van elk team. Rondes van 4 minuten.',
@@ -84,7 +92,12 @@ const oefeningen = [
     keepersNodig: 0,
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: 5 tegen 5 met doelspelers in een groter vak, of een neutrale joker in het vak.',
-    coachpunten: ['Doelspeler: kort je lijn op en neer bewegen, zodat je aanspeelbaar blijft', 'In het vak: speel de doelspeler pas in als je ervoor staat, niet met je rug ernaar', 'Na de wissel meteen meedoen: de nieuwe speler moet direct aanspeelbaar zijn'],
+    coachpunten: [
+      'Doelspeler: kort je lijn op en neer bewegen, zodat je aanspeelbaar blijft',
+      'In het vak: speel de doelspeler pas in als je ervoor staat, niet met je rug ernaar',
+      'Na de wissel meteen meedoen: de nieuwe speler moet direct aanspeelbaar zijn',
+      'Zonder bal: samen druk zetten en de lijn naar de doelspeler dichtzetten, zodat het andere team breed moet blijven spelen',
+    ],
     variaties: {
       makkelijker: ['Doelspelers mogen ook binnen het vak lopen', 'Elke pass naar een doelspeler is een punt'],
       moeilijker: ['Doelspelers in één keer', 'Een punt alleen als iedereen in het vak de bal heeft gehad', 'Kleiner vak'],
@@ -96,7 +109,12 @@ const oefeningen = [
       organisatie: '18 × 26 m area. At both short ends, two target players stand behind the line, one from each team. 4-minute rounds.',
       benodigdheden: ['4 cones', 'Balls', 'Bibs in 2 colours'],
       meerSpelers: 'With more players: 5v5 with target players in a bigger area, or a neutral joker in the area.',
-      coachpunten: ['Target player: shuffle along your line so you stay available', 'In the area: only play into the target player once you are facing them, not with your back to them', 'Join in straight after the swap: the new player has to be available immediately'],
+      coachpunten: [
+        'Target player: shuffle along your line so you stay available',
+        'In the area: only play into the target player once you are facing them, not with your back to them',
+        'Join in straight after the swap: the new player has to be available immediately',
+        'Out of possession: press together and block the line to the target player, so the other team has to keep playing it sideways',
+      ],
       variaties: {
         makkelijker: ['Target players may also move inside the area', 'Every pass to a target player is a point'],
         moeilijker: ['Target players one touch', 'Only a point once everyone in the area has had the ball', 'Smaller area'],
@@ -197,13 +215,18 @@ const oefeningen = [
     categorieen: ['positiespel'],
     uitleg:
       'Zeven tegen vijf met een vaste opbouw: twee centrale verdedigers, twee backs breed, twee middenvelders en een spits aan de overkant. Het overtal bouwt op van achteren en probeert de spits te bereiken: elke pass in de voeten van de spits is een punt. Vaste afspraak: eerst de verdedigers en backs gebruiken om de tegenstander te laten schuiven, dan via een middenvelder naar voren.',
-    organisatie: 'Vak van 40 × 36 m. Centrale verdedigers op de achterlijn, backs aan de zijkanten op 12 m, middenvelders op 16 m, spits op 30 m. Vijf tegenstanders in hesjes. Na een punt of balverlies begint de bal weer bij een centrale verdediger.',
+    organisatie:
+      'Vak van 40 × 36 m. Centrale verdedigers op de achterlijn, backs aan de zijkanten op 12 m, middenvelders op 16 m, spits op 30 m. Vijf tegenstanders in hesjes. Na een punt of balverlies begint de bal weer bij een centrale verdediger.',
     benodigdheden: ['4 pionnen', 'Ballen', '5 hesjes'],
     spelersNodig: 12,
     keepersNodig: 0,
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: een keeper achter de centrale verdedigers (8 tegen 5), of een tweede spits tegen een extra verdediger.',
-    coachpunten: ['Breedte en diepte houden: backs op de lijn, middenvelders tussen de tegenstanders', 'De bal verplaatsen tot er een middenvelder vrij staat, dan pas naar voren', 'Middenvelder: half gedraaid aannemen, zodat je de spits meteen ziet'],
+    coachpunten: [
+      'Breedte en diepte houden: backs op de lijn, middenvelders tussen de tegenstanders',
+      'De bal verplaatsen tot er een middenvelder vrij staat, dan pas naar voren',
+      'Middenvelder: half gedraaid aannemen, zodat je de spits meteen ziet',
+    ],
     variaties: {
       makkelijker: ['Vier tegenstanders', 'Backs mogen niet worden aangevallen'],
       moeilijker: ['Maximaal twee aanrakingen', 'Na balwinst scoren de tegenstanders op twee kleine doeltjes', 'Zes tegenstanders'],
@@ -212,10 +235,15 @@ const oefeningen = [
       naam: 'Possession 7v5 with a build-up structure',
       uitleg:
         'Seven against five with a fixed build-up shape: two centre-backs, two full-backs out wide, two midfielders and a striker at the far end. The overload builds from the back and tries to reach the striker: every pass into the striker’s feet is a point. Fixed agreement: first use the centre-backs and full-backs to make the opponents shift, then go forwards through a midfielder.',
-      organisatie: '40 × 36 m area. Centre-backs on the back line, full-backs on the sides at 12 m, midfielders at 16 m, striker at 30 m. Five opponents in bibs. After a point or losing the ball, the ball starts again with a centre-back.',
+      organisatie:
+        '40 × 36 m area. Centre-backs on the back line, full-backs on the sides at 12 m, midfielders at 16 m, striker at 30 m. Five opponents in bibs. After a point or losing the ball, the ball starts again with a centre-back.',
       benodigdheden: ['4 cones', 'Balls', '5 bibs'],
       meerSpelers: 'With more players: a keeper behind the centre-backs (8v5), or a second striker against an extra defender.',
-      coachpunten: ['Keep width and depth: full-backs on the line, midfielders between the opponents', 'Move the ball until a midfielder is free, only then go forwards', 'Midfielder: receive half-turned so you can see the striker straight away'],
+      coachpunten: [
+        'Keep width and depth: full-backs on the line, midfielders between the opponents',
+        'Move the ball until a midfielder is free, only then go forwards',
+        'Midfielder: receive half-turned so you can see the striker straight away',
+      ],
       variaties: {
         makkelijker: ['Four opponents', 'The full-backs may not be pressed'],
         moeilijker: ['Two touches maximum', 'After winning the ball, the opponents score on two mini goals', 'Six opponents'],
@@ -268,7 +296,11 @@ const oefeningen = [
     keepersNodig: 0,
     doorwisselbaar: false,
     meerSpelers: 'Met 7 spelers: een middenman erbij (5 tegen 2). Met meer: een tweede rondo.',
-    coachpunten: ['Na je pass meteen wisselen, buitenom en snel', 'Wie binnendoor loopt: niet door de passlijn, kijk eerst waar de bal is', 'De ontvanger kijkt vóór de aanname al waar zijn medespelers nu staan'],
+    coachpunten: [
+      'Na je pass meteen wisselen, buitenom en snel',
+      'Wie binnendoor loopt: niet door de passlijn, kijk eerst waar de bal is',
+      'De ontvanger kijkt vóór de aanname al waar zijn medespelers nu staan',
+    ],
     variaties: {
       makkelijker: ['Wisselen om de twee passes', 'Groter vierkant (12 m)'],
       moeilijker: ['Maximaal twee aanrakingen', 'De passer kiest zelf met wie hij wisselt', 'Kleiner vierkant (8 m)'],
@@ -280,7 +312,11 @@ const oefeningen = [
       organisatie: '10 × 10 m square. Four outside players on the sides, two defenders in bibs in the middle. Whoever loses the ball swaps with the defender who won it.',
       benodigdheden: ['4 cones', '1 ball', '2 bibs'],
       meerSpelers: 'With 7 players: add a middle player (5v2). With more: a second rondo.',
-      coachpunten: ['Swap straight after your pass, round the outside and quickly', 'If you cut inside: don’t run through the passing lane, check where the ball is first', 'The receiver checks where their teammates are now before the first touch'],
+      coachpunten: [
+        'Swap straight after your pass, round the outside and quickly',
+        'If you cut inside: don’t run through the passing lane, check where the ball is first',
+        'The receiver checks where their teammates are now before the first touch',
+      ],
       variaties: {
         makkelijker: ['Swap every two passes', 'Bigger square (12 m)'],
         moeilijker: ['Two touches maximum', 'The passer chooses who to swap with', 'Smaller square (8 m)'],
@@ -306,13 +342,31 @@ const oefeningen = [
         stap(
           { type: 'pass', van: 'a1', naar: 'a2' },
           { type: 'druk', wie: 'd1', op: 'a2', afstand: 2, start: 0.4 },
-          { type: 'loop', wie: 'a1', via: [[3, 1.4], [1.4, 3]], naar: [3.6, 8], start: 0.35 },
+          {
+            type: 'loop',
+            wie: 'a1',
+            via: [
+              [3, 1.4],
+              [1.4, 3],
+            ],
+            naar: [3.6, 8],
+            start: 0.35,
+          },
           { type: 'loop', wie: 'a4', via: [[5.2, 5.0]], naar: [8, 3.6], start: 0.35 },
         ),
         stap(
           { type: 'pass', van: 'a2', naar: 'a3' },
           { type: 'druk', wie: 'd1', op: 'a3', afstand: 2, start: 0.45 },
-          { type: 'loop', wie: 'a2', via: [[14.6, 3], [13, 1.4]], naar: [8, 3.6], start: 0.35 },
+          {
+            type: 'loop',
+            wie: 'a2',
+            via: [
+              [14.6, 3],
+              [13, 1.4],
+            ],
+            naar: [8, 3.6],
+            start: 0.35,
+          },
           { type: 'loop', wie: 'a4', via: [[10.8, 5.0]], naar: [12.4, 8], start: 0.35 },
         ),
         stap({ type: 'pass', van: 'a3', naar: 'a1' }, { type: 'druk', wie: 'd2', op: 'a1', afstand: 2, start: 0.45 }),
@@ -334,7 +388,11 @@ const oefeningen = [
     keepersNodig: 0,
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: twee driehoeken met elk een doeltje, of 4 tegen 1 in een vierkant.',
-    coachpunten: ['Rondo: twee aanspeelmogelijkheden geven, de bal in één of twee keer', 'Na balverlies meteen omschakelen: jij verdedigt het doeltje', 'Verdediger: na de balwinst meteen naar het doeltje dribbelen, niet eerst kijken'],
+    coachpunten: [
+      'Rondo: twee aanspeelmogelijkheden geven, de bal in één of twee keer',
+      'Na balverlies meteen omschakelen: jij verdedigt het doeltje',
+      'Verdediger: na de balwinst meteen naar het doeltje dribbelen, niet eerst kijken',
+    ],
     variaties: {
       makkelijker: ['Grotere driehoek', 'Verdediger mag alleen onderscheppen'],
       moeilijker: ['Maximaal twee aanrakingen', 'Na balwinst valt de verdediger aan op twee doeltjes (keuze)', 'Doeltje verder weg'],
@@ -346,7 +404,11 @@ const oefeningen = [
       organisatie: 'Triangle with 9 m sides (disc cones). Mini goal 8 m from the triangle. Three players and one defender in a bib.',
       benodigdheden: ['3 disc cones', '1 mini goal', 'Balls', '1 bib'],
       meerSpelers: 'With more players: two triangles, each with a mini goal, or 4v1 in a square.',
-      coachpunten: ['Rondo: give two passing options, the ball in one or two touches', 'After losing the ball, switch straight away: you defend the goal', 'Defender: after winning it, dribble straight at the goal, don’t look round first'],
+      coachpunten: [
+        'Rondo: give two passing options, the ball in one or two touches',
+        'After losing the ball, switch straight away: you defend the goal',
+        'Defender: after winning it, dribble straight at the goal, don’t look round first',
+      ],
       variaties: {
         makkelijker: ['Bigger triangle', 'The defender may only intercept'],
         moeilijker: ['Two touches maximum', 'After winning it, the defender attacks two mini goals (choice)', 'Goal further away'],
@@ -369,7 +431,11 @@ const oefeningen = [
         pauze(0.6),
         stap({ type: 'pass', van: 'a1', naar: 'a2' }, { type: 'druk', wie: 'd', op: 'a2', afstand: 2.2, start: 0.4 }),
         stap({ type: 'pass', van: 'a2', naar: 'a3', onderschept: 'd' }),
-        stap({ type: 'dribbel', wie: 'd', via: [[11.6, 13]], naar: [9.6, 16.4] }, { type: 'loop', wie: 'a3', naar: [5.6, 12.6], start: 0.1 }, { type: 'druk', wie: 'a2', op: 'd', afstand: 1.8, manier: 'sprint', start: 0.15 }),
+        stap(
+          { type: 'dribbel', wie: 'd', via: [[11.6, 13]], naar: [9.6, 16.4] },
+          { type: 'loop', wie: 'a3', naar: [5.6, 12.6], start: 0.1 },
+          { type: 'druk', wie: 'a2', op: 'd', afstand: 1.8, manier: 'sprint', start: 0.15 },
+        ),
         stap({ type: 'schot', van: 'd', naar: [8.5, 21] }),
         pauze(1.0),
       ],
@@ -383,13 +449,18 @@ const oefeningen = [
     categorieen: ['positiespel'],
     uitleg:
       'De keeper begint met de bal. Twee centrale verdedigers en twee middenvelders bouwen samen met de keeper op tegen twee aanvallers van de tegenstander. Ze scoren door de bal in een van de twee kleine doeltjes op de middenlijn te spelen of te dribbelen. Veroveren de aanvallers de bal, dan mogen ze meteen op het grote doel scoren.',
-    organisatie: 'Vak van 40 × 32 m met een groot doel en keeper aan de ene kant en twee kleine doeltjes op de andere lijn (16 m uit elkaar). Centrale verdedigers breed op 6 m, middenvelders op 15 m, twee aanvallers in hesjes.',
+    organisatie:
+      'Vak van 40 × 32 m met een groot doel en keeper aan de ene kant en twee kleine doeltjes op de andere lijn (16 m uit elkaar). Centrale verdedigers breed op 6 m, middenvelders op 15 m, twee aanvallers in hesjes.',
     benodigdheden: ['Goal', '2 kleine doeltjes', '4 pionnen', 'Ballen', '2 hesjes'],
     spelersNodig: 6,
     keepersNodig: 1,
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: twee backs erbij (6 + keeper tegen 3), of een derde aanvaller.',
-    coachpunten: ['Centrale verdedigers: breed uit elkaar, zodat de aanvallers niet allebei kunnen afschermen', 'Keeper: speel de vrije verdediger in, op zijn verste voet', 'Middenvelder: vrijlopen in de rug van de aanvallers en half gedraaid aannemen'],
+    coachpunten: [
+      'Centrale verdedigers: breed uit elkaar, zodat de aanvallers niet allebei kunnen afschermen',
+      'Keeper: speel de vrije verdediger in, op zijn verste voet',
+      'Middenvelder: vrijlopen in de rug van de aanvallers en half gedraaid aannemen',
+    ],
     variaties: {
       makkelijker: ['Eén aanvaller', 'Aanvallers mogen de keeper niet storen'],
       moeilijker: ['Drie aanvallers', 'Binnen 10 seconden een doeltje', 'Keeper speelt alleen met de voet'],
@@ -398,10 +469,15 @@ const oefeningen = [
       naam: 'Build-up with 4 + keeper against 2',
       uitleg:
         'The keeper starts with the ball. Two centre-backs and two midfielders build up together with the keeper against two opposing attackers. They score by passing or dribbling the ball into one of the two mini goals on the halfway line. If the attackers win the ball, they can shoot at the big goal straight away.',
-      organisatie: '40 × 32 m area with a full-size goal and keeper at one end and two mini goals on the other line (16 m apart). Centre-backs wide at 6 m, midfielders at 15 m, two attackers in bibs.',
+      organisatie:
+        '40 × 32 m area with a full-size goal and keeper at one end and two mini goals on the other line (16 m apart). Centre-backs wide at 6 m, midfielders at 15 m, two attackers in bibs.',
       benodigdheden: ['Goal', '2 mini goals', '4 cones', 'Balls', '2 bibs'],
       meerSpelers: 'With more players: add two full-backs (6 + keeper against 3), or a third attacker.',
-      coachpunten: ['Centre-backs: split wide so the attackers can’t screen both', 'Keeper: pass to the free defender, onto their far foot', 'Midfielder: get free behind the attackers and receive half-turned'],
+      coachpunten: [
+        'Centre-backs: split wide so the attackers can’t screen both',
+        'Keeper: pass to the free defender, onto their far foot',
+        'Midfielder: get free behind the attackers and receive half-turned',
+      ],
       variaties: {
         makkelijker: ['One attacker', 'The attackers may not press the keeper'],
         moeilijker: ['Three attackers', 'Score in a mini goal within 10 seconds', 'The keeper may only use their feet'],
@@ -440,13 +516,18 @@ const oefeningen = [
     categorieen: ['positiespel'],
     uitleg:
       'Twee centrale verdedigers bouwen op en moeten de bal via het middenvak naar de spits krijgen. In het middenvak spelen twee middenvelders tegen twee tegenstanders. De centrale verdedigers verplaatsen de bal tot er een middenvelder vrij staat; die draait open en speelt de spits diep, die het duel met zijn verdediger aangaat en afrondt.',
-    organisatie: 'Op een half veld, in drie zones: achterzone (40–50 m) met twee centrale verdedigers, middenvak (26–40 m) met 2 tegen 2, voorzone met de spits tegen één verdediger en een keeper. Spelers blijven in hun eigen zone, alleen de bal gaat door de linies.',
+    organisatie:
+      'Op een half veld, in drie zones: achterzone (40–50 m) met twee centrale verdedigers, middenvak (26–40 m) met 2 tegen 2, voorzone met de spits tegen één verdediger en een keeper. Spelers blijven in hun eigen zone, alleen de bal gaat door de linies.',
     benodigdheden: ['Goal', '8 pionnen', 'Ballen', 'Hesjes'],
     spelersNodig: 8,
     keepersNodig: 1,
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: 3 tegen 2 in het middenvak, of een tweede spits in de voorzone.',
-    coachpunten: ['Centrale verdedigers: de bal snel verplaatsen tot de lijn naar een middenvelder open is', 'Middenvelder: in het gat tussen de tegenstanders staan en open draaien', 'Spits: loopactie op het moment dat de middenvelder opkijkt, diep in de ruimte'],
+    coachpunten: [
+      'Centrale verdedigers: de bal snel verplaatsen tot de lijn naar een middenvelder open is',
+      'Middenvelder: in het gat tussen de tegenstanders staan en open draaien',
+      'Spits: loopactie op het moment dat de middenvelder opkijkt, diep in de ruimte',
+    ],
     variaties: {
       makkelijker: ['Eén tegenstander in het middenvak', 'Spits zonder verdediger'],
       moeilijker: ['Middenvelder moet in één keer doorspelen', 'Een tegenstander mag vanuit het middenvak terug verdedigen', 'Binnen 10 seconden afronden'],
@@ -455,10 +536,15 @@ const oefeningen = [
       naam: 'Through the lines to a striker in behind',
       uitleg:
         'Two centre-backs build up and have to get the ball through the middle zone to the striker. In the middle zone, two midfielders play against two opponents. The centre-backs move the ball until a midfielder is free; they open up and play the striker in behind, who takes on their defender and finishes.',
-      organisatie: 'On half a pitch, in three zones: back zone (40–50 m) with two centre-backs, middle zone (26–40 m) with 2v2, front zone with the striker against one defender and a keeper. Players stay in their own zone, only the ball goes through the lines.',
+      organisatie:
+        'On half a pitch, in three zones: back zone (40–50 m) with two centre-backs, middle zone (26–40 m) with 2v2, front zone with the striker against one defender and a keeper. Players stay in their own zone, only the ball goes through the lines.',
       benodigdheden: ['Goal', '8 cones', 'Balls', 'Bibs'],
       meerSpelers: 'With more players: 3v2 in the middle zone, or a second striker in the front zone.',
-      coachpunten: ['Centre-backs: move the ball quickly until the line to a midfielder opens', 'Midfielder: stand in the gap between the opponents and open up', 'Striker: make your run as the midfielder looks up, deep into the space'],
+      coachpunten: [
+        'Centre-backs: move the ball quickly until the line to a midfielder opens',
+        'Midfielder: stand in the gap between the opponents and open up',
+        'Striker: make your run as the midfielder looks up, deep into the space',
+      ],
       variaties: {
         makkelijker: ['One opponent in the middle zone', 'Striker without a defender'],
         moeilijker: ['The midfielder must play it on first time', 'An opponent from the middle zone may track back', 'Finish within 10 seconds'],

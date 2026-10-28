@@ -1,0 +1,170 @@
+{
+  "veld-vo-druk-drie-fases": {
+    "naam": "Pressing in three phases",
+    "uitleg": "Three teams of three. Red keeps the ball in the area, blue presses and yellow rests. Blue presses in three phases: first passively (track the play and close the passing lanes, no tackling), then blue may intercept, and finally full pressure. If blue wins the ball or the coach gives a signal, blue attacks the big goal straight away: 3v2 against two red players and the keeper. Then the roles rotate: blue keeps the ball, yellow presses, red rests.",
+    "organisatie": "On half a pitch. 16 × 14 m area about 38 m from goal; keeper in goal. Red (3) in the area, blue (3) with them, yellow (3) resting next to the area. Each phase about 1 minute; after an attack the next round starts in the area.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: three teams of four (4v3 on goal), or a bigger area.",
+    "coachpunten": [
+      "Passive pressing is still work: stay between ball and goal and close the short passing lane",
+      "Full pressure: the nearest player presses, the others shift across and close the passing lanes",
+      "After winning the ball go forward straight away: an attempt on goal within a few seconds"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger area, so red can keep the ball more easily",
+        "Only one red player defends the attack"
+      ],
+      "moeilijker": [
+        "Smaller area",
+        "The attack must be finished within 8 seconds",
+        "After losing the ball, all three red players may defend"
+      ]
+    }
+  },
+  "veld-vo-drie-verdedigers": {
+    "naam": "First, second and third defender",
+    "uitleg": "Three against three, with the focus on the defenders’ jobs. The first defender presses the ball. The second covers: diagonally behind them, ready to step in if the attacker gets past. The third keeps the balance on the far side, a little deeper, watching the space behind the defence and their own player. When the ball is passed on, the roles change straight away: whoever is closest to the new ball carrier becomes the first defender. After winning the ball, the defenders can score on the two mini goals at the other end.",
+    "organisatie": "26 × 32 m area with two mini goals at each short end. Red attacks (with the ball), blue defends. Swap roles after 5 attacks. The coach freezes play now and then to show the positions.",
+    "benodigdheden": [
+      "4 mini goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 4v4 (two covering, one in balance), or bring in a new three every round.",
+    "coachpunten": [
+      "First defender: close down quickly, slow down for the last few metres and show the attacker outside",
+      "Second defender: 3–4 m diagonally behind the first, on the side the attacker wants to go",
+      "Third defender: in balance, a little deeper and narrower, with ball and player in view",
+      "Talk with every pass: who takes the ball, who covers?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Attackers start at walking pace",
+        "Narrower area (20 m)"
+      ],
+      "moeilijker": [
+        "Attackers already score by dribbling over the line",
+        "A fourth attacker as a joker",
+        "After winning the ball, score within 6 seconds"
+      ]
+    }
+  },
+  "veld-vo-1-1-wegdrukken": {
+    "naam": "1v1 defending: showing the attacker away",
+    "uitleg": "The defender passes the ball to the attacker at the other end and closes them down straight away. For the last few metres they slow down and drop into a side-on stance, just off the line to the middle. That leaves only the outside open and shows the attacker away towards the touchline. They stay an arm’s length away and only step in when the attacker pushes the ball too far ahead. The attacker scores by dribbling the ball over the line behind the defender.",
+    "organisatie": "12 × 20 m channel. Defenders in a queue with balls at the scoring line, attackers in a queue at the other end. After each go, join the other queue.",
+    "benodigdheden": [
+      "6 cones or disc cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Close down fast while the ball is travelling, short steps for the last few metres",
+      "Stand side-on, knees bent: inside closed, outside open",
+      "Watch the ball, not the feints",
+      "Only step in after a poor touch: otherwise keep showing them away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Narrower channel (8 m), so showing the attacker away is easier",
+        "Attacker at walking or dribbling pace only"
+      ],
+      "moeilijker": [
+        "Wider channel (16 m)",
+        "The attacker may also score in a mini goal",
+        "Defender starts 3 m further away"
+      ]
+    }
+  },
+  "veld-vo-hoog-druk-loont": {
+    "naam": "High pressing pays off",
+    "uitleg": "A 5v5 game with keepers on a pitch split into three zones. A goal is worth more the higher up the pitch you won the ball: won in the last zone (near the opponents’ goal) and scored = 3 points, won in the middle zone = 2 points, won in your own half = 1 point. That way it pays to press straight away. In the example, red presses blue’s build-up and intercepts a back pass just in front of goal: 3 points.",
+    "organisatie": "36 × 48 m pitch split into three 16 m zones (disc cones or cones), with a youth goal and a keeper at each short end. Teams in bibs, 5-minute rounds.",
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones or disc cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 6v6 or 7v7 on a bigger pitch.",
+    "coachpunten": [
+      "Press as a team: the front player presses, the rest shift across and close the short passing lanes",
+      "Watch for the back pass: it is often soft and predictable",
+      "After winning the ball high up the pitch: finish straight away, don’t look round first"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The keeper may not be pressed",
+        "Bigger pitch"
+      ],
+      "moeilijker": [
+        "Three touches maximum",
+        "A goal after winning the ball in the last zone only counts within 10 seconds",
+        "Smaller pitch"
+      ]
+    }
+  },
+  "veld-vo-pressen-na-balverlies": {
+    "naam": "Counter-pressing after losing the ball",
+    "uitleg": "A 5v5 game on four mini goals. If you lose the ball, you have 5 seconds to win it back: manage it and your team gets a bonus point (and can try to score straight away). The coach counts down out loud. In the example, blue intercepts a pass, but two red players press together straight away, win the ball back and red scores.",
+    "organisatie": "30 × 40 m pitch with two mini goals at each short end, 12 m apart. Teams in bibs, 4-minute rounds. Goal = 1 point, ball back within 5 seconds = 1 bonus point.",
+    "benodigdheden": [
+      "4 mini goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 6v6 on a bigger pitch, or a joker who always plays for the team in possession.",
+    "coachpunten": [
+      "After losing the ball, no sulking but press straight away: the nearest player goes straight to the ball",
+      "Press in twos or threes, the rest close the short passing lanes",
+      "If it doesn’t work within 5 seconds: get back behind the ball quickly and stay compact"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "8 seconds to win the ball back",
+        "Bigger pitch"
+      ],
+      "moeilijker": [
+        "3 seconds",
+        "The other team already scores by keeping the ball for 5 passes",
+        "Two touches maximum"
+      ]
+    }
+  },
+  "veld-vo-omschakelen-kaatsers": {
+    "naam": "Transition with bounce players",
+    "uitleg": "A 5v5 game with keepers and two neutral bounce players on the touchlines. The bounce players play for the team in possession and may touch the ball twice at most. A normal goal is 1 point. Score within 10 seconds of winning the ball and it’s 2 points, and if the assist then comes from a bounce player, 3 points. In the example, red intercepts, plays straight into the bounce player, who lays it off first time to a player running through.",
+    "organisatie": "36 × 46 m pitch with a youth goal and a keeper at each short end. A bounce player (own colour) halfway along each touchline. Teams in bibs, 5-minute rounds; change the bounce players every round.",
+    "benodigdheden": [
+      "2 youth goals",
+      "4 cones",
+      "Balls",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: 6v6 with bounce players, or four bounce players (two per touchline).",
+    "coachpunten": [
+      "After winning the ball, look forward first: if the bounce player is free, play it in straight away",
+      "After the pass to the bounce player, run in behind straight away",
+      "The team that loses the ball: get back behind the ball immediately and close the middle"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bounce players may take three touches",
+        "15 seconds for the extra points"
+      ],
+      "moeilijker": [
+        "Bounce players one touch",
+        "8 seconds for the extra points",
+        "Goals only count after a pass from a bounce player"
+      ]
+    }
+  }
+}

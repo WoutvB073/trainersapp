@@ -22,6 +22,8 @@ export const TEKENING_TEKST: Record<string, string> = {
   Koning: 'King',
   'schutter → doel': 'shooter → goal',
   'keeper → rij': 'keeper → queue',
+  'Rood 0 – 2 Blauw': 'Red 0 – 2 Blue',
+  dobbelsteen: 'dice',
 };
 
 /** De Engelse versie van een oefening (de tekening blijft gelijk, op tekst-labels na). */

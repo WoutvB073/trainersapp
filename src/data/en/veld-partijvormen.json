@@ -3,144 +3,656 @@
     "naam": "1v1 on two mini goals each",
     "uitleg": "Two players play 1v1. Each player defends two mini goals and attacks the other player's two goals. Be brave and take them on: use a feint and pick the goal that is open. After a goal, the other player gets the ball.",
     "organisatie": "13 × 18 m area with two mini goals (2–3 m wide) in the corners of both short sides. Waiting pairs beside the area; each round lasts 45–60 seconds.",
-    "benodigdheden": ["4 mini goals", "4 cones", "balls"],
-    "coachpunten": ["Run at the defender with speed, then make your move", "Look up: which goal is the defender leaving open?", "Defender: don't dive in, stay on your toes, side-on, and force the attacker one way"],
-    "variaties": { "makkelijker": ["Wider area (15 × 18 m)", "One bigger goal at each end"], "moeilijker": ["A goal only counts after a feint or a cut", "Smaller area (10 × 15 m)", "90-second rounds: who can keep going?"] }
+    "benodigdheden": [
+      "4 mini goals",
+      "4 cones",
+      "balls"
+    ],
+    "coachpunten": [
+      "Run at the defender with speed, then make your move",
+      "Look up: which goal is the defender leaving open?",
+      "Defender: don't dive in, stay on your toes, side-on, and force the attacker one way"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider area (15 × 18 m)",
+        "One bigger goal at each end"
+      ],
+      "moeilijker": [
+        "A goal only counts after a feint or a cut",
+        "Smaller area (10 × 15 m)",
+        "90-second rounds: who can keep going?"
+      ]
+    }
   },
   "veld-pv-2-1": {
     "naam": "2v1 to goal",
     "uitleg": "Two attackers start at 26 m and play against one defender and a keeper. Dribble at the defender to commit them, then pass to your teammate and go in behind: with a one-two the defender is beaten. If the defender wins the ball, they can score in a mini goal on the halfway line.",
     "organisatie": "On half a pitch: attackers with a ball at 26 m, defender at 16 m, keeper in goal. Mini goal on the halfway line for the defender. Rotate after each attack.",
-    "benodigdheden": ["1 goal", "1 mini goal", "balls", "bibs"],
-    "coachpunten": ["Ball carrier: dribble at the defender until they have to choose", "Teammate: stay wide, don't run towards the ball", "Go in behind straight after your pass: the return comes into your path"],
-    "variaties": { "makkelijker": ["The defender only starts after the first pass", "No keeper, bigger goal"], "moeilijker": ["6 seconds maximum per attack", "A second defender comes on from the side after 3 seconds (2v2)", "A goal only counts after a one-two"] }
+    "benodigdheden": [
+      "1 goal",
+      "1 mini goal",
+      "balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Ball carrier: dribble at the defender until they have to choose",
+      "Teammate: stay wide, don't run towards the ball",
+      "Go in behind straight after your pass: the return comes into your path"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender only starts after the first pass",
+        "No keeper, bigger goal"
+      ],
+      "moeilijker": [
+        "6 seconds maximum per attack",
+        "A second defender comes on from the side after 3 seconds (2v2)",
+        "A goal only counts after a one-two"
+      ]
+    }
   },
   "veld-pv-2-2-winnaar-blijft": {
     "naam": "2v2: winners stay on",
     "uitleg": "Two against two on two mini goals. The pair that scores stays on; the pair that concedes goes off and a new pair comes on. Work together: a pass and a run behind the defender (overlap or in behind) often leads to a goal.",
     "organisatie": "22 × 14 m area with a mini goal (3 m) on each short side. Pairs wait beside the area; changes happen at the side.",
-    "benodigdheden": ["2 mini goals", "4 cones", "balls", "bibs in 3 colours"],
-    "coachpunten": ["Off the ball: run behind your opponent, not towards the ball", "Play the ball into your teammate's path", "Defending: one presses, the other tracks the run"],
-    "variaties": { "makkelijker": ["Bigger area (25 × 18 m)", "Change every 2 minutes instead of after a goal"], "moeilijker": ["A goal only counts after a pass", "10 seconds maximum per attack", "With a keeper in each goal"] }
+    "benodigdheden": [
+      "2 mini goals",
+      "4 cones",
+      "balls",
+      "bibs in 3 colours"
+    ],
+    "coachpunten": [
+      "Off the ball: run behind your opponent, not towards the ball",
+      "Play the ball into your teammate's path",
+      "Defending: one presses, the other tracks the run"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger area (25 × 18 m)",
+        "Change every 2 minutes instead of after a goal"
+      ],
+      "moeilijker": [
+        "A goal only counts after a pass",
+        "10 seconds maximum per attack",
+        "With a keeper in each goal"
+      ]
+    }
   },
   "veld-pv-3-2-omschakeling": {
     "naam": "3v2 with transition",
     "uitleg": "Three attackers play against two defenders and a keeper on the full-size goal. As soon as the defenders or the keeper win the ball, they switch to attack: they can score in the two mini goals on the halfway line, and the attackers have to defend straight away.",
     "organisatie": "Half pitch with keeper. Two mini goals on the halfway line, 12 m apart. Attackers start with the ball at 26 m, defenders at 16 m.",
-    "benodigdheden": ["1 goal", "2 mini goals", "balls", "bibs"],
-    "coachpunten": ["Attackers: use the overload quickly, move the ball to the free player", "Defenders: cover the most dangerous line and wait for the mistake", "When you win it: first pass forwards, and support the attack straight away"],
-    "variaties": { "makkelijker": ["3v1", "Defenders score with a pass through a gate instead of in mini goals"], "moeilijker": ["Attackers must finish within 8 seconds", "After losing the ball, all three attackers can defend", "Two extra keepers: in the mini goals as well"] },
+    "benodigdheden": [
+      "1 goal",
+      "2 mini goals",
+      "balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Attackers: use the overload quickly, move the ball to the free player",
+      "Defenders: cover the most dangerous line and wait for the mistake",
+      "When you win it: first pass forwards, and support the attack straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "3v1",
+        "Defenders score with a pass through a gate instead of in mini goals"
+      ],
+      "moeilijker": [
+        "Attackers must finish within 8 seconds",
+        "After losing the ball, all three attackers can defend",
+        "Two extra keepers: in the mini goals as well"
+      ]
+    },
     "meerSpelers": "With more players: change one group after each attack, or set up a second pitch."
   },
   "veld-pv-3-3-vier-doeltjes": {
     "naam": "3v3 on four mini goals",
     "uitleg": "Each team defends two mini goals in the corners and attacks the other team's two goals. Play down one side to draw the opponents across, then switch quickly to the goal that is open.",
     "organisatie": "24 × 20 m area with a mini goal (2.5 m) in each corner. Two teams of three in bibs; 3-minute rounds.",
-    "benodigdheden": ["4 mini goals", "4 cones", "balls", "bibs"],
-    "coachpunten": ["Check the far goal before the ball reaches you", "Get wide when you have the ball: then the opponents have to shift a long way", "Defend as a unit and shift across to the ball side"],
-    "variaties": { "makkelijker": ["Bigger area (30 × 24 m)", "4v3 with a joker"], "moeilijker": ["Three touches maximum", "A goal on the opposite side to where the attack started counts double", "Smaller area"] },
+    "benodigdheden": [
+      "4 mini goals",
+      "4 cones",
+      "balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Check the far goal before the ball reaches you",
+      "Get wide when you have the ball: then the opponents have to shift a long way",
+      "Defend as a unit and shift across to the ball side"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger area (30 × 24 m)",
+        "4v3 with a joker"
+      ],
+      "moeilijker": [
+        "Three touches maximum",
+        "A goal on the opposite side to where the attack started counts double",
+        "Smaller area"
+      ]
+    },
     "meerSpelers": "With 7 players: a joker who plays for the team in possession. With 8 or more: 4v4 or a second area."
   },
   "veld-pv-4-4-keepers": {
     "naam": "4v4 with keepers",
     "uitleg": "A 4v4 game with two keepers on two youth goals. The keeper starts the attack with a throw; the team builds up patiently, finds the striker and the striker lays it off to a teammate arriving. Free play, focusing on combination play.",
     "organisatie": "28 × 36 m pitch with a youth goal (5 × 2 m) and a keeper at each end. Teams in bibs, 4–5-minute rounds.",
-    "benodigdheden": ["2 youth goals", "4 cones", "balls", "bibs"],
-    "coachpunten": ["Build-up: get wide and let the keeper throw it out to the free player", "Striker: come short, lay it off, then spin in behind", "After losing the ball, the nearest player presses straight away"],
-    "variaties": { "makkelijker": ["5v4 with a joker", "The keeper may also join in as an outfield player"], "moeilijker": ["Three touches maximum", "A goal within 10 seconds of winning the ball counts double", "Smaller pitch (24 × 30 m)"] },
+    "benodigdheden": [
+      "2 youth goals",
+      "4 cones",
+      "balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Build-up: get wide and let the keeper throw it out to the free player",
+      "Striker: come short, lay it off, then spin in behind",
+      "After losing the ball, the nearest player presses straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "5v4 with a joker",
+        "The keeper may also join in as an outfield player"
+      ],
+      "moeilijker": [
+        "Three touches maximum",
+        "A goal within 10 seconds of winning the ball counts double",
+        "Smaller pitch (24 × 30 m)"
+      ]
+    },
     "meerSpelers": "With 9 players: a joker. With more: 5v5 on a bigger pitch, or rotate every 3 minutes."
   },
   "veld-pv-5-5-flank": {
     "naam": "5v5 with keepers: goals from the wing count double",
     "uitleg": "A 5v5 game with keepers. There is a wide channel along each touchline. A goal from a cross or pass out of a wide channel counts double. This teaches players to make the pitch big and attack down the flanks.",
     "organisatie": "34 × 44 m pitch with two youth goals and keepers. 6 m wide channels along the touchlines (cones or disc cones). Teams in bibs.",
-    "benodigdheden": ["2 youth goals", "8 cones or disc cones", "balls", "bibs"],
-    "coachpunten": ["Make the pitch wide: one player on each wing", "Cross: first look who is attacking the box (near post, far post)", "Strikers: don't arrive in the box too early, come in with speed"],
-    "variaties": { "makkelijker": ["No defending in the wide channels", "Wider channels (8 m)"], "moeilijker": ["Only goals from the wing count", "Two touches maximum in the wide channel", "Defenders may also enter the wide channel (1v1)"] },
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones or disc cones",
+      "balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Make the pitch wide: one player on each wing",
+      "Cross: first look who is attacking the box (near post, far post)",
+      "Strikers: don't arrive in the box too early, come in with speed"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No defending in the wide channels",
+        "Wider channels (8 m)"
+      ],
+      "moeilijker": [
+        "Only goals from the wing count",
+        "Two touches maximum in the wide channel",
+        "Defenders may also enter the wide channel (1v1)"
+      ]
+    },
     "meerSpelers": "With 11 players: a joker. With more: rotate subs every 3 minutes, or two pitches side by side."
   },
   "veld-pv-scoren-na-kaats": {
     "naam": "3v3 + bounce players: score only after a one-two",
     "uitleg": "Three against three on two mini goals, with two bounce players on the touchlines who always play for the team in possession. A goal only counts if the attack includes a one-two, with a teammate or a bounce player.",
     "organisatie": "20 × 26 m area with a mini goal (3 m) on each short side. Bounce players (purple) in the middle of both touchlines. Change the bounce players every round.",
-    "benodigdheden": ["2 mini goals", "4 cones", "balls", "bibs in 3 colours"],
-    "coachpunten": ["Accelerate straight after your pass to the bounce player: the ball comes back into your path", "Bounce players: return it first time, onto the runner's foot", "Defenders: follow the runner, not the ball"],
-    "variaties": { "makkelijker": ["You can score without a one-two too, but with one it counts double", "Bounce players may take two touches"], "moeilijker": ["Bounce players are one-touch only", "A goal only counts after a one-two with a bounce player", "With keepers in the goals"] },
+    "benodigdheden": [
+      "2 mini goals",
+      "4 cones",
+      "balls",
+      "bibs in 3 colours"
+    ],
+    "coachpunten": [
+      "Accelerate straight after your pass to the bounce player: the ball comes back into your path",
+      "Bounce players: return it first time, onto the runner's foot",
+      "Defenders: follow the runner, not the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "You can score without a one-two too, but with one it counts double",
+        "Bounce players may take two touches"
+      ],
+      "moeilijker": [
+        "Bounce players are one-touch only",
+        "A goal only counts after a one-two with a bounce player",
+        "With keepers in the goals"
+      ]
+    },
     "meerSpelers": "With more players: extra bounce players on the touchline, or 4v4 with the bounce players."
   },
   "veld-pv-lijnvoetbal": {
     "naam": "End-zone game 4v4",
     "uitleg": "Two teams of four. You score by dribbling the ball over the other team's end line. There are no goals, so the whole width is the 'goal': find space, be brave in the 1v1 and dribble through.",
     "organisatie": "26 × 30 m pitch; the short sides are the scoring lines (cones on the corners). Teams in bibs, 3-minute rounds.",
-    "benodigdheden": ["4 cones", "1 ball", "bibs"],
-    "coachpunten": ["Look for space beside or behind the last defender", "On the ball: pick your moment to accelerate", "Defending: stay together, leave no gaps between you"],
-    "variaties": { "makkelijker": ["Wider pitch (30 m)", "You can also score with a pass to a player behind the line"], "moeilijker": ["Dribble over the line and stop the ball with your sole on it", "Score only in the two 5 m zones by the touchlines", "Narrower pitch (20 m)"] },
+    "benodigdheden": [
+      "4 cones",
+      "1 ball",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Look for space beside or behind the last defender",
+      "On the ball: pick your moment to accelerate",
+      "Defending: stay together, leave no gaps between you"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider pitch (30 m)",
+        "You can also score with a pass to a player behind the line"
+      ],
+      "moeilijker": [
+        "Dribble over the line and stop the ball with your sole on it",
+        "Score only in the two 5 m zones by the touchlines",
+        "Narrower pitch (20 m)"
+      ]
+    },
     "meerSpelers": "With 9 players: a joker. With more: 5v5 on a wider pitch, or a second area."
   },
   "veld-cv-1t1-2t1": {
     "naam": "1v1, pass and 2v1",
     "uitleg": "The attacker beats the first defender with a feint. Then it becomes 2v1: they dribble at the second defender to commit them and pass to their supporting teammate, who finishes.",
     "organisatie": "First defender at 27 m, second at 15 m. The second attacker starts on the wing at 24 m. Attackers and defenders swap roles after each attack.",
-    "benodigdheden": ["Goal", "Balls", "Bibs"],
-    "coachpunten": ["1v1: run at the defender with speed, make your move and then accelerate", "2v1: dribble until the defender has to choose, only then pass", "Supporting attacker: stay wide and don't come inside too early"],
-    "variaties": { "makkelijker": ["The first defender only half-defends (just runs alongside)", "The second defender only starts when the pass is played"], "moeilijker": ["The first defender may sprint back (2v2)", "8 seconds maximum for the whole attack", "Finish first time only"] },
-    "onderdelen": ["1v1 move", "Keep dribbling", "Play the 2v1", "Finish"]
+    "benodigdheden": [
+      "Goal",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "1v1: run at the defender with speed, make your move and then accelerate",
+      "2v1: dribble until the defender has to choose, only then pass",
+      "Supporting attacker: stay wide and don't come inside too early"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The first defender only half-defends (just runs alongside)",
+        "The second defender only starts when the pass is played"
+      ],
+      "moeilijker": [
+        "The first defender may sprint back (2v2)",
+        "8 seconds maximum for the whole attack",
+        "Finish first time only"
+      ]
+    },
+    "onderdelen": [
+      "1v1 move",
+      "Keep dribbling",
+      "Play the 2v1",
+      "Finish"
+    ]
   },
   "veld-ps-3-2-poortjes": {
     "naam": "3v2 overload to end gates",
     "uitleg": "Three attackers play against two defenders and score by dribbling the ball through one of the two end gates. Use the overload: draw a defender towards you and pass to the free player.",
     "organisatie": "20 × 24 m pitch. Two 3 m gates on the end line. Attackers start with the ball on the other end line, defenders on the halfway line. Swap after each attack.",
-    "benodigdheden": ["4 cones (pitch)", "4 cones (gates)", "balls", "bibs"],
-    "coachpunten": ["Dribble at a defender to commit them, then pass", "Play wide: the outside attackers keep their distance", "Decide quickly: the overload only lasts a few seconds"],
-    "variaties": { "makkelijker": ["3v1", "Wider gates (4 m)"], "moeilijker": ["8 seconds maximum per attack", "If the defenders win the ball, they can score in a mini goal behind the attackers", "You can only score once everyone has touched the ball"] },
+    "benodigdheden": [
+      "4 cones (pitch)",
+      "4 cones (gates)",
+      "balls",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Dribble at a defender to commit them, then pass",
+      "Play wide: the outside attackers keep their distance",
+      "Decide quickly: the overload only lasts a few seconds"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "3v1",
+        "Wider gates (4 m)"
+      ],
+      "moeilijker": [
+        "8 seconds maximum per attack",
+        "If the defenders win the ball, they can score in a mini goal behind the attackers",
+        "You can only score once everyone has touched the ball"
+      ]
+    },
     "meerSpelers": "With more players: groups wait beside the area and swap after each attack."
   },
   "veld-sp-koning-van-het-veld": {
     "naam": "King of the pitch",
     "uitleg": "Three (or more) small pitches side by side, with a 1v1 on each. After every round the winner moves one pitch up towards the king's pitch and the loser one pitch down. Whoever wins on the king's pitch at the end is the king.",
     "organisatie": "8 × 12 m pitches with two mini goals, 3 m apart. The yellow pitch is the king's pitch. 1-minute rounds; a draw is decided by a penalty into the empty goal.",
-    "benodigdheden": ["6 mini goals", "12 cones", "1 ball per pitch", "bibs"],
-    "coachpunten": ["Every round counts: full speed from the first second", "Be brave and take them on, also on the king's pitch", "Move quickly: winners go right, losers go left"],
-    "variaties": { "makkelijker": ["Only the winner moves, the loser stays", "Bigger pitch (10 × 15 m)"], "moeilijker": ["2v2 on each pitch", "On the king's pitch only a goal after a skill move counts", "45-second rounds"] }
+    "benodigdheden": [
+      "6 mini goals",
+      "12 cones",
+      "1 ball per pitch",
+      "bibs"
+    ],
+    "coachpunten": [
+      "Every round counts: full speed from the first second",
+      "Be brave and take them on, also on the king's pitch",
+      "Move quickly: winners go right, losers go left"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Only the winner moves, the loser stays",
+        "Bigger pitch (10 × 15 m)"
+      ],
+      "moeilijker": [
+        "2v2 on each pitch",
+        "On the king's pitch only a goal after a skill move counts",
+        "45-second rounds"
+      ]
+    }
   },
   "veld-pv-1-1-poortjes": {
     "naam": "1v1 through the gates",
     "uitleg": "There is a mini goal at each end with a gate in front of it. A passes the ball across to B and goes straight in to defend. B must first dribble through one of the gates and can then score in either mini goal. After your turn, join the other queue.",
     "organisatie": "20 × 26 m area with a mini goal on each short side and a 2.5 m gate 4 m in front of it. Two queues on the halfway line, one on each touchline; the left queue has the balls.",
-    "benodigdheden": ["2 mini goals", "4 cones", "Balls", "Bibs"],
-    "coachpunten": ["Attacker: pick a gate quickly and take the ball in your running direction", "Defender: close down quickly and shut off the short route to the gate", "After the gate: check which goal is open"],
-    "variaties": { "makkelijker": ["Wider gates", "The defender starts a second later"], "moeilijker": ["After the gate, score only in the far goal", "Pass in the air instead of along the ground: control it under pressure first"] }
+    "benodigdheden": [
+      "2 mini goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Attacker: pick a gate quickly and take the ball in your running direction",
+      "Defender: close down quickly and shut off the short route to the gate",
+      "After the gate: check which goal is open"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider gates",
+        "The defender starts a second later"
+      ],
+      "moeilijker": [
+        "After the gate, score only in the far goal",
+        "Pass in the air instead of along the ground: control it under pressure first"
+      ]
+    }
   },
   "veld-pv-wippen-1-1": {
     "naam": "Chip shot and 1v1",
     "uitleg": "A small pitch with two mini goals. A stands on the halfway line with the ball, B by their own goal. A passes it gently to B; B tries to chip the ball first time over A into A's goal (a point). Straight after, the coach plays a second ball in from the side and they play 1v1.",
     "organisatie": "16 × 22 m pitch with a mini goal on both short sides. A on the halfway line, B by their goal, coach with balls on the touchline at halfway.",
-    "benodigdheden": ["2 mini goals", "Balls", "Bibs"],
-    "coachpunten": ["Chip: standing foot next to the ball, get your laces under it, short follow-through", "A: don't stand too close to B after your pass", "Second ball: who gets there first?"],
-    "variaties": { "makkelijker": ["Control the ball before the chip", "Bigger goal"], "moeilijker": ["Chip with the weaker foot only", "The coach plays the second ball to A's feet"] }
+    "benodigdheden": [
+      "2 mini goals",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Chip: standing foot next to the ball, get your laces under it, short follow-through",
+      "A: don't stand too close to B after your pass",
+      "Second ball: who gets there first?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Control the ball before the chip",
+        "Bigger goal"
+      ],
+      "moeilijker": [
+        "Chip with the weaker foot only",
+        "The coach plays the second ball to A's feet"
+      ]
+    }
   },
   "veld-pv-oplopend-overtal": {
     "naam": "Building overloads: 1v1, 2v1, 3v2, 3v3",
     "uitleg": "One continuous attack. The coach plays to attacker 1: 1v1. Then a second attacker joins from one side (2v1), followed by another attacker and a defender from the other side (3v2). With a sixth player, a second defender joins as well: 3v3. The attackers try to score in one of the two mini goals before the defence is complete.",
     "organisatie": "30 × 30 m area with two mini goals 12 m apart on the end line. Attacker 1 facing defender 1 in the middle, the extra players on the touchlines. Coach with balls behind the attackers.",
-    "benodigdheden": ["2 mini goals", "Balls", "Bibs", "4 cones"],
-    "coachpunten": ["Attackers: play quickly and use the overload before the next defender arrives", "Joining players: start your run deep and stay wide", "Defenders: buy time and close off the middle"],
-    "variaties": { "makkelijker": ["The extra players start earlier", "Defender 2 only comes on after 5 seconds"], "moeilijker": ["With the sixth player, go straight to 3v3", "If the defenders win the ball, they can counter on two mini goals"] }
+    "benodigdheden": [
+      "2 mini goals",
+      "Balls",
+      "Bibs",
+      "4 cones"
+    ],
+    "coachpunten": [
+      "Attackers: play quickly and use the overload before the next defender arrives",
+      "Joining players: start your run deep and stay wide",
+      "Defenders: buy time and close off the middle"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The extra players start earlier",
+        "Defender 2 only comes on after 5 seconds"
+      ],
+      "moeilijker": [
+        "With the sixth player, go straight to 3v3",
+        "If the defenders win the ball, they can counter on two mini goals"
+      ]
+    }
   },
   "veld-pv-2-1-inhalende-verdediger": {
     "naam": "2v1 with a recovering defender",
     "uitleg": "There are two mini goals at each end. Defender 1 stands between their goals and passes to one of the two attackers by the other goals. As the pass is played, defender 2 runs round a mini goal from the touchline and defends from behind. If the attackers don't play the 2v1 quickly, it becomes 2v2.",
     "organisatie": "22 × 28 m area with two mini goals on both short sides. Defender 1 between their goals, the attackers by the other goals, defender 2 on the touchline next to the attackers.",
-    "benodigdheden": ["4 mini goals", "Balls", "Bibs"],
-    "coachpunten": ["Attackers: go forward quickly, make the defender choose, then pass", "Defender 1: buy time until your teammate arrives", "Defender 2: shortest route back, behind the ball carrier"],
-    "variaties": { "makkelijker": ["Defender 2 starts later", "Bigger area"], "moeilijker": ["Defender 2 starts closer", "Attackers have 3 touches each maximum"] }
+    "benodigdheden": [
+      "4 mini goals",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Attackers: go forward quickly, make the defender choose, then pass",
+      "Defender 1: buy time until your teammate arrives",
+      "Defender 2: shortest route back, behind the ball carrier"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Defender 2 starts later",
+        "Bigger area"
+      ],
+      "moeilijker": [
+        "Defender 2 starts closer",
+        "Attackers have 3 touches each maximum"
+      ]
+    }
   },
   "veld-pv-golven": {
     "naam": "Waves: 1v1, 2v1, 3v2",
     "uitleg": "Attacks in separate waves that keep getting bigger: first 1v1, then 2v1, then 3v2, always on the goal with a keeper. After each wave the players walk back and the next group steps up. Unlike the building overloads (one continuous attack), every wave starts again from the start line.",
     "organisatie": "Start line 30 m from goal, defenders at 18 m. Full-size goal with keeper. Attackers and defenders rotate after each wave.",
-    "benodigdheden": ["Goal", "4 cones", "Balls", "Bibs"],
-    "coachpunten": ["Go forward quickly and make the defender choose", "In an overload: find the free player at the right moment", "Defenders: slow the attack down, close off the middle and work together"],
-    "variaties": { "makkelijker": ["Defenders start further away", "Only 1v1 and 2v1"], "moeilijker": ["The next wave goes straight after the last one (no rest)", "If the defenders win the ball, they can score in two mini goals"] }
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Go forward quickly and make the defender choose",
+      "In an overload: find the free player at the right moment",
+      "Defenders: slow the attack down, close off the middle and work together"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Defenders start further away",
+        "Only 1v1 and 2v1"
+      ],
+      "moeilijker": [
+        "The next wave goes straight after the last one (no rest)",
+        "If the defenders win the ball, they can score in two mini goals"
+      ]
+    }
+  },
+  "veld-pv-1-1-naar-4-4": {
+    "naam": "From 1v1 to 4v4",
+    "uitleg": "It starts with a 1v1 on two goals with keepers. After every goal or every time the ball goes out, each team adds a player: 2v2, then 3v3 and finally 4v4. The keeper of the team that conceded (or when the ball goes out: the keeper of the team whose ball it is) restarts straight away. After a few minutes of 4v4, a new round starts with a 1v1.",
+    "organisatie": "24 × 32 m pitch with a youth goal and a keeper at each short end. Three players per team wait beside the pitch, level with the halfway line. Spare balls by the goals.",
+    "benodigdheden": [
+      "2 youth goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: carry on up to 5v5, or two pitches side by side.",
+    "coachpunten": [
+      "1v1: dare to take on your opponent, run at the defender with pace",
+      "When you come on: be available straight away or pick up your player straight away",
+      "With more players: make the pitch big in possession, compact after losing the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A goal in the first 1v1 counts double, after that normal",
+        "Bigger pitch"
+      ],
+      "moeilijker": [
+        "Only the team that conceded adds a player (a temporary overload)",
+        "Three touches maximum from 3v3 onwards"
+      ]
+    }
+  },
+  "veld-pv-6-6-verboden-midden": {
+    "naam": "6v6 with a no-go middle strip",
+    "uitleg": "A 6v6 game with keepers. Down the middle of the pitch runs a narrow strip where nobody may go, not even to fetch the ball. The ball may go over or through it. So you have to switch play via the wings and with long balls over the strip. In the example, red plays in the left winger, who switches play to the right with a long ball; the right winger puts in the cross.",
+    "organisatie": "44 × 60 m pitch with a youth goal and a keeper at each short end. No-go strip 8 m wide in the middle, from 12 m to 48 m (cones or a different colour of disc cones). Teams in bibs, 6-minute rounds. Anyone who steps into the strip gives the ball to the other team.",
+    "benodigdheden": [
+      "2 youth goals",
+      "12 cones or disc cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 7v7 or 8v8 on a bigger pitch, with a wider strip.",
+    "coachpunten": [
+      "Stay wide: someone available on both sides of the strip",
+      "The long ball over the strip: with the laces, high enough, to feet or into a run",
+      "After the switch, play on quickly before the opponents can shift across"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Narrower strip (5 m)",
+        "The ball may roll through the strip, low as well"
+      ],
+      "moeilijker": [
+        "Wider strip (12 m)",
+        "The ball must switch wings at least once before a goal",
+        "Three touches maximum"
+      ]
+    }
+  },
+  "veld-pv-5-5-schietzones": {
+    "naam": "5v5 with shooting zones",
+    "uitleg": "A 5v5 game with keepers. You may only score from the shooting zone in front of goal. Four neutral players stand on the sides (two per touchline) and play for the team in possession; they may not score and touch the ball twice at most. Use them to get into the shooting zone: play a neutral player in and make your run.",
+    "organisatie": "34 × 48 m pitch with a youth goal and a keeper at each short end. A 20 × 12 m shooting zone in front of each goal (disc cones). Four neutral players in their own colour on the touchlines, at 16 and 32 m. Teams in bibs, 5-minute rounds; change the neutrals every round.",
+    "benodigdheden": [
+      "2 youth goals",
+      "12 disc cones",
+      "4 cones",
+      "Balls",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: 6v6 with four neutrals on a bigger pitch.",
+    "coachpunten": [
+      "Get into the shooting zone with an action: a one-two with a neutral player or a run in behind",
+      "In the zone: finish quickly, in one or two touches",
+      "Defenders: keep the shooting zone closed and follow your player when they make a run"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger shooting zone (14 m deep)",
+        "Neutrals may take three touches"
+      ],
+      "moeilijker": [
+        "In the shooting zone, first-time finishes only",
+        "Neutrals one touch",
+        "Smaller shooting zone"
+      ]
+    }
+  },
+  "veld-pv-4-4-wingers": {
+    "naam": "4v4 with wingers in the wide zones",
+    "uitleg": "A 4v4 game with keepers in the middle of the pitch. Down each side is a wide zone with a fixed winger in it. The wingers play for the team in possession, always stay in their zone and may not be challenged there. A goal from a cross out of the wide zone counts double. In the example, red plays in the right winger, who dribbles on and crosses; the striker heads it in.",
+    "organisatie": "28 × 44 m pitch with a 6 m wide zone on each side (so 40 m wide in total), a youth goal and a keeper at each short end. Two wingers in their own colour. Teams in bibs, 5-minute rounds; change the wingers every round.",
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones",
+      "Balls",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: 5v5 in the middle, or each team has its own winger in each zone (1v1 on the wing).",
+    "coachpunten": [
+      "Play wide: find the winger as soon as the middle is closed",
+      "When the cross comes: one to the near post, one to the far post, one around the penalty spot",
+      "Winger: look up before you cross and put the ball between keeper and defenders"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A goal after a pass from the winger also counts double",
+        "Wingers may take three touches"
+      ],
+      "moeilijker": [
+        "One defender may enter the wide zone",
+        "First-time crosses only",
+        "Only a header or volley from a cross counts"
+      ]
+    }
+  },
+  "veld-pv-voorsprong": {
+    "naam": "Game with a head start",
+    "uitleg": "A short 5-minute game in which one team starts 2-0 up. That team has to defend the lead; the other team has to at least draw level in time. You learn how to hold on to a lead cleverly (stay compact, keep the ball in the team) and how to take risks when you are behind. Variant: one team plays with a player fewer, but leads 1-0.",
+    "organisatie": "34 × 44 m pitch with a youth goal and a keeper at each short end. 5v5 (variant: 5v4). 5-minute rounds; then the other team starts with the lead.",
+    "benodigdheden": [
+      "2 youth goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 6v6 or 7v7, or two pitches with games side by side.",
+    "coachpunten": [
+      "Leading: stay compact, close the space in front of goal, and after winning the ball keep it calmly in the team",
+      "Behind: make the pitch big, play quickly and be brave: an extra player forward",
+      "Watch the clock: what does the score ask of your team right now?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "1-0 lead instead of 2-0",
+        "Longer round (8 minutes)"
+      ],
+      "moeilijker": [
+        "3-0 lead with 3 minutes to go",
+        "The team that is behind plays with a player more, but with two touches maximum"
+      ]
+    }
+  },
+  "veld-pv-2-2-doelspeler": {
+    "naam": "2v2 with a target player",
+    "uitleg": "Two against two in a small area. Each team has a target player behind the line at the end it is attacking. Get the ball to your target player and it’s a point. The target player lays the ball straight back to a teammate, so your team can carry on for the next point. That means the defenders have to keep pressing to win the ball; if they do, they play towards their own target player at the other end.",
+    "organisatie": "14 × 22 m area. A target player behind the line at each short end (they may move across the full width). 2-minute rounds; then the target players swap with an outfield player.",
+    "benodigdheden": [
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 3v3 with target players, or pairs waiting to come on after every round.",
+    "coachpunten": [
+      "Attacking: make the area big and play into the target player as soon as the line is open",
+      "Defending: one presses the ball, the other blocks the line to the target player",
+      "After winning the ball, switch straight away: look where your target player is"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger area",
+        "Target players may take two touches"
+      ],
+      "moeilijker": [
+        "Target players one touch",
+        "Only a point when the target player lays it off to a player running in",
+        "Smaller area"
+      ]
+    }
+  },
+  "veld-pv-mandekking": {
+    "naam": "Man-marking game",
+    "uitleg": "A 4v4 game on four mini goals, but everyone has a fixed opponent: only they may challenge you and only you may challenge them. Off the ball it is all about getting free and shaking off your marker: a run one way and then quickly the other way (first away, then come short). As a defender you stay between your player and your own goals and see ball and player at the same time.",
+    "organisatie": "26 × 34 m pitch with two mini goals at each short end. Make fixed pairs of players with roughly the same pace. Teams in bibs, 4-minute rounds; then new pairs.",
+    "benodigdheden": [
+      "4 mini goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: 5v5 or 6v6, always in fixed pairs.",
+    "coachpunten": [
+      "Shaking off your marker: take them with you first, then turn sharply the other way",
+      "Ask for the ball the moment you are free, not while your opponent is still tight on you",
+      "Defending: between player and goal, half-turned so you can see ball and player"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One free player per team without a fixed opponent",
+        "Bigger pitch"
+      ],
+      "moeilijker": [
+        "Three touches maximum",
+        "If your opponent scores, you do a 5-rep task (e.g. squats)",
+        "Smaller pitch"
+      ]
+    }
   }
 }
