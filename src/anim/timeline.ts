@@ -731,6 +731,8 @@ function loslaatHoogte(x: Pick<Loslaten, 'soort' | 'rollend'>): number {
       return 0.05;
     case 'tik':
       return 0.1;
+    case 'inworp':
+      return 2.1;
     default:
       return 0;
   }

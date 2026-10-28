@@ -86,7 +86,7 @@ describe('A5 categorieën', () => {
   it('zoals opgegeven (precies deze categorieën, de eerste is de hoofdcategorie)', () => {
     const spelers: Record<string, string[]> = {
       'Rondo 4 tegen 1': ['warming-up'],
-      'Duel om de bal: 1 tegen 1 naar doel': ['afwerken', 'partijvormen'],
+      'Duel om de bal: 1 tegen 1 naar doel': ['afwerken', 'partijvormen', 'verdedigen-omschakelen'], // + 0.26.0
       'Eindzonespel 4 tegen 4': ['positiespel', 'partijvormen'],
       'Koning van het veld': ['partijvormen'],
       'Lijnvoetbal 4 tegen 4': ['partijvormen'],

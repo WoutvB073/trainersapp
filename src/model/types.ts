@@ -177,11 +177,12 @@ export interface BalActie extends ActieBasis {
    * `zwaai` (zijwaartse zwaaiworp, vlak en ver), `volley` (bal uit de handen laten vallen en trappen), `dropkick`
    * (halfvolley: trappen op het moment dat de bal de grond raakt) of `trap` (van de grond: bal neerleggen of een losse
    * bal, zoals een doeltrap). `voet` = een keeper speelt met de voet (terugspeelbal aannemen en wegspelen).
-   * `tik` = een (stil)liggende bal met één hand wegtikken (bv. vanuit kniezit).
+   * `tik` = een (stil)liggende bal met één hand wegtikken (bv. vanuit kniezit). `inworp` = ingooien met twee handen vanaf de
+   * zijlijn: bal achter het hoofd, over het hoofd heen gooien, beide voeten op de grond (0.26.0).
    * Zonder `worp` speelt een veldspeler of trainer met de voet; een keeper rolt de bal onderhands weg. Een keeper die een
    * hoge bal met `worp: "voet"` en `direct` doorspeelt, kopt hem weg (vanaf ± 1,3 m) of trapt hem weg op die hoogte.
    */
-  worp?: 'onderhands' | 'bovenhands' | 'zwaai' | 'volley' | 'dropkick' | 'trap' | 'voet' | 'tik';
+  worp?: 'onderhands' | 'bovenhands' | 'zwaai' | 'volley' | 'dropkick' | 'trap' | 'voet' | 'tik' | 'inworp';
   /**
    * Bal naar een keeper die ervoor duikt: de keeper duikt naar dit punt en pakt de bal precies aan het eind van
    * zijn duik (de duik wordt vanzelf op de bal afgestemd). `duikHoogte` = hoogte van de handen (hoge duik).

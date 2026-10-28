@@ -2555,5 +2555,556 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-wu-vierhoek-verdediger",
+    "soort": "veld",
+    "naam": "Vierhoek met een verdediger erbij",
+    "categorieen": [
+      "warming-up",
+      "pass-en-trap"
+    ],
+    "uitleg": "Vier spelers staan op de hoeken van een vierhoek en spelen de bal langs de zijden rond. In het midden staat een verdediger die steeds meer doet: eerst loopt hij alleen mee (passief), dan zet hij half druk en houdt hij afstand, en tot slot zet hij volle druk. Zo gaat de warming-up vanzelf over in passen onder druk.",
+    "organisatie": "Vierhoek van 12 × 12 m met een pion op elke hoek. Vier spelers op de hoeken, één verdediger met een hesje in het midden. Elke fase ± 1 minuut; daarna een nieuwe verdediger.",
+    "benodigdheden": [
+      "4 pionnen",
+      "1 bal",
+      "1 hesje"
+    ],
+    "spelersNodig": 5,
+    "keepersNodig": 0,
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: een tweede vierhoek ernaast, of wissel na elke fase een buitenspeler met een wachtende speler.",
+    "coachpunten": [
+      "Aannemen met de voet die het verst van de bal is, in de richting van de volgende hoek",
+      "Pass langs de buitenkant van de vierhoek, weg van de verdediger",
+      "Bij volle druk: twee aanrakingen, de tweede meteen weg"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Grotere vierhoek (15 m)",
+        "Verdediger blijft langer passief"
+      ],
+      "moeilijker": [
+        "Na de volle druk: één aanraking",
+        "Een tweede verdediger erbij",
+        "Verovert de verdediger de bal, dan ruilt hij met de speler die hem verloor"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 18,
+        "lengte": 18
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 9,
+          "y": 9,
+          "breedte": 12,
+          "lengte": 12
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 15,
+          "y": 3
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 3,
+          "y": 15
+        },
+        {
+          "id": "p4",
+          "soort": "pion",
+          "x": 15,
+          "y": 15
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 4.2,
+          "y": 4.2,
+          "kijkrichting": 45
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 13.8,
+          "y": 4.2,
+          "kijkrichting": 135
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 4.2,
+          "y": 13.8,
+          "kijkrichting": -45
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 13.8,
+          "y": 13.8,
+          "kijkrichting": -135
+        },
+        {
+          "id": "d1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 5,
+          "x": 9,
+          "y": 9
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 4.6,
+          "y": 4.6,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            },
+            {
+              "type": "loop",
+              "wie": "d1",
+              "naar": [
+                10,
+                7.6
+              ],
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a4"
+            },
+            {
+              "type": "loop",
+              "wie": "d1",
+              "naar": [
+                10.6,
+                9.6
+              ],
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a4",
+              "naar": "a3"
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a3",
+              "afstand": 3.2,
+              "start": 0.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a3",
+              "naar": "a1"
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a1",
+              "afstand": 3.2,
+              "start": 0.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a2",
+              "afstand": 1.7,
+              "manier": "sprint",
+              "start": 0.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a4"
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a4",
+              "afstand": 1.7,
+              "manier": "sprint",
+              "start": 0.55
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a4",
+              "naar": "a3"
+            },
+            {
+              "type": "druk",
+              "wie": "d1",
+              "op": "a3",
+              "afstand": 1.7,
+              "manier": "sprint",
+              "start": 0.55
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-wu-pentagon-kiezen",
+    "soort": "veld",
+    "naam": "Pentagon: passen en kiezen",
+    "categorieen": [
+      "warming-up",
+      "pass-en-trap"
+    ],
+    "uitleg": "Vijf pionnen in een vijfhoek, met twee ballen tegelijk in het spel. Je speelt de bal naar een speler bij een andere pion en kiest daarna zelf naar welke pion je loopt: je sluit daar achteraan aan. Loop altijd buitenom, zodat je niet door de passlijnen gaat. Omdat er twee ballen rondgaan, moet je steeds kijken waar de andere bal is.",
+    "organisatie": "Vijfhoek met een pion op elke hoek, ± 13 m tussen de pionnen. Bij twee pionnen staan twee spelers (daar beginnen de ballen), bij de andere één. Minstens 7 spelers.",
+    "benodigdheden": [
+      "5 pionnen",
+      "2 ballen"
+    ],
+    "spelersNodig": 7,
+    "keepersNodig": 0,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Vóór je de bal krijgt al kijken: naar wie speel je, en waar is de andere bal?",
+      "Pass op de voet waar je medespeler mee wil aannemen",
+      "Na je pass meteen kiezen en vertrekken, buitenom"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eén bal",
+        "Altijd naar de pion waar je naartoe speelde"
+      ],
+      "moeilijker": [
+        "In twee aanrakingen",
+        "Een derde bal erbij",
+        "Na de pass sprinten in plaats van joggen"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 24,
+        "lengte": 24
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "c1",
+          "soort": "pion",
+          "x": 12,
+          "y": 19
+        },
+        {
+          "id": "c2",
+          "soort": "pion",
+          "x": 5.34,
+          "y": 14.16
+        },
+        {
+          "id": "c3",
+          "soort": "pion",
+          "x": 7.89,
+          "y": 6.34
+        },
+        {
+          "id": "c4",
+          "soort": "pion",
+          "x": 16.11,
+          "y": 6.34
+        },
+        {
+          "id": "c5",
+          "soort": "pion",
+          "x": 18.66,
+          "y": 14.16
+        },
+        {
+          "id": "p1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 12,
+          "y": 20.2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "q1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 6,
+          "x": 12,
+          "y": 22.2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "p2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 4.2,
+          "y": 14.53,
+          "kijkrichting": -18
+        },
+        {
+          "id": "q2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 2.3,
+          "y": 15.15,
+          "kijkrichting": -18
+        },
+        {
+          "id": "p3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 7.18,
+          "y": 5.37,
+          "kijkrichting": 54
+        },
+        {
+          "id": "p4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 16.82,
+          "y": 5.37,
+          "kijkrichting": 126
+        },
+        {
+          "id": "p5",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 5,
+          "x": 19.8,
+          "y": 14.53,
+          "kijkrichting": 198
+        },
+        {
+          "id": "ba",
+          "soort": "bal",
+          "x": 12,
+          "y": 19.65,
+          "bij": "p1"
+        },
+        {
+          "id": "bb",
+          "soort": "bal",
+          "x": 4.72,
+          "y": 14.36,
+          "bij": "p2"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "p1",
+              "naar": "p3"
+            },
+            {
+              "type": "pass",
+              "van": "p2",
+              "naar": "p4",
+              "start": 0.15
+            },
+            {
+              "type": "loop",
+              "wie": "p1",
+              "via": [
+                [
+                  18.17,
+                  20.49
+                ]
+              ],
+              "naar": [
+                21.7,
+                15.15
+              ],
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "p2",
+              "via": [
+                [
+                  2.01,
+                  8.76
+                ]
+              ],
+              "naar": [
+                6,
+                3.75
+              ],
+              "start": 0.35
+            },
+            {
+              "type": "loop",
+              "wie": "q1",
+              "naar": [
+                12,
+                20.2
+              ],
+              "start": 0.7
+            },
+            {
+              "type": "loop",
+              "wie": "q2",
+              "naar": [
+                4.2,
+                14.53
+              ],
+              "start": 0.8
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "p3",
+              "naar": "q1"
+            },
+            {
+              "type": "pass",
+              "van": "p4",
+              "naar": "p5",
+              "start": 0.15
+            },
+            {
+              "type": "loop",
+              "wie": "p3",
+              "via": [
+                [
+                  2.01,
+                  8.76
+                ]
+              ],
+              "naar": [
+                2.3,
+                15.15
+              ],
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "p4",
+              "via": [
+                [
+                  12,
+                  1.5
+                ]
+              ],
+              "naar": [
+                6,
+                3.75
+              ],
+              "start": 1
+            },
+            {
+              "type": "loop",
+              "wie": "p2",
+              "naar": [
+                7.18,
+                5.37
+              ],
+              "start": 1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "q1",
+              "naar": "q2"
+            },
+            {
+              "type": "pass",
+              "van": "p5",
+              "naar": "p2",
+              "start": 0.15
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

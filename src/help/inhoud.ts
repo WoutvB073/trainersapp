@@ -37,7 +37,7 @@ export const HELP_NL: HelpOnderwerp[] = [
     id: 'zoeken',
     titel: 'Oefeningen zoeken',
     tekst: [
-      'Op het startscherm kies je **Spelers** of **Keepers**. Daarna kies je een categorie, zoals Warming-up, Afwerken of Laag duiken, of **Alle oefeningen**.',
+      'Op het startscherm kies je **Spelers** of **Keepers**. Daarna kies je een categorie, zoals Warming-up, Afwerken, Verdedigen en omschakelen of Laag duiken, of **Alle oefeningen**. Elke categorie heeft een klein plaatje, zodat je hem snel terugvindt.',
       'Een oefening kan in meer categorieën staan. De eerste is de hoofdcategorie.',
       '- **Zoek op naam** vindt een oefening aan een deel van de naam.',
       '- **Filters**: zet **Alleen wat past bij mijn aantal** aan en vul het aantal spelers en keepers in. Je ziet dan alleen oefeningen die je met die groep kunt doen.',
@@ -156,7 +156,7 @@ export const HELP_EN: HelpOnderwerp[] = [
     id: 'zoeken',
     titel: 'Finding drills',
     tekst: [
-      'On the home screen, choose **Players** or **Goalkeepers**. Then pick a category, such as Warm-up, Finishing or Low diving, or **All drills**.',
+      'On the home screen, choose **Players** or **Goalkeepers**. Then pick a category, such as Warm-up, Finishing, Defending & transition or Low diving, or **All drills**. Each category has a small picture so you can find it quickly.',
       'A drill can be in more than one category. The first one is its main category.',
       '- **Search by name** finds a drill from part of its name.',
       '- **Filters**: switch on **Only what fits my numbers** and enter your number of players and keepers. You then only see drills you can run with that group.',

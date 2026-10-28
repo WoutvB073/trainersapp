@@ -3,57 +3,213 @@
     "naam": "Passing in a triangle",
     "uitleg": "Pass to the player at the next cone and sprint after your ball to that cone. The receiver takes their first touch towards the next cone and plays on. After a few minutes, change direction.",
     "organisatie": "Triangle of about 9 m with three disc cones. Two players with the ball at the starting cone, one player at each of the other two.",
-    "benodigdheden": ["3 disc cones", "1 ball per group"],
-    "coachpunten": ["Receive with your back foot, body open to the next cone", "Pass to your teammate's correct foot (the one they want to receive with)", "Accelerate straight after your pass"],
-    "variaties": { "makkelijker": ["Smaller triangle (6 m)", "Unlimited touches"], "moeilijker": ["One-touch passing", "Add a second ball", "Receive with the outside of the foot"] }
+    "benodigdheden": [
+      "3 disc cones",
+      "1 ball per group"
+    ],
+    "coachpunten": [
+      "Receive with your back foot, body open to the next cone",
+      "Pass to your teammate's correct foot (the one they want to receive with)",
+      "Accelerate straight after your pass"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Smaller triangle (6 m)",
+        "Unlimited touches"
+      ],
+      "moeilijker": [
+        "One-touch passing",
+        "Add a second ball",
+        "Receive with the outside of the foot"
+      ]
+    }
   },
   "veld-pt-y-vorm": {
     "naam": "Y-shape with a one-two",
     "uitleg": "A passes to B, B lays it back and A plays it long to C (left) or D (right). Then rotate: A to B's spot, B to C, C dribbles back to the start. The next round goes to the other side.",
     "organisatie": "Start cone A; B 7 m straight ahead; C and D 6 m further on, 5 m to the left and right (Y-shape). Start with 4–6 players; extra players wait at A.",
-    "benodigdheden": ["4 cones", "1–2 balls"],
-    "coachpunten": ["B: move away from the cone first, then come short to receive", "Lay it back onto A's running foot so they can play it first time", "Long pass firm and in front of the receiver"],
-    "variaties": { "makkelijker": ["Shorter distances", "B controls first and then passes back"], "moeilijker": ["Everything one-touch", "C/D also lays it back to B arriving (third man)", "Two balls: left and right alternately", "After the lay-off, C plays B in behind and B finishes on the big goal"] }
+    "benodigdheden": [
+      "4 cones",
+      "1–2 balls"
+    ],
+    "coachpunten": [
+      "B: move away from the cone first, then come short to receive",
+      "Lay it back onto A's running foot so they can play it first time",
+      "Long pass firm and in front of the receiver"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shorter distances",
+        "B controls first and then passes back"
+      ],
+      "moeilijker": [
+        "Everything one-touch",
+        "C/D also lays it back to B arriving (third man)",
+        "Two balls: left and right alternately",
+        "After the lay-off, C plays B in behind and B finishes on the big goal"
+      ]
+    }
   },
   "veld-pt-rebounder": {
     "naam": "Passing against the rebounder",
     "uitleg": "Pass against the rebounder (or a wall) and move sideways while the ball is travelling. Control the return with the inside of your foot and play it back with the other foot. That way you shuttle between two spots.",
     "organisatie": "Rebounder or wall 7 m away. Two disc cones 4 m apart mark the width. One player per rebounder; with more players, take turns of 30 seconds.",
-    "benodigdheden": ["1 rebounder (or wall)", "2 disc cones", "1 ball"],
-    "coachpunten": ["Be balanced every time before you receive the ball", "Inside of the foot, ankle locked, standing foot next to the ball", "Alternate left and right foot"],
-    "variaties": { "makkelijker": ["Stay in one spot, 4 m away", "Control first, then pass"], "moeilijker": ["Play it back first time", "10 m away and harder", "After each pass, turn round a cone behind you", "After three passes, take the ball and score in a mini goal"] }
+    "benodigdheden": [
+      "1 rebounder (or wall)",
+      "2 disc cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Be balanced every time before you receive the ball",
+      "Inside of the foot, ankle locked, standing foot next to the ball",
+      "Alternate left and right foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Stay in one spot, 4 m away",
+        "Control first, then pass"
+      ],
+      "moeilijker": [
+        "Play it back first time",
+        "10 m away and harder",
+        "After each pass, turn round a cone behind you",
+        "After three passes, take the ball and score in a mini goal"
+      ]
+    }
   },
   "veld-pt-lange-bal": {
     "naam": "Long ball and control",
     "uitleg": "A plays a long, lofted ball to B in the area on the other side. B controls it out of the air, takes it with them inside the area and plays it long back. A ball that lands in the area scores a point. Suitable from U13.",
     "organisatie": "Two 6 × 6 m areas 25 m apart (15–20 m for younger players). One player in each area; with more players, queues behind the areas.",
-    "benodigdheden": ["8 disc cones", "1 ball per pair"],
-    "coachpunten": ["Standing foot beside and slightly behind the ball, strike the bottom of it with your laces", "Lean back slightly and follow through towards your target", "Receiver: read the flight early and take it in your running direction"],
-    "variaties": { "makkelijker": ["Distance 15 m", "The ball may bounce first"], "moeilijker": ["Distance 30–35 m", "First touch straight out of the area (take it with you)", "Cross-field ball: from the side to a player making a run"] }
+    "benodigdheden": [
+      "8 disc cones",
+      "1 ball per pair"
+    ],
+    "coachpunten": [
+      "Standing foot beside and slightly behind the ball, strike the bottom of it with your laces",
+      "Lean back slightly and follow through towards your target",
+      "Receiver: read the flight early and take it in your running direction"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Distance 15 m",
+        "The ball may bounce first"
+      ],
+      "moeilijker": [
+        "Distance 30–35 m",
+        "First touch straight out of the area (take it with you)",
+        "Cross-field ball: from the side to a player making a run"
+      ]
+    }
   },
   "veld-pt-poortjesspel": {
     "naam": "Gates game in pairs",
     "uitleg": "Pairs pass the ball to each other through a gate: every good pass through a gate is a point. Then you have to pick a different gate. Which pair has the most points after 1.5 minutes?",
     "organisatie": "18 × 17 m area with 5 gates of two disc cones (1.5 m wide). Pairs with one ball; all pairs play at the same time.",
-    "benodigdheden": ["4 cones", "10 disc cones", "1 ball per pair"],
-    "coachpunten": ["Off the ball: move to the other side of a free gate in good time", "On the ball: look up and pick a gate where your partner is already waiting", "Pass firmly and along the ground"],
-    "variaties": { "makkelijker": ["Wider gates (2.5 m)", "The same gate twice is allowed"], "moeilijker": ["Two touches maximum", "A tagger or defender who can intercept passes", "Pass with the weaker foot only", "After passing through the gate, keep running: your partner plays it back into your path"] }
+    "benodigdheden": [
+      "4 cones",
+      "10 disc cones",
+      "1 ball per pair"
+    ],
+    "coachpunten": [
+      "Off the ball: move to the other side of a free gate in good time",
+      "On the ball: look up and pick a gate where your partner is already waiting",
+      "Pass firmly and along the ground"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider gates (2.5 m)",
+        "The same gate twice is allowed"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "A tagger or defender who can intercept passes",
+        "Pass with the weaker foot only",
+        "After passing through the gate, keep running: your partner plays it back into your path"
+      ]
+    }
   },
   "veld-pt-vierhoek-twee-ballen": {
     "naam": "Passing square with two balls",
     "uitleg": "Four players on the corners of a square, two balls on opposite corners. Both balls go round at the same time: receive with your back foot towards the next corner and play on. On the whistle, the direction changes.",
     "organisatie": "10 × 10 m square with a cone on each corner. Players stand just inside the cone. Two balls with players on opposite corners.",
-    "benodigdheden": ["4 cones", "2 balls"],
-    "coachpunten": ["Stay open: body facing the ball and the next corner", "Receive with your back foot, in one movement onto your passing foot", "Watch the second ball: talk and play in time"],
-    "variaties": { "makkelijker": ["One ball", "Smaller square (8 m)"], "moeilijker": ["One-touch passing", "Follow your pass to the next corner", "Add a third ball"] }
+    "benodigdheden": [
+      "4 cones",
+      "2 balls"
+    ],
+    "coachpunten": [
+      "Stay open: body facing the ball and the next corner",
+      "Receive with your back foot, in one movement onto your passing foot",
+      "Watch the second ball: talk and play in time"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One ball",
+        "Smaller square (8 m)"
+      ],
+      "moeilijker": [
+        "One-touch passing",
+        "Follow your pass to the next corner",
+        "Add a third ball"
+      ]
+    }
   },
   "veld-cv-derde-man-afronden": {
     "naam": "Triangle, third man and finish",
     "uitleg": "Player 1 passes into player 2, who comes short and lays it back. Meanwhile player 3 (the third man) runs in behind the defender. Player 1 plays them in first time and player 3 finishes.",
     "organisatie": "Triangle of about 8 m, 20–28 m from goal, mannequin as a defender at 15 m. Rotate after each attack: 1 becomes 2, 2 becomes 3, 3 joins the ball.",
-    "benodigdheden": ["Goal", "1 mannequin", "Balls", "Disc cones"],
-    "coachpunten": ["Player 2: come short and lay it back first time", "Third man: only start when the ball reaches player 2, then go flat out", "Through ball into the run, not to feet"],
-    "variaties": { "makkelijker": ["No mannequin", "Player 3 starts before the first pass"], "moeilijker": ["A defender instead of the mannequin", "Everything one-touch", "After the shot, player 1 defends a second attack"] },
-    "onderdelen": ["Pass in", "Lay-off", "Third man in behind", "Finish"]
+    "benodigdheden": [
+      "Goal",
+      "1 mannequin",
+      "Balls",
+      "Disc cones"
+    ],
+    "coachpunten": [
+      "Player 2: come short and lay it back first time",
+      "Third man: only start when the ball reaches player 2, then go flat out",
+      "Through ball into the run, not to feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No mannequin",
+        "Player 3 starts before the first pass"
+      ],
+      "moeilijker": [
+        "A defender instead of the mannequin",
+        "Everything one-touch",
+        "After the shot, player 1 defends a second attack"
+      ]
+    },
+    "onderdelen": [
+      "Pass in",
+      "Lay-off",
+      "Third man in behind",
+      "Finish"
+    ]
+  },
+  "veld-pt-y-vorm-varianten": {
+    "naam": "Y-shape with variations",
+    "uitleg": "The Y-shape, three times with a different finish. Variation 1, overlap: the starter passes into the lay-off player, gets it back, plays to the left and runs round the outside of the left-hand player, who plays it back into their path. Variation 2, third man: the lay-off player knocks it straight out to the left, the starter sprints past the lay-off player in behind and gets the ball as the third man. Variation 3, long ball: lay-off back and then a long ball straight to the end player. Every variation ends with the end player at the top of the Y.",
+    "organisatie": "Starters with balls at the bottom of the Y (34 m), lay-off player at 24 m, a player left and right at 16 m (6 m to the side), end player at the top at 4 m. Cones by the lay-off player and the left and right players. After each go, everyone moves on one spot.",
+    "benodigdheden": [
+      "3 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Lay-off player: move away from the cone first, then come short and play it first time",
+      "Overlap and third man: only go once the ball is travelling, then accelerate flat out",
+      "Long ball: standing foot next to the ball, strike through it and aim for the end player’s chest or feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Practise each variation separately a few times in a row",
+        "Two touches per player"
+      ],
+      "moeilijker": [
+        "Everything one-touch",
+        "The coach only calls the variation during the first pass",
+        "Right instead of left, or alternate"
+      ]
+    }
   }
 }

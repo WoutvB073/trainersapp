@@ -1539,6 +1539,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
   // ---- worp of trap uit de handen ----
   const wp = s.worp;
   let werpHand = 0;
+  let tweeHanden = false;
   if (wp) {
     const u = wp.u;
     const los = 0.58;
@@ -1609,6 +1610,19 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
         h.voet[0].p.lerp(_v.set(-0.14, MAAT.enkel, -0.25), venster(u, 0.3, 0.9));
         h.arm[1].x = mix(h.arm[1].x, -1.35, w);
         h.arm[1].elleboog = mix(h.arm[1].elleboog, 0.2, w);
+      } else if (wp.soort === 'inworp') {
+        // Inworp: met twee handen, bal achter het hoofd en er in één beweging overheen; beide voeten blijven staan.
+        p = [
+          [0, 1.15, 0.35],
+          [0, 2.0, -0.2],
+          [0, 2.15, 0.28],
+          [0, 1.35, 0.6],
+        ];
+        tweeHanden = true;
+        h.romp.x += u < los ? -0.32 * glad(u / los) : mix(-0.32, 0.3, glad((u - los) / (1 - los)));
+        h.voet[1].p.lerp(_v.set(0.13, MAAT.enkel, 0.32), venster(u, 0.2, 0.95));
+        h.voet[0].p.lerp(_v.set(-0.13, MAAT.enkel, -0.12), venster(u, 0.2, 0.95));
+        h.voet[0].kantel = mix(h.voet[0].kantel, 0.35, venster(u, 0.45, 0.95));
       } else if (wp.soort === 'tik') {
         // Wegtikken met één hand: hand laag naar de bal (rechts voor) en er doorheen zwaaien.
         p = [
@@ -1639,6 +1653,12 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       const pb = p[seg + 1]!;
       h.arm[ri].doel.set(mix(pa[0], pb[0], a), mix(pa[1], pb[1], a), mix(pa[2], pb[2], a));
       h.arm[ri].ik = w;
+      if (tweeHanden) {
+        // Beide handen aan weerszijden van de bal.
+        h.arm[1].doel.copy(h.arm[0].doel).setX(h.arm[0].doel.x + 0.13);
+        h.arm[0].doel.x -= 0.13;
+        h.arm[1].ik = w;
+      }
       st.balInHand = u < los && wp.soort !== 'tik' ? 1 : 0;
     }
   }
@@ -1826,6 +1846,11 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
 
   // Plek van de rechterhand (de bal volgt hem bij een worp).
   sk.pols[0].localToWorld(st.hand.set(0, -0.07, 0.07));
+  if (tweeHanden) {
+    // Inworp: de bal zit tussen beide handen.
+    sk.pols[1].localToWorld(_w.set(0, -0.07, 0.07));
+    st.hand.add(_w).multiplyScalar(0.5);
+  }
 }
 
 function opstaanHand(s: ObjectStand): boolean {

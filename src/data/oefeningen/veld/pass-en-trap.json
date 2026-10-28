@@ -1346,5 +1346,380 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-pt-y-vorm-varianten",
+    "soort": "veld",
+    "naam": "Y-vorm met varianten",
+    "categorieen": [
+      "pass-en-trap"
+    ],
+    "uitleg": "De Y-vorm, drie keer met een andere afloop. Variant 1, overlap: de starter speelt de kaatser in, krijgt de bal terug, speelt naar links en loopt buitenom de linkerspeler, die hem in zijn loop terugspeelt. Variant 2, derde man: de kaatser legt de bal meteen opzij naar links, de starter sprint langs de kaatser de diepte in en krijgt de bal als derde man. Variant 3, lange bal: kaats terug en dan meteen een lange bal naar de eindspeler. Elke variant eindigt bij de eindspeler bovenin de Y.",
+    "organisatie": "Starters met ballen onderaan de Y (34 m), kaatser op 24 m, links en rechts een speler op 16 m (6 m opzij), eindspeler bovenin op 4 m. Pionnen bij de kaatser en de spelers links en rechts. Na elke actie schuift iedereen een plek door.",
+    "benodigdheden": [
+      "3 pionnen",
+      "Ballen"
+    ],
+    "spelersNodig": 7,
+    "keepersNodig": 0,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kaatser: eerst van de pion weg, dan kort komen en in één keer spelen",
+      "Overlap en derde man: pas starten als de bal onderweg is, dan vol versnellen",
+      "Lange bal: standbeen naast de bal, door de bal heen trappen en de eindspeler op de borst of voet zoeken"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Elke variant apart oefenen, een paar keer achter elkaar",
+        "Twee aanrakingen per speler"
+      ],
+      "moeilijker": [
+        "Alles in één keer",
+        "De trainer roept pas tijdens de eerste pass welke variant",
+        "Rechts in plaats van links, of om en om"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 24,
+        "lengte": 38
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "pb",
+          "soort": "pion",
+          "x": 12,
+          "y": 23.2
+        },
+        {
+          "id": "pc",
+          "soort": "pion",
+          "x": 5.2,
+          "y": 15.2
+        },
+        {
+          "id": "pd",
+          "soort": "pion",
+          "x": 18.8,
+          "y": 15.2
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 12,
+          "y": 32,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 12,
+          "y": 34.2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 12,
+          "y": 36.4,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 12,
+          "y": 24.2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "c",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 5,
+          "x": 6,
+          "y": 16,
+          "kijkrichting": 60
+        },
+        {
+          "id": "d",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 6,
+          "x": 18,
+          "y": 16,
+          "kijkrichting": 120
+        },
+        {
+          "id": "e",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 12,
+          "y": 4.5,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 12,
+          "y": 31.45,
+          "bij": "a1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 13.1,
+          "y": 34.4
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 13.1,
+          "y": 36.6
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "b"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b",
+              "naar": "a1",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "c"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "via": [
+                [
+                  8.5,
+                  19.5
+                ],
+                [
+                  2.6,
+                  17.5
+                ]
+              ],
+              "naar": [
+                3.2,
+                11
+              ],
+              "manier": "sprint"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "c",
+              "naar": "a1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "e"
+            },
+            {
+              "type": "pak",
+              "wie": "a2",
+              "bal": "b2",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "e",
+              "naar": [
+                17.5,
+                2.5
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                1.8,
+                6.5
+              ],
+              "start": 0.2
+            },
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "naar": [
+                12,
+                32
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "b"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b",
+              "naar": "c",
+              "direct": true
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "via": [
+                [
+                  15,
+                  27
+                ]
+              ],
+              "naar": [
+                12.6,
+                17
+              ],
+              "manier": "sprint",
+              "start": 0.1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "c",
+              "naar": "a2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "e"
+            },
+            {
+              "type": "pak",
+              "wie": "a3",
+              "bal": "b3",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "e",
+              "naar": [
+                6.5,
+                2.5
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                21,
+                10
+              ],
+              "start": 0.2
+            },
+            {
+              "type": "dribbel",
+              "wie": "a3",
+              "naar": [
+                12,
+                32
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a3",
+              "naar": "b"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "b",
+              "naar": "a3",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a3",
+              "naar": "e",
+              "hoogte": "hoog",
+              "eindHoogte": 1.2
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

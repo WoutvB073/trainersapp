@@ -76,6 +76,8 @@ export const EN: Record<string, string> = {
   'Scoren na een pass, dribbel of kaats': 'Scoring after a pass, dribble or one-two',
   Positiespel: 'Possession',
   'Rondo’s en positiespelen': 'Rondos and positional games',
+  'Verdedigen en omschakelen': 'Defending & transition',
+  'Druk zetten, de bal veroveren en snel omschakelen': 'Pressing, winning the ball and quick transitions',
   Partijvormen: 'Small-sided games',
   '1v1, 2v2, overtal uitspelen en meer': '1v1, 2v2, overloads and more',
   Spelletjes: 'Games',

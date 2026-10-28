@@ -456,6 +456,11 @@ h3 {
   text-decoration: none;
 }
 
+.cat-plaatje {
+  flex: none;
+  border-radius: 9px;
+}
+
 .rij:active {
   background: var(--primair-licht);
 }

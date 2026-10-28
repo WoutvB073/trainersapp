@@ -1160,7 +1160,8 @@
     "naam": "Duel om de bal: 1 tegen 1 naar doel",
     "categorieen": [
       "afwerken",
-      "partijvormen"
+      "partijvormen",
+      "verdedigen-omschakelen"
     ],
     "uitleg": "De trainer speelt een bal tussen twee rijen in. De eerste van beide rijen sprint erop af: wie de bal heeft, valt aan op het doel, de ander verdedigt. Een doelpunt is een punt voor je team. Welk team staat na 10 duels voor?",
     "organisatie": "Twee rijen (team rood en team blauw) op 30 m, 14 m uit elkaar. Trainer met een stapel ballen in het midden tussen de rijen. Keeper in het doel.",
@@ -2598,6 +2599,1374 @@
                 0.3
               ],
               "afloop": "vangt"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-af-schieten-onder-druk",
+    "soort": "veld",
+    "naam": "Schieten onder druk",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "De aanvaller staat op de rand van de zestien met een verdediger 3 m achter zich. De aangever speelt de bal vanaf de zijkant in; op dat moment sprint de verdediger erop af om het schot te blokken. De aanvaller moet snel afronden: met de eerste aanraking klaarleggen en schieten. Wie een tikje te veel neemt, wordt ingehaald en verliest de bal.",
+    "organisatie": "Aanvaller op 19 m recht voor het doel, verdediger 3 m achter hem. Aangever met ballen rechts op 18 m van het doel en 12 m opzij. Keeper in het doel. Na twee ballen wisselen aanvaller en verdediger.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen",
+      "1 hesje"
+    ],
+    "spelersNodig": 3,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Vóór de bal komt al weten welke hoek je kiest",
+      "Eerste aanraking schuin naar voren, de bal ligt dan meteen goed om te schieten",
+      "Snel en laag: liever een snel schot dan een mooi schot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Verdediger start 5 m erachter",
+        "Aanvaller mag twee keer raken voor het schot"
+      ],
+      "moeilijker": [
+        "Schieten in één keer",
+        "Verdediger start naast de aanvaller",
+        "Pass komt halfhoog: aannemen uit de lucht"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 20,
+        "y": -3,
+        "breedte": 30,
+        "lengte": 28
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "a",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 34,
+          "y": 19,
+          "kijkrichting": -60
+        },
+        {
+          "id": "d",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 4,
+          "x": 34.6,
+          "y": 22.2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "s",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 46,
+          "y": 18,
+          "kijkrichting": 180
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 45.45,
+          "y": 18,
+          "bij": "s"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 46.8,
+          "y": 18.8
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "s",
+              "naar": "a"
+            },
+            {
+              "type": "druk",
+              "wie": "d",
+              "op": "a",
+              "afstand": 1.7,
+              "manier": "sprint",
+              "start": 0.35
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a",
+              "naar": [
+                33.2,
+                17.6
+              ],
+              "duur": 0.45
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a",
+              "naar": [
+                30.9,
+                -0.3
+              ],
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a",
+              "naar": [
+                34,
+                19
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "d",
+              "naar": [
+                34.6,
+                22.2
+              ]
+            },
+            {
+              "type": "pak",
+              "wie": "s",
+              "bal": "b2",
+              "start": 0.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "s",
+              "naar": "a",
+              "bal": "b2"
+            },
+            {
+              "type": "druk",
+              "wie": "d",
+              "op": "a",
+              "afstand": 1.7,
+              "manier": "sprint",
+              "start": 0.35
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a",
+              "naar": [
+                32.6,
+                17.2
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a",
+              "naar": [
+                31.2,
+                16.4
+              ]
+            },
+            {
+              "type": "verover",
+              "wie": "d",
+              "van": "a",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-af-cutback",
+    "soort": "veld",
+    "naam": "Cutback en afronden",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "De buitenspeler dribbelt langs de zijkant tot vlak bij de achterlijn. Twee spelers lopen in: de eerste naar de eerste paal (hij trekt de keeper en verdedigers mee), de tweede blijft iets hangen en komt rond de penaltystip. De buitenspeler legt de bal terug (cutback) op de inloper bij de stip, die in één keer afrondt.",
+    "organisatie": "Op een half veld. Buitenspeler met ballen rechts op 26 m van het doel, twee aanvallers centraal op 20–26 m. Keeper in het doel. Na elke actie doordraaien, ook van de linkerkant.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen",
+      "2 hoedjes"
+    ],
+    "spelersNodig": 3,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Buitenspeler: tot bijna de achterlijn, dan opkijken en de bal terugleggen over de grond",
+      "Inloper bij de stip: niet te vroeg, kom aan als de bal onderweg is",
+      "Eerste paal: hard inlopen, zo maak je ruimte achter je"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Buitenspeler legt de bal stil terug",
+        "Inloper mag eerst aannemen"
+      ],
+      "moeilijker": [
+        "Een verdediger in de zestien",
+        "Buitenspeler kiest: cutback of voorzet op de eerste paal",
+        "Afronden met het zwakke been"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 20,
+        "y": -3,
+        "breedte": 42,
+        "lengte": 32
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "w",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 54,
+          "y": 26,
+          "kijkrichting": -100
+        },
+        {
+          "id": "n",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 30,
+          "y": 21,
+          "kijkrichting": -70
+        },
+        {
+          "id": "r",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 37,
+          "y": 26,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 53.9,
+          "y": 25.45,
+          "bij": "w"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "w",
+              "naar": [
+                53,
+                4.2
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "n",
+              "naar": [
+                37.2,
+                5.2
+              ],
+              "manier": "sprint",
+              "start": 1
+            },
+            {
+              "type": "loop",
+              "wie": "r",
+              "naar": [
+                36.2,
+                14.6
+              ],
+              "start": 1.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "w",
+              "naar": "r"
+            },
+            {
+              "type": "loop",
+              "wie": "r",
+              "naar": [
+                35.8,
+                12.6
+              ],
+              "start": 0.1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "r",
+              "naar": [
+                31.2,
+                -0.3
+              ],
+              "afloop": "goal",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-af-snel-na-balwinst",
+    "soort": "veld",
+    "naam": "Snel afronden na balwinst",
+    "categorieen": [
+      "afwerken",
+      "verdedigen-omschakelen"
+    ],
+    "uitleg": "In het middenvak spelen twee verdedigers de bal rond. Twee aanvallers zetten druk en proberen de bal te veroveren. Lukt dat, dan moeten ze binnen 8 seconden scoren op het grote doel; de verdedigers sprinten terug om dat te voorkomen. Geslaagd binnen de tijd = een punt.",
+    "organisatie": "Op een half veld. Middenvak van 30 × 14 m op 23–37 m van het doel. Twee verdedigers (hesjes) met de bal in het vak, twee aanvallers erbij. Keeper in het doel. De trainer telt hardop tot 8.",
+    "benodigdheden": [
+      "Goal",
+      "4 pionnen",
+      "Ballen",
+      "2 hesjes"
+    ],
+    "spelersNodig": 4,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Druk zetten samen: één op de bal, de ander op de passlijn",
+      "Na de balwinst: eerste aanraking vooruit, niet eerst omkijken",
+      "Snel naar doel en de tweede man meenemen: 2 tegen de keeper voordat de verdedigers terug zijn"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "10 seconden de tijd",
+        "Verdedigers mogen niet terugsprinten"
+      ],
+      "moeilijker": [
+        "6 seconden",
+        "Drie verdedigers tegen twee aanvallers",
+        "Na een doelpunt meteen opnieuw: de verdedigers krijgen een nieuwe bal"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 14,
+        "y": -3,
+        "breedte": 40,
+        "lengte": 44
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "z",
+          "soort": "zone",
+          "x": 34,
+          "y": 30,
+          "breedte": 30,
+          "lengte": 14
+        },
+        {
+          "id": "v1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 4,
+          "x": 27,
+          "y": 31,
+          "kijkrichting": 0
+        },
+        {
+          "id": "v2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 5,
+          "x": 41,
+          "y": 31,
+          "kijkrichting": 180
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 31,
+          "y": 35.4,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 37.5,
+          "y": 26.5,
+          "kijkrichting": 90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 27.55,
+          "y": 31,
+          "bij": "v1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "v1",
+              "naar": "v2"
+            },
+            {
+              "type": "druk",
+              "wie": "a2",
+              "op": "v2",
+              "afstand": 2.2,
+              "manier": "sprint",
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                32.4,
+                33.6
+              ],
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "v2",
+              "naar": "v1",
+              "onderschept": "a1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                33.6,
+                19.4
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                39.8,
+                15.8
+              ],
+              "manier": "sprint",
+              "start": 0.1
+            },
+            {
+              "type": "loop",
+              "wie": "v1",
+              "naar": [
+                30.4,
+                21.4
+              ],
+              "manier": "sprint",
+              "start": 0.5
+            },
+            {
+              "type": "loop",
+              "wie": "v2",
+              "naar": [
+                43.6,
+                22
+              ],
+              "manier": "sprint",
+              "start": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                31,
+                -0.3
+              ],
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-af-golven-na-inworp",
+    "soort": "veld",
+    "naam": "Aanvallen in golven na een inworp",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Inworp aan de zijkant, ter hoogte van de zestien. De ontvanger komt kort, neemt aan en dribbelt richting de achterlijn. Intussen komen de aanvallers in golven de zestien in: eerst twee spelers naar de eerste en de tweede paal, daarna een derde speler die achter hen blijft en rond de rand van de zestien aankomt. De ontvanger kiest de vrije man; in het voorbeeld legt hij terug op de derde loper, die afrondt.",
+    "organisatie": "Op een half veld. Ingooier op de rechterzijlijn op 22 m van de achterlijn, ontvanger 6 m binnen het veld. Twee aanvallers op 24–28 m (eerste golf), een derde op 32 m (tweede golf). Keeper in het doel. Na elke aanval doordraaien.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen",
+      "2 hoedjes (ingooiplek)"
+    ],
+    "spelersNodig": 5,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Ingooier: twee handen, de bal achter het hoofd en beide voeten op de grond; gooi op de voet of borst van de ontvanger",
+      "Eerste golf: verdeel de palen, niet allebei naar dezelfde plek",
+      "Tweede golf: blijf achter de bal en kom laat; de terugleg is vaak de beste kans"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Ontvanger mag een voorzet uit stilstand geven",
+        "Zonder tweede golf"
+      ],
+      "moeilijker": [
+        "Twee verdedigers in de zestien",
+        "Ontvanger moet binnen 4 seconden de bal afgeven",
+        "Ingooier loopt mee en wordt de derde golf"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 24,
+        "y": -3,
+        "breedte": 46,
+        "lengte": 38
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "t",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 67.6,
+          "y": 22,
+          "kijkrichting": 180
+        },
+        {
+          "id": "r",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 61.4,
+          "y": 24.4,
+          "kijkrichting": 0
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 42,
+          "y": 25,
+          "kijkrichting": -100
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 11,
+          "x": 33,
+          "y": 27.5,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 8,
+          "x": 46,
+          "y": 32,
+          "kijkrichting": -120
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 67.05,
+          "y": 22,
+          "bij": "t"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "r",
+              "naar": [
+                62.4,
+                22.6
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t",
+              "naar": "r",
+              "worp": "inworp",
+              "hoogte": 1.8,
+              "eindHoogte": 0.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "r",
+              "naar": [
+                61.2,
+                7.2
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                38.6,
+                5.4
+              ],
+              "manier": "sprint",
+              "start": 0.8
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                30.4,
+                7.6
+              ],
+              "manier": "sprint",
+              "start": 0.9
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                42.6,
+                16.4
+              ],
+              "start": 1.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "r",
+              "naar": "a3"
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                41.8,
+                15.4
+              ],
+              "start": 0.1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a3",
+              "naar": [
+                31,
+                -0.3
+              ],
+              "afloop": "goal",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-af-kopballen-voorzet",
+    "soort": "veld",
+    "naam": "Kopballen na een voorzet",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Voorzetten van beide kanten, om en om. Twee spitsen lopen in met een afgesproken looplijn: de één naar de eerste paal, de ander naar de tweede. Eerst een voorzet van rechts op de eerste paal, daarna een voorzet van links op de tweede paal. De spits kopt de bal naar beneden, in de hoek.",
+    "organisatie": "Op een half veld. Buitenspelers met ballen links en rechts op 18 m van de achterlijn en 24 m opzij van het midden. Twee spitsen centraal op 22–24 m. Keeper in het doel. Na een paar voorzetten wisselen de spitsen van looplijn.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 4,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Looplijn met een bocht: eerst weg van de paal, dan erop af",
+      "Afzetten op één been, met het voorhoofd raken en de ogen open",
+      "Kop de bal naar beneden: een stuitende bal is voor een keeper het lastigst"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Voorzet met de hand gooien",
+        "Spitsen staan al op hun plek"
+      ],
+      "moeilijker": [
+        "Een verdediger springt mee",
+        "Buitenspelers geven de voorzet in de loop",
+        "Een derde loper naar de rand van de zestien voor de tweede bal"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 6,
+        "y": -3,
+        "breedte": 56,
+        "lengte": 30
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "wr",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 58,
+          "y": 18,
+          "kijkrichting": 180
+        },
+        {
+          "id": "wl",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 11,
+          "x": 10,
+          "y": 18,
+          "kijkrichting": 0
+        },
+        {
+          "id": "s1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 37,
+          "y": 22,
+          "kijkrichting": -90
+        },
+        {
+          "id": "s2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 31,
+          "y": 24,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 57.45,
+          "y": 18,
+          "bij": "wr"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 10.55,
+          "y": 18,
+          "bij": "wl"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "wr",
+              "naar": [
+                55,
+                13
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "s1",
+              "via": [
+                [
+                  40.2,
+                  15
+                ]
+              ],
+              "naar": [
+                38.4,
+                6.2
+              ],
+              "manier": "sprint",
+              "start": 0.6
+            },
+            {
+              "type": "loop",
+              "wie": "s2",
+              "naar": [
+                30.2,
+                9.4
+              ],
+              "start": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "wr",
+              "naar": "s1",
+              "hoogte": "hoog",
+              "eindHoogte": 1.9
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "s1",
+              "naar": [
+                36.4,
+                0.2
+              ],
+              "afloop": "goal",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "s1",
+              "naar": [
+                38,
+                22
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "s2",
+              "naar": [
+                32,
+                24
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "wl",
+              "naar": [
+                13,
+                13
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "s2",
+              "via": [
+                [
+                  28.4,
+                  16
+                ]
+              ],
+              "naar": [
+                29.2,
+                9.6
+              ],
+              "start": 0.4
+            },
+            {
+              "type": "loop",
+              "wie": "s1",
+              "via": [
+                [
+                  41.4,
+                  14
+                ]
+              ],
+              "naar": [
+                38.8,
+                6.8
+              ],
+              "manier": "sprint",
+              "start": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "wl",
+              "naar": "s1",
+              "hoogte": "hoog",
+              "eindHoogte": 1.9,
+              "bal": "b2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "s1",
+              "naar": [
+                36.8,
+                0.2
+              ],
+              "afloop": "goal",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-af-wedstrijdje-schieten",
+    "soort": "veld",
+    "naam": "Wedstrijdje schieten",
+    "categorieen": [
+      "afwerken",
+      "spelletjes"
+    ],
+    "uitleg": "Twee teams staan in een rij naast elkaar op 18 m en schieten om de beurt op doel. Een doelpunt is een punt; laag in de hoek (onder kniehoogte en dicht bij de paal) is twee punten. Na je schot haal je je bal op en sluit je achteraan je rij aan. Welk team heeft na vijf rondes de meeste punten?",
+    "organisatie": "Twee rijen met ballen op 18 m van het doel, 6 m uit elkaar. Keeper in het doel. De trainer houdt de stand bij.",
+    "benodigdheden": [
+      "Goal",
+      "1 bal per speler",
+      "4 hoedjes",
+      "Hesjes voor één team"
+    ],
+    "spelersNodig": 4,
+    "keepersNodig": 1,
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Plaatsen gaat voor kracht: laag in de hoek is het moeilijkst voor de keeper",
+      "Standbeen naast de bal, knie boven de bal",
+      "Kies vóór je aanloop al je hoek en houd je eraan"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Schieten vanaf 14 m",
+        "Hoek-punten ook voor halfhoog"
+      ],
+      "moeilijker": [
+        "Vanaf 20 m",
+        "Eerst een kaats met de trainer, dan in één keer schieten",
+        "Alleen het zwakke been"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 20,
+        "y": -3,
+        "breedte": 28,
+        "lengte": 28
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 31,
+          "y": 18,
+          "kijkrichting": -80
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 31,
+          "y": 20.4,
+          "kijkrichting": -80
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 8,
+          "x": 37,
+          "y": 18,
+          "kijkrichting": -100
+        },
+        {
+          "id": "b2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 10,
+          "x": 37,
+          "y": 20.4,
+          "kijkrichting": -100
+        },
+        {
+          "id": "ba1",
+          "soort": "bal",
+          "x": 31.1,
+          "y": 17.45,
+          "bij": "a1"
+        },
+        {
+          "id": "ba2",
+          "soort": "bal",
+          "x": 31.1,
+          "y": 19.85,
+          "bij": "a2"
+        },
+        {
+          "id": "bb1",
+          "soort": "bal",
+          "x": 36.9,
+          "y": 17.45,
+          "bij": "b1"
+        },
+        {
+          "id": "bb2",
+          "soort": "bal",
+          "x": 36.9,
+          "y": 19.85,
+          "bij": "b2"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                30.9,
+                0.2
+              ],
+              "hoogte": "grond",
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "via": [
+                [
+                  27.4,
+                  12
+                ]
+              ],
+              "naar": [
+                27.6,
+                22.6
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                31,
+                18
+              ],
+              "start": 0.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "b1",
+              "naar": "k1",
+              "afloop": "vangt"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "b1",
+              "via": [
+                [
+                  40.6,
+                  12
+                ]
+              ],
+              "naar": [
+                40.4,
+                22.6
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "b2",
+              "naar": [
+                37,
+                18
+              ],
+              "start": 0.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                36.2,
+                0.2
+              ],
+              "hoogte": 1.6,
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "b2",
+              "naar": [
+                37.1,
+                0.2
+              ],
+              "hoogte": "grond",
+              "afloop": "goal"
             }
           ]
         },

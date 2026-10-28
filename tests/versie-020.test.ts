@@ -81,8 +81,8 @@ describe('0.20.0 nieuwe oefeningen', () => {
     const verwacht: Record<string, string[]> = {
       'veld-pv-1-1-poortjes': ['partijvormen'],
       'veld-pv-wippen-1-1': ['partijvormen'],
-      'veld-pv-oplopend-overtal': ['partijvormen'],
-      'veld-pv-2-1-inhalende-verdediger': ['partijvormen'],
+      'veld-pv-oplopend-overtal': ['partijvormen', 'verdedigen-omschakelen'], // + 0.26.0
+      'veld-pv-2-1-inhalende-verdediger': ['partijvormen', 'verdedigen-omschakelen'], // + 0.26.0
       'veld-ps-rondo-4-2-uitbraak': ['positiespel', 'afwerken'],
       'veld-pv-golven': ['partijvormen', 'afwerken'],
       'veld-af-kaatsen-verdediger-rug': ['afwerken'],

@@ -15,6 +15,7 @@ export const CATEGORIEEN: Record<Soort, Categorie[]> = {
     { id: 'pass-en-trap', naam: t('Pass en trap'), omschrijving: t('Passen, aannemen en meenemen') },
     { id: 'afwerken', naam: t('Afwerken'), omschrijving: t('Scoren na een pass, dribbel of kaats') },
     { id: 'positiespel', naam: t('Positiespel'), omschrijving: t('Rondo’s en positiespelen') },
+    { id: 'verdedigen-omschakelen', naam: t('Verdedigen en omschakelen'), omschrijving: t('Druk zetten, de bal veroveren en snel omschakelen') },
     { id: 'partijvormen', naam: t('Partijvormen'), omschrijving: t('1v1, 2v2, overtal uitspelen en meer') },
     { id: 'spelletjes', naam: t('Spelletjes'), omschrijving: t('Voetvolley en andere spelvormen') },
   ],

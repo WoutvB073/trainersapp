@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { CATEGORIEEN, SOORT_NAAM, SOORT_PAD } from '../data/categorieen';
 import { oefeningenVan } from '../data/oefeningen';
 import { Kop } from '../components/Kop';
@@ -9,8 +10,9 @@ import { aantalActief, filterOefeningen, useFilters } from '../engine/filters';
 import { useEigenOefeningen } from '../eigen/opslag';
 import type { Soort } from '../model/types';
 import { t } from '../i18n/t';
+import { CategoriePlaatje } from '../components/CategoriePlaatje';
 
-function Rij({ pad, naam, omschrijving, aantal, gefilterd }: { pad: string; naam: string; omschrijving: string; aantal: number; gefilterd: boolean }) {
+function Rij({ pad, naam, omschrijving, aantal, gefilterd, plaatje }: { pad: string; naam: string; omschrijving: string; aantal: number; gefilterd: boolean; plaatje?: ReactNode }) {
   return (
     <li>
       <a
@@ -21,6 +23,7 @@ function Rij({ pad, naam, omschrijving, aantal, gefilterd }: { pad: string; naam
           ga(pad);
         }}
       >
+        {plaatje}
         <span className="rij-tekst">
           <span className="rij-titel">{naam}</span>
           <span className="rij-sub">{omschrijving}</span>
@@ -51,7 +54,7 @@ export function Categorieen({ soort }: { soort: Soort }) {
         <h2 className="sectie-titel">{t('Categorieën')}</h2>
         <ul className="lijst">
           {CATEGORIEEN[soort].map((c) => (
-            <Rij key={c.id} pad={`${basis}/${c.id}`} naam={c.naam} omschrijving={c.omschrijving} aantal={tel(c.id)} gefilterd={gefilterd} />
+            <Rij key={c.id} pad={`${basis}/${c.id}`} naam={c.naam} omschrijving={c.omschrijving} aantal={tel(c.id)} gefilterd={gefilterd} plaatje={<CategoriePlaatje soort={soort} id={c.id} />} />
           ))}
         </ul>
       </main>
