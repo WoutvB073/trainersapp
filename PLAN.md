@@ -1027,6 +1027,24 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   drukzetters schuin opzij in plaats van recht achter de balbezitter (3D-overlap), Mandekking-partijtje een kwartslag
   gedraaid (duo's naast elkaar), ruimer beeld bij schietzones/wingers/pressen, scorebord groter.
 
+## Deel C (0.28.0) – tussenstand, NOG NIET AF (branch `deel-c-tussenstand`)
+- Klaar: `src/wedstrijd/tactieken.ts` met alle 17 tactieken in 3 groepen (25 borden: 11 tegen 11, de 8-tegen-8-versies van
+  T1, T4, T6, T7, T12, T15, T16 en T11 in 1-3-2-2 en 1-3-3-1), uitleg (wat, wanneer, 2–3 aandachtspunten).
+  `tests/versie-028.test.ts`: alle borden spelen af zonder meldingen, zonder fysieke fouten en met ≥ 1,5 m afstand.
+  `Bord.tactiek` (id, ook in de deellink `tk`). Scherm `src/screens/wedstrijd/Tactieken.tsx` (lijst + voorbeeld met
+  11/8-keuze, uitleg, Opslaan als eigen bord, Aanpassen) – nog niet aangesloten en nog niet getypecheckt.
+- Nog te doen:
+  1. Engelse vertalingen van alle nieuwe t()-teksten in `src/i18n/en.ts` (`node tools/i18n/scan.mjs -v`).
+  2. Router (`#/tactieken`, `#/tactiek/<id>/<versie>`) en App.tsx; in Wedstrijd → Nieuw tactiekbord een keuze
+     "Voorbeeldtactiek" naar `/tactieken`; in BordScherm `<TactiekUitleg>` als `b.tactiek` gezet is; CSS `.tactiek-uitleg`.
+  3. Help: onderwerp "Voorbeeldtactieken" (NL/EN) met alle namen, Laat zien → `/tactieken`.
+  4. Screenshots 2D/3D van elke tactiek (ook iPhone SE) kritisch bekijken; browsertest; versie 0.28.0; mergen naar main.
+- Keuzes tot nu toe: rugnummers per positie (2 rechtsback … 11 linksbuiten, zoals "de 6"), niet links-naar-rechts zoals
+  in de opstelling; T7 in 8 tegen 8 in de 1-2-3-2 (de buitenste middenvelders doen wat de backs in 11 tegen 11 doen);
+  T11 als één tactiek met twee versies (1-3-2-2 en 1-3-3-1); een voorbeeld opent eerst een voorbeeldscherm (niet meteen
+  een opgeslagen bord), zodat de 11/8-keuze bovenaan kan en het voorbeeld ongewijzigd blijft. Borden kun je niet aan een
+  training toevoegen (dat kon al niet); "zichtbaar zoals andere borden" = in Wedstrijd, delen via link en team.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.27.0 – #27 niet gebouwd maar de bestaande 4 tegen 4 met doelspelers kreeg de categorie Verdedigen en omschakelen en

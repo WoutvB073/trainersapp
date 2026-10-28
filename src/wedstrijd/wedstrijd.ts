@@ -170,6 +170,8 @@ export interface Bord {
   naam: string;
   soort: BordSoort;
   tekening: Tekening;
+  /** Gemaakt uit een voorbeeldtactiek (0.28.0): het id, zodat de uitleg in het bord te openen is. */
+  tactiek?: string;
   gemaakt: number;
   gewijzigd: number;
 }
@@ -253,7 +255,7 @@ export function wedstrijdCode(x: { soort: 'opstelling'; opstelling: Opstelling }
     return naarBase64Url(JSON.stringify({ v: 1, s: 'o', n: o.naam, d: o.datum, f: o.spelvorm, fo: o.formatie, p: o.plekken, w: o.wissels }));
   }
   const b = x.bord;
-  return naarBase64Url(JSON.stringify({ v: 1, s: 'b', n: b.naam, z: b.soort, t: b.tekening }));
+  return naarBase64Url(JSON.stringify({ v: 1, s: 'b', n: b.naam, z: b.soort, t: b.tekening, ...(b.tactiek ? { tk: b.tactiek } : {}) }));
 }
 
 export type UitCode = { soort: 'opstelling'; opstelling: Omit<Opstelling, 'id' | 'gemaakt' | 'gewijzigd'> } | { soort: 'bord'; bord: Omit<Bord, 'id' | 'gemaakt' | 'gewijzigd'> };
@@ -276,7 +278,8 @@ export function uitWedstrijdCode(code: string): UitCode | null {
     if (x.s === 'b') {
       const t = x.t as Tekening | undefined;
       if (!t || typeof t !== 'object' || !t.veld || !Array.isArray(t.objecten)) return null;
-      return { soort: 'bord', bord: { naam, soort: x.z === 'hervatting' ? 'hervatting' : 'tactiek', tekening: t } };
+      const tactiek = typeof x.tk === 'string' && /^[a-z0-9-]{1,40}$/.test(x.tk) ? { tactiek: x.tk } : {};
+      return { soort: 'bord', bord: { naam, soort: x.z === 'hervatting' ? 'hervatting' : 'tactiek', tekening: t, ...tactiek } };
     }
     return null;
   } catch {
