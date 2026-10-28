@@ -39,6 +39,8 @@ import {
   type UitCode,
 } from '../../wedstrijd/wedstrijd';
 import { SITUATIES, VOORBEELDEN } from '../../wedstrijd/hervattingen';
+import { vindTactiek } from '../../wedstrijd/tactieken';
+import { TactiekUitleg } from './Tactieken';
 import { t as vt } from '../../i18n/t';
 
 const LAATSTE_SPELVORM = 'trainersapp.spelvorm';
@@ -312,6 +314,14 @@ function NieuwTactiekbord({ ops, opSluit }: { ops: Opstelling[]; opSluit: () => 
         <Icoon naam="tactiek" maat={20} />
         {vt('Bord met beide teams maken')}
       </button>
+      <h3 className="wedstrijd-sub">{vt('Voorbeeldtactiek')}</h3>
+      <button className="keuze-kaart" onClick={() => ga('/tactieken')}>
+        <Icoon naam="tactiek" maat={28} />
+        <span>
+          <strong>{vt('Kies een voorbeeldtactiek')}</strong>
+          <span className="klein">{vt('17 tactieken: druk zetten, opbouwen, aanvallen en omschakelen')}</span>
+        </span>
+      </button>
       <h3 className="wedstrijd-sub">{vt('Vanuit een opstelling')}</h3>
       {ops.length === 0 ? (
         <p className="klein">{vt('Maak eerst een opstelling; jouw spelers staan dan met hun namen klaar (en de tegenstander ertegenover).')}</p>
@@ -558,6 +568,7 @@ export function BordScherm({ id }: { id: string }) {
   if (!b || !speel) return <NietGevonden />;
   const nu = () => borden.haal(id) ?? b;
   const lijnen = b.tekening.lijnen?.length ?? 0;
+  const tactiek = vindTactiek(b.tactiek);
   return (
     <div className="pagina">
       <Kop titel={bordNaam(b)} ouder="/wedstrijd" />
@@ -566,6 +577,7 @@ export function BordScherm({ id }: { id: string }) {
           <AnimatieSpeler tekening={speel} />
         </div>
         <div className="detail-tekst">
+          {tactiek && <TactiekUitleg tactiek={tactiek} />}
           {!lijnen && <p className="hint">{vt('Tik op Tekenen om looplijnen, passes en dribbels te tekenen. Elke lijn krijgt een stapnummer; zo speelt het af in 2D en 3D.')}</p>}
           <section className="blok training-gegevens">
             <label className="veld">

@@ -452,3 +452,50 @@
   background: var(--primair-licht);
   color: var(--primair-tekst);
 }
+
+/* ---------- Voorbeeldtactieken (0.28.0) ---------- */
+
+.tactiek-versies {
+  margin-bottom: 10px;
+}
+
+.tactiek-uitleg {
+  margin-bottom: 12px;
+}
+
+.tactiek-uitleg summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.tactiek-uitleg summary::-webkit-details-marker {
+  display: none;
+}
+
+.tactiek-uitleg summary svg {
+  flex: none;
+  color: var(--primair-tekst);
+}
+
+.tactiek-uitleg h3 {
+  margin: 12px 0 4px;
+  font-size: 0.9rem;
+  color: var(--primair-tekst);
+}
+
+.tactiek-uitleg p {
+  margin: 0;
+}
+
+.tactiek-uitleg ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.tactiek-uitleg li + li {
+  margin-top: 4px;
+}

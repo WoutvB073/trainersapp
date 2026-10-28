@@ -21,6 +21,7 @@ import { Gegevens } from './screens/eigen/Gegevens';
 import { Instellingen } from './screens/Instellingen';
 import { Help } from './screens/Help';
 import { BordScherm, GedeeldWedstrijd, OpstellingScherm, TeamWedstrijdScherm, Wedstrijd } from './screens/wedstrijd/Wedstrijd';
+import { TactiekenScherm, TactiekScherm } from './screens/wedstrijd/Tactieken';
 import { BordTekenen } from './screens/wedstrijd/BordTekenen';
 import { Account, SamenvoegenVraag } from './screens/online/Account';
 import { Teams, TeamScherm, TeamTrainingScherm } from './screens/online/Teams';
@@ -73,6 +74,10 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <BordScherm key={route.id} id={route.id} />;
     case 'bord-tekenen':
       return <BordTekenen key={route.id} id={route.id} />;
+    case 'tactieken':
+      return <TactiekenScherm />;
+    case 'tactiek':
+      return <TactiekScherm key={route.id} id={route.id} versie={route.versie} />;
     case 'wedstrijd-gedeeld':
       return <GedeeldWedstrijd key={route.code} code={route.code} />;
     case 'teamwedstrijd':

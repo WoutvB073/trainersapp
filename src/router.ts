@@ -51,6 +51,8 @@ export type Route =
   | { naam: 'opstelling'; id: string }
   | { naam: 'bord'; id: string }
   | { naam: 'bord-tekenen'; id: string }
+  | { naam: 'tactieken' }
+  | { naam: 'tactiek'; id: string; versie?: string }
   | { naam: 'wedstrijd-gedeeld'; code: string }
   | { naam: 'teamwedstrijd'; id: string; item: string }
   | { naam: 'eigen-nieuw' }
@@ -87,6 +89,8 @@ export function leesHash(hash: string): Route {
   if (a === 'opstelling' && b) return { naam: 'opstelling', id: b };
   if (a === 'bord' && b && !c) return { naam: 'bord', id: b };
   if (a === 'bord' && b && c === 'tekenen') return { naam: 'bord-tekenen', id: b };
+  if (a === 'tactieken' && !b) return { naam: 'tactieken' };
+  if (a === 'tactiek' && b) return c ? { naam: 'tactiek', id: b, versie: c } : { naam: 'tactiek', id: b };
   if (a === 'w' && b) return { naam: 'wedstrijd-gedeeld', code: b };
   if (a === 'team' && b && c === 'wedstrijd' && d) return { naam: 'teamwedstrijd', id: b, item: d };
   if (a === 'eigen' && b === 'nieuw') return { naam: 'eigen-nieuw' };
