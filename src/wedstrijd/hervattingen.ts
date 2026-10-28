@@ -2,6 +2,7 @@ import type { Lijn, Punt, Tekening, VeldObject } from '../model/types';
 import { formatiePlekken } from './wedstrijd';
 import { veldTekening } from './wedstrijd';
 import { t } from '../i18n/t';
+import { HERVATTINGEN } from './hervattingVoorbeelden';
 
 /**
  * Spelhervattingen: kant-en-klare beginsituaties (half veld, het goal bovenaan; aftrap op een heel veld) en een paar
@@ -160,77 +161,15 @@ export const SITUATIES: Situatie[] = [
   { id: 'aftrap', naam: t('Aftrap'), maak: aftrap },
 ];
 
-const lijn = (soort: Lijn['soort'], punten: Punt[], stap: number, extra: Partial<Lijn> = {}): Lijn => ({ soort, punten, stap, ...extra });
-
 export interface Voorbeeld extends Situatie {
   uitleg: string;
 }
 
-/** Voorbeelden met lijnen (spelen meteen af). */
-export const VOORBEELDEN: Voorbeeld[] = [
-  {
-    id: 'corner-eerste-paal',
-    naam: t('Corner op de eerste paal'),
-    uitleg: t('Speler 2 loopt naar de eerste paal, de corner komt hoog op hem en hij kopt hem in de verre hoek.'),
-    maak: () => {
-      const t = corner('links');
-      return {
-        ...t,
-        lijnen: [
-          lijn('loop', [[30, 13], [29.5, 4]], 1, { van: 'a2', manier: 'sprint' }),
-          lijn('bal', [[0.9, 0.9], [29.5, 4]], 2, { van: 'a1', naar: 'a2', hoogte: 'hoog' }),
-          lijn('bal', [[29.5, 4], [35.5, 0]], 3, { van: 'a2', afloop: 'goal' }),
-        ],
-      };
-    },
-  },
-  {
-    id: 'korte-corner',
-    naam: t('Korte corner'),
-    uitleg: t('Corner kort naar speler 2, die naar binnen dribbelt en voorzet op speler 3, die vanaf de rand de zestien in loopt.'),
-    maak: () =>
-      half(
-        [
-          aanval('a1', 1, [67.1, 0.9], hoek([67.1, 0.9], [61, 5])),
-          aanval('a2', 2, [61, 5], 140),
-          aanval('a3', 3, [42, 14], -110),
-          aanval('a4', 4, [33, 13]),
-          aanval('a5', 5, [28, 9]),
-          keeper(),
-          verdediger('b2', 2, [37.5, 1.2], [60, 6]),
-          verdediger('b3', 3, [35, 6.5], [60, 6]),
-          verdediger('b4', 4, [30.5, 6.5], [60, 6]),
-          verdediger('b5', 5, [44, 11], [60, 6]),
-          verdediger('b6', 6, [31, 11], [60, 6]),
-          verdediger('b7', 7, [60, 10], [61, 5]),
-          bal('a1', [67.1, 0.9]),
-        ],
-        [
-          lijn('bal', [[67.1, 0.9], [61, 5]], 1, { van: 'a1', naar: 'a2' }),
-          lijn('dribbel', [[61, 5], [54, 12]], 2, { van: 'a2' }),
-          lijn('loop', [[42, 14], [38, 7]], 2, { van: 'a3', manier: 'sprint' }),
-          lijn('bal', [[54, 12], [38, 7]], 3, { van: 'a2', naar: 'a3', hoogte: 'hoog' }),
-          lijn('bal', [[38, 7], [32, 0]], 4, { van: 'a3', afloop: 'goal' }),
-        ],
-      ),
-  },
-  {
-    id: 'vrije-trap-kaats',
-    naam: t('Vrije trap via een kaats'),
-    uitleg: t('Speler 1 legt de bal opzij op speler 2, loopt langs het muurtje en krijgt de bal terug; schot in de verre hoek.'),
-    maak: () => {
-      const t = vrijeTrap(25, 30);
-      const objecten = t.objecten.map((o) => (o.id === 'a2' ? { ...o, x: 26.5, y: 20, kijkrichting: 45 } : o));
-      return {
-        ...t,
-        objecten,
-        lijnen: [
-          lijn('bal', [[30, 25], [26.5, 20]], 1, { van: 'a1', naar: 'a2' }),
-          lijn('loop', [[30, 25], [27, 16.5]], 2, { van: 'a1', manier: 'sprint' }),
-          lijn('bal', [[26.5, 20], [27, 16.5]], 3, { van: 'a2', naar: 'a1' }),
-          lijn('bal', [[27, 16.5], [31.5, 0]], 4, { van: 'a1', afloop: 'goal' }),
-        ],
-      };
-    },
-  },
-];
+/**
+ * De voorbeelden die meteen afspelen staan sinds 0.29.0 in de bibliotheek (`hervattingVoorbeelden.ts`, met uitleg en
+ * 8-tegen-8-versies). Deze drie (de eerste voorbeelden) blijven hier beschikbaar onder dezelfde id's.
+ */
+export const VOORBEELDEN: Voorbeeld[] = ['corner-eerste-paal', 'korte-corner', 'vrije-trap-kaats'].map((id) => {
+  const x = HERVATTINGEN.find((h) => h.id === id)!;
+  return { id, naam: x.naam, uitleg: x.kort, maak: x.versies[0]!.maak };
+});

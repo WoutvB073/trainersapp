@@ -5,6 +5,7 @@ import { maakTijdlijn, standOp, TekeningFout, type Tijdlijn } from '../anim/time
 import { fysiekeMeldingen } from '../anim/fysiek';
 import { lokaal, wereld } from './editor';
 import { doelnetGaten, goalMaten, netVan } from '../anim/doelnet';
+import { veldMaten } from '../anim/render2d';
 import { t as vt } from '../i18n/t';
 
 /**
@@ -194,6 +195,10 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
   };
   const materiaalBij = (p: Punt) => objecten.find((o) => (o.soort === 'rebounder' || o.soort === 'pop' || o.soort === 'bank' || o.soort === 'muurtje') && afstand(p, [o.x, o.y]) < 1.4);
 
+  // Inworp (0.29.0): een speler op of buiten de zijlijn die de bal speelt, gooit hem in met twee handen.
+  const veldBreedte = t.veld.type === 'leeg' ? undefined : veldMaten(t).breedte;
+  const opZijlijn = (o: VeldObject, p: Punt) => o.soort === 'speler' && veldBreedte !== undefined && (p[0] <= 0.5 || p[0] >= veldBreedte - 0.5);
+
   const nummers = [...new Set(lijnen.map((l) => l.stap ?? 0).filter((n) => n > 0))].sort((a, b) => a - b);
   const stappen: AnimatieStap[] = [];
   const stapLijnen: number[][] = [];
@@ -339,6 +344,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
         const h = hoogteVan(l, a.type === 'schot');
         if ((h !== 'grond' || a.type === 'schot') && a.eindHoogte === undefined) a.hoogte = h;
         if (direct) a.direct = true;
+        if (a.type === 'pass' && !direct && opZijlijn(o, nu.get(wie)!)) a.worp = 'inworp';
         acties.push(a);
         inStap.push(i);
         eersteSpeler ??= wie;

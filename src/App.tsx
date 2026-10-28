@@ -75,9 +75,13 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
     case 'bord-tekenen':
       return <BordTekenen key={route.id} id={route.id} />;
     case 'tactieken':
-      return <TactiekenScherm />;
+      return <TactiekenScherm key="tactiek" />;
     case 'tactiek':
       return <TactiekScherm key={route.id} id={route.id} versie={route.versie} />;
+    case 'hervattingen':
+      return <TactiekenScherm soort="hervatting" />;
+    case 'hervatting':
+      return <TactiekScherm key={route.id} id={route.id} versie={route.versie} soort="hervatting" />;
     case 'wedstrijd-gedeeld':
       return <GedeeldWedstrijd key={route.code} code={route.code} />;
     case 'teamwedstrijd':

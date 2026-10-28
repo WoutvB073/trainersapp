@@ -7,17 +7,23 @@ import { AnimatieSpeler } from '../../anim/AnimatieSpeler';
 import type { Tekening } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { borden } from '../../wedstrijd/opslag';
-import { nieuwBord } from '../../wedstrijd/wedstrijd';
-import { TACTIEKEN, TACTIEK_GROEPEN, vindTactiek, type Tactiek } from '../../wedstrijd/tactieken';
+import { nieuwBord, type BordSoort } from '../../wedstrijd/wedstrijd';
+import type { Tactiek } from '../../wedstrijd/tactieken';
+import { BIBLIOTHEKEN, vindVoorbeeld } from '../../wedstrijd/bibliotheken';
 import { t as vt } from '../../i18n/t';
 
-/** Uitleg bij een voorbeeldtactiek (wat, wanneer, aandachtspunten); in het voorbeeld open, in een eigen bord in te klappen. */
-export function TactiekUitleg({ tactiek, open = false }: { tactiek: Tactiek; open?: boolean }) {
+/**
+ * Voorbeeldtactieken (0.28.0) en voorbeeldhervattingen (0.29.0): lijst per groep, één voorbeeld met versiekeuze, animatie
+ * en uitleg, en een eigen bord maken (het voorbeeld zelf verandert nooit).
+ */
+
+/** Uitleg bij een voorbeeld (wat, wanneer, aandachtspunten); in het voorbeeld open, in een eigen bord in te klappen. */
+export function TactiekUitleg({ tactiek, soort = 'tactiek', open = false }: { tactiek: Tactiek; soort?: BordSoort; open?: boolean }) {
   return (
     <details className="blok tactiek-uitleg" open={open}>
       <summary>
         <Icoon naam="info" maat={20} />
-        {vt('Uitleg bij deze tactiek')}
+        {BIBLIOTHEKEN[soort].uitlegKop}
       </summary>
       <h3>{vt('Wat')}</h3>
       <p>{tactiek.wat}</p>
@@ -41,38 +47,41 @@ function vormenTekst(x: Tactiek): string {
   return acht ? vt('Alleen 8 tegen 8') : vt('11 tegen 11');
 }
 
-/** Alle voorbeeldtactieken, in drie groepen. */
-export function TactiekenScherm() {
+/** Alle voorbeelden van een bibliotheek, per groep. */
+export function TactiekenScherm({ soort = 'tactiek' }: { soort?: BordSoort }) {
+  const bieb = BIBLIOTHEKEN[soort];
   return (
     <div className="pagina">
-      <Kop titel={vt('Voorbeeldtactieken')} ouder="/wedstrijd" />
+      <Kop titel={bieb.titel} ouder="/wedstrijd" />
       <main className="inhoud smal">
-        <p className="hint">{vt('Kant-en-klare tactiekborden met beide teams. Ze spelen meteen af; sla er een op als eigen bord om hem aan te passen.')}</p>
-        {TACTIEK_GROEPEN.map((g) => (
+        <p className="hint">{bieb.intro}</p>
+        {bieb.groepen.map((g) => (
           <section key={g.id}>
             <h2 className="sectie-titel">{g.naam}</h2>
             <ul className="lijst">
-              {TACTIEKEN.filter((x) => x.groep === g.id).map((x) => (
-                <li key={x.id}>
-                  <a
-                    className="rij"
-                    href={`#/tactiek/${x.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      ga(`/tactiek/${x.id}`);
-                    }}
-                  >
-                    <Icoon naam="tactiek" maat={24} className="training-icoon" />
-                    <span className="rij-tekst">
-                      <span className="rij-titel">{x.naam}</span>
-                      <span className="rij-sub">
-                        {x.kort} · {vormenTekst(x)}
+              {bieb.items
+                .filter((x) => x.groep === g.id)
+                .map((x) => (
+                  <li key={x.id}>
+                    <a
+                      className="rij"
+                      href={`#${bieb.voorbeeld}/${x.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        ga(`${bieb.voorbeeld}/${x.id}`);
+                      }}
+                    >
+                      <Icoon naam={bieb.icoon} maat={24} className="training-icoon" />
+                      <span className="rij-tekst">
+                        <span className="rij-titel">{x.naam}</span>
+                        <span className="rij-sub">
+                          {x.kort} · {vormenTekst(x)}
+                        </span>
                       </span>
-                    </span>
-                    <Icoon naam="verder" className="rij-pijl" />
-                  </a>
-                </li>
-              ))}
+                      <Icoon naam="verder" className="rij-pijl" />
+                    </a>
+                  </li>
+                ))}
             </ul>
           </section>
         ))}
@@ -86,18 +95,20 @@ const metUitsnede = (t: Tekening): Tekening => {
   return w ? { ...t, weergave: w } : t;
 };
 
-/** Eén voorbeeldtactiek: kies bovenaan de versie (11 of 8 tegen 8), bekijk de animatie en de uitleg, en sla hem op als eigen bord. */
-export function TactiekScherm({ id, versie }: { id: string; versie?: string }) {
-  const x = vindTactiek(id);
+/** Eén voorbeeld: kies bovenaan de versie (11 of 8 tegen 8), bekijk de animatie en de uitleg, en sla hem op als eigen bord. */
+export function TactiekScherm({ id, versie, soort = 'tactiek' }: { id: string; versie?: string; soort?: BordSoort }) {
+  const gevonden = vindVoorbeeld(id, soort);
+  const x = gevonden?.x;
+  const bieb = BIBLIOTHEKEN[soort];
   const [gekozen, kies] = useState(() => (x?.versies.some((v) => v.id === versie) ? versie! : x?.versies[0]?.id));
   const v = x?.versies.find((w) => w.id === gekozen) ?? x?.versies[0];
   const speel = useMemo(() => (v ? metUitsnede(v.maak()) : null), [v]);
   if (!x || !v || !speel) return <NietGevonden />;
   const naam = x.versies.length > 1 ? `${x.naam} · ${v.naam}` : x.naam;
-  const maakBord = () => borden.bewaar({ ...nieuwBord('tactiek', v.maak(), naam), tactiek: x.id });
+  const maakBord = () => borden.bewaar({ ...nieuwBord(soort, v.maak(), naam), tactiek: x.id });
   return (
     <div className="pagina">
-      <Kop titel={TACTIEK_GROEPEN.find((g) => g.id === x.groep)?.naam ?? vt('Voorbeeldtactieken')} ouder="/tactieken" />
+      <Kop titel={bieb.groepen.find((g) => g.id === x.groep)?.naam ?? bieb.titel} ouder={bieb.lijst} />
       <main className="inhoud detail bord-pagina">
         {x.versies.length > 1 && (
           <div className="wedstrijd-chips tactiek-versies" role="radiogroup" aria-label={vt('Spelvorm')}>
@@ -109,7 +120,7 @@ export function TactiekScherm({ id, versie }: { id: string; versie?: string }) {
                 className={`gen-chip${w.id === v.id ? ' aan' : ''}`}
                 onClick={() => {
                   kies(w.id);
-                  vervang(`/tactiek/${x.id}/${w.id}`);
+                  vervang(`${bieb.voorbeeld}/${x.id}/${w.id}`);
                 }}
               >
                 {w.naam}
@@ -122,7 +133,7 @@ export function TactiekScherm({ id, versie }: { id: string; versie?: string }) {
         </div>
         <div className="detail-tekst">
           <h2 className="detail-titel">{x.naam}</h2>
-          <TactiekUitleg tactiek={x} open />
+          <TactiekUitleg tactiek={x} soort={soort} open />
           <div className="knoppenrij">
             <button
               className="knop knop-primair"

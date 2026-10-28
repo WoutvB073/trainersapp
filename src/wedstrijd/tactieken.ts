@@ -11,7 +11,7 @@ import { t } from '../i18n/t';
  * De voorbeelden zelf veranderen nooit: opslaan of aanpassen maakt een eigen bord (met `tactiek` = het id, voor de uitleg).
  */
 
-export type TactiekGroep = 'druk' | 'opbouw' | 'aanval';
+export type TactiekGroep = string;
 
 export const TACTIEK_GROEPEN: { id: TactiekGroep; naam: string }[] = [
   { id: 'druk', naam: t('Druk zetten') },
@@ -25,6 +25,8 @@ export interface TactiekVersie {
   naam: string;
   vorm: Spelvorm;
   maak: () => Tekening;
+  /** Spelers in een muur (spelhervattingen): die mogen dicht naast elkaar staan (± 0,8 m). */
+  muur?: string[];
 }
 
 export interface Tactiek {
@@ -42,14 +44,23 @@ export interface Tactiek {
 
 const r2 = (v: number) => Math.round(v * 100) / 100;
 
-/** Bouwhulp: spelers neerzetten en lijnen tekenen zoals in de editor (startpunt = waar de speler op dat moment staat). */
-class Opzet {
+/**
+ * Bouwhulp: spelers neerzetten en lijnen tekenen zoals in de editor (startpunt = waar de speler op dat moment staat).
+ * Heel veld (zoals een opgesteld tactiekbord) of half veld met het goal bovenaan (spelhervattingen, 0.29.0); 8 tegen 8 in
+ * de veldmaat van die spelvorm (half: 42,5 × 32 m) met een jeugdgoal.
+ */
+export class Opzet {
   private objecten: VeldObject[];
   private plek = new Map<string, Punt>();
   private lijnen: Lijn[] = [];
   private veld: Tekening;
-  constructor(vorm: Spelvorm) {
-    this.veld = veldVoorSpelvorm(vorm);
+  constructor(vorm: Spelvorm, type: 'heel' | 'half' = 'heel') {
+    if (type === 'heel') this.veld = veldVoorSpelvorm(vorm);
+    else {
+      const acht = vorm === '8v8';
+      const goal: VeldObject = acht ? { id: 'g1', soort: 'goal', x: 21.25, y: 0, breedte: 5, hoogte: 2 } : { id: 'g1', soort: 'goal', x: 34, y: 0 };
+      this.veld = { veld: acht ? { type: 'half', breedte: 42.5, lengte: 32 } : { type: 'half' }, camera: 'schuin', objecten: [goal], lijnen: [] };
+    }
     this.objecten = [...this.veld.objecten];
   }
   private zet(o: VeldObject) {
@@ -73,6 +84,15 @@ class Opzet {
     this.objecten.push({ id: 'bal1', soort: 'bal', x: p[0], y: p[1], bij });
     return this;
   }
+  /** Losse bal op een plek (bv. bij een vrije trap); wie er binnen 1,5 m staat, kan hem spelen. */
+  balOp(x: number, y: number) {
+    this.objecten.push({ id: 'bal1', soort: 'bal', x: r2(x), y: r2(y) });
+    return this;
+  }
+  /** Waar een speler nu staat (na zijn laatste lijn). */
+  waar(id: string): Punt {
+    return this.plek.get(id)!;
+  }
   private beweeg(soort: 'loop' | 'dribbel', wie: string, naar: Punt, stap: number, via: Punt[] = [], sprint = false) {
     const van = this.plek.get(wie)!;
     this.lijnen.push({ soort, punten: [van, ...via, naar], stap, van: wie, ...(sprint ? { manier: 'sprint' as const } : {}) });
@@ -86,7 +106,7 @@ class Opzet {
     return this.beweeg('dribbel', wie, naar, stap, x.via);
   }
   /** Pass naar een speler (zijn plek na zijn eigen lijn in dezelfde stap) of schot op een punt (met afloop goal). */
-  pass(van: string, naar: string | Punt, stap: number, x: { hoog?: boolean; goal?: boolean } = {}) {
+  pass(van: string, naar: string | Punt, stap: number, x: { hoog?: boolean; goal?: boolean; afloop?: 'goal' | 'vangt' | 'naast' } = {}) {
     const begin = this.plek.get(van)!;
     const eind = typeof naar === 'string' ? this.plek.get(naar)! : naar;
     this.lijnen.push({
@@ -96,7 +116,7 @@ class Opzet {
       van,
       ...(typeof naar === 'string' ? { naar } : {}),
       ...(x.hoog ? { hoogte: 'hoog' as const } : {}),
-      ...(x.goal ? { afloop: 'goal' as const } : {}),
+      ...(x.goal ? { afloop: 'goal' as const } : x.afloop ? { afloop: x.afloop } : {}),
     });
     return this;
   }

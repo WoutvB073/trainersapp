@@ -38,8 +38,8 @@ import {
   type Spelvorm,
   type UitCode,
 } from '../../wedstrijd/wedstrijd';
-import { SITUATIES, VOORBEELDEN } from '../../wedstrijd/hervattingen';
-import { vindTactiek } from '../../wedstrijd/tactieken';
+import { SITUATIES } from '../../wedstrijd/hervattingen';
+import { vindVoorbeeld } from '../../wedstrijd/bibliotheken';
 import { TactiekUitleg } from './Tactieken';
 import { t as vt } from '../../i18n/t';
 
@@ -372,25 +372,14 @@ function NieuweHervatting({ opSluit }: { opSluit: () => void }) {
           </button>
         ))}
       </div>
-      <h3 className="wedstrijd-sub">{vt('Voorbeelden (spelen meteen af)')}</h3>
-      <div className="wedstrijd-keuzes">
-        {VOORBEELDEN.map((v) => (
-          <button
-            key={v.id}
-            className="keuze-kaart"
-            onClick={() => {
-              const b = borden.bewaar(nieuwBord('hervatting', v.maak(), v.naam));
-              ga(`/bord/${b.id}`);
-            }}
-          >
-            <Icoon naam="hervatting" maat={28} />
-            <span>
-              <strong>{v.naam}</strong>
-              <span className="klein">{v.uitleg}</span>
-            </span>
-          </button>
-        ))}
-      </div>
+      <h3 className="wedstrijd-sub">{vt('Voorbeeldhervatting')}</h3>
+      <button className="keuze-kaart" onClick={() => ga('/hervattingen')}>
+        <Icoon naam="hervatting" maat={28} />
+        <span>
+          <strong>{vt('Kies een voorbeeldhervatting')}</strong>
+          <span className="klein">{vt('20 spelhervattingen: corners, vrije trappen, inworp en aftrap, verdedigen')}</span>
+        </span>
+      </button>
     </Paneel>
   );
 }
@@ -568,7 +557,7 @@ export function BordScherm({ id }: { id: string }) {
   if (!b || !speel) return <NietGevonden />;
   const nu = () => borden.haal(id) ?? b;
   const lijnen = b.tekening.lijnen?.length ?? 0;
-  const tactiek = vindTactiek(b.tactiek);
+  const voorbeeld = vindVoorbeeld(b.tactiek);
   return (
     <div className="pagina">
       <Kop titel={bordNaam(b)} ouder="/wedstrijd" />
@@ -577,7 +566,7 @@ export function BordScherm({ id }: { id: string }) {
           <AnimatieSpeler tekening={speel} />
         </div>
         <div className="detail-tekst">
-          {tactiek && <TactiekUitleg tactiek={tactiek} />}
+          {voorbeeld && <TactiekUitleg tactiek={voorbeeld.x} soort={voorbeeld.bieb.soort} />}
           {!lijnen && <p className="hint">{vt('Tik op Tekenen om looplijnen, passes en dribbels te tekenen. Elke lijn krijgt een stapnummer; zo speelt het af in 2D en 3D.')}</p>}
           <section className="blok training-gegevens">
             <label className="veld">
