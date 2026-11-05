@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (05-11-2026, versie 0.31.1)
+## Status (05-11-2026, versie 0.31.2)
 
 | Fase | Status |
 |---|---|
@@ -38,7 +38,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 24. Installeren op elke telefoon en browser, filter op aantal keepers (0.29.1) | ✅ online – **wacht op test** |
 | 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online – **wacht op test** |
 | 26. Clubtraining: veldplan, rotatie, materiaal, deellink, kwartiertimer (0.31.0) | ✅ online – **wacht op test** |
-| 27. Nieuwe namen (Teamtraining, Circuittraining) en nieuw startscherm (0.31.1) | ✅ online – **wacht op test** |
+| 27. Nieuwe namen (Teamtraining, Circuittraining) en nieuw startscherm (0.31.1) | ✅ online, getest |
+| 28. Delen met team bij Circuittraining, overal link én team, sync-fouten opgelost (0.31.2) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1128,8 +1129,23 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Startscherm** (`src/styles/start.css`): Teamtraining over de volle breedte, Wedstrijd en Circuittraining naast elkaar, en drie kleinere tegels: Oefeningen spelers, Oefeningen keepers, Oefening maken. Nieuwe plaatjes `TeamPlaatje`, `CircuitPlaatje`, `TekenPlaatje`.
 - **Tests**: `tests/versie-0311.test.ts` (oude namen weg, oude links en sleutels werken), browsertest `tools/e2e/versie-0311.mjs`.
 
+## Besluiten versie 0.31.2 – delen met team
+- **Circuittraining in een team**: nieuw soort team-item `clubtraining`. Inhoud `{ club, eigen }` (`voorTeam`, `leesTeamClub`, `uitGedeeldeClub` in `src/clubtraining/clubtraining.ts`). Schermen: `src/screens/club/TeamClub.tsx` op `ClubWeergave`, dezelfde weergave als de trainerslink, met materiaal erbij. Adressen `#/team/:id/club/:item` (+ `/station/:nr`, `/partij`).
+- **Regels**: alleen `clubtraining` toegevoegd aan de toegestane soorten bij aanmaken. Eigenaar past aan en trekt terug, beheerder verwijdert, net als bij de andere items.
+- **Grootte**: ingebouwde oefeningen gaan alleen als id mee. Een item met 4 ingebouwde oefeningen is ±430 bytes, met 4 eigen oefeningen zo groot als de grootste ingebouwde ±18 KB; groepjes maken niet uit (één oefening per blok). Getest in `tests/versie-0312.test.ts`. Boven de 500 KB geeft `deelItem` een duidelijke melding.
+- **Wat ontbrak**: circuittraining met team (toegevoegd), eigen oefening met link (`#/o/:code`, `src/screens/eigen/GedeeldeOefening.tsx`, openen via plakken bij Eigen oefeningen), eigen bord uit een voorbeeld verloor bij kopiëren uit een team zijn uitleg (`leesTeamWedstrijd`), teamtraining verloor de leeftijd, een spelhervatting heette in het team "Tactiekbord", de kop was niet vertaald. Oefeningen uit een team gaan nu als kopie mee in links (`src/eigen/meenemen.ts`).
+- **Synchroniseren** (`src/online/sync.ts`): twee fouten die al sinds 0.16 bestonden. `bekend` werd bijgewerkt vóór Firestore een schrijfactie bevestigde. Gevolg 1: een oudere momentopname overschreef een nieuwere wijziging, waardoor letters wegvielen bij snel typen. Gevolg 2: haalde een schrijfactie de server niet (app dicht vlak na het maken), dan gold het item de volgende keer als online verwijderd en verdween het. Nu telt onze eigen versie zolang hij `onderweg` is en wordt `bekend` pas bijgewerkt na bevestiging. Tests: `tests/online/sync.test.ts`, `tools/e2e/sync-race.mjs`.
+- **203 MB in de online-tests**: geen echt bericht. De Firestore-emulator (v1.19.8) zette de frame-kop van gRPC soms twee keer in één stuk (gevangen: `00 0000001d 00 0000001d 12 1b 22 0b 0a…`). De client las daarna inhoud als lengte: 203557642 = `0c 22 0b 0a`, bytes uit een TargetChange van 29 bytes. Alleen gRPC (tests in Node) heeft hier last van; de app gebruikt WebChannel. Vermoedelijk twee gelijktijdige schrijfacties op één stream in de emulator. Alleen tests die hierdoor vastlopen krijgen een herkansing (`KAPOT_BERICHT` in `tests/online/hulp.ts`).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.31.2 – Een gedeelde circuittraining wordt niet vanzelf bijgewerkt: nog eens Delen met team doet dat, net als bij teamtrainingen. Op de gedeelde pagina staat voor de eigenaar een knop Aanpassen met die uitleg (alleen als het origineel er nog is).
+- 0.31.2 – De link-knop bij een circuittraining blijft "Deel met trainers" en die link blijft alleen om te bekijken (geen Opslaan). Kopiëren kan via het team.
+- 0.31.2 – Een kopie neemt naam, datums, trainers en oefeningen over; de afvinklijst begint leeg. Materiaal staat bij het team als lijst zonder afvinken, en niet in de trainerslink.
+- 0.31.2 – Link van een eigen oefening: op een telefoon zonder app zie je de oefening met uitleg hoe je hem in de app krijgt, zoals bij een teamtraining. Opslaan kan in de app.
+- 0.31.2 – Een gedeelde link heet nu "Gedeelde spelhervatting" als het een spelhervatting is, en in het Engels staat "(you)" in de ledenlijst.
+- 0.31.2 – De synchronisatiefouten zijn meegenomen hoewel ze niet gevraagd waren, omdat ze de browsertest lieten falen en gegevens konden kosten. Favorieten en instellingen lopen via een andere route en zijn niet aangepast.
+- 0.31.2 – De emulator is niet bijgewerkt: niets wijst erop dat een nieuwere versie het kapotte bericht oplost.
 - 0.31.1 – Ook "Training genereren" is "Teamtraining genereren", "Start training" is "Start teamtraining", en in lopende tekst (Help, meldingen) staat overal "teamtraining". Het woord "trainingsmodus" bleef, en de tekst op de tegel zegt zoals gevraagd "stel je training samen".
 - 0.31.1 – Teamtrainingen zonder naam krijgen voortaan "Teamtraining 17 okt". Bestaande trainingen houden de naam die ze al hadden.
 - 0.31.1 – Alleen de tegels heten Oefeningen spelers, Oefeningen keepers en Oefening maken. Kop en tabbladen op de schermen daarachter blijven Spelers, Keepers en Eigen oefeningen.
