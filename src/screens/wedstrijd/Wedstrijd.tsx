@@ -11,6 +11,9 @@ import type { Tekening } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { Toast, useToast } from '../training/onderdelen';
 import { DeelMetTeam } from '../online/Teams';
+import { deelInhoud } from '../../engine/deellink';
+import { LinkFout } from '../GedeeldLink';
+import { InAppUitleg, LinkOpenen } from '../training/onderdelen';
 import { useTeam } from '../../engine/teams';
 import { OpstellingVeld } from './OpstellingVeld';
 import { borden, opstellingen, spelersnamen, useBord, useBorden, useOpstelling, useOpstellingen, useSpelersnamen } from '../../wedstrijd/opslag';
@@ -30,7 +33,6 @@ import {
   voegSpelerToe,
   vulAan,
   wedstrijdCode,
-  wedstrijdCodeUitLink,
   wisselFormatie,
   type Bord,
   type BordSoort,
@@ -43,6 +45,7 @@ import { SITUATIES } from '../../wedstrijd/hervattingen';
 import { vindVoorbeeld } from '../../wedstrijd/bibliotheken';
 import { TactiekUitleg } from './Tactieken';
 import { t as vt } from '../../i18n/t';
+import { zin } from '../../i18n/zin';
 
 const LAATSTE_SPELVORM = 'trainersapp.spelvorm';
 function laatsteSpelvorm(): Spelvorm {
@@ -54,24 +57,8 @@ function laatsteSpelvorm(): Spelvorm {
   }
 }
 
-/** Deellink: via het deelmenu van de telefoon, anders kopiëren. */
-async function deelLink(titel: string, code: string): Promise<string> {
-  const url = `${location.origin}${import.meta.env.BASE_URL}#/w/${code}`;
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: titel, text: titel, url });
-      return '';
-    } catch (e) {
-      if ((e as Error).name === 'AbortError') return '';
-    }
-  }
-  try {
-    await navigator.clipboard.writeText(url);
-    return vt('Link gekopieerd');
-  } catch {
-    return url;
-  }
-}
+/** Delen: korte link via het deelmenu van de telefoon, anders kopiëren. */
+const deelLink = (titel: string, regel: string, code: string) => deelInhoud({ soort: 'w', code, titel, regel });
 
 /** Tekening met een passende uitsnede (voor afspelen). */
 function metUitsnede(t: Tekening): Tekening {
@@ -135,9 +122,6 @@ export function Wedstrijd() {
   const bs = useBorden();
   const [kies, setKies] = useState<null | 'tactiek' | 'hervatting'>(null);
   const [melding, toon] = useToast();
-  const [linkOpen, setLinkOpen] = useState(false);
-  const [link, setLink] = useState('');
-  const code = wedstrijdCodeUitLink(link);
   const tactiek = bs.filter((b) => b.soort === 'tactiek');
   const hervattingen = bs.filter((b) => b.soort === 'hervatting');
 
@@ -220,28 +204,7 @@ export function Wedstrijd() {
           )}
         </section>
 
-        <div className="link-openen">
-          {!linkOpen ? (
-            <button className="link-knop" onClick={() => setLinkOpen(true)}>
-              <Icoon naam="link" maat={18} />
-              {vt('Gedeelde opstelling of tactiekbord openen via een link')}
-            </button>
-          ) : (
-            <form
-              className="blok link-formulier"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (code) ga(`/w/${code}`);
-              }}
-            >
-              <label htmlFor="wedstrijdlink">{vt('Plak de link die je hebt gekregen')}</label>
-              <input id="wedstrijdlink" type="url" inputMode="url" placeholder="https://…/#/w/…" value={link} onChange={(e) => setLink(e.target.value)} autoFocus />
-              <button className="knop knop-primair" disabled={!code}>
-                {vt('Openen')}
-              </button>
-            </form>
-          )}
-        </div>
+        <LinkOpenen tekst={vt('Gedeelde opstelling of tactiekbord openen via een link')} pad="w" id="wedstrijdlink" />
       </main>
       {kies === 'tactiek' && <NieuwTactiekbord ops={ops} opSluit={() => setKies(null)} />}
       {kies === 'hervatting' && <NieuweHervatting opSluit={() => setKies(null)} />}
@@ -512,7 +475,7 @@ export function OpstellingScherm({ id }: { id: string }) {
               <Icoon naam="tactiek" maat={20} />
               {vt('Tactiekbord maken')}
             </button>
-            <button className="knop" onClick={() => void deelLink(opstellingNaam(o), wedstrijdCode({ soort: 'opstelling', opstelling: nu() })).then((m) => m && toon(m))}>
+            <button className="knop" onClick={() => void deelLink(opstellingNaam(o), vt('Opstelling: {w0}', { w0: opstellingNaam(o) }), wedstrijdCode({ soort: 'opstelling', opstelling: nu() })).then((m) => m && toon(m))}>
               <Icoon naam="deel" maat={20} />
               {vt('Delen')}
             </button>
@@ -615,7 +578,7 @@ export function BordScherm({ id }: { id: string }) {
             </button>
           </div>
           <div className="knoppenrij">
-            <button className="knop" onClick={() => void deelLink(bordNaam(b), wedstrijdCode({ soort: 'bord', bord: nu() })).then((m) => m && toon(m))}>
+            <button className="knop" onClick={() => void deelLink(bordNaam(b), b.soort === 'hervatting' ? vt('Spelhervatting: {w0}', { w0: bordNaam(b) }) : vt('Tactiekbord: {w0}', { w0: bordNaam(b) }), wedstrijdCode({ soort: 'bord', bord: nu() })).then((m) => m && toon(m))}>
               <Icoon naam="deel" maat={20} />
               {vt('Delen')}
             </button>
@@ -654,7 +617,7 @@ export function BordScherm({ id }: { id: string }) {
 
 // ---------- gedeeld (link of team) ----------
 
-function Voorbeeld({ x, titel, ouder, knop }: { x: UitCode; titel: string; ouder: string; knop: string }) {
+function Voorbeeld({ x, titel, ouder, knop, nietGeinstalleerd }: { x: UitCode; titel: string; ouder?: string; knop: string; nietGeinstalleerd?: boolean }) {
   const speel = useMemo(() => (x.soort === 'bord' ? metUitsnede(x.bord.tekening) : null), [x]);
   const opslaan = () => {
     const nu = Date.now();
@@ -685,20 +648,24 @@ function Voorbeeld({ x, titel, ouder, knop }: { x: UitCode; titel: string; ouder
               </p>
             )}
           </section>
-          <button className="knop knop-primair knop-breed" onClick={opslaan}>
-            <Icoon naam="kopieer" maat={20} />
-            {knop}
-          </button>
+          {nietGeinstalleerd ? (
+            <InAppUitleg uitleg={zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Wedstrijd → Gedeelde opstelling of tactiekbord openen via een link**.')} />
+          ) : (
+            <button className="knop knop-primair knop-breed" onClick={opslaan}>
+              <Icoon naam="kopieer" maat={20} />
+              {knop}
+            </button>
+          )}
         </div>
       </main>
     </div>
   );
 }
 
-export function GedeeldWedstrijd({ code }: { code: string }) {
+export function GedeeldWedstrijd({ code, nietGeinstalleerd }: { code: string; nietGeinstalleerd?: boolean }) {
   const x = useMemo(() => uitWedstrijdCode(code), [code]);
-  if (!x) return <NietGevonden />;
-  return <Voorbeeld x={x} titel={x.soort === 'opstelling' ? vt('Gedeelde opstelling') : x.bord.soort === 'hervatting' ? vt('Gedeelde spelhervatting') : vt('Gedeeld tactiekbord')} ouder="/wedstrijd" knop={vt('Opslaan bij mijn wedstrijd')} />;
+  if (!x) return <LinkFout />;
+  return <Voorbeeld x={x} titel={x.soort === 'opstelling' ? vt('Gedeelde opstelling') : x.bord.soort === 'hervatting' ? vt('Gedeelde spelhervatting') : vt('Gedeeld tactiekbord')} ouder={nietGeinstalleerd ? undefined : '/wedstrijd'} nietGeinstalleerd={nietGeinstalleerd} knop={vt('Opslaan bij mijn wedstrijd')} />;
 }
 
 export function TeamWedstrijdScherm({ id, item }: { id: string; item: string }) {

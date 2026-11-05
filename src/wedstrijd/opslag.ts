@@ -106,6 +106,14 @@ export const useBord = (id: string) => useBorden().find((b) => b.id === id);
 // ---------- spelersnamen (onthouden voor de volgende opstelling) ----------
 
 const NAMEN = 'trainersapp.spelersnamen';
+/** Heeft dit toestel al een spelerslijst gehad? (Ook een leeggemaakte lijst telt.) */
+let lijstGehad = (() => {
+  try {
+    return lokaleOpslag()?.getItem(NAMEN) != null;
+  } catch {
+    return false;
+  }
+})();
 let namen: string[] = (() => {
   try {
     const x = JSON.parse(lokaleOpslag()?.getItem(NAMEN) ?? '[]') as unknown;
@@ -118,7 +126,12 @@ const naamLuisteraars = new Set<() => void>();
 
 export const spelersnamen = {
   lijst: () => namen,
+  /** Nieuw toestel: de lijst vullen met de namen uit je opstellingen. Een bestaande of leeggemaakte lijst blijft zoals hij is. */
+  vulAanAls(lijst: string[]) {
+    if (!lijstGehad && lijst.length) this.zet(lijst);
+  },
   zet(lijst: string[]) {
+    lijstGehad = true;
     namen = [...new Set(lijst.map((n) => n.trim()).filter(Boolean))].slice(0, 60);
     try {
       lokaleOpslag()?.setItem(NAMEN, JSON.stringify(namen));

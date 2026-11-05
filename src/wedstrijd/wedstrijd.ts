@@ -288,6 +288,11 @@ export function uitWedstrijdCode(code: string): UitCode | null {
 }
 
 /** Code uit een geplakte link (#/w/…). */
+/** Spelersnamen uit opstellingen, zonder dubbele (die staan online, de spelerslijst zelf niet). */
+export function namenUitOpstellingen(lijst: Pick<Opstelling, 'plekken' | 'wissels'>[]): string[] {
+  return [...new Set(lijst.flatMap((o) => [...o.plekken.flatMap((p) => (p.naam ? [p.naam] : [])), ...o.wissels]))];
+}
+
 /** Gedeeld team-item lezen (null als het kapot is). Een bord houdt zijn soort en de koppeling met de voorbeeldtactiek. */
 export function leesTeamWedstrijd(soort: 'opstelling' | 'bord', data: string): UitCode | null {
   try {

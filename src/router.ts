@@ -57,6 +57,9 @@ export type Route =
   | { naam: 'teamtraining'; id: string; item: string }
   | { naam: 'teamclub'; id: string; item: string; station?: number; partij?: boolean }
   | { naam: 'oefening-gedeeld'; code: string }
+  | { naam: 'link'; code: string; station?: number; partij?: boolean }
+  | { naam: 'link-fout' }
+  | { naam: 'deellinks' }
   | { naam: 'wedstrijd' }
   | { naam: 'opstelling'; id: string }
   | { naam: 'bord'; id: string }
@@ -100,6 +103,12 @@ export function leesHash(hash: string): Route {
   if (a === 'training' && b && c === 'kiezen') return { naam: 'kiezen', id: b };
   if (a === 'training' && b && c === 'genereren') return { naam: 'genereren', id: b };
   if (a === 'training' && b && c === 'modus') return { naam: 'modus', id: b, nr: Math.max(1, Number(d) || 1) };
+  if (a === 'd' && b && c === 'station') return { naam: 'link', code: b, station: Math.max(1, Number(d) || 1) };
+  if (a === 'd' && b && c === 'partij') return { naam: 'link', code: b, partij: true };
+  if (a === 'd' && b) return { naam: 'link', code: b };
+  // Een afgekapte link (WhatsApp maakte soms alleen het begin klikbaar).
+  if (['c', 'd', 'o', 't', 'w'].includes(a) && !b) return { naam: 'link-fout' };
+  if (a === 'links' && !b) return { naam: 'deellinks' };
   if (a === 't' && b) return { naam: 'gedeeld', code: b };
   if (a === 'o' && b) return { naam: 'oefening-gedeeld', code: b };
   if (a === 'eigen' && !b) return { naam: 'eigen' };

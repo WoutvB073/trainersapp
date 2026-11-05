@@ -9,7 +9,8 @@ import { trainingen } from '../../training/opslag';
 import { eigenOefeningen } from '../../eigen/opslag';
 import { benodigdheden, datumTekst, trainingNaam, uitCode } from '../../training/training';
 import type { Oefening } from '../../model/types';
-import { Toast, useToast } from './onderdelen';
+import { InAppUitleg } from './onderdelen';
+import { LinkFout } from '../GedeeldLink';
 import { t as vt } from '../../i18n/t';
 import { zin } from '../../i18n/zin';
 
@@ -17,27 +18,14 @@ import { zin } from '../../i18n/zin';
  * Gedeelde training (link): bekijken en met één knop opslaan. Werkt ook als de app (nog) niet is geïnstalleerd;
  * dan staat er uitleg bij hoe je de training in de app krijgt.
  */
-export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { code: string; nietGeinstalleerd?: boolean; opInstalleren?: () => void }) {
+export function GedeeldeTraining({ code, nietGeinstalleerd }: { code: string; nietGeinstalleerd?: boolean }) {
   const g = useMemo(() => uitCode(code), [code]);
-  const [melding, toon] = useToast();
   // Eigen oefeningen van de afzender zitten in de link zelf.
   const oefeningen = useMemo(() => (g?.oefeningen ?? []).map((id) => g?.eigen?.find((o) => o.id === id) ?? vindOefening(id)).filter((o): o is Oefening => !!o), [g]);
   const onbekend = (g?.oefeningen.length ?? 0) - oefeningen.length;
   const spullen = useMemo(() => benodigdheden(oefeningen), [oefeningen]);
 
-  if (!g) {
-    return (
-      <div className="pagina">
-        <Kop titel={vt('Gedeelde teamtraining')} ouder="/" />
-        <main className="inhoud smal">
-          <div className="leeg">
-            <p className="leeg-titel">{vt('Deze link klopt niet')}</p>
-            <p>{vt('Vraag de trainer om de link opnieuw te sturen.')}</p>
-          </div>
-        </main>
-      </div>
-    );
-  }
+  if (!g) return <LinkFout />;
 
   const opslaan = () => {
     // Eerst de eigen oefeningen opslaan (eventueel met een nieuwe id), dan de training met de juiste id's.
@@ -48,8 +36,7 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
       ...rest,
       oefeningen: [...new Set(g.oefeningen.map((id) => ids.get(id) ?? id))],
     });
-    if (nietGeinstalleerd) toon(vt('Opgeslagen in deze browser'));
-    else ga(`/training/${t.id}`);
+    ga(`/training/${t.id}`);
   };
 
   return (
@@ -72,34 +59,6 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
           )}
         </section>
 
-        {nietGeinstalleerd && (
-          <section className="blok gedeeld-uitleg">
-            <h3>{vt('In de app openen')}</h3>
-            <p>
-              {zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Mijn teamtrainingen → Gedeelde teamtraining openen via een link**.')}
-            </p>
-            <div className="knoppenrij">
-              <button
-                className="knop knop-primair"
-                onClick={() =>
-                  void navigator.clipboard
-                    .writeText(location.href)
-                    .then(() => toon(vt('Link gekopieerd')))
-                    .catch(() => toon(vt('Kopiëren lukte niet: houd de adresbalk ingedrukt')))
-                }
-              >
-                <Icoon naam="kopieer" maat={20} />
-                {vt('Kopieer link')}
-              </button>
-              {opInstalleren && (
-                <button className="knop" onClick={opInstalleren}>
-                  <Icoon naam="plusVierkant" maat={20} />
-                  {vt('App installeren')}
-                </button>
-              )}
-            </div>
-          </section>
-        )}
 
         <h2 className="sectie-titel">{vt('Oefeningen')}</h2>
         {onbekend > 0 && <p className="waarschuwing">{vt(onbekend === 1 ? '1 oefening staat niet in deze versie van de app. Werk de app bij.' : '{n} oefeningen staan niet in deze versie van de app. Werk de app bij.', { n: onbekend })}</p>}
@@ -131,8 +90,8 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
             </ul>
           </section>
         )}
+        {nietGeinstalleerd && <InAppUitleg uitleg={zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Mijn teamtrainingen → Gedeelde teamtraining openen via een link**.')} />}
       </main>
-      <Toast tekst={melding} />
     </div>
   );
 }

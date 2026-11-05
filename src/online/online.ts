@@ -5,25 +5,27 @@ import {
   onAuthStateChanged,
   reauthenticateWithCredential,
   sendPasswordResetEmail,
+  signInAnonymously,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
   type User,
 } from 'firebase/auth';
-import { collection, doc, getDocs, setDoc, writeBatch, type Unsubscribe } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, setDoc, writeBatch, type Unsubscribe } from 'firebase/firestore';
 import { bewaardAccount, huidigeStatus, sleutelVoor, zetBewaardAccount, zetStatus, type AccountInfo } from '../engine/account';
 import { eigenBackend, eigenOefeningen } from '../eigen/opslag';
 import { trainingBackend, trainingen } from '../training/opslag';
 import { favorieten, favorietenBackend } from '../engine/favorieten';
-import { bordBackend, borden, opstellingBackend, opstellingen } from '../wedstrijd/opslag';
+import { bordBackend, borden, opstellingBackend, opstellingen, spelersnamen } from '../wedstrijd/opslag';
 import { clubBackend, clubtrainingen } from '../clubtraining/opslag';
 import { clubNaam, voorTeam } from '../clubtraining/clubtraining';
-import { bordNaam, opstellingNaam } from '../wedstrijd/wedstrijd';
+import { bordNaam, namenUitOpstellingen, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
 import { abonneerFilters, huidigeFilters, zetFilters } from '../engine/filters';
 import { isLeeftijd } from '../data/leeftijden';
 import { teams, type Rol } from '../engine/teams';
+import { eigenLinks, vergeetLinks } from '../engine/deellink';
 import { voorDelen } from '../eigen/eigen';
 import { meeTeNemen } from '../eigen/meenemen';
 import type { EigenOefening } from '../model/types';
@@ -41,6 +43,7 @@ let v: Verbinding | null = null;
 let sync: Synchronisatie | null = null;
 let teamsStop: Unsubscribe | null = null;
 let eigenStop: (() => void) | null = null;
+let namenStop: (() => void) | null = null;
 let gestart: Promise<void> | null = null;
 let antwoord: ((ja: boolean) => void) | null = null;
 
@@ -84,7 +87,8 @@ export function startOnline(): Promise<void> {
     zetStatus({ verbonden: true });
     let eerste = true;
     onAuthStateChanged(v.auth, (user) => {
-      const p = user ? opIngelogd(user) : opUitgelogd();
+      // Anoniem is alleen om een deellink te kunnen maken: dat is geen account.
+      const p = user && !user.isAnonymous ? opIngelogd(user) : opUitgelogd();
       void p.finally(() => {
         if (eerste) {
           eerste = false;
@@ -266,6 +270,10 @@ function startSync(a: AccountInfo) {
   });
   // Eigen oefening aangepast die je in een team deelt: het team krijgt de nieuwe versie.
   eigenStop = eigenOefeningen.abonneer(werkGedeeldeBij);
+  // Nieuw toestel: de spelerslijst staat niet online, maar de namen in je opstellingen wel.
+  const vulNamen = () => spelersnamen.vulAanAls(namenUitOpstellingen(opstellingen.lijst()));
+  namenStop = opstellingen.abonneer(vulNamen);
+  vulNamen();
 }
 
 function stopSync() {
@@ -275,6 +283,8 @@ function stopSync() {
   teamsStop = null;
   eigenStop?.();
   eigenStop = null;
+  namenStop?.();
+  namenStop = null;
 }
 
 function ik(): T.Ik {
@@ -325,6 +335,14 @@ export async function uitloggen(): Promise<void> {
   await signOut(verbinding().auth);
 }
 
+/** Toegang voor deellinks: je account, en anders een anonieme sessie (`maak` = die zo nodig aanmaken). */
+export async function linkToegang(maak = true): Promise<{ token: string; uid: string } | null> {
+  await startOnline();
+  const { auth } = verbinding();
+  const u = auth.currentUser ?? (maak ? (await signInAnonymously(auth)).user : null);
+  return u ? { token: await u.getIdToken(), uid: u.uid } : null;
+}
+
 export async function wachtwoordVergeten(email: string): Promise<void> {
   await startOnline();
   await sendPasswordResetEmail(verbinding().auth, email.trim());
@@ -341,6 +359,10 @@ export async function verwijderAccount(wachtwoord: string): Promise<void> {
   stopSync();
   // Teams van de server (de lokale lijst kan op een nieuw apparaat nog leeg zijn).
   await T.verlaatAlleTeams(mij);
+  // Deellinks die je op dit toestel maakte (een lijst opvragen kan niet, dat staan de regels niet toe).
+  const links = eigenLinks().filter((l) => l.maker === u.uid).map((l) => l.code);
+  for (const code of links) await deleteDoc(doc(db, 'links', code)).catch(() => {});
+  vergeetLinks(links);
   for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen']) {
     const s = await getDocs(collection(db, 'users', u.uid, col));
     const b = writeBatch(db);

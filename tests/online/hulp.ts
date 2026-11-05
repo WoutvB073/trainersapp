@@ -20,9 +20,11 @@ const PROJECT = 'demo-toptraining';
  */
 export const KAPOT_BERICHT = 'kapot gRPC-bericht van de emulator';
 let kapotBericht = false;
+/** Voor bij een test: herkansing als de emulator tijdens deze poging haperde. Ook een schrijfactie die hij dan dubbel krijgt, telt mee. */
+export const HERKANSING = { count: 4, condition: () => kapotBericht };
 const consoleFout = console.error;
 console.error = (...a: unknown[]) => {
-  if (a.some((x) => String(x).includes('Received message larger than max'))) kapotBericht = true;
+  if (a.some((x) => /Received message larger than max|Response message parsing error|Application error processing RPC/.test(String(x)))) kapotBericht = true;
   consoleFout(...a);
 };
 
@@ -43,8 +45,12 @@ export async function inEmulator(pad: string): Promise<string[]> {
 let teller = 0;
 const open: Verbinding[] = [];
 
+const lopend: Synchronisatie[] = [];
+
 /** Alle verbindingen van deze test sluiten (anders blijven ze de emulator belasten). */
 export async function opruimen(): Promise<void> {
+  // Ook na een mislukte test: eerst de luisteraars stoppen, anders volgen er losse fouten over een gesloten verbinding.
+  for (const s of lopend.splice(0)) s.stop();
   for (const v of open.splice(0)) {
     await terminate(v.db).catch(() => {});
     await deleteApp(v.app).catch(() => {});
@@ -115,8 +121,8 @@ export function lokaleOpslag() {
     doelen,
     instellingen: () => inst,
     /** Instelling lokaal wijzigen (zoals de app dat doet). */
-    zetInstellingen(w: Partial<Instellingen>) {
-      inst = { ...inst, ...w, gewijzigd: Date.now() };
+    zetInstellingen(w: Partial<Instellingen>, tijd = Date.now()) {
+      inst = { ...inst, ...w, gewijzigd: tijd };
       for (const cb of instLuisteraars) cb();
     },
   };
@@ -125,6 +131,7 @@ export function lokaleOpslag() {
 export function synchroniseer(v: Verbinding & { uid: string }, opslag: ReturnType<typeof lokaleOpslag>, opStatus?: (s: string) => void) {
   const s = new Synchronisatie(v.db, v.uid, opslag.doelen, opStatus);
   s.start();
+  lopend.push(s);
   return s;
 }
 

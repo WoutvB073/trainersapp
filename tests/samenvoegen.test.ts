@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CODE_TEKENS, isGeldigeCode, nieuweCode, normaliseerCode, nieuwste, verzoen, verzoenSet } from '../src/online/samenvoegen';
+import { CODE_TEKENS, isGeldigeCode, nieuweCode, normaliseerCode, verzoen, verzoenSet } from '../src/online/samenvoegen';
 
 const it_ = (id: string, gewijzigd: number, naam = id) => ({ id, gewijzigd, naam });
 const bekendVan = (...items: { id: string }[]) => Object.fromEntries(items.map((x) => [x.id, JSON.stringify(x)]));
@@ -88,11 +88,6 @@ describe('synchroniseren: favorieten (verzameling)', () => {
     expect(w.lokaalVeranderd || w.onlineVeranderd).toBe(false);
   });
 
-  it('instellingen: de nieuwste wint', () => {
-    expect(nieuwste({ thema: 'rood', gewijzigd: 2 }, { thema: 'blauw', gewijzigd: 5 })?.thema).toBe('blauw');
-    expect(nieuwste({ thema: 'rood', gewijzigd: 6 }, { thema: 'blauw', gewijzigd: 5 })?.thema).toBe('rood');
-    expect(nieuwste(undefined, { thema: 'blauw', gewijzigd: 5 })?.thema).toBe('blauw');
-  });
 });
 
 describe('teamcode', () => {

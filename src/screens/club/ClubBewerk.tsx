@@ -9,18 +9,19 @@ import { ga } from '../../router';
 import { BLOKKEN, blokKandidaten, clubNaam, genereerAlles, genereerBlok, groepGrootte, MAX_GROEPJES, MAX_KINDEREN, MIN_GROEPJES, naarCode, stations, type Blok, type ClubTraining } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
-import { deelUrl, Toast, useToast } from '../training/onderdelen';
+import { deelInhoud } from '../../engine/deellink';
+import { Toast, useToast } from '../training/onderdelen';
 import { blokNaam, blokStijl } from './onderdelen';
 import { DeelMetTeam } from '../online/Teams';
 import { t as vt } from '../../i18n/t';
 
 const bron = () => ({ alle: alleOefeningen(), favorieten: favorieten.alle(), toeval: Math.random });
 
-/** Link voor de trainers; eigen oefeningen gaan erin mee. */
-export function clubLink(c: ClubTraining): string {
+/** Code voor de link voor de trainers; eigen oefeningen gaan erin mee. */
+export function clubCode(c: ClubTraining): string {
   const { eigen, nieuwId } = meeTeNemen(Object.values(c.blokken));
   const blokken = Object.fromEntries(Object.entries(c.blokken).map(([blok, id]) => [blok, nieuwId(id)]));
-  return `${location.origin}${import.meta.env.BASE_URL}#/c/${naarCode({ ...c, blokken }, eigen)}`; // i18n-ok
+  return naarCode({ ...c, blokken }, eigen);
 }
 
 export function ClubBewerk({ id }: { id: string }) {
@@ -146,7 +147,7 @@ export function ClubBewerk({ id }: { id: string }) {
           <button
             className="knop knop-breed"
             onClick={async () => {
-              const m = await deelUrl(clubNaam(c), vt('Circuittraining: {w0}', { w0: clubNaam(c) }), clubLink(clubtrainingen.haal(id) ?? c));
+              const m = await deelInhoud({ soort: 'c', code: clubCode(clubtrainingen.haal(id) ?? c), titel: clubNaam(c), regel: vt('Circuittraining: {w0}', { w0: clubNaam(c) }) });
               if (m) toon(m);
             }}
           >

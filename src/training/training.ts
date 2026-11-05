@@ -1,3 +1,4 @@
+import { deflateSync, inflateSync } from 'fflate';
 import type { Leeftijd, Oefening, Soort } from '../model/types';
 import { maakId } from '../model/id';
 import { geldigeEigen, isEigenId } from '../eigen/eigen';
@@ -124,17 +125,33 @@ export interface GedeeldeTraining {
   eigen?: Oefening[];
 }
 
-export function naarBase64Url(tekst: string): string {
-  const bytes = new TextEncoder().encode(tekst);
+function bytesNaarUrl(bytes: Uint8Array): string {
   let bin = '';
   for (const b of bytes) bin += String.fromCharCode(b);
   return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-export function uitBase64Url(code: string): string {
+function urlNaarBytes(code: string): Uint8Array {
   const b64 = code.replace(/-/g, '+').replace(/_/g, '/');
   const bin = atob(b64 + '='.repeat((4 - (b64.length % 4)) % 4));
-  return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
+  return Uint8Array.from(bin, (c) => c.charCodeAt(0));
+}
+
+/**
+ * Tekst als URL-veilige code (alleen letters, cijfers, - en _). Gecomprimeerd als dat korter is; die code begint met een z.
+ * Oude links zijn nooit gecomprimeerd en beginnen altijd met "ey" (de { van JSON), dus die blijven gewoon werken.
+ */
+export function naarBase64Url(tekst: string): string {
+  const bytes = new TextEncoder().encode(tekst);
+  const klein = bytesNaarUrl(deflateSync(bytes, { level: 9 }));
+  const gewoon = bytesNaarUrl(bytes);
+  return klein.length + 1 < gewoon.length ? `z${klein}` : gewoon;
+}
+
+export function uitBase64Url(code: string): string {
+  const z = code.startsWith('z');
+  const bytes = urlNaarBytes(z ? code.slice(1) : code);
+  return new TextDecoder().decode(z ? inflateSync(bytes) : bytes);
 }
 
 /**

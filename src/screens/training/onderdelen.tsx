@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Icoon } from '../../components/Icoon';
 import { MAX_AANTAL, naarCode, trainingNaam, type Training } from '../../training/training';
 import { meeTeNemen } from '../../eigen/meenemen';
+import { deelInhoud, isLinkCode } from '../../engine/deellink';
 import { ga } from '../../router';
 import { t as vt } from '../../i18n/t';
 
@@ -28,25 +29,26 @@ export function Stapper({ label, waarde, onStap, icoon }: { label: string; waard
   );
 }
 
-/** Volledige deellink voor een training. Eigen oefeningen gaan in hun geheel mee in de link. */
-export function deelLink(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'leeftijd' | 'oefeningen'>): string {
+/** Code voor het delen van een teamtraining. Oefeningen die de ontvanger niet heeft, gaan in hun geheel mee. */
+export function trainingCode(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'leeftijd' | 'oefeningen'>): string {
   const { eigen, nieuwId } = meeTeNemen(t.oefeningen);
-  return `${location.origin}${import.meta.env.BASE_URL}#/t/${naarCode({ ...t, oefeningen: t.oefeningen.map(nieuwId) }, eigen)}`; // i18n-ok
+  return naarCode({ ...t, oefeningen: t.oefeningen.map(nieuwId) }, eigen);
 }
 
-/** Code uit een geplakte link (of de code zelf). */
-export function codeUitLink(tekst: string, pad: 't' | 'o' = 't'): string | null {
+/** Waar een geplakte link heen gaat (of de code zelf). Ook de korte links; `pad` is de soort van een losse lange code. */
+export function linkDoel(tekst: string, pad: 't' | 'o' | 'w'): string | null {
   const t = tekst.trim();
-  const m = new RegExp(`#/${pad}/([A-Za-z0-9_-]+)`).exec(t);
-  if (m) return m[1]!;
-  return /^[A-Za-z0-9_-]{16,}$/.test(t) ? t : null;
+  const m = /#\/([dtcow])\/([A-Za-z0-9_-]+)/.exec(t);
+  if (m) return `/${m[1]}/${m[2]}`;
+  if (isLinkCode(t)) return `/d/${t}`;
+  return /^[A-Za-z0-9_-]{16,}$/.test(t) ? `/${pad}/${t}` : null;
 }
 
 /** "… openen via een link": voor wie de link in de browser kreeg en hem in de geïnstalleerde app wil hebben. */
-export function LinkOpenen({ tekst, pad }: { tekst: string; pad: 't' | 'o' }) {
+export function LinkOpenen({ tekst, pad, id = 'deellink' }: { tekst: string; pad: 't' | 'o' | 'w'; id?: string }) {
   const [open, setOpen] = useState(false);
   const [link, setLink] = useState('');
-  const code = codeUitLink(link, pad);
+  const doel = linkDoel(link, pad);
   return (
     <div className="link-openen">
       {!open ? (
@@ -59,12 +61,12 @@ export function LinkOpenen({ tekst, pad }: { tekst: string; pad: 't' | 'o' }) {
           className="blok link-formulier"
           onSubmit={(e) => {
             e.preventDefault();
-            if (code) ga(`/${pad}/${code}`);
+            if (doel) ga(doel);
           }}
         >
-          <label htmlFor="deellink">{vt('Plak de link die je hebt gekregen')}</label>
-          <input id="deellink" type="url" inputMode="url" placeholder={`https://…/#/${pad}/…`} value={link} onChange={(e) => setLink(e.target.value)} />
-          <button className="knop knop-primair" disabled={!code}>
+          <label htmlFor={id}>{vt('Plak de link die je hebt gekregen')}</label>
+          <input id={id} type="url" inputMode="url" placeholder={`https://…/#/${pad}/…`} value={link} onChange={(e) => setLink(e.target.value)} />
+          <button className="knop knop-primair" disabled={!doel}>
             {vt('Openen')}
           </button>
         </form>
@@ -73,31 +75,38 @@ export function LinkOpenen({ tekst, pad }: { tekst: string; pad: 't' | 'o' }) {
   );
 }
 
-/** Delen met de deelfunctie van de telefoon, anders de link kopiëren. Geeft een korte melding terug. */
-export async function deel(t: Training): Promise<string> {
+/** Teamtraining delen: korte link via het deelmenu van de telefoon, anders kopiëren. Geeft een melding terug (of niets). */
+export function deel(t: Training): Promise<string> {
   const titel = trainingNaam(t);
-  return deelUrl(titel, vt('Teamtraining: {w0}', { w0: titel }), deelLink(t));
+  return deelInhoud({ soort: 't', code: trainingCode(t), titel, regel: vt('Teamtraining: {w0}', { w0: titel }) });
 }
 
-/** Een link delen met de deelfunctie van de telefoon, anders kopiëren. */
-export async function deelUrl(titel: string, text: string, url: string): Promise<string> {
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: titel, text, url });
-      return '';
-    } catch (e) {
-      if ((e as Error).name === 'AbortError') return '';
-    }
-  }
-  try {
-    await navigator.clipboard.writeText(url);
-    return vt('Link gekopieerd');
-  } catch {
-    return url;
-  }
+/** Op een toestel zonder de app: zo krijg je de gedeelde inhoud er alsnog in. */
+export function InAppUitleg({ uitleg }: { uitleg: ReactNode }) {
+  const [melding, toon] = useToast();
+  return (
+    <section className="blok gedeeld-uitleg">
+      <h3>{vt('In de app openen')}</h3>
+      <p>{uitleg}</p>
+      <div className="knoppenrij">
+        <button
+          className="knop knop-primair"
+          onClick={() =>
+            void navigator.clipboard
+              .writeText(location.href)
+              .then(() => toon(vt('Link gekopieerd')))
+              .catch(() => toon(vt('Kopiëren lukte niet: houd de adresbalk ingedrukt')))
+          }
+        >
+          <Icoon naam="kopieer" maat={20} />
+          {vt('Kopieer link')}
+        </button>
+      </div>
+      <Toast tekst={melding} />
+    </section>
+  );
 }
 
-/** Korte melding onderin beeld (verdwijnt vanzelf). */
 export function useToast(): [string, (tekst: string) => void] {
   const [tekst, setTekst] = useState('');
   const toon = (t: string) => {

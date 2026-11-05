@@ -6,8 +6,6 @@ export default defineConfig({
     environment: 'node',
     include: ['tests/online/**/*.test.ts'],
     testTimeout: 30000,
-    // Alleen vastlopers door de emulator zelf krijgen een herkansing, zie KAPOT_BERICHT in tests/online/hulp.ts.
-    retry: { count: 2, condition: /kapot gRPC-bericht van de emulator/ },
     hookTimeout: 30000,
     // Eén voor één: alle tests delen dezelfde emulator.
     fileParallelism: false,

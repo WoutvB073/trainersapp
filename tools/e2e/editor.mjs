@@ -315,7 +315,7 @@ await page.evaluate(() => {
 });
 await klik(page, 'Delen');
 await slaap(300);
-const link = await page.evaluate(() => navigator.clipboard.readText());
+const link = (await page.evaluate(() => navigator.clipboard.readText())).split('\n').pop();
 controle(link.includes('#/t/'), `Geen deellink: ${link.slice(0, 80)}`);
 const anderToestel = await browser.createBrowserContext();
 const ontvanger = await nieuwePagina(TELEFOON, anderToestel);

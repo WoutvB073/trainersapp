@@ -160,7 +160,7 @@ for (const taal of ['nl', 'en']) {
       });
       await tik(page, 'Deel met trainers');
       await slaap(300);
-      deellink = await page.evaluate(() => window.__link ?? '');
+      deellink = (await page.evaluate(() => window.__link ?? '')).split('\n').pop();
       if (!deellink.includes('#/c/')) problemen.push(`${waar}: geen deellink (${deellink})`);
       console.log(`Deellink: ${deellink.length} tekens`);
     }

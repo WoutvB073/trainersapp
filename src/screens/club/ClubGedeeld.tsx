@@ -8,24 +8,11 @@ import { clubNaam, groepNaam, materiaal, partijvelden, rotatie, stationNaam, sta
 import { datumTekst } from '../../training/training';
 import type { Oefening } from '../../model/types';
 import { blokNaam, blokStijl, RotatieTabel, veldGroepen, VeldplanPartij, VeldplanStations } from './onderdelen';
+import { LinkFout } from '../GedeeldLink';
 import { t as vt } from '../../i18n/t';
 
 function zoeker(g: GedeeldeClub) {
   return (id: string): Oefening | undefined => g.eigen?.find((o) => o.id === id) ?? vindOefening(id);
-}
-
-function GeenLink() {
-  return (
-    <div className="pagina">
-      <Kop titel={vt('Circuittraining')} />
-      <main className="inhoud smal">
-        <div className="leeg">
-          <p className="leeg-titel">{vt('Deze link klopt niet')}</p>
-          <p>{vt('Vraag de trainer om de link opnieuw te sturen.')}</p>
-        </div>
-      </main>
-    </div>
-  );
 }
 
 /** Eén station of de partijvelden, voor de trainer die daar staat. */
@@ -92,7 +79,7 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
 
   if (station) {
     const s = lijst.find((x) => x.nr === station);
-    if (!s) return <GeenLink />;
+    if (!s) return <LinkFout />;
     const id = g.blokken[s.vorm];
     const tr = stationTrainer(g, s.nr);
     return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s, g.groepjes) })} kleurBlok={s.vorm} regels={[...(tr ? [vt('Trainer: {naam}', { naam: tr })] : []), ...wieOpStation(g, s)]} oefening={id ? vind(id) : undefined} />;
@@ -150,7 +137,7 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
 }
 
 /** De link voor de trainers: alleen lezen, zonder inloggen. */
-export function ClubGedeeld({ code, station, partij }: { code: string; station?: number; partij?: boolean }) {
+export function ClubGedeeld({ code, basis, station, partij }: { code: string; basis?: string; station?: number; partij?: boolean }) {
   const g = useMemo(() => uitCode(code), [code]);
-  return g ? <ClubWeergave g={g} basis={`/c/${code}`} station={station} partij={partij} /> : <GeenLink />;
+  return g ? <ClubWeergave g={g} basis={basis ?? `/c/${code}`} station={station} partij={partij} /> : <LinkFout />;
 }

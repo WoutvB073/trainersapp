@@ -29,6 +29,9 @@ export interface Verzoening<T> {
 
 const json = (x: unknown) => JSON.stringify(x);
 
+/** De nieuwste wint. Bij dezelfde tijd beslist de inhoud, zodat twee toestellen altijd dezelfde winnaar kiezen. */
+const lokaalWint = (l: Item, lj: string, r: Item, rj: string) => l.gewijzigd > r.gewijzigd || (l.gewijzigd === r.gewijzigd && lj >= rj);
+
 export function verzoen<T extends Item>(lokaal: T[], bekend: Record<string, string>, online: T[]): Verzoening<T> {
   const L = new Map(lokaal.map((x) => [x.id, x]));
   const R = new Map(online.map((x) => [x.id, x]));
@@ -60,7 +63,7 @@ export function verzoen<T extends Item>(lokaal: T[], bekend: Record<string, stri
         uitLokaal.set(id, l);
         schrijf.push(l);
         nieuwBekend[id] = lj!;
-      } else if (l.gewijzigd >= r.gewijzigd) {
+      } else if (lokaalWint(l, lj!, r, rj!)) {
         // Allebei veranderd (of allebei nieuw): de nieuwste wint.
         uitLokaal.set(id, l);
         schrijf.push(l);
@@ -126,13 +129,6 @@ export function verzoenSet(lokaal: readonly string[], bekend: readonly string[],
   }
   const zelfde = (a: string[], b: Set<string>) => a.length === b.size && a.every((x) => b.has(x));
   return { lokaal: uit, online: uit, lokaalVeranderd: !zelfde(uit, L), onlineVeranderd: !zelfde(uit, R) };
-}
-
-/** Instellingen: de nieuwste wint. */
-export function nieuwste<T extends { gewijzigd: number }>(a: T | undefined, b: T | undefined): T | undefined {
-  if (!a) return b;
-  if (!b) return a;
-  return b.gewijzigd > a.gewijzigd ? b : a;
 }
 
 // ---------- teamcode ----------

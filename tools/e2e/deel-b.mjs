@@ -215,7 +215,7 @@ for (const [naam, vp, modus] of [
       navigator.share = undefined;
     });
     await klik(page, 'Delen', '.knoppenrij button');
-    gedeeldeLink = await page.evaluate(() => navigator.clipboard.readText());
+    gedeeldeLink = (await page.evaluate(() => navigator.clipboard.readText())).split('\n').pop();
     controle(/#\/w\/[A-Za-z0-9_-]+$/.test(gedeeldeLink ?? ''), `deellink opstelling: ${gedeeldeLink}`);
   }
   // Dupliceren.

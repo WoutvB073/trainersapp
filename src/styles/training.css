@@ -752,3 +752,25 @@
     margin-left: 4px;
   }
 }
+
+/* Gedeelde link: fout, verwijzing naar installeren en het deelbericht (0.31.3) */
+.link-fout .knoppenrij {
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.installeer-melding {
+  margin: 0;
+  padding: 8px 16px calc(env(safe-area-inset-bottom) + 20px);
+  text-align: center;
+}
+
+.deel-tekst {
+  margin: 0 0 12px;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.gedeeld-uitleg .knop {
+  white-space: nowrap;
+}
