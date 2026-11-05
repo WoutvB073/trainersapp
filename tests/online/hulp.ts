@@ -115,8 +115,8 @@ export function lokaleOpslag() {
     doelen,
     instellingen: () => inst,
     /** Instelling lokaal wijzigen (zoals de app dat doet). */
-    zetInstellingen(w: Partial<Instellingen>) {
-      inst = { ...inst, ...w, gewijzigd: Date.now() };
+    zetInstellingen(w: Partial<Instellingen>, tijd = Date.now()) {
+      inst = { ...inst, ...w, gewijzigd: tijd };
       for (const cb of instLuisteraars) cb();
     },
   };

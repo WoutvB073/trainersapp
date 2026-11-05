@@ -1,10 +1,10 @@
-import { collection, deleteDoc, doc, onSnapshot, setDoc, type Firestore, type Unsubscribe } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, collection, deleteDoc, doc, onSnapshot, setDoc, writeBatch, type Firestore, type Unsubscribe } from 'firebase/firestore';
 import type { EigenOefening } from '../model/types';
 import type { Training } from '../training/training';
 import type { ClubTraining } from '../clubtraining/clubtraining';
 import type { Bord, Opstelling } from '../wedstrijd/wedstrijd';
 import type { SyncStatus } from '../engine/account';
-import { nieuwste, verzoen, verzoenSet, type Item } from './samenvoegen';
+import { verzoen, verzoenSet, type Item } from './samenvoegen';
 
 /**
  * Synchroniseren van eigen oefeningen, trainingen, favorieten en instellingen tussen de lokale opslag en Firestore.
@@ -69,7 +69,8 @@ function vast(i: Instellingen | undefined): Instellingen | undefined {
   const a = i.aantallen ? { spelers: Number(i.aantallen.spelers), keepers: Number(i.aantallen.keepers) } : null;
   return { thema: String(i.thema), modus: String(i.modus), taal: String(i.taal ?? 'auto'), aantallen: a, leeftijd: i.leeftijd ?? null, gewijzigd: Number(i.gewijzigd) || 0 };
 }
-const gelijk = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+/** Wat de gebruiker koos, zonder de tijd. */
+const inhoud = (i: Instellingen) => JSON.stringify({ ...i, gewijzigd: 0 });
 
 export class Synchronisatie {
   private stoppers: (() => void)[] = [];
@@ -172,7 +173,10 @@ export class Synchronisatie {
     const verwerk = () => {
       if (!online) return;
       const oudBekend = leesBekend();
-      const v = verzoen(doel.lijst(), oudBekend, online);
+      // Vergelijken met wat wij het laatst stuurden, zodat ook een wijziging daarna als "lokaal veranderd" telt.
+      const vergelijk = { ...oudBekend };
+      for (const [id, o] of onderweg) zetBekend(vergelijk, id, o.versie ? JSON.stringify(o.versie) : undefined);
+      const v = verzoen(doel.lijst(), vergelijk, online);
       const bekend = { ...v.bekend };
       for (const [id, o] of onderweg) zetBekend(bekend, id, o.bekend);
       for (const x of v.schrijf) zetBekend(bekend, x.id, onderweg.get(x.id)?.bekend ?? oudBekend[x.id]);
@@ -200,10 +204,14 @@ export class Synchronisatie {
             /* kapot document: overslaan */
           }
         }
-        online = metOnderweg(lijst);
+        const vanServer = this.vanServer.get(col) || !snap.metadata.fromCache;
         this.wacht.set(col, snap.metadata.hasPendingWrites);
-        this.vanServer.set(col, this.vanServer.get(col) || !snap.metadata.fromCache);
-        verwerk();
+        this.vanServer.set(col, vanServer);
+        // Pas beslissen als de server iets gezegd heeft: een lege of halve cache betekent niet dat iets online weg is.
+        if (vanServer) {
+          online = metOnderweg(lijst);
+          verwerk();
+        }
         this.meldStatus();
       },
       () => this.zetFout(),
@@ -214,37 +222,106 @@ export class Synchronisatie {
     this.stoppers.push(uit, uitLokaal);
   }
 
+  /**
+   * Eén waarde naar Firestore sturen. Zolang `plek.wacht` gevuld is, telt die eigen versie; wat er als bevestigd bewaard wordt
+   * (`bewaar`) verandert pas na de bevestiging. Zie `onderweg` in koppelLijst.
+   */
+  private stuurWaarde<V>(plek: { wacht: V | null }, versie: V, bewaar: (v: V) => void, schrijf: () => Promise<void>) {
+    plek.wacht = versie;
+    const klaar = () => {
+      bewaar(versie);
+      if (plek.wacht === versie) plek.wacht = null;
+    };
+    // Geweigerd (regels): niet eindeloos opnieuw proberen, dan wint wat online staat.
+    void schrijf().then(klaar, () => {
+      klaar();
+      this.zetFout();
+    });
+  }
+
   private koppelGebruiker() {
     const pad = doc(this.db, 'users', this.uid);
     let data: { favorieten?: string[]; instellingen?: Instellingen } | null = null;
+    const favorieten: { wacht: string[] | null } = { wacht: null };
+    const instellingen: { wacht: Instellingen | null } = { wacht: null };
+    const bekend = this.doelen.bekend;
+
+    const verwerkFavorieten = () => {
+      // Per oefening kijken wie er iets aan veranderde. Terwijl we schrijven is onze eigen versie de vergelijking.
+      const vorige = favorieten.wacht ?? bekend.lees<string[]>('favorieten', []);
+      const online = favorieten.wacht ?? data?.favorieten ?? [];
+      const v = verzoenSet([...this.doelen.favorieten.alle()], vorige, online);
+      if (v.lokaalVeranderd) this.toepassen(() => this.doelen.favorieten.vervangAlles(v.lokaal));
+      if (!v.onlineVeranderd) {
+        if (!favorieten.wacht) bekend.zet('favorieten', v.lokaal);
+        return;
+      }
+      // Alleen het verschil sturen: een hele lijst zou overschrijven wat een ander toestel intussen deed.
+      const erbij = v.online.filter((x) => !online.includes(x));
+      const eraf = online.filter((x) => !v.online.includes(x));
+      this.stuurWaarde(
+        favorieten,
+        v.online,
+        (w) => bekend.zet('favorieten', w),
+        () => {
+          const b = writeBatch(this.db);
+          if (erbij.length) b.set(pad, { favorieten: arrayUnion(...erbij) }, { merge: true });
+          if (eraf.length) b.set(pad, { favorieten: arrayRemove(...eraf) }, { merge: true });
+          return b.commit();
+        },
+      );
+    };
+
+    const verwerkInstellingen = () => {
+      const lokaal = vast(this.doelen.instellingen.lees())!;
+      const online = vast(instellingen.wacht ?? data?.instellingen);
+      const stuur = (i: Instellingen) =>
+        this.stuurWaarde(
+          instellingen,
+          i,
+          (w) => bekend.zet('instellingen', inhoud(w)),
+          () => setDoc(pad, { instellingen: i }, { merge: true }),
+        );
+      if (!online) return stuur(lokaal);
+      if (inhoud(lokaal) === inhoud(online)) {
+        if (!instellingen.wacht) bekend.zet('instellingen', inhoud(online));
+        return;
+      }
+      // De nieuwste wint; bij gelijke tijd online, zodat twee toestellen niet eindeloos tegen elkaar blijven schrijven. Alleen een
+      // wijziging hier zonder nieuwe tijd (online is nog zoals de vorige keer) wint ook als de tijd niet hoger is.
+      const vorige = instellingen.wacht ? inhoud(instellingen.wacht) : bekend.lees<string | undefined>('instellingen', undefined);
+      const alleenHier = vorige !== undefined && inhoud(lokaal) !== vorige && inhoud(online) === vorige;
+      if (lokaal.gewijzigd <= online.gewijzigd && !alleenHier) {
+        // Eerst bewaren: een andere taal laadt de app opnieuw.
+        bekend.zet('instellingen', inhoud(online));
+        this.toepassen(() => this.doelen.instellingen.zet(online));
+        return;
+      }
+      // Gewijzigd zonder nieuwe tijd (bijvoorbeeld net na het opstarten): nu alsnog een tijd, die de andere toestellen overnemen.
+      if (lokaal.gewijzigd > online.gewijzigd) return stuur(lokaal);
+      const nieuw = { ...lokaal, gewijzigd: Math.max(Date.now(), online.gewijzigd + 1) };
+      this.toepassen(() => this.doelen.instellingen.zet(nieuw));
+      stuur(nieuw);
+    };
+
     const verwerk = () => {
       if (!data) return;
-      // Favorieten: per oefening kijken wie er iets aan veranderde.
-      const bekendFav = this.doelen.bekend.lees<string[]>('favorieten', []);
-      const v = verzoenSet([...this.doelen.favorieten.alle()], bekendFav, data.favorieten ?? []);
-      this.doelen.bekend.zet('favorieten', v.lokaal);
-      if (v.lokaalVeranderd) this.toepassen(() => this.doelen.favorieten.vervangAlles(v.lokaal));
-      const w: Record<string, unknown> = {};
-      if (v.onlineVeranderd) w.favorieten = v.online;
-      // Instellingen: de nieuwste wint.
-      const lokaal = vast(this.doelen.instellingen.lees())!;
-      const online = vast(data.instellingen);
-      const beste = nieuwste(lokaal, online)!;
-      if (!gelijk(beste, lokaal)) this.toepassen(() => this.doelen.instellingen.zet(beste));
-      else if (!gelijk(online, lokaal)) w.instellingen = lokaal;
-      if (Object.keys(w).length) {
-        data = { ...data, ...w };
-        void setDoc(pad, w, { merge: true }).catch(() => this.zetFout());
-      }
+      verwerkFavorieten();
+      verwerkInstellingen();
     };
     const uit = onSnapshot(
       pad,
       { includeMetadataChanges: true },
       (snap) => {
-        data = (snap.data() as typeof data) ?? {};
+        const vanServer = this.vanServer.get('gebruiker') || !snap.metadata.fromCache;
         this.wacht.set('gebruiker', snap.metadata.hasPendingWrites);
-        this.vanServer.set('gebruiker', this.vanServer.get('gebruiker') || !snap.metadata.fromCache);
-        verwerk();
+        this.vanServer.set('gebruiker', vanServer);
+        // De eerste stand op een nieuw toestel is alleen onze eigen naam en e-mail: daarop beslissen zou de instellingen online
+        // overschrijven met de standaardwaarden van dit toestel.
+        if (vanServer) {
+          data = (snap.data() as typeof data) ?? {};
+          verwerk();
+        }
         this.meldStatus();
       },
       () => this.zetFout(),

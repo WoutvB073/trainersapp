@@ -15,10 +15,10 @@ import { bewaardAccount, huidigeStatus, sleutelVoor, zetBewaardAccount, zetStatu
 import { eigenBackend, eigenOefeningen } from '../eigen/opslag';
 import { trainingBackend, trainingen } from '../training/opslag';
 import { favorieten, favorietenBackend } from '../engine/favorieten';
-import { bordBackend, borden, opstellingBackend, opstellingen } from '../wedstrijd/opslag';
+import { bordBackend, borden, opstellingBackend, opstellingen, spelersnamen } from '../wedstrijd/opslag';
 import { clubBackend, clubtrainingen } from '../clubtraining/opslag';
 import { clubNaam, voorTeam } from '../clubtraining/clubtraining';
-import { bordNaam, opstellingNaam } from '../wedstrijd/wedstrijd';
+import { bordNaam, namenUitOpstellingen, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
 import { abonneerFilters, huidigeFilters, zetFilters } from '../engine/filters';
@@ -41,6 +41,7 @@ let v: Verbinding | null = null;
 let sync: Synchronisatie | null = null;
 let teamsStop: Unsubscribe | null = null;
 let eigenStop: (() => void) | null = null;
+let namenStop: (() => void) | null = null;
 let gestart: Promise<void> | null = null;
 let antwoord: ((ja: boolean) => void) | null = null;
 
@@ -266,6 +267,10 @@ function startSync(a: AccountInfo) {
   });
   // Eigen oefening aangepast die je in een team deelt: het team krijgt de nieuwe versie.
   eigenStop = eigenOefeningen.abonneer(werkGedeeldeBij);
+  // Nieuw toestel: de spelerslijst staat niet online, maar de namen in je opstellingen wel.
+  const vulNamen = () => spelersnamen.vulAanAls(namenUitOpstellingen(opstellingen.lijst()));
+  namenStop = opstellingen.abonneer(vulNamen);
+  vulNamen();
 }
 
 function stopSync() {
@@ -275,6 +280,8 @@ function stopSync() {
   teamsStop = null;
   eigenStop?.();
   eigenStop = null;
+  namenStop?.();
+  namenStop = null;
 }
 
 function ik(): T.Ik {

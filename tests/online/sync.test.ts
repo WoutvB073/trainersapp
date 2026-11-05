@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { disableNetwork, enableNetwork, terminate } from 'firebase/firestore';
+import { disableNetwork, doc, enableNetwork, getDoc, setDoc, terminate } from 'firebase/firestore';
 import { leegmaken, lokaleOpslag, synchroniseer, toestel, wachtTot, opruimen } from './hulp';
 import { nieuweEigen } from '../../src/eigen/eigen';
 import { nieuweTekening } from '../../src/editor/editor';
@@ -93,6 +93,152 @@ describe('synchroniseren tussen twee toestellen (zelfde account)', () => {
     expect(a.clubtrainingen.haal('c1')!.naam).toBe(naam);
     sa.stop();
     sb.stop();
+  });
+
+  it('favorieten op twee toestellen tegelijk: niets overschrijft de ander (ook niet offline)', async () => {
+    const tel = await toestel('test1@example.com');
+    const lap = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const b = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    const sb = synchroniseer(lap, b);
+    a.favorieten.wissel('samen');
+    await wachtTot(() => b.favorieten.is('samen'), 10000, 'eerste favoriet');
+
+    // Telefoon offline: favoriet erbij. Intussen op de laptop ook een.
+    await disableNetwork(tel.db);
+    a.favorieten.wissel('van-telefoon');
+    a.favorieten.wissel('samen');
+    b.favorieten.wissel('van-laptop');
+    await new Promise((r) => setTimeout(r, 800));
+    await enableNetwork(tel.db);
+    await wachtTot(() => a.favorieten.is('van-laptop') && b.favorieten.is('van-telefoon') && !b.favorieten.is('samen'), 10000, 'beide favorieten op beide toestellen');
+    await new Promise((r) => setTimeout(r, 800));
+    for (const x of [a, b]) expect([...x.favorieten.alle()].sort()).toEqual(['van-laptop', 'van-telefoon']);
+    sa.stop();
+    sb.stop();
+  });
+
+  it('instellingen met dezelfde tijd op twee toestellen: ze worden het eens en blijven niet schrijven', async () => {
+    const tel = await toestel('test1@example.com');
+    const lap = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const b = lokaleOpslag();
+    // Vóór het inloggen op elk toestel iets anders gekozen: geen tijd, dus allebei 0.
+    a.doelen.instellingen.zet({ ...a.instellingen(), thema: 'rood' });
+    b.doelen.instellingen.zet({ ...b.instellingen(), thema: 'blauw' });
+    const statusA: string[] = [];
+    const sa = synchroniseer(tel, a, (x) => statusA.push(x));
+    const sb = synchroniseer(lap, b);
+    await wachtTot(() => a.instellingen().thema === b.instellingen().thema, 10000, 'zelfde thema');
+    await new Promise((r) => setTimeout(r, 1000));
+    const aantal = statusA.length;
+    const stand = [a.instellingen().thema, b.instellingen().thema];
+    await new Promise((r) => setTimeout(r, 1500));
+    expect(stand[0]).toBe(stand[1]);
+    expect(a.instellingen().thema).toBe(b.instellingen().thema);
+    expect(statusA.length - aantal).toBeLessThanOrEqual(1);
+    sa.stop();
+    sb.stop();
+  });
+
+  it('nieuw toestel dat eerst naam en e-mail schrijft (zoals de app): instellingen en favorieten online blijven', async () => {
+    const tel = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    a.favorieten.wissel('veld-pt-derde-man');
+    a.zetInstellingen({ thema: 'rood', modus: 'donker', taal: 'en', aantallen: { spelers: 8, keepers: 1 }, leeftijd: 'jo8-11' });
+    await wachtTot(() => a.favorieten.is('veld-pt-derde-man'), 2000);
+    await new Promise((r) => setTimeout(r, 1000));
+    sa.stop();
+    await terminate(tel.db);
+
+    // Alleen dit nieuwe toestel is nog actief: niemand zet de instellingen terug.
+    const lap = await toestel('test1@example.com');
+    const b = lokaleOpslag();
+    await setDoc(doc(lap.db, 'users', lap.uid), { naam: 'Testtrainer 1', email: 'test1@example.com' }, { merge: true });
+    const sb = synchroniseer(lap, b);
+    await new Promise((r) => setTimeout(r, 1500));
+    expect(b.instellingen()).toMatchObject({ thema: 'rood', modus: 'donker', taal: 'en', aantallen: { spelers: 8, keepers: 1 }, leeftijd: 'jo8-11' });
+    expect(b.favorieten.is('veld-pt-derde-man')).toBe(true);
+    sb.stop();
+  });
+
+  it('nieuw toestel, schrijfactie nog onderweg bij de eerste momentopname: de instellingen online blijven', async () => {
+    const tel = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    a.zetInstellingen({ thema: 'rood', taal: 'en' });
+    await new Promise((r) => setTimeout(r, 1000));
+    sa.stop();
+    await terminate(tel.db);
+
+    const lap = await toestel('test1@example.com');
+    const b = lokaleOpslag();
+    // Niet wachten: zo doet de app het ook (de schrijfactie is nog onderweg als de luisteraar start).
+    void setDoc(doc(lap.db, 'users', lap.uid), { naam: 'Testtrainer 1', email: 'test1@example.com' }, { merge: true });
+    const sb = synchroniseer(lap, b);
+    await new Promise((r) => setTimeout(r, 1500));
+    expect(b.instellingen()).toMatchObject({ thema: 'rood', taal: 'en' });
+    const d = await getDoc(doc(lap.db, 'users', lap.uid));
+    expect((d.data() as { instellingen?: { thema?: string } }).instellingen?.thema).toBe('rood');
+    sb.stop();
+  });
+
+  it('nieuw toestel: alles komt binnen, ook de afvinklijst en de instellingen', async () => {
+    const tel = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    a.eigen.bewaar(oefening('eigen-1', 'Een'));
+    a.trainingen.bewaar({ ...nieuweTraining(1, 't1'), naam: 'Dinsdag' });
+    a.clubtrainingen.bewaar({ ...nieuweClub('mini-5-7', 1, 'c1'), naam: 'Maandag', afgevinkt: ['1:pionnen'] });
+    a.opstellingen.bewaar({ ...nieuweOpstelling('8v8', ['Testspeler'], 1, 'o1'), naam: 'Zaterdag' });
+    a.borden.bewaar(nieuwBord('tactiek', nieuweTekening('leeg'), 'Corner', 1, 'b1'));
+    a.favorieten.wissel('veld-pt-derde-man');
+    a.zetInstellingen({ thema: 'rood', modus: 'donker', taal: 'en', aantallen: { spelers: 8, keepers: 1 }, leeftijd: 'jo8-11' });
+    await new Promise((r) => setTimeout(r, 1000));
+
+    const lap = await toestel('test1@example.com');
+    const b = lokaleOpslag();
+    const sb = synchroniseer(lap, b);
+    await wachtTot(() => b.eigen.lijst().length === 1 && b.trainingen.lijst().length === 1 && b.clubtrainingen.lijst().length === 1 && b.opstellingen.lijst().length === 1 && b.borden.lijst().length === 1 && b.favorieten.is('veld-pt-derde-man') && b.instellingen().thema === 'rood', 10000, 'alles op het nieuwe toestel');
+    expect(b.clubtrainingen.haal('c1')?.afgevinkt).toEqual(['1:pionnen']);
+    expect(b.instellingen()).toMatchObject({ modus: 'donker', taal: 'en', aantallen: { spelers: 8, keepers: 1 }, leeftijd: 'jo8-11' });
+    sa.stop();
+    sb.stop();
+  });
+
+  it('eerste keer samenvoegen: wat op het toestel staat en wat online staat blijven allebei', async () => {
+    const tel = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    a.eigen.bewaar(oefening('eigen-online', 'Online'));
+    a.trainingen.bewaar({ ...nieuweTraining(1, 't-online'), naam: 'Online' });
+    a.clubtrainingen.bewaar({ ...nieuweClub('mini-5-7', 1, 'c-online'), naam: 'Online' });
+    a.favorieten.wissel('fav-online');
+    await new Promise((r) => setTimeout(r, 1000));
+    sa.stop();
+
+    // Nieuw toestel met eigen spullen in de lokale kopie (zo laat de app ze achter na "Ja, meenemen").
+    const lap = await toestel('test1@example.com');
+    const b = lokaleOpslag();
+    b.eigen.bewaar(oefening('eigen-toestel', 'Toestel'));
+    b.trainingen.bewaar({ ...nieuweTraining(1, 't-toestel'), naam: 'Toestel' });
+    b.clubtrainingen.bewaar({ ...nieuweClub('mini-5-7', 1, 'c-toestel'), naam: 'Toestel' });
+    b.opstellingen.bewaar({ ...nieuweOpstelling('8v8', [], 1, 'o-toestel'), naam: 'Toestel' });
+    b.borden.bewaar(nieuwBord('tactiek', nieuweTekening('leeg'), 'Toestel', 1, 'b-toestel'));
+    b.favorieten.wissel('fav-toestel');
+    const sb = synchroniseer(lap, b);
+    await wachtTot(() => b.eigen.lijst().length === 2 && b.trainingen.lijst().length === 2 && b.clubtrainingen.lijst().length === 2 && b.favorieten.is('fav-online') && b.favorieten.is('fav-toestel'), 10000, 'samengevoegd op het toestel');
+    await new Promise((r) => setTimeout(r, 800));
+
+    // Een derde toestel ziet alles.
+    const derde = await toestel('test1@example.com');
+    const c = lokaleOpslag();
+    const sc = synchroniseer(derde, c);
+    await wachtTot(() => c.eigen.lijst().length === 2 && c.trainingen.lijst().length === 2 && c.clubtrainingen.lijst().length === 2 && c.opstellingen.lijst().length === 1 && c.borden.lijst().length === 1 && c.favorieten.is('fav-online') && c.favorieten.is('fav-toestel'), 10000, 'alles online');
+    sb.stop();
+    sc.stop();
   });
 
   it('offline wijzigen en daarna synchroniseren: niets kwijt', async () => {
