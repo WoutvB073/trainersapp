@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { bewaardeScroll, openTraining, useRoute, type Route } from './router';
+import { bewaardeScroll, openClub, openTraining, useRoute, type Route } from './router';
 import { soortUitPad } from './data/categorieen';
 import { useNieuweVersie, werkBij } from './engine/update';
 import { Start } from './screens/Start';
@@ -8,6 +8,13 @@ import { OefenLijst } from './screens/OefenLijst';
 import { OefeningDetail } from './screens/OefeningDetail';
 import { NietGevonden } from './screens/NietGevonden';
 import { Installeren } from './screens/installeren/Installeren';
+import { ClubLijst } from './screens/club/ClubLijst';
+import { ClubBewerk } from './screens/club/ClubBewerk';
+import { ClubKiezen } from './screens/club/ClubKiezen';
+import { ClubPlan } from './screens/club/ClubPlan';
+import { ClubTimer } from './screens/club/ClubTimer';
+import { ClubGedeeld } from './screens/club/ClubGedeeld';
+import { ruimLegeClubsOp } from './clubtraining/opslag';
 import { MijnTrainingen } from './screens/training/MijnTrainingen';
 import { trainingen } from './training/opslag';
 import { TrainingBewerk } from './screens/training/TrainingBewerk';
@@ -57,6 +64,18 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <TrainingModus id={route.id} nr={route.nr} />;
     case 'gedeeld':
       return <GedeeldeTraining key={route.code} code={route.code} />;
+    case 'club-lijst':
+      return <ClubLijst />;
+    case 'club':
+      return <ClubBewerk key={route.id} id={route.id} />;
+    case 'club-kiezen':
+      return <ClubKiezen key={route.id + route.blok} id={route.id} blok={route.blok} />;
+    case 'club-plan':
+      return <ClubPlan key={route.id} id={route.id} />;
+    case 'club-timer':
+      return <ClubTimer key={route.id} id={route.id} />;
+    case 'club-gedeeld':
+      return <ClubGedeeld key={JSON.stringify(route)} code={route.code} station={route.station} partij={route.partij} />;
     case 'eigen':
       return <EigenOefeningen />;
     case 'eigen-nieuw':
@@ -120,6 +139,8 @@ export function App() {
   if (scherm !== 'app' && route.naam === 'gedeeld' && !installatieGetoond) {
     return <GedeeldeTraining code={route.code} nietGeinstalleerd opInstalleren={() => setInstallatieGetoond(true)} />;
   }
+  // De link voor de trainers werkt altijd direct, zonder installeren of inloggen.
+  if (scherm !== 'app' && route.naam === 'club-gedeeld') return <ClubGedeeld key={JSON.stringify(route)} code={route.code} station={route.station} partij={route.partij} />;
   if (scherm !== 'app') return <Installeren alGeinstalleerd={scherm === 'al-geinstalleerd'} computer={!omgeving.mobiel} opBrowserGekozen={() => kies(true)} />;
   return <AppSchermen opInstalleren={isStandalone() ? undefined : () => kies(false)} />;
 }
@@ -129,6 +150,8 @@ function AppSchermen({ opInstalleren }: { opInstalleren?: () => void }) {
   // Training maken en weer weg zonder iets in te vullen: die lege training niet bewaren (één plek, alle schermen van een training).
   const open = openTraining(route);
   useEffect(() => trainingen.ruimLegeOp(open), [open]);
+  const openC = openClub(route);
+  useEffect(() => ruimLegeClubsOp(openC), [openC]);
   const nieuweVersie = useNieuweVersie();
   const sleutel = JSON.stringify(route);
 

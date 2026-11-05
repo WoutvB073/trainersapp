@@ -25,6 +25,14 @@ import { useSyncExternalStore } from 'react';
  *   #/bord/:id/tekenen       Tekenen (editor)
  *   #/w/:code                Gedeelde opstelling of tactiekbord (link)
  *   #/team/:id/wedstrijd/:item  Gedeelde opstelling/tactiekbord in een team
+ *   #/club                   Clubtrainingen
+ *   #/club/:id               Clubtraining: instellingen en blokken
+ *   #/club/:id/kiezen/:blok  Oefening kiezen voor een blok
+ *   #/club/:id/plan          Veldplan, rotatie en materiaal
+ *   #/club/:id/timer         Kwartiertimer
+ *   #/c/:code                Gedeelde clubtraining voor de trainers (alleen lezen)
+ *   #/c/:code/station/:nr    Eén station
+ *   #/c/:code/partij         De partijvelden
  *   #/eigen/nieuw            Nieuwe oefening: veld kiezen
  *   #/eigen/:id/tekenen      Editor (tekenen)
  *   #/eigen/:id/gegevens     Naam, categorieën, uitleg …
@@ -57,6 +65,12 @@ export type Route =
   | { naam: 'hervatting'; id: string; versie?: string }
   | { naam: 'wedstrijd-gedeeld'; code: string }
   | { naam: 'teamwedstrijd'; id: string; item: string }
+  | { naam: 'club-lijst' }
+  | { naam: 'club'; id: string }
+  | { naam: 'club-kiezen'; id: string; blok: string }
+  | { naam: 'club-plan'; id: string }
+  | { naam: 'club-timer'; id: string }
+  | { naam: 'club-gedeeld'; code: string; station?: number; partij?: boolean }
   | { naam: 'eigen-nieuw' }
   | { naam: 'tekenen'; id: string }
   | { naam: 'gegevens'; id: string }
@@ -65,6 +79,11 @@ export type Route =
 /** De training waar deze route bij hoort (bewerken, kiezen, genereren, trainingsmodus); die wordt niet als leeg opgeruimd. */
 export function openTraining(route: Route): string | undefined {
   return route.naam === 'training' || route.naam === 'kiezen' || route.naam === 'genereren' || route.naam === 'modus' ? route.id : undefined;
+}
+
+/** De clubtraining waar deze route bij hoort; die wordt niet als leeg opgeruimd. */
+export function openClub(route: Route): string | undefined {
+  return route.naam === 'club' || route.naam === 'club-kiezen' || route.naam === 'club-plan' || route.naam === 'club-timer' ? route.id : undefined;
 }
 
 export function leesHash(hash: string): Route {
@@ -97,6 +116,14 @@ export function leesHash(hash: string): Route {
   if (a === 'hervatting' && b) return c ? { naam: 'hervatting', id: b, versie: c } : { naam: 'hervatting', id: b };
   if (a === 'w' && b) return { naam: 'wedstrijd-gedeeld', code: b };
   if (a === 'team' && b && c === 'wedstrijd' && d) return { naam: 'teamwedstrijd', id: b, item: d };
+  if (a === 'club' && !b) return { naam: 'club-lijst' };
+  if (a === 'club' && b && !c) return { naam: 'club', id: b };
+  if (a === 'club' && b && c === 'kiezen' && d) return { naam: 'club-kiezen', id: b, blok: d };
+  if (a === 'club' && b && c === 'plan') return { naam: 'club-plan', id: b };
+  if (a === 'club' && b && c === 'timer') return { naam: 'club-timer', id: b };
+  if (a === 'c' && b && c === 'station') return { naam: 'club-gedeeld', code: b, station: Math.max(1, Number(d) || 1) };
+  if (a === 'c' && b && c === 'partij') return { naam: 'club-gedeeld', code: b, partij: true };
+  if (a === 'c' && b) return { naam: 'club-gedeeld', code: b };
   if (a === 'eigen' && b === 'nieuw') return { naam: 'eigen-nieuw' };
   if (a === 'eigen' && b && c === 'tekenen') return { naam: 'tekenen', id: b };
   if (a === 'eigen' && b && c === 'gegevens') return { naam: 'gegevens', id: b };

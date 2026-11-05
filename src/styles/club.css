@@ -1,0 +1,380 @@
+/* Clubtraining (0.31.0). */
+
+.club-lijst {
+  margin-top: 14px;
+}
+
+.club-gegevens {
+  display: grid;
+  gap: 12px;
+}
+
+.club-gegevens textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--rand);
+  border-radius: 10px;
+  background: var(--kaart);
+  color: var(--tekst);
+  font: inherit;
+}
+
+.club-gegevens .veld select,
+.club-gegevens .veld input {
+  width: 100%;
+  min-width: 0;
+}
+
+.club-gegevens .veld select {
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--rand);
+  border-radius: 10px;
+  background: var(--kaart);
+  color: var(--tekst);
+  font: inherit;
+}
+
+.club-twee {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.club-kop-rij {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.club-kop-rij .sectie-titel {
+  margin: 0;
+}
+
+.club-kop-rij .knop {
+  flex: none;
+}
+
+.club-blokken {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.club-blok {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--kaart);
+  box-shadow: var(--schaduw);
+}
+
+.club-blok-kop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 1rem;
+}
+
+.club-blok-oefening {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.club-blok-plaatje {
+  flex: none;
+  width: 84px;
+  height: 64px;
+  border-radius: 8px;
+}
+
+.club-blok-naam {
+  flex: 1;
+  min-width: 0;
+  font-weight: 650;
+}
+
+.club-blok-leeg {
+  margin: 10px 12px 0;
+}
+
+.club-blok-knoppen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 10px 12px 12px;
+}
+
+.club-acties {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* Veldplan: staand half veld. */
+.club-veld {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 8px auto 0;
+  aspect-ratio: 105 / 136;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--gras-1);
+}
+
+.club-veld svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.club-vak {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background: var(--kaart);
+  background-clip: padding-box;
+  color: var(--tekst);
+  font: inherit;
+  text-align: left;
+}
+
+.club-vak-kop {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.club-vak-kop span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.club-vak-plaatje {
+  display: block;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.club-vak-leeg {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: 4px;
+  font-size: 0.75rem;
+  color: var(--tekst-2);
+  text-align: center;
+}
+
+.club-vak-voet {
+  padding: 2px 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.club-noot {
+  margin: 8px 0 0;
+}
+
+.club-trainers {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+/* Rotatieschema */
+.club-tabel-vak {
+  overflow-x: auto;
+}
+
+.club-tabel {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  text-align: center;
+}
+
+.club-tabel th {
+  padding: 2px 4px;
+  font-size: 0.82rem;
+}
+
+.club-tabel tbody th {
+  font-family: var(--font-kop);
+  font-size: 1.2rem;
+}
+
+.club-tabel td {
+  padding: 2px 4px;
+}
+
+.club-nr {
+  display: inline-grid;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  place-items: center;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.club-legenda {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px 10px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.88rem;
+}
+
+.club-legenda li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Materiaal */
+.club-afvink {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.club-afvink label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 6px 0;
+}
+
+.club-afvink input {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.club-afvink small {
+  display: block;
+  color: var(--tekst-2);
+}
+
+.club-afvink label.aan > span {
+  color: var(--tekst-2);
+  text-decoration: line-through;
+}
+
+/* Gedeelde weergave */
+.club-station-knoppen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.club-station-knoppen .knop {
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: 52px;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.club-station-naam {
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.club-station-naam small {
+  display: block;
+  font-weight: 500;
+  color: var(--tekst-2);
+}
+
+.club-plek {
+  border-left: 6px solid transparent;
+}
+
+.club-plek-blok {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.club-plek .klein {
+  margin: 2px 0;
+}
+
+/* Kwartiertimer */
+.club-timer {
+  text-align: center;
+}
+
+.club-timer-blok {
+  display: inline-block;
+  margin: 8px 0 0;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-family: var(--font-kop);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.club-timer-tijd {
+  margin: 4px 0 10px;
+  font-family: var(--font-kop);
+  font-size: clamp(5rem, 28vw, 9rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.club-timer-knoppen {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.club-ronde {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.club-ronde li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

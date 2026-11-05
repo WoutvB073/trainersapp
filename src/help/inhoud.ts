@@ -84,6 +84,21 @@ export const HELP_NL: HelpOnderwerp[] = [
     laatZien: [{ tekst: 'Naar Mijn trainingen', pad: '/trainingen' }],
   },
   {
+    id: 'club',
+    titel: 'Clubtraining',
+    tekst: [
+      'Met **Clubtraining** coördineer je een helft van het veld met veel kinderen in groepjes: 4 blokken van 15 minuten met Techniek, 1 tegen 1, Afwerken en Partijvormen. Vul de datums, leeftijd, het aantal kinderen en groepjes in, en eventueel de trainers.',
+      '- **Oefeningen**: kies per blok een oefening of tik op **Genereer** (per blok of alles tegelijk). Je ziet alleen wat past bij de leeftijd en de groepsgrootte.',
+      '- **Veldplan**: bij **Stations** zie je het halve veld met genummerde stations, bij **Partij** de partijvelden. Twee groepjes per veld; bij een oneven aantal speelt het laatste groepje onderling met de trainer als joker.',
+      '- **Rotatie**: elk groepje doet elke vorm één keer en er staan nooit twee groepjes op één station. Bij 6 groepjes zijn er 6 stations. Bij 4 of 5 groepjes zijn het er 6 en bij 7 of 8 groepjes 9: dan blijven er per ronde een of twee leeg.',
+      '- **Materiaal**: alles om klaar te zetten, opgeteld over de stations, met wat er extra nodig is voor de partijvelden. Afvinken wordt bewaard.',
+      '- **Deel met trainers**: een link voor de groepsapp. Trainers hoeven niet in te loggen en openen direct hun station, met uitleg en animatie.',
+      '- **Kwartiertimer**: toont de ronde en de resterende tijd en geeft een signaal bij elke wissel. Trillen en het scherm aan houden lukken alleen als de browser dat kan.',
+      'In de lijst kun je een clubtraining dupliceren, of met het kalender-icoon naar volgende week kopiëren. Een lege clubtraining wordt niet bewaard.',
+    ],
+    laatZien: [{ tekst: 'Naar Clubtraining', pad: '/club' }],
+  },
+  {
     id: 'eigen',
     titel: 'Eigen oefeningen tekenen',
     tekst: [
@@ -232,6 +247,21 @@ export const HELP_EN: HelpOnderwerp[] = [
       "A session without a name is named after its date automatically. An empty session (nothing filled in) isn't saved.",
     ],
     laatZien: [{ tekst: 'Go to My sessions', pad: '/trainingen' }],
+  },
+  {
+    id: 'club',
+    titel: 'Club session',
+    tekst: [
+      'With **Club session** you coordinate one half of the pitch with lots of children in groups: 4 blocks of 15 minutes with Technique, 1v1, Finishing and Small-sided games. Enter the dates, age group, number of children and groups, and the coaches if you like.',
+      '- **Drills**: choose a drill for each block or tap **Generate** (per block or all at once). You only see what fits the age group and the group size.',
+      '- **Pitch plan**: **Stations** shows the half pitch with numbered stations, **Games** shows the game pitches. Two groups per pitch; with an odd number the last group plays among themselves with the coach as the joker.',
+      '- **Rotation**: every group does each activity once and two groups are never on the same station. With 6 groups there are 6 stations. With 4 or 5 groups there are 6 and with 7 or 8 groups there are 9: then one or two stay empty each round.',
+      '- **Equipment**: everything to set out, added up across the stations, plus what is needed extra for the game pitches. Ticked items are remembered.',
+      '- **Share with coaches**: a link for the group chat. Coaches don’t need to log in and can open their station straight away, with explanation and animation.',
+      '- **15-minute timer**: shows the round and the time left and gives a signal at each change. Vibrating and keeping the screen on only work if the browser can do it.',
+      'In the list you can duplicate a club session, or copy it to next week with the calendar icon. An empty club session isn’t saved.',
+    ],
+    laatZien: [{ tekst: 'Go to Club session', pad: '/club' }],
   },
   {
     id: 'eigen',

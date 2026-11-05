@@ -1,17 +1,23 @@
 /* ---------- Wedstrijd: tegel op het startscherm ---------- */
 
 .tegels {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-areas:
-    'training training'
+    'training eigen'
     'veld keepers'
-    'eigen wedstrijd';
+    'wedstrijd club';
 }
 
 .tegel-wedstrijd {
   grid-area: wedstrijd;
 }
 
-.tegel-wedstrijd .tegel-tekst {
+.tegel-club {
+  grid-area: club;
+}
+
+.tegel-wedstrijd .tegel-tekst,
+.tegel-club .tegel-tekst {
   flex: 1;
   min-width: 0;
 }
@@ -23,21 +29,28 @@
       'training training'
       'veld keepers'
       'eigen eigen'
-      'wedstrijd wedstrijd';
+      'wedstrijd club';
   }
 
-  .tegel-wedstrijd {
-    gap: 12px;
-    padding: 8px 12px 8px 8px;
+  /* Wedstrijd en Clubtraining naast elkaar: lage tegels zonder plaatje. */
+  .tegel-wedstrijd,
+  .tegel-club {
+    gap: 6px;
+    padding: 8px 8px 8px 12px;
   }
 
-  .tegel-wedstrijd .tegel-plaatje {
-    width: 74px;
-    flex: none;
+  .tegel-wedstrijd .tegel-plaatje,
+  .tegel-club .tegel-plaatje {
+    display: none;
   }
 
-  .tegel-wedstrijd .tegel-titel {
-    font-size: 1.35rem;
+  .tegel-wedstrijd .tegel-titel,
+  .tegel-club .tegel-titel {
+    font-size: 1.25rem;
+  }
+
+  .tegel-club .tegel-sub {
+    font-size: 0.78rem;
   }
 
   .tegel-wedstrijd .tegel-sub {
@@ -76,10 +89,10 @@
 /* Telefoon liggend: Training | Eigen en daaronder Spelers | Keepers | Wedstrijd. */
 @media (orientation: landscape) and (max-height: 500px) {
   .tegels {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(8, minmax(0, 1fr));
     grid-template-areas:
-      'training training training eigen eigen eigen'
-      'veld veld keepers keepers wedstrijd wedstrijd';
+      'training training training training eigen eigen eigen eigen'
+      'veld veld keepers keepers wedstrijd wedstrijd club club';
   }
 
   .tegel-wedstrijd {

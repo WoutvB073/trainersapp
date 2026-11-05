@@ -149,6 +149,24 @@ export function KeepersPlaatje({ className = 'tegel-plaatje' }: { className?: st
 }
 
 /** Tegel Wedstrijd: tactiekbord met twee teams, een looplijn en een pass. */
+/** Half veld met zes stations in drie kleuren. */
+export function ClubPlaatje({ className = 'tegel-plaatje' }: { className?: string }) {
+  const id = `gras-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  const vak = (x: number, y: number, kleur: string) => <rect x={x} y={y} width="26" height="16" rx="2.5" fill={kleur} stroke="#fff" strokeWidth="1.2" />;
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden="true">
+      <Gras id={id} />
+      <rect x="20" y="5" width="80" height="70" rx="1" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.85" />
+      {vak(29, 11, '#1c64d8')}
+      {vak(65, 11, '#1c64d8')}
+      {vak(29, 32, '#c92a2a')}
+      {vak(65, 32, '#c92a2a')}
+      {vak(29, 53, '#f2b705')}
+      {vak(65, 53, '#f2b705')}
+    </svg>
+  );
+}
+
 export function WedstrijdPlaatje({ className = 'tegel-plaatje' }: { className?: string }) {
   const id = `gras-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   const rood = (x: number, y: number) => <circle cx={x} cy={y} r="5" fill="var(--team-a)" stroke="#fff" strokeWidth="1.4" />;

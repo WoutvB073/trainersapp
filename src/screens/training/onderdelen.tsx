@@ -48,11 +48,15 @@ export function codeUitLink(tekst: string): string | null {
 
 /** Delen met de deelfunctie van de telefoon, anders de link kopiëren. Geeft een korte melding terug. */
 export async function deel(t: Training): Promise<string> {
-  const url = deelLink(t);
   const titel = trainingNaam(t);
+  return deelUrl(titel, `Training: ${titel}`, deelLink(t));
+}
+
+/** Een link delen met de deelfunctie van de telefoon, anders kopiëren. */
+export async function deelUrl(titel: string, text: string, url: string): Promise<string> {
   if (navigator.share) {
     try {
-      await navigator.share({ title: titel, text: `Training: ${titel}`, url });
+      await navigator.share({ title: titel, text, url });
       return '';
     } catch (e) {
       if ((e as Error).name === 'AbortError') return '';
