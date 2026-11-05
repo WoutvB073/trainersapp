@@ -101,11 +101,11 @@ for (const [naam, vp, modus] of [
   ])
     await page.evaluate((g, c) => [...document.querySelectorAll('.gen-groep')[g].querySelectorAll('button')].find((b) => b.textContent.trim() === c)?.click(), g, c);
   await klik(page, 'Genereren', '.knoppenrij button');
-  await klik(page, 'Naar de training');
+  await klik(page, 'Naar de teamtraining');
   await wachtOp(page, () => document.querySelectorAll('.onderdeel').length === 3, null, `${naam}: gegenereerde training`);
   await ga(page, '#/trainingen', `${naam}2`);
   let lijst = await trainingenOpslag(page);
-  controle(lijst.length === 1 && /^Training \d+ \w+$/.test(lijst[0].naam) && lijst[0].oefeningen.length === 3, `${naam}: gegenereerde training bewaard: ${JSON.stringify(lijst.map((t) => [t.naam, t.oefeningen.length]))}`);
+  controle(lijst.length === 1 && /^Teamtraining \d+ \w+$/.test(lijst[0].naam) && lijst[0].oefeningen.length === 3, `${naam}: gegenereerde training bewaard: ${JSON.stringify(lijst.map((t) => [t.naam, t.oefeningen.length]))}`);
   if (naam === 'telefoon') await foto(page, 'trainingen', 'Gegenereerde training zonder naam: bewaard, met automatische naam');
   // Gewone training met alleen oefeningen.
   await klik(page, 'Teamtraining maken');

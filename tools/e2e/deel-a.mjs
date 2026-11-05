@@ -182,7 +182,7 @@ for (const [naam, vp, modus] of [
   await ga(page, '#/', `${naam}1`);
   const titels = await page.evaluate(() => [...document.querySelectorAll('.tegel-titel')].map((x) => x.textContent));
   controle(titels.includes('Oefeningen spelers') && !titels.includes('Veld'), `${naam}: tegels ${titels.join(', ')}`);
-  controle((await page.evaluate(() => document.querySelectorAll('.tegel-soort svg.tegel-plaatje').length)) === 2, `${naam}: illustraties op de tegels`);
+  controle((await page.evaluate(() => document.querySelectorAll('.tegel-klein svg.tegel-plaatje').length)) === 3, `${naam}: illustraties op de tegels`);
   if (naam === 'telefoon') await foto(page, 'start', 'Startscherm: Spelers en Keepers met getekende illustraties');
   await ga(page, '#/veld', `${naam}2`);
   controle((await page.evaluate(() => document.querySelector('.kop-titel')?.textContent)) === 'Spelers', `${naam}: titel categorieën Spelers`);
@@ -268,7 +268,7 @@ for (const [naam, vp, modus] of [
   if (naam === 'telefoon') await foto(page, 'gen-geen', 'Zonder keeper: melding bij de keeperonderdelen', true);
   await klik(page, 'Eén keepers meer');
   await klik(page, 'Alles opnieuw genereren');
-  await klik(page, 'Naar de training');
+  await klik(page, 'Naar de teamtraining');
   await wachtOp(page, () => document.querySelectorAll('.onderdeel').length === 5, null, `${naam}: training met 5 oefeningen`);
   const eerste = await page.evaluate(() => document.querySelector('.onderdeel .onderdeel-naam')?.textContent);
   await page.evaluate(() => document.querySelector('.onderdeel [title="Andere oefening"]')?.click());
@@ -377,7 +377,7 @@ if (exportBestand) {
   await invoer.uploadFile(exportBestand);
   await wachtOp(page, () => /Erbij gekomen/.test(document.body.innerText), null, 'import: melding');
   const melding = await page.evaluate(() => document.querySelector('.melding-goed')?.textContent ?? '');
-  controle(/1 eigen oefening/.test(melding) && /1 training/.test(melding) && /1 favoriet/.test(melding), `import: ${melding}`);
+  controle(/1 eigen oefening/.test(melding) && /1 teamtraining/.test(melding) && /1 favoriet/.test(melding), `import: ${melding}`);
   const tel = await page.evaluate(() => [JSON.parse(localStorage.getItem('trainersapp.eigen')).oefeningen.length, JSON.parse(localStorage.getItem('trainersapp.trainingen')).trainingen.length, JSON.parse(localStorage.getItem('trainersapp.favorieten')).ids.length]);
   controle(tel.join(',') === '1,1,1', `import: op het toestel ${tel.join(',')}`);
   await page.evaluate(() => document.querySelector('.melding-goed')?.scrollIntoView({ block: 'center' }));

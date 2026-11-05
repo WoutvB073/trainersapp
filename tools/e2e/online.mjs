@@ -244,7 +244,7 @@ for (const [naam, vp] of [
   const oefeningenInTraining = await t2.page.evaluate(() => [...document.querySelectorAll('.onderdeel-naam')].map((x) => x.textContent));
   controle(oefeningenInTraining.length === 2 && oefeningenInTraining.includes('Testoefening passen'), `${naam}: gedeelde training toont ${oefeningenInTraining.join(', ')}`);
   if (naam === 'telefoon') await foto(t2.page, 'teamtraining', 'Gedeelde training bij Testtrainer 2', true);
-  await klik(t2.page, 'Kopiëren naar mijn trainingen');
+  await klik(t2.page, 'Kopiëren naar mijn teamtrainingen');
   await wachtOp(t2.page, () => location.hash.startsWith('#/training/') && document.querySelectorAll('.onderdeel').length === 2, null, `${naam}: gekopieerde training`);
   await t2.page.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.startsWith('Start teamtraining'))?.click());
   await slaap(1200);

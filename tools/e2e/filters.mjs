@@ -139,7 +139,7 @@ for (const [naam, vp] of [
   const zonder = await status(page);
   if (!(await page.evaluate(() => !!document.querySelector('.filter-paneel')))) await klik(page, 'Filters', '.filter-knop');
   const noot = await page.evaluate(() => document.querySelector('.filter-noot')?.textContent ?? '');
-  controle(noot.includes('van de training'), `${naam}: kiezen: geen uitleg over de aantallen van de training ("${noot}")`);
+  controle(noot.includes('van de teamtraining'), `${naam}: kiezen: geen uitleg over de aantallen van de training ("${noot}")`);
   await klik(page, 'Favorieten', '.filter-chips button');
   const kiesFav = await status(page);
   controle(kiesFav >= 1 && kiesFav <= 3 && kiesFav < zonder, `${naam}: kiezen met favorieten: ${kiesFav} van ${zonder}`);

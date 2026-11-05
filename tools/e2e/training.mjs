@@ -176,7 +176,7 @@ await slaap(400);
 const gedeeld = await ontvanger.evaluate(() => ({ titel: document.querySelector('.detail-titel')?.textContent, aantal: document.querySelectorAll('.onderdeel').length }));
 controle(gedeeld.titel === 'Dinsdag JO11-1' && gedeeld.aantal === 4, `Gedeelde link: ${JSON.stringify(gedeeld)}`);
 await foto(ontvanger, 'gedeeld', 'Ontvanger opent de link', true);
-await klik(ontvanger, 'Opslaan in mijn trainingen');
+await klik(ontvanger, 'Opslaan in mijn teamtrainingen');
 const opgeslagen = await ontvanger.evaluate(() => JSON.parse(localStorage.getItem('trainersapp.trainingen') ?? '{}').trainingen?.length ?? 0);
 controle(opgeslagen === 1 && ontvanger.url().includes('#/training/'), `Opslaan bij ontvanger: ${opgeslagen}, ${ontvanger.url()}`);
 const volgordeOntvanger = await volgorde(ontvanger);

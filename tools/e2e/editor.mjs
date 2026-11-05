@@ -117,6 +117,7 @@ async function teken(naam, viewport, modus) {
   const tegel = await page.evaluate(() => [...document.querySelectorAll('.tegel-titel')].map((t) => t.textContent));
   controle(tegel.includes('Oefening maken'), `${naam}: geen tegel Oefening maken (${tegel.join(', ')})`);
   if (naam === 'telefoon') await foto(page, 'start', 'Startscherm met de tegel Eigen oefeningen', true);
+  await klik(page, 'Oefening maken', 'a');
   await klik(page, 'Nieuwe oefening');
   const maat = await page.evaluate(() => [...document.querySelectorAll('.veld-maat output')].map((o) => o.textContent).join(' × '));
   controle(maat === (naam === 'telefoon' ? '20 m × 30 m' : '30 m × 20 m'), `${naam}: standaardmaat leeg veld ${maat}`);
@@ -323,7 +324,7 @@ await slaap(500);
 const ontvangen = await ontvanger.evaluate(() => [...document.querySelectorAll('.onderdeel-naam')].map((x) => x.textContent));
 controle(ontvangen.includes('Passen rond de ladder') && ontvangen.length === 2, `Ontvanger ziet: ${ontvangen.join(' | ')}`);
 await foto(ontvanger, 'gedeeld', 'Andere telefoon opent de link: eigen oefening zit erin', true);
-await klik(ontvanger, 'Opslaan in mijn trainingen');
+await klik(ontvanger, 'Opslaan in mijn teamtrainingen');
 await slaap(400);
 const bijOntvanger = await ontvanger.evaluate(() => JSON.parse(localStorage.getItem('trainersapp.eigen') ?? '{}').oefeningen?.map((o) => o.naam) ?? []);
 controle(bijOntvanger.length === 1 && bijOntvanger[0] === 'Passen rond de ladder', `Eigen oefening bij ontvanger: ${bijOntvanger.join(', ')}`);
