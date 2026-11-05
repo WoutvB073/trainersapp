@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Icoon } from '../../components/Icoon';
-import { eigenIds, MAX_AANTAL, naarCode, trainingNaam, type Training } from '../../training/training';
-import { eigenOefeningen } from '../../eigen/opslag';
-import { voorDelen } from '../../eigen/eigen';
-import type { EigenOefening } from '../../model/types';
+import { MAX_AANTAL, naarCode, trainingNaam, type Training } from '../../training/training';
+import { meeTeNemen } from '../../eigen/meenemen';
+import { ga } from '../../router';
 import { t as vt } from '../../i18n/t';
 
 /** Stapper met − en + (ook 0 mag). */
@@ -30,20 +29,48 @@ export function Stapper({ label, waarde, onStap, icoon }: { label: string; waard
 }
 
 /** Volledige deellink voor een training. Eigen oefeningen gaan in hun geheel mee in de link. */
-export function deelLink(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'oefeningen'>): string {
-  const eigen = eigenIds(t)
-    .map((id) => eigenOefeningen.haal(id))
-    .filter((o): o is EigenOefening => !!o)
-    .map(voorDelen);
-  return `${location.origin}${import.meta.env.BASE_URL}#/t/${naarCode(t, eigen)}`;
+export function deelLink(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'leeftijd' | 'oefeningen'>): string {
+  const { eigen, nieuwId } = meeTeNemen(t.oefeningen);
+  return `${location.origin}${import.meta.env.BASE_URL}#/t/${naarCode({ ...t, oefeningen: t.oefeningen.map(nieuwId) }, eigen)}`; // i18n-ok
 }
 
 /** Code uit een geplakte link (of de code zelf). */
-export function codeUitLink(tekst: string): string | null {
+export function codeUitLink(tekst: string, pad: 't' | 'o' = 't'): string | null {
   const t = tekst.trim();
-  const m = /#\/t\/([A-Za-z0-9_-]+)/.exec(t);
+  const m = new RegExp(`#/${pad}/([A-Za-z0-9_-]+)`).exec(t);
   if (m) return m[1]!;
   return /^[A-Za-z0-9_-]{16,}$/.test(t) ? t : null;
+}
+
+/** "… openen via een link": voor wie de link in de browser kreeg en hem in de geïnstalleerde app wil hebben. */
+export function LinkOpenen({ tekst, pad }: { tekst: string; pad: 't' | 'o' }) {
+  const [open, setOpen] = useState(false);
+  const [link, setLink] = useState('');
+  const code = codeUitLink(link, pad);
+  return (
+    <div className="link-openen">
+      {!open ? (
+        <button className="link-knop" onClick={() => setOpen(true)}>
+          <Icoon naam="link" maat={18} />
+          {tekst}
+        </button>
+      ) : (
+        <form
+          className="blok link-formulier"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (code) ga(`/${pad}/${code}`);
+          }}
+        >
+          <label htmlFor="deellink">{vt('Plak de link die je hebt gekregen')}</label>
+          <input id="deellink" type="url" inputMode="url" placeholder={`https://…/#/${pad}/…`} value={link} onChange={(e) => setLink(e.target.value)} />
+          <button className="knop knop-primair" disabled={!code}>
+            {vt('Openen')}
+          </button>
+        </form>
+      )}
+    </div>
+  );
 }
 
 /** Delen met de deelfunctie van de telefoon, anders de link kopiëren. Geeft een korte melding terug. */

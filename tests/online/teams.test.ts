@@ -3,6 +3,7 @@ import { inEmulator, leegmaken, toestel, wachtTot, opruimen } from './hulp';
 import { deelItem, hefTeamOp, joinTeam, maakTeam, verlaatTeam, vernieuwCode, verwijderItem, verwijderLid, verlaatAlleTeams, volgTeams, zetRol, type Ik } from '../../src/online/teamsOnline';
 import type { Team } from '../../src/engine/teams';
 import { leesTeamTraining } from '../../src/engine/teams';
+import { leesTeamClub, nieuweClub, uitGedeeldeClub, voorTeam } from '../../src/clubtraining/clubtraining';
 
 beforeEach(leegmaken);
 afterEach(opruimen);
@@ -63,6 +64,29 @@ describe('teams', () => {
     await wachtTot(() => trainer1.teams()[0]!.items.length === 2);
     await verwijderItem(trainer1.ik, id, 't2');
     await wachtTot(() => trainer2.teams()[0]!.items.length === 1);
+    trainer1.stop();
+    trainer2.stop();
+  });
+
+  it('circuittraining delen: lid opent en kopieert, de eigenaar werkt bij en trekt terug', { timeout: 30000 }, async () => {
+    const trainer1 = await persoon('test1@example.com', 'Testtrainer 1');
+    const trainer2 = await persoon('test2@example.com', 'Testtrainer 2');
+    const { id, code } = await maakTeam(trainer1.ik, 'JO9-1');
+    await joinTeam(trainer2.ik, code);
+    const c = { ...nieuweClub('mini-5-7', 1, 'c1'), naam: 'Maandag', blokken: { techniek: 'veld-mt-tik-tak' as const } };
+    await deelItem(trainer1.ik, id, { id: 'c1', soort: 'clubtraining', naam: 'Maandag', data: voorTeam(c) });
+    await wachtTot(() => trainer2.teams()[0]?.items.length === 1, 15000, 'gedeelde circuittraining');
+    const it1 = trainer2.teams()[0]!.items[0]!;
+    expect(it1).toMatchObject({ soort: 'clubtraining', naam: 'Maandag', eigenaarNaam: 'Testtrainer 1' });
+    expect(uitGedeeldeClub(leesTeamClub(it1.data)!, new Map(), 2, 'c2')).toMatchObject({ id: 'c2', naam: 'Maandag', blokken: { techniek: 'veld-mt-tik-tak' } });
+    // Een lid kan het item niet overschrijven of terugtrekken.
+    await expect(deelItem(trainer2.ik, id, { id: 'c1', soort: 'clubtraining', naam: 'Gekaapt', data: '{}' })).rejects.toThrow();
+    await expect(verwijderItem(trainer2.ik, id, 'c1')).rejects.toThrow();
+    // Nog eens delen werkt het bij.
+    await deelItem(trainer1.ik, id, { id: 'c1', soort: 'clubtraining', naam: 'Dinsdag', data: voorTeam({ ...c, naam: 'Dinsdag' }) });
+    await wachtTot(() => trainer2.teams()[0]?.items[0]?.naam === 'Dinsdag', 15000, 'bijgewerkte circuittraining');
+    await verwijderItem(trainer1.ik, id, 'c1');
+    await wachtTot(() => trainer2.teams()[0]?.items.length === 0, 15000, 'teruggetrokken circuittraining');
     trainer1.stop();
     trainer2.stop();
   });

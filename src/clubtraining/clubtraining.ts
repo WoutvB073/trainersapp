@@ -277,7 +277,7 @@ function tel(per: Map<string, Telling>, o: Oefening, keer: number, kinderen: num
  * Wat er klaar moet staan: het materiaal per station × aantal stations, opgeteld. Materiaal van de stations gebruik je opnieuw
  * voor de partijvelden; daarvoor telt alleen wat er meer nodig is.
  */
-export function materiaal(c: ClubTraining, vind: (id: string) => Oefening | undefined, taal: Taal = TAAL): Materiaal {
+export function materiaal(c: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokken'>, vind: (id: string) => Oefening | undefined, taal: Taal = TAAL): Materiaal {
   const per = stationsPerVorm(c.groepjes);
   const kinderen = groepGrootte(c);
   const deel1 = new Map<string, Telling>();
@@ -323,7 +323,9 @@ export interface GedeeldeClub {
 const kort = (id: string) => id.replace(/^veld-/, 'v:');
 const lang = (id: string) => id.replace(/^v:/, 'veld-');
 
-export function naarCode(c: Pick<ClubTraining, 'naam' | 'datums' | 'leeftijd' | 'kinderen' | 'groepjes' | 'trainers' | 'blokken' | 'stationTrainers' | 'veldTrainers'>, eigen: Oefening[] = []): string {
+type Inhoud = Pick<ClubTraining, 'naam' | 'datums' | 'leeftijd' | 'kinderen' | 'groepjes' | 'trainers' | 'blokken' | 'stationTrainers' | 'veldTrainers'>;
+
+export function naarCode(c: Inhoud, eigen: Oefening[] = []): string {
   const b = BLOKKEN.map((x) => (c.blokken[x] ? kort(c.blokken[x]!) : ''));
   const ids = Object.values(c.blokken);
   const e = eigen.filter((o) => ids.includes(o.id));
@@ -336,31 +338,70 @@ const tekstenRecord = (x: unknown): Record<number, string> => {
   return uit;
 };
 
+const getal = (v: unknown, min: number, max: number, standaard: number) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(min, Math.min(max, Math.round(v))) : standaard);
+
+/** Controleert wat er binnenkomt (link of team): alles wat niet klopt valt terug op iets veiligs. */
+function netteClub(x: { [k in keyof GedeeldeClub]?: unknown }): GedeeldeClub {
+  const bron = (x.blokken && typeof x.blokken === 'object' ? x.blokken : {}) as Record<string, unknown>;
+  const blokken: Partial<Record<Blok, string>> = {};
+  for (const blok of BLOKKEN) {
+    const id = bron[blok];
+    if (typeof id === 'string' && id) blokken[blok] = id;
+  }
+  return {
+    naam: typeof x.naam === 'string' ? x.naam.slice(0, 80) : '',
+    datums: Array.isArray(x.datums) ? x.datums.filter((d): d is string => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)).slice(0, 7) : [],
+    leeftijd: isLeeftijd(x.leeftijd) ? x.leeftijd : 'mini-5-7',
+    kinderen: getal(x.kinderen, 1, MAX_KINDEREN, 30),
+    groepjes: getal(x.groepjes, MIN_GROEPJES, MAX_GROEPJES, 6),
+    trainers: Array.isArray(x.trainers) ? x.trainers.filter((n): n is string => typeof n === 'string').map((n) => n.slice(0, 40)).slice(0, 12) : [],
+    blokken,
+    stationTrainers: tekstenRecord(x.stationTrainers),
+    veldTrainers: tekstenRecord(x.veldTrainers),
+    ...(Array.isArray(x.eigen) && x.eigen.some(geldigeEigen) ? { eigen: x.eigen.filter(geldigeEigen).map((o) => ({ ...o, eigen: true })) } : {}),
+  };
+}
+
 export function uitCode(code: string): GedeeldeClub | null {
   try {
     const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; l?: unknown; k?: unknown; g?: unknown; t?: unknown; b?: unknown; s?: unknown; f?: unknown; e?: unknown };
     if (x.v !== 1 || !Array.isArray(x.b)) return null;
-    const getal = (v: unknown, min: number, max: number, standaard: number) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(min, Math.min(max, Math.round(v))) : standaard);
     const blokken: Partial<Record<Blok, string>> = {};
     BLOKKEN.forEach((blok, i) => {
       const id = (x.b as unknown[])[i];
       if (typeof id === 'string' && id) blokken[blok] = lang(id);
     });
-    return {
-      naam: typeof x.n === 'string' ? x.n.slice(0, 80) : '',
-      datums: Array.isArray(x.d) ? x.d.filter((d): d is string => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)).slice(0, 7) : [],
-      leeftijd: isLeeftijd(x.l) ? x.l : 'mini-5-7',
-      kinderen: getal(x.k, 1, MAX_KINDEREN, 30),
-      groepjes: getal(x.g, MIN_GROEPJES, MAX_GROEPJES, 6),
-      trainers: Array.isArray(x.t) ? x.t.filter((n): n is string => typeof n === 'string').map((n) => n.slice(0, 40)).slice(0, 12) : [],
-      blokken,
-      stationTrainers: tekstenRecord(x.s),
-      veldTrainers: tekstenRecord(x.f),
-      ...(Array.isArray(x.e) && x.e.some(geldigeEigen) ? { eigen: x.e.filter(geldigeEigen).map((o) => ({ ...o, eigen: true })) } : {}),
-    };
+    return netteClub({ naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, blokken, stationTrainers: x.s, veldTrainers: x.f, eigen: x.e });
   } catch {
     return null;
   }
+}
+
+/** Inhoud van een gedeeld team-item (0.31.2): de circuittraining plus de oefeningen die de teamleden niet hebben. */
+export function voorTeam(c: Inhoud, eigen: Oefening[] = []): string {
+  const { naam, datums, leeftijd, kinderen, groepjes, trainers, blokken, stationTrainers, veldTrainers } = c;
+  const ids = Object.values(blokken);
+  return JSON.stringify({ club: { naam, datums, leeftijd, kinderen, groepjes, trainers, blokken, stationTrainers, veldTrainers }, eigen: eigen.filter((o) => ids.includes(o.id)) });
+}
+
+/** Gedeeld team-item lezen (null als het kapot is). */
+export function leesTeamClub(data: string): GedeeldeClub | null {
+  try {
+    const x = JSON.parse(data) as { club?: { blokken?: unknown }; eigen?: unknown };
+    if (!x?.club || typeof x.club !== 'object' || !x.club.blokken) return null;
+    return netteClub({ ...x.club, eigen: x.eigen });
+  } catch {
+    return null;
+  }
+}
+
+/** Gedeelde circuittraining als nieuwe eigen circuittraining: `ids` zijn de nieuwe id's van de meegekomen oefeningen. */
+export function uitGedeeldeClub(g: GedeeldeClub, ids: ReadonlyMap<string, string> = new Map(), nu = Date.now(), id = maakId()): ClubTraining {
+  const { eigen: _e, ...rest } = g;
+  void _e;
+  const blokken: Partial<Record<Blok, string>> = {};
+  for (const [blok, oefening] of Object.entries(g.blokken) as [Blok, string][]) blokken[blok] = ids.get(oefening) ?? oefening;
+  return { ...rest, blokken, id, afgevinkt: [], gemaakt: nu, gewijzigd: nu };
 }
 
 // ---------- kwartiertimer ----------

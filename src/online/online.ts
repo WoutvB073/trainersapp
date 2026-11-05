@@ -17,14 +17,15 @@ import { trainingBackend, trainingen } from '../training/opslag';
 import { favorieten, favorietenBackend } from '../engine/favorieten';
 import { bordBackend, borden, opstellingBackend, opstellingen } from '../wedstrijd/opslag';
 import { clubBackend, clubtrainingen } from '../clubtraining/opslag';
+import { clubNaam, voorTeam } from '../clubtraining/clubtraining';
 import { bordNaam, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
 import { abonneerFilters, huidigeFilters, zetFilters } from '../engine/filters';
 import { isLeeftijd } from '../data/leeftijden';
-import { teams, isTeamId, teamOefeningen, type Rol } from '../engine/teams';
+import { teams, type Rol } from '../engine/teams';
 import { voorDelen } from '../eigen/eigen';
-import { vindOefening } from '../data/oefeningen';
+import { meeTeNemen } from '../eigen/meenemen';
 import type { EigenOefening } from '../model/types';
 import { verbind, type Verbinding } from './firebase';
 import { Synchronisatie, type Instellingen, type SyncDoelen } from './sync';
@@ -386,29 +387,21 @@ export function deelOefening(team: string, o: EigenOefening): Promise<void> {
 }
 
 /**
- * Training delen: met de eigen oefeningen erin (en oefeningen uit een ander team, als kopie), zoals bij een deellink.
+ * Teamtraining delen: met de eigen oefeningen erin (en oefeningen uit een ander team, als kopie), zoals bij een deellink.
  */
 export function deelTraining(team: string, trainingId: string): Promise<void> {
   const t = trainingen.haal(trainingId);
   if (!t) throw new T.TeamFout(vt('Teamtraining niet gevonden'));
-  const eigen: unknown[] = [];
-  const oefeningen = t.oefeningen.map((id) => {
-    const eo = eigenOefeningen.haal(id);
-    if (eo) {
-      eigen.push(voorDelen(eo));
-      return id;
-    }
-    if (isTeamId(id) && !id.startsWith(`team-${team}-`)) {
-      const o = teamOefeningen().find((x) => x.id === id) ?? vindOefening(id);
-      if (o?.team) {
-        const { team: _t, ...rest } = o;
-        void _t;
-        eigen.push({ ...rest, id: o.team.itemId, eigen: true });
-        return o.team.itemId;
-      }
-    }
-    return id;
-  });
-  const data = { training: { naam: t.naam, datum: t.datum, spelers: t.spelers, keepers: t.keepers, oefeningen }, eigen };
+  const { eigen, nieuwId } = meeTeNemen(t.oefeningen, team);
+  const data = { training: { naam: t.naam, datum: t.datum, spelers: t.spelers, keepers: t.keepers, ...(t.leeftijd ? { leeftijd: t.leeftijd } : {}), oefeningen: t.oefeningen.map(nieuwId) }, eigen };
   return T.deelItem(ik(), team, { id: t.id, soort: 'training', naam: t.naam || vt('Teamtraining'), data: JSON.stringify(data) });
+}
+
+/** Circuittraining delen (0.31.2): ook hier gaan oefeningen mee die de teamleden niet hebben. Nog eens delen = bijwerken. */
+export function deelClub(team: string, id: string): Promise<void> {
+  const c = clubtrainingen.haal(id);
+  if (!c) throw new T.TeamFout(vt('Circuittraining niet gevonden'));
+  const { eigen, nieuwId } = meeTeNemen(Object.values(c.blokken), team);
+  const blokken = Object.fromEntries(Object.entries(c.blokken).map(([blok, oefening]) => [blok, nieuwId(oefening)]));
+  return T.deelItem(ik(), team, { id, soort: 'clubtraining', naam: clubNaam(c), data: voorTeam({ ...c, blokken }, eigen) });
 }

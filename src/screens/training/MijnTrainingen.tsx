@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { meervoud } from '../../components/Labels';
 import { ga } from '../../router';
 import { trainingen, useTrainingen } from '../../training/opslag';
 import { datumTekst, nieuweTraining, trainingNaam, type Training } from '../../training/training';
-import { codeUitLink, Toast, useToast } from './onderdelen';
+import { LinkOpenen, Toast, useToast } from './onderdelen';
 import { huidigeFilters } from '../../engine/filters';
 import { t as vt } from '../../i18n/t';
 
@@ -76,9 +75,6 @@ function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }
 export function MijnTrainingen() {
   const lijst = useTrainingen();
   const [melding, toon] = useToast();
-  const [linkOpen, setLinkOpen] = useState(false);
-  const [link, setLink] = useState('');
-  const code = codeUitLink(link);
 
   return (
     <div className="pagina">
@@ -111,28 +107,7 @@ export function MijnTrainingen() {
           </>
         )}
 
-        <div className="link-openen">
-          {!linkOpen ? (
-            <button className="link-knop" onClick={() => setLinkOpen(true)}>
-              <Icoon naam="link" maat={18} />
-              {vt('Gedeelde teamtraining openen via een link')}
-            </button>
-          ) : (
-            <form
-              className="blok link-formulier"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (code) ga(`/t/${code}`);
-              }}
-            >
-              <label htmlFor="deellink">{vt('Plak de link die je hebt gekregen')}</label>
-              <input id="deellink" type="url" inputMode="url" placeholder="https://…/#/t/…" value={link} onChange={(e) => setLink(e.target.value)} autoFocus />
-              <button className="knop knop-primair" disabled={!code}>
-                {vt('Openen')}
-              </button>
-            </form>
-          )}
-        </div>
+        <LinkOpenen tekst={vt('Gedeelde teamtraining openen via een link')} pad="t" />
         <p className="voetnoot">{vt('Teamtrainingen staan op dit apparaat. Met delen stuur je een link naar een andere trainer.')}</p>
       </main>
       <Toast tekst={melding} />

@@ -1,5 +1,6 @@
 import type { EigenOefening, Oefening, Soort, Tekening } from '../model/types';
 import { maakId } from '../model/id';
+import { naarBase64Url, uitBase64Url } from '../training/training';
 import { autoUitsnede, bevries } from '../editor/editor';
 import { t } from '../i18n/t';
 
@@ -119,6 +120,18 @@ export function geldigeEigen(x: unknown): x is Oefening {
     Array.isArray(o.tekening.objecten) &&
     !!o.tekening.veld
   );
+}
+
+/** Code voor de deellink van één eigen oefening (`#/o/…`, 0.31.2). Geef `voorDelen(o)` mee. */
+export const oefeningNaarCode = (o: Oefening) => naarBase64Url(JSON.stringify({ v: 1, o }));
+
+export function oefeningUitCode(code: string): Oefening | null {
+  try {
+    const x = JSON.parse(uitBase64Url(code)) as { v?: number; o?: unknown };
+    return x.v === 1 && geldigeEigen(x.o) ? { ...x.o, eigen: true } : null;
+  } catch {
+    return null;
+  }
 }
 
 /** Zelfde inhoud (los van tijden)? */

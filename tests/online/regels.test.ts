@@ -109,6 +109,32 @@ describe('teams', () => {
     await assertFails(setDoc(doc(db('c'), 'teams', 't1', 'items', 'i4'), item('c')));
   });
 
+  it('gedeelde circuittraining: zelfde rechten als de andere items, en verder niets ruimer', async () => {
+    await maakTeam(db('a'), 'a');
+    await join(db('b'), 'b', 'ABC234');
+    const item = (eigenaar: string, soort = 'clubtraining') => ({ soort, data: '{"club":{"blokken":{}},"eigen":[]}', naam: 'Maandag', eigenaar, eigenaarNaam: 'Testtrainer', gewijzigd: 1 });
+    // Delen door een lid: ja. Namens een ander of als niet-lid: nee.
+    await assertSucceeds(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c1'), item('b')));
+    await assertFails(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c2'), item('a')));
+    await assertFails(setDoc(doc(db('c'), 'teams', 't1', 'items', 'c3'), item('c')));
+    // Lezen: leden wel, anderen niet.
+    await assertSucceeds(getDoc(doc(db('a'), 'teams', 't1', 'items', 'c1')));
+    await assertFails(getDoc(doc(db('c'), 'teams', 't1', 'items', 'c1')));
+    // Aanpassen: alleen de eigenaar, ook geen beheerder.
+    await assertSucceeds(updateDoc(doc(db('b'), 'teams', 't1', 'items', 'c1'), { naam: 'Dinsdag', gewijzigd: 2 }));
+    await assertFails(updateDoc(doc(db('a'), 'teams', 't1', 'items', 'c1'), { naam: 'Weg', gewijzigd: 3 }));
+    // Terugtrekken door de eigenaar.
+    await assertSucceeds(deleteDoc(doc(db('b'), 'teams', 't1', 'items', 'c1')));
+    // Lid verwijdert niet wat een ander deelde; de beheerder wel.
+    await assertSucceeds(setDoc(doc(db('a'), 'teams', 't1', 'items', 'c4'), item('a')));
+    await assertFails(deleteDoc(doc(db('b'), 'teams', 't1', 'items', 'c4')));
+    await assertSucceeds(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c5'), item('b')));
+    await assertSucceeds(deleteDoc(doc(db('a'), 'teams', 't1', 'items', 'c5')));
+    // Andere soorten en extra velden blijven verboden.
+    await assertFails(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c6'), item('b', 'circuittraining')));
+    await assertFails(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c7'), { ...item('b'), extra: 1 }));
+  });
+
   it('rollen: beheerders verwijderen leden, maken beheerders, vernieuwen de code; leden niet', async () => {
     await maakTeam(db('a'), 'a');
     await join(db('b'), 'b', 'ABC234');

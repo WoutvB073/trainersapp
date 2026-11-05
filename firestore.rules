@@ -11,7 +11,7 @@ rules_version = '2';
 //   users/{uid}/clubtrainingen/{id}  clubtrainingen { data, gewijzigd }
 //   teams/{teamId}                  { naam, code, maker, gemaakt }
 //   teams/{teamId}/leden/{uid}      { rol: 'beheerder' | 'lid', naam, sinds, code? }
-//   teams/{teamId}/items/{itemId}   gedeelde oefening/training/opstelling/bord { soort, data, naam, eigenaar, eigenaarNaam, gewijzigd }
+//   teams/{teamId}/items/{itemId}   gedeelde oefening/training/opstelling/bord/clubtraining { soort, data, naam, eigenaar, eigenaarNaam, gewijzigd }
 //   teamCodes/{code}                { team } — om met een code te kunnen joinen
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -112,7 +112,7 @@ service cloud.firestore {
         allow create: if isLid(team)
           && request.resource.data.keys().hasOnly(['soort', 'data', 'naam', 'eigenaar', 'eigenaarNaam', 'gewijzigd'])
           && request.resource.data.eigenaar == request.auth.uid
-          && request.resource.data.soort in ['oefening', 'training', 'opstelling', 'bord']
+          && request.resource.data.soort in ['oefening', 'training', 'opstelling', 'bord', 'clubtraining']
           && tekst(request.resource.data.data, 500000)
           && tekst(request.resource.data.naam, 120);
         // Aanpassen: alleen je eigen gedeelde items.

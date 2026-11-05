@@ -37,6 +37,7 @@ import {
   type Opstelling,
   type Spelvorm,
   type UitCode,
+  leesTeamWedstrijd,
 } from '../../wedstrijd/wedstrijd';
 import { SITUATIES } from '../../wedstrijd/hervattingen';
 import { vindVoorbeeld } from '../../wedstrijd/bibliotheken';
@@ -697,23 +698,14 @@ function Voorbeeld({ x, titel, ouder, knop }: { x: UitCode; titel: string; ouder
 export function GedeeldWedstrijd({ code }: { code: string }) {
   const x = useMemo(() => uitWedstrijdCode(code), [code]);
   if (!x) return <NietGevonden />;
-  return <Voorbeeld x={x} titel={x.soort === 'opstelling' ? vt('Gedeelde opstelling') : vt('Gedeeld tactiekbord')} ouder="/wedstrijd" knop={vt('Opslaan bij mijn wedstrijd')} />;
+  return <Voorbeeld x={x} titel={x.soort === 'opstelling' ? vt('Gedeelde opstelling') : x.bord.soort === 'hervatting' ? vt('Gedeelde spelhervatting') : vt('Gedeeld tactiekbord')} ouder="/wedstrijd" knop={vt('Opslaan bij mijn wedstrijd')} />;
 }
 
 export function TeamWedstrijdScherm({ id, item }: { id: string; item: string }) {
   const team = useTeam(id);
   const it = team?.items.find((i) => i.id === item);
-  const x = useMemo<UitCode | null>(() => {
-    if (!it) return null;
-    try {
-      const d = JSON.parse(it.data) as Opstelling & Bord;
-      if (it.soort === 'opstelling') return { soort: 'opstelling', opstelling: { naam: d.naam, datum: d.datum, spelvorm: d.spelvorm, formatie: d.formatie, plekken: d.plekken, wissels: d.wissels } };
-      if (it.soort === 'bord') return { soort: 'bord', bord: { naam: d.naam, soort: d.soort, tekening: d.tekening } };
-    } catch {
-      /* kapot */
-    }
-    return null;
-  }, [it]);
+  const x = useMemo(() => (it?.soort === 'opstelling' || it?.soort === 'bord' ? leesTeamWedstrijd(it.soort, it.data) : null), [it]);
   if (!team || !x) return <NietGevonden />;
-  return <Voorbeeld x={x} titel={`${team.naam}: ${x.soort === 'opstelling' ? 'opstelling' : 'tactiekbord'}`} ouder={`/team/${id}`} knop={vt('Kopiëren naar mijn wedstrijd')} />;
+  const soort = x.soort === 'opstelling' ? vt('Opstelling') : x.bord.soort === 'hervatting' ? vt('Spelhervatting') : vt('Tactiekbord');
+  return <Voorbeeld x={x} titel={`${team.naam}: ${soort}`} ouder={`/team/${id}`} knop={vt('Kopiëren naar mijn wedstrijd')} />;
 }

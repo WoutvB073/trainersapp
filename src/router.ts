@@ -55,6 +55,8 @@ export type Route =
   | { naam: 'teams' }
   | { naam: 'team'; id: string }
   | { naam: 'teamtraining'; id: string; item: string }
+  | { naam: 'teamclub'; id: string; item: string; station?: number; partij?: boolean }
+  | { naam: 'oefening-gedeeld'; code: string }
   | { naam: 'wedstrijd' }
   | { naam: 'opstelling'; id: string }
   | { naam: 'bord'; id: string }
@@ -88,7 +90,7 @@ export function openClub(route: Route): string | undefined {
 
 export function leesHash(hash: string): Route {
   const delen = (hash.replace(/^#/, '') || '/').split('/').filter(Boolean).map(decodeURIComponent);
-  const [a, b, c, d] = delen;
+  const [a, b, c, d, e, f] = delen;
   if (!a) return { naam: 'start' };
   if ((a === 'veld' || a === 'keepers') && !b) return { naam: 'categorieen', soort: a };
   if ((a === 'veld' || a === 'keepers') && b) return { naam: 'lijst', soort: a, categorie: b };
@@ -99,6 +101,7 @@ export function leesHash(hash: string): Route {
   if (a === 'training' && b && c === 'genereren') return { naam: 'genereren', id: b };
   if (a === 'training' && b && c === 'modus') return { naam: 'modus', id: b, nr: Math.max(1, Number(d) || 1) };
   if (a === 't' && b) return { naam: 'gedeeld', code: b };
+  if (a === 'o' && b) return { naam: 'oefening-gedeeld', code: b };
   if (a === 'eigen' && !b) return { naam: 'eigen' };
   if (a === 'instellingen' && !b) return { naam: 'instellingen' };
   if (a === 'help') return b ? { naam: 'help', onderwerp: b } : { naam: 'help' };
@@ -106,6 +109,9 @@ export function leesHash(hash: string): Route {
   if (a === 'teams' && !b) return { naam: 'teams' };
   if (a === 'team' && b && !c) return { naam: 'team', id: b };
   if (a === 'team' && b && c === 'training' && d) return { naam: 'teamtraining', id: b, item: d };
+  if (a === 'team' && b && c === 'club' && d && e === 'station') return { naam: 'teamclub', id: b, item: d, station: Math.max(1, Number(f) || 1) };
+  if (a === 'team' && b && c === 'club' && d && e === 'partij') return { naam: 'teamclub', id: b, item: d, partij: true };
+  if (a === 'team' && b && c === 'club' && d) return { naam: 'teamclub', id: b, item: d };
   if (a === 'wedstrijd' && !b) return { naam: 'wedstrijd' };
   if (a === 'opstelling' && b) return { naam: 'opstelling', id: b };
   if (a === 'bord' && b && !c) return { naam: 'bord', id: b };

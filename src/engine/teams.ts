@@ -19,9 +19,9 @@ export interface TeamLid {
 
 export interface TeamItem {
   id: string;
-  soort: 'oefening' | 'training' | 'opstelling' | 'bord';
+  soort: 'oefening' | 'training' | 'opstelling' | 'bord' | 'clubtraining';
   naam: string;
-  /** JSON: een oefening (zoals voorDelen), of { training, eigen } voor een training. */
+  /** JSON: een oefening (zoals voorDelen), { training, eigen } voor een training, { club, eigen } voor een circuittraining. */
   data: string;
   eigenaar: string;
   eigenaarNaam: string;
