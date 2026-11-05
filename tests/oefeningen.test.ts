@@ -6,7 +6,7 @@ import type { ObjectSoort } from '../src/model/types';
 
 const MAP_SOORT: Record<string, string> = { veld: 'veld', keepers: 'keeper' };
 const SOORTEN: ObjectSoort[] = [
-  'hesje',
+  'hesje', 'doelnet',
   'speler', 'keeper', 'trainer', 'bal', 'goal', 'klein-goal', 'pion', 'hoedje', 'paaltje', 'ladder',
   'horde', 'ring', 'zone', 'muurtje', 'rebounder', 'keepersmat', 'stok', 'tekst', 'net', 'bank', 'kooi', 'pop',
 ];

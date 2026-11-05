@@ -490,5 +490,357 @@
         "Weaker foot only"
       ]
     }
+  },
+  "veld-mt-pionnen-omgooien": {
+    "naam": "Knock over the cones",
+    "uitleg": "Look at those tall cones. Stand behind the line and knock them over! Boom, there goes one. The coach quickly stands them up again. How many can you knock over?",
+    "organisatie": "5 tall cones in a row, shooting line 5 m away. All the children shoot at the same time, each with a ball, and fetch their own ball. The coach stands the cones back up. For 5 children; nobody waits. Play for 15 minutes.",
+    "benodigdheden": [
+      "5 tall cones",
+      "2 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look at the ball when you shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer",
+        "Large cones"
+      ],
+      "moeilijker": [
+        "Further away",
+        "Use your other foot"
+      ]
+    }
+  },
+  "veld-mt-dribbel-en-schiet": {
+    "naam": "Dribble and shoot",
+    "uitleg": "Dribble through the gate, look at the mini-goal and shoot! Did it go in? Fetch your ball and join the back of the line.",
+    "organisatie": "Gate of 2 disc cones (2 m wide) 5 m from the start, mini-goal 5 m further on. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 mini-goal",
+      "2 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Keep the ball close to your foot",
+      "Look up before you shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer to the mini-goal",
+        "A wider gate"
+      ],
+      "moeilijker": [
+        "A narrower gate",
+        "Shoot with your other foot"
+      ]
+    }
+  },
+  "veld-mt-ballen-van-de-pion": {
+    "naam": "Balls off the cones",
+    "uitleg": "There are balls on cones in the goal. Aim carefully and shoot them off! Did the ball fall off the cone? Then you hit it.",
+    "organisatie": "E-goal with 3 large cones on the goal line, a ball on each cone. Shooting line 6 m away. The coach puts the balls back. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 E-goal",
+      "3 large cones",
+      "3 footballs for the cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Aim at the cone",
+      "Not too hard: aim well"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer",
+        "More cones"
+      ],
+      "moeilijker": [
+        "Further away",
+        "Dribble first, then shoot"
+      ]
+    }
+  },
+  "veld-mt-hoekenjacht": {
+    "naam": "Corner hunt",
+    "uitleg": "There’s a net in the goal with holes in the corners. Do you shoot through a hole? You get 3 points! Do you hit the net? You get 1 point. Who has the most points?",
+    "organisatie": "E-goal with a net with open corners. Shooting line 6 m away. Through a corner = 3 points, anywhere else in the goal = 1 point. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 E-goal",
+      "1 net with open corners",
+      "2 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look at the corner and aim"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer",
+        "Place the ball and shoot calmly"
+      ],
+      "moeilijker": [
+        "Further away",
+        "Only the low corners count"
+      ]
+    }
+  },
+  "veld-mt-slalom-en-scoren": {
+    "naam": "Slalom and score",
+    "uitleg": "Dribble past the cones like a snake. At the last cone, look up and shoot at the mini-goal. Goal!",
+    "organisatie": "3 cones 2 m apart, mini-goal 4 m after the last cone. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 mini-goal",
+      "3 large cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Small touches around the cones"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two cones",
+        "Closer to the mini-goal"
+      ],
+      "moeilijker": [
+        "More cones",
+        "Shoot with your other foot"
+      ]
+    }
+  },
+  "veld-mt-kleurendoel": {
+    "naam": "Colour goal",
+    "uitleg": "There’s a coloured disc cone by each mini-goal. Dribble! When the coach calls \"red\", shoot at the mini-goal with the red disc cone. Listen carefully!",
+    "organisatie": "Two mini-goals 5 m apart, each with a disc cone in its own colour. The children dribble 7 m in front of them; the coach calls a colour. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "2 disc cones in 2 colours",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look up and listen",
+      "Set the ball and then shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach points as well",
+        "Closer"
+      ],
+      "moeilijker": [
+        "Three mini-goals",
+        "The coach calls later"
+      ]
+    }
+  },
+  "veld-mt-poortjesschieten": {
+    "naam": "Gate shooting",
+    "uitleg": "There are three gates. The wide gate is easy: 1 point. The narrow gate is hard: 3 points! Which gate will you choose?",
+    "organisatie": "3 gates of disc cones in a line (2 m, 1.5 m and 1 m wide), shooting line 5 m away. Wide = 1 point, narrow = 3 points. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "6 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Softly, and aim well"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider gates",
+        "Closer"
+      ],
+      "moeilijker": [
+        "Narrower gates",
+        "Use your other foot"
+      ]
+    }
+  },
+  "veld-mt-aannemen-en-schieten": {
+    "naam": "Control and shoot",
+    "uitleg": "The coach plays the ball to you. Stop the ball with your foot. Look at the mini-goal and shoot! Time to score.",
+    "organisatie": "Coach 5 m to the side with the balls, child 6 m from the mini-goal. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 mini-goal",
+      "2 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Stop it first, then shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach rolls the ball by hand",
+        "Closer to the mini-goal"
+      ],
+      "moeilijker": [
+        "Shoot first time",
+        "The ball comes from the other side"
+      ]
+    }
+  },
+  "veld-mt-kaatsen-en-schieten": {
+    "naam": "Rebound and shoot",
+    "uitleg": "Play the ball against the rebound board. It comes back! Control it and shoot at the mini-goal.",
+    "organisatie": "Rebound board at an angle 4 m away, mini-goal 7 m away. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 rebound board",
+      "1 mini-goal",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Stop the ball before you shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer to the rebound board",
+        "The coach rolls the ball in"
+      ],
+      "moeilijker": [
+        "Shoot first time",
+        "Use your other foot"
+      ]
+    }
+  },
+  "veld-mt-hoepelpass": {
+    "naam": "Hoop pass",
+    "uitleg": "Play the ball gently so that it stays in the hoop. Walk over to it. Now you get one shot at the mini-goal. A hit?",
+    "organisatie": "Hoop 4 m from the start, mini-goal 5 m further on. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 hoop",
+      "1 mini-goal",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Play it softly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Hoop closer",
+        "A bigger hoop or two hoops"
+      ],
+      "moeilijker": [
+        "Hoop further away",
+        "Use your other foot"
+      ]
+    }
+  },
+  "veld-mt-hordes-en-schieten": {
+    "naam": "Hurdles and shoot",
+    "uitleg": "Jump over the three hurdles like a frog. Then the coach gives you a ball. Shoot it into the mini-goal!",
+    "organisatie": "3 low hurdles 1.5 m apart, coach to the side with the balls, mini-goal 5 m after the last hurdle. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "3 hurdles",
+      "1 mini-goal",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Jump on two feet",
+      "Look at the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two hurdles",
+        "The coach sets the ball ready"
+      ],
+      "moeilijker": [
+        "On one leg",
+        "Shoot first time"
+      ]
+    }
+  },
+  "veld-mt-om-de-pop": {
+    "naam": "Around the mannequin",
+    "uitleg": "Dribble around the mannequin. Look up: there’s the goal. Shoot!",
+    "organisatie": "Mannequin 5 m from the start, mini-goal 5 m behind it. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 mannequin",
+      "1 mini-goal",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Calmly around the mannequin, then shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Mannequin closer",
+        "Stop the ball before the shot"
+      ],
+      "moeilijker": [
+        "Go left and right around it",
+        "Use your other foot"
+      ]
+    }
+  },
+  "veld-mt-ladder-en-scoren": {
+    "naam": "Ladder and score",
+    "uitleg": "Go through the speed ladder with quick feet. Your ball is by the cone. Take it and shoot at the mini-goal!",
+    "organisatie": "Speed ladder, 1 m further on a cone with the balls, mini-goal 5 m away. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 speed ladder",
+      "1 large cone",
+      "1 mini-goal",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Small steps, then shoot calmly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A short ladder",
+        "Closer to the mini-goal"
+      ],
+      "moeilijker": [
+        "Sideways through the ladder",
+        "Use your other foot"
+      ]
+    }
+  },
+  "veld-mt-tennisballen-van-de-pion": {
+    "naam": "Tennis balls off the cones",
+    "uitleg": "There are tall cones in the goal with a tennis ball on top. That’s hard! Aim carefully and shoot the tennis ball off.",
+    "organisatie": "E-goal with 3 tall cones on the goal line, a tennis ball on each cone. Shooting line 5 m away. The coach puts the balls back. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 E-goal",
+      "3 tall cones",
+      "3 tennis balls",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look at the cone and shoot straight ahead"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer",
+        "A football instead of a tennis ball"
+      ],
+      "moeilijker": [
+        "Further away",
+        "Dribble first"
+      ]
+    }
+  },
+  "veld-mt-brug-en-goal": {
+    "naam": "Bridge and goal",
+    "uitleg": "Play the ball gently under the bridge. Step over the bridge yourself. Take your ball and shoot into the mini-goal!",
+    "organisatie": "High hurdle 4 m from the start, mini-goal 5 m after the hurdle. For 5 children: set the drill up twice side by side, so there are at most 2–3 in a line. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 hurdle",
+      "1 mini-goal",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Softly under the bridge, hard at the goal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Roll the ball under the bridge by hand",
+        "Closer to the mini-goal"
+      ],
+      "moeilijker": [
+        "Two bridges",
+        "Use your other foot"
+      ]
+    }
   }
 }

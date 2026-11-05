@@ -4056,5 +4056,3045 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-mt-pionnen-omgooien",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Pionnen omgooien",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Daar staan hoge pionnen. Sta achter de lijn en schiet ze om! Boem, daar gaat er een. De trainer zet ze snel weer neer. Hoeveel schiet jij er om?",
+    "organisatie": "5 hoge pionnen op een rij, schietlijn op 5 m. Alle kinderen schieten tegelijk, ieder met een bal, en halen de bal zelf op. De trainer zet de pionnen terug. Voor 5 kinderen; niemand wacht. Speel 15 minuten.",
+    "benodigdheden": [
+      "5 hoge pionnen",
+      "2 hoedjes",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Kijk naar de bal als je schiet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dichterbij",
+        "Grote pionnen"
+      ],
+      "moeilijker": [
+        "Verder weg",
+        "Met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 10
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 3,
+          "y": 2,
+          "hoogte": 0.7,
+          "kleur": "#e03131"
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 6,
+          "y": 2,
+          "hoogte": 0.7,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 9,
+          "y": 2,
+          "hoogte": 0.7,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 1,
+          "y": 7.4
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 11,
+          "y": 7.4
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 1.2,
+          "y": 3.2,
+          "kijkrichting": 0
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 3,
+          "y": 8,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 3,
+          "y": 7.45,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 6,
+          "y": 8,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 6,
+          "y": 7.45,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 9,
+          "y": 8,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 9,
+          "y": 7.45,
+          "bij": "a3"
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                3,
+                2.35
+              ],
+              "hoogte": "grond"
+            },
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                6,
+                2.35
+              ],
+              "hoogte": "grond"
+            },
+            {
+              "type": "schot",
+              "van": "a3",
+              "naar": [
+                9,
+                2.35
+              ],
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "valOm",
+              "object": "p1",
+              "hoek": -90
+            },
+            {
+              "type": "valOm",
+              "object": "p2",
+              "hoek": -90
+            },
+            {
+              "type": "valOm",
+              "object": "p3",
+              "hoek": -90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "t1",
+              "naar": [
+                3.8,
+                3.2
+              ],
+              "duur": 1.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "zetOp",
+              "wie": "t1",
+              "object": "p1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "t1",
+              "naar": [
+                6.8,
+                3.2
+              ],
+              "duur": 1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "zetOp",
+              "wie": "t1",
+              "object": "p2"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-dribbel-en-schiet",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Dribbel en schiet",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Dribbel door het poortje, kijk naar het goaltje en schiet! Zit hij erin? Haal je bal op en sluit achter aan.",
+    "organisatie": "Poortje van 2 hoedjes (2 m breed) op 5 m van de start, mini-goaltje 5 m verder. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 mini-goaltje",
+      "2 hoedjes",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Bal dicht bij je voet",
+      "Kijk op voor je schiet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dichter bij het goaltje",
+        "Poortje breder"
+      ],
+      "moeilijker": [
+        "Poortje smaller",
+        "Met je andere voet schieten"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 4,
+          "y": 7.2
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 6,
+          "y": 7.2
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 11,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "@",
+                    "naar": [
+                      5,
+                      4.4
+                    ],
+                    "duur": 3
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      0.8
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      8.6,
+                      5
+                    ],
+                    "duur": 1.4,
+                    "spoor": false
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-ballen-van-de-pion",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Ballen van de pion",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "In het doel liggen ballen op pionnen. Mik goed en schiet ze eraf! Valt de bal van de pion? Dan heb je hem geraakt.",
+    "organisatie": "E-goal met 3 grote pionnen op de doellijn, op elke pion een bal. Schietlijn op 6 m. De trainer legt de ballen terug. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 E-goal",
+      "3 grote pionnen",
+      "3 voetballen voor op de pion",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Mik op de pion",
+      "Niet te hard: goed richten"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dichterbij",
+        "Meer pionnen"
+      ],
+      "moeilijker": [
+        "Verder weg",
+        "Eerst dribbelen, dan schieten"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 13
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 6,
+          "y": 1.8,
+          "hoek": 0,
+          "breedte": 5,
+          "hoogte": 2,
+          "lengte": 1.5
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 4.4,
+          "y": 1.4,
+          "hoogte": 0.45
+        },
+        {
+          "id": "e1",
+          "soort": "bal",
+          "x": 4.4,
+          "y": 1.4,
+          "opHoogte": 0.56
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 6,
+          "y": 1.4,
+          "hoogte": 0.45
+        },
+        {
+          "id": "e2",
+          "soort": "bal",
+          "x": 6,
+          "y": 1.4,
+          "opHoogte": 0.56
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 7.6,
+          "y": 1.4,
+          "hoogte": 0.45
+        },
+        {
+          "id": "e3",
+          "soort": "bal",
+          "x": 7.6,
+          "y": 1.4,
+          "opHoogte": 0.56
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 6,
+          "y": 8,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": "@doel",
+                    "hoogte": 0.5,
+                    "eindHoogte": 0.4
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "valOm",
+                    "object": "@ei",
+                    "naar": "@weg"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ],
+            "waarden": {
+              "doel": [
+                [
+                  4.4,
+                  1.8
+                ],
+                [
+                  7.6,
+                  1.8
+                ]
+              ],
+              "ei": [
+                "e1",
+                "e3"
+              ],
+              "weg": [
+                [
+                  4.2,
+                  0.7
+                ],
+                [
+                  7.8,
+                  0.7
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-hoekenjacht",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Hoekenjacht",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "In het doel hangt een net met gaten in de hoeken. Schiet je door een gat? Dan krijg je 3 punten! Raak je het net? Dan krijg je 1 punt. Wie heeft de meeste punten?",
+    "organisatie": "E-goal met een net met open hoeken. Schietlijn op 6 m. Door een hoek = 3 punten, ergens anders in het doel = 1 punt. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 E-goal",
+      "1 net met open hoeken",
+      "2 hoedjes",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Kijk naar de hoek en mik"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dichterbij",
+        "Bal stil leggen en rustig schieten"
+      ],
+      "moeilijker": [
+        "Verder weg",
+        "Alleen de lage hoeken tellen"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 13
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 6,
+          "y": 1.8,
+          "hoek": 0,
+          "breedte": 5,
+          "hoogte": 2,
+          "lengte": 1.5
+        },
+        {
+          "id": "n1",
+          "soort": "doelnet",
+          "x": 6,
+          "y": 1.8,
+          "breedte": 5,
+          "hoogte": 2,
+          "doel": "g1"
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 1.5,
+          "y": 8
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 10.5,
+          "y": 8
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 6,
+          "y": 8,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                8.13,
+                1.3
+              ],
+              "hoogte": "laag",
+              "eindHoogte": 0.35
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "aansluiten",
+              "wie": "a1",
+              "rij": "r1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                6.5,
+                1.8
+              ],
+              "raakt": "net",
+              "eindHoogte": 0.9,
+              "terugNaar": [
+                6.3,
+                4.6
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "aansluiten",
+              "wie": "a2",
+              "rij": "r1"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-slalom-en-scoren",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Slalom en scoren",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Dribbel als een slang langs de pionnen. Bij de laatste pion kijk je op en schiet je op het goaltje. Goal!",
+    "organisatie": "3 pionnen op 2 m van elkaar, mini-goaltje 4 m na de laatste pion. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 mini-goaltje",
+      "3 grote pionnen",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Kleine tikjes om de pionnen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Twee pionnen",
+        "Dichter bij het goaltje"
+      ],
+      "moeilijker": [
+        "Meer pionnen",
+        "Schieten met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 5,
+          "y": 10,
+          "hoogte": 0.45
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 5,
+          "y": 8,
+          "hoogte": 0.45
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 5,
+          "y": 6,
+          "hoogte": 0.45
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 12.4,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "@",
+                    "via": [
+                      [
+                        3.9,
+                        10
+                      ],
+                      [
+                        6.1,
+                        8
+                      ],
+                      [
+                        3.9,
+                        6
+                      ]
+                    ],
+                    "naar": [
+                      5,
+                      4.2
+                    ],
+                    "duur": 5,
+                    "manier": "wandel"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      0.8
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      8.6,
+                      5
+                    ],
+                    "duur": 1.4,
+                    "spoor": false
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-kleurendoel",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Kleurendoel",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Bij elk goaltje ligt een gekleurd hoedje. Dribbel maar! Roept de trainer \"rood\", dan schiet je op het goaltje met het rode hoedje. Goed luisteren!",
+    "organisatie": "Twee mini-goaltjes op 5 m van elkaar, bij elk goaltje een hoedje in een eigen kleur. De kinderen dribbelen 7 m ervoor; de trainer roept een kleur. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "2 mini-goaltjes",
+      "2 hoedjes in 2 kleuren",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Kijk op en luister",
+      "Bal klaarleggen en dan schieten"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "De trainer wijst ook",
+        "Dichterbij"
+      ],
+      "moeilijker": [
+        "Drie goaltjes",
+        "De trainer roept pas laat"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 13
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 3.5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "g2",
+          "soort": "klein-goal",
+          "x": 8.5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 4.8,
+          "y": 1.4,
+          "kleur": "#e03131"
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 9.8,
+          "y": 1.4,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 11,
+          "y": 8,
+          "kijkrichting": 180
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 6,
+          "y": 9.4,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "@",
+                    "naar": "@plek",
+                    "duur": 2.6
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": "@doel"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ],
+            "waarden": {
+              "plek": [
+                [
+                  4.2,
+                  5
+                ],
+                [
+                  7.8,
+                  5
+                ]
+              ],
+              "doel": [
+                [
+                  3.5,
+                  0.8
+                ],
+                [
+                  8.5,
+                  0.8
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-poortjesschieten",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Poortjesschieten",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Daar staan drie poortjes. Het brede poortje is makkelijk: 1 punt. Het smalle poortje is moeilijk: 3 punten! Welk poortje kies jij?",
+    "organisatie": "3 poortjes van hoedjes op een lijn (2 m, 1,5 m en 1 m breed), schietlijn op 5 m. Breed = 1 punt, smal = 3 punten. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "6 hoedjes",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Zachtjes en goed mikken"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Poortjes breder",
+        "Dichterbij"
+      ],
+      "moeilijker": [
+        "Poortjes smaller",
+        "Met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 11
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 1.4,
+          "y": 2,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 3.4,
+          "y": 2,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "h3",
+          "soort": "hoedje",
+          "x": 5.2,
+          "y": 2,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "h4",
+          "soort": "hoedje",
+          "x": 6.7,
+          "y": 2,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "h5",
+          "soort": "hoedje",
+          "x": 8.8,
+          "y": 2,
+          "kleur": "#e03131"
+        },
+        {
+          "id": "h6",
+          "soort": "hoedje",
+          "x": 9.8,
+          "y": 2,
+          "kleur": "#e03131"
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 6,
+          "y": 7,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": "@doel",
+                    "hoogte": "grond"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ],
+            "waarden": {
+              "doel": [
+                [
+                  2.4,
+                  0.8
+                ],
+                [
+                  9.3,
+                  0.8
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-aannemen-en-schieten",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Aannemen en schieten",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "De trainer speelt de bal naar je toe. Stop de bal met je voet. Kijk naar het goaltje en schiet! Scoren maar.",
+    "organisatie": "Trainer op 5 m opzij met de ballen, kind op 6 m van het mini-goaltje. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 mini-goaltje",
+      "2 hoedjes",
+      "Voetballen"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Eerst stilleggen, dan schieten"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "De trainer rolt de bal met de hand",
+        "Dichter bij het goaltje"
+      ],
+      "moeilijker": [
+        "In één keer schieten",
+        "De bal komt van de andere kant"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 8,
+          "y": 5.4
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 10.2,
+          "y": 7,
+          "kijkrichting": 180
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 9.65,
+          "y": 7,
+          "bij": "t1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 10.4,
+          "y": 8
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 7,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "a1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                5,
+                0.8
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "aansluiten",
+              "wie": "a1",
+              "rij": "r1"
+            },
+            {
+              "type": "pak",
+              "wie": "t1",
+              "bal": "b2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "a2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                5,
+                0.8
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-kaatsen-en-schieten",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Kaatsen en schieten",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Speel de bal tegen het kaatsbord. Hij komt terug! Neem hem aan en schiet op het goaltje.",
+    "organisatie": "Kaatsbord schuin op 4 m, mini-goaltje op 7 m. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 kaatsbord",
+      "1 mini-goaltje",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Stop de bal voor je schiet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dichter bij het kaatsbord",
+        "De trainer rolt de bal in"
+      ],
+      "moeilijker": [
+        "In één keer schieten",
+        "Met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "k1",
+          "soort": "rebounder",
+          "x": 2.4,
+          "y": 4.6,
+          "hoek": 65
+        },
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 7,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 6.4,
+          "y": 7,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "pass",
+                    "van": "@",
+                    "naar": "k1",
+                    "terug": "@"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": [
+                      7,
+                      0.8
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-hoepelpass",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Hoepelpass",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Speel de bal zachtjes zodat hij in de hoepel blijft liggen. Loop ernaartoe. Nu mag je één keer schieten op het goaltje. Raak?",
+    "organisatie": "Hoepel op 4 m van de start, mini-goaltje 5 m verder. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 hoepel",
+      "1 mini-goaltje",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Zachtjes spelen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Hoepel dichterbij",
+        "Grotere hoepel of twee hoepels"
+      ],
+      "moeilijker": [
+        "Hoepel verder weg",
+        "Met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 14
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "h1",
+          "soort": "ring",
+          "x": 5,
+          "y": 6,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 10,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "pass",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      6
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      5,
+                      6.7
+                    ],
+                    "duur": 1.4
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "pak",
+                    "wie": "@"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      0.8
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-hordes-en-schieten",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Hordes en schieten",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Spring als een kikker over de drie hordes. Daarna geeft de trainer je een bal. Schiet hem in het goaltje!",
+    "organisatie": "3 lage hordes op 1,5 m van elkaar, trainer opzij met de ballen, mini-goaltje op 5 m na de laatste horde. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "3 hordes",
+      "1 mini-goaltje",
+      "Voetballen"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Spring op twee voeten",
+      "Kijk naar de bal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Twee hordes",
+        "De trainer legt de bal klaar"
+      ],
+      "moeilijker": [
+        "Op één been",
+        "In één keer schieten"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "o1",
+          "soort": "horde",
+          "x": 5,
+          "y": 10,
+          "hoek": 0,
+          "hoogte": 0.15
+        },
+        {
+          "id": "o2",
+          "soort": "horde",
+          "x": 5,
+          "y": 8.5,
+          "hoek": 0,
+          "hoogte": 0.15
+        },
+        {
+          "id": "o3",
+          "soort": "horde",
+          "x": 5,
+          "y": 7,
+          "hoek": 0,
+          "hoogte": 0.15
+        },
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 9.6,
+          "y": 5,
+          "kijkrichting": 180
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 9.05,
+          "y": 5,
+          "bij": "t1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 10,
+          "y": 6
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 11.8,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                5,
+                5.4
+              ],
+              "manier": "hordes",
+              "duur": 3.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "a1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                5,
+                0.8
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                7.6,
+                7.4
+              ],
+              "duur": 1.3,
+              "spoor": false
+            },
+            {
+              "type": "pak",
+              "wie": "t1",
+              "bal": "b2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "aansluiten",
+              "wie": "a1",
+              "rij": "r1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                5,
+                5.4
+              ],
+              "manier": "hordes",
+              "duur": 3.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "a2"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                5,
+                0.8
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-om-de-pop",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Om de pop",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Dribbel om de pop heen. Kijk op: daar is het doel. Schiet maar!",
+    "organisatie": "Pop op 5 m van de start, mini-goaltje 5 m erachter. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 pop",
+      "1 mini-goaltje",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Rustig om de pop, dan schieten"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Pop dichterbij",
+        "Bal stil leggen voor het schot"
+      ],
+      "moeilijker": [
+        "Linksom en rechtsom",
+        "Met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 14
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "m1",
+          "soort": "pop",
+          "x": 5,
+          "y": 6.4
+        },
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 10.4,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "@",
+                    "via": [
+                      [
+                        3.8,
+                        7
+                      ]
+                    ],
+                    "naar": [
+                      4.4,
+                      4
+                    ],
+                    "duur": 3.4
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      0.8
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      8.6,
+                      5
+                    ],
+                    "duur": 1.4,
+                    "spoor": false
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-ladder-en-scoren",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Ladder en scoren",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Ga met snelle voetjes door de loopladder. Bij de pion ligt je bal. Pak hem en schiet op het goaltje!",
+    "organisatie": "Loopladder, 1 m verder een pion met de ballen, mini-goaltje op 5 m. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 loopladder",
+      "1 grote pion",
+      "1 mini-goaltje",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Kleine stapjes, dan rustig schieten"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Korte ladder",
+        "Dichter bij het goaltje"
+      ],
+      "moeilijker": [
+        "Zijwaarts door de ladder",
+        "Met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "l1",
+          "soort": "ladder",
+          "x": 5,
+          "y": 9,
+          "lengte": 3
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 3.4,
+          "y": 5.8,
+          "hoogte": 0.45
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 5.8,
+          "y": 5.2
+        },
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 11.2,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": "@plek",
+                    "manier": "voetenwerk",
+                    "duur": 3
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "pak",
+                    "wie": "@",
+                    "bal": "@bal"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      0.8
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      8.6,
+                      5
+                    ],
+                    "duur": 1.4,
+                    "spoor": false
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ],
+            "waarden": {
+              "plek": [
+                [
+                  5,
+                  6.6
+                ],
+                [
+                  5.2,
+                  5.8
+                ]
+              ],
+              "bal": [
+                "b1",
+                "b2"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-tennisballen-van-de-pion",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Tennisballen van de pion",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "In het doel staan hoge pionnen met een tennisbal erop. Dat is moeilijk! Mik goed en schiet de tennisbal eraf.",
+    "organisatie": "E-goal met 3 hoge pionnen op de doellijn, op elke pion een tennisbal. Schietlijn op 5 m. De trainer legt de ballen terug. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 E-goal",
+      "3 hoge pionnen",
+      "3 tennisballen",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Kijk naar de pion en schiet recht vooruit"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dichterbij",
+        "Voetbal in plaats van tennisbal"
+      ],
+      "moeilijker": [
+        "Verder weg",
+        "Eerst dribbelen"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 6,
+          "y": 1.8,
+          "hoek": 0,
+          "breedte": 5,
+          "hoogte": 2,
+          "lengte": 1.5
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 4.4,
+          "y": 1.4,
+          "hoogte": 0.7
+        },
+        {
+          "id": "e1",
+          "soort": "bal",
+          "x": 4.4,
+          "y": 1.4,
+          "variant": "tennisbal",
+          "opHoogte": 0.76
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 6,
+          "y": 1.4,
+          "hoogte": 0.7
+        },
+        {
+          "id": "e2",
+          "soort": "bal",
+          "x": 6,
+          "y": 1.4,
+          "variant": "tennisbal",
+          "opHoogte": 0.76
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 7.6,
+          "y": 1.4,
+          "hoogte": 0.7
+        },
+        {
+          "id": "e3",
+          "soort": "bal",
+          "x": 7.6,
+          "y": 1.4,
+          "variant": "tennisbal",
+          "opHoogte": 0.76
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 6,
+          "y": 7,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": "@doel",
+                    "hoogte": 0.8,
+                    "eindHoogte": 0.6
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "valOm",
+                    "object": "@ei",
+                    "naar": "@weg"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ],
+            "waarden": {
+              "doel": [
+                [
+                  4.4,
+                  1.8
+                ],
+                [
+                  7.6,
+                  1.8
+                ]
+              ],
+              "ei": [
+                "e1",
+                "e3"
+              ],
+              "weg": [
+                [
+                  4.1,
+                  0.6
+                ],
+                [
+                  7.9,
+                  0.6
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-mt-brug-en-goal",
+    "soort": "veld",
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "naam": "Brug en goal",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Speel de bal zachtjes onder de brug door. Stap zelf over de brug heen. Pak je bal en schiet in het goaltje!",
+    "organisatie": "Hoge horde op 4 m van de start, mini-goaltje op 5 m na de horde. Voor 5 kinderen: zet de oefening twee keer naast elkaar neer, zodat er maximaal 2–3 in een rij staan. Speel 15 minuten.",
+    "benodigdheden": [
+      "1 horde",
+      "1 mini-goaltje",
+      "1 voetbal per kind"
+    ],
+    "spelersNodig": 1,
+    "coachpunten": [
+      "Zachtjes onder de brug, hard op doel"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bal met de hand onder de brug rollen",
+        "Dichter bij het goaltje"
+      ],
+      "moeilijker": [
+        "Twee bruggen",
+        "Met je andere voet"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 10,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "o1",
+          "soort": "horde",
+          "x": 5,
+          "y": 7,
+          "hoek": 0,
+          "hoogte": 0.3
+        },
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 5,
+          "y": 1.2,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a2"
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b3",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "rijen": [
+        {
+          "id": "r1",
+          "x": 5,
+          "y": 11,
+          "richting": 60,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2"
+            ],
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "@",
+                    "naar": [
+                      5,
+                      8.8
+                    ],
+                    "duur": 1.4
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "pass",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      5.4
+                    ],
+                    "onderdoor": "o1"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      5,
+                      6
+                    ],
+                    "manier": "hordes",
+                    "duur": 1.6
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "pak",
+                    "wie": "@"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": [
+                      5,
+                      0.8
+                    ]
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      8.6,
+                      5
+                    ],
+                    "duur": 1.4,
+                    "spoor": false
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "r1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
   }
 ]
