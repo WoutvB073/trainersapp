@@ -135,19 +135,57 @@ export class Synchronisatie {
   private koppelLijst<T extends Item>(col: Collectie, doel: LijstDoel<T>) {
     const pad = collection(this.db, 'users', this.uid, col);
     let online: T[] | null = null;
+    /**
+     * Schrijfacties die Firestore nog niet bevestigd heeft: per item de versie die wij stuurden (null = verwijderd) en wat er
+     * het laatst zeker online stond. Zo lang iets hier staat:
+     * - telt onze eigen versie, want een momentopname kan ouder zijn (anders verdwijnen letters tijdens het typen);
+     * - blijft `bekend` op de oude stand, want als de schrijfactie de server nooit haalt (app dicht), moet hij de volgende keer
+     *   opnieuw, en mag een item dat online ontbreekt niet als "online verwijderd" gelden.
+     */
+    const onderweg = new Map<string, { versie: T | null; bekend: string | undefined }>();
+    const metOnderweg = (lijst: T[]): T[] => [...lijst.filter((y) => !onderweg.has(y.id)), ...[...onderweg.values()].flatMap((o) => (o.versie ? [o.versie] : []))];
+    const leesBekend = () => this.doelen.bekend.lees<Record<string, string>>(col, {});
+    const zetBekend = (bekend: Record<string, string>, id: string, waarde: string | undefined) => {
+      if (waarde === undefined) delete bekend[id];
+      else bekend[id] = waarde;
+    };
+    const stuur = (id: string, versie: T | null, oud: string | undefined, schrijf: () => Promise<void>) => {
+      const bevestigd = onderweg.get(id)?.bekend ?? oud;
+      const ik = { versie, bekend: bevestigd };
+      onderweg.set(id, ik);
+      const klaar = () => {
+        const nu = versie ? JSON.stringify(versie) : undefined;
+        const volgende = onderweg.get(id);
+        if (volgende === ik) {
+          onderweg.delete(id);
+          const bekend = { ...leesBekend() };
+          zetBekend(bekend, id, nu);
+          this.doelen.bekend.zet(col, bekend);
+        } else if (volgende) volgende.bekend = nu;
+      };
+      // Geweigerd (regels): niet eindeloos opnieuw proberen, dan wint wat online staat.
+      void schrijf().then(klaar, () => {
+        klaar();
+        this.zetFout();
+      });
+    };
     const verwerk = () => {
       if (!online) return;
-      const bekend = this.doelen.bekend.lees<Record<string, string>>(col, {});
-      const v = verzoen(doel.lijst(), bekend, online);
-      this.doelen.bekend.zet(col, v.bekend);
+      const oudBekend = leesBekend();
+      const v = verzoen(doel.lijst(), oudBekend, online);
+      const bekend = { ...v.bekend };
+      for (const [id, o] of onderweg) zetBekend(bekend, id, o.bekend);
+      for (const x of v.schrijf) zetBekend(bekend, x.id, onderweg.get(x.id)?.bekend ?? oudBekend[x.id]);
+      for (const id of v.verwijder) zetBekend(bekend, id, onderweg.get(id)?.bekend ?? oudBekend[id]);
+      this.doelen.bekend.zet(col, bekend);
       if (v.lokaalVeranderd) this.toepassen(() => doel.vervangAlles(v.lokaal));
       for (const x of v.schrijf) {
         online = [...online.filter((y) => y.id !== x.id), x];
-        void setDoc(doc(pad, x.id), { data: JSON.stringify(x), gewijzigd: x.gewijzigd }).catch(() => this.zetFout());
+        stuur(x.id, x, oudBekend[x.id], () => setDoc(doc(pad, x.id), { data: JSON.stringify(x), gewijzigd: x.gewijzigd }));
       }
       for (const id of v.verwijder) {
         online = online.filter((y) => y.id !== id);
-        void deleteDoc(doc(pad, id)).catch(() => this.zetFout());
+        stuur(id, null, oudBekend[id], () => deleteDoc(doc(pad, id)));
       }
     };
     const uit: Unsubscribe = onSnapshot(
@@ -162,7 +200,7 @@ export class Synchronisatie {
             /* kapot document: overslaan */
           }
         }
-        online = lijst;
+        online = metOnderweg(lijst);
         this.wacht.set(col, snap.metadata.hasPendingWrites);
         this.vanServer.set(col, this.vanServer.get(col) || !snap.metadata.fromCache);
         verwerk();

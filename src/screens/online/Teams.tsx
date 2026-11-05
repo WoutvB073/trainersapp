@@ -9,6 +9,7 @@ import { leesTeamTraining, teamOefeningId, teamOefeningen, useTeam, useTeams, ty
 import { vindOefening } from '../../data/oefeningen';
 import { eigenOefeningen } from '../../eigen/opslag';
 import { trainingen } from '../../training/opslag';
+import { leesTeamWedstrijd } from '../../wedstrijd/wedstrijd';
 import { benodigdheden } from '../../training/training';
 import { ga, terug, vervang } from '../../router';
 import type { Oefening } from '../../model/types';
@@ -38,12 +39,19 @@ function useActie(toon: (t: string) => void) {
   return { bezig, doe };
 }
 
+/** Opstelling, Tactiekbord of Spelhervatting (die laatste twee zijn allebei een bord). */
+function wedstrijdSoort(it: TeamItem): string {
+  if (it.soort === 'opstelling') return vt('Opstelling');
+  const x = leesTeamWedstrijd('bord', it.data);
+  return x?.soort === 'bord' && x.bord.soort === 'hervatting' ? vt('Spelhervatting') : vt('Tactiekbord');
+}
+
 /** Uitgelogd (of online staat nog uit): korte uitleg met knop om in te loggen. */
 function NietIngelogd() {
   return (
     <div className="leeg">
       <p className="leeg-titel">{vt('Teams')}</p>
-      <p>{vt('Met een team deel je oefeningen en teamtrainingen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).')}</p>
+      <p>{vt('Met een team deel je oefeningen, teamtrainingen, circuittrainingen en wedstrijdplannen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).')}</p>
       {onlineBeschikbaar() ? (
         <button className="knop knop-primair" onClick={() => ga('/account')}>
           <Icoon naam="persoon" maat={20} />
@@ -186,6 +194,7 @@ export function TeamScherm({ id }: { id: string }) {
   const beheerder = t.rol === 'beheerder';
   const oefeningen = t.items.filter((i) => i.soort === 'oefening');
   const trainingenTeam = t.items.filter((i) => i.soort === 'training');
+  const clubsTeam = t.items.filter((i) => i.soort === 'clubtraining');
   const wedstrijdTeam = t.items.filter((i) => i.soort === 'opstelling' || i.soort === 'bord');
   const deelCode = async () => {
     const tekst = vt('Kom in mijn team "{naam}" in TopTraining: open de app, ga naar Instellingen → Teams en vul de code {code} in.', { naam: t.naam, code: t.code });
@@ -316,6 +325,33 @@ export function TeamScherm({ id }: { id: string }) {
           </ul>
         )}
 
+        <h2 className="sectie-titel">{vt('Gedeelde circuittrainingen')}</h2>
+        {clubsTeam.length === 0 ? (
+          <p className="klein">{vt('Nog niets gedeeld. Open een circuittraining en kies "Delen met team".')}</p>
+        ) : (
+          <ul className="lijst">
+            {clubsTeam.map((it) => (
+              <li key={it.id} className="training-regel">
+                <a
+                  className="rij"
+                  href={`#/team/${t.id}/club/${it.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    ga(`/team/${t.id}/club/${it.id}`);
+                  }}
+                >
+                  <Icoon naam="team" maat={24} className="training-icoon" />
+                  <span className="rij-tekst">
+                    <span className="rij-titel">{it.naam}</span>
+                    <span className="rij-sub">{it.eigenaar === ik ? vt('Gedeeld door jou') : vt('Gedeeld door {naam}', { naam: it.eigenaarNaam })}</span>
+                  </span>
+                </a>
+                <div className="training-acties">{itemKnoppen(it)}</div>
+              </li>
+            ))}
+          </ul>
+        )}
+
         <h2 className="sectie-titel">{vt('Gedeelde opstellingen en tactiekborden')}</h2>
         {wedstrijdTeam.length === 0 ? (
           <p className="klein">{vt('Nog niets gedeeld. Open een opstelling, tactiekbord of spelhervatting en kies "Delen met team".')}</p>
@@ -335,7 +371,7 @@ export function TeamScherm({ id }: { id: string }) {
                   <span className="rij-tekst">
                     <span className="rij-titel">{it.naam}</span>
                     <span className="rij-sub">
-                      {it.soort === 'opstelling' ? vt('Opstelling') : vt('Tactiekbord')} · {it.eigenaar === ik ? vt('gedeeld door jou') : vt('gedeeld door {naam}', { naam: it.eigenaarNaam })}
+                      {wedstrijdSoort(it)} · {it.eigenaar === ik ? vt('gedeeld door jou') : vt('gedeeld door {naam}', { naam: it.eigenaarNaam })}
                     </span>
                   </span>
                 </a>
@@ -354,7 +390,7 @@ export function TeamScherm({ id }: { id: string }) {
                 <span className="rij-tekst">
                   <span className="rij-titel">
                     {l.naam}
-                    {l.uid === ik ? ' (jij)' : ''}
+                    {l.uid === ik ? ` (${vt('jij')})` : ''}
                   </span>
                   <span className="rij-sub">{l.rol === 'beheerder' ? vt('Beheerder') : vt('Lid')}</span>
                 </span>
@@ -479,10 +515,10 @@ export function TeamTrainingScherm({ id, item }: { id: string; item: string }) {
 }
 
 /**
- * "Delen met team" (eigen oefening of training). Alleen zichtbaar als je ingelogd bent. Zit je in meerdere teams, dan
+ * "Delen met team" (alles wat je kunt maken). Alleen zichtbaar als je ingelogd bent. Zit je in meerdere teams, dan
  * kies je er een.
  */
-export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training' | 'opstelling' | 'bord'; id: string; naam: string }) {
+export function DeelMetTeam({ soort, id, naam, breed }: { soort: TeamItem['soort']; id: string; naam: string; breed?: boolean }) {
   const s = useOnlineStatus();
   const lijst = useTeams();
   const [open, setOpen] = useState(false);
@@ -498,6 +534,7 @@ export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training
           if (!o) throw new Error('Online: oefening niet gevonden');
           await m.deelOefening(t.id, o);
         } else if (soort === 'training') await m.deelTraining(t.id, id);
+        else if (soort === 'clubtraining') await m.deelClub(t.id, id);
         else await m.deelWedstrijd(t.id, soort, id);
       },
       vt('Gedeeld met {naam}', { naam: t.naam }),
@@ -506,7 +543,7 @@ export function DeelMetTeam({ soort, id, naam }: { soort: 'oefening' | 'training
   const gedeeld = lijst.filter((t) => t.items.some((it) => it.id === id && it.eigenaar === s.account!.uid));
   return (
     <>
-      <button className="knop" disabled={bezig} onClick={() => (lijst.length === 1 ? deel(lijst[0]!) : setOpen(true))}>
+      <button className={breed ? 'knop knop-breed' : 'knop'} disabled={bezig} onClick={() => (lijst.length === 1 ? deel(lijst[0]!) : setOpen(true))}>
         <Icoon naam="team" maat={18} />
         {vt('Delen met team')}
       </button>

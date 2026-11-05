@@ -32,6 +32,8 @@ import { TactiekenScherm, TactiekScherm } from './screens/wedstrijd/Tactieken';
 import { BordTekenen } from './screens/wedstrijd/BordTekenen';
 import { Account, SamenvoegenVraag } from './screens/online/Account';
 import { Teams, TeamScherm, TeamTrainingScherm } from './screens/online/Teams';
+import { TeamClubScherm } from './screens/club/TeamClub';
+import { GedeeldeOefening } from './screens/eigen/GedeeldeOefening';
 import { alGeinstalleerd, browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen, zetGeinstalleerd } from './engine/platform';
 
 // Als app geopend: onthouden, zodat de link in de browser later "Je hebt de app al" toont (0.29.1).
@@ -64,6 +66,8 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <TrainingModus id={route.id} nr={route.nr} />;
     case 'gedeeld':
       return <GedeeldeTraining key={route.code} code={route.code} />;
+    case 'oefening-gedeeld':
+      return <GedeeldeOefening key={route.code} code={route.code} />;
     case 'club-lijst':
       return <ClubLijst />;
     case 'club':
@@ -116,6 +120,8 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <TeamScherm key={route.id} id={route.id} />;
     case 'teamtraining':
       return <TeamTrainingScherm key={route.id + route.item} id={route.id} item={route.item} />;
+    case 'teamclub':
+      return <TeamClubScherm key={JSON.stringify(route)} id={route.id} item={route.item} station={route.station} partij={route.partij} />;
     default:
       return <NietGevonden />;
   }
@@ -138,6 +144,9 @@ export function App() {
   // Een gedeelde training (link) kun je ook zonder de app bekijken, met uitleg hoe je hem in de app krijgt.
   if (scherm !== 'app' && route.naam === 'gedeeld' && !installatieGetoond) {
     return <GedeeldeTraining code={route.code} nietGeinstalleerd opInstalleren={() => setInstallatieGetoond(true)} />;
+  }
+  if (scherm !== 'app' && route.naam === 'oefening-gedeeld' && !installatieGetoond) {
+    return <GedeeldeOefening code={route.code} nietGeinstalleerd opInstalleren={() => setInstallatieGetoond(true)} />;
   }
   // De link voor de trainers werkt altijd direct, zonder installeren of inloggen.
   if (scherm !== 'app' && route.naam === 'club-gedeeld') return <ClubGedeeld key={JSON.stringify(route)} code={route.code} station={route.station} partij={route.partij} />;

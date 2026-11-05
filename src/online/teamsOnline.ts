@@ -142,8 +142,12 @@ export async function vernieuwCode(ik: Ik, team: string, toeval: () => number = 
 export const zetRol = (ik: Ik, team: string, uid: string, rol: Rol) => updateDoc(lidPad(ik.db, team, uid), { rol });
 export const verwijderLid = (ik: Ik, team: string, uid: string) => deleteDoc(lidPad(ik.db, team, uid));
 
+/** Grens uit firestore.rules; in bytes geteld, dus ook ruim onder de 1 MB per document van Firestore. */
+export const MAX_ITEM = 500000;
+
 /** Iets delen met het team (of je eigen gedeelde item bijwerken). */
 export async function deelItem(ik: Ik, team: string, item: { id: string; soort: TeamItem['soort']; naam: string; data: string }): Promise<void> {
+  if (new TextEncoder().encode(item.data).length > MAX_ITEM) throw new TeamFout(vt('Dit is te groot om met het team te delen.'));
   await setDoc(itemPad(ik.db, team, item.id), {
     soort: item.soort,
     data: item.data,

@@ -93,6 +93,7 @@ export const HELP_NL: HelpOnderwerp[] = [
       '- **Rotatie**: elk groepje doet elke vorm één keer en er staan nooit twee groepjes op één station. Bij 6 groepjes zijn er 6 stations. Bij 4 of 5 groepjes zijn het er 6 en bij 7 of 8 groepjes 9: dan blijven er per ronde een of twee leeg.',
       '- **Materiaal**: alles om klaar te zetten, opgeteld over de stations, met wat er extra nodig is voor de partijvelden. Afvinken wordt bewaard.',
       '- **Deel met trainers**: een link voor de groepsapp. Trainers hoeven niet in te loggen en openen direct hun station, met uitleg en animatie.',
+      '- **Delen met team**: zit je in een team, dan staat de circuittraining daar met jouw naam erbij. Teamleden openen het plan, de stations, de rotatie, het materiaal en de animaties, en kunnen hem kopiëren naar hun eigen circuittrainingen. Pas je hem daarna aan? Tik nog eens op **Delen met team** om het gedeelde plan bij te werken.',
       '- **Kwartiertimer**: toont de ronde en de resterende tijd en geeft een signaal bij elke wissel. Trillen en het scherm aan houden lukken alleen als de browser dat kan.',
       'In de lijst kun je een circuittraining dupliceren, of met het kalender-icoon naar volgende week kopiëren. Een lege circuittraining wordt niet bewaard.',
     ],
@@ -154,9 +155,9 @@ export const HELP_NL: HelpOnderwerp[] = [
     id: 'delen',
     titel: 'Delen, team, account en back-up',
     tekst: [
-      '- **Delen via een link**: bij een teamtraining, opstelling of tactiekbord tik je op **Delen**. De ander opent de link, ook zonder de app, en kan hem opslaan. Eigen oefeningen in een gedeelde teamtraining gaan mee.',
+      '- **Delen via een link**: bij een teamtraining, eigen oefening, opstelling, tactiekbord of spelhervatting tik je op **Delen**; bij een circuittraining op **Deel met trainers**. De ander opent de link, ook zonder de app, en kan hem opslaan (de link van een circuittraining is alleen om te bekijken). Eigen oefeningen in een gedeelde teamtraining of circuittraining gaan mee.',
       '- **Account**: bij Instellingen log je in met je e-mailadres. Je eigen oefeningen, teamtrainingen, favorieten en instellingen staan dan online en zijn op al je apparaten gelijk. Zonder account werkt alles gewoon op dit apparaat.',
-      '- **Team**: met een account maak je een team of word je lid met een teamcode van 6 tekens. Bij een eigen oefening, teamtraining of opstelling kies je **Delen met team**; je teamgenoten zien hem dan bij het team en kunnen hem kopiëren.',
+      '- **Team**: met een account maak je een team of word je lid met een teamcode van 6 tekens. Bij een teamtraining, circuittraining, eigen oefening, opstelling, tactiekbord of spelhervatting kies je **Delen met team**. Je teamgenoten zien bij het team wie hem deelde, kunnen hem openen en kopiëren. Alleen jij kunt je gedeelde item aanpassen (nog eens **Delen met team** werkt het bij) of terugtrekken; een beheerder kan het uit het team verwijderen.',
       '- **Exporteren en importeren**: bij Instellingen → **Je gegevens** maak je een bestand met je eigen oefeningen, teamtrainingen en favorieten. Met **Importeren** zet je dat op een ander apparaat. Er wordt niets overschreven en niets komt dubbel.',
     ],
     laatZien: [
@@ -258,6 +259,7 @@ export const HELP_EN: HelpOnderwerp[] = [
       '- **Rotation**: every group does each activity once and two groups are never on the same station. With 6 groups there are 6 stations. With 4 or 5 groups there are 6 and with 7 or 8 groups there are 9: then one or two stay empty each round.',
       '- **Equipment**: everything to set out, added up across the stations, plus what is needed extra for the game pitches. Ticked items are remembered.',
       '- **Share with coaches**: a link for the group chat. Coaches don’t need to log in and can open their station straight away, with explanation and animation.',
+      '- **Share with team**: if you are in a team, the circuit session appears there with your name on it. Team members can open the plan, stations, rotation, equipment and animations, and copy it to their own circuit sessions. Changed it afterwards? Tap **Share with team** again to update the shared plan.',
       '- **15-minute timer**: shows the round and the time left and gives a signal at each change. Vibrating and keeping the screen on only work if the browser can do it.',
       'In the list you can duplicate a circuit session, or copy it to next week with the calendar icon. An empty circuit session isn’t saved.',
     ],
@@ -319,9 +321,9 @@ export const HELP_EN: HelpOnderwerp[] = [
     id: 'delen',
     titel: 'Sharing, teams, account and backup',
     tekst: [
-      '- **Sharing a link**: on a team session, line-up or tactics board, tap **Share**. The other person opens the link, even without the app, and can save it. Your own drills in a shared team session go along with it.',
+      '- **Sharing a link**: on a team session, your own drill, line-up, tactics board or set piece, tap **Share**; on a circuit session, tap **Share with coaches**. The other person opens the link, even without the app, and can save it (the link to a circuit session is view-only). Your own drills in a shared team session or circuit session go along with it.',
       '- **Account**: log in with your email address in Settings. Your drills, team sessions, favourites and settings are then stored online and the same on all your devices. Without an account, everything still works on this device.',
-      '- **Team**: with an account you can create a team or join one with a 6-character team code. On one of your drills, team sessions or line-ups, choose **Share with team**; your teammates then see it in the team and can copy it.',
+      '- **Team**: with an account you can create a team or join one with a 6-character team code. On a team session, circuit session, your own drill, line-up, tactics board or set piece, choose **Share with team**. Your teammates see in the team who shared it, and can open and copy it. Only you can change what you shared (**Share with team** again updates it) or withdraw it; an admin can remove it from the team.',
       '- **Export and import**: in Settings → **Your data**, create a file with your drills, team sessions and favourites. Use **Import** to put it on another device. Nothing is overwritten and nothing is duplicated.',
     ],
     laatZien: [

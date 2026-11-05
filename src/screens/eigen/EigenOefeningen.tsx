@@ -9,7 +9,7 @@ import { inBibliotheek, nieuweEigen, ontbreekt } from '../../eigen/eigen';
 import { nieuweTekening } from '../../editor/editor';
 import { SOORT_NAAM } from '../../data/categorieen';
 import type { EigenOefening, Soort, VeldType } from '../../model/types';
-import { Toast, useToast } from '../training/onderdelen';
+import { LinkOpenen, Toast, useToast } from '../training/onderdelen';
 import { lijstTekst, t } from '../../i18n/t';
 
 export const eigenNaam = (o: Pick<EigenOefening, 'naam'>) => o.naam.trim() || t('Naamloze oefening');
@@ -89,6 +89,7 @@ export function EigenOefeningen() {
             ))}
           </ul>
         )}
+        <LinkOpenen tekst={t('Gedeelde oefening openen via een link')} pad="o" />
         <p className="voetnoot">{t('Eigen oefeningen staan op dit toestel. Zit er een eigen oefening in een teamtraining die je deelt, dan gaat hij mee in de link.')}</p>
       </main>
       <Toast tekst={melding} />

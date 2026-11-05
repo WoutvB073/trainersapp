@@ -177,7 +177,7 @@ for (const [naam, vp] of [
   await account(t1.page, 'Testtrainer 1', 'test1@example.com');
   await wachtOp(t1.page, () => !!document.querySelector('.paneel-vraag'), null, `${naam}: vraag om gegevens mee te nemen`);
   const vraag = await t1.page.evaluate(() => document.querySelector('.paneel-vraag')?.textContent ?? '');
-  controle(/1 eigen oefening/.test(vraag) && /1 training/.test(vraag) && /1 favoriet/.test(vraag), `${naam}: vraag samenvoegen: "${vraag.slice(0, 120)}"`);
+  controle(/1 eigen oefening/.test(vraag) && /1 teamtraining/.test(vraag) && /1 favoriet/.test(vraag), `${naam}: vraag samenvoegen: "${vraag.slice(0, 120)}"`);
   if (naam === 'telefoon') await foto(t1.page, 'samenvoegen', 'Eerste keer inloggen: gegevens van dit apparaat meenemen?');
   await klik(t1.page, 'Ja, meenemen', '.paneel-vraag button');
   await wachtOp(t1.page, () => document.querySelector('.account-naam')?.textContent === 'Testtrainer 1', null, `${naam}: ingelogd als Testtrainer 1`);

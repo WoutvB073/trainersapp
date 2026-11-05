@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { disableNetwork, enableNetwork } from 'firebase/firestore';
+import { disableNetwork, enableNetwork, terminate } from 'firebase/firestore';
 import { leegmaken, lokaleOpslag, synchroniseer, toestel, wachtTot, opruimen } from './hulp';
 import { nieuweEigen } from '../../src/eigen/eigen';
 import { nieuweTekening } from '../../src/editor/editor';
@@ -41,6 +41,56 @@ describe('synchroniseren tussen twee toestellen (zelfde account)', () => {
     a.trainingen.verwijder('t1');
     a.favorieten.wissel('veld-pt-derde-man');
     await wachtTot(() => !b.trainingen.haal('t1') && !b.favorieten.is('veld-pt-derde-man'));
+    sa.stop();
+    sb.stop();
+  });
+
+  it('een schrijfactie die de server nooit haalde, gaat niet verloren (app dicht vlak na het maken)', async () => {
+    const tel = await toestel('test1@example.com');
+    const lap = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const b = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    const sb = synchroniseer(lap, b);
+    a.eigen.bewaar(oefening('eigen-1', 'Een'));
+    await wachtTot(() => b.eigen.lijst().length === 1, 10000, 'eerste oefening');
+
+    // Nieuw bord en een aanpassing, maar de app gaat dicht voor het de server haalt (in de test: geheugen, dus ook niet bewaard).
+    await disableNetwork(tel.db);
+    a.borden.bewaar(nieuwBord('tactiek', nieuweTekening('leeg'), 'Net gemaakt', Date.now(), 'b1'));
+    a.eigen.bewaar({ ...a.eigen.haal('eigen-1')!, naam: 'Een (aangepast)', gewijzigd: Date.now() });
+    await new Promise((r) => setTimeout(r, 200));
+    sa.stop();
+    await terminate(tel.db);
+
+    // Opnieuw opstarten met dezelfde lokale opslag: alles is er nog en gaat alsnog online.
+    const tel2 = await toestel('test1@example.com');
+    const sa2 = synchroniseer(tel2, a);
+    await wachtTot(() => !!b.borden.haal('b1') && b.eigen.haal('eigen-1')?.naam === 'Een (aangepast)', 10000, 'alsnog online');
+    expect(a.borden.haal('b1')?.naam).toBe('Net gemaakt');
+    expect(a.eigen.haal('eigen-1')?.naam).toBe('Een (aangepast)');
+    sa2.stop();
+    sb.stop();
+  });
+
+  it('snel typen: wat Firestore nog over een oudere versie meldt, overschrijft de nieuwste niet', async () => {
+    const tel = await toestel('test1@example.com');
+    const lap = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const b = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    const sb = synchroniseer(lap, b);
+    const c = { ...nieuweClub('mini-5-7', 1, 'c1'), naam: 'M' };
+    a.clubtrainingen.bewaar(c);
+    await wachtTot(() => !!b.clubtrainingen.haal('c1'), 10000, 'circuittraining');
+    const naam = 'Maandagavond op het hoofdveld';
+    for (let i = 1; i <= naam.length; i += 1) {
+      a.clubtrainingen.bewaar({ ...a.clubtrainingen.haal('c1')!, naam: naam.slice(0, i), gewijzigd: Date.now() });
+      expect(a.clubtrainingen.haal('c1')!.naam).toBe(naam.slice(0, i));
+      await new Promise((r) => setTimeout(r, i % 3));
+    }
+    await wachtTot(() => b.clubtrainingen.haal('c1')?.naam === naam, 10000, 'hele naam op het andere toestel');
+    expect(a.clubtrainingen.haal('c1')!.naam).toBe(naam);
     sa.stop();
     sb.stop();
   });

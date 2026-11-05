@@ -539,8 +539,8 @@ export const EN: Record<string, string> = {
   Nee: 'No',
 
   // ---- teams ----
-  'Met een team deel je oefeningen en teamtrainingen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).':
-    'With a team you share drills and team sessions with other coaches. To do that you log in (free, with your email address).',
+  'Met een team deel je oefeningen, teamtrainingen, circuittrainingen en wedstrijdplannen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).':
+    'With a team you share drills, team sessions, circuit sessions and match plans with other coaches. For this you need to log in (free, with your email address).',
   'Inloggen of account maken': 'Log in or create account',
   'Online opslag wordt nog ingesteld.': 'Online storage is still being set up.',
   lid: 'member',
@@ -575,6 +575,21 @@ export const EN: Record<string, string> = {
   'Gedeeld door jou': 'Shared by you',
   'Gedeeld door {naam}': 'Shared by {naam}',
   'Gedeelde teamtrainingen': 'Shared team sessions',
+  'Gedeelde circuittrainingen': 'Shared circuit sessions',
+  jij: 'you',
+  'Nog niets gedeeld. Open een circuittraining en kies "Delen met team".': 'Nothing shared yet. Open a circuit session and choose "Share with team".',
+  'Kopiëren naar mijn circuittrainingen': 'Copy to my circuit sessions',
+  'Circuittraining niet gevonden': 'Circuit session not found',
+  'Dit is te groot om met het team te delen.': 'This is too large to share with the team.',
+  'Pas je circuittraining aan en tik daarna weer op "Delen met team".': 'Change your circuit session, then tap "Share with team" again.',
+  'Gedeelde oefening': 'Shared drill',
+  'Je hebt een oefening gekregen': "You've been sent a drill",
+  'Opslaan in mijn eigen oefeningen': 'Save to my drills',
+  'Gedeelde oefening openen via een link': 'Open a shared drill from a link',
+  'Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Eigen oefeningen → Gedeelde oefening openen via een link**.':
+    'Already have {app} on your home screen? Copy this link, open the app and choose **My drills → Open a shared drill from a link**.',
+  'Oefening: {w0}': 'Drill: {w0}',
+  'Gedeelde spelhervatting': 'Shared set piece',
   'Nog niets gedeeld. Open een teamtraining en kies "Delen met team".': 'Nothing shared yet. Open a team session and choose "Share with team".',
   'Gedeelde opstellingen en tactiekborden': 'Shared line-ups and tactics boards',
   'Nog niets gedeeld. Open een opstelling, tactiekbord of spelhervatting en kies "Delen met team".': 'Nothing shared yet. Open a line-up, tactics board or set piece and choose "Share with team".',

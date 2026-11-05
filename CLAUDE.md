@@ -37,6 +37,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/data/leeftijden.ts` — leeftijdsgroepen (`Oefening.leeftijden`, `pastBijLeeftijd`); mini-oefeningen `veld-mt-…` in `tools/nieuw/mini-030a–d.cjs` met `mini-hulp.cjs`.
 - Zichtbare namen (0.31.1): Teamtraining (code: training) en Circuittraining (code: club/clubtraining). Routes, sleutels en collecties houden de oude namen; alleen tekst in `t()` en `en.ts` gebruikt de nieuwe.
 - `src/styles/start.css` — startscherm. `src/clubtraining/` — Circuittraining (0.31.0): `clubtraining.ts` puur (stations, rotatie, partijvelden, materiaal, deellink, timer), `opslag.ts`; schermen `src/screens/club/`. Deellink `#/c/<code>` werkt zonder installeren (zie `App.tsx`).
+- Delen met team (0.31.2): `TeamItem.soort` ook `clubtraining`; `src/screens/club/TeamClub.tsx` en `ClubWeergave` (ook de trainerslink); `src/eigen/meenemen.ts` (`meeTeNemen`: eigen en team-oefeningen gaan als kopie mee), `src/screens/eigen/GedeeldeOefening.tsx` (link `#/o/…`), `LinkOpenen` in `screens/training/onderdelen.tsx`, `src/components/OefeningBlokken.tsx`.
 - `src/engine/platform.ts` — toestel/browser + `kiesScherm` (installatiescherm of app); `src/screens/installeren/`.
 - `src/editor/editor.ts` — pure editorlogica (palet, aanraken, slepen/draaien/maat, lijnen, ongedaan maken, benodigdheden, bevriezen); `src/eigen/` — eigen oefeningen (opslag, kopiëren, delen); `src/screens/eigen/` — lijst, nieuw, Tekenen, Gegevens.
 - `src/styles/thema.css` — veld/teamkleuren (vast) + standaard app-kleuren; `src/engine/thema.ts` — clubkleuren (8 thema's × licht/donker), toegepast als CSS-variabelen. Gebruik in CSS `--primair-tekst` voor de themakleur als tekst (niet `--primair`), en `--op-…` voor tekst op een gekleurd vlak (nooit `#fff`).
@@ -81,6 +82,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `online.mjs [url]` — account, eerste keer samenvoegen, teams (code, delen, rollen) met twee testaccounts tegen de
   Firebase-emulator (`npm run emulator` moet draaien; zet `trainersapp.emulator=1`). Blad: `blad-online.png`.
   Met `ECHT=1` tegen het echte project (`toptraining-40a90`): ruimt de testaccounts vooraf en na afloop op via de app.
+- `tools/firebase-leeg.cjs` — alleen lezen: telt accounts, teams en documenten in het echte project; na testen moet er alleen het eigen account staan (met zijn eigen teams).
 - `online-opruimen.mjs [url]` — testaccounts test1/test2@example.com in het echte project verwijderen (via "Account verwijderen").
 - `deel-a.mjs [url]` — 0.17.0: Training maken (4+1, datumveld, geen lege), Training genereren (slepen, Andere oefening, geen passende), looplijnen-knop, doelnet 2D/3D + palet, Spelers/geen Combinatievorm, exporteren/importeren. Blad: `blad-deel-a.png`.
 - `deel-b.mjs [url]` — 0.18.0: Wedstrijd-tegel, opstelling (slepen/tikken/ruilen/bank/positie verslepen, formatie, spelvorm, namen, link), tactiekbord vanuit opstelling (editor, lijnen wissen, 2D/3D), spelhervattingen (voorbeeld + beginsituatie), gedeelde link op een ander toestel. Blad: `blad-deel-b.png`.
@@ -93,6 +95,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `pas.mjs set <lopen|keeper|spelers|kort>` of `pas.mjs <id> <wie> <t0> <t1>` — filmstrip van één persoon van dichtbij/opzij (voeten, knieën, armen beoordelen). Blad: `blad-pas-<naam>.png`.
 - `versie-030.mjs [url]` — 0.30.0: leeftijdsfilter (ook onthouden), bij de oefening, Training maken (oranje markering), genereren, 1 tegen 1 en Help in NL/EN op iPhone SE en laptop. Blad: `blad-030.png`.
 - `versie-0311.mjs [url]` — 0.31.1: startscherm op 7 formaten in NL/EN, hernoemde schermen zonder oude namen, oude clublink. Bladen: `blad-0311-nl.png`, `blad-0311-en.png`, `blad-0311-schermen.png`.
+- `team-delen.mjs [url]` — 0.31.2: delen met team met twee testaccounts in NL/EN op telefoon en laptop (`npm run emulator`): alles wat je kunt maken heeft beide knoppen, openen, kopiëren, aanpassen, terugtrekken, beheerder verwijdert, oefeninglink. Bladen: `blad-team-<taal>-<formaat>.png`. Met `ECHT=1` tegen het echte project (NL, laptop), testaccounts vooraf en na afloop weg.
+- `sync-race.mjs [url]` — 0.31.2: naam typen op verschillende snelheden en bord maken + herladen, ingelogd tegen de emulator.
 - `club.mjs [url]` — 0.31.0: Clubtraining op iPhone SE en laptop in NL/EN: leeg opruimen, genereren, kiezen, veldplan, rotatie, afvinken, timer, volgende week, deellink op een niet-geïnstalleerde telefoon, station in 3D/2D, 3/5/8 groepjes. Blad: `blad-club.png`.
 - `nieuw.mjs <id,id,…> [blad] [url]` — close-ups van (nieuwe) oefeningen: 3D op vier momenten + 2D, op één blad (`blad-<naam>.png`).
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
@@ -109,6 +113,9 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
   adressen. Na testen tegen het echte project: testaccounts en hun data verwijderen.
 
 ## Valkuilen
+- Sync: `bekend` = wat Firestore bevestigd heeft, niet wat we stuurden; zolang iets `onderweg` is telt de eigen versie (`koppelLijst` in `src/online/sync.ts`).
+- "Received message larger than max" in de online-tests is een kapot frame van de emulator, geen groot bericht (PLAN.md, 0.31.2); de test krijgt alleen dan een herkansing.
+- `innerText` geeft tekst met `text-transform: uppercase` in hoofdletters terug: vergelijk in e2e zonder hoofdlettergevoeligheid.
 - Categorieën: zo min mogelijk, geen maximum; spelers-oefeningen zonder bal → Loopcoördinatie (niet Spelletjes/Techniek), behalve Tikkertje met hesje en Overlopertje. De eerste categorie = het bestand.
 - Vitest onthoudt `import.meta.glob`: na een **nieuw** databestand eerst `rm -rf node_modules/.vitest-cache`, anders ziet `npm test` het bestand niet.
 - `@volgende` in een herhaling is cyclisch: de lijst moet precies de volgorde van passeerders zijn (simuleer de rijen even op papier).

@@ -4,26 +4,23 @@ import { Miniatuur } from '../../components/Miniatuur';
 import { alleOefeningen, vindOefening } from '../../data/oefeningen';
 import { isLeeftijd, LEEFTIJDEN } from '../../data/leeftijden';
 import { favorieten } from '../../engine/favorieten';
-import { eigenOefeningen } from '../../eigen/opslag';
-import { voorDelen } from '../../eigen/eigen';
+import { meeTeNemen } from '../../eigen/meenemen';
 import { ga } from '../../router';
 import { BLOKKEN, blokKandidaten, clubNaam, genereerAlles, genereerBlok, groepGrootte, MAX_GROEPJES, MAX_KINDEREN, MIN_GROEPJES, naarCode, stations, type Blok, type ClubTraining } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
 import { deelUrl, Toast, useToast } from '../training/onderdelen';
 import { blokNaam, blokStijl } from './onderdelen';
-import type { EigenOefening } from '../../model/types';
+import { DeelMetTeam } from '../online/Teams';
 import { t as vt } from '../../i18n/t';
 
 const bron = () => ({ alle: alleOefeningen(), favorieten: favorieten.alle(), toeval: Math.random });
 
 /** Link voor de trainers; eigen oefeningen gaan erin mee. */
 export function clubLink(c: ClubTraining): string {
-  const eigen = Object.values(c.blokken)
-    .map((id) => (id ? eigenOefeningen.haal(id) : undefined))
-    .filter((o): o is EigenOefening => !!o)
-    .map(voorDelen);
-  return `${location.origin}${import.meta.env.BASE_URL}#/c/${naarCode(c, eigen)}`;
+  const { eigen, nieuwId } = meeTeNemen(Object.values(c.blokken));
+  const blokken = Object.fromEntries(Object.entries(c.blokken).map(([blok, id]) => [blok, nieuwId(id)]));
+  return `${location.origin}${import.meta.env.BASE_URL}#/c/${naarCode({ ...c, blokken }, eigen)}`; // i18n-ok
 }
 
 export function ClubBewerk({ id }: { id: string }) {
@@ -156,6 +153,7 @@ export function ClubBewerk({ id }: { id: string }) {
             <Icoon naam="deel" maat={20} />
             {vt('Deel met trainers')}
           </button>
+          <DeelMetTeam soort="clubtraining" id={id} naam={clubNaam(c)} breed />
           {!klaar && <p className="klein">{vt('Nog niet alle blokken hebben een oefening.')}</p>}
           <button className="knop knop-breed" onClick={() => ga(`/club/${id}/timer`)}>
             <Icoon naam="afspelen" maat={20} />

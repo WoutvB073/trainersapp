@@ -288,6 +288,17 @@ export function uitWedstrijdCode(code: string): UitCode | null {
 }
 
 /** Code uit een geplakte link (#/w/…). */
+/** Gedeeld team-item lezen (null als het kapot is). Een bord houdt zijn soort en de koppeling met de voorbeeldtactiek. */
+export function leesTeamWedstrijd(soort: 'opstelling' | 'bord', data: string): UitCode | null {
+  try {
+    const d = JSON.parse(data) as Opstelling & Bord;
+    if (soort === 'opstelling') return { soort, opstelling: { naam: d.naam, datum: d.datum, spelvorm: d.spelvorm, formatie: d.formatie, plekken: d.plekken, wissels: d.wissels } };
+    return { soort, bord: { naam: d.naam, soort: d.soort === 'hervatting' ? 'hervatting' : 'tactiek', tekening: d.tekening, ...(typeof d.tactiek === 'string' ? { tactiek: d.tactiek } : {}) } };
+  } catch {
+    return null;
+  }
+}
+
 export function wedstrijdCodeUitLink(tekst: string): string | null {
   const m = /#\/w\/([A-Za-z0-9_-]+)/.exec(tekst.trim());
   return m ? m[1]! : null;

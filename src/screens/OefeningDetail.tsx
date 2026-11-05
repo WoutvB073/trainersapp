@@ -9,6 +9,7 @@ import { aantalTekst, Labels } from '../components/Labels';
 import { NietGevonden } from './NietGevonden';
 import { Hartje } from '../components/Filters';
 import { DeelMetTeam, TeamItemActies } from './online/Teams';
+import { DeelOefeningKnop } from './eigen/GedeeldeOefening';
 import { ga, terug, vervang } from '../router';
 import { eigenOefeningen, useEigenOefeningen } from '../eigen/opslag';
 import { inBibliotheek, kopieerNaarEigen } from '../eigen/eigen';
@@ -94,6 +95,7 @@ function Acties({ oefening }: { oefening: Oefening }) {
         <Icoon naam="prullenbak" maat={18} />
         {t('Verwijderen')}
       </button>
+      <DeelOefeningKnop o={o} />
       <DeelMetTeam soort="oefening" id={o.id} naam={o.naam} />
     </div>
   );
