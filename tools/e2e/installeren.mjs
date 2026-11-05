@@ -50,6 +50,62 @@ async function nieuwePagina(ua, w, h, taal, extra = {}, verzoek = false) {
   return page;
 }
 
+/** Valt de pijl ergens over tekst of knoppen? Op drie scrollstanden, met de echte rechthoeken. */
+const overlap = (page) =>
+  page.evaluate(async () => {
+    const pijl = document.querySelector('.poort-pijl');
+    if (!pijl) return [];
+    const p = pijl.getBoundingClientRect();
+    const bak = document.querySelector('.poort-scroll');
+    const uit = [];
+    if (p.top < -1 || p.bottom > innerHeight + 1) uit.push(`pijl buiten beeld (${Math.round(p.top)}–${Math.round(p.bottom)} van ${innerHeight})`);
+    for (const stand of [0, 0.5, 1]) {
+      bak.scrollTop = (bak.scrollHeight - bak.clientHeight) * stand;
+      await new Promise((r) => requestAnimationFrame(r));
+      const zicht = bak.getBoundingClientRect();
+      for (const e of document.querySelectorAll('.poort h1, .poort h2, .poort h3, .poort p, .poort li, .poort button, .poort a, .poort input, .poort summary')) {
+        const b = e.getBoundingClientRect();
+        if (!b.width || !b.height) continue;
+        // Alleen wat zichtbaar is: de rest is weggescrold.
+        const boven = Math.max(b.top, zicht.top);
+        const onder = Math.min(b.bottom, zicht.bottom);
+        if (onder <= boven) continue;
+        const raak = onder > p.top + 0.5 && boven < p.bottom - 0.5 && b.right > p.left && b.left < p.right;
+        if (raak) uit.push(`${stand}: "${e.innerText.slice(0, 30)}"`);
+      }
+    }
+    bak.scrollTop = 0;
+    return uit;
+  });
+
+/** Telefoons met de browserbalk in beeld: wat er overblijft voor de pagina. */
+const BALK = [
+  ['iPhone SE, Safari-balk onderin', 375, 553],
+  ['iPhone, Safari-balk onderin', 390, 664],
+  ['Grote iPhone, Safari-balk onderin', 430, 740],
+  ['Klein scherm', 320, 480],
+];
+const balkShots = [];
+for (const x of lijst.filter((y) => !y.computer && !y.tablet)) {
+  for (const [naam, w, h] of BALK) {
+    for (const taal of ['nl', 'en']) {
+      const page = await nieuwePagina(x.ua, w, h, taal);
+      await page.goto(`${BASE}#/`, { waitUntil: 'domcontentloaded' });
+      await page.waitForSelector('.poort', { timeout: 10000 }).catch(() => {});
+      await page.evaluate(() => document.fonts.ready);
+      const r = await overlap(page);
+      for (const o of r) problemen.push(`${x.naam} · ${naam} · ${taal}: pijl over ${o}`);
+      if (taal === 'nl' && /iPhone Safari \(iOS 18\)|iPhone WhatsApp|Android Chrome$/.test(x.naam)) {
+        const p = `${MAP}inst-balk-${balkShots.length}.png`;
+        await page.screenshot({ path: p });
+        balkShots.push([p, `${x.naam} · ${naam}`]);
+      }
+      await page.browserContext().close();
+    }
+  }
+}
+await blad(browser, balkShots, `${MAP}blad-inst-balk.png`, 6, 2400);
+
 for (const x of lijst) {
   const formaat = x.computer ? [1366, 800] : x.tablet ? (x.sleutel.startsWith('android') ? [800, 1280] : [820, 1180]) : [375, 667];
   for (const taal of ['nl', 'en']) {
@@ -104,6 +160,7 @@ for (const x of lijst) {
     if (r.breed > 0) problemen.push(`${waar}: ${r.breed}px horizontaal scrollen`);
     if (r.kap.length) problemen.push(`${waar}: afgekapt: ${r.kap.join(' | ')}`);
     if (!r.pijlInBeeld) problemen.push(`${waar}: pijl "Begin hier" niet helemaal in beeld`);
+    for (const o of await overlap(page)) problemen.push(`${waar}: pijl over ${o}`);
     // Chrome/Edge/Samsung op Android: met installatieverzoek de knop Installeren (geen pijl), anders de pijl naar het menu.
     const knop = r.knoppen.some((k) => k === 'Installeren' || k === 'Install');
     const verwacht = x.computer || knop ? undefined : x.tablet && PIJL[x.sleutel] ? 'boven-rechts' : PIJL[x.sleutel]; // tablet: knoppen bovenin

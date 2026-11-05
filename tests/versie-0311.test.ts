@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { leesHash } from '../src/router';
 import { uitCode as uitClubCode } from '../src/clubtraining/clubtraining';
-import { naarBase64Url, uitCode } from '../src/training/training';
+import { uitCode } from '../src/training/training';
 import { sleutelVoor } from '../src/engine/account';
 import { EN as en } from '../src/i18n/en';
 import { HELP_EN, HELP_NL } from '../src/help/inhoud';
@@ -10,6 +10,9 @@ import { HELP_EN, HELP_NL } from '../src/help/inhoud';
 import { sleutels } from '../tools/i18n/scan.mjs';
 
 /** Versie 0.31.1: nieuwe namen (Teamtraining, Circuittraining). Adressen, opslag en links blijven hetzelfde. */
+
+/** Links van vóór 0.31.3: niet gecomprimeerd. */
+const naarBase64Url = (tekst: string) => Buffer.from(tekst, 'utf8').toString('base64url');
 
 const OUD_NL = /\bClubtraining|\bclubtraining|\bTraining maken\b|\bMijn trainingen\b|\bTraining genereren\b/;
 const OUD_EN = /\b[Cc]lub session|\bPlan a session\b|\bMy sessions\b|\bGenerate a session\b/;

@@ -293,8 +293,8 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   });
   await klik(t1.page, T('Delen'));
   await slaap(300);
-  const link = await t1.page.evaluate(() => navigator.clipboard.readText().catch(() => ''));
-  controle(/#\/o\/[A-Za-z0-9_-]+$/.test(link), `${waar}: link van de eigen oefening: ${link.slice(0, 80)}`);
+  const link = (await t1.page.evaluate(() => navigator.clipboard.readText().catch(() => ''))).split('\n').pop();
+  controle(/#\/d\/[A-Z2-9]{12}$/.test(link), `${waar}: link van de eigen oefening: ${link.slice(0, 80)}`);
 
   // ---------- Testtrainer 2 ----------
   const t2 = await toestel(vp, taal);
@@ -375,7 +375,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await vul(t2.page, '#deellink', link);
   await slaap(200);
   await klik(t2.page, T('Openen'), '.link-formulier button');
-  await wachtOp(t2.page, () => location.hash.startsWith('#/o/'), null, `${waar}: link plakken bij Eigen oefeningen`);
+  await wachtOp(t2.page, () => location.hash.startsWith('#/d/'), null, `${waar}: link plakken bij Eigen oefeningen`);
 
   // ---------- Aanpassen en terugtrekken door de eigenaar ----------
   await ga(t1.page, `/team/${teamId}/club/club-test`);

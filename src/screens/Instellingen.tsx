@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Kop } from '../components/Kop';
+import { useEigenLinks } from '../engine/deellink';
+import { meervoud } from '../components/Labels';
 import { Icoon, type IcoonNaam } from '../components/Icoon';
 import { isDonker, kiesThema, THEMAS, themaVariabelen, useThema, type Modus } from '../engine/thema';
 import { APP_NAAM, VERSIE } from '../config';
@@ -42,6 +44,22 @@ function AccountBlok() {
           {vt('Teams')}
         </button>
       </div>
+    </section>
+  );
+}
+
+/** Links die je op dit toestel deelde: alleen als die er zijn. */
+function LinksBlok() {
+  const lijst = useEigenLinks();
+  if (!lijst.length) return null;
+  return (
+    <section className="blok">
+      <h3>{vt('Mijn deellinks')}</h3>
+      <p className="klein">{vt('Hier trek je een link in die je hebt gedeeld.')}</p>
+      <button className="knop" onClick={() => ga('/links')}>
+        <Icoon naam="link" maat={18} />
+        {meervoud(lijst.length, 'link', 'links')}
+      </button>
     </section>
   );
 }
@@ -103,6 +121,7 @@ export function Instellingen() {
       <Kop titel={vt('Instellingen')} ouder="/" />
       <main className="inhoud smal">
         {onlineBeschikbaar() && <AccountBlok />}
+        <LinksBlok />
         <section className="blok">
           <h3>{vt('Help')}</h3>
           <p className="klein">{vt('Uitleg en tips voor alles in de app, van installeren tot tactiekbord.')}</p>

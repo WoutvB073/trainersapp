@@ -160,7 +160,7 @@ await page.evaluate(() => {
 await klik(page, 'Delen');
 await slaap(300);
 const melding = await page.evaluate(() => document.querySelector('.toast')?.textContent ?? '');
-const link = await page.evaluate(() => navigator.clipboard.readText());
+const link = (await page.evaluate(() => navigator.clipboard.readText())).split('\n').pop();
 controle(melding === 'Link gekopieerd' && link === viaDelen?.url, `Kopieer link: melding "${melding}", link ${link.slice(0, 60)}`);
 if (!link.includes('#/t/')) {
   console.log('PROBLEMEN:', problemen);

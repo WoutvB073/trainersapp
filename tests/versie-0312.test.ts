@@ -10,7 +10,7 @@ import { nieuweTekening } from '../src/editor/editor';
 import { teams, teamOefeningId, type Team } from '../src/engine/teams';
 import { vindOefening } from '../src/data/oefeningen';
 import { leesTeamWedstrijd, nieuwBord } from '../src/wedstrijd/wedstrijd';
-import { codeUitLink } from '../src/screens/training/onderdelen';
+import { linkDoel } from '../src/screens/training/onderdelen';
 import { EN as en } from '../src/i18n/en';
 import { HELP_EN, HELP_NL } from '../src/help/inhoud';
 
@@ -109,7 +109,7 @@ describe('eigen oefening delen via een link', () => {
     const code = oefeningNaarCode(voorDelen(o));
     expect(leesHash(`#/o/${code}`)).toEqual({ naam: 'oefening-gedeeld', code });
     expect(oefeningUitCode(code)).toMatchObject({ id: 'eigen-a', naam: 'Mijn rondo', eigen: true });
-    expect(codeUitLink(`https://x.nl/trainersapp/#/o/${code}`, 'o')).toBe(code);
+    expect(linkDoel(`https://x.nl/trainersapp/#/o/${code}`, 'o')).toBe(`/o/${code}`);
   });
   it('een kapotte link of iets anders dan een eigen oefening', () => {
     expect(oefeningUitCode('kapot')).toBeNull();
@@ -168,7 +168,7 @@ describe('overal beide manieren van delen', () => {
   it('elk scherm heeft een link en Delen met team', () => {
     expect(lees('training/TrainingBewerk.tsx')).toMatch(/soort="training"/);
     expect(lees('club/ClubBewerk.tsx')).toMatch(/soort="clubtraining"/);
-    expect(lees('club/ClubBewerk.tsx')).toMatch(/clubLink\(/);
+    expect(lees('club/ClubBewerk.tsx')).toMatch(/clubCode\(/);
     expect(lees('OefeningDetail.tsx')).toMatch(/soort="oefening"/);
     expect(lees('OefeningDetail.tsx')).toMatch(/DeelOefeningKnop/);
     expect(lees('wedstrijd/Wedstrijd.tsx')).toMatch(/soort="opstelling"/);

@@ -138,6 +138,37 @@ describe('teams', () => {
     await assertSucceeds(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c9'), { ...item('b'), data: 'x'.repeat(500000) }));
   });
 
+  it('deellinks: lezen met de code, geen lijst, aanmaken op eigen naam met een grens, intrekken alleen door de maker', async () => {
+    const CODE = 'ABCDEFGHJKMN';
+    const link = (maker: string) => ({ soort: 'c', data: 'zABC', maker, gemaakt: 1 });
+    // Aanmaken kan alleen ingelogd (ook anoniem) en op eigen naam.
+    await assertFails(setDoc(doc(db(null), 'links', CODE), link('a')));
+    await assertFails(setDoc(doc(db('a'), 'links', CODE), link('b')));
+    await assertSucceeds(setDoc(doc(db('a'), 'links', CODE), link('a')));
+    // Lezen kan iedereen die de code kent, ook niet ingelogd. Een lijst opvragen niet, ook niet als maker.
+    await assertSucceeds(getDoc(doc(db(null), 'links', CODE)));
+    await assertSucceeds(getDoc(doc(db('b'), 'links', CODE)));
+    await assertFails(getDocs(collection(db(null), 'links')));
+    await assertFails(getDocs(collection(db('a'), 'links')));
+    // Wijzigen kan niemand, ook de maker niet; een bestaande code overschrijven dus ook niet.
+    await assertFails(updateDoc(doc(db('a'), 'links', CODE), { data: 'zXYZ' }));
+    await assertFails(updateDoc(doc(db('b'), 'links', CODE), { data: 'zXYZ' }));
+    await assertFails(setDoc(doc(db('a'), 'links', CODE), link('a')));
+    await assertFails(setDoc(doc(db('b'), 'links', CODE), link('b')));
+    // Intrekken: alleen de maker.
+    await assertFails(deleteDoc(doc(db(null), 'links', CODE)));
+    await assertFails(deleteDoc(doc(db('b'), 'links', CODE)));
+    await assertSucceeds(deleteDoc(doc(db('a'), 'links', CODE)));
+    // Grens, velden, soort en vorm van de code.
+    await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMP'), { ...link('a'), data: 'x'.repeat(200001) }));
+    await assertSucceeds(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMQ'), { ...link('a'), data: 'x'.repeat(200000) }));
+    await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMR'), { ...link('a'), extra: 1 }));
+    await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMS'), { ...link('a'), soort: 'x' }));
+    await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMT'), { ...link('a'), data: '' }));
+    await assertFails(setDoc(doc(db('a'), 'links', 'kort'), link('a')));
+    await assertFails(setDoc(doc(db('a'), 'links', 'abcdefghjkmn'), link('a')));
+  });
+
   it('rollen: beheerders verwijderen leden, maken beheerders, vernieuwen de code; leden niet', async () => {
     await maakTeam(db('a'), 'a');
     await join(db('b'), 'b', 'ABC234');

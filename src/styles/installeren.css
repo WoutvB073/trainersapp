@@ -11,14 +11,37 @@
   gap: 18px;
 }
 
-/* Ruimte voor de wijzende pijl, zodat die de stappen niet bedekt. */
-.poort-pijl-onder-midden,
-.poort-pijl-onder-rechts {
-  padding-bottom: calc(env(safe-area-inset-bottom) + 110px);
+/*
+ * Met een wijzende pijl: het scherm is precies zo hoog als wat je ziet (ook met de Safari-balk onderin) en alleen het deel met de
+ * tekst scrolt. De pijl heeft zijn eigen strook aan de rand, dus hij kan nergens overheen vallen.
+ */
+.poort-scherm {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--achtergrond);
 }
 
-.poort-pijl-boven-rechts {
-  padding-top: calc(env(safe-area-inset-top) + 92px);
+.poort-scherm--boven-rechts {
+  flex-direction: column-reverse;
+}
+
+.poort-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.poort-scroll .poort {
+  min-height: 0;
+  padding-bottom: 16px;
+}
+
+.poort-scherm--boven-rechts .poort-scroll .poort {
+  padding-top: 12px;
 }
 
 .poort-kop {
@@ -194,19 +217,11 @@
 
 /* Wijzende pijl naar de knop in de browserbalk */
 .poort-pijl {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 20;
+  flex: none;
   display: flex;
   pointer-events: none;
-  padding: 18px max(14px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 4px) max(14px, env(safe-area-inset-left));
-}
-
-.poort-pijl--onder-midden,
-.poort-pijl--onder-rechts {
-  bottom: 0;
-  background: linear-gradient(to top, var(--achtergrond) 55%, transparent);
+  border-top: 1px solid var(--rand);
+  padding: 8px max(14px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 10px) max(14px, env(safe-area-inset-left));
 }
 
 .poort-pijl--onder-midden {
@@ -218,11 +233,11 @@
 }
 
 .poort-pijl--boven-rechts {
-  top: 0;
   justify-content: flex-end;
   padding-top: calc(env(safe-area-inset-top) + 10px);
-  padding-bottom: 18px;
-  background: linear-gradient(to bottom, var(--achtergrond) 55%, transparent);
+  padding-bottom: 8px;
+  border-top: 0;
+  border-bottom: 1px solid var(--rand);
 }
 
 .poort-pijl-binnen {
@@ -270,10 +285,6 @@
   .poort {
     padding-top: calc(env(safe-area-inset-top) + 16px);
     gap: 12px;
-  }
-  /* Ruimte voor de pijl bovenin blijft (anders schuift het logo eronder). */
-  .poort-pijl-boven-rechts {
-    padding-top: calc(env(safe-area-inset-top) + 84px);
   }
   .poort-logo {
     width: 56px;

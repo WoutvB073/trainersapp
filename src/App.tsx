@@ -34,6 +34,7 @@ import { Account, SamenvoegenVraag } from './screens/online/Account';
 import { Teams, TeamScherm, TeamTrainingScherm } from './screens/online/Teams';
 import { TeamClubScherm } from './screens/club/TeamClub';
 import { GedeeldeOefening } from './screens/eigen/GedeeldeOefening';
+import { DeelPaneel, GedeeldLink, InstalleerMelding, LinkFout, MijnLinks } from './screens/GedeeldLink';
 import { alGeinstalleerd, browserGekozen, isStandalone, kiesScherm, omgeving, zetBrowserGekozen, zetGeinstalleerd } from './engine/platform';
 
 // Als app geopend: onthouden, zodat de link in de browser later "Je hebt de app al" toont (0.29.1).
@@ -68,6 +69,12 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <GedeeldeTraining key={route.code} code={route.code} />;
     case 'oefening-gedeeld':
       return <GedeeldeOefening key={route.code} code={route.code} />;
+    case 'link':
+      return <GedeeldLink key={JSON.stringify(route)} code={route.code} station={route.station} partij={route.partij} />;
+    case 'link-fout':
+      return <LinkFout />;
+    case 'deellinks':
+      return <MijnLinks />;
     case 'club-lijst':
       return <ClubLijst />;
     case 'club':
@@ -127,6 +134,18 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
   }
 }
 
+/** Scherm voor een gedeelde link op een toestel zonder de app. */
+function gedeeldZonderApp(route: Route) {
+  const sleutel = JSON.stringify(route);
+  if (route.naam === 'gedeeld') return <GedeeldeTraining key={sleutel} code={route.code} nietGeinstalleerd />;
+  if (route.naam === 'club-gedeeld') return <ClubGedeeld key={sleutel} code={route.code} station={route.station} partij={route.partij} />;
+  if (route.naam === 'oefening-gedeeld') return <GedeeldeOefening key={sleutel} code={route.code} nietGeinstalleerd />;
+  if (route.naam === 'wedstrijd-gedeeld') return <GedeeldWedstrijd key={sleutel} code={route.code} nietGeinstalleerd />;
+  if (route.naam === 'link') return <GedeeldLink key={sleutel} code={route.code} station={route.station} partij={route.partij} nietGeinstalleerd />;
+  if (route.naam === 'link-fout') return <LinkFout />;
+  return null;
+}
+
 /**
  * Geïnstalleerd: de app. In de browser: het installatiescherm (of "Je hebt de app al"), altijd met
  * "Gewoon in de browser gebruiken" (keuze wordt onthouden, ook op een telefoon sinds 0.29.1).
@@ -141,15 +160,16 @@ export function App() {
     setGekozen(aan);
     window.scrollTo(0, 0);
   };
-  // Een gedeelde training (link) kun je ook zonder de app bekijken, met uitleg hoe je hem in de app krijgt.
-  if (scherm !== 'app' && route.naam === 'gedeeld' && !installatieGetoond) {
-    return <GedeeldeTraining code={route.code} nietGeinstalleerd opInstalleren={() => setInstallatieGetoond(true)} />;
+  // Een gedeelde link opent altijd meteen de inhoud, ook in een ingebouwde browser: de installatie-uitleg staat er alleen als verwijzing onder.
+  const gedeeld = scherm !== 'app' && !installatieGetoond ? gedeeldZonderApp(route) : null;
+  if (gedeeld) {
+    return (
+      <>
+        {gedeeld}
+        <InstalleerMelding opTik={() => setInstallatieGetoond(true)} />
+      </>
+    );
   }
-  if (scherm !== 'app' && route.naam === 'oefening-gedeeld' && !installatieGetoond) {
-    return <GedeeldeOefening code={route.code} nietGeinstalleerd opInstalleren={() => setInstallatieGetoond(true)} />;
-  }
-  // De link voor de trainers werkt altijd direct, zonder installeren of inloggen.
-  if (scherm !== 'app' && route.naam === 'club-gedeeld') return <ClubGedeeld key={JSON.stringify(route)} code={route.code} station={route.station} partij={route.partij} />;
   if (scherm !== 'app') return <Installeren alGeinstalleerd={scherm === 'al-geinstalleerd'} computer={!omgeving.mobiel} opBrowserGekozen={() => kies(true)} />;
   return <AppSchermen opInstalleren={isStandalone() ? undefined : () => kies(false)} />;
 }
@@ -174,6 +194,7 @@ function AppSchermen({ opInstalleren }: { opInstalleren?: () => void }) {
     <>
       <Scherm route={route} opInstalleren={opInstalleren} />
       <SamenvoegenVraag />
+      <DeelPaneel />
       {nieuweVersie && (
         <div className="melding" role="status">
           <span>{t('Er is een nieuwe versie')}</span>

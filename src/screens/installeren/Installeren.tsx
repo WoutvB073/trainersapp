@@ -91,8 +91,8 @@ export function Installeren({ computer = false, alGeinstalleerd = false, opBrows
     if (await vraagInstallatie()) setGelukt(true);
   };
 
-  return (
-    <div className={`poort${pijl ? ` poort-pijl-${pijl}` : ''}`}>
+  const inhoud = (
+    <div className="poort">
       <Kop />
 
       <section className="poort-kaart" aria-labelledby="poort-stappen">
@@ -179,17 +179,21 @@ export function Installeren({ computer = false, alGeinstalleerd = false, opBrows
       )}
 
       <BrowserKnop opBrowserGekozen={opBrowserGekozen} tekst={t('Gewoon in de browser gebruiken')} />
-
-      {pijl && (
-        <div className={`poort-pijl poort-pijl--${pijl}`} aria-hidden="true">
-          <div className="poort-pijl-binnen">
-            <span className="poort-pijl-label">{t('Begin hier')}</span>
-            <svg viewBox="0 0 24 24" width="34" height="34">
-              <path d="M12 3v17M5 13l7 7 7-7" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
+    </div>
+  );
+  if (!pijl) return inhoud;
+  // De pijl staat in een eigen strook, buiten het deel dat scrolt: zo ligt hij nooit over tekst of knoppen.
+  return (
+    <div className={`poort-scherm poort-scherm--${pijl}`}>
+      <div className="poort-scroll">{inhoud}</div>
+      <div className={`poort-pijl poort-pijl--${pijl}`} aria-hidden="true">
+        <div className="poort-pijl-binnen">
+          <span className="poort-pijl-label">{t('Begin hier')}</span>
+          <svg viewBox="0 0 24 24" width="34" height="34">
+            <path d="M12 3v17M5 13l7 7 7-7" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </div>
-      )}
+      </div>
     </div>
   );
 }
