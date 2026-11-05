@@ -412,6 +412,14 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await wachtOp(t1.page, () => !document.body.innerText.includes('Testcircuit'), null, `${waar}: beheerder heeft verwijderd`);
   await foto(t1.page, 'na', 'Team na terugtrekken en verwijderen');
 
+  // De deellink van deze test intrekken: het account wordt straks op een ander toestel verwijderd, dat deze link niet kent.
+  await ga(t1.page, '/links');
+  for (let i = 0; i < 4; i += 1) {
+    await t1.page.evaluate(() => document.querySelector('.training-regel .icoon-knop')?.click());
+    await slaap(700);
+  }
+  controle((await t1.page.$$('.training-regel')).length === 0, `${waar}: deellink niet ingetrokken`);
+
   await t1.context.close();
   await t2.context.close();
   await blad(browser, shots, `${MAP}blad-team-${taal}-${formaat}.png`, formaat === 'telefoon' ? 6 : 3, 2600);
