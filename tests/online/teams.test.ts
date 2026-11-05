@@ -6,13 +6,24 @@ import { leesTeamTraining } from '../../src/engine/teams';
 import { leesTeamClub, nieuweClub, uitGedeeldeClub, voorTeam } from '../../src/clubtraining/clubtraining';
 
 beforeEach(leegmaken);
-afterEach(opruimen);
+// Ook na een mislukte test de luisteraars stoppen vóór de verbinding dichtgaat (anders volgen er losse fouten).
+const luisteraars: (() => void)[] = [];
+afterEach(async () => {
+  for (const stop of luisteraars.splice(0)) stop();
+  await opruimen();
+});
 
 async function persoon(email: string, naam: string) {
   const v = await toestel(email, naam);
   const ik: Ik = { db: v.db, uid: v.uid, naam };
   let teams: Team[] = [];
-  const stop = volgTeams(ik, (l) => (teams = l));
+  const volg = volgTeams(ik, (l) => (teams = l));
+  let actief = true;
+  const stop = () => {
+    if (actief) volg();
+    actief = false;
+  };
+  luisteraars.push(stop);
   return { ik, stop, teams: () => teams };
 }
 

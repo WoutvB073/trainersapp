@@ -12,8 +12,23 @@ import type { Bord, Opstelling } from '../../src/wedstrijd/wedstrijd';
 
 const PROJECT = 'demo-toptraining';
 
+/**
+ * De Firestore-emulator verstuurt soms twee berichten tegelijk over één Listen-stream, waardoor ze door elkaar lopen (de frame-kop
+ * staat dan dubbel). De gRPC-client leest daarna inhoud als lengte: "Received message larger than max (203557642 vs 4194304)".
+ * De SDK wacht dan de maximale tijd voor hij opnieuw verbindt, langer dan een test duurt. Alleen tests die daardoor vastlopen
+ * krijgen een herkansing (zie vitest.online.config.ts); elke andere fout telt meteen. De app zelf gebruikt geen gRPC maar WebChannel.
+ */
+export const KAPOT_BERICHT = 'kapot gRPC-bericht van de emulator';
+let kapotBericht = false;
+const consoleFout = console.error;
+console.error = (...a: unknown[]) => {
+  if (a.some((x) => String(x).includes('Received message larger than max'))) kapotBericht = true;
+  consoleFout(...a);
+};
+
 /** Emulator leegmaken (accounts en database). */
 export async function leegmaken(): Promise<void> {
+  kapotBericht = false;
   await fetch(`http://127.0.0.1:8080/emulator/v1/projects/${PROJECT}/databases/(default)/documents`, { method: 'DELETE' });
   await fetch(`http://127.0.0.1:9099/emulator/v1/projects/${PROJECT}/accounts`, { method: 'DELETE' });
 }
@@ -120,5 +135,5 @@ export async function wachtTot(f: () => boolean, ms = 10000, wat = ""): Promise<
     if (f()) return;
     await new Promise((r) => setTimeout(r, 50));
   }
-  throw new Error(`Wachten duurde te lang${wat ? `: ${wat}` : ''}`);
+  throw new Error(`Wachten duurde te lang${wat ? `: ${wat}` : ''}${kapotBericht ? ` (${KAPOT_BERICHT})` : ''}`);
 }
