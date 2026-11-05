@@ -208,6 +208,10 @@ export function volgTeams(ik: Ik, opLijst: (teams: Team[]) => void, opFout: () =
     const x: { stop: Unsubscribe[]; team?: Omit<Team, 'leden' | 'items' | 'rol'>; leden: TeamLid[]; items: TeamItem[] } = { stop: [], leden: [], items: [] };
     per.set(id, x);
     const nietMeer = () => later(() => weg(id, true));
+    // Alleen "geen toegang" betekent dat je er niet meer in zit. Een andere fout (storing, quotum) is geen reden om het team uit je lijst te halen.
+    const opFoutTeam = (e: { code?: string }) => {
+      if (e.code === 'permission-denied') nietMeer();
+    };
     x.stop.push(
       onSnapshot(
         teamPad(ik.db, id),
@@ -218,7 +222,7 @@ export function volgTeams(ik: Ik, opLijst: (teams: Team[]) => void, opFout: () =
           x.team = { id, naam: d.naam, code: d.code, maker: d.maker };
           melden();
         },
-        nietMeer,
+        opFoutTeam,
       ),
       onSnapshot(
         collection(ik.db, 'teams', id, 'leden'),
@@ -227,7 +231,7 @@ export function volgTeams(ik: Ik, opLijst: (teams: Team[]) => void, opFout: () =
           if (!x.leden.some((l) => l.uid === ik.uid)) return s.metadata.fromCache ? undefined : nietMeer();
           melden();
         },
-        nietMeer,
+        opFoutTeam,
       ),
       onSnapshot(
         collection(ik.db, 'teams', id, 'items'),
@@ -235,7 +239,7 @@ export function volgTeams(ik: Ik, opLijst: (teams: Team[]) => void, opFout: () =
           x.items = s.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<TeamItem, 'id'>) }));
           melden();
         },
-        nietMeer,
+        opFoutTeam,
       ),
     );
   };

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { disableNetwork, doc, enableNetwork, getDoc, setDoc, terminate } from 'firebase/firestore';
-import { leegmaken, lokaleOpslag, synchroniseer, toestel, wachtTot, opruimen } from './hulp';
+import { HERKANSING, leegmaken, lokaleOpslag, synchroniseer, toestel, wachtTot, opruimen } from './hulp';
 import { nieuweEigen } from '../../src/eigen/eigen';
 import { nieuweTekening } from '../../src/editor/editor';
 import { nieuweTraining } from '../../src/training/training';
@@ -13,7 +13,7 @@ afterEach(opruimen);
 
 const oefening = (id: string, naam: string, nu = Date.now()) => ({ ...nieuweEigen(nieuweTekening('leeg'), 'veld', nu, id), naam, categorieen: ['techniek'] });
 
-describe('synchroniseren tussen twee toestellen (zelfde account)', () => {
+describe('synchroniseren tussen twee toestellen (zelfde account)', { retry: HERKANSING }, () => {
   it('oefeningen, trainingen, favorieten en instellingen komen op het andere toestel', async () => {
     const tel = await toestel('test1@example.com');
     const lap = await toestel('test1@example.com');

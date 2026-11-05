@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { inEmulator, leegmaken, toestel, wachtTot, opruimen } from './hulp';
+import { HERKANSING, inEmulator, leegmaken, toestel, wachtTot, opruimen } from './hulp';
 import { deelItem, hefTeamOp, joinTeam, maakTeam, verlaatTeam, vernieuwCode, verwijderItem, verwijderLid, verlaatAlleTeams, volgTeams, zetRol, type Ik } from '../../src/online/teamsOnline';
 import type { Team } from '../../src/engine/teams';
 import { leesTeamTraining } from '../../src/engine/teams';
@@ -27,7 +27,7 @@ async function persoon(email: string, naam: string) {
   return { ik, stop, teams: () => teams };
 }
 
-describe('teams', () => {
+describe('teams', { retry: HERKANSING }, () => {
   it('team maken, joinen met de code, verkeerde code geeft een duidelijke melding', async () => {
     const trainer1 = await persoon('test1@example.com', 'Testtrainer 1');
     const trainer2 = await persoon('test2@example.com', 'Testtrainer 2');

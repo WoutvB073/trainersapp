@@ -1151,7 +1151,9 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - Instellingen: twee toestellen met dezelfde tijd en andere inhoud bleven eindeloos schrijven; een wijziging zonder nieuwe tijd (net na het opstarten) ging verloren. Nu telt wat de vorige keer gelijk was (`bekend`, zonder tijd).
   - Lijsten: iets maken en meteen verwijderen kwam terug (fout uit 0.31.2): vergelijken met wat wij stuurden, bewaren wat bevestigd is.
   - Spelerslijst: staat niet online, een nieuw toestel vult hem uit de opstellingen (`vulAanAls`).
-  - Getest en in orde: snel afvinken, thema, taal, aantallen, leeftijd, opstellingen, borden, eerste keer samenvoegen. Teams schrijven rechtstreeks naar Firestore en lopen niet via deze route.
+  - Teams (`volgTeams`): elke fout van een luisteraar gold als "niet meer in het team" en haalde het team uit je lijst; nu alleen bij "geen toegang" (`tests/teams-fouten.test.ts`).
+  - Getest en in orde: snel afvinken, thema, taal, aantallen, leeftijd, opstellingen, borden, eerste keer samenvoegen. Team-items schrijven rechtstreeks naar Firestore en lopen niet via deze route.
+  - Emulator: naast de kapotte berichten (0.31.2) crasht hij soms een schrijfstream ("Application error processing RPC"), en een schrijfactie wordt in de browser soms pas na precies 30 seconden bevestigd. Niets gaat verloren en op het echte project is dit niet gezien. Online-tests krijgen alleen dan een herkansing (`HERKANSING` in `tests/online/hulp.ts`).
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)

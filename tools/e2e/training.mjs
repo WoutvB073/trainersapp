@@ -152,7 +152,7 @@ await page.evaluate(() => {
 await klik(page, 'Delen');
 await slaap(300);
 const viaDelen = await page.evaluate(() => window.__gedeeld);
-controle(viaDelen?.url?.includes('#/t/') && viaDelen.title === 'Dinsdag JO11-1', `Deelmenu: ${JSON.stringify(viaDelen)}`);
+controle(viaDelen?.text?.startsWith('Teamtraining: Dinsdag JO11-1\n') && viaDelen.text.includes('#/t/') && viaDelen.title === 'Dinsdag JO11-1', `Deelmenu: ${JSON.stringify(viaDelen)?.slice(0, 200)}`);
 // 2) Zonder deelmenu: link kopiëren.
 await page.evaluate(() => {
   navigator.share = undefined;
@@ -161,7 +161,7 @@ await klik(page, 'Delen');
 await slaap(300);
 const melding = await page.evaluate(() => document.querySelector('.toast')?.textContent ?? '');
 const link = (await page.evaluate(() => navigator.clipboard.readText())).split('\n').pop();
-controle(melding === 'Link gekopieerd' && link === viaDelen?.url, `Kopieer link: melding "${melding}", link ${link.slice(0, 60)}`);
+controle(melding === 'Link gekopieerd' && link === viaDelen?.text?.split('\n').pop(), `Kopieer link: melding "${melding}", link ${link.slice(0, 60)}`);
 if (!link.includes('#/t/')) {
   console.log('PROBLEMEN:', problemen);
   process.exit(1);

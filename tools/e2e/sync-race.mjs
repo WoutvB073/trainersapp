@@ -141,7 +141,7 @@ await page.evaluate((uid) => {
   localStorage.setItem(k, JSON.stringify(d));
 }, uid);
 await ga('/account');
-await page.waitForFunction(() => document.querySelector('.sync-regel')?.textContent.includes('Alles staat online'), { timeout: 20000 }).catch(() => problemen.push('toestel 1 komt niet op Alles staat online'));
+await page.waitForFunction(() => document.querySelector('.sync-regel')?.textContent.includes('Alles staat online'), { timeout: 45000 }).catch(() => problemen.push('toestel 1 komt niet op Alles staat online')); // de emulator bevestigt soms pas na precies 30 seconden
 const nieuw = await browser.createBrowserContext();
 const p2 = await nieuw.newPage();
 await alsGeinstalleerd(p2);
