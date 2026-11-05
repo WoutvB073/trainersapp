@@ -133,6 +133,9 @@ describe('teams', () => {
     // Andere soorten en extra velden blijven verboden.
     await assertFails(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c6'), item('b', 'circuittraining')));
     await assertFails(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c7'), { ...item('b'), extra: 1 }));
+    // De grens van 500 KB geldt ook hier.
+    await assertFails(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c8'), { ...item('b'), data: 'x'.repeat(500001) }));
+    await assertSucceeds(setDoc(doc(db('b'), 'teams', 't1', 'items', 'c9'), { ...item('b'), data: 'x'.repeat(500000) }));
   });
 
   it('rollen: beheerders verwijderen leden, maken beheerders, vernieuwen de code; leden niet', async () => {

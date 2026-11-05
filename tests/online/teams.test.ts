@@ -82,6 +82,8 @@ describe('teams', () => {
     // Een lid kan het item niet overschrijven of terugtrekken.
     await expect(deelItem(trainer2.ik, id, { id: 'c1', soort: 'clubtraining', naam: 'Gekaapt', data: '{}' })).rejects.toThrow();
     await expect(verwijderItem(trainer2.ik, id, 'c1')).rejects.toThrow();
+    // Te groot: een duidelijke melding, en er komt niets in het team.
+    await expect(deelItem(trainer1.ik, id, { id: 'c9', soort: 'clubtraining', naam: 'Groot', data: 'x'.repeat(500001) })).rejects.toThrow(/te groot/);
     // Nog eens delen werkt het bij.
     await deelItem(trainer1.ik, id, { id: 'c1', soort: 'clubtraining', naam: 'Dinsdag', data: voorTeam({ ...c, naam: 'Dinsdag' }) });
     await wachtTot(() => trainer2.teams()[0]?.items[0]?.naam === 'Dinsdag', 15000, 'bijgewerkte circuittraining');

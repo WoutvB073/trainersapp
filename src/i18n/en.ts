@@ -579,6 +579,7 @@ export const EN: Record<string, string> = {
   'Nog niets gedeeld. Open een circuittraining en kies "Delen met team".': 'Nothing shared yet. Open a circuit session and choose "Share with team".',
   'Kopiëren naar mijn circuittrainingen': 'Copy to my circuit sessions',
   'Circuittraining niet gevonden': 'Circuit session not found',
+  'Dit is te groot om met het team te delen.': 'This is too large to share with the team.',
   'Pas je circuittraining aan en tik daarna weer op "Delen met team".': 'Change your circuit session, then tap "Share with team" again.',
   'Gedeelde oefening': 'Shared drill',
   'Je hebt een oefening gekregen': "You've been sent a drill",

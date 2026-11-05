@@ -145,7 +145,9 @@ const wachtOp = async (page, f, arg, wat, ms = ECHT ? 40000 : 15000) => {
     await page.screenshot({ path: `${MAP}team-fout-${problemen.length}.png` }).catch(() => {});
   }
 };
-const wachtTekst = (page, tekst, wat) => wachtOp(page, (t) => document.body.innerText.includes(t), tekst, wat);
+const wachtTekst = (page, tekst, wat) => wachtOp(page, (t) => document.body.innerText.toLowerCase().includes(t.toLowerCase()), tekst, wat);
+/** Tekst op de pagina, in kleine letters: kopjes staan met text-transform in hoofdletters. */
+const bevat = async (page, t) => (await page.evaluate(() => document.body.innerText)).toLowerCase().includes(t.toLowerCase());
 const wachtTeams = (page, wat) =>
   wachtOp(page, () => Object.keys(localStorage).some((k) => k.startsWith('trainersapp.u.') && k.endsWith('.teams') && (JSON.parse(localStorage.getItem(k) ?? '[]') ?? []).length > 0), null, wat);
 const ga = async (page, pad) => {
@@ -302,8 +304,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await wachtOp(t2.page, () => document.querySelectorAll('.lid-regel').length === 2 && document.body.innerText.includes('Testcircuit'), null, `${waar}: team bij Testtrainer 2`);
   await foto(t2.page, 'team', 'Team bij Testtrainer 2');
   await opmaak(t2.page, `${waar} team`);
-  const pagina = await t2.page.evaluate(() => document.body.innerText);
-  controle(pagina.includes(T('Gedeelde circuittrainingen')), `${waar}: geen kopje Gedeelde circuittrainingen`);
+  controle(await bevat(t2.page, T('Gedeelde circuittrainingen')), `${waar}: geen kopje Gedeelde circuittrainingen`);
   const regel = await t2.page.evaluate(() => [...document.querySelectorAll('.training-regel')].find((r) => r.textContent.includes('Testcircuit'))?.textContent ?? '');
   controle(regel.includes(T('Gedeeld door {naam}', { naam: 'Testtrainer 1' })), `${waar}: naam van wie deelde: "${regel}"`);
   const borden = await t2.page.evaluate(() => [...document.querySelectorAll('.rij-sub')].map((x) => x.textContent).join(' | '));
@@ -316,8 +317,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await wachtOp(t2.page, () => !!document.querySelector('.gedeeld-kop'), null, `${waar}: gedeelde circuittraining`);
   await foto(t2.page, 'circuit', 'Gedeelde circuittraining bij Testtrainer 2');
   await opmaak(t2.page, `${waar} circuit`);
-  const inhoud = await t2.page.evaluate(() => document.body.innerText);
-  for (const t of [T('Gedeeld door {naam}', { naam: 'Testtrainer 1' }), 'Testcircuit', T('Rotatieschema'), T('Materiaal'), T('Open jouw station'), T('Extra voor de partijvelden')]) controle(inhoud.includes(t), `${waar}: "${t}" ontbreekt in de gedeelde circuittraining`);
+  for (const t of [T('Gedeeld door {naam}', { naam: 'Testtrainer 1' }), 'Testcircuit', T('Rotatieschema'), T('Materiaal'), T('Open jouw station'), T('Extra voor de partijvelden')]) controle(await bevat(t2.page, t), `${waar}: "${t}" ontbreekt in de gedeelde circuittraining`);
   controle((await t2.page.$$('.club-station-knoppen button')).length === 7, `${waar}: 6 stations + partijvelden verwacht`);
   controle(!(await heeftKnop(t2.page, T('Aanpassen'))), `${waar}: lid ziet Aanpassen`);
   const basis = await t2.page.evaluate(() => location.hash.slice(1));
@@ -377,7 +377,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   // ---------- Aanpassen en terugtrekken door de eigenaar ----------
   await ga(t1.page, `/team/${teamId}/club/club-test`);
   await wachtOp(t1.page, () => !!document.querySelector('.gedeeld-kop'), null, `${waar}: eigenaar opent zijn item`);
-  controle((await t1.page.evaluate(() => document.body.innerText)).includes(T('Gedeeld door jou')), `${waar}: eigenaar ziet niet Gedeeld door jou`);
+  controle(await bevat(t1.page, T('Gedeeld door jou')), `${waar}: eigenaar ziet niet Gedeeld door jou`);
   await foto(t1.page, 'eigenaar', 'Eigenaar: Aanpassen');
   await klik(t1.page, T('Aanpassen'));
   await wachtOp(t1.page, () => location.hash === '#/club/club-test', null, `${waar}: Aanpassen opent de eigen circuittraining`);
@@ -385,7 +385,8 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await t1.page.type('input[maxlength="80"]', 'Testcircuit nieuw');
   await slaap(300);
   await klik(t1.page, T('Delen met team'));
-  await wachtOp(t2.page, () => true, null, 'tijd');
+  await wachtTekst(t1.page, T('Gedeeld met {naam}', { naam: 'Testteam' }), `${waar}: opnieuw gedeeld`);
+  await slaap(500);
   await ga(t2.page, `/team/${teamId}`);
   await wachtTekst(t2.page, 'Testcircuit nieuw', `${waar}: bijgewerkte naam bij Testtrainer 2`);
   await ga(t1.page, `/team/${teamId}`);

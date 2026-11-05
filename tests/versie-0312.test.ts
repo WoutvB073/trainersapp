@@ -76,6 +76,33 @@ describe('circuittraining in een team', () => {
   });
 });
 
+describe('grootte van een gedeelde circuittraining', () => {
+  const GRENS = 500000; // firestore.rules; een document mag bij Firestore 1 MB zijn
+  const bytes = (s: string) => Buffer.byteLength(s, 'utf8');
+  const zes = () => ({ ...club(), groepjes: 6, kinderen: 30, trainers: ['Testtrainer 1', 'Testtrainer 2', 'Testtrainer 3', 'Testtrainer 4', 'Testtrainer 5', 'Testtrainer 6'] });
+  it('ingebouwde oefeningen gaan alleen als id mee, zonder animaties', () => {
+    const data = voorTeam({ ...zes(), blokken: { techniek: 'veld-mt-tik-tak', 'een-tegen-een': 'veld-mt-over-de-rivier', afwerken: 'veld-mt-pionnen-omgooien', partijvormen: 'veld-mt-3-tegen-3' } });
+    expect(bytes(data)).toBeLessThan(1000);
+    expect(data).not.toContain('tekening');
+  });
+  it('6 of 8 groepjes maakt niet uit: er is één oefening per blok', () => {
+    const c = { ...zes(), blokken: { techniek: 'eigen-a' } };
+    const eigen = [eigenOefening('eigen-a')];
+    expect(Math.abs(bytes(voorTeam({ ...c, groepjes: 8 }, eigen)) - bytes(voorTeam(c, eigen)))).toBeLessThan(5);
+  });
+  it('vier heel grote eigen oefeningen blijven onder de grens', () => {
+    const groot = (id: string) => {
+      const o = eigenOefening(id);
+      const objecten = Array.from({ length: 150 }, (_, i) => ({ id: `s${i}`, soort: 'speler' as const, team: 'A' as const, nummer: i + 1, x: 12.25, y: 34.75 }));
+      const lijnen = Array.from({ length: 150 }, (_, i) => ({ soort: 'loop' as const, punten: Array.from({ length: 8 }, (_, p) => [i + 0.25, p + 0.75] as [number, number]), van: `s${i}`, stap: 1 }));
+      return { ...o, uitleg: 'x'.repeat(2000), tekening: { ...o.tekening, objecten, lijnen } };
+    };
+    const blokken = { techniek: 'eigen-a', 'een-tegen-een': 'eigen-b', afwerken: 'eigen-c', partijvormen: 'eigen-d' } as const;
+    const data = voorTeam({ ...zes(), blokken }, ['eigen-a', 'eigen-b', 'eigen-c', 'eigen-d'].map(groot) as never);
+    expect(bytes(data)).toBeLessThan(GRENS);
+  });
+});
+
 describe('eigen oefening delen via een link', () => {
   it('heen en terug', () => {
     const o = eigenOefening('eigen-a');
