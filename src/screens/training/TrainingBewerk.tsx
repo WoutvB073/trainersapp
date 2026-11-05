@@ -10,7 +10,10 @@ import { Miniatuur } from '../../components/Miniatuur';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
 import { trainingen, useTraining } from '../../training/opslag';
-import { benodigdheden, MAX_AANTAL, pastBij, trainingNaam, verplaats, type Training } from '../../training/training';
+import { benodigdheden, MAX_AANTAL, pastBij, pastBijLeeftijd, trainingNaam, verplaats, type Training } from '../../training/training';
+import { LeeftijdKeuze } from '../../components/Filters';
+import { zetFilters } from '../../engine/filters';
+import { leeftijdNaam } from '../../data/leeftijden';
 import type { Oefening } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { deel, Stapper, Toast, useToast } from './onderdelen';
@@ -91,11 +94,17 @@ export function TrainingBewerk({ id }: { id: string }) {
     const nu = trainingen.haal(t.id) ?? t;
     zet({ [veld]: Math.max(0, Math.min(MAX_AANTAL, nu[veld] + d)) });
   };
-  const passen = t.oefeningen.map((oid) => {
+  const aantalPast = t.oefeningen.map((oid) => {
     const o = vindOefening(oid);
     return !o || pastBij(o, t.spelers, t.keepers);
   });
-  const nietPassend = passen.filter((p) => !p).length;
+  const leeftijdPast = t.oefeningen.map((oid) => {
+    const o = vindOefening(oid);
+    return !o || pastBijLeeftijd(o, t.leeftijd);
+  });
+  const passen = aantalPast.map((p, i) => p && leeftijdPast[i]!);
+  const nietPassend = aantalPast.filter((p) => !p).length;
+  const andereLeeftijd = leeftijdPast.filter((p) => !p).length;
   const sleep = ({ active, over }: DragEndEvent) => {
     if (!over || active.id === over.id) return;
     const lijst = (trainingen.haal(t.id) ?? t).oefeningen;
@@ -117,6 +126,13 @@ export function TrainingBewerk({ id }: { id: string }) {
           </label>
           <Stapper label={vt('Spelers')} icoon="spelers" waarde={t.spelers} onStap={(d) => stap('spelers', d)} />
           <Stapper label={vt('Keepers')} icoon="keeper" waarde={t.keepers} onStap={(d) => stap('keepers', d)} />
+          <LeeftijdKeuze
+            waarde={t.leeftijd ?? null}
+            opKies={(leeftijd) => {
+              zet({ leeftijd: leeftijd ?? undefined });
+              zetFilters({ leeftijd });
+            }}
+          />
         </section>
 
         <h2 className="sectie-titel">
@@ -125,6 +141,11 @@ export function TrainingBewerk({ id }: { id: string }) {
         {nietPassend > 0 && (
           <p className="waarschuwing" role="status">
             {vt(nietPassend === 1 ? '1 oefening past niet bij {s} spelers en {k} keepers. Pas de aantallen aan of haal hem weg.' : '{n} oefeningen passen niet bij {s} spelers en {k} keepers. Pas de aantallen aan of haal ze weg.', { n: nietPassend, s: t.spelers, k: t.keepers })}
+          </p>
+        )}
+        {andereLeeftijd > 0 && t.leeftijd && (
+          <p className="waarschuwing" role="status">
+            {vt(andereLeeftijd === 1 ? '1 oefening past niet bij {leeftijd}. Kies een andere leeftijd of haal hem weg.' : '{n} oefeningen passen niet bij {leeftijd}. Kies een andere leeftijd of haal ze weg.', { n: andereLeeftijd, leeftijd: leeftijdNaam(t.leeftijd) })}
           </p>
         )}
         {t.oefeningen.length === 0 ? (

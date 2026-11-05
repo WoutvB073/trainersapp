@@ -15,6 +15,11 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 7 spelers: een middenman erbij (5 tegen 2). Met meer: een tweede rondo.",
     "coachpunten": [
@@ -247,6 +252,10 @@
     ],
     "spelersNodig": 7,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een tweede rondo, of 6 tegen 3 in een groter vak.",
     "coachpunten": [
@@ -525,6 +534,10 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 11 of 12 spelers: 5 tegen 5 met 2 jokers. Met meer: extra jokers op de zijlijn.",
     "coachpunten": [
@@ -807,6 +820,10 @@
     ],
     "spelersNodig": 12,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: jokers op de zijlijn, of wisselen per blok van 3 minuten.",
     "coachpunten": [
@@ -1115,6 +1132,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 9 spelers: een joker. Met meer: 5 tegen 5 in een groter vak, of een tweede veld.",
     "coachpunten": [
@@ -1338,6 +1359,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: jokers op de zijlijnen, of 5 tegen 5 in grotere vakken.",
     "coachpunten": [
@@ -1604,6 +1629,10 @@
     ],
     "spelersNodig": 9,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een extra speler per zone, of een joker op de zijlijn.",
     "coachpunten": [
@@ -1886,6 +1915,10 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een tweede rondo ernaast, de rondo’s breken om de beurt uit.",
     "coachpunten": [
@@ -2101,6 +2134,10 @@
     ],
     "spelersNodig": 7,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: twee rondo’s naast elkaar die om de beurt de spits aanspelen, of twee spitsen.",
     "coachpunten": [
@@ -2394,6 +2431,10 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 4 tegen 4 + 4, of twee spitsen die om de beurt mogen.",
     "coachpunten": [
@@ -2722,6 +2763,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 6 tegen 3 in een groter vak, of een tweede vak met dezelfde vorm.",
     "coachpunten": [
@@ -2985,6 +3030,10 @@
     ],
     "spelersNodig": 12,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 5 tegen 5 met doelspelers in een groter vak, of een neutrale joker in het vak.",
     "coachpunten": [
@@ -3238,6 +3287,10 @@
     ],
     "spelersNodig": 7,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 5 tegen 3 met een joker die overal mag komen, of 6 tegen 4 in een groter vak.",
     "coachpunten": [
@@ -3460,6 +3513,9 @@
     ],
     "spelersNodig": 12,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een keeper achter de centrale verdedigers (8 tegen 5), of een tweede spits tegen een extra verdediger.",
     "coachpunten": [
@@ -3735,6 +3791,10 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 7 spelers: een middenman erbij (5 tegen 2). Met meer: een tweede rondo.",
     "coachpunten": [
@@ -3991,6 +4051,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: twee driehoeken met elk een doeltje, of 4 tegen 1 in een vierkant.",
     "coachpunten": [
@@ -4189,6 +4253,10 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "keeperVerplicht": true,
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: twee backs erbij (6 + keeper tegen 3), of een derde aanvaller.",
@@ -4414,6 +4482,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 3 tegen 2 in het middenvak, of een tweede spits in de voorzone.",
     "coachpunten": [

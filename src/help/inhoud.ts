@@ -44,9 +44,10 @@ export const HELP_NL: HelpOnderwerp[] = [
       'Een oefening kan in meer categorieën staan. De eerste is de hoofdcategorie.',
       '- **Zoek op naam** vindt een oefening aan een deel van de naam.',
       '- **Filters**: zet **Alleen wat past bij mijn aantal** aan en vul het aantal spelers en keepers in. Je ziet dan alleen oefeningen die je met die groep kunt doen.',
+      '- **Leeftijd**: kies bij **Filters** een leeftijdsgroep: Mini’s 3–5 jr, Mini’s 5–7 jr, JO8–JO11, JO12–JO15 of JO16–JO19. Je ziet dan alleen oefeningen voor die groep. Een oefening kan bij meer groepen horen; welke dat zijn, staat bij de oefening. Eigen oefeningen zonder leeftijd blijven altijd staan.',
       '- **4+ spelers** betekent: er zijn er 4 tegelijk bezig, extra spelers sluiten aan in de rij of wisselen door. Staat er geen plus (bijv. **6 spelers**), dan is de oefening gebouwd op precies dat aantal.',
       '- **Favorieten**: tik op het hartje bij een oefening. Met het filter **Alleen favorieten** zie je alleen die. Favorieten krijgen ook voorrang bij Training genereren.',
-      'Je aantallen spelers en keepers worden onthouden.',
+      'Je aantallen spelers en keepers en je leeftijdsgroep worden onthouden.',
     ],
     laatZien: [
       { tekst: 'Naar de spelersoefeningen', pad: '/veld' },
@@ -72,7 +73,8 @@ export const HELP_NL: HelpOnderwerp[] = [
     titel: 'Training maken',
     tekst: [
       'Tik op het startscherm op **Training maken**. Vul (als je wilt) een naam en datum in en het aantal spelers en keepers.',
-      '- **Oefeningen toevoegen**: je ziet alleen oefeningen die bij je aantallen passen. Tik ze aan in de volgorde die je wilt.',
+      '- **Leeftijd**: kies bij de training een leeftijdsgroep (de laatst gekozen staat er al). Bij Oefeningen toevoegen en Training genereren krijg je dan alleen oefeningen voor die groep. Past een oefening niet (meer), dan wordt hij oranje gemarkeerd.',
+      '- **Oefeningen toevoegen**: je ziet alleen oefeningen die bij je aantallen en leeftijd passen. Tik ze aan in de volgorde die je wilt.',
       '- **Volgorde**: sleep een oefening aan het greepje omhoog of omlaag.',
       '- **Klaarzetten**: onder de oefeningen staat al het materiaal dat je moet klaarzetten. Per soort telt het meeste dat één oefening nodig heeft, want je gebruikt het daarna opnieuw.',
       '- **Start training**: de trainingsmodus voor op het veld, oefening voor oefening. Veeg naar links of rechts, of gebruik **Vorige** en **Volgende**.',
@@ -192,9 +194,10 @@ export const HELP_EN: HelpOnderwerp[] = [
       'A drill can be in more than one category. The first one is its main category.',
       '- **Search by name** finds a drill from part of its name.',
       '- **Filters**: switch on **Only what fits my numbers** and enter your number of players and keepers. You then only see drills you can run with that group.',
+      '- **Age**: under **Filters**, choose an age group: Minis 3–5 yrs, Minis 5–7 yrs, U8–U11, U12–U15 or U16–U19. You then only see drills for that group. A drill can belong to several groups; they are shown on the drill. Your own drills without an age always stay in the list.',
       '- **4+ players** means: 4 are working at the same time, extra players join the queue or rotate in. Without a plus (e.g. **6 players**), the drill is built for exactly that number.',
       '- **Favourites**: tap the heart on a drill. The **Only favourites** filter shows just those. Favourites also get priority when you generate a session.',
-      'Your numbers of players and keepers are remembered.',
+      'Your numbers of players and keepers and your age group are remembered.',
     ],
     laatZien: [
       { tekst: 'Go to player drills', pad: '/veld' },
@@ -220,7 +223,8 @@ export const HELP_EN: HelpOnderwerp[] = [
     titel: 'Planning a session',
     tekst: [
       'On the home screen, tap **Plan a session**. Enter a name and date if you like, and the number of players and keepers.',
-      '- **Add drills**: you only see drills that fit your numbers. Tap them in the order you want.',
+      '- **Age**: choose an age group for the session (the last one you chose is already filled in). Add drills and Generate a session then only offer drills for that group. If a drill doesn’t suit it (any more), it is marked in orange.',
+      '- **Add drills**: you only see drills that fit your numbers and age group. Tap them in the order you want.',
       '- **Order**: drag a drill up or down by its handle.',
       '- **Equipment to set out**: below the drills is all the equipment you need to put out. For each type it counts the most that any single drill needs, because you reuse it afterwards.',
       '- **Start session**: session mode for out on the pitch, one drill at a time. Swipe left or right, or use **Previous** and **Next**.',

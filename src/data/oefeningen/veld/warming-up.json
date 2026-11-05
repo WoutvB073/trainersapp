@@ -16,6 +16,11 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 5 spelers: 4 tegen 1 in een vierkant. Met 6 of meer: een tweede rondo, of 4 tegen 2.",
     "coachpunten": [
@@ -215,6 +220,12 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kijk om je heen en zoek de open ruimte op",
@@ -534,6 +545,11 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Pass met de binnenkant, standbeen naast de bal",
@@ -683,6 +699,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Op de voorvoet, niet op de hakken",
@@ -843,6 +864,11 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 6 spelers: 4 tegen 2. Met meer: een tweede rondo.",
     "coachpunten": [
@@ -1120,6 +1146,12 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Bal dicht bij de voet: bij elke stap of elke tweede stap contact",
@@ -1380,6 +1412,11 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Snel kiezen: welke bal pak ik?",
@@ -1686,6 +1723,13 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Laag zwaartepunt, op de voorvoet",
@@ -1908,6 +1952,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Speel de bal vóór je partner, in zijn looprichting",
@@ -2050,6 +2099,12 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kijk vooruit en zoek de gaten tussen de tikkers",
@@ -2317,6 +2372,11 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Hordes: knieën hoog, kort contact met de grond",
@@ -2573,6 +2633,10 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: een tweede vierhoek ernaast, of wissel na elke fase een buitenspeler met een wachtende speler.",
     "coachpunten": [
@@ -2830,6 +2894,10 @@
     ],
     "spelersNodig": 7,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Vóór je de bal krijgt al kijken: naar wie speel je, en waar is de andere bal?",

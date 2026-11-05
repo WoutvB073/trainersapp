@@ -19,7 +19,6 @@ const WEG = [
   'veld-pt-pass-in-de-loop',
   'veld-kaatsen-en-afwerken',
   'veld-af-rebound',
-  'veld-af-kleine-doeltjes',
   'keeper-hd-kniezit-kussen',
   'keeper-hd-afzet-landing',
   'keeper-re-via-de-pop',

@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { CATEGORIEEN, SOORT_NAAM } from '../../data/categorieen';
+import { LEEFTIJDEN } from '../../data/leeftijden';
 import { eigenOefeningen, useEigenOefening } from '../../eigen/opslag';
 import { ontbreekt } from '../../eigen/eigen';
 import { benodigdhedenUit, telPersonen } from '../../editor/editor';
 import { ga, vervang } from '../../router';
-import type { EigenOefening, Soort } from '../../model/types';
+import type { EigenOefening, Leeftijd, Soort } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { Stapper } from '../training/onderdelen';
 import { t } from '../../i18n/t';
@@ -32,6 +33,7 @@ function Formulier({ start }: { start: EigenOefening }) {
   const [naam, setNaam] = useState(start.naam);
   const [soort, setSoort] = useState<Soort>(start.soort);
   const [categorieen, setCategorieen] = useState<string[]>(start.categorieen);
+  const [leeftijden, setLeeftijden] = useState<Leeftijd[]>(start.leeftijden ?? []);
   const [uitleg, setUitleg] = useState(start.uitleg);
   const [organisatie, setOrganisatie] = useState(start.organisatie ?? '');
   // Bij een nieuwe oefening: benodigdheden en aantallen alvast invullen uit de tekening.
@@ -73,6 +75,8 @@ function Formulier({ start }: { start: EigenOefening }) {
         moeilijker: naarLijst(moeilijker),
       },
     };
+    if (leeftijden.length) o.leeftijden = LEEFTIJDEN.map((l) => l.id).filter((l) => leeftijden.includes(l));
+    else delete o.leeftijden;
     if (!doorwisselbaar && meerSpelers.trim()) o.meerSpelers = meerSpelers.trim();
     else delete o.meerSpelers;
     const mis = ontbreekt(o);
@@ -124,6 +128,25 @@ function Formulier({ start }: { start: EigenOefening }) {
             ))}
           </div>
           <p className="klein">{t('De eerste die je kiest, is de hoofdcategorie.')}</p>
+        </fieldset>
+
+        <fieldset className="veld-groep">
+          <legend>{t('Leeftijd')}</legend>
+          <div className="chips">
+            {LEEFTIJDEN.map((l) => (
+              <button
+                type="button"
+                key={l.id}
+                className={`chip${leeftijden.includes(l.id) ? ' aan' : ''}`}
+                aria-pressed={leeftijden.includes(l.id)}
+                onClick={() => setLeeftijden((x) => (x.includes(l.id) ? x.filter((y) => y !== l.id) : [...x, l.id]))}
+              >
+                {leeftijden.includes(l.id) && <Icoon naam="vink" maat={16} />}
+                {l.naam}
+              </button>
+            ))}
+          </div>
+          <p className="klein">{t('Niets gekozen? Dan past de oefening bij elke leeftijd.')}</p>
         </fieldset>
 
         <label className="veld-label">

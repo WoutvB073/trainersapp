@@ -1102,6 +1102,28 @@ html.editor-open body {
   }
 }
 
+/* 0.30.0: leeftijdsgroep kiezen (filterbalk, Training maken en genereren). */
+.leeftijd-keuze {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.leeftijd-keuze select {
+  min-height: 44px;
+  min-width: 0;
+  max-width: 62%;
+  padding: 8px 10px;
+  border: 1px solid var(--rand);
+  border-radius: 10px;
+  background: var(--kaart);
+  color: var(--tekst);
+  font: inherit;
+  font-weight: 500;
+}
+
 .filterbalk .filter-chips {
   flex-wrap: wrap;
   overflow: visible;

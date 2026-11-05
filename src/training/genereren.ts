@@ -1,5 +1,5 @@
-import type { Oefening, Soort } from '../model/types';
-import { pastBij, type Training } from './training';
+import type { Leeftijd, Oefening, Soort } from '../model/types';
+import { pastBij, pastBijLeeftijd, type Training } from './training';
 
 /**
  * Training genereren: per gekozen onderdeel (categorie van Spelers of Keepers) kiest de app één oefening die past bij de
@@ -22,6 +22,8 @@ export interface KiesContext {
   alle: Oefening[];
   spelers: number;
   keepers: number;
+  /** Leeftijdsgroep van de training (0.30.0). */
+  leeftijd?: Leeftijd | null;
   favorieten: ReadonlySet<string>;
   /** Hoe recent een oefening gebruikt is: 1 = in de laatste training, 2 = de training daarvoor … */
   recent: ReadonlyMap<string, number>;
@@ -29,9 +31,9 @@ export interface KiesContext {
   toeval: () => number;
 }
 
-/** Oefeningen die bij een onderdeel kunnen (soort, categorie en aantallen). */
-export function kandidaten(o: Onderdeel, c: Pick<KiesContext, 'alle' | 'spelers' | 'keepers'>): Oefening[] {
-  return c.alle.filter((x) => x.soort === o.soort && x.categorieen.includes(o.categorie) && pastBij(x, c.spelers, c.keepers));
+/** Oefeningen die bij een onderdeel kunnen (soort, categorie, aantallen en leeftijd). */
+export function kandidaten(o: Onderdeel, c: Pick<KiesContext, 'alle' | 'spelers' | 'keepers' | 'leeftijd'>): Oefening[] {
+  return c.alle.filter((x) => x.soort === o.soort && x.categorieen.includes(o.categorie) && pastBij(x, c.spelers, c.keepers) && pastBijLeeftijd(x, c.leeftijd));
 }
 
 /** Score: hoger = liever. Toeval zorgt voor afwisseling tussen gelijkwaardige oefeningen. */

@@ -58,6 +58,14 @@ const PLAATJES: Record<Soort, Record<string, ReactNode>> = {
         <Bal x={16} y={36} />
       </>
     ),
+    'een-tegen-een': (
+      <>
+        <Stip x={16} y={30} />
+        <Stip x={48} y={20} />
+        <Bal x={22} y={35} />
+        <Pijl d="M20 26 Q32 34 42 22" stippel />
+      </>
+    ),
     afwerken: (
       <>
         <Goal x={32} y={7} b={26} />

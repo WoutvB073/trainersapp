@@ -15,6 +15,11 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Aannemen met de voet die het verst van de bal is, lichaam open naar de volgende pion",
@@ -177,6 +182,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "B: eerst van de pion weg, dan kort komen om aanspeelbaar te zijn",
@@ -444,6 +453,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Steeds weer in balans staan vóór je de bal aanneemt",
@@ -609,6 +623,10 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Standbeen naast en iets achter de bal, raak de onderkant met de wreef",
@@ -743,6 +761,10 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Zonder bal: loop alvast naar de andere kant van een vrij poortje",
@@ -1002,6 +1024,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Open staan: lichaam naar de bal én naar de volgende hoek",
@@ -1187,6 +1213,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Speler 2: kort komen en in één keer terugleggen",
@@ -1362,6 +1392,10 @@
     ],
     "spelersNodig": 7,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kaatser: eerst van de pion weg, dan kort komen en in één keer spelen",

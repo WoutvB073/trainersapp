@@ -6,17 +6,24 @@ import { ga } from '../../router';
 import { trainingen, useTrainingen } from '../../training/opslag';
 import { datumTekst, nieuweTraining, trainingNaam, type Training } from '../../training/training';
 import { codeUitLink, Toast, useToast } from './onderdelen';
+import { huidigeFilters } from '../../engine/filters';
 import { t as vt } from '../../i18n/t';
+
+/** Nieuwe training, met de laatst gekozen leeftijd. */
+function nieuw() {
+  const leeftijd = huidigeFilters().leeftijd;
+  return trainingen.bewaar({ ...nieuweTraining(), ...(leeftijd ? { leeftijd } : {}) });
+}
 
 /** Nieuwe lege training maken en openen. */
 export function maakTraining() {
-  const t = trainingen.bewaar(nieuweTraining());
+  const t = nieuw();
   ga(`/training/${t.id}`);
 }
 
 /** Nieuwe training die de app samenstelt uit gekozen onderdelen. */
 export function genereerTraining() {
-  const t = trainingen.bewaar(nieuweTraining());
+  const t = nieuw();
   ga(`/training/${t.id}/genereren`);
 }
 

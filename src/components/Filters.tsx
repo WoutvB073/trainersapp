@@ -4,6 +4,8 @@ import { meervoud } from './Labels';
 import { favorieten, useFavorieten } from '../engine/favorieten';
 import { aantalActief, useFilters, wisFilters, zetFilters, laatsteAantallen } from '../engine/filters';
 import { Stapper } from '../screens/training/onderdelen';
+import { isLeeftijd, LEEFTIJDEN } from '../data/leeftijden';
+import type { Leeftijd } from '../model/types';
 import { t } from '../i18n/t';
 
 /** Hartje: favoriet aan/uit (op een kaart of op de detailpagina). */
@@ -27,12 +29,29 @@ export function Hartje({ id, naam, groot }: { id: string; naam: string; groot?: 
   );
 }
 
+/** Leeftijdsgroep kiezen: alle leeftijden of één groep (filterbalk, Training maken en genereren). */
+export function LeeftijdKeuze({ waarde, opKies }: { waarde: Leeftijd | null; opKies: (l: Leeftijd | null) => void }) {
+  return (
+    <label className="leeftijd-keuze">
+      <span>{t('Leeftijd')}</span>
+      <select value={waarde ?? ''} onChange={(e) => opKies(isLeeftijd(e.target.value) ? e.target.value : null)}>
+        <option value="">{t('Alle leeftijden')}</option>
+        {LEEFTIJDEN.map((l) => (
+          <option key={l.id} value={l.id}>
+            {l.naam}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 const breed = () => typeof window !== 'undefined' && window.innerWidth >= 900;
 
 /**
- * Filterbalk boven een lijst met oefeningen: zoeken, aantallen, favorieten, eigen oefeningen.
+ * Filterbalk boven een lijst met oefeningen: zoeken, aantallen, leeftijd, favorieten, eigen oefeningen.
  * Op een telefoon ingeklapt (knop Filters); toont altijd hoeveel oefeningen er overblijven.
- * `aantallenVan`: bij Training maken gelden de aantallen van de training (dan geen eigen aantallen).
+ * `aantallenVan`: bij Training maken gelden de aantallen en de leeftijd van de training (dan geen eigen keuze).
  */
 export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallenVan?: string }) {
   const f = useFilters();
@@ -81,6 +100,7 @@ export function FilterBalk({ aantal, aantallenVan }: { aantal: number; aantallen
                   />
                 </div>
               )}
+              <LeeftijdKeuze waarde={f.leeftijd} opKies={(leeftijd) => zetFilters({ leeftijd })} />
             </div>
           )}
           <div className="chips filter-chips" role="group" aria-label={t('Alleen')}>

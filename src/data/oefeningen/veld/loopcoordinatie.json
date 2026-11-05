@@ -15,6 +15,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Op de voorvoet, kleine en snelle pasjes",
@@ -160,6 +165,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Heupen en schouders blijven naar de trainer gericht",
@@ -361,6 +371,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Knie omhoog, tenen opgetrokken",
@@ -546,6 +561,13 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kleine pasjes vlak voor het paaltje, afzetten met de buitenste voet",
@@ -750,6 +772,10 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Bij elke pion laag zakken en aantikken",
@@ -924,6 +950,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Landen op de voorvoet, zacht door de knieën",
@@ -1150,6 +1181,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Tussen elke twee stokken precies één pas",
@@ -1360,6 +1396,12 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Licht door de knieën en op de voorvoet: klaar om weg te gaan",
@@ -1560,6 +1602,10 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Techniek gaat voor snelheid: een fout in de ladder is opnieuw",
@@ -1867,7 +1913,8 @@
     "naam": "Hordes, sprint naar de bal en 1 tegen 1",
     "categorieen": [
       "loopcoordinatie",
-      "partijvormen"
+      "partijvormen",
+      "een-tegen-een"
     ],
     "combinatievorm": true,
     "onderdelen": [
@@ -1885,6 +1932,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Hordes: snel en precies, niet de horde raken",

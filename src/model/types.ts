@@ -5,6 +5,9 @@
 
 export type Soort = 'veld' | 'keeper';
 
+/** Leeftijdsgroep (0.30.0): Mini's 3–5 en 5–7 jaar, JO8–JO11, JO12–JO15, JO16–JO19. Namen in src/data/leeftijden.ts. */
+export type Leeftijd = 'mini-3-5' | 'mini-5-7' | 'jo8-11' | 'jo12-15' | 'jo16-19';
+
 /** [x, y] in meters. x = breedte (links → rechts), y = lengte (boven → onder in bovenaanzicht). */
 export type Punt = [number, number];
 
@@ -510,6 +513,8 @@ export interface Oefening {
    * doel niet nodig (net of trainer in het doel); bij twee grote doelen (partijvorm) wel. Zie `keeperNodig`.
    */
   keeperVerplicht?: boolean;
+  /** Leeftijdsgroepen waarvoor de oefening geschikt is. Eigen oefeningen zonder leeftijden passen bij elke leeftijd. */
+  leeftijden?: Leeftijd[];
   /** Combinatievorm: 2–4 onderdelen achter elkaar (bv. voetenwerk → vangen → duiken). Niet meer als badge getoond. */
   combinatievorm?: boolean;
   /** Combinatievorm: de onderdelen in volgorde (2–4 korte namen), getoond als genummerd verloop. */

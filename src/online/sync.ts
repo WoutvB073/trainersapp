@@ -30,6 +30,8 @@ export interface Instellingen {
   /** Taalkeuze (0.25.0): nl, en of auto. Ontbreekt bij oudere gegevens (= auto). */
   taal?: string;
   aantallen: { spelers: number; keepers: number } | null;
+  /** Laatst gekozen leeftijdsgroep (0.30.0). Ontbreekt bij oudere gegevens. */
+  leeftijd?: string | null;
   gewijzigd: number;
 }
 
@@ -62,7 +64,7 @@ type Collectie = 'oefeningen' | 'trainingen' | 'opstellingen' | 'borden';
 function vast(i: Instellingen | undefined): Instellingen | undefined {
   if (!i) return undefined;
   const a = i.aantallen ? { spelers: Number(i.aantallen.spelers), keepers: Number(i.aantallen.keepers) } : null;
-  return { thema: String(i.thema), modus: String(i.modus), taal: String(i.taal ?? 'auto'), aantallen: a, gewijzigd: Number(i.gewijzigd) || 0 };
+  return { thema: String(i.thema), modus: String(i.modus), taal: String(i.taal ?? 'auto'), aantallen: a, leeftijd: i.leeftijd ?? null, gewijzigd: Number(i.gewijzigd) || 0 };
 }
 const gelijk = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 

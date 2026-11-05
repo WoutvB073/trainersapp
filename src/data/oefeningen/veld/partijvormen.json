@@ -5,7 +5,8 @@
     "naam": "1 tegen 1 op twee kleine doeltjes",
     "categorieen": [
       "partijvormen",
-      "techniek"
+      "techniek",
+      "een-tegen-een"
     ],
     "uitleg": "Twee spelers spelen 1 tegen 1. Elke speler verdedigt twee kleine doeltjes en valt aan op de twee doeltjes van de ander. Durf te passeren: maak een schijnbeweging en kies het doeltje dat open ligt. Na een doelpunt krijgt de ander de bal.",
     "organisatie": "Vak van 13 × 18 m met op beide korte zijden twee kleine doeltjes (2–3 m breed) in de hoeken. Wachtende tweetallen naast het vak; elke ronde 45–60 seconden.",
@@ -16,6 +17,13 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Met snelheid op de verdediger af, dan pas de actie",
@@ -215,6 +223,11 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Balbezitter: dribbel op de verdediger af tot hij moet kiezen",
@@ -398,6 +411,13 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Zonder bal: loop in de rug van je tegenstander, niet naar de bal toe",
@@ -690,6 +710,11 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: na elke aanval wisselt er een groepje, of maak een tweede veld.",
     "coachpunten": [
@@ -1031,6 +1056,13 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 7 spelers: een joker die met de balbezitter meespeelt. Met 8 of meer: 4 tegen 4 of een tweede veldje.",
     "coachpunten": [
@@ -1315,6 +1347,11 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 9 spelers: een joker. Met meer: 5 tegen 5 op een groter veld, of wisselen om de 3 minuten.",
     "coachpunten": [
@@ -1593,6 +1630,10 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 11 spelers: een joker. Met meer: wisselspelers om de 3 minuten, of twee velden naast elkaar.",
     "coachpunten": [
@@ -1938,6 +1979,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: extra kaatsers op de zijlijn, of 4 tegen 4 met de kaatsers erbij.",
     "coachpunten": [
@@ -2184,6 +2229,11 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met 9 spelers: een joker. Met meer: 5 tegen 5 op een breder veld, of een tweede veldje.",
     "coachpunten": [
@@ -2456,6 +2506,11 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "1 tegen 1: met snelheid op de verdediger af, actie en dan versnellen",
@@ -2686,6 +2741,11 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: wachtende groepjes naast het vak, na elke aanval wisselen.",
     "coachpunten": [
@@ -2951,6 +3011,11 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Elke ronde telt: vanaf de eerste seconde vol gas",
@@ -3406,7 +3471,8 @@
     "soort": "veld",
     "naam": "1 tegen 1 door de poortjes",
     "categorieen": [
-      "partijvormen"
+      "partijvormen",
+      "een-tegen-een"
     ],
     "uitleg": "Aan beide uiteinden staat een klein goaltje met een poortje ervoor. A speelt de bal over naar B en gaat meteen verdedigen. B moet eerst door één van de poortjes dribbelen en mag daarna op beide goaltjes scoren. Na je beurt sluit je aan bij de andere rij.",
     "organisatie": "Vak van 20 × 26 m met aan de korte kanten een klein goaltje en 4 m ervoor een poortje van 2,5 m. Twee rijen op de middenlijn, aan beide zijlijnen; de rij links heeft de ballen.",
@@ -3418,6 +3484,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Aanvaller: kies snel een poortje en neem de bal mee in de looprichting",
@@ -3741,7 +3812,8 @@
     "soort": "veld",
     "naam": "Wippen en 1 tegen 1",
     "categorieen": [
-      "partijvormen"
+      "partijvormen",
+      "een-tegen-een"
     ],
     "uitleg": "Klein veldje met twee kleine goaltjes. A staat op de middenlijn met de bal, B bij zijn eigen goaltje. A speelt B rustig in; B probeert de bal direct over A heen in het goaltje van A te wippen (punt). Meteen daarna speelt de trainer vanaf de zijkant een tweede bal in en spelen ze 1 tegen 1.",
     "organisatie": "Veldje van 16 × 22 m met aan beide korte kanten een klein goaltje. A op de middenlijn, B bij zijn goaltje, trainer met ballen langs de zijlijn op de middenlijn.",
@@ -3752,6 +3824,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Wippen: standbeen naast de bal, onder de bal door met de wreef, kort uithalen",
@@ -3983,6 +4060,11 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Aanvallers: snel spelen, het overtal gebruiken voordat de volgende verdediger er is",
@@ -4278,6 +4360,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Aanvallers: snel naar voren, de verdediger laten kiezen en dan afspelen",
@@ -4539,6 +4625,10 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Snel naar voren en de verdediger laten kiezen",
@@ -5013,6 +5103,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: door tot 5 tegen 5, of twee velden naast elkaar.",
     "coachpunten": [
@@ -5360,6 +5454,10 @@
     ],
     "spelersNodig": 12,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 7 tegen 7 of 8 tegen 8 op een groter veld, met een bredere strook.",
     "coachpunten": [
@@ -5682,6 +5780,10 @@
     ],
     "spelersNodig": 14,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 6 tegen 6 met vier neutralen op een groter veld.",
     "coachpunten": [
@@ -5993,6 +6095,10 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 5 tegen 5 in het midden, of per team een eigen winger in elke zone (1 tegen 1 op de flank).",
     "coachpunten": [
@@ -6277,6 +6383,11 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 6 tegen 6 of 7 tegen 7, of twee velden met wedstrijdjes naast elkaar.",
     "coachpunten": [
@@ -6582,6 +6693,10 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 3 tegen 3 met doelspelers, of wachtende tweetallen die na elke ronde inwisselen.",
     "coachpunten": [
@@ -6827,6 +6942,10 @@
     ],
     "spelersNodig": 8,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 5 tegen 5 of 6 tegen 6, steeds in vaste duo’s.",
     "coachpunten": [

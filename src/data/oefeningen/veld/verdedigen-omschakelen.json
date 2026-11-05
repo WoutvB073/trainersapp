@@ -17,6 +17,10 @@
     ],
     "spelersNodig": 9,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: drie teams van vier (4 tegen 3 op het doel), of een groter vak.",
     "coachpunten": [
@@ -323,6 +327,10 @@
     ],
     "spelersNodig": 6,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 4 tegen 4 (twee dekkers, één in balans), of wissel elke ronde een nieuw drietal in.",
     "coachpunten": [
@@ -617,7 +625,8 @@
     "soort": "veld",
     "naam": "1 tegen 1 verdedigen: de aanvaller wegdrukken",
     "categorieen": [
-      "verdedigen-omschakelen"
+      "verdedigen-omschakelen",
+      "een-tegen-een"
     ],
     "uitleg": "De verdediger speelt de bal naar de aanvaller aan de overkant en komt er meteen op af. De laatste meters remt hij af en zakt hij door de knieën in een zijwaartse houding, net naast de lijn naar het midden. Zo laat hij alleen de buitenkant open en drukt hij de aanvaller weg naar de zijlijn. Hij blijft op een armlengte en stapt pas in als de aanvaller de bal te ver voor zich uit speelt. De aanvaller scoort door met de bal over de lijn achter de verdediger te dribbelen.",
     "organisatie": "Strook van 12 × 20 m. Verdedigers in een rij met ballen bij de scoorlijn, aanvallers in een rij aan de overkant. Na elke actie sluit je aan bij de andere rij.",
@@ -628,6 +637,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Snel aanlopen terwijl de bal onderweg is, de laatste meters kleine pasjes",
@@ -871,6 +885,9 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 6 tegen 6 of 7 tegen 7 op een groter veld.",
     "coachpunten": [
@@ -1155,6 +1172,10 @@
     ],
     "spelersNodig": 10,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 6 tegen 6 op een groter veld, of een joker die altijd met het balbezittende team meedoet.",
     "coachpunten": [
@@ -1454,6 +1475,10 @@
     ],
     "spelersNodig": 12,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer spelers: 6 tegen 6 met kaatsers, of vier kaatsers (twee per zijlijn).",
     "coachpunten": [

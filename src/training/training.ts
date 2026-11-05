@@ -1,6 +1,7 @@
-import type { Oefening, Soort } from '../model/types';
+import type { Leeftijd, Oefening, Soort } from '../model/types';
 import { maakId } from '../model/id';
 import { geldigeEigen, isEigenId } from '../eigen/eigen';
+import { isLeeftijd } from '../data/leeftijden';
 import type { Generator } from './genereren';
 import { t as vt, TAAL, LOCALE } from '../i18n/t';
 import type { Taal } from '../i18n/taal';
@@ -16,6 +17,8 @@ export interface Training {
   datum?: string;
   spelers: number;
   keepers: number;
+  /** Leeftijdsgroep (0.30.0). Zonder: er wordt niet op leeftijd gefilterd (ook oude trainingen). */
+  leeftijd?: Leeftijd;
   oefeningen: string[];
   gemaakt: number;
   gewijzigd: number;
@@ -48,9 +51,14 @@ export function pastBij(o: MetKeeper, spelers: number, keepers: number): boolean
   return o.spelersNodig <= spelers && (o.keepersNodig <= keepers || !keeperNodig(o));
 }
 
-/** Oefeningen die je kunt kiezen: van deze soort (en categorie) én passend bij de aantallen. */
-export function kiesbaar(alle: Oefening[], soort: Soort, categorie: string | undefined, spelers: number, keepers: number): Oefening[] {
-  return alle.filter((o) => o.soort === soort && (!categorie || o.categorieen.includes(categorie)) && pastBij(o, spelers, keepers));
+/** Past een oefening bij deze leeftijd? Zonder keuze altijd; een oefening zonder leeftijden (eigen, team) ook. */
+export function pastBijLeeftijd(o: Pick<Oefening, 'leeftijden'>, leeftijd?: Leeftijd | null): boolean {
+  return !leeftijd || !o.leeftijden?.length || o.leeftijden.includes(leeftijd);
+}
+
+/** Oefeningen die je kunt kiezen: van deze soort (en categorie) én passend bij de aantallen en de leeftijd. */
+export function kiesbaar(alle: Oefening[], soort: Soort, categorie: string | undefined, spelers: number, keepers: number, leeftijd?: Leeftijd | null): Oefening[] {
+  return alle.filter((o) => o.soort === soort && (!categorie || o.categorieen.includes(categorie)) && pastBij(o, spelers, keepers) && pastBijLeeftijd(o, leeftijd));
 }
 
 /** Lijst met één element verplaatst (slepen). */
@@ -110,6 +118,7 @@ export interface GedeeldeTraining {
   datum?: string;
   spelers: number;
   keepers: number;
+  leeftijd?: Leeftijd;
   oefeningen: string[];
   /** Eigen oefeningen die in de training zitten: die gaan in hun geheel mee in de link. */
   eigen?: Oefening[];
@@ -132,10 +141,10 @@ export function uitBase64Url(code: string): string {
  * Compacte code voor in de link. Oefening-id's zonder het voorvoegsel "veld-"/"keeper-" waar dat kan. Eigen oefeningen
  * (`eigen`, klaargemaakt met `voorDelen`) gaan er in hun geheel in, zodat de ontvanger ze ook heeft.
  */
-export function naarCode(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'oefeningen'>, eigen: Oefening[] = []): string {
+export function naarCode(t: Pick<Training, 'naam' | 'datum' | 'spelers' | 'keepers' | 'leeftijd' | 'oefeningen'>, eigen: Oefening[] = []): string {
   const o = t.oefeningen.map((id) => id.replace(/^veld-/, 'v:').replace(/^keeper-/, 'k:'));
   const e = eigen.filter((x) => t.oefeningen.includes(x.id));
-  return naarBase64Url(JSON.stringify({ v: 1, n: t.naam, d: t.datum, s: t.spelers, k: t.keepers, o, ...(e.length ? { e } : {}) }));
+  return naarBase64Url(JSON.stringify({ v: 1, n: t.naam, d: t.datum, s: t.spelers, k: t.keepers, ...(t.leeftijd ? { l: t.leeftijd } : {}), o, ...(e.length ? { e } : {}) }));
 }
 
 /** Eigen oefeningen die in een training zitten (voor in de link). */
@@ -143,7 +152,7 @@ export const eigenIds = (t: Pick<Training, 'oefeningen'>) => t.oefeningen.filter
 
 export function uitCode(code: string): GedeeldeTraining | null {
   try {
-    const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; s?: unknown; k?: unknown; o?: unknown; e?: unknown };
+    const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; s?: unknown; k?: unknown; l?: unknown; o?: unknown; e?: unknown };
     if (x.v !== 1 || !Array.isArray(x.o)) return null;
     const getal = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(0, Math.min(MAX_AANTAL, Math.round(v))) : 0);
     return {
@@ -151,6 +160,7 @@ export function uitCode(code: string): GedeeldeTraining | null {
       datum: typeof x.d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x.d) ? x.d : undefined,
       spelers: getal(x.s),
       keepers: getal(x.k),
+      ...(isLeeftijd(x.l) ? { leeftijd: x.l } : {}),
       oefeningen: x.o.filter((id): id is string => typeof id === 'string').map((id) => id.replace(/^v:/, 'veld-').replace(/^k:/, 'keeper-')),
       ...(Array.isArray(x.e) && x.e.some(geldigeEigen) ? { eigen: x.e.filter(geldigeEigen).map((o) => ({ ...o, eigen: true })) } : {}),
     };

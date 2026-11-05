@@ -16,6 +16,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Bal dicht aan de voet bij de poort, daarna een grotere aanraking richting doel",
@@ -275,6 +280,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Timing: versnel op het moment dat de trainer de bal aanraakt",
@@ -520,6 +530,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Spitsen: niet te vroeg inlopen, start als de vleugelspeler opkijkt",
@@ -780,6 +794,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Eerste aanraking ver genoeg naar voren, zodat je snelheid houdt",
@@ -950,6 +969,10 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Standbeen naast de bal, knie en lichaam boven de bal",
@@ -1161,7 +1184,8 @@
     "categorieen": [
       "afwerken",
       "partijvormen",
-      "verdedigen-omschakelen"
+      "verdedigen-omschakelen",
+      "een-tegen-een"
     ],
     "uitleg": "De trainer speelt een bal tussen twee rijen in. De eerste van beide rijen sprint erop af: wie de bal heeft, valt aan op het doel, de ander verdedigt. Een doelpunt is een punt voor je team. Welk team staat na 10 duels voor?",
     "organisatie": "Twee rijen (team rood en team blauw) op 30 m, 14 m uit elkaar. Trainer met een stapel ballen in het midden tussen de rijen. Keeper in het doel.",
@@ -1172,6 +1196,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Aanvaller: lichaam tussen tegenstander en bal, en snel naar doel",
@@ -1402,6 +1431,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Ladder: op de voorvoet, armen actief, niet naar je voeten kijken",
@@ -1593,6 +1627,10 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Dribbel de verdediger vast voordat je de kaats speelt",
@@ -1763,6 +1801,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Aanname met de buitenkant (of binnenkant) weg van de tegenstander, direct in de draai",
@@ -1963,6 +2005,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Na de pass meteen buitenom, met snelheid",
@@ -2166,6 +2212,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Spits: eerst contact maken met de verdediger, dan pas de bal vragen",
@@ -2357,6 +2407,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Dribbelen met kleine tikjes, bal dicht aan de voet",
@@ -2625,6 +2680,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Vóór de bal komt al weten welke hoek je kiest",
@@ -2858,6 +2917,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Buitenspeler: tot bijna de achterlijn, dan opkijken en de bal terugleggen over de grond",
@@ -3029,6 +3092,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Druk zetten samen: één op de bal, de ander op de passlijn",
@@ -3252,6 +3319,10 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Ingooier: twee handen, de bal achter het hoofd en beide voeten op de grond; gooi op de voet of borst van de ontvanger",
@@ -3472,6 +3543,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Looplijn met een bocht: eerst weg van de paal, dan erop af",
@@ -3751,6 +3826,11 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Plaatsen gaat voor kracht: laag in de hoek is het moeilijkst voor de keeper",

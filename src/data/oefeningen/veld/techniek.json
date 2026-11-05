@@ -17,6 +17,11 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kleine tikjes, de bal dicht bij je voet",
@@ -279,6 +284,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Licht op de voorvoet, standbeen licht gebogen",
@@ -554,6 +564,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Al vóór de aanname over je schouder kijken: waar is ruimte?",
@@ -769,6 +784,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Afremmen met kleine pasjes vlak voor de draai",
@@ -983,6 +1003,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Schijnbeweging op 1–2 m van de verdediger: niet te vroeg, niet te laat",
@@ -1160,6 +1185,12 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kijk op en kies alvast het volgende poortje",
@@ -1445,6 +1476,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Raak de bal met de wreef, enkel gestrekt",
@@ -1603,6 +1639,11 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kom de bal tegemoet en lees de baan vroeg",
@@ -1738,6 +1779,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Eerst van de bal weg, dan kort komen: zo maak je ruimte",
@@ -1925,6 +1970,12 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Lichaam tussen tegenstander en bal (afschermen)",
@@ -2215,6 +2266,10 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Zachte aanname: geef mee met de bal, zodat hij niet wegspringt",
@@ -2356,6 +2411,11 @@
     ],
     "spelersNodig": 1,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kaatsen met de binnenkant, enkel strak",
@@ -2496,6 +2556,12 @@
     ],
     "spelersNodig": 2,
     "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7",
+      "jo8-11",
+      "jo12-15"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Kijk op naar de trainer, niet naar de bal",
@@ -2702,6 +2768,10 @@
     ],
     "spelersNodig": 5,
     "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Vóór de bal komt: kijk waar de verdediger vandaan komt",
@@ -2950,6 +3020,10 @@
     ],
     "spelersNodig": 3,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Vóór de aanname over je schouder kijken: waar staat de pop, waar is de spits?",
@@ -3118,6 +3192,10 @@
     ],
     "spelersNodig": 4,
     "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Vrijlopen op het juiste moment: als de passer opkijkt, niet eerder",

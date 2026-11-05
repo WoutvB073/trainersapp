@@ -4,6 +4,7 @@ import { Icoon } from '../../components/Icoon';
 import { Labels, meervoud } from '../../components/Labels';
 import { Miniatuur } from '../../components/Miniatuur';
 import { CATEGORIEEN, SOORT_NAAM } from '../../data/categorieen';
+import { leeftijdNaam } from '../../data/leeftijden';
 import { alleOefeningen } from '../../data/oefeningen';
 import { ga, terug } from '../../router';
 import { trainingen, useTraining } from '../../training/opslag';
@@ -49,11 +50,12 @@ export function TrainingKiezen({ id }: { id: string }) {
     setCategorie(c);
     onthoud(soort, c);
   };
-  // De aantallen van de training gelden; de andere filters (favorieten, zoeken …) komen erbij.
-  const f = { ...filters, aantallen: null };
-  const lijst = filterOefeningen(kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers), f, favs);
-  const telling = (c?: string) => filterOefeningen(kiesbaar(alleOefeningen(), soort, c, t.spelers, t.keepers), f, favs).length;
-  const zonderFilters = kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers).length;
+  // De aantallen en de leeftijd van de training gelden; de andere filters (favorieten, zoeken …) komen erbij.
+  const f = { ...filters, aantallen: null, leeftijd: null };
+  const leeftijd = t.leeftijd;
+  const lijst = filterOefeningen(kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers, leeftijd), f, favs);
+  const telling = (c?: string) => filterOefeningen(kiesbaar(alleOefeningen(), soort, c, t.spelers, t.keepers, leeftijd), f, favs).length;
+  const zonderFilters = kiesbaar(alleOefeningen(), soort, categorie, t.spelers, t.keepers, leeftijd).length;
   // Altijd de nieuwste versie uit de opslag (ook bij snel achter elkaar tikken).
   const wissel = (oid: string) => {
     const nu = trainingen.haal(id) ?? t;
@@ -83,7 +85,7 @@ export function TrainingKiezen({ id }: { id: string }) {
         </div>
       </div>
       <main className="inhoud">
-        <FilterBalk aantal={lijst.length} aantallenVan={vt('Passend bij {w0} en {w1} (van de training)', { w0: meervoud(t.spelers, 'speler', 'spelers'), w1: meervoud(t.keepers, 'keeper', 'keepers') })} />
+        <FilterBalk aantal={lijst.length} aantallenVan={[vt('Passend bij {w0} en {w1} (van de training)', { w0: meervoud(t.spelers, 'speler', 'spelers'), w1: meervoud(t.keepers, 'keeper', 'keepers') }), leeftijd ? leeftijdNaam(leeftijd) : ''].filter(Boolean).join(' · ')} />
         {lijst.length === 0 && zonderFilters > 0 ? (
           <GeenResultaat metFilters />
         ) : lijst.length === 0 ? (
@@ -94,7 +96,7 @@ export function TrainingKiezen({ id }: { id: string }) {
                 ? vt('Met 0 spelers zijn er alleen keeperoefeningen.')
                 : soort === 'keeper' && t.keepers === 0
                   ? vt('Vul minstens 1 keeper in voor keeperoefeningen.')
-                  : vt('Kies een andere categorie of pas de aantallen aan.')}
+                  : vt('Kies een andere categorie of pas de aantallen of de leeftijd aan.')}
             </p>
           </div>
         ) : (

@@ -1,21 +1,24 @@
 import { useSyncExternalStore } from 'react';
-import type { Oefening } from '../model/types';
-import { pastBij } from '../training/training';
+import type { Leeftijd, Oefening } from '../model/types';
+import { isLeeftijd } from '../data/leeftijden';
+import { pastBij, pastBijLeeftijd } from '../training/training';
 
 /**
  * Filters voor lijsten met oefeningen: aantallen die je hebt (dezelfde regel als bij Training maken: minder nodig is
- * prima), alleen favorieten, alleen eigen oefeningen en zoeken op naam. De aantallen worden
+ * prima), leeftijdsgroep, alleen favorieten, alleen eigen oefeningen en zoeken op naam. De aantallen en de leeftijd worden
  * onthouden op het apparaat; de rest geldt zolang de app open is (ook als je naar een andere categorie gaat).
  */
 export interface Filters {
   /** Aantal spelers en keepers dat je hebt (`null` = niet op aantallen filteren). */
   aantallen: { spelers: number; keepers: number } | null;
+  /** Leeftijdsgroep (`null` = alle leeftijden). */
+  leeftijd: Leeftijd | null;
   favorieten: boolean;
   eigen: boolean;
   zoek: string;
 }
 
-export const GEEN_FILTERS: Filters = { aantallen: null, favorieten: false, eigen: false, zoek: '' };
+export const GEEN_FILTERS: Filters = { aantallen: null, leeftijd: null, favorieten: false, eigen: false, zoek: '' };
 
 /** Zonder hoofdletters en accenten (zoeken op "coordinatie" vindt "Coördinatie"). */
 const plat = (s: string) =>
@@ -28,6 +31,7 @@ const plat = (s: string) =>
 /** Past deze oefening bij de filters? `aantallen` uit kan je meegeven (bv. bij Training maken: die van de training). */
 export function pastBijFilters(o: Oefening, f: Filters, favorieten: ReadonlySet<string>): boolean {
   if (f.aantallen && !pastBij(o, f.aantallen.spelers, f.aantallen.keepers)) return false;
+  if (!pastBijLeeftijd(o, f.leeftijd)) return false;
   if (f.favorieten && !favorieten.has(o.id)) return false;
   if (f.eigen && !o.eigen) return false;
   const z = plat(f.zoek);
@@ -45,14 +49,15 @@ export function filterOefeningen(lijst: Oefening[], f: Filters, favorieten: Read
 
 /** Hoeveel filters staan er aan (voor het knopje "Filters (2)"). */
 export function aantalActief(f: Filters, metAantallen = true): number {
-  return (metAantallen && f.aantallen ? 1 : 0) + (f.favorieten ? 1 : 0) + (f.eigen ? 1 : 0) + (f.zoek.trim() ? 1 : 0);
+  return (metAantallen && f.aantallen ? 1 : 0) + (metAantallen && f.leeftijd ? 1 : 0) + (f.favorieten ? 1 : 0) + (f.eigen ? 1 : 0) + (f.zoek.trim() ? 1 : 0);
 }
 
-// ---------- gedeelde toestand (zolang de app open is; aantallen ook op het apparaat) ----------
+// ---------- gedeelde toestand (zolang de app open is; aantallen en leeftijd ook op het apparaat) ----------
 
 const SLEUTEL = 'trainersapp.filterAantallen';
 /** De laatst gebruikte aantallen (ook als het filter uit staat), om ze bij het aanzetten weer te gebruiken. */
 const LAATST = 'trainersapp.filterAantallenLaatst';
+const LEEFTIJD = 'trainersapp.filterLeeftijd';
 type Opslagplek = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
 function opslag(): Opslagplek | undefined {
@@ -90,16 +95,35 @@ export function laatsteAantallen(plek: Opslagplek | undefined = opslag()): { spe
   return leesAantallen(plek, LAATST) ?? leesAantallen(plek) ?? { spelers: 12, keepers: 1 };
 }
 
-let huidig: Filters = { ...GEEN_FILTERS, aantallen: leesAantallen() };
+export function leesLeeftijd(plek: Opslagplek | undefined = opslag()): Leeftijd | null {
+  try {
+    const x = plek?.getItem(LEEFTIJD);
+    return isLeeftijd(x) ? x : null;
+  } catch {
+    return null;
+  }
+}
+
+export function bewaarLeeftijd(l: Leeftijd | null, plek: Opslagplek | undefined = opslag()): void {
+  try {
+    if (l) plek?.setItem(LEEFTIJD, l);
+    else plek?.removeItem(LEEFTIJD);
+  } catch {
+    /* niet erg */
+  }
+}
+
+let huidig: Filters = { ...GEEN_FILTERS, aantallen: leesAantallen(), leeftijd: leesLeeftijd() };
 const luisteraars = new Set<() => void>();
 
 export function zetFilters(w: Partial<Filters>): void {
   huidig = { ...huidig, ...w };
   if ('aantallen' in w) bewaarAantallen(huidig.aantallen);
+  if ('leeftijd' in w) bewaarLeeftijd(huidig.leeftijd);
   for (const cb of luisteraars) cb();
 }
 
-/** Alles wissen (ook de aantallen). */
+/** Alles wissen (ook de aantallen en de leeftijd). */
 export function wisFilters(): void {
   zetFilters({ ...GEEN_FILTERS });
 }
@@ -110,7 +134,7 @@ const abonneer = (cb: () => void) => {
 };
 const nu = () => huidig;
 
-/** Luisteren naar filterwijzigingen (synchronisatie van de aantallen). */
+/** Luisteren naar filterwijzigingen (synchronisatie van de aantallen en de leeftijd). */
 export const abonneerFilters = abonneer;
 export const huidigeFilters = nu;
 

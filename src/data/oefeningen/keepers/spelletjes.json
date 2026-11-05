@@ -15,6 +15,11 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer keepers: wie een doelpunt tegen krijgt, wisselt met een wachtende keeper. Of speel Keepersoorlog op één goal.",
     "coachpunten": [
@@ -145,6 +150,11 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": false,
     "meerSpelers": "Met meer keepers: 2 tegen 2 op een iets groter veld, of winnaar blijft.",
     "coachpunten": [
@@ -317,6 +327,11 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 3,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Buiten: eerst aannemen en kijken, dan zuiver over de grond inspelen op de verre voet",
@@ -584,6 +599,11 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Als schutter: aanname schuin voor je, kijk kort naar de keeper en schiet laag in de hoek",
@@ -972,6 +992,11 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 4,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Klein doeltje: blijf vlak voor je lijn, dan heb je alles binnen bereik",
@@ -1208,6 +1233,11 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Meeverschuiven met de bal, ook bij een pass tussen de aanvallers",
@@ -1498,6 +1528,11 @@
     ],
     "spelersNodig": 0,
     "keepersNodig": 3,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
     "doorwisselbaar": true,
     "coachpunten": [
       "Bij de steekpass al vertrekken: de bal is het moment om ruimte te winnen",

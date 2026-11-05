@@ -274,5 +274,31 @@
         "A task at the cone: round the cone and back into the area"
       ]
     }
+  },
+  "veld-af-kleine-doeltjes": {
+    "naam": "Quick shooter on mini goals",
+    "uitleg": "Two teams, each with their own mini goal. On the signal, the front player of each queue dribbles to the shooting line and shoots at their goal. A goal = a point. Then back to the end of the queue. Which team has the most points after 3 minutes?",
+    "organisatie": "Two mini goals (3 m wide) 8 m apart. Shooting line of disc cones 8 m in front of the goals, the queues with balls at 18 m. Suitable for the youngest players.",
+    "benodigdheden": [
+      "2 mini goals",
+      "4 disc cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Look up before you shoot: where is the goal?",
+      "Placement beats power: inside of the foot",
+      "Rejoin the queue quickly so your team gets its next go sooner"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shooting line at 5 m",
+        "Bigger goals or two cones as a goal"
+      ],
+      "moeilijker": [
+        "With a keeper in each goal (then it's real finishing)",
+        "Weaker foot only",
+        "A cone to dribble round before the shooting line"
+      ]
+    }
   }
 }

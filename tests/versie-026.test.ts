@@ -42,7 +42,7 @@ describe('categorie Verdedigen en omschakelen', () => {
   it('bestaat bij de spelers, vóór Partijvormen, met een Engelse naam', () => {
     const ids = CATEGORIEEN.veld.map((c) => c.id);
     expect(ids).toContain('verdedigen-omschakelen');
-    expect(ids.indexOf('verdedigen-omschakelen')).toBe(ids.indexOf('partijvormen') - 1);
+    expect(ids.indexOf('verdedigen-omschakelen')).toBeLessThan(ids.indexOf('partijvormen'));
     expect(en['Verdedigen en omschakelen']).toBe('Defending & transition');
     expect(en['Druk zetten, de bal veroveren en snel omschakelen']).toBeTruthy();
   });

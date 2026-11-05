@@ -20,6 +20,7 @@ import { bordNaam, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
 import { abonneerFilters, huidigeFilters, zetFilters } from '../engine/filters';
+import { isLeeftijd } from '../data/leeftijden';
 import { teams, isTeamId, teamOefeningen, type Rol } from '../engine/teams';
 import { voorDelen } from '../eigen/eigen';
 import { vindOefening } from '../data/oefeningen';
@@ -173,10 +174,11 @@ export function beantwoordSamenvoegen(ja: boolean): void {
 function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
   const sleutel = sleutelVoor('instellingenGewijzigd', uid);
   let bezig = false;
-  let vorigeAantallen = JSON.stringify(huidigeFilters().aantallen);
+  const onthouden = () => JSON.stringify([huidigeFilters().aantallen, huidigeFilters().leeftijd]);
+  let vorigeAantallen = onthouden();
   const lees = (): Instellingen => {
     const k = leesKeuze();
-    return { thema: k.thema, modus: k.modus, taal: leesTaalKeuze(), aantallen: huidigeFilters().aantallen, gewijzigd: Number(opslag()?.getItem(sleutel) ?? 0) };
+    return { thema: k.thema, modus: k.modus, taal: leesTaalKeuze(), aantallen: huidigeFilters().aantallen, leeftijd: huidigeFilters().leeftijd, gewijzigd: Number(opslag()?.getItem(sleutel) ?? 0) };
   };
   return {
     lees,
@@ -184,7 +186,7 @@ function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
       bezig = true;
       try {
         kiesThema({ thema: i.thema as ThemaId, modus: i.modus as Modus });
-        zetFilters({ aantallen: i.aantallen });
+        zetFilters({ aantallen: i.aantallen, leeftijd: isLeeftijd(i.leeftijd) ? i.leeftijd : null });
         // Andere taal van een ander apparaat: de app laadt opnieuw in die taal.
         if (i.taal === 'nl' || i.taal === 'en' || i.taal === 'auto') {
           if (i.taal !== leesTaalKeuze()) {
@@ -192,7 +194,7 @@ function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
             kiesTaal(i.taal);
           }
         }
-        vorigeAantallen = JSON.stringify(i.aantallen);
+        vorigeAantallen = onthouden();
         opslag()?.setItem(sleutel, String(i.gewijzigd));
       } finally {
         bezig = false;
@@ -207,7 +209,7 @@ function instellingenDoel(uid: string): SyncDoelen['instellingen'] {
       const a = abonneerThema(gewijzigd);
       const c = abonneerTaal(gewijzigd);
       const b = abonneerFilters(() => {
-        const nu = JSON.stringify(huidigeFilters().aantallen);
+        const nu = onthouden();
         if (nu === vorigeAantallen) return;
         vorigeAantallen = nu;
         gewijzigd();

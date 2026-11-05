@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SOORT_NAAM, SOORT_PAD, vindCategorie } from '../data/categorieen';
 import { vindOefening } from '../data/oefeningen';
+import { leeftijdNaam } from '../data/leeftijden';
 import { AnimatieSpeler } from '../anim/AnimatieSpeler';
 import { Kop } from '../components/Kop';
 import { Icoon } from '../components/Icoon';
@@ -162,6 +163,13 @@ export function OefeningDetail({ id }: { id: string }) {
             <section className="blok">
               <h3>{t('Organisatie')}</h3>
               <p>{oefening.organisatie}</p>
+            </section>
+          )}
+
+          {!!oefening.leeftijden?.length && (
+            <section className="blok">
+              <h3>{t('Leeftijd')}</h3>
+              <p className="detail-leeftijden">{oefening.leeftijden.map(leeftijdNaam).join(' · ')}</p>
             </section>
           )}
 

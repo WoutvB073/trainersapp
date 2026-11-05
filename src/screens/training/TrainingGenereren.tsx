@@ -16,6 +16,8 @@ import { MAX_AANTAL, metNaam, verplaats, type Training } from '../../training/tr
 import type { Soort } from '../../model/types';
 import { NietGevonden } from '../NietGevonden';
 import { Stapper } from './onderdelen';
+import { LeeftijdKeuze } from '../../components/Filters';
+import { zetFilters } from '../../engine/filters';
 import { t as vt } from '../../i18n/t';
 
 /** Gegevens voor het kiezen, altijd vers (aantallen van de training, favorieten, recente trainingen). */
@@ -24,6 +26,7 @@ function context(t: Training): KiesContext {
     alle: alleOefeningen(),
     spelers: t.spelers,
     keepers: t.keepers,
+    leeftijd: t.leeftijd,
     favorieten: favorieten.alle(),
     recent: recentGebruikt(trainingen.lijst(), t.id),
     toeval: Math.random,
@@ -202,6 +205,13 @@ export function TrainingGenereren({ id }: { id: string }) {
         <section className="blok training-gegevens">
           <Stapper label={vt('Spelers')} icoon="spelers" waarde={t.spelers} onStap={(d) => stap('spelers', d)} />
           <Stapper label={vt('Keepers')} icoon="keeper" waarde={t.keepers} onStap={(d) => stap('keepers', d)} />
+          <LeeftijdKeuze
+            waarde={t.leeftijd ?? null}
+            opKies={(leeftijd) => {
+              trainingen.bewaar({ ...(trainingen.haal(id) ?? t), leeftijd: leeftijd ?? undefined });
+              zetFilters({ leeftijd });
+            }}
+          />
         </section>
 
         <section className="blok gen-kiezen">
