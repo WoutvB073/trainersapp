@@ -59,7 +59,6 @@ export function GedeeldeTraining({ code, nietGeinstalleerd }: { code: string; ni
           )}
         </section>
 
-        {nietGeinstalleerd && <InAppUitleg uitleg={zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Mijn teamtrainingen → Gedeelde teamtraining openen via een link**.')} />}
 
         <h2 className="sectie-titel">{vt('Oefeningen')}</h2>
         {onbekend > 0 && <p className="waarschuwing">{vt(onbekend === 1 ? '1 oefening staat niet in deze versie van de app. Werk de app bij.' : '{n} oefeningen staan niet in deze versie van de app. Werk de app bij.', { n: onbekend })}</p>}
@@ -91,6 +90,7 @@ export function GedeeldeTraining({ code, nietGeinstalleerd }: { code: string; ni
             </ul>
           </section>
         )}
+        {nietGeinstalleerd && <InAppUitleg uitleg={zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Mijn teamtrainingen → Gedeelde teamtraining openen via een link**.')} />}
       </main>
     </div>
   );

@@ -50,8 +50,8 @@ export function GedeeldeOefening({ code, nietGeinstalleerd }: { code: string; ni
             </button>
           )}
         </section>
-        {nietGeinstalleerd && <InAppUitleg uitleg={zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Eigen oefeningen → Gedeelde oefening openen via een link**.')} />}
         <OefeningBlokken o={o} />
+        {nietGeinstalleerd && <InAppUitleg uitleg={zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Eigen oefeningen → Gedeelde oefening openen via een link**.')} />}
       </main>
     </div>
   );

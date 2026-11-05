@@ -97,6 +97,27 @@ async function maker(taal = 'nl') {
   return { context, page };
 }
 
+/** Tweede toestel met de app, leeg. */
+async function maker2() {
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  await alsGeinstalleerd(page);
+  await page.evaluateOnNewDocument(
+    (echt) => {
+      try {
+        localStorage.setItem(echt ? 'trainersapp.echteLinks' : 'trainersapp.emulator', '1');
+        localStorage.setItem('trainersapp.taal', 'nl');
+      } catch {
+        /* about:blank */
+      }
+    },
+    ECHT,
+  );
+  page.on('dialog', (d) => void d.accept());
+  await page.setViewport({ width: 1366, height: 820 });
+  return { context, page };
+}
+
 /** Telefoon zonder app en zonder account. */
 async function ontvanger(ua, taal, viewport = { width: 375, height: 667, isMobile: true, hasTouch: true }) {
   const context = await browser.createBrowserContext();
@@ -292,6 +313,83 @@ for (let i = 0; i < 12; i += 1) {
   await slaap(700);
 }
 controle((await m.page.$$('.training-regel')).length === 0, 'niet alle testlinks zijn ingetrokken');
+
+// ---------- 6. Mag de browser het deelmenu niet meer openen na het maken: het paneel met een eigen knop ----------
+{
+  await ga(m.page, '/club/club-test');
+  await m.page.waitForFunction(() => [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Deel met trainers'));
+  await m.page.evaluate(() => {
+    const geweigerd = () => Promise.reject(Object.assign(new Error('geen tik'), { name: 'NotAllowedError' }));
+    Object.defineProperty(navigator, 'share', { value: geweigerd, configurable: true });
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText: geweigerd }, configurable: true });
+  });
+  await knopMet(m.page, 'Deel met trainers');
+  await m.page.waitForSelector('.deel-tekst', { timeout: 10000 }).catch(() => problemen.push('paneel verschijnt niet'));
+  const t = await m.page.evaluate(() => document.querySelector('.deel-tekst')?.innerText ?? '');
+  controle(/^Circuittraining: MT\n.*#\/d\/[A-Z2-9]{12}$/.test(t), `paneel: ${t.slice(0, 100)}`);
+  const p = `${MAP}dl-paneel.png`;
+  await m.page.screenshot({ path: p });
+  shots.push([p, 'Deelmenu geblokkeerd: paneel']);
+  await ga(m.page, '/links');
+  for (let i = 0; i < 4; i += 1) {
+    await m.page.evaluate(() => document.querySelector('.training-regel .icoon-knop')?.click());
+    await slaap(600);
+  }
+}
+
+// ---------- 7. Met accounts: Testtrainer 1 deelt, Testtrainer 2 opent en slaat op, account weg = links weg ----------
+const WACHTWOORD = 'testwachtwoord1';
+async function inloggen(page, naam, email, maken) {
+  await ga(page, '/account');
+  await page.waitForSelector('.account-form', { timeout: 15000 });
+  if (maken) {
+    await page.evaluate(() => [...document.querySelectorAll('[role="tab"]')].find((b) => b.textContent.startsWith('Account maken'))?.click());
+    await slaap(300);
+    await page.type('.account-form input[autocomplete="name"]', naam);
+  }
+  await page.type('.account-form input[type="email"]', email);
+  await page.type('.account-form input[type="password"]', WACHTWOORD);
+  await page.evaluate(() => document.querySelector('.account-form button[type="submit"]')?.click());
+}
+async function verwijderAccount(page) {
+  await ga(page, '/account');
+  await page.waitForSelector('.account-naam', { timeout: 20000 });
+  await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.startsWith('Account verwijderen'))?.click());
+  await page.waitForSelector('.gevaar-blok input[type="password"]', { timeout: 10000 });
+  await page.type('.gevaar-blok input[type="password"]', WACHTWOORD);
+  await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.startsWith('Definitief verwijderen'))?.click());
+  await page.waitForSelector('.account-form', { timeout: 60000 }).catch(() => problemen.push('account verwijderen lukt niet'));
+}
+{
+  await inloggen(m.page, 'Testtrainer 1', 'test1@example.com', true);
+  await m.page.waitForSelector('.paneel-vraag, .account-naam', { timeout: 20000 });
+  await m.page.evaluate(() => [...document.querySelectorAll('.paneel-vraag button')].find((b) => b.textContent.startsWith('Ja'))?.click());
+  await m.page.waitForFunction(() => document.querySelector('.account-naam')?.textContent === 'Testtrainer 1', { timeout: 20000 });
+  await m.page.waitForFunction(() => document.querySelector('.sync-regel')?.textContent.includes('Alles staat online'), { timeout: 30000 }).catch(() => problemen.push('Testtrainer 1: niet alles online'));
+  const account = await m.page.evaluate(() => Object.keys(localStorage).find((k) => k.endsWith('.sync.oefeningen'))?.split('.')[2]);
+  const link = (await deel(m.page, '/oefening/eigen-testoefening', 'Delen')).split(/\r?\n/)[1];
+  console.log(`Testtrainer 1 deelt: ${link}`);
+  controle(/#\/d\/[A-Z2-9]{12}$/.test(link ?? ''), `Testtrainer 1: geen korte link: ${link?.slice(0, 80)}`);
+  const maker = await m.page.evaluate(() => JSON.parse(localStorage.getItem('trainersapp.deellinks'))[0]?.maker);
+  controle(maker === account, 'de link staat niet op naam van het account');
+
+  const t2 = await maker2();
+  await inloggen(t2.page, 'Testtrainer 2', 'test2@example.com', true);
+  await t2.page.waitForFunction(() => document.querySelector('.account-naam')?.textContent === 'Testtrainer 2', { timeout: 20000 });
+  await ga(t2.page, pad(link));
+  await t2.page.waitForFunction(() => document.body.innerText.includes('Testoefening passen') && !!document.querySelector('.gedeeld-kop'), { timeout: 15000 }).catch(() => problemen.push('Testtrainer 2: link opent niet'));
+  await knopMet(t2.page, 'Opslaan in mijn eigen oefeningen');
+  await t2.page.waitForFunction(() => location.hash.startsWith('#/oefening/eigen-'), { timeout: 8000 }).catch(() => problemen.push('Testtrainer 2: opslaan lukt niet'));
+
+  // Account weg: de link werkt niet meer.
+  await verwijderAccount(m.page);
+  const o = await ontvanger(UA['iPhone WhatsApp'], 'nl');
+  await ga(o.page, pad(link));
+  await o.page.waitForFunction(() => !!document.querySelector('.link-fout'), { timeout: 8000 }).catch(() => problemen.push('link blijft werken na het verwijderen van het account'));
+  await o.context.close();
+  await verwijderAccount(t2.page);
+  await t2.context.close();
+}
 
 await blad(browser, shots, `${MAP}blad-deellinks.png`, 5, 2400);
 await browser.close();

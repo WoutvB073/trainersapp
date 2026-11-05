@@ -100,7 +100,7 @@ for (const x of lijst.filter((y) => !y.computer && !y.tablet)) {
         await page.screenshot({ path: p });
         balkShots.push([p, `${x.naam} · ${naam}`]);
       }
-      await page.browserContext().close();
+      await page.close();
     }
   }
 }
