@@ -179,7 +179,7 @@ const namen = (c: Pick<ClubTraining, 'trainers'>) => c.trainers.map((x) => x.tri
 
 /** Zelf gekozen trainer, anders automatisch om en om verdeeld. Een gekozen naam die niet meer bestaat telt niet. */
 function trainerVan(lijst: string[], gekozen: string | undefined, nr: number): string | undefined {
-  if (gekozen === '' ) return undefined;
+  if (gekozen === '') return undefined;
   if (gekozen && lijst.includes(gekozen)) return gekozen;
   return lijst.length ? lijst[(nr - 1) % lijst.length] : undefined;
 }

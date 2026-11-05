@@ -236,7 +236,7 @@ const MAPPEN: Record<Taal, { enkelvoud: Record<string, string>; klein: Record<st
   en: { enkelvoud: ENKELVOUD_EN, klein: {} },
 };
 
-function sleutel(naam: string, taal: Taal): string {
+export function sleutel(naam: string, taal: Taal): string {
   const { enkelvoud: ENKELVOUD, klein: KLEIN } = MAPPEN[taal];
   return naam
     .toLowerCase()
@@ -248,7 +248,7 @@ function sleutel(naam: string, taal: Taal): string {
     .trim();
 }
 
-function metAantal(s: string, aantal: number, taal: Taal): string {
+export function metAantal(s: string, aantal: number, taal: Taal): string {
   const { enkelvoud, klein: KLEIN } = MAPPEN[taal];
   const MEERVOUD: Record<string, string> = Object.fromEntries(Object.entries(enkelvoud).map(([m, e]) => [e, m]));
   const woorden = s.split(' ');
