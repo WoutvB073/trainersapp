@@ -86,6 +86,9 @@ await foto(page, 'training', 'Training met 4 oefeningen', true);
 
 // Slepen met de vinger: oefening 1 naar plek 3.
 const grepen = await page.$$('.greep');
+// De lijst bovenin beeld: anders scrollt het slepen vanzelf mee aan de onderrand (0.30.0: extra regel Leeftijd).
+await grepen[0].evaluate((e) => window.scrollBy(0, e.getBoundingClientRect().top - 90));
+await slaap(150);
 const a = await grepen[0].boundingBox();
 const b = await grepen[2].boundingBox();
 const x = a.x + a.width / 2;
