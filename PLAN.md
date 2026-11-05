@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (05-11-2026, versie 0.31.2)
+## Status (05-11-2026, versie 0.31.3)
 
 | Fase | Status |
 |---|---|
@@ -39,7 +39,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online – **wacht op test** |
 | 26. Clubtraining: veldplan, rotatie, materiaal, deellink, kwartiertimer (0.31.0) | ✅ online – **wacht op test** |
 | 27. Nieuwe namen (Teamtraining, Circuittraining) en nieuw startscherm (0.31.1) | ✅ online, getest |
-| 28. Delen met team bij Circuittraining, overal link én team, sync-fouten opgelost (0.31.2) | ✅ online – **wacht op test** |
+| 28. Delen met team bij Circuittraining, overal link én team, sync-fouten opgelost (0.31.2) | ✅ online, getest |
+| 29. Korte deellinks, links openen zonder installatiescherm, pijl in eigen strook, synchroniseren nagelopen (0.31.3) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1137,8 +1138,36 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Synchroniseren** (`src/online/sync.ts`): twee fouten die al sinds 0.16 bestonden. `bekend` werd bijgewerkt vóór Firestore een schrijfactie bevestigde. Gevolg 1: een oudere momentopname overschreef een nieuwere wijziging, waardoor letters wegvielen bij snel typen. Gevolg 2: haalde een schrijfactie de server niet (app dicht vlak na het maken), dan gold het item de volgende keer als online verwijderd en verdween het. Nu telt onze eigen versie zolang hij `onderweg` is en wordt `bekend` pas bijgewerkt na bevestiging. Tests: `tests/online/sync.test.ts`, `tools/e2e/sync-race.mjs`.
 - **203 MB in de online-tests**: geen echt bericht. De Firestore-emulator (v1.19.8) zette de frame-kop van gRPC soms twee keer in één stuk (gevangen: `00 0000001d 00 0000001d 12 1b 22 0b 0a…`). De client las daarna inhoud als lengte: 203557642 = `0c 22 0b 0a`, bytes uit een TargetChange van 29 bytes. Alleen gRPC (tests in Node) heeft hier last van; de app gebruikt WebChannel. Vermoedelijk twee gelijktijdige schrijfacties op één stream in de emulator. Alleen tests die hierdoor vastlopen krijgen een herkansing (`KAPOT_BERICHT` in `tests/online/hulp.ts`).
 
+## Besluiten versie 0.31.3 – korte deellinks en synchroniseren
+- **Korte links** (`src/engine/deellink.ts`): `#/d/<code>`, code van 12 tekens (cryptografisch toeval, geen 0/O/1/I/L), link van 56 tekens. De inhoud staat in `links/{code}` als { soort, data, maker, gemaakt }; `data` is de code van de lange link, dus de schermen bleven hetzelfde. Lezen en maken gaan via de REST-API: een gedeelde link opent zonder de Firebase-code. Maken zonder account gaat met anoniem inloggen (`linkToegang` in `online.ts`; `isAnonymous` telt niet als account).
+- **Regels**: `links`: `get` voor iedereen, geen `list`, `create` ingelogd op eigen naam (code van 12 tekens, soort, maximaal 200 KB), geen `update`, `delete` alleen de maker. Anoniem inloggen staat aan in het echte project.
+- **Terugval**: geen internet of het duurt langer dan 6 seconden: de lange link, gecomprimeerd (`naarBase64Url`, fflate, code begint met z, alleen URL-veilige tekens). Oude links beginnen met "ey" en blijven werken.
+- **Deelbericht**: naam op de eerste regel, link op de tweede (`deelTekst`). Mag de browser het deelmenu na het maken niet meer openen, dan volgt een paneel met een eigen knop (`DeelPaneel`).
+- **Openen**: `gedeeldZonderApp` in `App.tsx`: elke gedeelde link opent meteen, onderaan `InstalleerMelding`. Onvolledig, ingetrokken of kapot: `LinkFout` met twee knoppen.
+- **Installatiescherm**: met een pijl is het scherm `position: fixed` met een scrollgebied en een eigen strook voor de pijl (`.poort-scherm`), dus de pijl ligt nergens overheen. `installeren.mjs` meet dat op alle toestellen, ook met de Safari-balk (375×553, 390×664, 430×740, 320×480).
+- **Synchroniseren** (`src/online/sync.ts`, `tests/sync-volgorde.test.ts` met een nep-Firestore):
+  - Nieuw toestel overschreef de instellingen online met zijn standaardwaarden, omdat de eerste stand alleen naam en e-mail bevatte: nu pas beslissen op een stand die zeker van de server komt (`zekerVanServer`).
+  - Favorieten: `bekend` pas na bevestiging, zoals de lijsten sinds 0.31.2, en alleen het verschil sturen (`arrayUnion`/`arrayRemove`): een offline toestel overschreef anders wat een ander toestel deed.
+  - Instellingen: twee toestellen met dezelfde tijd en andere inhoud bleven eindeloos schrijven; een wijziging zonder nieuwe tijd (net na het opstarten) ging verloren. Nu telt wat de vorige keer gelijk was (`bekend`, zonder tijd).
+  - Lijsten: iets maken en meteen verwijderen kwam terug (fout uit 0.31.2): vergelijken met wat wij stuurden, bewaren wat bevestigd is.
+  - Spelerslijst: staat niet online, een nieuw toestel vult hem uit de opstellingen (`vulAanAls`).
+  - Getest en in orde: snel afvinken, thema, taal, aantallen, leeftijd, opstellingen, borden, eerste keer samenvoegen. Teams schrijven rechtstreeks naar Firestore en lopen niet via deze route.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.31.3 – De controle van het synchroniseren en de korte links zijn samen één versie 0.31.3, omdat beide opdrachten dat nummer noemden. Het synchroniseren is eerst afgemaakt, omdat dat al begonnen was.
+- 0.31.3 – Codes van 12 tekens in plaats van 8: moeilijker te raden en de link is met 56 tekens nog onder de 60.
+- 0.31.3 – Links verlopen niet vanzelf: ze werken tot je ze intrekt. Dezelfde inhoud nog eens delen geeft dezelfde link; na een wijziging komt er een nieuwe link en de oude blijft de oude inhoud tonen.
+- 0.31.3 – Intrekken kan bij Instellingen → Mijn deellinks (verschijnt zodra er links zijn), per toestel. Een link die je zonder account maakte, kun je na het inloggen niet meer intrekken; dat zegt de app dan.
+- 0.31.3 – Account verwijderen trekt de links in die op dat toestel gemaakt zijn. Links van een ander toestel blijven bestaan, want een lijst opvragen mag volgens de regels niet.
+- 0.31.3 – Maximaal 200 KB per link; groter (komt in de praktijk niet voor) wordt de lange link.
+- 0.31.3 – Zonder de app is Opslaan niet zichtbaar; onder de inhoud staat hoe je hem in de app krijgt. Wie al "Gewoon in de browser" koos, ziet de melding onderaan niet en kan wel opslaan.
+- 0.31.3 – De laatste 5 geopende links blijven op het toestel staan, zodat een trainer ze op het veld ook zonder bereik ziet. Een ingetrokken link verdwijnt zodra het toestel online is.
+- 0.31.3 – Geen internet bij het openen geeft een eigen melding ("Geen verbinding…") met dezelfde twee knoppen.
+- 0.31.3 – Spelerslijst: alleen op een nieuw toestel gevuld uit de opstellingen, niet doorlopend. Zo komt er niets nieuws online en blijft een leeggemaakte lijst leeg.
+- 0.31.3 – Niet opgelost: als twee toestellen tegelijk dezelfde circuittraining wijzigen terwijl er één offline is, wint wie als laatste online komt, voor de hele circuittraining (ook de vinkjes). Dat vraagt per vinkje een eigen veld online, dus andere regels. Hetzelfde geldt voor de instellingen als geheel.
+- 0.31.3 – Niet aangepast: `werkGedeeldeBij` kan bij het opstarten even een oudere versie van een gedeelde oefening naar het team sturen, tot de eigen oefeningen binnen zijn. Dat herstelt zich vanzelf en is alleen uit de code afgeleid, niet met een test bewezen.
+- 0.31.3 – Niet aangepast: wat je maakt terwijl je uitgelogd bent (na de eerste keer samenvoegen) blijft op het toestel staan maar komt na inloggen niet in je account; je ziet het weer als je uitlogt.
 - 0.31.2 – Een gedeelde circuittraining wordt niet vanzelf bijgewerkt: nog eens Delen met team doet dat, net als bij teamtrainingen. Op de gedeelde pagina staat voor de eigenaar een knop Aanpassen met die uitleg (alleen als het origineel er nog is).
 - 0.31.2 – De link-knop bij een circuittraining blijft "Deel met trainers" en die link blijft alleen om te bekijken (geen Opslaan). Kopiëren kan via het team.
 - 0.31.2 – Een kopie neemt naam, datums, trainers en oefeningen over; de afvinklijst begint leeg. Materiaal staat bij het team als lijst zonder afvinken, en niet in de trainerslink.

@@ -321,6 +321,9 @@ describe('nieuw toestel en opstarten zonder gegevens van de server', () => {
     new Synchronisatie({} as never, 'u1', a.doelen).start();
     nep.luisteraars.get(IK)!(alleenNaam);
     expect(nep.wachtrij).toEqual([]);
+    // Gezien met de emulator: ook "niet uit de cache" kan nog alleen onze eigen schrijfactie zijn.
+    nep.luisteraars.get(IK)!({ ...alleenNaam, metadata: { hasPendingWrites: true, fromCache: false } });
+    expect(nep.wachtrij).toEqual([]);
     meld();
     await bevestig();
     expect(a.instellingen()).toMatchObject({ thema: 'rood', taal: 'en' });

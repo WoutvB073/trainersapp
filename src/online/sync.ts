@@ -69,6 +69,9 @@ function vast(i: Instellingen | undefined): Instellingen | undefined {
   const a = i.aantallen ? { spelers: Number(i.aantallen.spelers), keepers: Number(i.aantallen.keepers) } : null;
   return { thema: String(i.thema), modus: String(i.modus), taal: String(i.taal ?? 'auto'), aantallen: a, leeftijd: i.leeftijd ?? null, gewijzigd: Number(i.gewijzigd) || 0 };
 }
+/** Komt deze stand echt van de server? Met een eigen schrijfactie onderweg kan hij alleen die bevatten, ook als hij niet uit de cache komt. */
+const zekerVanServer = (m: { fromCache: boolean; hasPendingWrites: boolean }) => !m.fromCache && !m.hasPendingWrites;
+
 /** Wat de gebruiker koos, zonder de tijd. */
 const inhoud = (i: Instellingen) => JSON.stringify({ ...i, gewijzigd: 0 });
 
@@ -204,7 +207,7 @@ export class Synchronisatie {
             /* kapot document: overslaan */
           }
         }
-        const vanServer = this.vanServer.get(col) || !snap.metadata.fromCache;
+        const vanServer = this.vanServer.get(col) || zekerVanServer(snap.metadata);
         this.wacht.set(col, snap.metadata.hasPendingWrites);
         this.vanServer.set(col, vanServer);
         // Pas beslissen als de server iets gezegd heeft: een lege of halve cache betekent niet dat iets online weg is.
@@ -313,7 +316,7 @@ export class Synchronisatie {
       pad,
       { includeMetadataChanges: true },
       (snap) => {
-        const vanServer = this.vanServer.get('gebruiker') || !snap.metadata.fromCache;
+        const vanServer = this.vanServer.get('gebruiker') || zekerVanServer(snap.metadata);
         this.wacht.set('gebruiker', snap.metadata.hasPendingWrites);
         this.vanServer.set('gebruiker', vanServer);
         // De eerste stand op een nieuw toestel is alleen onze eigen naam en e-mail: daarop beslissen zou de instellingen online
