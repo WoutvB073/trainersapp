@@ -288,7 +288,7 @@ describe('A4 Doelnet', () => {
     expect(doelnetUitkomst({ ...basis, lijnen: [schot([20.5, 0])] }, schot([20.5, 0]))).toBeNull();
   });
 
-  it('ingebouwde oefeningen hebben geen doelnet', () => {
-    expect(OEFENINGEN.some((o) => o.tekening.objecten.some((x) => x.soort === 'doelnet'))).toBe(false);
+  it('ingebouwde oefeningen hebben geen doelnet, behalve Hoekenjacht (0.30.0)', () => {
+    expect(OEFENINGEN.filter((o) => o.tekening.objecten.some((x) => x.soort === 'doelnet')).map((o) => o.id)).toEqual(['veld-mt-hoekenjacht']);
   });
 });

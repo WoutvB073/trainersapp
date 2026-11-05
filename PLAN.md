@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (28-10-2026, versie 0.29.1)
+## Status (05-11-2026, versie 0.30.0)
 
 | Fase | Status |
 |---|---|
@@ -36,6 +36,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 22. Deel C: voorbeeldtactieken op het tactiekbord, 17 tactieken / 25 borden (0.28.0) | ✅ online, getest en akkoord |
 | 23. Deel D: ingestudeerde spelhervattingen, 20 hervattingen / 27 borden (0.29.0) | ✅ online – **wacht op test** |
 | 24. Installeren op elke telefoon en browser, filter op aantal keepers (0.29.1) | ✅ online – **wacht op test** |
+| 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1102,8 +1103,28 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   EN (pijl in beeld, niets afgekapt, geen andere taal), Lukt het niet?, kiezen, browserkeuze onthouden, al geïnstalleerd,
   Gelukt. Bladen `blad-inst-{ios,android,inapp,computer}-{nl,en}.png`, `blad-inst-hulp.png`, `blad-inst-status.png`.
 
+## Besluiten versie 0.30.0 – leeftijdsgroepen en Mini Talents
+- **Leeftijdsgroepen** (`src/data/leeftijden.ts`, `Oefening.leeftijden`): Mini’s 3–5 jr, Mini’s 5–7 jr, JO8–JO11, JO12–JO15, JO16–JO19; Engels Minis 3–5 yrs, Minis 5–7 yrs, U8–U11, U12–U15, U16–U19. Elke ingebouwde oefening heeft er een of meer (`tools/nieuw/leeftijden-030.cjs`, getest). Eigen oefeningen: optioneel in Gegevens; zonder leeftijd passen ze overal.
+- **Filter**: één keuze in de filterbalk (`Filters.leeftijd`, onthouden in `trainersapp.filterLeeftijd` en via het account). Een training heeft een eigen `leeftijd` (start met de laatst gekozen, gaat mee in de deellink); die geldt bij Oefeningen kiezen en Training genereren, met oranje markering als een oefening niet past. Oude trainingen en links hebben geen leeftijd en filteren niet.
+- **Categorie 1 tegen 1** (`een-tegen-een`, vóór Partijvormen, eigen plaatje), ook bij 6 bestaande duels.
+- **Snelle schutter** (`veld-af-kleine-doeltjes`) is op verzoek terug uit het archief, alleen met de twee mini-groepen.
+- **62 nieuwe oefeningen** (`veld-mt-…`, `tools/nieuw/mini-030a–d.cjs`, hulpjes in `mini-hulp.cjs`): Techniek 17, 1 tegen 1 15, Afwerken 15, Partijvormen 15. `uitleg` is kleutertaal om voor te lezen, `organisatie` is voor de trainer, `benodigdheden` is het materiaalveld. Stations van ±5 kinderen, rij hoogstens 3; partijvormen 4+ met 2 groepjes per veld (±10 kinderen).
+- **Nieuwe bouwstenen**: bewegend materiaal (`pakObject`, `legObject`, `keerOm`, `valOm`, `zetOp`; `Stand.materiaal`, in 2D en 3D), bal op een pion (`opHoogte`), `op-bal` (op de bal zitten), `voetOpBal`, `tiktak`, pionmaten via `hoogte`, `zonderNet` op een klein goal, `onderdoor` (pass onder een horde), los `hesje` met `drager` (staart).
+- **Tests**: `tests/versie-030.test.ts`; browsertest `tools/e2e/versie-030.mjs` (blad `blad-030.png`). Close-ups per blok: `nieuw.mjs`, met consolefouten.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.30.0 – Geen nieuw veld "materiaal": dat bestaat al als Benodigdheden. Hetzelfde voor de kleuteruitleg: dat is de Uitleg van de oefening.
+- 0.30.0 – Filter: één leeftijd tegelijk, geen meerdere groepen.
+- 0.30.0 – De poppetjes blijven even groot als in de rest van de app; kinderen zijn in de animatie dus "volwassen" poppetjes.
+- 0.30.0 – Bestaande oefeningen houden hun kleine doeltje met net; alleen de nieuwe mini-goaltjes zijn zonder net.
+- 0.30.0 – Keepers nooit bij de mini’s. Keeperoefeningen: basis vanaf JO8, de rest vanaf JO12. Spelers: tactische vormen vanaf JO12, 7 tegen 5 en Hoog druk zetten loont alleen JO16–JO19.
+- 0.30.0 – Mini’s (beide groepen): naast de 8 genoemde ook Kleurenreactie in tweetallen, Dribbelen met opdrachten, Poortjesdribbel, Uit het vak rennen, Voetgolf, Spiegelen in tweetallen, Slalom tussen de paaltjes, 1 tegen 1 op twee kleine doeltjes, 2 tegen 2: winnaar blijft, 3 tegen 3 op vier doeltjes.
+- 0.30.0 – Makkelijker en Moeilijker staan ook bij elke mini-oefening (verplicht in de app), al stonden ze niet in de opdracht.
+- 0.30.0 – Maten mini-goaltje 1,5 × 0,9 m, E-goal 5 × 2 m. Vak bij stations meestal 12 × 12 m; partijvormen 16 × 20 m.
+- 0.30.0 – Partijvormen zonder genoemd aantal tonen in de animatie 3 tegen 3; P1 2 tegen 2. Mini-toernooi op twee veldjes met vier teams.
+- 0.30.0 – T16 Hoedjes omdraaien: met 5 kinderen 2 tegen 3 en de trainer helpt het kleinste team. D5: bij 5 kinderen doet de trainer mee.
+- 0.30.0 – In "Rug tegen rug" en "Staart pakken" komen kinderen dichter bij elkaar dan de 1,5 m uit de test; daarvoor is een uitzondering.
 - 0.29.1 – "Gewoon in de browser gebruiken" staat nu ook op de telefoon en wordt onthouden (zoals op de laptop). De uitleg
   vind je terug via "TopTraining als app installeren" onderaan het startscherm (nu met een download-icoon) en in de Help.
 - 0.29.1 – Of Chrome/Edge/Firefox op de iPhone kan installeren, beslist de iOS-versie uit de user-agent (vanaf 16.4). Een

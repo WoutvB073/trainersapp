@@ -11024,6 +11024,12 @@
           "bij": "a1"
         }
       ],
+      "weergave": {
+        "x": 0,
+        "y": -1.2,
+        "breedte": 19,
+        "lengte": 24.4
+      },
       "animatie": [
         {
           "acties": [

@@ -35,7 +35,7 @@ describe('nieuwe spelersoefeningen 0.27.0', () => {
       const o = OEFENINGEN.find((x) => x.id === id)!;
       expect(o, id).toBeTruthy();
       expect(o.soort).toBe('veld');
-      expect(o.categorieen).toEqual(verwacht.categorieen);
+      expect(o.categorieen.filter((c) => c !== 'een-tegen-een')).toEqual(verwacht.categorieen);
       expect(o.spelersNodig).toBe(verwacht.spelers);
       expect(o.keepersNodig).toBe(verwacht.keepers);
       expect(o.coachpunten.length).toBeGreaterThanOrEqual(2);

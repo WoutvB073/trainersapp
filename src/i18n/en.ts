@@ -1204,4 +1204,5 @@ export const EN: Record<string, string> = {
   'Niets gekozen? Dan past de oefening bij elke leeftijd.': 'Nothing selected? Then the drill suits every age group.',
   '1 tegen 1': '1v1',
   'Duels: passeren, verdedigen en de bal beschermen': 'Duels: beating a player, defending and shielding the ball',
+  'Past niet bij deze leeftijd': 'Doesn’t suit this age group',
 };

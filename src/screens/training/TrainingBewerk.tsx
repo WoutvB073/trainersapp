@@ -20,7 +20,7 @@ import { deel, Stapper, Toast, useToast } from './onderdelen';
 import { andereVoor } from './TrainingGenereren';
 import { t as vt } from '../../i18n/t';
 
-function Onderdeel({ id, nr, oefening, past, keepers, opVerwijder, opAnder }: { id: string; nr: number; oefening?: Oefening; past: boolean; keepers: number; opVerwijder: () => void; opAnder?: () => void }) {
+function Onderdeel({ id, nr, oefening, past, alleenLeeftijd, keepers, opVerwijder, opAnder }: { id: string; nr: number; oefening?: Oefening; past: boolean; alleenLeeftijd: boolean; keepers: number; opVerwijder: () => void; opAnder?: () => void }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id });
   const stijl = { transform: CSS.Transform.toString(transform), transition };
   return (
@@ -41,7 +41,7 @@ function Onderdeel({ id, nr, oefening, past, keepers, opVerwijder, opAnder }: { 
           <Miniatuur tekening={oefening.tekening} className="onderdeel-plaatje" />
           <span className="onderdeel-info">
             <span className="onderdeel-naam">{oefening.naam}</span>
-            {!past && <span className="label label-waarschuwing">{vt('Past niet bij deze aantallen')}</span>}
+            {!past && <span className="label label-waarschuwing">{alleenLeeftijd ? vt('Past niet bij deze leeftijd') : vt('Past niet bij deze aantallen')}</span>}
             <Labels oefening={oefening} keepers={keepers} />
           </span>
         </a>
@@ -168,6 +168,7 @@ export function TrainingBewerk({ id }: { id: string }) {
                     nr={i + 1}
                     oefening={vindOefening(oid)}
                     past={passen[i]!}
+                    alleenLeeftijd={aantalPast[i]!}
                     keepers={t.keepers}
                     opVerwijder={() => zet({ oefeningen: (trainingen.haal(t.id) ?? t).oefeningen.filter((x) => x !== oid) })}
                     opAnder={t.generator?.keuzes.includes(oid) ? () => (andereVoor(t.id, oid) ? undefined : toon(vt('Geen andere passende oefening'))) : undefined}

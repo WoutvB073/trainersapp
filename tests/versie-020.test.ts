@@ -91,7 +91,7 @@ describe('0.20.0 nieuwe oefeningen', () => {
     for (const [id, cats] of Object.entries(verwacht)) {
       const o = opId(id);
       expect(o, id).toBeDefined();
-      expect(o!.categorieen, id).toEqual(cats);
+      expect(o!.categorieen.filter((c) => c !== 'een-tegen-een'), id).toEqual(cats);
     }
     expect(opId('veld-pv-1-1-poortjes')).toMatchObject({ spelersNodig: 2, doorwisselbaar: true });
     expect(opId('veld-pv-oplopend-overtal')!.spelersNodig).toBe(5);

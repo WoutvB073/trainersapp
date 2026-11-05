@@ -53,7 +53,7 @@ describe('categorie Verdedigen en omschakelen', () => {
     for (const id of ERBIJ) {
       const o = vindOefening(id)!;
       expect(o, id).toBeTruthy();
-      expect(o.categorieen.at(-1), id).toBe('verdedigen-omschakelen');
+      expect(o.categorieen.filter((c) => c !== 'een-tegen-een').at(-1), id).toBe('verdedigen-omschakelen');
       expect(o.categorieen[0], id).not.toBe('verdedigen-omschakelen');
     }
   });

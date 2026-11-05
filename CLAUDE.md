@@ -34,6 +34,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/anim/poppetje.ts` — 3D-poppetje: skelet, vormen (InstancedMesh, fijn/grof), houding per beeld (`poseer`: voetdoelen + IK, armen naar de bal), `balInvoer`/`persoonInvoer` (gedeeld met de tests). `src/engine/poppetjes.ts` — instelling Eenvoudige poppetjes (per toestel, ook automatisch).
 - `src/editor/animatie.ts` — editor-animatie: lijnen met stapnummers ↔ animatiestappen (`lijnenNaarAnimatie`, `animatieNaarLijnen`), `afspeelTekening` (gebruikt in AnimatieSpeler/Miniatuur), meldingen per lijn (ook fysieke check).
 - `src/i18n/` — taal (`taal.ts`: keuze, Automatisch, herladen), `t.ts` (t, aantal, lijstTekst, getal), `en.ts` (Engels), `zin.tsx` (**vet**); `src/help/inhoud.ts` + `src/screens/Help.tsx` — Help; `src/data/vertaling.ts` + `src/data/en/` — Engelse oefenteksten.
+- `src/data/leeftijden.ts` — leeftijdsgroepen (`Oefening.leeftijden`, `pastBijLeeftijd`); mini-oefeningen `veld-mt-…` in `tools/nieuw/mini-030a–d.cjs` met `mini-hulp.cjs`.
 - `src/engine/platform.ts` — toestel/browser + `kiesScherm` (installatiescherm of app); `src/screens/installeren/`.
 - `src/editor/editor.ts` — pure editorlogica (palet, aanraken, slepen/draaien/maat, lijnen, ongedaan maken, benodigdheden, bevriezen); `src/eigen/` — eigen oefeningen (opslag, kopiëren, delen); `src/screens/eigen/` — lijst, nieuw, Tekenen, Gegevens.
 - `src/styles/thema.css` — veld/teamkleuren (vast) + standaard app-kleuren; `src/engine/thema.ts` — clubkleuren (8 thema's × licht/donker), toegepast als CSS-variabelen. Gebruik in CSS `--primair-tekst` voor de themakleur als tekst (niet `--primair`), en `--op-…` voor tekst op een gekleurd vlak (nooit `#fff`).
@@ -44,6 +45,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/wedstrijd/` — opstellingen, borden, spelhervattingen, voorbeeldtactieken (`tactieken.ts`, bouwhulp `Opzet`) en voorbeeldhervattingen (`hervattingVoorbeelden.ts`), samen in `bibliotheken.ts`; schermen generiek in `screens/wedstrijd/Tactieken.tsx` (puur) en opslag; `src/screens/wedstrijd/` (OpstellingVeld met slepen, BordTekenen = `Editor` uit `screens/eigen/Tekenen.tsx` met een `EditorBron`).
 - Keuzes die de gebruiker niet kon beantwoorden: PLAN.md → "Keuzes zonder overleg".
 - Nieuwe ingebouwde oefeningen (met Engelse tekst, zie Werkwijze): als bouwscript in `tools/nieuw/` (zie `spelers-027a/b/c.cjs`, `spelers-026a/b/c.cjs`, `keepers-024a/b/c.cjs`; Engels in een `en`-blok per oefening, dat `zet` naar `src/data/en/` schrijft; objecten en stappen uit `bouwstenen.cjs`, opslaan met `hulp.cjs`), daarna `npm test -t <id>` en `tools/e2e/nieuw.mjs`.
+- Materiaal in beweging (0.30.0): `pakObject`, `legObject`, `keerOm`, `valOm`, `zetOp` (tijdlijn `Stand.materiaal`, in 2D en 3D), bal op een pion (`opHoogte`), los `hesje` met `drager`; verder `voetOpBal`, `tiktak`, zithouding `op-bal`, pass met `onderdoor` (horde), klein goal met `zonderNet`.
 - Acties voor personen (bouwstenen): loop/dribbel (via, om, manier — ook `verdedigend` = lage, half zijwaartse 1-tegen-1-houding —, kijk), pass/schot (worp — ook `tik` = met één hand wegtikken, `inworp` = met twee handen achter het hoofd ingooien —, hoogte, stuitOp, duikNaar, uitkomen+stompNaar (met stuitOp: stuitbal naar voren aanvallen en wegstompen), blokt+blokSoort ster/knie/voeten, terug; keeper + `worp: 'voet'` + `direct` op een hoge bal = kopbal), zitten (kniezit, hurkzit, zit, zit-opgetrokken, buik, halfknie), opstaan, grondtik, pak, springen, draai (kijk/naar, sprong), aantikken (doel of punt, met hand/voet). Een bal naar jezelf opgooien = pass van en naar dezelfde persoon.
 - Weggehaalde ingebouwde oefeningen gaan naar `src/data/oefeningen/archief.json` (`verwijderd: true`): niet in de bibliotheek, wel via `vindOefening`. Nooit echt wissen (oude trainingen/links/teams).
 
@@ -87,6 +89,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `versie-026.mjs [url]` — 0.26.0: categorielijst met plaatjes, Verdedigen en omschakelen, Training genereren en Help in NL/EN op iPhone SE en laptop. Blad: `blad-026.png`.
 - `animaties.mjs <label> [url] [scenes|snelheid|laden]` — vaste 3D-momenten (`anim-<label>-*.png`, met `voor` en `na` ook vergelijkingsbladen), beeldsnelheid 11 tegen 11 (processor 1/4/6× trager, ook eenvoudig) en laadtijd.
 - `pas.mjs set <lopen|keeper|spelers|kort>` of `pas.mjs <id> <wie> <t0> <t1>` — filmstrip van één persoon van dichtbij/opzij (voeten, knieën, armen beoordelen). Blad: `blad-pas-<naam>.png`.
+- `versie-030.mjs [url]` — 0.30.0: leeftijdsfilter (ook onthouden), bij de oefening, Training maken (oranje markering), genereren, 1 tegen 1 en Help in NL/EN op iPhone SE en laptop. Blad: `blad-030.png`.
 - `nieuw.mjs <id,id,…> [blad] [url]` — close-ups van (nieuwe) oefeningen: 3D op vier momenten + 2D, op één blad (`blad-<naam>.png`).
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
   Chrome draait met de echte videokaart (`--use-angle=d3d11`); `trainersapp.3dAltijd=1` zet de 2D-terugval uit in tests.
@@ -133,5 +136,6 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - Nieuwe voorbeeldtactiek: in `tactieken.ts` met `Opzet` (lijnen starten waar de speler op dat moment staat); `tests/versie-028.test.ts` controleert meldingen, fysiek en ≥ 1,5 m; daarna `tools/e2e/tactieken.mjs borden … <id>` bekijken. Teksten via t() + Engels in `en.ts`.
 - Druk zetten of mandekking recht achter de balbezitter (in de kijkrichting) geeft overlappende rugnummers in 3D: laat de
   drukzetter schuin opzij aanlopen (`loop` naar een punt) of draai de oefening een kwartslag (`draaiKwart` in `spelers-027b.cjs`).
+- Nieuw materiaal in 3D dat beweegt moet in `beweegbaar`/`beweegt` staan (render3d zet de matrix van al het andere vast). Rijen in `schuin`: gebruik `richting: 60`, anders staan de kinderen achter elkaar in beeld.
 - Een bal "bij" een speler ligt rekenkundig 0,55 m voor de speler; de 2D-renderer duwt hem visueel naar de rand
   van het poppetje (niet over het rugnummer).
