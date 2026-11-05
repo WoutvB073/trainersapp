@@ -390,7 +390,7 @@ export function TeamScherm({ id }: { id: string }) {
                 <span className="rij-tekst">
                   <span className="rij-titel">
                     {l.naam}
-                    {l.uid === ik ? ' (jij)' : ''}
+                    {l.uid === ik ? ` (${vt('jij')})` : ''}
                   </span>
                   <span className="rij-sub">{l.rol === 'beheerder' ? vt('Beheerder') : vt('Lid')}</span>
                 </span>

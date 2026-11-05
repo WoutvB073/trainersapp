@@ -576,6 +576,7 @@ export const EN: Record<string, string> = {
   'Gedeeld door {naam}': 'Shared by {naam}',
   'Gedeelde teamtrainingen': 'Shared team sessions',
   'Gedeelde circuittrainingen': 'Shared circuit sessions',
+  jij: 'you',
   'Nog niets gedeeld. Open een circuittraining en kies "Delen met team".': 'Nothing shared yet. Open a circuit session and choose "Share with team".',
   'Kopiëren naar mijn circuittrainingen': 'Copy to my circuit sessions',
   'Circuittraining niet gevonden': 'Circuit session not found',

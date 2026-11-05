@@ -11,6 +11,7 @@ import { BASE, MAP, alsGeinstalleerd, blad, slaap, start } from './hulp.mjs';
 
 const jiti = createJiti(import.meta.url);
 const { EN } = await jiti.import('../../src/i18n/en.ts');
+const { nieuweOpstelling } = await jiti.import('../../src/wedstrijd/wedstrijd.ts');
 
 const ECHT = process.env.ECHT === '1';
 const PROJECT = 'demo-toptraining';
@@ -76,7 +77,7 @@ const CLUB = {
   gemaakt: 1,
   gewijzigd: 1,
 };
-const OPSTELLING = { id: 'opst-test', naam: 'Testopstelling', spelvorm: '8v8', formatie: '1-3-3-1', plekken: [{ id: 'p1', x: 30, y: 60, nummer: 1 }], wissels: [], gemaakt: 1, gewijzigd: 1 };
+const OPSTELLING = { ...nieuweOpstelling('8v8', [], 1, 'opst-test'), naam: 'Testopstelling' };
 const BORD = { id: 'bord-test', naam: 'Testbord', soort: 'tactiek', tekening: OEFENING.tekening, gemaakt: 1, gewijzigd: 1 };
 
 async function leegmaken() {
@@ -168,7 +169,7 @@ const opmaak = async (page, waar) => {
         const b = e.getBoundingClientRect();
         return (b.width > 0 && (b.right > innerWidth + 1 || b.left < -1)) || ((s.overflow === 'hidden' || s.textOverflow === 'ellipsis') && e.scrollWidth > e.clientWidth + 2);
       })
-      .map((e) => e.innerText.slice(0, 30)),
+      .map((e) => `${e.innerText.slice(0, 30)} [${e.className} ${e.scrollWidth}>${e.clientWidth}]`),
   }));
   if (r.breed > 0) problemen.push(`${waar}: ${r.breed}px horizontaal scrollen`);
   if (r.kap.length) problemen.push(`${waar}: afgekapt: ${r.kap.join(' | ')}`);
@@ -282,6 +283,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
     await opmaak(t1.page, `${waar} ${naam}`);
     if (naam === 'circuittraining') await foto(t1.page, 'bewerk', 'Testtrainer 1: circuittraining met Delen met team');
     if (naam === 'eigen oefening') await foto(t1.page, 'oefening', 'Testtrainer 1: eigen oefening met Delen en Delen met team');
+    if (naam === 'opstelling') await foto(t1.page, 'opstelling', 'Testtrainer 1: opstelling');
   }
 
   // De link van de eigen oefening.
@@ -303,6 +305,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await klik(t2.page, T('Joinen'), '.team-form button');
   await wachtOp(t2.page, () => document.querySelectorAll('.lid-regel').length === 2 && document.body.innerText.includes('Testcircuit'), null, `${waar}: team bij Testtrainer 2`);
   await foto(t2.page, 'team', 'Team bij Testtrainer 2');
+  controle(await bevat(t2.page, `Testtrainer 2 (${T('jij')})`), `${waar}: eigen naam in de ledenlijst`);
   await opmaak(t2.page, `${waar} team`);
   controle(await bevat(t2.page, T('Gedeelde circuittrainingen')), `${waar}: geen kopje Gedeelde circuittrainingen`);
   const regel = await t2.page.evaluate(() => [...document.querySelectorAll('.training-regel')].find((r) => r.textContent.includes('Testcircuit'))?.textContent ?? '');
@@ -381,7 +384,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await foto(t1.page, 'eigenaar', 'Eigenaar: Aanpassen');
   await klik(t1.page, T('Aanpassen'));
   await wachtOp(t1.page, () => location.hash === '#/club/club-test', null, `${waar}: Aanpassen opent de eigen circuittraining`);
-  await t1.page.click('input[maxlength="80"]', { clickCount: 3 });
+  await t1.page.$eval('input[maxlength="80"]', (e) => e.select());
   await t1.page.type('input[maxlength="80"]', 'Testcircuit nieuw');
   await slaap(300);
   await klik(t1.page, T('Delen met team'));

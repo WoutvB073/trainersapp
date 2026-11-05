@@ -45,7 +45,7 @@ export function TeamClubScherm({ id, item, station, partij }: { id: string; item
             <Icoon naam="potlood" maat={20} />
             {vt('Aanpassen')}
           </button>
-          <p className="klein">{vt('Pas je circuittraining aan en tik daarna weer op "Delen met team".')}</p>
+          <p className="gedeeld-met">{vt('Pas je circuittraining aan en tik daarna weer op "Delen met team".')}</p>
         </>
       )}
     </ClubWeergave>
