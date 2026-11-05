@@ -1,0 +1,348 @@
+{
+  "veld-mt-over-de-rivier": {
+    "naam": "Across the river",
+    "uitleg": "There is a river with a crocodile in it! Dribble your ball to the other side. The crocodile has to stay in the river. Can you get past the crocodile? Then you are safe on the other side.",
+    "organisatie": "10 × 12 m area with a 2 m strip across the middle: the river. The defender stays in the river. Attackers take turns starting from one side. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "8 disc cones",
+      "Bibs",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "See where the crocodile is and go the other way"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A narrower river",
+        "The crocodile only walks"
+      ],
+      "moeilijker": [
+        "Two crocodiles",
+        "A narrower area"
+      ]
+    }
+  },
+  "veld-mt-poortjesduel": {
+    "naam": "Gate duel",
+    "uitleg": "You play together with one ball. There are two gates on each side. Dribble the ball through one of the other child’s gates: that’s a point! Do you get the ball? Then you go and score.",
+    "organisatie": "Small 8 × 10 m area with 2 gates of disc cones (1.5 m wide) on both short sides. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "8 disc cones",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "Choose the gate where the other child isn’t"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider gates",
+        "The defender starts further away"
+      ],
+      "moeilijker": [
+        "Narrower gates",
+        "One gate on each side"
+      ]
+    }
+  },
+  "veld-mt-wie-eerst": {
+    "naam": "Who’s first?",
+    "uitleg": "Get ready in your line next to the coach. The coach rolls the ball onto the pitch. Run! The first one to the ball goes and scores in the mini-goal. The other one tries to stop them.",
+    "organisatie": "Two lines left and right of the coach, a mini-goal 10 m away. The coach rolls the ball 5 m onto the pitch. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 mini-goal",
+      "2 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Put your body between the other child and the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Ball closer to the mini-goal",
+        "The other child starts a little later"
+      ],
+      "moeilijker": [
+        "The coach rolls it at an angle",
+        "Two mini-goals to choose from"
+      ]
+    }
+  },
+  "veld-mt-nummerduel": {
+    "naam": "Number duel",
+    "uitleg": "Everyone gets a number. Listen carefully! When the coach calls your number, run onto the pitch. You play 1v1 against the other child with the same number. Score in the mini-goal!",
+    "organisatie": "10 × 12 m pitch with a mini-goal on both short sides. The children sit along the sides, split over two sides. The coach calls a number and rolls the ball in. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "Listen carefully: is it your turn?",
+      "Be brave and go for the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Colours instead of numbers",
+        "A smaller pitch"
+      ],
+      "moeilijker": [
+        "Two numbers: 2v2",
+        "The coach throws the ball higher"
+      ]
+    }
+  },
+  "veld-mt-staart-pakken": {
+    "naam": "Catch the tail",
+    "uitleg": "Tuck a bib into the back of your shorts: that’s your tail. Dribble your ball away and look after your tail. The other child tries to grab it. Got it? Then you swap!",
+    "organisatie": "10 × 10 m area, one bib and one ball per pair. Swap after every tail is caught. Several pairs can play at once; with 5 children the coach joins in. Play for 15 minutes.",
+    "benodigdheden": [
+      "Bibs",
+      "4 disc cones",
+      "1 football per pair"
+    ],
+    "coachpunten": [
+      "Keep moving and keep an eye on the other child"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Catch the tail without a ball",
+        "A bigger area"
+      ],
+      "moeilijker": [
+        "The catcher has a ball too",
+        "A smaller area"
+      ]
+    }
+  },
+  "veld-mt-pion-omschieten": {
+    "naam": "Knock down the cone",
+    "uitleg": "You have your own cone and so does the other child. Protect your cone! Try to knock over the other child’s cone with the ball. Did it fall? That’s a point.",
+    "organisatie": "Two tall cones 10 m apart, each child defends their own cone. After a point, the other child stands the cone back up. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 tall cones",
+      "4 disc cones",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "Shoot when you’re free"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A bigger cone",
+        "Cones closer together"
+      ],
+      "moeilijker": [
+        "Cones further apart",
+        "Dribble past the other child first"
+      ]
+    }
+  },
+  "veld-mt-rug-tegen-rug": {
+    "naam": "Back to back",
+    "uitleg": "Stand with your back against the other child’s back. The coach throws the ball. Turn around quickly and run to the ball! Whoever gets it tries to score in the mini-goal.",
+    "organisatie": "Two children back to back, 6 m in front of a mini-goal. The coach stands to one side and throws the ball in. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 mini-goal",
+      "2 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Turn quickly and see where the ball is"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach calls \"now!\"",
+        "Throw the ball closer"
+      ],
+      "moeilijker": [
+        "Throw the ball higher",
+        "Sit down instead of standing"
+      ]
+    }
+  },
+  "veld-mt-bal-beschermen": {
+    "naam": "Shield the ball",
+    "uitleg": "The ball is your treasure. Put your body in the way and keep the ball for 20 seconds! The other child tries to knock it away. Can you do it? Count along: 1, 2, 3 …",
+    "organisatie": "Small 5 × 5 m area. The coach counts to 20, then swap. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "4 disc cones",
+      "1 football"
+    ],
+    "coachpunten": [
+      "Your body is between the other child and the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Count to 10",
+        "A bigger area"
+      ],
+      "moeilijker": [
+        "A smaller area",
+        "Count to 30"
+      ]
+    }
+  },
+  "veld-mt-achtervolging": {
+    "naam": "The chase",
+    "uitleg": "Dribble as fast as you can to the mini-goal and score. Careful: the other child starts 2 metres behind you and tries to catch you. Who is fastest?",
+    "organisatie": "Mini-goal 10 m away, the attacker starts 2 m in front of the defender. Then they swap. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 mini-goal",
+      "2 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Look up before you shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The attacker starts further ahead",
+        "Mini-goal closer"
+      ],
+      "moeilijker": [
+        "The defender starts closer",
+        "Further from the mini-goal"
+      ]
+    }
+  },
+  "veld-mt-koning-in-het-vak": {
+    "naam": "King in the area",
+    "uitleg": "This area is your kingdom. Dribble the ball over the other child’s line and stop it there: that’s a point! After each point, a new pair comes into the area.",
+    "organisatie": "Small 6 × 8 m area. A point when you stop the ball behind the other child’s line. A new pair after every point. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "4 disc cones",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "Stop the ball with the sole of your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A wider area",
+        "The defender starts behind the line"
+      ],
+      "moeilijker": [
+        "A narrower area",
+        "Only score with your other foot"
+      ]
+    }
+  },
+  "veld-mt-paalduel": {
+    "naam": "Pole duel",
+    "uitleg": "You have a pole and so does the other child. Look after your pole! Try to hit the other child’s pole with the ball. A hit? That’s a point.",
+    "organisatie": "Two poles or mannequins 8 m apart in an 8 × 10 m area. Each child defends their own pole. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 poles or 2 mannequins",
+      "4 disc cones",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "See where the pole is and aim carefully"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A mannequin instead of a pole",
+        "Closer"
+      ],
+      "moeilijker": [
+        "Further away",
+        "Only hit it after dribbling past the other child"
+      ]
+    }
+  },
+  "veld-mt-kaatsbordstart": {
+    "naam": "Rebound board start",
+    "uitleg": "Play the ball against the rebound board. Does it come back? Then the other child comes at you from the side. Dribble past and score in the mini-goal!",
+    "organisatie": "Rebound board 4 m from the attacker, mini-goal 7 m behind them. The defender starts at the side, 5 m away. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "1 rebound board",
+      "1 mini-goal",
+      "2 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Control the ball well and look up"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender starts later",
+        "Mini-goal closer"
+      ],
+      "moeilijker": [
+        "The defender starts closer",
+        "Take the ball with your first touch"
+      ]
+    }
+  },
+  "veld-mt-hoepelkasteel": {
+    "naam": "Hoop castle",
+    "uitleg": "Your hoop is your castle. Guard it well! Dribble to the other child’s castle and stop the ball in the hoop. Then you have captured the castle!",
+    "organisatie": "Two hoops 8 m apart in an 8 × 10 m area. Each child defends their hoop. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 hoops",
+      "4 disc cones",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "Stop the ball in the hoop with the sole of your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Hoops closer",
+        "The defender stands still"
+      ],
+      "moeilijker": [
+        "Hoops further apart",
+        "Two hoops per child"
+      ]
+    }
+  },
+  "veld-mt-ladderstart": {
+    "naam": "Ladder start",
+    "uitleg": "Ready to go? Both of you go through the speed ladder with small steps. At the end, the coach rolls the ball in. Who gets there first? Play 1v1 on the mini-goal!",
+    "organisatie": "Two speed ladders side by side, 2 m apart, mini-goal 7 m away. The coach rolls the ball in as the children come out of the ladder. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 speed ladders",
+      "1 mini-goal",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Quick feet in the ladder"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A short ladder",
+        "Roll the ball closer"
+      ],
+      "moeilijker": [
+        "Go through the ladder sideways",
+        "Two mini-goals"
+      ]
+    }
+  },
+  "veld-mt-tussen-de-poppen": {
+    "naam": "Between the mannequins",
+    "uitleg": "Two mannequins make a gate. Dribble past the other child and go between the mannequins. Can you do it? Then you’ve won!",
+    "organisatie": "Two mannequins 3 m apart as a gate, the defender 4 m in front of it. The attacker starts 8 m away. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 mannequins",
+      "2 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Do a feint, then go quickly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Mannequins further apart",
+        "The defender only walks"
+      ],
+      "moeilijker": [
+        "Mannequins closer together",
+        "The defender starts closer to the attacker"
+      ]
+    }
+  }
+}

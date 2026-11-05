@@ -6,6 +6,7 @@ import type { ObjectSoort } from '../src/model/types';
 
 const MAP_SOORT: Record<string, string> = { veld: 'veld', keepers: 'keeper' };
 const SOORTEN: ObjectSoort[] = [
+  'hesje',
   'speler', 'keeper', 'trainer', 'bal', 'goal', 'klein-goal', 'pion', 'hoedje', 'paaltje', 'ladder',
   'horde', 'ring', 'zone', 'muurtje', 'rebounder', 'keepersmat', 'stok', 'tekst', 'net', 'bank', 'kooi', 'pop',
 ];
@@ -76,6 +77,9 @@ describe('oefeningen (databestanden)', () => {
   }
 });
 
+/** Oefeningen waarin kinderen bewust dicht bij elkaar komen (0.30.0): rug tegen rug, een staart pakken. */
+const DICHTBIJ: Record<string, number> = { 'veld-mt-rug-tegen-rug': 0.55, 'veld-mt-staart-pakken': 1 };
+
 describe('animaties: niet door elkaar of door materiaal heen', () => {
   const VAST = ['pion', 'paaltje', 'hoedje', 'pop'];
   for (const o of OEFENINGEN) {
@@ -91,7 +95,7 @@ describe('animaties: niet door elkaar of door materiaal heen', () => {
           for (let j = i + 1; j < personen.length; j++) {
             const b = s.objecten.get(personen[j]!)!;
             const d = Math.hypot(a.x - b.x, a.y - b.y);
-            if (d < 1.5) problemen.push(`${personen[i]}–${personen[j]} ${d.toFixed(2)} m op t=${t.toFixed(2)}`);
+            if (d < (DICHTBIJ[o.id] ?? 1.5)) problemen.push(`${personen[i]}–${personen[j]} ${d.toFixed(2)} m op t=${t.toFixed(2)}`);
           }
           for (const m of materiaal) {
             const d = Math.hypot(a.x - m.x, a.y - m.y);

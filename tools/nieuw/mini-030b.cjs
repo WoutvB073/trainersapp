@@ -5,9 +5,7 @@ const { KLEUREN: K, mini, zone, B, hoepel, kaatsbord, miniGoal, pionGroot, pionH
 
 const WACHT = 'Voor 5 kinderen: twee spelen tegen elkaar, de anderen wachten in twee rijtjes (maximaal 2 per rij) en zijn na 20 seconden aan de beurt. Speel 15 minuten.';
 const WACHT_EN = 'For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.';
-const C1 = ['1 tegen 1'];
 const cat = ['een-tegen-een'];
-void C1;
 
 /** Twee wachtende kinderen naast het vak. */
 const wachtend = (x1, y1, x2, y2) => [speler('w1', 3, x1, y1, { kijkrichting: -90 }), B('w2', 4, x2, y2, { kijkrichting: -90 })];
@@ -89,7 +87,7 @@ const oefeningen = [
       objecten: [
         ...[[2.1, 1.5], [3.6, 1.5], [6.4, 1.5], [7.9, 1.5], [2.1, 10.5], [3.6, 10.5], [6.4, 10.5], [7.9, 10.5]].map(([x, y], i) => hoedje(`h${i + 1}`, x, y, i < 4 ? K.blauw : K.rood)),
         speler('a1', 1, 5, 8.6, { kijkrichting: -90 }),
-        B('c1', 2, 5, 4.4, { kijkrichting: 90 }),
+        B('c1', 2, 6.2, 4.4, { kijkrichting: 100 }),
         bal('b1', 5, 8.05, 'a1'),
       ],
       animatie: [
@@ -358,7 +356,7 @@ const oefeningen = [
       animatie: [
         stap({ type: 'dribbel', wie: 'a1', naar: [3, 3.2], duur: 1.4, manier: 'wandel' }, { type: 'loop', wie: 'c1', naar: [4.7, 3.8], manier: 'verdedigend', duur: 1.4 }),
         stap({ type: 'dribbel', wie: 'a1', naar: [3.6, 2.4], duur: 1.2, manier: 'wandel' }, { type: 'loop', wie: 'c1', naar: [4.6, 4], manier: 'verdedigend', duur: 1.2 }),
-        stap({ type: 'dribbel', wie: 'a1', naar: [2.6, 3.4], duur: 1.4, manier: 'wandel' }, { type: 'loop', wie: 'c1', naar: [4.1, 3.2], manier: 'verdedigend', duur: 1.4 }),
+        stap({ type: 'dribbel', wie: 'a1', naar: [2.6, 3.4], duur: 1.4, manier: 'wandel' }, { type: 'loop', wie: 'c1', naar: [4.4, 3.4], manier: 'verdedigend', duur: 1.4 }),
       ],
     },
   }),
@@ -425,7 +423,7 @@ const oefeningen = [
     },
     tekening: {
       ...leeg(10, 12),
-      objecten: [zone('vak', 5, 6, 6, 8), hoedje('h1', 2, 2), hoedje('h2', 8, 2), hoedje('h3', 2, 10), hoedje('h4', 8, 10), speler('a1', 1, 5, 9, { kijkrichting: -90 }), B('c1', 2, 5, 4, { kijkrichting: 90 }), bal('b1', 5, 8.45, 'a1'), ...wachtend(1, 7, 9, 7)],
+      objecten: [zone('vak', 5, 6, 6, 8), hoedje('h1', 2, 2), hoedje('h2', 8, 2), hoedje('h3', 2, 10), hoedje('h4', 8, 10), speler('a1', 1, 5, 9, { kijkrichting: -90 }), B('c1', 2, 6.2, 4, { kijkrichting: 100 }), bal('b1', 5, 8.45, 'a1'), ...wachtend(1, 7, 9, 7)],
       animatie: [
         stap({ type: 'dribbel', wie: 'a1', naar: [4.6, 7], duur: 1.3 }, { type: 'druk', wie: 'c1', afstand: 2.2, manier: 'verdedigend', duur: 1.3 }),
         stap({ type: 'schijn', wie: 'a1', kant: 'rechts' }),
@@ -618,7 +616,7 @@ const oefeningen = [
     },
     tekening: {
       ...leeg(10, 13),
-      objecten: [pop('m1', 3.5, 2), pop('m2', 6.5, 2), hoedje('h1', 4, 11), hoedje('h2', 6, 11), speler('a1', 1, 5, 10.4, { kijkrichting: -90 }), B('c1', 2, 5, 6, { kijkrichting: 90 }), bal('b1', 5, 9.85, 'a1')],
+      objecten: [pop('m1', 3.5, 2), pop('m2', 6.5, 2), hoedje('h1', 4, 11), hoedje('h2', 6, 11), speler('a1', 1, 5, 10.4, { kijkrichting: -90 }), B('c1', 2, 6, 6, { kijkrichting: 100 }), bal('b1', 5, 9.85, 'a1')],
       animatie: [
         stap({ type: 'dribbel', wie: 'a1', naar: [5, 8.6], duur: 1.2 }),
         stap({ type: 'schijn', wie: 'a1', kant: 'links' }),
