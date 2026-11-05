@@ -8,6 +8,7 @@ rules_version = '2';
 //   users/{uid}/oefeningen/{id}     eigen oefeningen   { data: JSON-tekst, gewijzigd }
 //   users/{uid}/trainingen/{id}     eigen trainingen   { data: JSON-tekst, gewijzigd }
 //   users/{uid}/opstellingen|borden/{id}  wedstrijd: opstellingen, tactiekborden/spelhervattingen { data, gewijzigd }
+//   users/{uid}/clubtrainingen/{id}  clubtrainingen { data, gewijzigd }
 //   teams/{teamId}                  { naam, code, maker, gemaakt }
 //   teams/{teamId}/leden/{uid}      { rol: 'beheerder' | 'lid', naam, sinds, code? }
 //   teams/{teamId}/items/{itemId}   gedeelde oefening/training/opstelling/bord { soort, data, naam, eigenaar, eigenaarNaam, gewijzigd }
@@ -46,8 +47,8 @@ service cloud.firestore {
         && (!('favorieten' in request.resource.data) || (request.resource.data.favorieten is list && request.resource.data.favorieten.size() <= 2000));
 
       match /{soort}/{id} {
-        allow read, delete: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden'];
-        allow create, update: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden']
+        allow read, delete: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen'];
+        allow create, update: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen']
           && request.resource.data.keys().hasOnly(['data', 'gewijzigd'])
           && tekst(request.resource.data.data, 500000)
           && request.resource.data.gewijzigd is number;

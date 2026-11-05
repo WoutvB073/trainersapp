@@ -16,6 +16,7 @@ import { eigenBackend, eigenOefeningen } from '../eigen/opslag';
 import { trainingBackend, trainingen } from '../training/opslag';
 import { favorieten, favorietenBackend } from '../engine/favorieten';
 import { bordBackend, borden, opstellingBackend, opstellingen } from '../wedstrijd/opslag';
+import { clubBackend, clubtrainingen } from '../clubtraining/opslag';
 import { bordNaam, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
@@ -118,7 +119,7 @@ async function opIngelogd(u: User): Promise<void> {
     if (!gekoppeld) {
       const aantallen = {
         eigen: eigenBackend(null).laad().length,
-        trainingen: trainingBackend(null).laad().length,
+        trainingen: trainingBackend(null).laad().length + clubBackend(null).laad().length,
         favorieten: favorietenBackend(null).laad().length,
         wedstrijd: opstellingBackend(null).laad().length + bordBackend(null).laad().length,
       };
@@ -134,6 +135,7 @@ async function opIngelogd(u: User): Promise<void> {
           favorietenBackend(a.uid).bewaar(favorietenBackend(null).laad());
           opstellingBackend(a.uid).bewaar(opstellingBackend(null).laad());
           bordBackend(a.uid).bewaar(bordBackend(null).laad());
+          clubBackend(a.uid).bewaar(clubBackend(null).laad());
         }
       }
       opslag()?.setItem(`trainersapp.gekoppeld.${a.uid}`, String(Date.now()));
@@ -144,6 +146,7 @@ async function opIngelogd(u: User): Promise<void> {
     favorieten.wisselBackend(favorietenBackend(a.uid));
     opstellingen.wisselBackend(opstellingBackend(a.uid));
     borden.wisselBackend(bordBackend(a.uid));
+    clubtrainingen.wisselBackend(clubBackend(a.uid));
     teams.wisselAccount(a.uid);
   } else zetBewaardAccount(a);
   zetStatus({ account: a, sync: 'bezig' });
@@ -159,6 +162,7 @@ async function opUitgelogd(): Promise<void> {
     favorieten.wisselBackend(favorietenBackend(null));
     opstellingen.wisselBackend(opstellingBackend(null));
     borden.wisselBackend(bordBackend(null));
+    clubtrainingen.wisselBackend(clubBackend(null));
     teams.wisselAccount(null);
   }
   zetStatus({ account: null, sync: 'uit', samenvoegen: null });
@@ -231,6 +235,7 @@ function startSync(a: AccountInfo) {
     trainingen,
     opstellingen,
     borden,
+    clubtrainingen,
     favorieten,
     instellingen: instellingenDoel(a.uid),
     bekend: {
@@ -335,7 +340,7 @@ export async function verwijderAccount(wachtwoord: string): Promise<void> {
   stopSync();
   // Teams van de server (de lokale lijst kan op een nieuw apparaat nog leeg zijn).
   await T.verlaatAlleTeams(mij);
-  for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden']) {
+  for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen']) {
     const s = await getDocs(collection(db, 'users', u.uid, col));
     const b = writeBatch(db);
     s.docs.forEach((d) => b.delete(d.ref));

@@ -1,6 +1,7 @@
 import { collection, deleteDoc, doc, onSnapshot, setDoc, type Firestore, type Unsubscribe } from 'firebase/firestore';
 import type { EigenOefening } from '../model/types';
 import type { Training } from '../training/training';
+import type { ClubTraining } from '../clubtraining/clubtraining';
 import type { Bord, Opstelling } from '../wedstrijd/wedstrijd';
 import type { SyncStatus } from '../engine/account';
 import { nieuwste, verzoen, verzoenSet, type Item } from './samenvoegen';
@@ -52,13 +53,15 @@ export interface SyncDoelen {
   trainingen: LijstDoel<Training>;
   /** Wedstrijd (0.18.0): opstellingen en tactiekborden/spelhervattingen. */
   opstellingen?: LijstDoel<Opstelling>;
+  /** Clubtrainingen (0.31.0). */
+  clubtrainingen?: LijstDoel<ClubTraining>;
   borden?: LijstDoel<Bord>;
   favorieten: FavorietenDoel;
   instellingen: InstellingenDoel;
   bekend: BekendOpslag;
 }
 
-type Collectie = 'oefeningen' | 'trainingen' | 'opstellingen' | 'borden';
+type Collectie = 'oefeningen' | 'trainingen' | 'opstellingen' | 'borden' | 'clubtrainingen';
 
 /** Instellingen in een vaste vorm (Firestore geeft velden in een andere volgorde terug). */
 function vast(i: Instellingen | undefined): Instellingen | undefined {
@@ -87,6 +90,7 @@ export class Synchronisatie {
     this.koppelLijst('trainingen', this.doelen.trainingen);
     if (this.doelen.opstellingen) this.koppelLijst('opstellingen', this.doelen.opstellingen);
     if (this.doelen.borden) this.koppelLijst('borden', this.doelen.borden);
+    if (this.doelen.clubtrainingen) this.koppelLijst('clubtrainingen', this.doelen.clubtrainingen);
     this.koppelGebruiker();
     if (typeof window !== 'undefined') {
       const melden = () => this.meldStatus();
@@ -125,7 +129,7 @@ export class Synchronisatie {
 
   /** Lijsten + het gebruikersdocument. */
   private aantalBronnen(): number {
-    return 3 + (this.doelen.opstellingen ? 1 : 0) + (this.doelen.borden ? 1 : 0);
+    return 3 + (this.doelen.opstellingen ? 1 : 0) + (this.doelen.borden ? 1 : 0) + (this.doelen.clubtrainingen ? 1 : 0);
   }
 
   private koppelLijst<T extends Item>(col: Collectie, doel: LijstDoel<T>) {

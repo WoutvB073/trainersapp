@@ -4,6 +4,7 @@ import { leegmaken, lokaleOpslag, synchroniseer, toestel, wachtTot, opruimen } f
 import { nieuweEigen } from '../../src/eigen/eigen';
 import { nieuweTekening } from '../../src/editor/editor';
 import { nieuweTraining } from '../../src/training/training';
+import { nieuweClub } from '../../src/clubtraining/clubtraining';
 import { nieuweOpstelling, nieuwBord, vulAan } from '../../src/wedstrijd/wedstrijd';
 import { VOORBEELDEN } from '../../src/wedstrijd/hervattingen';
 
@@ -116,6 +117,22 @@ describe('synchroniseren tussen twee toestellen (zelfde account)', () => {
     await wachtTot(() => d.eigen.lijst().length === 2);
     sn.stop();
     sd.stop();
+  });
+
+  it('clubtrainingen komen op het andere toestel, ook de afvinklijst', { timeout: 30000 }, async () => {
+    const tel = await toestel('test1@example.com', 'Testtrainer 1');
+    const lap = await toestel('test1@example.com', 'Testtrainer 1');
+    const a = lokaleOpslag();
+    const b = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    const sb = synchroniseer(lap, b);
+    a.clubtrainingen.bewaar({ ...nieuweClub('mini-5-7', 1000, 'c1'), naam: 'Maandag', afgevinkt: ['1:hoedje'] });
+    await wachtTot(() => b.clubtrainingen.haal('c1')?.naam === 'Maandag', 15000, 'clubtraining naar het andere toestel');
+    expect(b.clubtrainingen.haal('c1')!.afgevinkt).toEqual(['1:hoedje']);
+    b.clubtrainingen.verwijder('c1');
+    await wachtTot(() => !a.clubtrainingen.haal('c1'), 15000, 'verwijderen');
+    sa.stop();
+    sb.stop();
   });
 
   it('opstellingen en tactiekborden (wedstrijd) komen op het andere toestel', { timeout: 30000 }, async () => {
