@@ -233,16 +233,22 @@ function goal(o: VeldObject, netTex: Texture, materialen: Material[]): Group {
   };
   // Achternet (schuin, in stukjes zodat het kan uitbollen), zijnetten en dak.
   const schuin = Math.hypot(D * 0.5, H * 0.85);
-  const achter = vlak(B, schuin, v3(0, H * 0.425, -D * 0.75), [-Math.atan2(D * 0.5, H * 0.85), 0, 0], [24, 8]);
-  g.userData.achterNet = achter;
-  g.userData.basis = Float32Array.from(achter.geometry.attributes.position!.array as ArrayLike<number>);
-  g.userData.hoogte = schuin;
-  vlak(B, D * 0.5, v3(0, H * 0.925, -D * 0.25), [Math.PI / 2 - Math.atan2(H * 0.15, D * 0.5), 0, 0]);
-  for (const x of [-B / 2, B / 2]) vlak(D, H * 0.9, v3(x, H * 0.45, -D / 2), [0, Math.PI / 2, 0]);
+  if (!o.zonderNet) {
+    const achter = vlak(B, schuin, v3(0, H * 0.425, -D * 0.75), [-Math.atan2(D * 0.5, H * 0.85), 0, 0], [24, 8]);
+    g.userData.achterNet = achter;
+    g.userData.basis = Float32Array.from(achter.geometry.attributes.position!.array as ArrayLike<number>);
+    g.userData.hoogte = schuin;
+  }
+  if (!o.zonderNet) {
+    vlak(B, D * 0.5, v3(0, H * 0.925, -D * 0.25), [Math.PI / 2 - Math.atan2(H * 0.15, D * 0.5), 0, 0]);
+    for (const x of [-B / 2, B / 2]) vlak(D, H * 0.9, v3(x, H * 0.45, -D / 2), [0, Math.PI / 2, 0]);
+  }
   g.position.set(o.x, 0, o.y);
   g.rotation.y = -((o.hoek ?? 0) * Math.PI) / 180;
   return g;
 }
+
+const _as = new Vector3();
 
 function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Object3D | null {
   const kleur = (standaard: string) => {
@@ -284,8 +290,17 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
       g.add(doek);
       return opGrond(g);
     }
-    case 'pion':
-      return opGrond(new Mesh(new ConeGeometry(0.13, 0.32, 18), kleur('#ff7a1a')), 0.16);
+    case 'pion': {
+      const h = o.hoogte ?? 0.32;
+      return opGrond(new Mesh(new ConeGeometry(0.13 * Math.min(1.5, Math.max(0.75, Math.sqrt(h / 0.32))), h, 18), kleur('#ff7a1a')), h / 2);
+    }
+    case 'hesje': {
+      const lap = new Mesh(new BoxGeometry(0.2, 0.42, 0.015), kleur('#f2b705'));
+      lap.position.y = -0.1;
+      const g = new Group();
+      g.add(lap);
+      return opGrond(g);
+    }
     case 'hoedje':
       return opGrond(new Mesh(new CylinderGeometry(0.06, 0.21, 0.07, 22, 1, true), kleur('#ffd23f')), 0.035);
     case 'paaltje': {
@@ -956,10 +971,21 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const netTex = netTextuur();
   texturen.push(netTex);
   const goals = new Map<string, Group>();
+  const beweegbaar = new Map<string, Group>();
   for (const o of tekening.objecten) {
     if (PLAT.includes(o.soort) && !isKussen(o)) continue;
     const m = materiaal(o, netTex, materialen);
     if (!m) continue;
+    if (tijdlijn.materiaal.has(o.id)) {
+      // Materiaal dat beweegt: in een groep op het gras, die elk beeld verplaatst en kantelt (draaipunt = onderkant).
+      const houder = new Group();
+      m.position.x = m.position.z = 0;
+      m.rotation.y = 0;
+      houder.add(m);
+      scene.add(houder);
+      beweegbaar.set(o.id, houder);
+      continue;
+    }
     scene.add(m);
     if (m instanceof Group && m.userData.achterNet) goals.set(o.id, m);
   }
@@ -1278,6 +1304,16 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
     }
 
     bolNet(s.net);
+    for (const [id, g] of beweegbaar) {
+      const ms = s.materiaal.get(id);
+      if (!ms) continue;
+      g.position.set(ms.x, ms.hoogte + 0.13 * ms.kantel + 0.07 * ms.kop, ms.y);
+      g.rotation.set(0, 0, 0);
+      const r = (ms.kantelHoek * Math.PI) / 180;
+      if (ms.kantel > 0) g.quaternion.setFromAxisAngle(_as.set(-Math.sin(r), 0, Math.cos(r)), (-Math.PI / 2) * ms.kantel);
+      else if (ms.kop > 0) g.rotation.x = Math.PI * ms.kop;
+      else g.rotation.y = -(ms.hoek * Math.PI) / 180;
+    }
     for (const sm of sporen) sm.mesh.visible = sm.pijl.visible = false;
     for (const sp of s.sporen) {
       const sm = sporen[sp.index];
@@ -1294,6 +1330,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const beweegt = new Set<Object3D>(poppetjes.lijst);
   beweegt.add(schaduwen);
   for (const b of ballen.values()) beweegt.add(b.mesh).add(b.schaduw);
+  for (const g of beweegbaar.values()) beweegt.add(g);
   for (const f of figuren.values()) for (const x of [f.rug, f.badge, f.naam, f.ring]) if (x) beweegt.add(x);
   for (const kind of scene.children) {
     if (beweegt.has(kind)) continue;

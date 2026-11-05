@@ -53,7 +53,9 @@ export type ObjectSoort =
   /** Losse pop/dummy (± 1,8 m): hindernis in de zestien of om de bal van richting te laten veranderen. */
   | 'pop'
   /** Doelnet/schotnet in een goal (in plaats van een keeper), met een gat in elke hoek (zie src/anim/doelnet.ts). */
-  | 'doelnet';
+  | 'doelnet'
+  /** Los hesje (0.30.0): als staart achter in de broek van `drager` (staart pakken), of in de hand. */
+  | 'hesje';
 
 /** Personen kunnen bewegen en een bal hebben. */
 export const PERSONEN: readonly ObjectSoort[] = ['speler', 'keeper', 'trainer'];
@@ -84,6 +86,12 @@ export interface VeldObject {
   naam?: string;
   /** Doelnet: id van het goal waar het in hangt (plek, draaiing en maat volgen dat goal). */
   doel?: string;
+  /** Hesje: de speler die het als staart achter in zijn broek heeft (0.30.0). */
+  drager?: string;
+  /** Bal: ligt op deze hoogte (m), bv. op een pion, tot hij er met `valOm` af gaat of gepakt wordt (0.30.0). */
+  opHoogte?: number;
+  /** Klein goal: mini-goaltje zonder net, alleen het frame (0.30.0). */
+  zonderNet?: boolean;
   /** Keeper mag buiten het doelgebied komen (bv. 1 tegen keeper). */
   uitkomen?: boolean;
   /** Bal: een reactiebal (stuit alle kanten op) of tennisbal (klein). */
@@ -94,7 +102,7 @@ export interface VeldObject {
   breedte?: number;
   lengte?: number;
   /**
-   * Hoogte in meters: horde (laag 0,15 / hoog 0,3), paaltje, net (standaard 1), goal (standaard 2,44; jeugdgoal 2),
+   * Hoogte in meters: horde (laag 0,15 / hoog 0,3), pion (klein 0,2 / standaard 0,32 / groot 0,45 / hoog 0,7), paaltje, net (standaard 1), goal (standaard 2,44; jeugdgoal 2),
    * keepersmat (vanaf 0,1 = landingskussen: een dik kussen waar de keeper op landt).
    */
   hoogte?: number;
@@ -227,6 +235,8 @@ export interface BalActie extends ActieBasis {
   terugNaar?: Punt;
   /** Welke bal (standaard de bal die `van` heeft). */
   bal?: string;
+  /** Pass over de grond onder deze horde door (0.30.0): de fysieke controle laat dat toe. */
+  onderdoor?: string;
   /** Hoogte van de bal (optioneel, zie BalHoogte). */
   hoogte?: BalHoogte;
   /** Verouderd: `hoog: true` = `hoogte: 'hoog'`. Blijft werken voor oude tekeningen. */
@@ -293,9 +303,10 @@ export interface BeweegActie extends ActieBasis {
 /**
  * Kniezit, hurkzit, of op de billen: `zit` (benen gestrekt naar voren) of `zit-opgetrokken` (knieën opgetrokken),
  * bv. grondoefeningen in de warming-up van keepers. `buik` = op de buik liggen (gezicht naar beneden, in de kijkrichting),
- * `halfknie` = halfknielend (rechterknie op de grond, linkervoet voor). Opstaan met `opstaan` gaat geleidelijk.
+ * `halfknie` = halfknielend (rechterknie op de grond, linkervoet voor), `op-bal` = op de eigen bal zitten (0.30.0). Opstaan met
+ * `opstaan` gaat geleidelijk.
  */
-export type Zithouding = 'kniezit' | 'hurkzit' | 'zit' | 'zit-opgetrokken' | 'buik' | 'halfknie';
+export type Zithouding = 'kniezit' | 'hurkzit' | 'zit' | 'zit-opgetrokken' | 'buik' | 'halfknie' | 'op-bal';
 
 /** Keeper gaat (weer) in kniezit of hurkzit zitten, bv. na een duik voor de volgende bal. */
 export interface ZitActie extends ActieBasis {
@@ -337,6 +348,32 @@ export interface AantikActie extends ActieBasis {
   punt?: Punt;
   /** Met de hand (standaard) of met de voet. */
   met?: 'hand' | 'voet';
+}
+
+/**
+ * Materiaal bewegen (0.30.0). `pakObject`: `wie` bukt en draagt het object (hoedje, tennisbal, hoepel, hesje) in de hand.
+ * `legObject`: legt het neer op `naar` (standaard voor zijn voeten). `keerOm`: draait een hoedje op zijn kop of terug.
+ * `valOm`: een pion of pop valt om (`hoek` = richting), of een bal valt van een pion en rolt naar `naar`; `wie` mag leeg blijven.
+ * `zetOp`: zet een omgevallen pion weer rechtop.
+ */
+export interface MateriaalActie extends ActieBasis {
+  type: 'pakObject' | 'legObject' | 'keerOm' | 'valOm' | 'zetOp';
+  object: string;
+  wie?: string;
+  naar?: Punt;
+  hoek?: number;
+}
+
+/** Voet op de bal zetten en zo blijven staan (0.30.0), standaard 1,2 s. */
+export interface VoetOpBalActie extends ActieBasis {
+  type: 'voetOpBal';
+  wie: string;
+}
+
+/** Bal heen en weer tikken tussen de binnenkanten van de voeten (0.30.0), standaard 2 s. Lopend: met een `dribbel` tegelijk. */
+export interface TikTakActie extends ActieBasis {
+  type: 'tiktak';
+  wie: string;
 }
 
 /** Achteraan een rij aansluiten (loopt buitenom, zonder door de rij te lopen). */
@@ -419,7 +456,7 @@ export interface TeamActie extends ActieBasis {
 }
 
 export type Actie =
-  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie;
+  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie;
 
 export interface AnimatieStap {
   acties: Actie[];

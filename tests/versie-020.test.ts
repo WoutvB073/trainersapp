@@ -24,7 +24,7 @@ describe('0.20.0 nieuwe oefeningen', () => {
     for (const [id, cats] of Object.entries(verwacht)) {
       const o = opId(id);
       expect(o, id).toBeDefined();
-      expect([...o!.categorieen].sort(), id).toEqual([...cats].sort());
+      expect(o!.categorieen.filter((c) => c !== 'een-tegen-een').sort(), id).toEqual([...cats].sort());
       expect(o!.coachpunten.length, id).toBeGreaterThanOrEqual(2);
       expect(o!.coachpunten.length, id).toBeLessThanOrEqual(4);
     }

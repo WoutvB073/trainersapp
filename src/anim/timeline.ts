@@ -1,4 +1,5 @@
-import type { Actie, AnimatieStap, BalActie, BeweegActie, HerhaalStap, LijnSoort, Manier, Punt, Rij, Stap, TegelijkStap, Team, Tekening, Waarde, VeldObject, Zithouding } from '../model/types';
+import type {
+  MateriaalActie, Actie, AnimatieStap, BalActie, BeweegActie, HerhaalStap, LijnSoort, Manier, Punt, Rij, Stap, TegelijkStap, Team, Tekening, Waarde, VeldObject, Zithouding } from '../model/types';
 import { PERSONEN } from '../model/types';
 
 /**
@@ -175,6 +176,12 @@ export interface Tijdlijn {
   tikken: Map<string, { t0: number; t1: number }[]>;
   /** Een pion/hoedje aantikken met de hand. */
   aantikken: Map<string, { t0: number; t1: number; punt: Punt; voet: boolean }[]>;
+  /** Materiaal dat beweegt (0.30.0): per object de gebeurtenissen; ook een lege lijst voor een bal op hoogte of een hesje. */
+  materiaal: Map<string, MateriaalEvent[]>;
+  /** Voet op de bal. */
+  voetOp: Map<string, { t0: number; t1: number }[]>;
+  /** Bal tik-tak tussen de voeten. */
+  tiktak: Map<string, { t0: number; t1: number }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
   /** Keeper blokt een schot met zijn lichaam (moment van contact). */
@@ -250,6 +257,28 @@ export interface ObjectStand {
   opstaan?: number;
   /** Een pion/hoedje aantikken: u 0–1 (hand bij het object op u = 0,5) en waar het object staat. */
   aantik?: { u: number; x: number; y: number; voet?: boolean };
+  /** Personen: 0–1, voet op de bal. */
+  voetOp?: number;
+  /** Personen: bal tik-tak tussen de voeten: −1 (links) tot 1 (rechts). */
+  tiktak?: number;
+}
+
+type MateriaalEvent = { t: number } & ({ soort: 'pak'; wie: string } | { soort: 'leg'; naar: Punt } | { soort: 'keer' } | { soort: 'val'; hoek: number; naar?: Punt } | { soort: 'op' });
+
+/** Stand van materiaal dat beweegt (alleen objecten met gebeurtenissen). */
+export interface MateriaalStand {
+  x: number;
+  y: number;
+  /** Hoogte boven het gras (gedragen of op een pion). */
+  hoogte: number;
+  /** 0 = rechtop, 1 = omgevallen in de richting `kantelHoek` (graden). */
+  kantel: number;
+  kantelHoek: number;
+  /** 0 = normaal, 1 = op zijn kop (hoedje). */
+  kop: number;
+  /** Draaiing (gedragen: die van de drager). */
+  hoek: number;
+  gedragen: boolean;
 }
 
 /** Een bal die net in een goal is gegaan: het net bolt op die plek even uit. */
@@ -285,6 +314,7 @@ export interface Stand {
   objecten: Map<string, ObjectStand>;
   sporen: SpoorStand[];
   net: NetInslag[];
+  materiaal: Map<string, MateriaalStand>;
 }
 
 // ---------- kleine rekenhulpjes ----------
@@ -384,6 +414,9 @@ function draaiOm(c: Punt, vorige: Punt, naar: Punt, straal: number, kant: 'links
 }
 
 const isBalActie = (a: Actie): a is BalActie => a.type === 'pass' || a.type === 'schot';
+const isMateriaalActie = (a: Actie): a is MateriaalActie => a.type === 'pakObject' || a.type === 'legObject' || a.type === 'keerOm' || a.type === 'valOm' || a.type === 'zetOp';
+/** Hoogte van iets dat je in de hand draagt. */
+const DRAAG_HOOGTE = 0.8;
 const isPersoon = (o: VeldObject | undefined) => !!o && PERSONEN.includes(o.soort);
 const isHerhaal = (s: Stap): s is HerhaalStap => 'herhaal' in s;
 const isTegelijk = (s: Stap): s is TegelijkStap => 'tegelijk' in s;
@@ -843,6 +876,17 @@ function balBijPersoon(tl: Tijdlijn, id: string, t: number): Punt {
   const duik = l.liggen > 0.5;
   const r = richting(duik ? l.hoek : kijkHoek(tl, id, t));
   let d = duik ? 0.55 : balAfstand(o);
+  // Op de bal zitten: de bal ligt onder de speler.
+  const z = zitOp(tl, id, t);
+  if (z.soort === 'op-bal') d *= 1 - z.zit;
+  const tik = tikTakOp(tl, id, t);
+  if (tik !== undefined) {
+    // Tik-tak: de bal gaat tussen de voeten heen en weer, vlak voor de speler.
+    const zij = richting(kijkHoek(tl, id, t) + 90);
+    return [p[0] + r[0] * 0.3 + zij[0] * 0.17 * tik, p[1] + r[1] * 0.3 + zij[1] * 0.17 * tik];
+  }
+  const voet = voetOpOp(tl, id, t);
+  if (voet > 0) d = d + (0.42 - d) * voet;
   // Dribbelen: de bal gaat bij elke balaanraking een stukje voor de voet uit en komt weer terug.
   if (b && !duik && o.soort !== 'keeper') d += 0.12 * (0.5 - 0.5 * Math.cos(voortgang(b, t) * RITME[b.manier]));
   return [p[0] + r[0] * d, p[1] + r[1] * d];
@@ -1069,10 +1113,15 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     sprongen: new Map(),
     tikken: new Map(),
     aantikken: new Map(),
+    materiaal: new Map(),
+    voetOp: new Map(),
+    tiktak: new Map(),
     stompen: [],
     blokken: [],
   };
   for (const o of tl.objecten.values()) if (o.houding) tl.zitten.set(o.id, [{ t: 0, soort: o.houding }]);
+  // Bal op een pion en hesje als staart: bewegend materiaal, ook zonder gebeurtenissen (0.30.0).
+  for (const o of tl.objecten.values()) if (o.opHoogte !== undefined || o.drager) tl.materiaal.set(o.id, []);
 
   // Rijen: spelers op hun plek zetten, kijkend naar voren.
   for (const r of tekening.rijen ?? []) {
@@ -1199,8 +1248,24 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
   // 1. Bewegingen van personen (eerst, zodat een pass weet waar de ontvanger heen loopt).
   for (const a of stap.acties) {
     if (isBalActie(a)) continue;
+    if (isMateriaalActie(a)) {
+      eind = Math.max(eind, materiaalActie(tl, a, T + (a.start ?? 0)));
+      continue;
+    }
     const o = persoon(a.wie, a);
     let t0 = T + (a.start ?? 0);
+    if (a.type === 'voetOpBal') {
+      const t1 = t0 + (a.duur ?? 1.2);
+      voegToe(tl.voetOp, o.id, { t0, t1 }, (e) => e.t0);
+      eind = Math.max(eind, t1);
+      continue;
+    }
+    if (a.type === 'tiktak') {
+      const t1 = t0 + (a.duur ?? 2);
+      voegToe(tl.tiktak, o.id, { t0, t1 }, (e) => e.t0);
+      eind = Math.max(eind, t1);
+      continue;
+    }
 
     if (a.type === 'team') {
       voegToe(tl.teams, o.id, { t: t0, team: a.team }, (e) => e.t);
@@ -1987,6 +2052,96 @@ function sprongOp(tl: Tijdlijn, id: string, t: number): number {
   return klem(w);
 }
 
+/** Voet op de bal: 0–1, met 0,2 s om de voet erop te zetten en eraf te halen. */
+function voetOpOp(tl: Tijdlijn, id: string, t: number): number {
+  for (const e of tl.voetOp.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return Math.min(1, (t - e.t0) / 0.2, (e.t1 - t) / 0.2);
+  return 0;
+}
+
+/** Tik-tak: van de ene voet naar de andere, twee keer per seconde. */
+function tikTakOp(tl: Tijdlijn, id: string, t: number): number | undefined {
+  for (const e of tl.tiktak.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return Math.sin(2 * Math.PI * (t - e.t0));
+  return undefined;
+}
+
+/** Stand van bewegend materiaal: alle gebeurtenissen tot t naspelen. */
+function materiaalStand(tl: Tijdlijn, id: string, t: number): MateriaalStand {
+  const o = tl.objecten.get(id)!;
+  let p: Punt = [o.x, o.y];
+  let hoogte = o.opHoogte ?? 0;
+  let drager = o.drager;
+  let staart = !!o.drager;
+  let kantel = 0;
+  let kantelHoek = 0;
+  let kop = 0;
+  let omgekeerd = false;
+  for (const e of tl.materiaal.get(id) ?? []) {
+    if (e.t > t) break;
+    const u = (duur: number) => klem((t - e.t) / duur);
+    if (e.soort === 'pak') {
+      drager = e.wie;
+      staart = false;
+    } else if (e.soort === 'leg') {
+      drager = undefined;
+      p = e.naar;
+      hoogte = DRAAG_HOOGTE * (1 - u(0.25));
+    } else if (e.soort === 'keer') {
+      omgekeerd = !omgekeerd;
+      kop = omgekeerd ? u(0.3) : 1 - u(0.3);
+    } else if (e.soort === 'op') {
+      kantel = 1 - u(0.3);
+    } else if (o.soort === 'bal') {
+      // Bal van de pion: valt en rolt door naar `naar`.
+      const f = u(0.7);
+      hoogte = (o.opHoogte ?? 0) * Math.max(0, 1 - f / 0.45) ** 2;
+      if (e.naar) p = lerp(p, e.naar, ease('bal', f));
+    } else {
+      kantel = u(0.3);
+      kantelHoek = e.hoek;
+    }
+  }
+  if (drager) {
+    const q = positie(tl, drager, t);
+    const hoek = kijkHoek(tl, drager, t);
+    const voor = richting(hoek);
+    const zij = richting(hoek + 90);
+    if (staart) return { x: q[0] - voor[0] * 0.2, y: q[1] - voor[1] * 0.2, hoogte: 0.42, kantel, kantelHoek, kop, hoek, gedragen: true };
+    return { x: q[0] + voor[0] * 0.18 + zij[0] * 0.26, y: q[1] + voor[1] * 0.18 + zij[1] * 0.26, hoogte: DRAAG_HOOGTE, kantel, kantelHoek, kop, hoek, gedragen: true };
+  }
+  return { x: p[0], y: p[1], hoogte, kantel, kantelHoek, kop, hoek: o.hoek ?? 0, gedragen: false };
+}
+
+/** Actie op materiaal verwerken; geeft het einde van de actie. Wie iets doet, bukt zoals bij aantikken (contact halverwege). */
+function materiaalActie(tl: Tijdlijn, a: MateriaalActie, t0: number): number {
+  if (!tl.objecten.has(a.object)) throw new TekeningFout(`${a.type}: onbekend object "${a.object}"`);
+  const wie = a.wie;
+  if (wie && !isPersoon(tl.objecten.get(wie))) throw new TekeningFout(`${a.type}: onbekende persoon "${wie}"`);
+  const t1 = t0 + (a.duur ?? 0.6);
+  const contact = wie ? (t0 + t1) / 2 : t0;
+  const nu = materiaalStand(tl, a.object, contact);
+  let punt: Punt = [nu.x, nu.y];
+  if (a.type === 'legObject') {
+    if (!wie) throw new TekeningFout(`legObject: wie legt "${a.object}" neer?`);
+    const p = positie(tl, wie, contact);
+    const r = richting(kijkHoek(tl, wie, contact));
+    punt = a.naar ?? [p[0] + r[0] * 0.5, p[1] + r[1] * 0.5];
+  }
+  if (a.type === 'pakObject' && !wie) throw new TekeningFout(`pakObject: wie pakt "${a.object}"?`);
+  if (wie) voegToe(tl.aantikken, wie, { t0, t1, punt, voet: false }, (e) => e.t0);
+  const e: MateriaalEvent =
+    a.type === 'pakObject'
+      ? { t: contact, soort: 'pak', wie: wie! }
+      : a.type === 'legObject'
+        ? { t: contact, soort: 'leg', naar: punt }
+        : a.type === 'keerOm'
+          ? { t: contact, soort: 'keer' }
+          : a.type === 'zetOp'
+            ? { t: contact, soort: 'op' }
+            : { t: contact, soort: 'val', hoek: a.hoek ?? 0, ...(a.naar ? { naar: a.naar } : {}) };
+  voegToe(tl.materiaal, a.object, e, (x) => x.t);
+  return wie ? t1 : contact + 0.3;
+}
+
 /** Alleen de velden die er zijn (dan blijven standen zonder deze bewegingen precies zoals ze waren). */
 /** Aantikken van een pion of hoedje op tijdstip t. */
 function aantikOp(tl: Tijdlijn, id: string, t: number): ObjectStand['aantik'] {
@@ -1994,9 +2149,11 @@ function aantikOp(tl: Tijdlijn, id: string, t: number): ObjectStand['aantik'] {
   return undefined;
 }
 
-function extra(trap: ObjectStand['trap'], aanname: ObjectStand['aanname'], opstaan: number | undefined, aantik?: ObjectStand['aantik']): Partial<ObjectStand> {
+function extra(trap: ObjectStand['trap'], aanname: ObjectStand['aanname'], opstaan: number | undefined, aantik?: ObjectStand['aantik'], voetOp = 0, tiktak?: number): Partial<ObjectStand> {
   const x: Partial<ObjectStand> = {};
   if (aantik) x.aantik = aantik;
+  if (voetOp > 0) x.voetOp = voetOp;
+  if (tiktak !== undefined) x.tiktak = tiktak;
   if (trap) x.trap = trap;
   if (aanname) x.aanname = aanname;
   if (opstaan !== undefined) x.opstaan = opstaan;
@@ -2071,7 +2228,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         tik: tikOp(tl, o.id, t),
         stomp: stompOp(tl, o.id, t),
         blok: blokOp(tl, o.id, t),
-        ...extra(trapOp(tl, o.id, t), aannameOp(tl, o, t), l.opstaan, aantikOp(tl, o.id, t)),
+        ...extra(trapOp(tl, o.id, t), aannameOp(tl, o, t), l.opstaan, aantikOp(tl, o.id, t), voetOpOp(tl, o.id, t), tikTakOp(tl, o.id, t)),
       });
     } else {
       objecten.set(o.id, { ...rust, x: o.x, y: o.y, hoek: o.hoek ?? 0 });
@@ -2087,5 +2244,13 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
     const punten = klaar ? s.pad : deelPad(s.pad, fractie * lengtes[lengtes.length - 1]!);
     sporen.push({ index, soort: s.soort, van: s.van, naar: s.naar, tot: punten[punten.length - 1]!, punten, fractie, top: s.top, manier: s.manier, klaar });
   });
-  return { objecten, sporen, net: netInslagen(tl, t) };
+  const materiaal = new Map<string, MateriaalStand>();
+  for (const id of tl.materiaal.keys()) {
+    const m = materiaalStand(tl, id, t);
+    materiaal.set(id, m);
+    // Een bal op een pion of in de hand: de bal volgt het materiaal.
+    const b = objecten.get(id);
+    if (b) objecten.set(id, { ...b, x: m.x, y: m.y, hoogte: m.hoogte });
+  }
+  return { objecten, sporen, net: netInslagen(tl, t), materiaal };
 }

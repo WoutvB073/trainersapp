@@ -390,5 +390,401 @@
         "A second defender on the striker"
       ]
     }
+  },
+  "veld-mt-verkeerslicht": {
+    "naam": "Traffic light",
+    "uitleg": "You are cars and the ball is your car. On green you drive around: dribble! On orange you put your foot on the ball. On red you sit on your ball. Listen carefully!",
+    "organisatie": "12 × 12 m area with a disc cone on each corner, for 5 children, each with a ball. The coach stands at the side and calls green, orange or red. Play for 15 minutes in short rounds with the odd drinks break.",
+    "benodigdheden": [
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Keep the ball close to your foot",
+      "Look up: where is the coach?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Only green and red",
+        "The coach shows each task first"
+      ],
+      "moeilijker": [
+        "Add blue: turn around",
+        "The coach calls faster and faster"
+      ]
+    }
+  },
+  "veld-mt-hondje-uitlaten": {
+    "naam": "Walking the dog",
+    "uitleg": "Your ball is your dog. Don’t let it run away: it stays close to you! When the coach calls \"sit\", put your foot on the ball. On \"turn around\" you go the other way. On \"run\" you and your dog go a bit faster.",
+    "organisatie": "12 × 12 m area with a disc cone on each corner, for 5 children, each with a ball. The coach calls the commands. Play for 15 minutes; let the children think of a command too.",
+    "benodigdheden": [
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Small touches: your dog stays close"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Only \"sit\" and \"run\"",
+        "Walk instead of running"
+      ],
+      "moeilijker": [
+        "\"Paw\": touch the ball with your other foot",
+        "Two commands in a row"
+      ]
+    }
+  },
+  "veld-mt-brandweer": {
+    "naam": "Fire brigade",
+    "uitleg": "You are firefighters driving calmly through the town. When the coach shouts \"fire!\", drive as fast as you can to a hoop and stop your ball in it. Who is the first to stand still?",
+    "organisatie": "12 × 12 m area with 5 hoops around the edges, for 5 children, each with a ball. Everyone dribbles freely. On \"fire!\" each child stops their ball in a hoop. Play for 15 minutes in short rounds.",
+    "benodigdheden": [
+      "5 hoops",
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Stop the ball with the sole of your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Hoops closer by",
+        "Walk to the hoop"
+      ],
+      "moeilijker": [
+        "One hoop fewer than children",
+        "Call a hoop colour"
+      ]
+    }
+  },
+  "veld-mt-kleurenpoortjes": {
+    "naam": "Colour gates",
+    "uitleg": "There are gates in lovely colours everywhere. Dribble around. When the coach calls \"red\", take your ball through a red gate. Then listen again: which colour is next?",
+    "organisatie": "12 × 12 m area with 4 gates of disc cones (2 m wide), each gate its own colour, for 5 children, each with a ball. The coach calls a colour. Play for 15 minutes.",
+    "benodigdheden": [
+      "8 disc cones in 4 colours",
+      "4 disc cones for the corners",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look up: where is your colour?",
+      "Keep the ball close through the gate"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two colours",
+        "Wider gates"
+      ],
+      "moeilijker": [
+        "The coach calls two colours in a row",
+        "Narrower gates"
+      ]
+    }
+  },
+  "veld-mt-onder-de-brug": {
+    "naam": "Under the bridge",
+    "uitleg": "The hurdle is a bridge. Dribble to it and gently roll your ball underneath. Step over the bridge yourself and take your ball with you again. Can you do it without touching the bridge?",
+    "organisatie": "Three lanes side by side, each with a high hurdle and a cone as the start 5 m away. For 5 children, each with a ball, at most 2 per lane. After the hurdle, dribble back around the outside. Play for 15 minutes.",
+    "benodigdheden": [
+      "3 hurdles",
+      "3 large cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Tap it softly so the ball rolls calmly under the bridge"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Roll the ball under the bridge by hand",
+        "Hurdle closer to the start"
+      ],
+      "moeilijker": [
+        "Two bridges in a row",
+        "Use your other foot"
+      ]
+    }
+  },
+  "veld-mt-huisjes": {
+    "naam": "Little houses",
+    "uitleg": "Every hoop is a little house. Dribble around. When the coach calls \"go home!\", take your ball to a house. But watch out: a house disappears each time. Then you have to share a house!",
+    "organisatie": "12 × 12 m area with 5 hoops spread out, for 5 children, each with a ball. After each round the coach takes one hoop away, until 2 are left. Then start again. Play for 15 minutes.",
+    "benodigdheden": [
+      "5 hoops",
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look up: which house is free?",
+      "Sharing is good"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Each child keeps their own house",
+        "Walk"
+      ],
+      "moeilijker": [
+        "Take hoops away faster",
+        "First a lap around the hoop, then in"
+      ]
+    }
+  },
+  "veld-mt-door-het-bos": {
+    "naam": "Through the forest",
+    "uitleg": "The cones are trees in the forest. Dribble in and out between the trees. Careful: you mustn’t touch a tree! How many trees can you pass?",
+    "organisatie": "12 × 12 m area with 9 cones spread out (about 3 m apart), for 5 children, each with a ball. Everyone dribbles at the same time: nobody is waiting. Play for 15 minutes in short rounds.",
+    "benodigdheden": [
+      "9 large cones",
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Small touches between the trees",
+      "Look where you are going"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Fewer trees, more space",
+        "Walk"
+      ],
+      "moeilijker": [
+        "More trees closer together",
+        "Use only your other foot"
+      ]
+    }
+  },
+  "veld-mt-tik-tak": {
+    "naam": "Tick-tock",
+    "uitleg": "Your feet are a clock: tick-tock, tick-tock! Tap the ball gently from one foot to the other. Copy the coach. Can you do it standing still? Then try it while walking!",
+    "organisatie": "Children in a line facing the coach, 2 m apart, each with a ball. First copy the coach standing still, then walking over 6 m. For 5 children; nobody waits. Play for 15 minutes with breaks.",
+    "benodigdheden": [
+      "2 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Tap with the inside of your foot",
+      "Softly: the ball stays between your feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "First a still ball, feet on it in turns",
+        "A smaller, softer ball"
+      ],
+      "moeilijker": [
+        "Count: who can get to 10?",
+        "Walk faster while doing tick-tock"
+      ]
+    }
+  },
+  "veld-mt-rondje-pion": {
+    "naam": "Round the cone",
+    "uitleg": "Let’s have a race! Dribble as fast as you can to the cone, go around it and come back. Tag the next child: now it’s their turn. Which line finishes first?",
+    "organisatie": "Two lines of 2–3 children, 3 m apart, each with a cone 6 m away. Everyone has a ball. The next child starts when the first is back. Play for 15 minutes, with a new race each time.",
+    "benodigdheden": [
+      "2 large cones",
+      "2 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Go calmly around the cone, keep the ball close"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Cone closer",
+        "No race: everyone at their own pace"
+      ],
+      "moeilijker": [
+        "Around two cones",
+        "Go left and right around the cone"
+      ]
+    }
+  },
+  "veld-mt-eieren-rapen": {
+    "naam": "Collecting eggs",
+    "uitleg": "There are eggs on the cones: they are the tennis balls. Dribble your ball to a cone, pick up an egg and dribble with it to your own hoop. Put the egg carefully in your nest. Who has the most eggs?",
+    "organisatie": "12 × 12 m area with 6 tall cones in the middle, each with a tennis ball on top, and a hoop for each child at the edge. For 5 children, each with a ball. One egg at a time. Play for 15 minutes; keep putting the eggs back.",
+    "benodigdheden": [
+      "6 tall cones",
+      "6 tennis balls",
+      "5 hoops",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Your ball stays with you, even with an egg in your hand"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No ball: just collect the eggs",
+        "Cones closer"
+      ],
+      "moeilijker": [
+        "Cones further away",
+        "Against the clock: 1 minute"
+      ]
+    }
+  },
+  "veld-mt-ladder-en-dribbel": {
+    "naam": "Ladder and dribble",
+    "uitleg": "First go through the ladder without a ball: small, quick steps! Your ball is waiting at the end. Take it with your foot and dribble around the tall cone and back. Who has finished?",
+    "organisatie": "Two lanes side by side: a speed ladder, 1 m further on a ball, and 4 m after that a tall cone. For 5 children, at most 2–3 per line. After the cone, dribble back and leave the ball for the next child. Play for 15 minutes.",
+    "benodigdheden": [
+      "2 speed ladders",
+      "2 tall cones",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "Small steps in the ladder",
+      "Go calmly around the cone"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One step in each box, walking",
+        "A shorter ladder"
+      ],
+      "moeilijker": [
+        "Two feet in each box",
+        "Go left and right around the cone"
+      ]
+    }
+  },
+  "veld-mt-poppenslalom": {
+    "naam": "Mannequin slalom",
+    "uitleg": "Look at those big mannequins. Dribble around them, first past one side and then the other, like a snake. Don’t touch them!",
+    "organisatie": "Two lanes, each with 3 mannequins 2.5 m apart. For 5 children, each with a ball, at most 2–3 per line. Dribble back around the outside. Play for 15 minutes.",
+    "benodigdheden": [
+      "6 mannequins",
+      "2 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Small touches, with both feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two mannequins, further apart",
+        "Walk"
+      ],
+      "moeilijker": [
+        "Mannequins closer together",
+        "Use only your other foot"
+      ]
+    }
+  },
+  "veld-mt-kaatsbordpassjes": {
+    "naam": "Rebound board passes",
+    "uitleg": "Play the ball against the rebound board. It comes back! Stop it with the bottom of your foot. Count along: who can get to 5?",
+    "organisatie": "One rebound board for every 2 children; each child 3 m from the board, side by side or taking turns. For 5 children, 3 rebound boards. Play for 15 minutes; keep changing foot.",
+    "benodigdheden": [
+      "3 rebound boards",
+      "3 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Stop the ball with the sole of your foot",
+      "Stay calm: play it softly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer to the board",
+        "Stop the ball first, then play it"
+      ],
+      "moeilijker": [
+        "Further from the board",
+        "Count to 10"
+      ]
+    }
+  },
+  "veld-mt-kleurenpionnen": {
+    "naam": "Colour cones",
+    "uitleg": "There are brightly coloured cones everywhere. When the coach calls \"yellow\", dribble to a yellow cone and touch it with your ball. Then come back to the middle. Which colour is next?",
+    "organisatie": "12 × 12 m area with 4 tall cones in 4 colours on the sides (disc cones work too), for 5 children, each with a ball in the middle. The coach calls a colour. Play for 15 minutes.",
+    "benodigdheden": [
+      "4 tall cones in 4 colours",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look up and listen carefully",
+      "Keep the ball close to you"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two colours",
+        "Cones closer"
+      ],
+      "moeilijker": [
+        "Two colours in a row",
+        "Touch it with your other foot"
+      ]
+    }
+  },
+  "veld-mt-palenpoort": {
+    "naam": "Pole tunnel",
+    "uitleg": "Two poles make a tunnel. Dribble through the tunnel, turn around and come back through it. How many times can you do it without touching the poles?",
+    "organisatie": "Three tunnels of 2 poles (1.5 m wide), with 1–2 children per tunnel, each with a ball. For 5 children. After the tunnel, turn 2 m further on and come back. Play for 15 minutes.",
+    "benodigdheden": [
+      "6 poles",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Turn with the ball at your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A wider tunnel",
+        "Walk"
+      ],
+      "moeilijker": [
+        "A narrower tunnel",
+        "Turn with your other foot"
+      ]
+    }
+  },
+  "veld-mt-hoedjes-omdraaien": {
+    "naam": "Flipping disc cones",
+    "uitleg": "We play in two teams. Team red turns the disc cones upside down. Team blue turns them back. Dribble your ball to a disc cone and flip it. Who has the most after 1 minute?",
+    "organisatie": "12 × 12 m area with 10 disc cones spread out: half of them are upside down. For 5 children: 2 against 3, each with a ball; the coach helps the smaller team. Rounds of 1 minute, count and start again. Play for 15 minutes.",
+    "benodigdheden": [
+      "10 disc cones",
+      "Bibs",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Take your ball with you, don’t leave it",
+      "Look up: where is a disc cone?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No ball, just running",
+        "Fewer disc cones"
+      ],
+      "moeilijker": [
+        "Flip them using only your foot",
+        "Rounds of 30 seconds"
+      ]
+    }
+  },
+  "veld-mt-hoedjes-verzamelen": {
+    "naam": "Collecting disc cones",
+    "uitleg": "There are disc cones everywhere. Dribble to a disc cone, pick it up and take it to your own hoop. Got lots of them? Then take them back one at a time!",
+    "organisatie": "12 × 12 m area with 12 disc cones spread out and a hoop for each child at the edge. For 5 children, each with a ball. First collect all the disc cones, then take them back one at a time. Play for 15 minutes.",
+    "benodigdheden": [
+      "12 disc cones",
+      "5 hoops",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Ball at your foot, disc cone in your hand"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No ball",
+        "Disc cones closer to the hoop"
+      ],
+      "moeilijker": [
+        "Only disc cones in your colour",
+        "Against the clock"
+      ]
+    }
   }
 }

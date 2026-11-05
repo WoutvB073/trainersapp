@@ -1,7 +1,7 @@
 import type { LijnSoort, Punt, Team, Tekening, Uitsnede, VeldObject } from '../model/types';
 import { HORDE } from '../model/types';
 import { lijnPunten } from '../model/lijn';
-import { PASJES, PASLENGTE, type NetInslag, type ObjectStand, type Stand } from './timeline';
+import { PASJES, PASLENGTE, type MateriaalStand, type NetInslag, type ObjectStand, type Stand } from './timeline';
 import { DOELNET_KLEUR, doelnetGaten, netMaten } from './doelnet';
 
 /** Kleuren komen uit CSS-variabelen, zodat clubkleuren (fase 6) ook de animatie kleuren. */
@@ -114,7 +114,13 @@ export function tekenScene(
 
   const objecten = tekening.objecten;
   const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'pop', 'rebounder', 'klein-goal', 'goal', 'doelnet', 'net'];
-  for (const soort of onder) for (const o of objecten) if (o.soort === soort) tekenMateriaal(b, o, stand.net.find((n) => n.id === o.id));
+  for (const soort of onder) {
+    for (const o of objecten) {
+      if (o.soort !== soort) continue;
+      const m = stand.materiaal.get(o.id);
+      tekenMateriaal(b, m ? { ...o, x: m.x, y: m.y } : o, stand.net.find((n) => n.id === o.id), m);
+    }
+  }
 
   const plek = (id: string): Punt | undefined => {
     const o = stand.objecten.get(id);
@@ -130,6 +136,8 @@ export function tekenScene(
   // Keepernummers alleen als er meer dan één keeper is.
   const meerKeepers = objecten.filter((o) => o.soort === 'keeper').length > 1;
   for (const o of objecten) {
+    const m = o.soort === 'hesje' ? stand.materiaal.get(o.id) : undefined;
+    if (o.soort === 'hesje') tekenMateriaal(b, m ? { ...o, x: m.x, y: m.y } : o, undefined, m);
     if (o.soort !== 'speler' && o.soort !== 'keeper' && o.soort !== 'trainer') continue;
     const s = stand.objecten.get(o.id);
     if (s) tekenPersoon(b, o, s, k, meerKeepers);
@@ -309,7 +317,7 @@ function metDraaiing(b: Beeld, o: VeldObject, teken: (ctx: CanvasRenderingContex
   ctx.restore();
 }
 
-function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
+function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag, m?: MateriaalStand) {
   const { ctx } = b;
   const s = b.schaal;
   const lijn = maat(b, 0.1, 1.2);
@@ -319,22 +327,24 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
       const w = (o.breedte ?? (o.soort === 'goal' ? 7.32 : 3)) * s;
       const d = maat(b, o.lengte ?? (o.soort === 'goal' ? 2 : 1.2), 6);
       metDraaiing(b, o, (c) => {
-        // Net achter de doellijn (naar -y), lat/palen op de lijn.
-        c.fillStyle = 'rgba(255,255,255,0.18)';
-        c.fillRect(-w / 2, -d, w, d);
-        c.strokeStyle = 'rgba(255,255,255,0.45)';
-        c.lineWidth = Math.max(1, lijn * 0.5);
-        const stap = Math.max(4 * b.dpr, 0.5 * s);
-        c.beginPath();
-        for (let x = -w / 2 + stap; x < w / 2; x += stap) {
-          c.moveTo(x, -d);
-          c.lineTo(x, 0);
+        // Net achter de doellijn (naar -y), lat/palen op de lijn. Een mini-goaltje zonder net heeft alleen het frame.
+        if (!o.zonderNet) {
+          c.fillStyle = 'rgba(255,255,255,0.18)';
+          c.fillRect(-w / 2, -d, w, d);
+          c.strokeStyle = 'rgba(255,255,255,0.45)';
+          c.lineWidth = Math.max(1, lijn * 0.5);
+          const stap = Math.max(4 * b.dpr, 0.5 * s);
+          c.beginPath();
+          for (let x = -w / 2 + stap; x < w / 2; x += stap) {
+            c.moveTo(x, -d);
+            c.lineTo(x, 0);
+          }
+          for (let y = -d + stap; y < 0; y += stap) {
+            c.moveTo(-w / 2, y);
+            c.lineTo(w / 2, y);
+          }
+          c.stroke();
         }
-        for (let y = -d + stap; y < 0; y += stap) {
-          c.moveTo(-w / 2, y);
-          c.lineTo(w / 2, y);
-        }
-        c.stroke();
         c.strokeStyle = '#ffffff';
         c.lineWidth = maat(b, 0.12, 1.5);
         c.strokeRect(-w / 2, -d, w, d);
@@ -386,8 +396,18 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
     }
     case 'pion': {
       const c = px(b, [o.x, o.y]);
-      const r = maat(b, 0.28, 5);
+      const r = maat(b, 0.28 * Math.min(1.5, Math.max(0.75, Math.sqrt((o.hoogte ?? 0.32) / 0.32))), 5);
       ctx.fillStyle = o.kleur ?? '#ff7a1a';
+      if (m && m.kantel > 0.5) {
+        // Omgevallen: een liggend ovaal in de richting waarin hij viel.
+        ctx.beginPath();
+        ctx.ellipse(c[0], c[1], r * 1.5, r * 0.6, (m.kantelHoek * Math.PI) / 180, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+        ctx.lineWidth = Math.max(1, lijn * 0.6);
+        ctx.stroke();
+        break;
+      }
       ctx.beginPath();
       ctx.arc(c[0], c[1], r, 0, Math.PI * 2);
       ctx.fill();
@@ -404,6 +424,15 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
       const c = px(b, [o.x, o.y]);
       const r = maat(b, 0.22, 4);
       ctx.fillStyle = o.kleur ?? '#ffd23f';
+      if (m && m.kop > 0.5) {
+        // Op zijn kop: alleen de rand.
+        ctx.strokeStyle = o.kleur ?? '#ffd23f';
+        ctx.lineWidth = Math.max(2, r * 0.45);
+        ctx.beginPath();
+        ctx.arc(c[0], c[1], r * 0.8, 0, Math.PI * 2);
+        ctx.stroke();
+        break;
+      }
       ctx.beginPath();
       ctx.arc(c[0], c[1], r, 0, Math.PI * 2);
       ctx.fill();
@@ -411,6 +440,19 @@ function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag) {
       ctx.beginPath();
       ctx.arc(c[0], c[1], r * 0.4, 0, Math.PI * 2);
       ctx.fill();
+      break;
+    }
+    case 'hesje': {
+      // Hesje als staart of in de hand: een strook stof.
+      metDraaiing(b, { ...o, hoek: (m?.hoek ?? 0) + 90 }, (c) => {
+        const w = maat(b, 0.2, 4);
+        const l = maat(b, 0.5, 9);
+        c.fillStyle = o.kleur ?? '#f2b705';
+        c.fillRect(-w / 2, 0, w, l);
+        c.strokeStyle = 'rgba(0,0,0,0.4)';
+        c.lineWidth = Math.max(1, lijn * 0.5);
+        c.strokeRect(-w / 2, 0, w, l);
+      });
       break;
     }
     case 'paaltje': {

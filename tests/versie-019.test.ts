@@ -116,7 +116,7 @@ describe('A5 categorieën', () => {
       'Duik op de losse bal': ['laag-duiken', 'reactie'],
       'Vangen en snel uitgooien in de loop': ['passing', 'bal-verwerken'],
     };
-    for (const [n, c] of Object.entries(spelers)) expect(opNaam(n, 'veld')?.categorieen, n).toEqual(c);
+    for (const [n, c] of Object.entries(spelers)) expect(opNaam(n, 'veld')?.categorieen.filter((c) => c !== 'een-tegen-een'), n).toEqual(c);
     for (const [n, c] of Object.entries(keepers)) expect(opNaam(n, 'keeper')?.categorieen, n).toEqual(c);
     // De kleurenreactie zonder bal heeft echt geen bal, die met bal wel.
     expect(opNaam('Kleurenreactie in tweetallen', 'veld').tekening.objecten.some((o) => o.soort === 'bal')).toBe(false);

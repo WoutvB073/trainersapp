@@ -1248,6 +1248,7 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     const hurk = zitS === 'hurkzit' ? zit : 0;
     const half = zitS === 'halfknie' ? zit : 0;
     const buik = zitS === 'buik' ? zit : 0;
+    const opBal = zitS === 'op-bal' ? zit : 0;
     const vorigOp = s.zitVorig === 'zit-opgetrokken' ? 1 : 0;
     const mixZ = s.zitVorig ? (s.zitMix ?? 1) : 1;
     const opgetrokken = ((zitS === 'zit-opgetrokken' ? 1 : 0) * mixZ + vorigOp * (1 - mixZ)) * billen;
@@ -1274,6 +1275,11 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
         vt.p.lerp(_v.set(kant(i) * 0.13, MAAT.enkel, 0), buik);
         vt.kantel = mix(vt.kantel, 0.2, buik);
       }
+      if (opBal > 0) {
+        // Op de bal: knieën gebogen, voeten plat voor de bal.
+        vt.p.lerp(_v.set(kant(i) * 0.17, MAAT.enkel, 0.36), opBal);
+        vt.draai = kant(i) * 0.2;
+      }
       if (billen > 0) {
         vt.p.lerp(_v.set(kant(i) * 0.13, MAAT.enkel, mix(0.84, 0.44, opgetrokken / Math.max(billen, 1e-6))), billen);
         vt.kantel = mix(vt.kantel, mix(0.15, 0, opgetrokken), billen);
@@ -1284,8 +1290,9 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     h.heup = mix(h.heup, 0.46, hurk);
     h.heup = mix(h.heup, 0.42, half);
     h.heup = mix(h.heup, MAAT.heup - 0.01, buik);
+    h.heup = mix(h.heup, 0.37, opBal);
     h.heup = mix(h.heup, 0.15 + 0.01 * opgetrokken, billen);
-    h.romp.x += 0.08 * knie + 0.4 * hurk - 0.1 * billen;
+    h.romp.x += 0.08 * knie + 0.4 * hurk - 0.1 * billen + 0.15 * opBal;
     h.bekken.x += 0.25 * hurk - 0.05 * billen;
     h.grond = Math.max(h.grond, zit);
     for (const i of [0, 1] as const) {
@@ -1310,6 +1317,21 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
         h.arm[i].doel.set(kant(i) * 0.3, 0.06, -0.3);
         h.arm[i].ik = s.tik;
       }
+    }
+  }
+
+  // ---- voet op de bal: rechtervoet boven op de bal ----
+  if (s.voetOp) {
+    h.voet[0].p.lerp(_v.set(-0.05, MAAT.enkel + 0.2, 0.42), s.voetOp);
+    h.voet[0].kantel = mix(h.voet[0].kantel, 0.3, s.voetOp);
+    h.heup -= 0.03 * s.voetOp;
+  }
+
+  // ---- tik-tak: de voet aan de kant van de bal tikt hem terug ----
+  if (s.tiktak !== undefined) {
+    for (const i of [0, 1] as const) {
+      const k = klem(-kant(i) * s.tiktak);
+      h.voet[i].p.lerp(_v.set(kant(i) * (0.2 + 0.06 * k), MAAT.enkel + 0.04 * k, 0.1 + 0.14 * k), 1);
     }
   }
 

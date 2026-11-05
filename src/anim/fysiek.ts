@@ -48,7 +48,7 @@ function vormen(o: VeldObject): Vorm[] {
     case 'ring':
       return [{ straal: 0.35, hoogte: 0.04 }];
     case 'pion':
-      return [{ straal: 0.14, hoogte: 0.3 }];
+      return [{ straal: 0.14, hoogte: o.hoogte ?? 0.3 }];
     case 'paaltje':
       return [{ straal: 0.05, hoogte: o.hoogte ?? 1.5 }];
     case 'pop':
@@ -132,6 +132,8 @@ export function fysiekeMeldingen(tekening: Tekening, tl: Tijdlijn = maakTijdlijn
   const goals = tekening.objecten.filter((o) => o.soort === 'goal' || o.soort === 'klein-goal');
   const personen = tekening.objecten.filter((o) => PERSONEN.includes(o.soort)).map((o) => o.id);
   const panna = new Set(alleActies(tekening.animatie ?? []).flatMap((a) => (a.type === 'panna' ? [a.wie + '>' + a.door] : [])));
+  // Hordes waar een bal bewust onderdoor gaat (0.30.0).
+  const onderdoor = new Set(alleActies(tekening.animatie ?? []).flatMap((a) => (a.type === 'pass' && a.onderdoor ? [a.onderdoor] : [])));
 
   // ---------- ballen ----------
   for (const [bal, lijst] of tl.balEvents) {
@@ -147,7 +149,7 @@ export function fysiekeMeldingen(tekening: Tekening, tl: Tijdlijn = maakTijdlijn
         const p: Punt = [b.x, b.y];
         const h = b.hoogte;
         for (const o of materiaal) {
-          if (doelwit.has(o.id)) continue;
+          if (doelwit.has(o.id) || (onderdoor.has(o.id) && h < 0.1)) continue;
           if (o.soort === 'kooi') {
             // Boarding van 0,5 m: niet laag eroverheen.
             const q = lokaal(o, p);
