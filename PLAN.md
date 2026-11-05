@@ -36,7 +36,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 22. Deel C: voorbeeldtactieken op het tactiekbord, 17 tactieken / 25 borden (0.28.0) | ✅ online, getest en akkoord |
 | 23. Deel D: ingestudeerde spelhervattingen, 20 hervattingen / 27 borden (0.29.0) | ✅ online – **wacht op test** |
 | 24. Installeren op elke telefoon en browser, filter op aantal keepers (0.29.1) | ✅ online – **wacht op test** |
-| 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online, getest en akkoord |
+| 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online – **wacht op test** |
 | 26. Clubtraining: veldplan, rotatie, materiaal, deellink, kwartiertimer (0.31.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
