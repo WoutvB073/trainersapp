@@ -654,5 +654,367 @@
         "Smaller pitch"
       ]
     }
+  },
+  "veld-mt-2-tegen-2": {
+    "naam": "2v2 on mini-goals",
+    "uitleg": "You play in twos against two others. Help each other! Dribble, pass to your teammate and score in the other team’s mini-goal.",
+    "organisatie": "12 × 16 m pitch with a mini-goal on both short sides. Two groups per pitch: with 10 children, 2v2 on two pitches side by side and 2 children rotate in. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals per pitch",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "See where your teammate is"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A bigger pitch",
+        "The coach joins in"
+      ],
+      "moeilijker": [
+        "Pass first, then score",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-3-tegen-3": {
+    "naam": "3v3 on mini-goals",
+    "uitleg": "Two teams of three. Pass to each other and score in the other team’s mini-goal. Don’t all stand by the ball: find an empty space!",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Find an empty space",
+      "Look up before you play"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach plays for the team with the ball",
+        "A bigger pitch"
+      ],
+      "moeilijker": [
+        "A point only after two passes",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-4-goaltjes": {
+    "naam": "4 mini-goals",
+    "uitleg": "There are two mini-goals on each side. Score in one of the other team’s mini-goals. Is someone standing in front of one? Then go to the other one!",
+    "organisatie": "16 × 20 m pitch with 2 mini-goals on each short side, 8 m apart. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "4 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Look for the free mini-goal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Mini-goals further apart",
+        "The coach joins in"
+      ],
+      "moeilijker": [
+        "Score in a different mini-goal from last time",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-poortjespartij": {
+    "naam": "Gate game",
+    "uitleg": "No mini-goals today, but gates! Dribble the ball through a gate on the other team’s side. That’s a point.",
+    "organisatie": "16 × 20 m pitch with 2 gates of disc cones (2 m wide) on each short side. Score by dribbling through a gate. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "8 disc cones for the gates",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Keep the ball close through the gate"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider gates",
+        "More gates"
+      ],
+      "moeilijker": [
+        "Narrower gates",
+        "One gate on each side"
+      ]
+    }
+  },
+  "veld-mt-twee-ballen": {
+    "naam": "Two balls",
+    "uitleg": "Oh no, there are two balls in play! Both teams can score at the same time. Pay attention: where are the balls?",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. A game with 2 balls at once; if one goes out, the coach puts a new one in. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Look up: where is the other ball?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A bigger pitch",
+        "Start with one ball"
+      ],
+      "moeilijker": [
+        "Three balls",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-bal-in-de-zone": {
+    "naam": "Ball in the zone",
+    "uitleg": "There’s a zone at the end of the pitch. Dribble the ball into it and put your foot on it: stop it! That’s a point.",
+    "organisatie": "16 × 20 m pitch with a 3 m end zone on both short sides (disc cones). Score by stopping the ball in the end zone. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "8 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Stop the ball with the sole of your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A bigger zone",
+        "The coach joins in"
+      ],
+      "moeilijker": [
+        "A smaller zone",
+        "A pass into the zone first"
+      ]
+    }
+  },
+  "veld-mt-jokerpartij": {
+    "naam": "Joker game",
+    "uitleg": "The coach joins in as the joker: they always help the team with the ball. Pass to the coach and run into space. You’ll get it back!",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. The coach plays for the team with the ball. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Pass and keep moving"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A bigger pitch",
+        "Two jokers"
+      ],
+      "moeilijker": [
+        "The joker gets one touch",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-geen-uitbal": {
+    "naam": "No throw-ins",
+    "uitleg": "Did the ball go out? No time to wait! The coach throws in a new ball straight away. Get there quickly and keep playing.",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. The coach stands at the side with a pile of balls and throws in a new one as soon as the ball goes out. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "Lots of footballs"
+    ],
+    "coachpunten": [
+      "Keep moving and look at the coach"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Throw the ball to a team’s feet",
+        "A bigger pitch"
+      ],
+      "moeilijker": [
+        "Throw the ball into free space",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-dribbelgoal": {
+    "naam": "Dribble goals count double",
+    "uitleg": "Do you score after dribbling past an opponent? Then your goal counts double: 2 points! Be brave and dribble.",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. A goal after dribbling past an opponent = 2 points, other goals 1 point. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Be brave and dribble, even if it goes wrong"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Every dribble counts",
+        "Defenders can only walk"
+      ],
+      "moeilijker": [
+        "Past two opponents = 3 points",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-mini-toernooi": {
+    "naam": "Mini tournament",
+    "uitleg": "We’re having a tournament! You play a game for 3 minutes. Then the coach blows the whistle and you get a new opponent. Which team wins the most games?",
+    "organisatie": "Two 12 × 16 m pitches side by side, each with a mini-goal on both short sides. Four teams: with 10 children, 2 teams of 3 and 2 teams of 2. Games of 3 minutes, then change opponent. Play for 15 minutes.",
+    "benodigdheden": [
+      "4 mini-goals",
+      "8 disc cones",
+      "Bibs in 4 colours",
+      "2 footballs"
+    ],
+    "coachpunten": [
+      "Win together, lose together"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One pitch with 2 teams",
+        "Games of 2 minutes"
+      ],
+      "moeilijker": [
+        "The winner moves up a pitch",
+        "Games of 4 minutes"
+      ]
+    }
+  },
+  "veld-mt-poppenpartij": {
+    "naam": "Mannequin game",
+    "uitleg": "There are mannequins on the pitch. They don’t do anything, but you have to go around them! Dribble past the mannequins and score.",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. There are 4 mannequins on the pitch that you have to play around. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 mannequins",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Look up: where are the mannequins?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two mannequins",
+        "A bigger pitch"
+      ],
+      "moeilijker": [
+        "Six mannequins",
+        "A pass past a mannequin counts double"
+      ]
+    }
+  },
+  "veld-mt-paaltjesvoetbal": {
+    "naam": "Pole football",
+    "uitleg": "No mini-goal, but a pole! Hit the other team’s pole with the ball. A hit? A point! Aim carefully.",
+    "organisatie": "16 × 20 m pitch with a pole in the middle of both short sides, 2 m from the line. Score by hitting the other team’s pole. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 poles",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Aim at the pole; getting close makes it easier"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A mannequin instead of a pole",
+        "Two poles on each side"
+      ],
+      "moeilijker": [
+        "A point only from outside an area",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-kaatsbordpartij": {
+    "naam": "Rebound board game",
+    "uitleg": "There are rebound boards at the side. They’re your teammates! Play the ball against one and run after it. That’s how you get past the other team.",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. A rebound board halfway along each long side; you can use them as a teammate. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "2 rebound boards",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Play it against the board and keep moving"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Rebound board closer",
+        "Four rebound boards"
+      ],
+      "moeilijker": [
+        "A goal after a rebound counts double",
+        "A smaller pitch"
+      ]
+    }
+  },
+  "veld-mt-hoepelgoal": {
+    "naam": "Hoop goal",
+    "uitleg": "There are hoops behind the line. Dribble over and stop the ball in a hoop. That’s a goal!",
+    "organisatie": "16 × 20 m pitch with 3 hoops behind each short line. Score by stopping the ball in one of the other team’s hoops. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "6 hoops",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Stop the ball in the hoop with the sole of your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "More hoops",
+        "A point even if the ball only touches the hoop"
+      ],
+      "moeilijker": [
+        "One hoop on each side",
+        "A pass first"
+      ]
+    }
+  },
+  "veld-mt-ballenregen": {
+    "naam": "Raining balls",
+    "uitleg": "It’s raining balls! The coach keeps throwing a new ball onto the pitch. Which team scores the most goals in 2 minutes?",
+    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. The coach keeps throwing in new balls, even if another ball is still in play. Rounds of 2 minutes, count the goals. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
+    "benodigdheden": [
+      "2 mini-goals",
+      "4 disc cones",
+      "Bibs",
+      "Lots of footballs"
+    ],
+    "coachpunten": [
+      "Look up: where is the next ball coming from?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Fewer balls",
+        "A bigger pitch"
+      ],
+      "moeilijker": [
+        "The coach throws faster",
+        "A smaller pitch"
+      ]
+    }
   }
 }

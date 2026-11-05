@@ -31,7 +31,7 @@ const opbouw = [
   stap({ type: 'pass', van: 'a1', naar: 'a3' }, { type: 'loop', wie: 'c3', naar: [12, 7.2], duur: 1, start: 0.2 }),
 ];
 const afronden = [
-  stap({ type: 'dribbel', wie: 'a3', naar: [12.6, 5.4], duur: 1.5 }, { type: 'druk', wie: 'c3', op: 'a3', afstand: 2.2, manier: 'verdedigend' }, { type: 'loop', wie: 'c1', naar: [9.4, 5.4], manier: 'sprint', duur: 1.5 }),
+  stap({ type: 'dribbel', wie: 'a3', via: [[15.2, 7.4]], naar: [13.6, 4.6], duur: 1.9 }, { type: 'loop', wie: 'c3', naar: [11.4, 5.4], manier: 'verdedigend', start: 0.4, duur: 1.5 }, { type: 'loop', wie: 'c1', naar: [9.2, 5.6], manier: 'sprint', duur: 1.9 }),
   stap({ type: 'schot', van: 'a3', naar: [9, 0.8] }),
 ];
 
@@ -201,7 +201,7 @@ const oefeningen = [
       ...veld(...goals, bal('b2', 9.6, 10.55, 'c1')),
       animatie: [
         stap({ type: 'pass', van: 'a1', naar: 'a2' }, { type: 'pass', van: 'c1', naar: 'c3', start: 0.2 }),
-        stap({ type: 'dribbel', wie: 'a2', naar: [4.6, 8], duur: 1.8 }, { type: 'dribbel', wie: 'c3', naar: [13, 14.4], duur: 2 }, { type: 'loop', wie: 'c2', naar: [7, 6.4], duur: 1.4 }, { type: 'loop', wie: 'a3', naar: [11, 15.8], duur: 1.4 }),
+        stap({ type: 'dribbel', wie: 'a2', naar: [4.6, 8], duur: 1.8 }, { type: 'dribbel', wie: 'c3', naar: [13, 14.4], duur: 2 }, { type: 'loop', wie: 'c2', naar: [2.8, 5.4], duur: 1.4 }, { type: 'loop', wie: 'a3', naar: [6.6, 15.2], duur: 1.8 }),
         stap({ type: 'dribbel', wie: 'a2', naar: [7, 4.2], duur: 1.3 }, { type: 'dribbel', wie: 'c3', naar: [10.6, 17.8], duur: 1.3 }),
         stap({ type: 'schot', van: 'a2', naar: [9, 0.8] }, { type: 'schot', van: 'c3', naar: [9, 21.2] }),
       ],
@@ -235,7 +235,7 @@ const oefeningen = [
     },
     tekening: {
       ...veld(zone('z1', 9, 2.5, 16, 3, K.blauw), zone('z2', 9, 19.5, 16, 3, K.rood)),
-      animatie: [...opbouw, stap({ type: 'dribbel', wie: 'a3', naar: [13.8, 3], duur: 2.2 }, { type: 'druk', wie: 'c3', op: 'a3', afstand: 2.3, manier: 'verdedigend' }), stap({ type: 'voetOpBal', wie: 'a3', duur: 1.2 })],
+      animatie: [...opbouw, stap({ type: 'dribbel', wie: 'a3', via: [[15, 7]], naar: [14, 3], duur: 2.4 }, { type: 'loop', wie: 'c3', naar: [11.6, 4.6], manier: 'verdedigend', start: 0.4, duur: 1.8 }), stap({ type: 'voetOpBal', wie: 'a3', duur: 1.2 })],
     },
   }),
 
@@ -462,7 +462,7 @@ const oefeningen = [
     },
     tekening: {
       ...veld(paaltje('q1', 9, 3), paaltje('q2', 9, 19)),
-      animatie: [...opbouw, stap({ type: 'dribbel', wie: 'a3', naar: [12.6, 6.6], duur: 1.4 }, { type: 'druk', wie: 'c3', op: 'a3', afstand: 2.2, manier: 'verdedigend' }), stap({ type: 'pass', van: 'a3', naar: 'q1', terug: [12, 2] })],
+      animatie: [...opbouw, stap({ type: 'dribbel', wie: 'a3', naar: [12.6, 6.6], duur: 1.4 }, { type: 'druk', wie: 'c3', op: 'a3', afstand: 2.2, manier: 'verdedigend' }), stap({ type: 'schot', van: 'a3', naar: [9.1, 3.05], hoogte: 'grond' })],
     },
   }),
 
@@ -530,7 +530,7 @@ const oefeningen = [
     },
     tekening: {
       ...veld(...[4, 9, 14].flatMap((x, i) => [hoepel(`h${i + 1}`, x, 0.4, K.blauw), hoepel(`k${i + 1}`, x, 21.6, K.rood)])),
-      animatie: [...opbouw, stap({ type: 'dribbel', wie: 'a3', naar: [14, 1.02], duur: 2.8 }, { type: 'druk', wie: 'c3', op: 'a3', afstand: 2.4, manier: 'verdedigend' }), stap({ type: 'voetOpBal', wie: 'a3', duur: 1.2 })],
+      animatie: [...opbouw, stap({ type: 'dribbel', wie: 'a3', via: [[15, 6]], naar: [14, 1.02], duur: 3 }, { type: 'loop', wie: 'c3', naar: [11.6, 3], manier: 'verdedigend', start: 0.4, duur: 2.2 }), stap({ type: 'voetOpBal', wie: 'a3', duur: 1.2 })],
     },
   }),
 
