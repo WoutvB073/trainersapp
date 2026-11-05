@@ -115,7 +115,10 @@ export function stations(groepjes: number): Station[] {
 }
 
 export function stationNaam(s: Station, groepjes: number): string {
-  return stationsPerVorm(groepjes) > 1 ? `${blokNaam(s.vorm)} ${s.plek + 1}` : blokNaam(s.vorm);
+  const naam = blokNaam(s.vorm);
+  if (stationsPerVorm(groepjes) === 1) return naam;
+  // "1 tegen 1 2" leest niet: bij een naam die op een cijfer eindigt een streepje ertussen.
+  return /\d$/.test(naam) ? `${naam} – ${s.plek + 1}` : `${naam} ${s.plek + 1}`;
 }
 
 export const RONDES = VORMEN.length;
@@ -242,12 +245,16 @@ interface Telling {
   bij: Set<string>;
 }
 
+/** Hetzelfde materiaal onder een andere naam telt samen. */
+// i18n-ok (woorden uit de oefenteksten)
+const ZELFDE: Record<string, string> = { bal: 'voetbal', 'klein doeltje': 'mini-goaltje', 'mini-doeltje': 'mini-goaltje', ball: 'football', 'mini goal': 'mini-goal', 'small goal': 'mini-goal' };
+
 /** "8 hoedjes voor de poortjes", "1 voetbal per kind" → aantal en het materiaal zelf, zonder toevoeging. */
 function ontleed(regel: string, kinderen: number): { aantal?: number; naam: string } {
   const m = /^(\d+)\+?(?:\s*[–-]\s*(\d+))?\s+(.+)$/.exec(regel.trim());
   let aantal = m ? Math.max(Number(m[1]), Number(m[2] ?? 0)) : undefined;
   let naam = (m ? m[3]! : regel).trim();
-  if (aantal !== undefined && /\s(per kind|per child)$/i.test(naam)) aantal *= kinderen;
+  if (aantal !== undefined && /\s(per kind|per child|per speler|per player)$/i.test(naam)) aantal *= kinderen;
   if (aantal !== undefined && /\s(per tweetal|per pair)$/i.test(naam)) aantal *= Math.ceil(kinderen / 2);
   naam = naam.replace(/\s+(per|voor|for|in|op|on)\s.*$/i, '').trim();
   return { aantal, naam };
@@ -256,8 +263,9 @@ function ontleed(regel: string, kinderen: number): { aantal?: number; naam: stri
 function tel(per: Map<string, Telling>, o: Oefening, keer: number, kinderen: number, taal: Taal) {
   for (const regel of o.benodigdheden) {
     const { aantal, naam } = ontleed(regel, kinderen);
-    const k = sleutel(naam, taal);
-    if (!k) continue;
+    const ruw = sleutel(naam, taal);
+    if (!ruw) continue;
+    const k = ZELFDE[ruw] ?? ruw;
     const nu = per.get(k) ?? { tekst: naam, bij: new Set<string>() };
     if (aantal !== undefined) nu.aantal = (nu.aantal ?? 0) + aantal * keer;
     nu.bij.add(o.naam);

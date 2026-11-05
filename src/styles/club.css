@@ -120,6 +120,16 @@
   margin-top: 16px;
 }
 
+.tabs.club-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.tabs.club-tabs button {
+  padding-inline: 2px;
+  font-size: 0.88rem;
+}
+
 /* Veldplan: staand half veld. */
 .club-veld {
   position: relative;

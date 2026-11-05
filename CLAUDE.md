@@ -35,6 +35,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/editor/animatie.ts` — editor-animatie: lijnen met stapnummers ↔ animatiestappen (`lijnenNaarAnimatie`, `animatieNaarLijnen`), `afspeelTekening` (gebruikt in AnimatieSpeler/Miniatuur), meldingen per lijn (ook fysieke check).
 - `src/i18n/` — taal (`taal.ts`: keuze, Automatisch, herladen), `t.ts` (t, aantal, lijstTekst, getal), `en.ts` (Engels), `zin.tsx` (**vet**); `src/help/inhoud.ts` + `src/screens/Help.tsx` — Help; `src/data/vertaling.ts` + `src/data/en/` — Engelse oefenteksten.
 - `src/data/leeftijden.ts` — leeftijdsgroepen (`Oefening.leeftijden`, `pastBijLeeftijd`); mini-oefeningen `veld-mt-…` in `tools/nieuw/mini-030a–d.cjs` met `mini-hulp.cjs`.
+- `src/clubtraining/` — Clubtraining (0.31.0): `clubtraining.ts` puur (stations, rotatie, partijvelden, materiaal, deellink, timer), `opslag.ts`; schermen `src/screens/club/`. Deellink `#/c/<code>` werkt zonder installeren (zie `App.tsx`).
 - `src/engine/platform.ts` — toestel/browser + `kiesScherm` (installatiescherm of app); `src/screens/installeren/`.
 - `src/editor/editor.ts` — pure editorlogica (palet, aanraken, slepen/draaien/maat, lijnen, ongedaan maken, benodigdheden, bevriezen); `src/eigen/` — eigen oefeningen (opslag, kopiëren, delen); `src/screens/eigen/` — lijst, nieuw, Tekenen, Gegevens.
 - `src/styles/thema.css` — veld/teamkleuren (vast) + standaard app-kleuren; `src/engine/thema.ts` — clubkleuren (8 thema's × licht/donker), toegepast als CSS-variabelen. Gebruik in CSS `--primair-tekst` voor de themakleur als tekst (niet `--primair`), en `--op-…` voor tekst op een gekleurd vlak (nooit `#fff`).
@@ -90,6 +91,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `animaties.mjs <label> [url] [scenes|snelheid|laden]` — vaste 3D-momenten (`anim-<label>-*.png`, met `voor` en `na` ook vergelijkingsbladen), beeldsnelheid 11 tegen 11 (processor 1/4/6× trager, ook eenvoudig) en laadtijd.
 - `pas.mjs set <lopen|keeper|spelers|kort>` of `pas.mjs <id> <wie> <t0> <t1>` — filmstrip van één persoon van dichtbij/opzij (voeten, knieën, armen beoordelen). Blad: `blad-pas-<naam>.png`.
 - `versie-030.mjs [url]` — 0.30.0: leeftijdsfilter (ook onthouden), bij de oefening, Training maken (oranje markering), genereren, 1 tegen 1 en Help in NL/EN op iPhone SE en laptop. Blad: `blad-030.png`.
+- `club.mjs [url]` — 0.31.0: Clubtraining op iPhone SE en laptop in NL/EN: leeg opruimen, genereren, kiezen, veldplan, rotatie, afvinken, timer, volgende week, deellink op een niet-geïnstalleerde telefoon, station in 3D/2D, 3/5/8 groepjes. Blad: `blad-club.png`.
 - `nieuw.mjs <id,id,…> [blad] [url]` — close-ups van (nieuwe) oefeningen: 3D op vier momenten + 2D, op één blad (`blad-<naam>.png`).
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).
   Chrome draait met de echte videokaart (`--use-angle=d3d11`); `trainersapp.3dAltijd=1` zet de 2D-terugval uit in tests.
@@ -136,6 +138,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - Nieuwe voorbeeldtactiek: in `tactieken.ts` met `Opzet` (lijnen starten waar de speler op dat moment staat); `tests/versie-028.test.ts` controleert meldingen, fysiek en ≥ 1,5 m; daarna `tools/e2e/tactieken.mjs borden … <id>` bekijken. Teksten via t() + Engels in `en.ts`.
 - Druk zetten of mandekking recht achter de balbezitter (in de kijkrichting) geeft overlappende rugnummers in 3D: laat de
   drukzetter schuin opzij aanlopen (`loop` naar een punt) of draai de oefening een kwartslag (`draaiKwart` in `spelers-027b.cjs`).
+- Nieuwe collectie in de sync: ook `firestore.rules` (en `npm run regels:live`), `online.ts` (wisselen, samenvoegen, account verwijderen) en `tests/online/hulp.ts`.
+- `String.replace` met `$$` in de nieuwe tekst geeft één `$`: gebruik in scripts een functie als vervanging.
 - Nieuw materiaal in 3D dat beweegt moet in `beweegbaar`/`beweegt` staan (render3d zet de matrix van al het andere vast). Rijen in `schuin`: gebruik `richting: 60`, anders staan de kinderen achter elkaar in beeld.
 - Een bal "bij" een speler ligt rekenkundig 0,55 m voor de speler; de 2D-renderer duwt hem visueel naar de rand
   van het poppetje (niet over het rugnummer).

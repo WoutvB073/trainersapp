@@ -95,27 +95,32 @@
       'veld veld keepers keepers wedstrijd wedstrijd club club';
   }
 
-  .tegel-wedstrijd {
+  .tegel-wedstrijd,
+  .tegel-club {
     gap: 10px;
     padding: 10px 12px;
   }
 
   .tegel-wedstrijd .tegel-plaatje,
+  .tegel-club .tegel-plaatje,
   .tegel-soort .tegel-plaatje {
     width: 66px;
   }
 
   .tegel-wedstrijd .tegel-pijl,
+  .tegel-club .tegel-pijl,
   .tegel-soort .tegel-pijl {
     display: none;
   }
 
   .tegel-wedstrijd .tegel-titel,
+  .tegel-club .tegel-titel,
   .tegel-soort .tegel-titel {
     font-size: 1.2rem;
   }
 
   .tegel-wedstrijd .tegel-sub,
+  .tegel-club .tegel-sub,
   .tegel-soort .tegel-sub {
     font-size: 0.78rem;
   }

@@ -78,7 +78,7 @@ export function ClubPlan({ id }: { id: string }) {
     <div className="pagina">
       <Kop titel={clubNaam(c)} ouder={`/club/${id}`} />
       <main className="inhoud smal">
-        <div className="tabs" role="tablist">
+        <div className="tabs club-tabs" role="tablist">
           {tabs.map(([k, naam]) => (
             <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'aan' : ''} onClick={() => setTab(k)}>
               {naam}

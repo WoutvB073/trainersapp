@@ -57,6 +57,7 @@ describe('rotatieschema', () => {
   it('stationnamen: met nummer alleen als een vorm vaker staat', () => {
     expect(stationNaam(stations(6)[1]!, 6)).toBe('Techniek 2');
     expect(stationNaam(stations(3)[1]!, 3)).toBe('1 tegen 1');
+    expect(stationNaam(stations(6)[3]!, 6)).toBe('1 tegen 1 – 2');
   });
 });
 
@@ -119,6 +120,11 @@ describe('materiaal', () => {
   it('rekent met het aantal stations bij een ander aantal groepjes', () => {
     expect(materiaal({ ...c, groepjes: 3, kinderen: 15 }, vind, 'nl').stations.map((r) => r.tekst)).toContain('12 hoedjes');
     expect(materiaal({ ...c, groepjes: 8 }, vind, 'nl').stations.map((r) => r.tekst)).toContain('36 hoedjes');
+  });
+  it('hetzelfde materiaal onder een andere naam telt samen', () => {
+    const eigen: Record<string, Oefening> = { a: oef('a', ['2 kleine doeltjes', '1 bal per speler']), b: oef('b', ['1 mini-goaltje', '1 voetbal per kind']) };
+    const m = materiaal(club({ blokken: { techniek: 'a', afwerken: 'b' } }), (id) => eigen[id], 'nl');
+    expect(m.stations.map((r) => r.tekst).sort()).toEqual(['20 voetballen', '6 mini-goaltjes']);
   });
   it('werkt met echte oefeningen, ook in het Engels; sleutels zijn uniek', () => {
     const echt = club({ blokken: { techniek: 'veld-mt-brandweer', 'een-tegen-een': 'veld-mt-hoepelkasteel', afwerken: 'veld-mt-hoekenjacht', partijvormen: 'veld-mt-3-tegen-3' } });

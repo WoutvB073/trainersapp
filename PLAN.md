@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (05-11-2026, versie 0.30.0)
+## Status (05-11-2026, versie 0.31.0)
 
 | Fase | Status |
 |---|---|
@@ -36,7 +36,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 22. Deel C: voorbeeldtactieken op het tactiekbord, 17 tactieken / 25 borden (0.28.0) | ✅ online, getest en akkoord |
 | 23. Deel D: ingestudeerde spelhervattingen, 20 hervattingen / 27 borden (0.29.0) | ✅ online – **wacht op test** |
 | 24. Installeren op elke telefoon en browser, filter op aantal keepers (0.29.1) | ✅ online – **wacht op test** |
-| 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online – **wacht op test** |
+| 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online, getest en akkoord |
+| 26. Clubtraining: veldplan, rotatie, materiaal, deellink, kwartiertimer (0.31.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1112,8 +1113,29 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Nieuwe bouwstenen**: bewegend materiaal (`pakObject`, `legObject`, `keerOm`, `valOm`, `zetOp`; `Stand.materiaal`, in 2D en 3D), bal op een pion (`opHoogte`), `op-bal` (op de bal zitten), `voetOpBal`, `tiktak`, pionmaten via `hoogte`, `zonderNet` op een klein goal, `onderdoor` (pass onder een horde), los `hesje` met `drager` (staart).
 - **Tests**: `tests/versie-030.test.ts`; browsertest `tools/e2e/versie-030.mjs` (blad `blad-030.png`). Close-ups per blok: `nieuw.mjs`, met consolefouten.
 
+## Besluiten versie 0.31.0 – Clubtraining
+- **Doel**: Mini Talents op één helft van het veld, ±30 kinderen in 6 groepjes, 4 blokken van 15 minuten (Techniek, 1 tegen 1, Afwerken, Partijvormen). Tegel op het startscherm, naast Wedstrijd.
+- **Rekenwerk** (`src/clubtraining/clubtraining.ts`, puur): stations, rotatie, partijvelden, vakken op het veld, trainers, kiezen en genereren per blok, materiaal, deellink, timerstand. Opslag `src/clubtraining/opslag.ts`, schermen `src/screens/club/`.
+- **Stations en rotatie**: per vorm `ceil(groepjes / 3)` stations; groepje g staat in ronde r op vorm `(g + r) % 3`, plek `floor(g / 3)`. Met overleg: bij 4/5 groepjes 6 stations, bij 7/8 groepjes 9, want anders kan niet elk groepje elke vorm precies één keer doen. Per ronde blijven er dan 1–2 leeg. De praktijk is 6 groepjes; de rest is vangnet.
+- **Materiaal**: per station × aantal stations opgeteld; "per kind/speler" = × kinderen per groepje, "per tweetal" de helft; toevoegingen ("voor de poortjes", "in 4 kleuren") vallen weg en dezelfde spullen onder een andere naam tellen samen (bal/voetbal, klein doeltje/mini-goaltje). Partijvelden: alleen het verschil met deel 1.
+- **Deellink** `#/c/<code>` (ook `/station/<nr>` en `/partij`): alleen lezen, geen inlog, gaat voorbij het installatiescherm. Eigen oefeningen gaan in de link mee.
+- **Sync**: collectie `clubtrainingen` (regels live gezet met `npm run regels:live`), eerste keer samenvoegen en account verwijderen doen hem mee.
+- **Tests**: `tests/clubtraining.test.ts`, `tests/online/sync.test.ts`; browsertest `tools/e2e/club.mjs` (blad `blad-club.png`).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.31.0 – Startscherm: Wedstrijd en Clubtraining staan naast elkaar als twee halve tegels, zodat alles op een iPhone SE in beeld blijft. Op tablet en laptop nu 2 × 3 tegels.
+- 0.31.0 – Standaardleeftijd: de laatst gekozen mini-groep, anders Mini’s 5–7 jr.
+- 0.31.0 – Oneven aantal groepjes: het laatste partijveld krijgt 1 groepje plus de trainer als joker (het groepje splitst in twee teams). Zo speelt iedereen; 3 groepjes op één veld met wissels laat juist kinderen wachten.
+- 0.31.0 – Een oefening per blok: alle stations van dezelfde vorm doen dezelfde oefening, alle partijvelden dezelfde partijvorm.
+- 0.31.0 – Trainers: om en om over de stations en velden verdeeld; aanpassen met een keuzelijst per station (niet slepen). Meer stations dan trainers: een trainer staat dan op meer stations; kies "Geen trainer" om een plek leeg te laten.
+- 0.31.0 – Aantal groepjes wijzigen maakt de zelf gekozen trainers per station leeg (de stations veranderen).
+- 0.31.0 – Materiaal zonder aantal in een oefening ("Hesjes", "Voetballen") staat zonder aantal in de lijst.
+- 0.31.0 – Oefeningen die al in een andere blok staan worden bij genereren overgeslagen, zolang er een andere is.
+- 0.31.0 – Dupliceren en naar volgende week maken de afvinklijst leeg. Naar volgende week houdt de naam gelijk, dupliceren zet "(kopie)" erachter.
+- 0.31.0 – Timer: 4 × 15 minuten achter elkaar, met Pauze, Volgende en Stoppen. De tijd loopt door als je het scherm vergrendelt. iPhones kunnen niet trillen vanuit een browser; daar hoor je alleen het geluid, en alleen zolang de app open is.
+- 0.31.0 – Clubtrainingen zitten niet in Exporteren/importeren (net als opstellingen en borden); wel in de sync via het account.
+- 0.31.0 – Engels: Clubtraining = "Club session", trainer = "coach", veld = "pitch".
 - 0.30.0 – Geen nieuw veld "materiaal": dat bestaat al als Benodigdheden. Hetzelfde voor de kleuteruitleg: dat is de Uitleg van de oefening.
 - 0.30.0 – Filter: één leeftijd tegelijk, geen meerdere groepen.
 - 0.30.0 – De poppetjes blijven even groot als in de rest van de app; kinderen zijn in de animatie dus "volwassen" poppetjes.

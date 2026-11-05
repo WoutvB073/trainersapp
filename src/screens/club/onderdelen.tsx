@@ -51,7 +51,7 @@ function VakKaart({ vak, blok, nr, naam, trainer, oefening, sub, opTik }: { vak:
   const inhoud = (
     <>
       <span className="club-vak-kop" style={kleur(blok)}>
-        <b>{nr}</b>
+        {nr && <b>{nr}</b>}
         <span>{naam}</span>
       </span>
       {oefening ? <Miniatuur tekening={oefening.tekening} className="club-vak-plaatje" /> : <span className="club-vak-leeg">{vt('Nog geen oefening')}</span>}
@@ -81,7 +81,7 @@ export function VeldplanStations({ c, vind, opStation }: { c: ClubInhoud; vind: 
   );
 }
 
-export const veldGroepen = (v: Partijveld) => v.groepen.map(groepNaam).join(' + ');
+export const veldGroepen = (v: Partijveld) => [...v.groepen.map(groepNaam), ...(v.metTrainer ? [vt('trainer')] : [])].join(' + ');
 
 /** Veldplan deel 2: de partijvelden. */
 export function VeldplanPartij({ c, vind, opVeld }: { c: ClubInhoud; vind: Vind; opVeld?: () => void }) {
@@ -92,7 +92,7 @@ export function VeldplanPartij({ c, vind, opVeld }: { c: ClubInhoud; vind: Vind;
     <>
       <HalfVeld>
         {velden.map((v) => (
-          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok="partijvormen" nr={String(v.nr)} naam={vt('Veld {nr}', { nr: v.nr })} sub={veldGroepen(v)} trainer={veldTrainer(c, v.nr)} oefening={o} opTik={opVeld} />
+          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok="partijvormen" nr="" naam={vt('Veld {nr}', { nr: v.nr })} sub={veldGroepen(v)} trainer={veldTrainer(c, v.nr)} oefening={o} opTik={opVeld} />
         ))}
       </HalfVeld>
       <p className="klein club-noot">{velden.some((v) => v.metTrainer) ? vt('Oneven aantal groepjes: op het laatste veld verdeelt het groepje zich in twee teams en speelt de trainer mee als joker. Zo speelt iedereen en wacht niemand.') : vt('Twee groepjes per veld. Elk groepje is één team.')}</p>

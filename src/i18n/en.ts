@@ -1274,4 +1274,5 @@ export const EN: Record<string, string> = {
   clubtraining: 'club session',
   clubtrainingen: 'club sessions',
   'Stations, rotatie en materiaal': 'Stations, rotation and equipment',
+  trainer: 'coach',
 };
