@@ -531,6 +531,7 @@ const oefeningen = [
     tekening: {
       ...veld(...[4, 9, 14].flatMap((x, i) => [hoepel(`h${i + 1}`, x, 0.4, K.blauw), hoepel(`k${i + 1}`, x, 21.6, K.rood)])),
       weergave: { x: 0, y: -1.2, breedte: 19, lengte: 24.4 },
+      camera: 'boven',
       animatie: [...opbouw, stap({ type: 'dribbel', wie: 'a3', via: [[15, 6]], naar: [14, 1.02], duur: 3 }, { type: 'loop', wie: 'c3', naar: [11.6, 3], manier: 'verdedigend', start: 0.4, duur: 2.2 }), stap({ type: 'voetOpBal', wie: 'a3', duur: 1.2 })],
     },
   }),
