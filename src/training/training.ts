@@ -83,7 +83,7 @@ export function nieuweTraining(nu = Date.now(), id = maakId()): Training {
 export function metNaam<T extends Pick<Training, 'naam' | 'datum' | 'oefeningen'>>(t: T, nu = new Date()): T {
   if (t.naam.trim() || !t.oefeningen.length) return t;
   const d = t.datum ?? `${nu.getFullYear()}-${String(nu.getMonth() + 1).padStart(2, '0')}-${String(nu.getDate()).padStart(2, '0')}`;
-  return { ...t, naam: vt('Training {w0}', { w0: datumTekst(d).replace(/ \d{4}$/, '') }) };
+  return { ...t, naam: vt('Teamtraining {w0}', { w0: datumTekst(d).replace(/ \d{4}$/, '') }) };
 }
 
 /** Niets ingevuld (geen oefeningen, naam of datum): zo'n training wordt niet bewaard. */
@@ -107,7 +107,7 @@ export function datumTekst(datum: string, taal: Taal = TAAL): string {
 
 export function trainingNaam(t: Pick<Training, 'naam' | 'datum'>): string {
   if (t.naam.trim()) return t.naam.trim();
-  return t.datum ? vt('Training {w0}', { w0: datumTekst(t.datum) }) : vt('Training zonder naam');
+  return t.datum ? vt('Teamtraining {w0}', { w0: datumTekst(t.datum) }) : vt('Teamtraining zonder naam');
 }
 
 // ---------- delen via een link ----------

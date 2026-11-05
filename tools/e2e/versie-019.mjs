@@ -88,9 +88,9 @@ for (const [naam, vp, modus] of [
 
   // ---------- A1 ----------
   await ga(page, '#/', `${naam}1`);
-  await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.trim().startsWith('Training maken'))?.click());
+  await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.trim().startsWith('Teamtraining maken'))?.click());
   await wachtOp(page, () => /^#\/training\/[^/]+$/.test(location.hash), null, `${naam}: training maken`);
-  await klik(page, 'Training genereren', '.leeg button');
+  await klik(page, 'Teamtraining genereren', '.leeg button');
   await wachtOp(page, () => location.hash.endsWith('/genereren'), null, `${naam}: genereren vanuit de training`);
   await slaap(400);
   controle(await page.evaluate(() => !document.body.innerText.includes('bestaat niet') && !!document.querySelector('.gen-kiezen')), `${naam}: genereren vanuit een training geeft "pagina bestaat niet"`);
@@ -108,7 +108,7 @@ for (const [naam, vp, modus] of [
   controle(lijst.length === 1 && /^Training \d+ \w+$/.test(lijst[0].naam) && lijst[0].oefeningen.length === 3, `${naam}: gegenereerde training bewaard: ${JSON.stringify(lijst.map((t) => [t.naam, t.oefeningen.length]))}`);
   if (naam === 'telefoon') await foto(page, 'trainingen', 'Gegenereerde training zonder naam: bewaard, met automatische naam');
   // Gewone training met alleen oefeningen.
-  await klik(page, 'Training maken');
+  await klik(page, 'Teamtraining maken');
   await klik(page, 'Oefeningen toevoegen');
   await page.evaluate(() => document.querySelector('.toevoeg-knop')?.click());
   await slaap(300);

@@ -181,7 +181,7 @@ for (const [naam, vp, modus] of [
   // ---------- A5: Spelers op het startscherm ----------
   await ga(page, '#/', `${naam}1`);
   const titels = await page.evaluate(() => [...document.querySelectorAll('.tegel-titel')].map((x) => x.textContent));
-  controle(titels.includes('Spelers') && !titels.includes('Veld'), `${naam}: tegels ${titels.join(', ')}`);
+  controle(titels.includes('Oefeningen spelers') && !titels.includes('Veld'), `${naam}: tegels ${titels.join(', ')}`);
   controle((await page.evaluate(() => document.querySelectorAll('.tegel-soort svg.tegel-plaatje').length)) === 2, `${naam}: illustraties op de tegels`);
   if (naam === 'telefoon') await foto(page, 'start', 'Startscherm: Spelers en Keepers met getekende illustraties');
   await ga(page, '#/veld', `${naam}2`);
@@ -194,7 +194,7 @@ for (const [naam, vp, modus] of [
   await ga(page, '#/trainingen', `${naam}3`);
   const opgeruimd = await page.evaluate(() => JSON.parse(localStorage.getItem('trainersapp.trainingen')).trainingen.length);
   controle(opgeruimd === 0, `${naam}: oude lege training niet opgeruimd (${opgeruimd})`);
-  await klik(page, 'Training maken');
+  await klik(page, 'Teamtraining maken');
   await wachtOp(page, () => location.hash.startsWith('#/training/'), null, `${naam}: training maken`);
   await slaap(300);
   const aantallen = await page.evaluate(() => [...document.querySelectorAll('.stapper output')].map((o) => o.textContent));
@@ -214,7 +214,7 @@ for (const [naam, vp, modus] of [
   controle(await page.evaluate(() => !!document.querySelector('.leeg')), `${naam}: Mijn trainingen niet leeg`);
 
   // ---------- A2: Training genereren ----------
-  await klik(page, 'Training genereren');
+  await klik(page, 'Teamtraining genereren');
   await wachtOp(page, () => location.hash.endsWith('/genereren'), null, `${naam}: genereren`);
   await slaap(300);
   for (const [groep, chip] of [
@@ -275,7 +275,7 @@ for (const [naam, vp, modus] of [
   await slaap(300);
   const eersteNa = await page.evaluate(() => document.querySelector('.onderdeel .onderdeel-naam')?.textContent);
   controle(eerste && eersteNa && eerste !== eersteNa, `${naam}: Andere oefening in de training ${eerste} → ${eersteNa}`);
-  controle(await page.evaluate(() => [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Start training') && !b.disabled)), `${naam}: Start training`);
+  controle(await page.evaluate(() => [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Start teamtraining') && !b.disabled)), `${naam}: Start training`);
   if (naam === 'telefoon') await foto(page, 'gen-training', 'Het resultaat is een gewone training', true);
 
   // ---------- A3: looplijnen ----------

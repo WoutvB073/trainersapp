@@ -224,8 +224,8 @@ for (const taal of ['en', 'nl']) {
   await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle0' }), knop[1].click()]);
   await page.goto(`${BASE}?r=${n++}#/`, { waitUntil: 'networkidle0' });
   const titel = await page.$eval('.tegel-veld .tegel-titel', (e) => e.textContent);
-  console.log(`Taal wisselen naar English: ${titel === 'Players' ? 'OK' : `MISLUKT (${titel})`}`);
-  if (titel !== 'Players') fouten.push(`taal wisselen: "${titel}"`);
+  console.log(`Taal wisselen naar English: ${titel === 'Player drills' ? 'OK' : `MISLUKT (${titel})`}`);
+  if (titel !== 'Player drills') fouten.push(`taal wisselen: "${titel}"`);
   const onthouden = await page.evaluate(() => localStorage.getItem('trainersapp.taal'));
   if (onthouden !== 'en') fouten.push(`taalkeuze niet onthouden (${onthouden})`);
   await page.close();
@@ -233,9 +233,9 @@ for (const taal of ['en', 'nl']) {
 
 // Automatisch: Engelse telefoon → Engels, Duitse telefoon → Nederlands.
 for (const [talen, verwacht] of [
-  [['en-GB', 'en'], 'Players'],
-  [['de-DE', 'en'], 'Spelers'],
-  [['nl-NL'], 'Spelers'],
+  [['en-GB', 'en'], 'Player drills'],
+  [['de-DE', 'en'], 'Oefeningen spelers'],
+  [['nl-NL'], 'Oefeningen spelers'],
 ]) {
   const page = await browser.newPage();
   await alsGeinstalleerd(page);

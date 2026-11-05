@@ -133,7 +133,7 @@ for (const [naam, vp] of [
 
   // Training maken: aantallen van de training, favorieten-filter werkt ook hier.
   await page.goto(`${BASE}?r=f${naam}5#/`, { waitUntil: 'networkidle0' });
-  await klik(page, 'Training maken');
+  await klik(page, 'Teamtraining maken');
   await klik(page, 'Oefeningen toevoegen');
   await slaap(300);
   const zonder = await status(page);

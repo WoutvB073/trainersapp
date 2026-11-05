@@ -56,8 +56,8 @@ const tik = (page, tekst) => page.evaluate((tekst) => {
 
 for (const taal of ['nl', 'en']) {
   const T = taal === 'nl'
-    ? { nieuw: 'Nieuwe clubtraining', alles: 'Genereer alles', plan: 'Veldplan, rotatie', partij: 'Partij', rotatie: 'Rotatie', materiaal: 'Materiaal', timer: 'Kwartiertimer', start: 'Start', volgende: 'Volgende', stoppen: 'Stoppen', stations: 'Stations' }
-    : { nieuw: 'New club session', alles: 'Generate all', plan: 'Pitch plan, rotation', partij: 'Games', rotatie: 'Rotation', materiaal: 'Equipment', timer: '15-minute timer', start: 'Start', volgende: 'Next', stoppen: 'Stop', stations: 'Stations' };
+    ? { nieuw: 'Nieuwe circuittraining', alles: 'Genereer alles', plan: 'Veldplan, rotatie', partij: 'Partij', rotatie: 'Rotatie', materiaal: 'Materiaal', timer: 'Kwartiertimer', start: 'Start', volgende: 'Volgende', stoppen: 'Stoppen', stations: 'Stations' }
+    : { nieuw: 'New circuit session', alles: 'Generate all', plan: 'Pitch plan, rotation', partij: 'Games', rotatie: 'Rotation', materiaal: 'Equipment', timer: '15-minute timer', start: 'Start', volgende: 'Next', stoppen: 'Stop', stations: 'Stations' };
   for (const [naam, w, h, mobiel] of FORMATEN) {
     const waar = `${taal} ${naam}`;
     const ctx = await browser.createBrowserContext();
@@ -203,7 +203,7 @@ for (const g of [3, 5, 8]) {
   const ctx = await browser.createBrowserContext();
   const page = await nieuw(ctx, 'nl', 375, 667, true, `${g} groepjes`);
   await page.goto(`${BASE}?r=g${g}#/club`, { waitUntil: 'networkidle0' });
-  await tik(page, 'Nieuwe clubtraining');
+  await tik(page, 'Nieuwe circuittraining');
   await slaap(200);
   await page.evaluate((g) => {
     const s = [...document.querySelectorAll('.club-gegevens .veld select')][0];

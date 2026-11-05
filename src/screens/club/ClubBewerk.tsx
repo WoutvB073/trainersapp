@@ -149,7 +149,7 @@ export function ClubBewerk({ id }: { id: string }) {
           <button
             className="knop knop-breed"
             onClick={async () => {
-              const m = await deelUrl(clubNaam(c), vt('Clubtraining: {w0}', { w0: clubNaam(c) }), clubLink(clubtrainingen.haal(id) ?? c));
+              const m = await deelUrl(clubNaam(c), vt('Circuittraining: {w0}', { w0: clubNaam(c) }), clubLink(clubtrainingen.haal(id) ?? c));
               if (m) toon(m);
             }}
           >

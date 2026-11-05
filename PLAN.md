@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (05-11-2026, versie 0.31.0)
+## Status (05-11-2026, versie 0.31.1)
 
 | Fase | Status |
 |---|---|
@@ -38,6 +38,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 24. Installeren op elke telefoon en browser, filter op aantal keepers (0.29.1) | ✅ online – **wacht op test** |
 | 25. Leeftijdsgroepen en Mini Talents: 62 nieuwe oefeningen, categorie 1 tegen 1 (0.30.0) | ✅ online – **wacht op test** |
 | 26. Clubtraining: veldplan, rotatie, materiaal, deellink, kwartiertimer (0.31.0) | ✅ online – **wacht op test** |
+| 27. Nieuwe namen (Teamtraining, Circuittraining) en nieuw startscherm (0.31.1) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1122,8 +1123,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Sync**: collectie `clubtrainingen` (regels live gezet met `npm run regels:live`), eerste keer samenvoegen en account verwijderen doen hem mee.
 - **Tests**: `tests/clubtraining.test.ts`, `tests/online/sync.test.ts`; browsertest `tools/e2e/club.mjs` (blad `blad-club.png`).
 
+## Besluiten versie 0.31.1 – nieuwe namen en startscherm
+- **Namen**: Training → Teamtraining (Team session), Clubtraining → Circuittraining (Circuit session), in alle zichtbare tekst. Adressen (`#/trainingen`, `#/club`, `#/c/…`, `#/t/…`), opslagsleutels, Firestore-collecties en code-namen blijven zoals ze waren.
+- **Startscherm** (`src/styles/start.css`): Teamtraining over de volle breedte, Wedstrijd en Circuittraining naast elkaar, en drie kleinere tegels: Oefeningen spelers, Oefeningen keepers, Oefening maken. Nieuwe plaatjes `TeamPlaatje`, `CircuitPlaatje`, `TekenPlaatje`.
+- **Tests**: `tests/versie-0311.test.ts` (oude namen weg, oude links en sleutels werken), browsertest `tools/e2e/versie-0311.mjs`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.31.1 – Ook "Training genereren" is "Teamtraining genereren", "Start training" is "Start teamtraining", en in lopende tekst (Help, meldingen) staat overal "teamtraining". Het woord "trainingsmodus" bleef, en de tekst op de tegel zegt zoals gevraagd "stel je training samen".
+- 0.31.1 – Teamtrainingen zonder naam krijgen voortaan "Teamtraining 17 okt". Bestaande trainingen houden de naam die ze al hadden.
+- 0.31.1 – Alleen de tegels heten Oefeningen spelers, Oefeningen keepers en Oefening maken. Kop en tabbladen op de schermen daarachter blijven Spelers, Keepers en Eigen oefeningen.
+- 0.31.1 – Tegel Oefening maken opent de lijst met eigen oefeningen; daar staat bovenaan Nieuwe oefening (eerder stonden beide knoppen op de tegel).
+- 0.31.1 – De tegel Teamtraining houdt de twee knoppen Teamtraining maken en Mijn teamtrainingen. De aantallen ("3 trainingen opgeslagen") op de tegels zijn vervangen door de vaste uitleg; de oefeningentegels tonen op tablet en laptop nog het aantal.
+- 0.31.1 – Engels: Oefeningen spelers = Player drills, Oefeningen keepers = Goalkeeper drills, Oefening maken = Create a drill. Teksten in oefeningen zelf die het gewone woord "training" gebruiken zijn niet aangepast.
 - 0.31.0 – Startscherm: Wedstrijd en Clubtraining staan naast elkaar als twee halve tegels, zodat alles op een iPhone SE in beeld blijft. Op tablet en laptop nu 2 × 3 tegels.
 - 0.31.0 – Standaardleeftijd: de laatst gekozen mini-groep, anders Mini’s 5–7 jr.
 - 0.31.0 – Oneven aantal groepjes: het laatste partijveld krijgt 1 groepje plus de trainer als joker (het groepje splitst in twee teams). Zo speelt iedereen; 3 groepjes op één veld met wissels laat juist kinderen wachten.

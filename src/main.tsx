@@ -10,6 +10,7 @@ import './styles/training.css';
 import './styles/editor.css';
 import './styles/wedstrijd.css';
 import './styles/club.css';
+import './styles/start.css';
 import { App } from './App';
 import { startServiceWorker } from './engine/update';
 import { pasThemaToe } from './engine/thema';

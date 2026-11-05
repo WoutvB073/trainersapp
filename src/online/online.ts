@@ -390,7 +390,7 @@ export function deelOefening(team: string, o: EigenOefening): Promise<void> {
  */
 export function deelTraining(team: string, trainingId: string): Promise<void> {
   const t = trainingen.haal(trainingId);
-  if (!t) throw new T.TeamFout(vt('Training niet gevonden'));
+  if (!t) throw new T.TeamFout(vt('Teamtraining niet gevonden'));
   const eigen: unknown[] = [];
   const oefeningen = t.oefeningen.map((id) => {
     const eo = eigenOefeningen.haal(id);
@@ -410,5 +410,5 @@ export function deelTraining(team: string, trainingId: string): Promise<void> {
     return id;
   });
   const data = { training: { naam: t.naam, datum: t.datum, spelers: t.spelers, keepers: t.keepers, oefeningen }, eigen };
-  return T.deelItem(ik(), team, { id: t.id, soort: 'training', naam: t.naam || vt('Training'), data: JSON.stringify(data) });
+  return T.deelItem(ik(), team, { id: t.id, soort: 'training', naam: t.naam || vt('Teamtraining'), data: JSON.stringify(data) });
 }

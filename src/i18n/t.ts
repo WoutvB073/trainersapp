@@ -2,7 +2,7 @@ import { TAAL, LOCALE } from './taal';
 import { EN } from './en';
 
 /**
- * Vertalen (0.25.0). De Nederlandse tekst is de sleutel: `t('Training maken')`. In het Engels komt de vertaling uit
+ * Vertalen (0.25.0). De Nederlandse tekst is de sleutel: `t('Teamtraining maken')`. In het Engels komt de vertaling uit
  * `en.ts`; ontbreekt die, dan blijft het Nederlands (een test vangt dat af). Variabelen: `t('{n} spelers', { n: 4 })`.
  */
 export function t(nl: string, vars?: Record<string, string | number>): string {

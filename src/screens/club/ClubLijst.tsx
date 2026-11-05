@@ -75,11 +75,11 @@ export function ClubLijst() {
   const [melding, toon] = useToast();
   return (
     <div className="pagina">
-      <Kop titel={vt('Clubtraining')} ouder="/" />
+      <Kop titel={vt('Circuittraining')} ouder="/" />
       <main className="inhoud smal">
         <button className="knop knop-primair knop-breed" onClick={maakClub}>
           <Icoon naam="plus" maat={20} />
-          {vt('Nieuwe clubtraining')}
+          {vt('Nieuwe circuittraining')}
         </button>
         {lijst.length ? (
           <ul className="lijst club-lijst">
@@ -89,7 +89,7 @@ export function ClubLijst() {
           </ul>
         ) : (
           <div className="leeg">
-            <p className="leeg-titel">{vt('Nog geen clubtrainingen')}</p>
+            <p className="leeg-titel">{vt('Nog geen circuittrainingen')}</p>
             <p>{vt('Eén helft van het veld, groepjes die rouleren langs de stations en daarna partijvormen. De app maakt het veldplan, het rotatieschema en de materiaallijst.')}</p>
           </div>
         )}

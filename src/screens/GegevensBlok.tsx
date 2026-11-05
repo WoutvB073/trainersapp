@@ -64,14 +64,14 @@ export function GegevensBlok() {
     if (s.favorieten.length) favorieten.vervangAlles([...favorieten.alle(), ...s.favorieten]);
     const delen = [
       s.eigen.length ? meervoud(s.eigen.length, 'eigen oefening', 'eigen oefeningen') : '',
-      s.trainingen.length ? meervoud(s.trainingen.length, 'training', 'trainingen') : '',
+      s.trainingen.length ? meervoud(s.trainingen.length, 'teamtraining', 'teamtrainingen') : '',
       s.favorieten.length ? meervoud(s.favorieten.length, 'favoriet', 'favorieten') : '',
     ].filter(Boolean);
     const erbij = delen.length ? t('Erbij gekomen: {w0}.', { w0: delen.join(', ').replace(/, ([^,]*)$/, ' en $1') }) : t('Er kwam niets bij: alles stond er al.');
     setMelding({ goed: true, tekst: s.overgeslagen && delen.length ? t(s.overgeslagen === 1 ? '{erbij} 1 stond er al.' : '{erbij} {overgeslagen} stonden er al.', { erbij, overgeslagen: s.overgeslagen }) : erbij });
   };
 
-  const inhoud = [meervoud(eigen.length, 'eigen oefening', 'eigen oefeningen'), meervoud(lijst.length, 'training', 'trainingen'), meervoud(favs.size, 'favoriet', 'favorieten')];
+  const inhoud = [meervoud(eigen.length, 'eigen oefening', 'eigen oefeningen'), meervoud(lijst.length, 'teamtraining', 'teamtrainingen'), meervoud(favs.size, 'favoriet', 'favorieten')];
   return (
     <section className="blok">
       <h3>{t('Je gegevens')}</h3>

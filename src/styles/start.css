@@ -1,0 +1,460 @@
+/* Startscherm (0.31.1): Teamtraining, daaronder Wedstrijd en Circuittraining, daaronder drie kleinere tegels. */
+
+.pagina-start .inhoud {
+  padding-top: 14px;
+}
+
+.start-voet {
+  margin-top: 14px;
+}
+
+.tegels {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-areas:
+    'training training training training training training'
+    'wedstrijd wedstrijd wedstrijd club club club'
+    'veld veld keepers keepers eigen eigen';
+}
+
+.tegel-training {
+  grid-area: training;
+  flex-wrap: wrap;
+}
+
+.tegel-wedstrijd {
+  grid-area: wedstrijd;
+}
+
+.tegel-club {
+  grid-area: club;
+}
+
+.tegel-veld {
+  grid-area: veld;
+}
+
+.tegel-keepers {
+  grid-area: keepers;
+}
+
+.tegel-eigen {
+  grid-area: eigen;
+}
+
+.tegel-training .tegel-tekst {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.tegel-training .tegel-knoppen {
+  flex: 1 1 100%;
+  margin-top: 0;
+}
+
+.tegel-groot .tegel-tekst,
+.tegel-klein .tegel-tekst {
+  min-width: 0;
+}
+
+.tegel-sub {
+  overflow-wrap: anywhere;
+}
+
+/* Telefoon staand. */
+@media (max-width: 639px) {
+  .start-kop {
+    gap: 12px;
+    padding-top: calc(14px + env(safe-area-inset-top));
+    padding-bottom: 16px;
+  }
+
+  .start-logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+
+  .start-titel {
+    font-size: 1.7rem;
+  }
+
+  .start-sub {
+    font-size: 0.9rem;
+  }
+
+  .tegels {
+    gap: 10px;
+  }
+
+  .tegel {
+    padding: 10px;
+  }
+
+  .tegel-training {
+    gap: 10px;
+  }
+
+  .tegel-training .tegel-plaatje {
+    width: 108px;
+  }
+
+  .tegel-training .tegel-titel {
+    font-size: 1.5rem;
+  }
+
+  .tegel-training .tegel-sub {
+    font-size: 0.9rem;
+    line-height: 1.25;
+  }
+
+  .tegel-training .tegel-knoppen {
+    flex-wrap: nowrap;
+  }
+
+  .tegel-training .tegel-knoppen .knop {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 6px;
+    font-size: 0.86rem;
+    line-height: 1.1;
+  }
+
+  .tegel-training .tegel-knoppen .knop svg {
+    display: none;
+  }
+
+  .tegel-groot,
+  .tegel-klein {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .tegel-groot .tegel-plaatje {
+    width: 100%;
+    max-height: 100px;
+  }
+
+  .tegel-groot .tegel-titel {
+    font-size: 1.3rem;
+  }
+
+  .tegel-groot .tegel-sub {
+    font-size: 0.8rem;
+    line-height: 1.25;
+  }
+
+  .tegel-klein {
+    padding: 8px 6px;
+    text-align: center;
+  }
+
+  .tegel-klein .tegel-plaatje {
+    width: 100%;
+    max-height: 64px;
+  }
+
+  .tegel-klein .tegel-titel {
+    font-size: 1.02rem;
+  }
+
+  .tegel-klein .tegel-sub,
+  .tegel-groot .tegel-pijl,
+  .tegel-klein .tegel-pijl {
+    display: none;
+  }
+}
+
+/* Lage telefoon (iPhone SE): compacter, zodat alles in beeld past. */
+@media (max-width: 639px) and (max-height: 700px) {
+  .start-kop {
+    padding-top: calc(10px + env(safe-area-inset-top));
+    padding-bottom: 10px;
+  }
+
+  .start-sub {
+    display: none;
+  }
+
+  .pagina-start .inhoud {
+    padding-top: 10px;
+  }
+
+  .tegel-groot .tegel-plaatje {
+    max-height: 84px;
+  }
+
+  .tegel-klein .tegel-plaatje {
+    max-height: 56px;
+  }
+
+  .start-voet {
+    margin-top: 8px;
+  }
+}
+
+/* Heel smal (± 320 px). */
+@media (max-width: 359px) {
+  .tegel-training .tegel-plaatje {
+    width: 72px;
+  }
+
+  .tegel-training .tegel-titel {
+    font-size: 1.3rem;
+  }
+
+  .tegel-training .tegel-sub {
+    font-size: 0.8rem;
+  }
+
+  .tegel-training .tegel-knoppen .knop {
+    font-size: 0.78rem;
+  }
+
+  .tegel-groot .tegel-titel {
+    font-size: 1.12rem;
+  }
+
+  .tegel-groot .tegel-sub {
+    font-size: 0.74rem;
+  }
+
+  .tegel-groot .tegel-plaatje {
+    max-height: 46px;
+  }
+
+  .tegel-klein .tegel-titel {
+    font-size: 0.9rem;
+  }
+
+  .tegel-klein .tegel-plaatje {
+    max-height: 34px;
+  }
+}
+
+/* Tablet en laptop: ruimer. */
+@media (min-width: 640px) {
+  .pagina-start .inhoud {
+    max-width: 980px;
+  }
+
+  .tegel-groot .tegel-tekst,
+  .tegel-klein .tegel-tekst {
+    flex: 1;
+  }
+
+  .tegel-klein {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .tegel-klein .tegel-plaatje {
+    width: 70px;
+  }
+
+  .tegel-klein .tegel-titel {
+    font-size: 1.2rem;
+  }
+
+  .tegel-klein .tegel-sub {
+    font-size: 0.85rem;
+  }
+
+  .tegel-klein .tegel-pijl {
+    display: none;
+  }
+}
+
+@media (min-width: 760px) and (min-height: 600px) {
+  .pagina-start .inhoud {
+    padding-top: 24px;
+  }
+
+  .tegels {
+    gap: 18px;
+  }
+
+  .tegel {
+    gap: 20px;
+    padding: 18px;
+  }
+
+  .tegel-training .tegel-plaatje {
+    width: 170px;
+  }
+
+  .tegel-groot .tegel-plaatje {
+    width: 130px;
+  }
+
+  .tegel-titel {
+    font-size: 1.9rem;
+  }
+
+  .tegel-klein .tegel-titel {
+    font-size: 1.3rem;
+  }
+
+  .tegel-klein {
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .tegel-klein .tegel-plaatje {
+    width: 80px;
+  }
+
+  .tegel-knoppen .knop {
+    min-height: 46px;
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 999px) {
+  .tegel-groot .tegel-plaatje {
+    width: 104px;
+  }
+
+  .tegel-groot .tegel-titel {
+    font-size: 1.5rem;
+  }
+
+  .tegel-klein {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .tegel-klein .tegel-plaatje {
+    width: 100%;
+    max-height: 84px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .tegel-training {
+    flex-wrap: nowrap;
+  }
+
+  .tegel-training .tegel-knoppen {
+    flex: none;
+  }
+}
+
+/* Telefoon liggend: Teamtraining | Wedstrijd | Circuittraining en daaronder de drie kleinere tegels; een lage kop. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .tegels {
+    gap: 8px;
+    grid-template-areas:
+      'training training wedstrijd wedstrijd club club'
+      'veld veld keepers keepers eigen eigen';
+  }
+
+  .start-kop {
+    padding-top: calc(8px + env(safe-area-inset-top));
+    padding-bottom: 8px;
+  }
+
+  .start-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .start-titel {
+    font-size: 1.4rem;
+  }
+
+  .start-sub,
+  .start-voet {
+    display: none;
+  }
+
+  .pagina-start .inhoud {
+    padding-top: 8px;
+  }
+
+  .tegel,
+  .tegel-klein {
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .tegel-training {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+
+  .tegel-training .tegel-tekst {
+    flex: none;
+  }
+
+  .tegel-training .tegel-plaatje {
+    display: none;
+  }
+
+  .tegel-training .tegel-knoppen {
+    flex: none;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tegel-training .tegel-knoppen .knop {
+    flex: 1 1 100%;
+    min-height: 32px;
+    padding: 4px 6px;
+    font-size: 0.82rem;
+  }
+
+  .tegel-training .tegel-knoppen .knop svg {
+    display: none;
+  }
+
+  .tegel-groot,
+  .tegel-klein {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+  }
+
+  .tegel-groot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tegel-groot .tegel-plaatje {
+    width: 100%;
+    max-height: 56px;
+  }
+
+  .tegel-klein .tegel-plaatje {
+    width: 54px;
+    flex: none;
+  }
+
+  .tegel-titel,
+  .tegel-training .tegel-titel,
+  .tegel-groot .tegel-titel {
+    font-size: 1.15rem;
+  }
+
+  .tegel-klein .tegel-titel {
+    font-size: 1rem;
+  }
+
+  .tegel-sub,
+  .tegel-training .tegel-sub,
+  .tegel-groot .tegel-sub {
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .tegel-klein .tegel-sub,
+  .tegel-pijl {
+    display: none;
+  }
+}

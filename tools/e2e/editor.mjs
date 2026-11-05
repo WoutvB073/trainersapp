@@ -115,7 +115,7 @@ async function teken(naam, viewport, modus) {
   await page.evaluate(() => localStorage.removeItem('trainersapp.eigen'));
   await page.goto(`${BASE}?r=${naam}2#/`, { waitUntil: 'networkidle0' });
   const tegel = await page.evaluate(() => [...document.querySelectorAll('.tegel-titel')].map((t) => t.textContent));
-  controle(tegel.includes('Eigen oefeningen'), `${naam}: geen tegel Eigen oefeningen (${tegel.join(', ')})`);
+  controle(tegel.includes('Oefening maken'), `${naam}: geen tegel Oefening maken (${tegel.join(', ')})`);
   if (naam === 'telefoon') await foto(page, 'start', 'Startscherm met de tegel Eigen oefeningen', true);
   await klik(page, 'Nieuwe oefening');
   const maat = await page.evaluate(() => [...document.querySelectorAll('.veld-maat output')].map((o) => o.textContent).join(' × '));
@@ -297,7 +297,7 @@ controle(inLijst, 'Eigen oefening staat niet in Veld → Techniek');
 // Training met de eigen oefening, delen, ontvanger op een andere telefoon.
 await page.goto(`${BASE}?r=c#/`, { waitUntil: 'networkidle0' });
 await page.evaluate(() => localStorage.removeItem('trainersapp.trainingen'));
-await klik(page, 'Training maken');
+await klik(page, 'Teamtraining maken');
 await klik(page, 'Oefeningen toevoegen');
 await klik(page, 'Techniek', '.chips button');
 const toegevoegd = await page.evaluate(() => {
@@ -327,7 +327,7 @@ await klik(ontvanger, 'Opslaan in mijn trainingen');
 await slaap(400);
 const bijOntvanger = await ontvanger.evaluate(() => JSON.parse(localStorage.getItem('trainersapp.eigen') ?? '{}').oefeningen?.map((o) => o.naam) ?? []);
 controle(bijOntvanger.length === 1 && bijOntvanger[0] === 'Passen rond de ladder', `Eigen oefening bij ontvanger: ${bijOntvanger.join(', ')}`);
-await klik(ontvanger, 'Start training');
+await klik(ontvanger, 'Start teamtraining');
 await slaap(1200);
 const modusTitel = await ontvanger.evaluate(() => document.querySelector('.detail-titel')?.textContent);
 controle(!!modusTitel, 'Trainingsmodus bij de ontvanger opent niet');

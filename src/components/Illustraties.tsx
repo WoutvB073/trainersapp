@@ -149,20 +149,74 @@ export function KeepersPlaatje({ className = 'tegel-plaatje' }: { className?: st
 }
 
 /** Tegel Wedstrijd: tactiekbord met twee teams, een looplijn en een pass. */
-/** Half veld met zes stations in drie kleuren. */
-export function ClubPlaatje({ className = 'tegel-plaatje' }: { className?: string }) {
+/** Eén groep met de trainer. */
+export function TeamPlaatje({ className = 'tegel-plaatje' }: { className?: string }) {
   const id = `gras-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
-  const vak = (x: number, y: number, kleur: string) => <rect x={x} y={y} width="26" height="16" rx="2.5" fill={kleur} stroke="#fff" strokeWidth="1.2" />;
+  const kind = (x: number, y: number) => (
+    <g key={x}>
+      <circle cx={x} cy={y} r="4.6" fill="#f2c9a0" stroke="#fff" strokeWidth="1" />
+      <path d={`M${x - 6} ${y + 15}c0-6 2.4-9 6-9s6 3 6 9z`} fill="var(--team-a)" stroke="#fff" strokeWidth="1.1" />
+    </g>
+  );
   return (
     <svg viewBox="0 0 120 80" className={className} aria-hidden="true">
       <Gras id={id} />
-      <rect x="20" y="5" width="80" height="70" rx="1" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.85" />
-      {vak(29, 11, '#1c64d8')}
-      {vak(65, 11, '#1c64d8')}
-      {vak(29, 32, '#c92a2a')}
-      {vak(65, 32, '#c92a2a')}
-      {vak(29, 53, '#f2b705')}
-      {vak(65, 53, '#f2b705')}
+      <path d="M8 74a52 40 0 0 1 104 0" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.6" />
+      <circle cx="60" cy="14" r="5.4" fill="#f2c9a0" stroke="#fff" strokeWidth="1" />
+      <path d="M52 37c0-9 3-14 8-14s8 5 8 14z" fill="#1b2a24" stroke="#fff" strokeWidth="1.2" />
+      <path d="M66 28l9 5" stroke="#1b2a24" strokeWidth="3" strokeLinecap="round" />
+      <rect x="73" y="29" width="11" height="14" rx="1.5" fill="#fff" stroke="#1b2a24" strokeWidth="1" />
+      <path d="M75.5 33h6M75.5 36h6M75.5 39h4" stroke="#1b2a24" strokeWidth="1" />
+      {[[22, 46], [41, 52], [60, 54], [79, 52], [98, 46]].map(([x, y]) => kind(x!, y!))}
+      <Bal x={60} y={74} r={4.5} />
+    </svg>
+  );
+}
+
+/** Veld met stations en pijlen: groepjes draaien door. */
+export function CircuitPlaatje({ className = 'tegel-plaatje' }: { className?: string }) {
+  const id = `gras-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  const vak = (x: number, y: number, kleur: string) => <rect x={x} y={y} width="24" height="19" rx="3" fill={kleur} stroke="#fff" strokeWidth="1.3" />;
+  const pijl = (d: string, punt: string) => (
+    <g fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d={d} />
+      <path d={punt} />
+    </g>
+  );
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden="true">
+      <Gras id={id} />
+      <rect x="6" y="5" width="108" height="70" rx="1" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.7" />
+      {vak(13, 11, '#1c64d8')}
+      {vak(48, 11, '#c92a2a')}
+      {vak(83, 11, '#f2b705')}
+      {vak(13, 50, '#f2b705')}
+      {vak(48, 50, '#1c64d8')}
+      {vak(83, 50, '#c92a2a')}
+      {pijl('M39 20h7', 'M43 17l3 3-3 3')}
+      {pijl('M74 20h7', 'M78 17l3 3-3 3')}
+      {pijl('M95 32v15', 'M92 44l3 3 3-3')}
+      {pijl('M81 60h-7', 'M77 57l-3 3 3 3')}
+      {pijl('M46 60h-7', 'M42 57l-3 3 3 3')}
+      {pijl('M25 47v-15', 'M22 35l3-3 3 3')}
+    </svg>
+  );
+}
+
+/** Zelf een oefening tekenen. */
+export function TekenPlaatje({ className = 'tegel-plaatje' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden="true">
+      <rect width="120" height="80" rx="10" fill="var(--gras-1)" />
+      <rect x="10" y="10" width="100" height="60" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.7" />
+      <path d="M30 56 Q 52 24 80 34" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M80 34l-7-4.5M80 34l-6 5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="28" cy="58" r="6" fill="var(--team-a)" stroke="#fff" strokeWidth="1.5" />
+      <path d="M88 22l4 8h-8z" fill="#ff7a1a" />
+      <g transform="translate(82 50) rotate(-35)">
+        <rect x="0" y="0" width="26" height="7" rx="1.5" fill="#ffd23f" stroke="#8a5a00" strokeWidth="1" />
+        <path d="M26 0l6 3.5-6 3.5z" fill="#f5d6a8" />
+      </g>
     </svg>
   );
 }

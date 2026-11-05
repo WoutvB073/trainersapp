@@ -40,7 +40,7 @@ describe('help', () => {
       'Eenvoudige poppetjes',
       'Klaarzetten',
       'trainingsmodus',
-      'Training genereren',
+      'Teamtraining genereren',
       'stapnummer',
       'Opties',
       'Afspelen',

@@ -43,7 +43,7 @@ function NietIngelogd() {
   return (
     <div className="leeg">
       <p className="leeg-titel">{vt('Teams')}</p>
-      <p>{vt('Met een team deel je oefeningen en trainingen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).')}</p>
+      <p>{vt('Met een team deel je oefeningen en teamtrainingen met andere trainers. Daarvoor log je in (gratis, met je e-mailadres).')}</p>
       {onlineBeschikbaar() ? (
         <button className="knop knop-primair" onClick={() => ga('/account')}>
           <Icoon naam="persoon" maat={20} />
@@ -289,9 +289,9 @@ export function TeamScherm({ id }: { id: string }) {
           </ul>
         )}
 
-        <h2 className="sectie-titel">{vt('Gedeelde trainingen')}</h2>
+        <h2 className="sectie-titel">{vt('Gedeelde teamtrainingen')}</h2>
         {trainingenTeam.length === 0 ? (
-          <p className="klein">{vt('Nog niets gedeeld. Open een training en kies "Delen met team".')}</p>
+          <p className="klein">{vt('Nog niets gedeeld. Open een teamtraining en kies "Delen met team".')}</p>
         ) : (
           <ul className="lijst">
             {trainingenTeam.map((it) => (
@@ -399,7 +399,7 @@ export function TeamScherm({ id }: { id: string }) {
               className="knop knop-gevaar"
               disabled={bezig}
               onClick={() => {
-                if (window.confirm(vt('Team "{naam}" opheffen? Alle gedeelde items en leden verdwijnen uit het team (ieders eigen oefeningen en trainingen blijven).', { naam: t.naam })))
+                if (window.confirm(vt('Team "{naam}" opheffen? Alle gedeelde items en leden verdwijnen uit het team (ieders eigen oefeningen en teamtrainingen blijven).', { naam: t.naam })))
                   void doe((m) => m.hefTeamOp(t.id)).then((ok) => {
                     if (ok) vervang('/teams');
                   });
@@ -436,11 +436,11 @@ export function TeamTrainingScherm({ id, item }: { id: string; item: string }) {
       <main className="inhoud smal">
         <section className="blok gedeeld-kop">
           <p className="klein">{vt('Gedeeld door {naam}', { naam: it.eigenaarNaam })}</p>
-          <h2 className="detail-titel">{tt.training.naam || vt('Training')}</h2>
+          <h2 className="detail-titel">{tt.training.naam || vt('Teamtraining')}</h2>
           <p>{[meervoud(oefeningen.length, 'oefening', 'oefeningen'), meervoud(tt.training.spelers, 'speler', 'spelers'), meervoud(tt.training.keepers, 'keeper', 'keepers')].join(' · ')}</p>
           <button className="knop knop-primair knop-breed" onClick={kopieer}>
             <Icoon naam="kopieer" maat={20} />
-            {vt('Kopiëren naar mijn trainingen')}
+            {vt('Kopiëren naar mijn teamtrainingen')}
           </button>
         </section>
         <ol className="onderdelen alleen-lezen">

@@ -246,7 +246,7 @@ for (const [naam, vp] of [
   if (naam === 'telefoon') await foto(t2.page, 'teamtraining', 'Gedeelde training bij Testtrainer 2', true);
   await klik(t2.page, 'Kopiëren naar mijn trainingen');
   await wachtOp(t2.page, () => location.hash.startsWith('#/training/') && document.querySelectorAll('.onderdeel').length === 2, null, `${naam}: gekopieerde training`);
-  await t2.page.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.startsWith('Start training'))?.click());
+  await t2.page.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.startsWith('Start teamtraining'))?.click());
   await slaap(1200);
   const speelt = await t2.page.evaluate(() => Number(document.querySelector('.speler-balk')?.max ?? 0));
   controle(speelt > 0, `${naam}: gekopieerde training speelt de oefening niet af`);

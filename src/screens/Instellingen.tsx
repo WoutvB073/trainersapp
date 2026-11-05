@@ -30,7 +30,7 @@ function AccountBlok() {
           <SyncRegel />
         </>
       ) : (
-        <p className="klein">{vt('Log in om je oefeningen en trainingen op al je apparaten te hebben en ze met je team te delen. Zonder account werkt alles gewoon op dit apparaat.')}</p>
+        <p className="klein">{vt('Log in om je oefeningen en teamtrainingen op al je apparaten te hebben en ze met je team te delen. Zonder account werkt alles gewoon op dit apparaat.')}</p>
       )}
       <div className="knoppenrij">
         <button className="knop knop-primair" onClick={() => ga('/account')}>
@@ -131,7 +131,7 @@ export function Instellingen() {
                   <span className="thema-voorbeeld" aria-hidden="true">
                     <span className="thema-kop">{APP_NAAM}</span>
                     <span className="thema-inhoud">
-                      <span className="thema-knop">{vt('Training')}</span>
+                      <span className="thema-knop">{vt('Teamtraining')}</span>
                       <span className="thema-label">{vt('4+ spelers')}</span>
                     </span>
                   </span>

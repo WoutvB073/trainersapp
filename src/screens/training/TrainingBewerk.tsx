@@ -53,7 +53,7 @@ function Onderdeel({ id, nr, oefening, past, alleenLeeftijd, keepers, opVerwijde
           <Icoon naam="wissel" maat={20} />
         </button>
       )}
-      <button className="icoon-knop" onClick={opVerwijder} aria-label={vt('{w0} uit de training halen', { w0: oefening?.naam ?? vt('Oefening') })}>
+      <button className="icoon-knop" onClick={opVerwijder} aria-label={vt('{w0} uit de teamtraining halen', { w0: oefening?.naam ?? vt('Oefening') })}>
         <Icoon naam="kruis" maat={20} />
       </button>
     </li>
@@ -151,10 +151,10 @@ export function TrainingBewerk({ id }: { id: string }) {
         {t.oefeningen.length === 0 ? (
           <div className="leeg">
             <p className="leeg-titel">{vt('Nog geen oefeningen')}</p>
-            <p>{vt('Kies zelf oefeningen die passen bij je aantallen spelers en keepers, of laat de app een training samenstellen.')}</p>
+            <p>{vt('Kies zelf oefeningen die passen bij je aantallen spelers en keepers, of laat de app een teamtraining samenstellen.')}</p>
             <button className="knop" onClick={() => ga(`/training/${t.id}/genereren`)}>
               <Icoon naam="wissel" maat={20} />
-              {vt('Training genereren')}
+              {vt('Teamtraining genereren')}
             </button>
           </div>
         ) : (
@@ -193,7 +193,7 @@ export function TrainingBewerk({ id }: { id: string }) {
           </button>
           <button className="knop knop-primair" disabled={t.oefeningen.length === 0} onClick={() => ga(`/training/${t.id}/modus/1`)}>
             <Icoon naam="afspelen" maat={20} />
-            {vt('Start training')}
+            {vt('Start teamtraining')}
           </button>
         </div>
 

@@ -35,7 +35,8 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `src/editor/animatie.ts` — editor-animatie: lijnen met stapnummers ↔ animatiestappen (`lijnenNaarAnimatie`, `animatieNaarLijnen`), `afspeelTekening` (gebruikt in AnimatieSpeler/Miniatuur), meldingen per lijn (ook fysieke check).
 - `src/i18n/` — taal (`taal.ts`: keuze, Automatisch, herladen), `t.ts` (t, aantal, lijstTekst, getal), `en.ts` (Engels), `zin.tsx` (**vet**); `src/help/inhoud.ts` + `src/screens/Help.tsx` — Help; `src/data/vertaling.ts` + `src/data/en/` — Engelse oefenteksten.
 - `src/data/leeftijden.ts` — leeftijdsgroepen (`Oefening.leeftijden`, `pastBijLeeftijd`); mini-oefeningen `veld-mt-…` in `tools/nieuw/mini-030a–d.cjs` met `mini-hulp.cjs`.
-- `src/clubtraining/` — Clubtraining (0.31.0): `clubtraining.ts` puur (stations, rotatie, partijvelden, materiaal, deellink, timer), `opslag.ts`; schermen `src/screens/club/`. Deellink `#/c/<code>` werkt zonder installeren (zie `App.tsx`).
+- Zichtbare namen (0.31.1): Teamtraining (code: training) en Circuittraining (code: club/clubtraining). Routes, sleutels en collecties houden de oude namen; alleen tekst in `t()` en `en.ts` gebruikt de nieuwe.
+- `src/styles/start.css` — startscherm. `src/clubtraining/` — Circuittraining (0.31.0): `clubtraining.ts` puur (stations, rotatie, partijvelden, materiaal, deellink, timer), `opslag.ts`; schermen `src/screens/club/`. Deellink `#/c/<code>` werkt zonder installeren (zie `App.tsx`).
 - `src/engine/platform.ts` — toestel/browser + `kiesScherm` (installatiescherm of app); `src/screens/installeren/`.
 - `src/editor/editor.ts` — pure editorlogica (palet, aanraken, slepen/draaien/maat, lijnen, ongedaan maken, benodigdheden, bevriezen); `src/eigen/` — eigen oefeningen (opslag, kopiëren, delen); `src/screens/eigen/` — lijst, nieuw, Tekenen, Gegevens.
 - `src/styles/thema.css` — veld/teamkleuren (vast) + standaard app-kleuren; `src/engine/thema.ts` — clubkleuren (8 thema's × licht/donker), toegepast als CSS-variabelen. Gebruik in CSS `--primair-tekst` voor de themakleur als tekst (niet `--primair`), en `--op-…` voor tekst op een gekleurd vlak (nooit `#fff`).
@@ -91,6 +92,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `animaties.mjs <label> [url] [scenes|snelheid|laden]` — vaste 3D-momenten (`anim-<label>-*.png`, met `voor` en `na` ook vergelijkingsbladen), beeldsnelheid 11 tegen 11 (processor 1/4/6× trager, ook eenvoudig) en laadtijd.
 - `pas.mjs set <lopen|keeper|spelers|kort>` of `pas.mjs <id> <wie> <t0> <t1>` — filmstrip van één persoon van dichtbij/opzij (voeten, knieën, armen beoordelen). Blad: `blad-pas-<naam>.png`.
 - `versie-030.mjs [url]` — 0.30.0: leeftijdsfilter (ook onthouden), bij de oefening, Training maken (oranje markering), genereren, 1 tegen 1 en Help in NL/EN op iPhone SE en laptop. Blad: `blad-030.png`.
+- `versie-0311.mjs [url]` — 0.31.1: startscherm op 7 formaten in NL/EN, hernoemde schermen zonder oude namen, oude clublink. Bladen: `blad-0311-nl.png`, `blad-0311-en.png`, `blad-0311-schermen.png`.
 - `club.mjs [url]` — 0.31.0: Clubtraining op iPhone SE en laptop in NL/EN: leeg opruimen, genereren, kiezen, veldplan, rotatie, afvinken, timer, volgende week, deellink op een niet-geïnstalleerde telefoon, station in 3D/2D, 3/5/8 groepjes. Blad: `blad-club.png`.
 - `nieuw.mjs <id,id,…> [blad] [url]` — close-ups van (nieuwe) oefeningen: 3D op vier momenten + 2D, op één blad (`blad-<naam>.png`).
 - `hulp.mjs` — `alsGeinstalleerd(page)` (standalone nadoen), `zetTijd`, `blad` (screenshots naast elkaar).

@@ -28,7 +28,7 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
   if (!g) {
     return (
       <div className="pagina">
-        <Kop titel={vt('Gedeelde training')} ouder="/" />
+        <Kop titel={vt('Gedeelde teamtraining')} ouder="/" />
         <main className="inhoud smal">
           <div className="leeg">
             <p className="leeg-titel">{vt('Deze link klopt niet')}</p>
@@ -54,10 +54,10 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
 
   return (
     <div className="pagina">
-      <Kop titel={vt('Gedeelde training')} ouder={nietGeinstalleerd ? undefined : '/'} />
+      <Kop titel={vt('Gedeelde teamtraining')} ouder={nietGeinstalleerd ? undefined : '/'} />
       <main className="inhoud smal">
         <section className="blok gedeeld-kop">
-          <p className="klein">{vt('Je hebt een training gekregen')}</p>
+          <p className="klein">{vt('Je hebt een teamtraining gekregen')}</p>
           <h2 className="detail-titel">{trainingNaam(g)}</h2>
           <p>
             {[meervoud(oefeningen.length, 'oefening', 'oefeningen'), meervoud(g.spelers, 'speler', 'spelers'), meervoud(g.keepers, 'keeper', 'keepers'), g.datum ? datumTekst(g.datum) : undefined]
@@ -67,7 +67,7 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
           {!nietGeinstalleerd && (
             <button className="knop knop-primair knop-breed" onClick={opslaan}>
               <Icoon naam="download" maat={20} />
-              {vt('Opslaan in mijn trainingen')}
+              {vt('Opslaan in mijn teamtrainingen')}
             </button>
           )}
         </section>
@@ -76,7 +76,7 @@ export function GedeeldeTraining({ code, nietGeinstalleerd, opInstalleren }: { c
           <section className="blok gedeeld-uitleg">
             <h3>{vt('In de app openen')}</h3>
             <p>
-              {zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Mijn trainingen → Gedeelde training openen via een link**.')}
+              {zin('Heb je {app} al op je beginscherm? Kopieer deze link, open de app en kies **Mijn teamtrainingen → Gedeelde teamtraining openen via een link**.')}
             </p>
             <div className="knoppenrij">
               <button

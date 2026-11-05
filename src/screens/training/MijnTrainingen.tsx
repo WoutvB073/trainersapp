@@ -62,7 +62,7 @@ function Regel({ t, opMelding }: { t: Training; opMelding: (s: string) => void }
           onClick={() => {
             if (window.confirm(vt('"{w0}" verwijderen?', { w0: trainingNaam(t) }))) {
               trainingen.verwijder(t.id);
-              opMelding(vt('Training verwijderd'));
+              opMelding(vt('Teamtraining verwijderd'));
             }
           }}
         >
@@ -82,23 +82,23 @@ export function MijnTrainingen() {
 
   return (
     <div className="pagina">
-      <Kop titel={vt('Mijn trainingen')} ouder="/" />
+      <Kop titel={vt('Mijn teamtrainingen')} ouder="/" />
       <main className="inhoud smal">
         <div className="knoppenrij knoppen-twee">
           <button className="knop knop-primair" onClick={maakTraining}>
             <Icoon naam="plus" maat={20} />
-            {vt('Training maken')}
+            {vt('Teamtraining maken')}
           </button>
           <button className="knop" onClick={genereerTraining}>
             <Icoon naam="wissel" maat={20} />
-            {vt('Training genereren')}
+            {vt('Teamtraining genereren')}
           </button>
         </div>
 
         {lijst.length === 0 ? (
           <div className="leeg">
-            <p className="leeg-titel">{vt('Nog geen trainingen')}</p>
-            <p>{vt('Maak een training: vul het aantal spelers en keepers in en kies de oefeningen.')}</p>
+            <p className="leeg-titel">{vt('Nog geen teamtrainingen')}</p>
+            <p>{vt('Maak een teamtraining: vul het aantal spelers en keepers in en kies de oefeningen.')}</p>
           </div>
         ) : (
           <>
@@ -115,7 +115,7 @@ export function MijnTrainingen() {
           {!linkOpen ? (
             <button className="link-knop" onClick={() => setLinkOpen(true)}>
               <Icoon naam="link" maat={18} />
-              {vt('Gedeelde training openen via een link')}
+              {vt('Gedeelde teamtraining openen via een link')}
             </button>
           ) : (
             <form
@@ -133,7 +133,7 @@ export function MijnTrainingen() {
             </form>
           )}
         </div>
-        <p className="voetnoot">{vt('Trainingen staan op dit apparaat. Met delen stuur je een link naar een andere trainer.')}</p>
+        <p className="voetnoot">{vt('Teamtrainingen staan op dit apparaat. Met delen stuur je een link naar een andere trainer.')}</p>
       </main>
       <Toast tekst={melding} />
     </div>

@@ -52,7 +52,7 @@ describe('A1 Training maken', () => {
     // Gegenereerd (met oefeningen, zonder naam) en daarna weg: blijft staan, met een naam.
     s.bewaar(metNaam(training('t1', { oefeningen: ['veld-pt-derde-man'] }), new Date(2026, 9, 17)));
     s.ruimLegeOp();
-    expect(s.haal('t1')).toMatchObject({ naam: 'Training 17 okt' });
+    expect(s.haal('t1')).toMatchObject({ naam: 'Teamtraining 17 okt' });
     // Gewoon gemaakt met alleen oefeningen en geen naam: ook niet weggehaald.
     s.bewaar(training('t2', { oefeningen: ['veld-pt-derde-man'] }));
     s.ruimLegeOp();
@@ -62,7 +62,7 @@ describe('A1 Training maken', () => {
   it('automatische naam: alleen als er oefeningen zijn en nog geen naam', () => {
     expect(metNaam(training('a'), new Date(2026, 9, 17)).naam).toBe('');
     expect(metNaam(training('a', { naam: 'Dinsdag', oefeningen: ['x'] })).naam).toBe('Dinsdag');
-    expect(metNaam(training('a', { datum: '2026-11-03', oefeningen: ['x'] })).naam).toBe('Training 3 nov');
+    expect(metNaam(training('a', { datum: '2026-11-03', oefeningen: ['x'] })).naam).toBe('Teamtraining 3 nov');
   });
 
   it('lege trainingen worden opgeruimd, behalve die je open hebt', () => {

@@ -80,9 +80,9 @@ describe('opslaan, dupliceren en verwijderen', () => {
 
   it('naam: eigen naam, anders datum, anders "zonder naam"', () => {
     expect(trainingNaam({ naam: ' Dinsdag ', datum: '2026-10-20' })).toBe('Dinsdag');
-    expect(trainingNaam({ naam: '', datum: '2026-10-20' })).toBe('Training 20 okt 2026');
-    expect(trainingNaam({ naam: '' })).toBe('Training zonder naam');
-    expect(dupliceer({ ...nieuweTraining(1, 'a'), naam: '' }).naam).toBe('Training zonder naam (kopie)');
+    expect(trainingNaam({ naam: '', datum: '2026-10-20' })).toBe('Teamtraining 20 okt 2026');
+    expect(trainingNaam({ naam: '' })).toBe('Teamtraining zonder naam');
+    expect(dupliceer({ ...nieuweTraining(1, 'a'), naam: '' }).naam).toBe('Teamtraining zonder naam (kopie)');
   });
 });
 

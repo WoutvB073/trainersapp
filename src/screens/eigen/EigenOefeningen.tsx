@@ -89,7 +89,7 @@ export function EigenOefeningen() {
             ))}
           </ul>
         )}
-        <p className="voetnoot">{t('Eigen oefeningen staan op dit toestel. Zit er een eigen oefening in een training die je deelt, dan gaat hij mee in de link.')}</p>
+        <p className="voetnoot">{t('Eigen oefeningen staan op dit toestel. Zit er een eigen oefening in een teamtraining die je deelt, dan gaat hij mee in de link.')}</p>
       </main>
       <Toast tekst={melding} />
     </div>

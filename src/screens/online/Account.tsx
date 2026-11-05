@@ -109,7 +109,7 @@ export function Account() {
           </section>
           <p className="klein">
             {t(
-              'Je eigen oefeningen, trainingen, favorieten en instellingen staan online en zijn op al je apparaten gelijk. Zonder internet werkt alles gewoon; wijzigingen gaan mee zodra je weer online bent.',
+              'Je eigen oefeningen, teamtrainingen, favorieten en instellingen staan online en zijn op al je apparaten gelijk. Zonder internet werkt alles gewoon; wijzigingen gaan mee zodra je weer online bent.',
             )}
           </p>
           <div className="knoppenrij">
@@ -165,7 +165,7 @@ export function Account() {
       <Kop titel={t('Account')} ouder="/instellingen" />
       <main className="inhoud smal formulier">
         <p className="klein">
-          {t('Inloggen is niet nodig: {app} werkt ook zonder account. Met een account staan je oefeningen en trainingen op al je apparaten en kun je ze met je team delen.', { app: APP_NAAM })}
+          {t('Inloggen is niet nodig: {app} werkt ook zonder account. Met een account staan je oefeningen en teamtrainingen op al je apparaten en kun je ze met je team delen.', { app: APP_NAAM })}
         </p>
         <div className="keuze-twee" role="tablist">
           <button role="tab" aria-selected={!maken} className={`keuze${!maken ? ' aan' : ''}`} onClick={() => setTab('inloggen')}>
@@ -240,7 +240,7 @@ export function SamenvoegenVraag() {
   const { eigen, trainingen, favorieten, wedstrijd = 0 } = s.samenvoegen;
   const delen = [
     eigen ? meervoud(eigen, 'eigen oefening', 'eigen oefeningen') : '',
-    trainingen ? meervoud(trainingen, 'training', 'trainingen') : '',
+    trainingen ? meervoud(trainingen, 'teamtraining', 'teamtrainingen') : '',
     favorieten ? meervoud(favorieten, 'favoriet', 'favorieten') : '',
     wedstrijd ? meervoud(wedstrijd, 'opstelling of tactiekbord', 'opstellingen en tactiekborden') : '',
   ].filter(Boolean);

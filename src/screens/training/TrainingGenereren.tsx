@@ -200,7 +200,7 @@ export function TrainingGenereren({ id }: { id: string }) {
 
   return (
     <div className="pagina">
-      <Kop titel={vt('Training genereren')} ouder={`/training/${id}`} />
+      <Kop titel={vt('Teamtraining genereren')} ouder={`/training/${id}`} />
       <main className="inhoud smal">
         <section className="blok training-gegevens">
           <Stapper label={vt('Spelers')} icoon="spelers" waarde={t.spelers} onStap={(d) => stap('spelers', d)} />
@@ -215,7 +215,7 @@ export function TrainingGenereren({ id }: { id: string }) {
         </section>
 
         <section className="blok gen-kiezen">
-          <h3>{vt('Tik de onderdelen aan in de volgorde van je training')}</h3>
+          <h3>{vt('Tik de onderdelen aan in de volgorde van je teamtraining')}</h3>
           {(['veld', 'keeper'] as const).map((s) => (
             <div key={s} className="gen-groep">
               <p className="gen-groep-naam">
@@ -268,11 +268,11 @@ export function TrainingGenereren({ id }: { id: string }) {
           {gegenereerd && (
             <button className="knop knop-primair" onClick={() => ga(`/training/${id}`)}>
               <Icoon naam="vink" maat={20} />
-              {vt('Naar de training')}
+              {vt('Naar de teamtraining')}
             </button>
           )}
         </div>
-        <p className="voetnoot">{vt('De app kiest afwisselend: liever geen oefening uit je laatste trainingen, je favorieten krijgen voorrang en een oefening komt maar één keer voor.')}</p>
+        <p className="voetnoot">{vt('De app kiest afwisselend: liever geen oefening uit je laatste teamtrainingen, je favorieten krijgen voorrang en een oefening komt maar één keer voor.')}</p>
       </main>
     </div>
   );

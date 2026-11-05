@@ -72,7 +72,7 @@ export function isLeeg(c: Pick<ClubTraining, 'naam' | 'trainers' | 'blokken'>): 
 }
 
 export function clubNaam(c: Pick<ClubTraining, 'naam'>): string {
-  return c.naam.trim() || vt('Clubtraining');
+  return c.naam.trim() || vt('Circuittraining');
 }
 
 export function dupliceer(c: ClubTraining, nu = Date.now(), id = maakId()): ClubTraining {

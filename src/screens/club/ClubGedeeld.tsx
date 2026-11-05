@@ -61,7 +61,7 @@ function OefeningBlokken({ o }: { o: Oefening }) {
 function GeenLink() {
   return (
     <div className="pagina">
-      <Kop titel={vt('Clubtraining')} />
+      <Kop titel={vt('Circuittraining')} />
       <main className="inhoud smal">
         <div className="leeg">
           <p className="leeg-titel">{vt('Deze link klopt niet')}</p>
@@ -119,7 +119,7 @@ export function ClubGedeeld({ code, station, partij }: { code: string; station?:
       <Kop titel={clubNaam(g)} />
       <main className="inhoud smal">
         <section className="blok gedeeld-kop">
-          <p className="klein">{vt('Clubtraining')}</p>
+          <p className="klein">{vt('Circuittraining')}</p>
           <h2 className="detail-titel">{clubNaam(g)}</h2>
           <p>{[g.datums.map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes })].filter(Boolean).join(' · ')}</p>
         </section>

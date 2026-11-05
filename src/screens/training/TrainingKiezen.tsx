@@ -85,7 +85,7 @@ export function TrainingKiezen({ id }: { id: string }) {
         </div>
       </div>
       <main className="inhoud">
-        <FilterBalk aantal={lijst.length} aantallenVan={[vt('Passend bij {w0} en {w1} (van de training)', { w0: meervoud(t.spelers, 'speler', 'spelers'), w1: meervoud(t.keepers, 'keeper', 'keepers') }), leeftijd ? leeftijdNaam(leeftijd) : ''].filter(Boolean).join(' · ')} />
+        <FilterBalk aantal={lijst.length} aantallenVan={[vt('Passend bij {w0} en {w1} (van de teamtraining)', { w0: meervoud(t.spelers, 'speler', 'spelers'), w1: meervoud(t.keepers, 'keeper', 'keepers') }), leeftijd ? leeftijdNaam(leeftijd) : ''].filter(Boolean).join(' · ')} />
         {lijst.length === 0 && zonderFilters > 0 ? (
           <GeenResultaat metFilters />
         ) : lijst.length === 0 ? (
@@ -125,10 +125,10 @@ export function TrainingKiezen({ id }: { id: string }) {
                     className={`toevoeg-knop${gekozen ? ' aan' : ''}`}
                     onClick={() => wissel(o.id)}
                     aria-pressed={gekozen}
-                    aria-label={gekozen ? vt('{naam} uit de training halen', { naam: o.naam }) : `${o.naam} toevoegen`}
+                    aria-label={gekozen ? vt('{naam} uit de teamtraining halen', { naam: o.naam }) : `${o.naam} toevoegen`}
                   >
                     <Icoon naam={gekozen ? 'vink' : 'plus'} maat={20} />
-                    {gekozen ? vt('In training') : vt('Toevoegen')}
+                    {gekozen ? vt('In teamtraining') : vt('Toevoegen')}
                   </button>
                 </li>
               );

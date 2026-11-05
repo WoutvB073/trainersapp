@@ -1,144 +1,61 @@
+import type { ReactNode } from 'react';
 import { APP_NAAM, VERSIE } from '../config';
 import { OEFENINGEN } from '../data/oefeningen';
 import { meervoud } from '../components/Labels';
 import { Icoon } from '../components/Icoon';
 import { ga } from '../router';
-import { useTrainingen } from '../training/opslag';
-import { useEigenOefeningen } from '../eigen/opslag';
 import { SyncIcoon } from './online/Account';
 import { maakTraining } from './training/MijnTrainingen';
 import type { Soort } from '../model/types';
-import { ClubPlaatje, KeepersPlaatje, SpelersPlaatje, WedstrijdPlaatje } from '../components/Illustraties';
-import { useClubtrainingen } from '../clubtraining/opslag';
-import { useOpstellingen, useBorden } from '../wedstrijd/opslag';
+import { CircuitPlaatje, KeepersPlaatje, SpelersPlaatje, TeamPlaatje, TekenPlaatje, WedstrijdPlaatje } from '../components/Illustraties';
 import { t } from '../i18n/t';
 
-function Tegel({ soort }: { soort: Soort }) {
-  const aantal = OEFENINGEN.filter((o) => o.soort === soort).length;
-  const pad = soort === 'veld' ? '/veld' : '/keepers';
+/** Tegel die als geheel een link is. */
+function Link({ pad, klas, plaatje, titel, sub }: { pad: string; klas: string; plaatje: ReactNode; titel: string; sub: string }) {
   return (
     <a
-      className={`tegel tegel-soort tegel-${soort === 'veld' ? 'veld' : 'keepers'}`}
+      className={`tegel ${klas}`}
       href={`#${pad}`}
       onClick={(e) => {
         e.preventDefault();
         ga(pad);
       }}
     >
-      {soort === 'veld' ? <SpelersPlaatje /> : <KeepersPlaatje />}
+      {plaatje}
       <span className="tegel-tekst">
-        <span className="tegel-titel">{soort === 'veld' ? t('Spelers') : t('Keepers')}</span>
-        <span className="tegel-sub">{meervoud(aantal, 'oefening', 'oefeningen')}</span>
+        <span className="tegel-titel">{titel}</span>
+        <span className="tegel-sub">{sub}</span>
       </span>
       <Icoon naam="verder" className="tegel-pijl" />
     </a>
   );
 }
 
-function TrainingTegel() {
-  const lijst = useTrainingen();
+function TeamTegel() {
   return (
-    <div className="tegel tegel-training tegel-actie">
-      <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
-        <rect width="120" height="80" rx="10" fill="var(--primair-licht)" />
-        <rect x="34" y="10" width="52" height="62" rx="6" fill="#fff" stroke="var(--primair)" strokeWidth="2.5" />
-        <rect x="48" y="5" width="24" height="10" rx="3" fill="var(--primair)" />
-        <g stroke="var(--primair)" strokeWidth="3" strokeLinecap="round">
-          <path d="M43 30h8M43 44h8M43 58h8" />
-          <path d="M56 30h20M56 44h20M56 58h14" opacity="0.5" />
-        </g>
-      </svg>
+    <div className="tegel tegel-training">
+      <TeamPlaatje />
       <span className="tegel-tekst">
-        <span className="tegel-titel">{t('Training')}</span>
-        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'training opgeslagen', 'trainingen opgeslagen') : t('Stel je training samen')}</span>
-        <span className="tegel-knoppen">
-          <button className="knop knop-primair" onClick={maakTraining}>
-            <Icoon naam="plus" maat={18} />
-            {t('Training maken')}
-          </button>
-          <button className="knop" onClick={() => ga('/trainingen')}>
-            {t('Mijn trainingen')}
-          </button>
-        </span>
+        <span className="tegel-titel">{t('Teamtraining')}</span>
+        <span className="tegel-sub">{t('Eén groep: stel je training samen en geef hem stap voor stap.')}</span>
+      </span>
+      <span className="tegel-knoppen">
+        <button className="knop knop-primair" onClick={maakTraining}>
+          <Icoon naam="plus" maat={18} />
+          {t('Teamtraining maken')}
+        </button>
+        <button className="knop" onClick={() => ga('/trainingen')}>
+          {t('Mijn teamtrainingen')}
+        </button>
       </span>
     </div>
   );
 }
 
-function EigenTegel() {
-  const lijst = useEigenOefeningen();
-  return (
-    <div className="tegel tegel-eigen tegel-actie">
-      <svg viewBox="0 0 120 80" className="tegel-plaatje" aria-hidden="true">
-        <rect width="120" height="80" rx="10" fill="var(--gras-1)" />
-        <rect x="10" y="10" width="100" height="60" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.7" />
-        <path d="M30 56 Q 52 24 80 34" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M80 34l-7-4.5M80 34l-6 5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx="28" cy="58" r="6" fill="var(--team-a)" stroke="#fff" strokeWidth="1.5" />
-        <path d="M88 22l4 8h-8z" fill="#ff7a1a" />
-        <g transform="translate(82 50) rotate(-35)">
-          <rect x="0" y="0" width="26" height="7" rx="1.5" fill="#ffd23f" stroke="#8a5a00" strokeWidth="1" />
-          <path d="M26 0l6 3.5-6 3.5z" fill="#f5d6a8" />
-        </g>
-      </svg>
-      <span className="tegel-tekst">
-        <span className="tegel-titel">{t('Eigen oefeningen')}</span>
-        <span className="tegel-sub">{lijst.length ? meervoud(lijst.length, 'eigen oefening', 'eigen oefeningen') : t('Teken je eigen oefening')}</span>
-        <span className="tegel-knoppen">
-          <button className="knop knop-primair" onClick={() => ga('/eigen/nieuw')}>
-            <Icoon naam="plus" maat={18} />
-            {t('Nieuwe oefening')}
-          </button>
-          <button className="knop" onClick={() => ga('/eigen')}>
-            {t('Mijn oefeningen')}
-          </button>
-        </span>
-      </span>
-    </div>
-  );
-}
-
-function WedstrijdTegel() {
-  const n = useOpstellingen().length + useBorden().length;
-  return (
-    <a
-      className="tegel tegel-wedstrijd"
-      href="#/wedstrijd"
-      onClick={(e) => {
-        e.preventDefault();
-        ga('/wedstrijd');
-      }}
-    >
-      <WedstrijdPlaatje />
-      <span className="tegel-tekst">
-        <span className="tegel-titel">{t('Wedstrijd')}</span>
-        <span className="tegel-sub">{n ? meervoud(n, 'opstelling of bord', 'opstellingen en borden') : t('Opstelling, tactiekbord, spelhervattingen')}</span>
-      </span>
-      <Icoon naam="verder" className="tegel-pijl" />
-    </a>
-  );
-}
-
-function ClubTegel() {
-  const n = useClubtrainingen().length;
-  return (
-    <a
-      className="tegel tegel-club"
-      href="#/club"
-      onClick={(e) => {
-        e.preventDefault();
-        ga('/club');
-      }}
-    >
-      <ClubPlaatje />
-      <span className="tegel-tekst">
-        <span className="tegel-titel">{t('Clubtraining')}</span>
-        <span className="tegel-sub">{n ? meervoud(n, 'clubtraining', 'clubtrainingen') : t('Stations, rotatie en materiaal')}</span>
-      </span>
-      <Icoon naam="verder" className="tegel-pijl" />
-    </a>
-  );
-}
+const aantalOefeningen = (soort: Soort) => {
+  const n = OEFENINGEN.filter((o) => o.soort === soort).length;
+  return meervoud(n, 'oefening', 'oefeningen');
+};
 
 /** `opInstalleren`: in de browser (telefoon, tablet of computer): terug naar de installatie-uitleg. */
 export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
@@ -162,12 +79,12 @@ export function Start({ opInstalleren }: { opInstalleren?: () => void }) {
       </header>
       <main className="inhoud">
         <div className="tegels">
-          <TrainingTegel />
-          <Tegel soort="veld" />
-          <Tegel soort="keeper" />
-          <EigenTegel />
-          <WedstrijdTegel />
-          <ClubTegel />
+          <TeamTegel />
+          <Link pad="/wedstrijd" klas="tegel-groot tegel-wedstrijd" plaatje={<WedstrijdPlaatje />} titel={t('Wedstrijd')} sub={t('Opstelling, tactiekbord en spelhervattingen')} />
+          <Link pad="/club" klas="tegel-groot tegel-club" plaatje={<CircuitPlaatje />} titel={t('Circuittraining')} sub={t('Groepjes draaien door langs stations, met uitleg per trainer.')} />
+          <Link pad="/veld" klas="tegel-klein tegel-veld" plaatje={<SpelersPlaatje />} titel={t('Oefeningen spelers')} sub={aantalOefeningen('veld')} />
+          <Link pad="/keepers" klas="tegel-klein tegel-keepers" plaatje={<KeepersPlaatje />} titel={t('Oefeningen keepers')} sub={aantalOefeningen('keeper')} />
+          <Link pad="/eigen" klas="tegel-klein tegel-eigen" plaatje={<TekenPlaatje />} titel={t('Oefening maken')} sub={t('Teken je eigen oefening')} />
         </div>
         {opInstalleren && (
           <button className="link-knop" onClick={opInstalleren}>

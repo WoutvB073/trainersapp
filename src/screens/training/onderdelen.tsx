@@ -49,7 +49,7 @@ export function codeUitLink(tekst: string): string | null {
 /** Delen met de deelfunctie van de telefoon, anders de link kopiëren. Geeft een korte melding terug. */
 export async function deel(t: Training): Promise<string> {
   const titel = trainingNaam(t);
-  return deelUrl(titel, `Training: ${titel}`, deelLink(t));
+  return deelUrl(titel, vt('Teamtraining: {w0}', { w0: titel }), deelLink(t));
 }
 
 /** Een link delen met de deelfunctie van de telefoon, anders kopiëren. */

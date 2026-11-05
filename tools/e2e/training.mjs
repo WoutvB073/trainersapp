@@ -53,7 +53,7 @@ await page.goto(`${BASE}?r=2#/`, { waitUntil: 'networkidle0' });
 await slaap(300);
 await foto(page, 'start', 'Startscherm met Training maken');
 
-await klik(page, 'Training maken');
+await klik(page, 'Teamtraining maken');
 controle(page.url().includes('#/training/'), 'Training maken opent de training niet');
 await page.type('.veld input', 'Dinsdag JO11-1');
 // Standaard 4 spelers en 1 keeper; spelers naar 8.
@@ -120,7 +120,7 @@ await page.evaluate(() => {
 await slaap(200);
 
 // Trainingsmodus: knoppen en vegen.
-await klik(page, 'Start training');
+await klik(page, 'Start teamtraining');
 await slaap(1200);
 await foto(page, 'modus-1', 'Trainingsmodus: oefening 1');
 await klik(page, 'Volgende', '.modus-knoppen button');
