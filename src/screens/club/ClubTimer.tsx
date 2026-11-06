@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
-import { BLOK_DUUR, BLOKKEN, clubNaam, partijvelden, RONDES, timerStand } from '../../clubtraining/clubtraining';
+import { clubNaam, clubPlan, rondeTijd, timerStand } from '../../clubtraining/clubtraining';
 import { useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
-import { blokNaam, blokStijl, RondeLijst, veldGroepen } from './onderdelen';
+import { blokNaam, blokStijl, RondeLijst } from './onderdelen';
 import { t as vt } from '../../i18n/t';
 
 interface Staat {
@@ -88,7 +88,7 @@ function useSchermAan(aan: boolean): boolean {
   return gelukt;
 }
 
-/** Kwartiertimer: 3 rondes en de partijvormen, elk 15 minuten, met trillen en geluid bij het wisselen. */
+/** Rondetimer: volgt de duur van de onderdelen, met trillen en geluid bij het wisselen. */
 export function ClubTimer({ id }: { id: string }) {
   const c = useClub(id);
   const [staat, setStaat] = useState<Staat | null>(() => lees(id));
@@ -102,7 +102,8 @@ export function ClubTimer({ id }: { id: string }) {
   };
   const loopt = !!staat && staat.pauze === null;
   const schermAan = useSchermAan(loopt);
-  const stand = timerStand(staat ? ((staat.pauze ?? nu) - staat.start) / 1000 : 0);
+  const rondes = c ? clubPlan(c).rondes : [];
+  const stand = timerStand(staat ? ((staat.pauze ?? nu) - staat.start) / 1000 : 0, rondes);
   const klaar = !!staat && stand.klaar;
 
   useEffect(() => {
@@ -112,7 +113,7 @@ export function ClubTimer({ id }: { id: string }) {
   }, [loopt]);
 
   // Trillen en piepen bij elke wissel.
-  const merk = klaar ? BLOKKEN.length : stand.blok;
+  const merk = klaar ? rondes.length : stand.ronde;
   useEffect(() => {
     if (!loopt) return;
     if (vorig.current !== null && vorig.current !== merk) {
@@ -145,18 +146,18 @@ export function ClubTimer({ id }: { id: string }) {
     vorig.current = null;
   };
 
-  const partij = stand.blok >= RONDES;
-  const blokTitel = partij ? blokNaam('partijvormen') : vt('Ronde {nr} van {n}', { nr: stand.blok + 1, n: RONDES });
+  const ronde = rondes[stand.ronde]!;
+  const blokTitel = ronde.samen ? blokNaam(ronde.samen.categorie) : vt('Ronde {nr} van {n}', { nr: stand.ronde + 1, n: rondes.length });
 
   return (
     <div className="pagina">
       <Kop titel={clubNaam(c)} ouder={`/club/${id}`} />
       <main className="inhoud smal club-timer">
-        <p className="club-timer-blok" style={partij ? blokStijl('partijvormen') : undefined}>
+        <p className="club-timer-blok" style={ronde.samen ? blokStijl(ronde.samen.categorie) : undefined}>
           {klaar ? vt('Klaar!') : blokTitel}
         </p>
         <p className="club-timer-tijd" role="timer">
-          {klok(staat ? stand.rest : BLOK_DUUR)}
+          {klok(staat ? stand.rest : ronde.eind - ronde.begin)}
         </p>
         <div className="club-timer-knoppen">
           {!loopt && !klaar && (
@@ -183,18 +184,12 @@ export function ClubTimer({ id }: { id: string }) {
             </button>
           )}
         </div>
-        {!klaar && (partij ? (
-          <ul className="club-ronde">
-            {partijvelden(c.groepjes).map((v) => (
-              <li key={v.nr}>
-                <b>{vt('Veld {nr}', { nr: v.nr })}</b>
-                {veldGroepen(v)}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <RondeLijst c={c} ronde={stand.blok} />
-        ))}
+        {!klaar && (
+          <>
+            <p className="klein club-noot">{rondeTijd(ronde, c.starttijd)}</p>
+            <RondeLijst c={c} ronde={ronde} />
+          </>
+        )}
         {loopt && !schermAan && <p className="klein club-noot">{vt('Deze browser kan het scherm niet aan houden. Zet automatisch vergrendelen even uit.')}</p>}
         <p className="klein club-noot">{vt('Bij elke wissel trilt de telefoon (als dat kan) en hoor je een signaal.')}</p>
       </main>

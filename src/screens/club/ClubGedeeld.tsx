@@ -4,10 +4,10 @@ import { OefeningBlokken } from '../../components/OefeningBlokken';
 import { vindOefening } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga } from '../../router';
-import { clubNaam, groepNaam, materiaal, partijvelden, rotatie, stationNaam, stations, stationTrainer, uitCode, veldTrainer, type Blok, type GedeeldeClub, type MateriaalRegel, type Station } from '../../clubtraining/clubtraining';
+import { clubNaam, clubPlan, groepNaam, materiaal, partijvelden, rondeTijd, stationNaam, stationTrainer, tijdTekst, uitCode, veldTrainer, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
 import { datumTekst } from '../../training/training';
 import type { Oefening } from '../../model/types';
-import { blokNaam, blokStijl, RotatieTabel, veldGroepen, VeldplanPartij, VeldplanStations } from './onderdelen';
+import { blokNaam, blokStijl, faseTitel, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
 import { LinkFout } from '../GedeeldLink';
 import { t as vt } from '../../i18n/t';
 
@@ -16,7 +16,7 @@ function zoeker(g: GedeeldeClub) {
 }
 
 /** Eén station of de partijvelden, voor de trainer die daar staat. */
-function Plek({ ouder, kop, kleurBlok, regels, oefening }: { ouder: string; kop: string; kleurBlok: Blok; regels: string[]; oefening?: Oefening }) {
+function Plek({ ouder, kop, kleurBlok, regels, oefening }: { ouder: string; kop: string; kleurBlok: string; regels: string[]; oefening?: Oefening }) {
   return (
     <div className="pagina">
       <Kop titel={kop} ouder={ouder} />
@@ -35,7 +35,11 @@ function Plek({ ouder, kop, kleurBlok, regels, oefening }: { ouder: string; kop:
   );
 }
 
-const wieOpStation = (g: GedeeldeClub, s: Station) => rotatie(g.groepjes).map((ronde, i) => vt('Ronde {nr}: groepje {g}', { nr: i + 1, g: ronde.findIndex((x) => x.nr === s.nr) < 0 ? '–' : groepNaam(ronde.findIndex((x) => x.nr === s.nr)) }));
+/** Per ronde waarin dit station meedoet: wanneer en welk groepje. */
+const wieOpStation = (g: GedeeldeClub, s: Station) =>
+  clubPlan(g)
+    .rondes.filter((r) => r.plekken.some((x) => x.nr === s.nr))
+    .map((r) => vt('Ronde {nr}: groepje {g}', { nr: r.nr, g: groepNaam(r.plekken.findIndex((x) => x.nr === s.nr)) }) + ` (${rondeTijd(r, g.starttijd)})`);
 
 function MateriaalBlok({ titel, regels }: { titel: string; regels: MateriaalRegel[] }) {
   return (
@@ -62,8 +66,8 @@ function MateriaalLijst({ g }: { g: GedeeldeClub }) {
   return (
     <>
       <h2 className="sectie-titel">{vt('Materiaal')}</h2>
-      <MateriaalBlok titel={vt('Stations (rondes 1–3)')} regels={m.stations} />
-      <MateriaalBlok titel={vt('Extra voor de partijvelden')} regels={m.extra} />
+      <MateriaalBlok titel={vt('Stations')} regels={m.stations} />
+      <MateriaalBlok titel={vt('Extra voor de samen-onderdelen')} regels={m.extra} />
     </>
   );
 }
@@ -72,21 +76,25 @@ function MateriaalLijst({ g }: { g: GedeeldeClub }) {
  * Een circuittraining bekijken, alleen lezen: stations, veldplan, rotatie en per station de oefening. Gebruikt door de link
  * voor de trainers en door de gedeelde circuittraining in een team. `basis` = adres van deze pagina.
  */
-export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, metMateriaal, children }: { g: GedeeldeClub; basis: string; station?: number; partij?: boolean; kop?: string; ouder?: string; label?: string; metMateriaal?: boolean; children?: ReactNode }) {
+export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, metMateriaal, children }: { g: GedeeldeClub; basis: string; station?: number; partij?: true | number; kop?: string; ouder?: string; label?: string; metMateriaal?: boolean; children?: ReactNode }) {
   const vind = zoeker(g);
-  const lijst = stations(g.groepjes);
+  const plan = clubPlan(g);
+  const lijst = plan.stations;
   const velden = partijvelden(g.groepjes);
+  const samenPad = (i: number) => (i === 0 ? `${basis}/partij` : `${basis}/partij/${i + 1}`);
+  const samenRegels = (o: Onderdeel) => (o.categorie === 'partijvormen' ? velden.map((v) => [vt('Veld {nr}', { nr: v.nr }), veldGroepen(v), veldTrainer(g, v.nr)].filter(Boolean).join(' · ')) : [vt('Alle groepjes samen')]);
 
   if (station) {
     const s = lijst.find((x) => x.nr === station);
     if (!s) return <LinkFout />;
-    const id = g.blokken[s.vorm];
+    const id = vindOnderdeel(g, s.onderdeel)?.oefening;
     const tr = stationTrainer(g, s.nr);
-    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s, g.groepjes) })} kleurBlok={s.vorm} regels={[...(tr ? [vt('Trainer: {naam}', { naam: tr })] : []), ...wieOpStation(g, s)]} oefening={id ? vind(id) : undefined} />;
+    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s) })} kleurBlok={s.vorm} regels={[...(tr ? [vt('Trainer: {naam}', { naam: tr })] : []), ...wieOpStation(g, s)]} oefening={id ? vind(id) : undefined} />;
   }
   if (partij) {
-    const id = g.blokken.partijvormen;
-    return <Plek ouder={basis} kop={blokNaam('partijvormen')} kleurBlok="partijvormen" regels={velden.map((v) => [vt('Veld {nr}', { nr: v.nr }), veldGroepen(v), veldTrainer(g, v.nr)].filter(Boolean).join(' · '))} oefening={id ? vind(id) : undefined} />;
+    const o = plan.samen[partij === true ? 0 : partij - 1];
+    if (!o) return <LinkFout />;
+    return <Plek ouder={basis} kop={blokNaam(o.categorie)} kleurBlok={o.categorie} regels={samenRegels(o)} oefening={o.oefening ? vind(o.oefening) : undefined} />;
   }
 
   return (
@@ -96,7 +104,7 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
         <section className="blok gedeeld-kop">
           <p className="klein">{label ?? vt('Circuittraining')}</p>
           <h2 className="detail-titel">{clubNaam(g)}</h2>
-          <p>{[g.datums.map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes })].filter(Boolean).join(' · ')}</p>
+          <p>{[g.datums.map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes }), tijdTekst(plan.totaal)].filter(Boolean).join(' · ')}</p>
           {children}
         </section>
 
@@ -110,24 +118,34 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
                   {s.nr}
                 </span>
                 <span className="club-station-naam">
-                  {stationNaam(s, g.groepjes)}
+                  {stationNaam(s)}
                   {tr && <small>{tr}</small>}
                 </span>
               </button>
             );
           })}
-          <button className="knop" onClick={() => ga(`${basis}/partij`)}>
-            <span className="club-nr" style={blokStijl('partijvormen')}>
-              P
-            </span>
-            <span className="club-station-naam">{blokNaam('partijvormen')}</span>
-          </button>
+          {plan.samen.map((o, i) => (
+            <button key={o.id} className="knop" onClick={() => ga(samenPad(i))}>
+              <span className="club-nr" style={blokStijl(o.categorie)}>
+                {o.categorie === 'partijvormen' ? 'P' : 'S'}
+              </span>
+              <span className="club-station-naam">{blokNaam(o.categorie)}</span>
+            </button>
+          ))}
         </div>
 
-        <h2 className="sectie-titel">{vt('Veldplan deel 1: rondes 1–3')}</h2>
-        <VeldplanStations c={g} vind={vind} opStation={(s) => ga(`${basis}/station/${s.nr}`)} />
-        <h2 className="sectie-titel">{vt('Veldplan deel 2: laatste kwartier')}</h2>
-        <VeldplanPartij c={g} vind={vind} opVeld={() => ga(`${basis}/partij`)} />
+        {plan.fases.map((f) => (
+          <div key={f.nr}>
+            <h2 className="sectie-titel">{faseTitel(f, plan)}</h2>
+            <VeldplanStations c={g} fase={f} vind={vind} opStation={(s) => ga(`${basis}/station/${s.nr}`)} />
+          </div>
+        ))}
+        {plan.samen.map((o, i) => (
+          <div key={o.id}>
+            <h2 className="sectie-titel">{`${blokNaam(o.categorie)} · ${tijdTekst(o.duur * 60)}`}</h2>
+            <VeldplanSamen c={g} onderdeel={o} vind={vind} opVeld={() => ga(samenPad(i))} />
+          </div>
+        ))}
         <h2 className="sectie-titel">{vt('Rotatieschema')}</h2>
         <RotatieTabel c={g} />
         {metMateriaal && <MateriaalLijst g={g} />}
@@ -137,7 +155,7 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
 }
 
 /** De link voor de trainers: alleen lezen, zonder inloggen. */
-export function ClubGedeeld({ code, basis, station, partij }: { code: string; basis?: string; station?: number; partij?: boolean }) {
+export function ClubGedeeld({ code, basis, station, partij }: { code: string; basis?: string; station?: number; partij?: true | number }) {
   const g = useMemo(() => uitCode(code), [code]);
   return g ? <ClubWeergave g={g} basis={basis ?? `/c/${code}`} station={station} partij={partij} /> : <LinkFout />;
 }

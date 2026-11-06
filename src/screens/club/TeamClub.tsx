@@ -11,7 +11,7 @@ import { ClubWeergave } from './ClubGedeeld';
 import { t as vt } from '../../i18n/t';
 
 /** Gedeelde circuittraining in een team: plan, stations, rotatie, materiaal en animaties, en kopiëren naar je eigen lijst. */
-export function TeamClubScherm({ id, item, station, partij }: { id: string; item: string; station?: number; partij?: boolean }) {
+export function TeamClubScherm({ id, item, station, partij }: { id: string; item: string; station?: number; partij?: true | number }) {
   const team = useTeam(id);
   const it = team?.items.find((x) => x.id === item && x.soort === 'clubtraining');
   const g = useMemo(() => (it ? leesTeamClub(it.data) : null), [it]);

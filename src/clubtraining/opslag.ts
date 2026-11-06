@@ -19,6 +19,10 @@ export const clubtrainingen = new LijstStore<ClubTraining>(apparaatLijst(lokaleO
 
 export const useClubtrainingen = () => useSyncExternalStore(clubtrainingen.abonneer, clubtrainingen.lijst, clubtrainingen.lijst);
 
+/** Eigen sjablonen staan in dezelfde lijst (zo synchroniseren ze mee), maar horen niet bij de trainingen. */
+export const sjablonen = (lijst: ClubTraining[]) => lijst.filter((c) => c.sjabloon);
+export const echteClubs = (lijst: ClubTraining[]) => lijst.filter((c) => !c.sjabloon);
+
 export function useClub(id: string): ClubTraining | undefined {
   return useClubtrainingen().find((c) => c.id === id);
 }

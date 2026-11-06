@@ -18,7 +18,7 @@ import { trainingBackend, trainingen } from '../training/opslag';
 import { favorieten, favorietenBackend } from '../engine/favorieten';
 import { bordBackend, borden, opstellingBackend, opstellingen, spelersnamen } from '../wedstrijd/opslag';
 import { clubBackend, clubtrainingen } from '../clubtraining/opslag';
-import { clubNaam, voorTeam } from '../clubtraining/clubtraining';
+import { clubNaam, metOefeningIds, oefeningIds, voorTeam } from '../clubtraining/clubtraining';
 import { bordNaam, namenUitOpstellingen, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
@@ -423,7 +423,6 @@ export function deelTraining(team: string, trainingId: string): Promise<void> {
 export function deelClub(team: string, id: string): Promise<void> {
   const c = clubtrainingen.haal(id);
   if (!c) throw new T.TeamFout(vt('Circuittraining niet gevonden'));
-  const { eigen, nieuwId } = meeTeNemen(Object.values(c.blokken), team);
-  const blokken = Object.fromEntries(Object.entries(c.blokken).map(([blok, oefening]) => [blok, nieuwId(oefening)]));
-  return T.deelItem(ik(), team, { id, soort: 'clubtraining', naam: clubNaam(c), data: voorTeam({ ...c, blokken }, eigen) });
+  const { eigen, nieuwId } = meeTeNemen(oefeningIds(c), team);
+  return T.deelItem(ik(), team, { id, soort: 'clubtraining', naam: clubNaam(c), data: voorTeam({ ...c, onderdelen: metOefeningIds(c, nieuwId) }, eigen) });
 }

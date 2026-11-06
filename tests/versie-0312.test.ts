@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { leesHash } from '../src/router';
-import { leesTeamClub, materiaal, naarCode, nieuweClub, uitCode, uitGedeeldeClub, voorTeam, type ClubTraining } from '../src/clubtraining/clubtraining';
+import { leesTeamClub, materiaal, naarCode, nieuweClub, onderdelenVan, uitCode, uitGedeeldeClub, voorTeam, type ClubTraining } from '../src/clubtraining/clubtraining';
 import { oefeningNaarCode, oefeningUitCode, voorDelen } from '../src/eigen/eigen';
 import { meeTeNemen } from '../src/eigen/meenemen';
 import { eigenOefeningen } from '../src/eigen/opslag';
@@ -36,7 +36,7 @@ describe('circuittraining in een team', () => {
     const o = eigenOefening('eigen-a');
     const g = leesTeamClub(voorTeam(club(), [o]))!;
     expect(g).toMatchObject({ naam: 'Maandag', datums: ['2026-11-09', '2026-11-11'], kinderen: 24, groepjes: 6, leeftijd: 'mini-5-7', trainers: ['Testtrainer 1'], stationTrainers: { 1: 'Testtrainer 1' }, veldTrainers: { 2: 'Testtrainer 2' } });
-    expect(g.blokken).toEqual({ techniek: 'eigen-a', partijvormen: 'veld-mt-3-tegen-3' });
+    expect(onderdelenVan(g).flatMap((o) => (o.oefening ? [o.oefening] : []))).toEqual(['eigen-a', 'veld-mt-3-tegen-3']);
     expect(g.eigen?.map((x) => x.id)).toEqual(['eigen-a']);
     expect(voorTeam(club())).not.toContain('afgevinkt');
   });
@@ -54,7 +54,7 @@ describe('circuittraining in een team', () => {
     const g = leesTeamClub(voorTeam(club(), [eigenOefening('eigen-a')]))!;
     const kopie = uitGedeeldeClub(g, new Map([['eigen-a', 'eigen-nieuw']]), 5000, 'c2');
     expect(kopie).toMatchObject({ id: 'c2', naam: 'Maandag', afgevinkt: [], gemaakt: 5000, gewijzigd: 5000 });
-    expect(kopie.blokken).toEqual({ techniek: 'eigen-nieuw', partijvormen: 'veld-mt-3-tegen-3' });
+    expect(onderdelenVan(kopie).flatMap((o) => (o.oefening ? [o.oefening] : []))).toEqual(['eigen-nieuw', 'veld-mt-3-tegen-3']);
     expect(kopie).not.toHaveProperty('eigen');
   });
   it('materiaal werkt ook op een gedeelde circuittraining', () => {
@@ -65,7 +65,8 @@ describe('circuittraining in een team', () => {
   it('de deellink blijft werken na het herschrijven van het lezen', () => {
     const c = club();
     const g = uitCode(naarCode(c, [eigenOefening('eigen-a')]))!;
-    expect(g).toMatchObject({ naam: 'Maandag', groepjes: 6, kinderen: 24, blokken: c.blokken, stationTrainers: { 1: 'Testtrainer 1' } });
+    expect(g).toMatchObject({ naam: 'Maandag', groepjes: 6, kinderen: 24, stationTrainers: { 1: 'Testtrainer 1' } });
+    expect(onderdelenVan(g).map((o) => o.oefening)).toEqual(onderdelenVan(c).map((o) => o.oefening));
     expect(g.eigen?.[0]).toMatchObject({ id: 'eigen-a', eigen: true });
   });
   it('adressen', () => {

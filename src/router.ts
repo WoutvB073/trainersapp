@@ -55,9 +55,9 @@ export type Route =
   | { naam: 'teams' }
   | { naam: 'team'; id: string }
   | { naam: 'teamtraining'; id: string; item: string }
-  | { naam: 'teamclub'; id: string; item: string; station?: number; partij?: boolean }
+  | { naam: 'teamclub'; id: string; item: string; station?: number; partij?: true | number }
   | { naam: 'oefening-gedeeld'; code: string }
-  | { naam: 'link'; code: string; station?: number; partij?: boolean }
+  | { naam: 'link'; code: string; station?: number; partij?: true | number }
   | { naam: 'link-fout' }
   | { naam: 'deellinks' }
   | { naam: 'wedstrijd' }
@@ -75,7 +75,7 @@ export type Route =
   | { naam: 'club-kiezen'; id: string; blok: string }
   | { naam: 'club-plan'; id: string }
   | { naam: 'club-timer'; id: string }
-  | { naam: 'club-gedeeld'; code: string; station?: number; partij?: boolean }
+  | { naam: 'club-gedeeld'; code: string; station?: number; partij?: true | number }
   | { naam: 'eigen-nieuw' }
   | { naam: 'tekenen'; id: string }
   | { naam: 'gegevens'; id: string }
@@ -104,7 +104,7 @@ export function leesHash(hash: string): Route {
   if (a === 'training' && b && c === 'genereren') return { naam: 'genereren', id: b };
   if (a === 'training' && b && c === 'modus') return { naam: 'modus', id: b, nr: Math.max(1, Number(d) || 1) };
   if (a === 'd' && b && c === 'station') return { naam: 'link', code: b, station: Math.max(1, Number(d) || 1) };
-  if (a === 'd' && b && c === 'partij') return { naam: 'link', code: b, partij: true };
+  if (a === 'd' && b && c === 'partij') return { naam: 'link', code: b, partij: Number(d) > 1 ? Number(d) : true };
   if (a === 'd' && b) return { naam: 'link', code: b };
   // Een afgekapte link (WhatsApp maakte soms alleen het begin klikbaar).
   if (['c', 'd', 'o', 't', 'w'].includes(a) && !b) return { naam: 'link-fout' };
@@ -119,7 +119,7 @@ export function leesHash(hash: string): Route {
   if (a === 'team' && b && !c) return { naam: 'team', id: b };
   if (a === 'team' && b && c === 'training' && d) return { naam: 'teamtraining', id: b, item: d };
   if (a === 'team' && b && c === 'club' && d && e === 'station') return { naam: 'teamclub', id: b, item: d, station: Math.max(1, Number(f) || 1) };
-  if (a === 'team' && b && c === 'club' && d && e === 'partij') return { naam: 'teamclub', id: b, item: d, partij: true };
+  if (a === 'team' && b && c === 'club' && d && e === 'partij') return { naam: 'teamclub', id: b, item: d, partij: Number(f) > 1 ? Number(f) : true };
   if (a === 'team' && b && c === 'club' && d) return { naam: 'teamclub', id: b, item: d };
   if (a === 'wedstrijd' && !b) return { naam: 'wedstrijd' };
   if (a === 'opstelling' && b) return { naam: 'opstelling', id: b };
@@ -137,7 +137,7 @@ export function leesHash(hash: string): Route {
   if (a === 'club' && b && c === 'plan') return { naam: 'club-plan', id: b };
   if (a === 'club' && b && c === 'timer') return { naam: 'club-timer', id: b };
   if (a === 'c' && b && c === 'station') return { naam: 'club-gedeeld', code: b, station: Math.max(1, Number(d) || 1) };
-  if (a === 'c' && b && c === 'partij') return { naam: 'club-gedeeld', code: b, partij: true };
+  if (a === 'c' && b && c === 'partij') return { naam: 'club-gedeeld', code: b, partij: Number(d) > 1 ? Number(d) : true };
   if (a === 'c' && b) return { naam: 'club-gedeeld', code: b };
   if (a === 'eigen' && b === 'nieuw') return { naam: 'eigen-nieuw' };
   if (a === 'eigen' && b && c === 'tekenen') return { naam: 'tekenen', id: b };
