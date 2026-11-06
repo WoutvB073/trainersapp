@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (05-11-2026, versie 0.31.3)
+## Status (06-11-2026, versie 0.32.0)
 
 | Fase | Status |
 |---|---|
@@ -41,6 +41,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 27. Nieuwe namen (Teamtraining, Circuittraining) en nieuw startscherm (0.31.1) | ✅ online, getest |
 | 28. Delen met team bij Circuittraining, overal link én team, sync-fouten opgelost (0.31.2) | ✅ online, getest |
 | 29. Korte deellinks, links openen zonder installatiescherm, pijl in eigen strook, synchroniseren nagelopen (0.31.3) | ✅ online – **wacht op test** |
+| 30. Circuittraining flexibel: eigen onderdelen, 2–8 groepjes, Stations/Samen, sjablonen, rondetimer (0.32.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1155,8 +1156,25 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
   - Getest en in orde: snel afvinken, thema, taal, aantallen, leeftijd, opstellingen, borden, eerste keer samenvoegen. Team-items schrijven rechtstreeks naar Firestore en lopen niet via deze route.
   - Emulator: naast de kapotte berichten (0.31.2) crasht hij soms een schrijfstream ("Application error processing RPC"), en een schrijfactie wordt in de browser soms pas na precies 30 seconden bevestigd. Niets gaat verloren en op het echte project is dit niet gezien. Online-tests krijgen alleen dan een herkansing (`HERKANSING` in `tests/online/hulp.ts`).
 
+## Besluiten versie 0.32.0 – circuittraining flexibel
+- **Model** (`src/clubtraining/clubtraining.ts`): `onderdelen` op volgorde, elk met categorie, duur, Stations of Samen en een oefening. Trainingen, links en team-items van vóór 0.32.0 hebben alleen `blokken` en worden gelezen als Mini Talents (`onderdelenVan`); er is niets omgezet. Link-versie 2 sinds 0.32.0, versie 1 blijft te lezen.
+- **Rotatie** (`clubPlan`): station-onderdelen tussen twee Samen-onderdelen gaan in fases (`faseGroottes`). Minder onderdelen dan groepjes: één fase, onderdelen vaker op het veld. Evenveel of meer: fases van minstens zoveel onderdelen als groepjes, elk onderdeel 1× op het veld; past het niet precies, dan worden de laatste fases één groter en blijven daar stations leeg. In een fase van k staat groepje g in ronde r op onderdeel (g + r) mod k.
+- **Tijd**: alle groepjes wisselen tegelijk, dus een ronde duurt zo lang als het langste onderdeel erin; de app meldt welke onderdelen daardoor langer duren. Begintijd is optioneel: dan toont de rotatie de klok, anders minuten vanaf de start.
+- **Sjablonen**: items in dezelfde lijst met `sjabloon: true`, zodat ze meesynchroniseren zonder nieuwe Firestore-regels.
+- **Tests**: `tests/versie-0320.test.ts` (2–8 groepjes × 3–6 onderdelen × alle verdelingen Stations/Samen, het voorbeeld met 2 groepjes), browsertest `tools/e2e/versie-0320.mjs`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.32.0 – Past het aantal onderdelen niet precies bij de groepjes (bijv. 3 onderdelen bij 2 groepjes), dan kiest de app voor een station dat leeg blijft en niet voor een oefening die dubbel moet: geen enkel groepje wacht, en er is minder materiaal nodig. Bij meer groepjes dan onderdelen staan oefeningen wel dubbel, zoals bij 4 of 5 groepjes in 0.31.0. De app zegt het bij de onderdelen en bij de rotatie.
+- 0.32.0 – Instellingen, onderdelen en oefeningen staan op één scherm in plaats van twee: per onderdeel de duur, Stations/Samen en Kies/Genereer.
+- 0.32.0 – Begintijd is er als extra veld bij gekomen, zodat de rotatie echte tijden kan tonen.
+- 0.32.0 – Een sjabloon bewaart onderdelen, duur, groepjes, kinderen en leeftijd, maar geen oefeningen, trainers of datums. Een sjabloon verwijder je met het prullenbakje in de keuze bij Nieuwe circuittraining.
+- 0.32.0 – Zelf samenstellen begint met Warming-up (samen, 10), Techniek (10), Afwerken (10), Partijvormen (samen, 15) en 6 groepjes.
+- 0.32.0 – Samen buiten de partijvormen is één plek voor alle kinderen: de oefening staat één keer op het veld, en het materiaal is voor alle kinderen. Hetzelfde onderdeel twee keer kiezen mag.
+- 0.32.0 – Het tabblad Partij heet Samen als er ook andere Samen-onderdelen zijn, en verdwijnt als er geen zijn. Tabblad Stations verdwijnt als alles Samen is.
+- 0.32.0 – Bij het veranderen van de onderdelen of de volgorde gaan de zelf gekozen trainers per station terug naar automatisch, want de stations veranderen dan.
+- 0.32.0 – Materiaal telt alle stations bij elkaar op, ook van verschillende fases: je zet alles in één keer klaar.
+- 0.32.0 – Warming-up en andere onderdelen zijn in het Engels "Parts"; Stations/Samen is Stations/Together.
 - 0.31.3 – De controle van het synchroniseren en de korte links zijn samen één versie 0.31.3, omdat beide opdrachten dat nummer noemden. Het synchroniseren is eerst afgemaakt, omdat dat al begonnen was.
 - 0.31.3 – Codes van 12 tekens in plaats van 8: moeilijker te raden en de link is met 56 tekens nog onder de 60.
 - 0.31.3 – Links verlopen niet vanzelf: ze werken tot je ze intrekt. Dezelfde inhoud nog eens delen geeft dezelfde link; na een wijziging komt er een nieuwe link en de oude blijft de oude inhoud tonen.

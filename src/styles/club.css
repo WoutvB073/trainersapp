@@ -538,3 +538,19 @@
 .club-ronde-leeg {
   color: var(--tekst-2);
 }
+
+/* In een rondekaart één regel per groepje: lange namen lopen anders tegen elkaar. */
+.club-ronde-kaart .club-ronde {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.club-twee .leeftijd-keuze {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.club-twee .leeftijd-keuze select {
+  width: 100%;
+  max-width: none;
+}

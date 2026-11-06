@@ -20,7 +20,7 @@ for (const [formaat, vp] of [
   ['SE', { width: 375, height: 667, deviceScaleFactor: 2, isMobile: true, hasTouch: true }],
   ['laptop', { width: 1366, height: 820, deviceScaleFactor: 1 }],
 ]) {
-  for (const taal of ['nl', 'en']) {
+  for (const taal of process.env.TAAL ? [process.env.TAAL] : ['nl', 'en']) {
     const waar = `${taal} ${formaat}`;
     const T = (s, vars = {}) => {
       let x = taal === 'en' ? (EN[s] ?? s) : s;
@@ -146,33 +146,29 @@ for (const [formaat, vp] of [
       await sleep(naamVan('loopcoordinatie'), naamVan('techniek'));
       await sleep(naamVan('partijvormen'), naamVan('een-tegen-een'));
     } else {
-      // Op de telefoon met de vinger.
-      const veeg = async (naam, doel) => {
-        const r = await page.evaluate(
-          (naam, doel) => {
-            const kaart = (n) => [...document.querySelectorAll('.club-blok')].find((k) => k.querySelector('.club-blok-titel').textContent === n);
-            const van = kaart(naam).querySelector('.club-greep');
-            van.scrollIntoView({ block: 'center' });
-            const a = van.getBoundingClientRect();
-            const b = kaart(doel).getBoundingClientRect();
-            return { x: a.x + a.width / 2, y: a.y + a.height / 2, y2: b.y + 8 };
-          },
-          naam,
-          doel,
-        );
+      // Op de telefoon met de vinger, één plek per keer (bij de rand van het scherm scrolt de pagina mee).
+      const stap = async (naam, richting) => {
+        const r = await page.evaluate((naam) => {
+          const kaart = [...document.querySelectorAll('.club-blok')].find((k) => k.querySelector('.club-blok-titel').textContent === naam);
+          const greep = kaart.querySelector('.club-greep');
+          greep.scrollIntoView({ block: 'center' });
+          const g = greep.getBoundingClientRect();
+          return { x: g.x + g.width / 2, y: g.y + g.height / 2, h: kaart.getBoundingClientRect().height };
+        }, naam);
+        const y2 = r.y + richting * r.h * 0.7;
         const c = await page.createCDPSession();
-        const punt = (y) => [{ x: r.x, y }];
-        await c.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: punt(r.y) });
+        await c.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: r.x, y: r.y }] });
         for (let i = 1; i <= 14; i += 1) {
-          await c.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: punt(r.y + ((r.y2 - r.y) * i) / 14) });
-          await slaap(16);
+          await c.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: r.x, y: r.y + ((y2 - r.y) * i) / 14 }] });
+          await slaap(20);
         }
-        await slaap(120);
+        await slaap(150);
         await c.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
         await slaap(350);
       };
-      await veeg(naamVan('loopcoordinatie'), naamVan('techniek'));
-      await veeg(naamVan('partijvormen'), naamVan('een-tegen-een'));
+      await page.evaluate(() => document.activeElement?.blur());
+      for (let i = 0; i < 3; i += 1) await stap(naamVan('loopcoordinatie'), -1);
+      await stap(naamVan('een-tegen-een'), -1);
     }
     const volgorde = await delen();
     const verwacht = [naamVan('loopcoordinatie'), naamVan('techniek'), naamVan('afwerken'), naamVan('een-tegen-een'), naamVan('partijvormen')];

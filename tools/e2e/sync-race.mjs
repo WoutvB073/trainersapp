@@ -45,6 +45,8 @@ const SNEL = process.env.SNEL === '1'; // alleen favorieten, afvinken, thema en 
 for (const [wat, delay] of SNEL ? [] : [['snel', 0], ['snel', 0], ['20 ms', 20], ['mensentempo 80 ms', 80], ['mensentempo 150 ms', 150]]) {
   await ga('/club');
   await knop('Nieuwe circuittraining');
+  await page.waitForSelector('.paneel');
+  await knop('Mini Talents', '.paneel button');
   await page.waitForSelector('input[maxlength="80"]');
   await slaap(800);
   await page.type('input[maxlength="80"]', NAAM, { delay });

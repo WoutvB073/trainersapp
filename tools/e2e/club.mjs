@@ -56,8 +56,8 @@ const tik = (page, tekst) => page.evaluate((tekst) => {
 
 for (const taal of ['nl', 'en']) {
   const T = taal === 'nl'
-    ? { nieuw: 'Nieuwe circuittraining', alles: 'Genereer alles', plan: 'Veldplan, rotatie', partij: 'Partij', rotatie: 'Rotatie', materiaal: 'Materiaal', timer: 'Kwartiertimer', start: 'Start', volgende: 'Volgende', stoppen: 'Stoppen', stations: 'Stations' }
-    : { nieuw: 'New circuit session', alles: 'Generate all', plan: 'Pitch plan, rotation', partij: 'Games', rotatie: 'Rotation', materiaal: 'Equipment', timer: '15-minute timer', start: 'Start', volgende: 'Next', stoppen: 'Stop', stations: 'Stations' };
+    ? { nieuw: 'Nieuwe circuittraining', alles: 'Genereer alles', plan: 'Veldplan, rotatie', partij: 'Partij', rotatie: 'Rotatie', materiaal: 'Materiaal', timer: 'Rondetimer', start: 'Start', volgende: 'Volgende', stoppen: 'Stoppen', stations: 'Stations' }
+    : { nieuw: 'New circuit session', alles: 'Generate all', plan: 'Pitch plan, rotation', partij: 'Games', rotatie: 'Rotation', materiaal: 'Equipment', timer: 'Round timer', start: 'Start', volgende: 'Next', stoppen: 'Stop', stations: 'Stations' };
   for (const [naam, w, h, mobiel] of FORMATEN) {
     const waar = `${taal} ${naam}`;
     const ctx = await browser.createBrowserContext();
@@ -76,6 +76,8 @@ for (const taal of ['nl', 'en']) {
     await open('/club');
     await tik(page, T.nieuw);
     await slaap(200);
+    await tik(page, 'Mini Talents');
+    await slaap(200);
     await page.goBack();
     await slaap(300);
     const leeg = await page.evaluate(() => document.querySelectorAll('.training-regel').length);
@@ -83,6 +85,8 @@ for (const taal of ['nl', 'en']) {
 
     // Instellen en genereren.
     await tik(page, T.nieuw);
+    await slaap(200);
+    await tik(page, 'Mini Talents');
     await slaap(200);
     const id = await page.evaluate(() => location.hash.split('/')[2]);
     await page.type('.club-gegevens input', 'Mini Talents');
@@ -204,6 +208,8 @@ for (const g of [3, 5, 8]) {
   const page = await nieuw(ctx, 'nl', 375, 667, true, `${g} groepjes`);
   await page.goto(`${BASE}?r=g${g}#/club`, { waitUntil: 'networkidle0' });
   await tik(page, 'Nieuwe circuittraining');
+  await slaap(200);
+  await tik(page, 'Mini Talents');
   await slaap(200);
   await page.evaluate((g) => {
     const s = [...document.querySelectorAll('.club-gegevens .veld select')][0];
