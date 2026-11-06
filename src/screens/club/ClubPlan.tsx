@@ -3,10 +3,10 @@ import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
-import { clubNaam, materiaal, partijvelden, stationNaam, stations, stationTrainer, veldTrainer, type ClubTraining, type MateriaalRegel } from '../../clubtraining/clubtraining';
+import { blokNaam, clubNaam, clubPlan, materiaal, partijvelden, stationNaam, stationTrainer, tijdTekst, veldTrainer, vindOnderdeel, type ClubTraining, type MateriaalRegel, type Onderdeel } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
-import { RotatieTabel, veldGroepen, VeldplanPartij, VeldplanStations } from './onderdelen';
+import { faseTitel, PlanNoot, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
 import { t as vt } from '../../i18n/t';
 
 type Tab = 'deel1' | 'deel2' | 'rotatie' | 'materiaal';
@@ -64,61 +64,64 @@ export function ClubPlan({ id }: { id: string }) {
   if (!c || !m) return <NietGevonden />;
 
   const zet = (w: Partial<ClubTraining>) => clubtrainingen.bewaar({ ...(clubtrainingen.haal(id) ?? c), ...w });
+  const plan = clubPlan(c);
+  const open = (o?: Onderdeel) => {
+    if (o?.oefening) ga(`/oefening/${o.oefening}`);
+  };
+  const alleenPartij = plan.samen.every((o) => o.categorie === 'partijvormen');
+  const metPartij = plan.samen.some((o) => o.categorie === 'partijvormen');
   const heeftTrainers = c.trainers.some((x) => x.trim());
   const alle = [...m.stations, ...m.extra];
   const klaar = alle.filter((r) => c.afgevinkt.includes(r.sleutel)).length;
   const tabs: [Tab, string][] = [
-    ['deel1', vt('Stations')],
-    ['deel2', vt('Partij')],
+    ...(plan.stations.length ? ([['deel1', vt('Stations')]] as [Tab, string][]) : []),
+    ...(plan.samen.length ? ([['deel2', alleenPartij ? vt('Partij') : vt('Samen')]] as [Tab, string][]) : []),
     ['rotatie', vt('Rotatie')],
     ['materiaal', vt('Materiaal')],
   ];
+  const actief = tabs.some(([k]) => k === tab) ? tab : tabs[0]![0];
 
   return (
     <div className="pagina">
       <Kop titel={clubNaam(c)} ouder={`/club/${id}`} />
       <main className="inhoud smal">
-        <div className="tabs club-tabs" role="tablist">
+        <div className={`tabs club-tabs club-tabs-${tabs.length}`} role="tablist">
           {tabs.map(([k, naam]) => (
-            <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'aan' : ''} onClick={() => setTab(k)}>
+            <button key={k} role="tab" aria-selected={actief === k} className={actief === k ? 'aan' : ''} onClick={() => setTab(k)}>
               {naam}
             </button>
           ))}
         </div>
 
-        {tab === 'deel1' && (
+        {actief === 'deel1' && (
           <>
-            <h2 className="sectie-titel">{vt('Veldplan deel 1: rondes 1–3')}</h2>
-            <VeldplanStations
-              c={c}
-              vind={vindOefening}
-              opStation={(s) => {
-                const oid = c.blokken[s.vorm];
-                if (oid) ga(`/oefening/${oid}`);
-              }}
-            />
+            {plan.fases.map((f) => (
+              <div key={f.nr}>
+                <h2 className="sectie-titel">{faseTitel(f, plan)}</h2>
+                <VeldplanStations c={c} fase={f} vind={vindOefening} opStation={(s) => open(vindOnderdeel(c, s.onderdeel))} />
+              </div>
+            ))}
+            <PlanNoot c={c} />
             {heeftTrainers && (
               <section className="blok club-trainers">
                 <h3>{vt('Trainers per station')}</h3>
-                {stations(c.groepjes).map((s) => (
-                  <TrainerKeuze key={s.nr} label={`${s.nr}. ${stationNaam(s, c.groepjes)}`} c={c} waarde={stationTrainer(c, s.nr)} opKies={(naam) => zet({ stationTrainers: { ...c.stationTrainers, [s.nr]: naam } })} />
+                {plan.stations.map((s) => (
+                  <TrainerKeuze key={s.nr} label={`${s.nr}. ${stationNaam(s)}`} c={c} waarde={stationTrainer(c, s.nr)} opKies={(naam) => zet({ stationTrainers: { ...c.stationTrainers, [s.nr]: naam } })} />
                 ))}
               </section>
             )}
           </>
         )}
 
-        {tab === 'deel2' && (
+        {actief === 'deel2' && (
           <>
-            <h2 className="sectie-titel">{vt('Veldplan deel 2: laatste kwartier')}</h2>
-            <VeldplanPartij
-              c={c}
-              vind={vindOefening}
-              opVeld={() => {
-                if (c.blokken.partijvormen) ga(`/oefening/${c.blokken.partijvormen}`);
-              }}
-            />
-            {heeftTrainers && (
+            {plan.samen.map((o) => (
+              <div key={o.id}>
+                <h2 className="sectie-titel">{`${blokNaam(o.categorie)} · ${tijdTekst(o.duur * 60)}`}</h2>
+                <VeldplanSamen c={c} onderdeel={o} vind={vindOefening} opVeld={() => open(o)} />
+              </div>
+            ))}
+            {heeftTrainers && metPartij && (
               <section className="blok club-trainers">
                 <h3>{vt('Trainers per veld')}</h3>
                 {partijvelden(c.groepjes).map((v) => (
@@ -129,14 +132,14 @@ export function ClubPlan({ id }: { id: string }) {
           </>
         )}
 
-        {tab === 'rotatie' && (
+        {actief === 'rotatie' && (
           <>
             <h2 className="sectie-titel">{vt('Rotatieschema')}</h2>
             <RotatieTabel c={c} />
           </>
         )}
 
-        {tab === 'materiaal' && (
+        {actief === 'materiaal' && (
           <>
             <h2 className="sectie-titel">
               {vt('Materiaal klaarzetten')} <span className="teller-klein">{`${klaar}/${alle.length}`}</span>
@@ -144,12 +147,12 @@ export function ClubPlan({ id }: { id: string }) {
             {alle.length === 0 ? (
               <div className="leeg">
                 <Icoon naam="materiaal" maat={28} />
-                <p>{vt('Kies eerst de oefeningen voor de blokken.')}</p>
+                <p>{vt('Kies eerst de oefeningen voor de onderdelen.')}</p>
               </div>
             ) : (
               <>
-                <Regels titel={vt('Stations (rondes 1–3)')} regels={m.stations} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
-                <Regels titel={vt('Extra voor de partijvelden')} regels={m.extra} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
+                <Regels titel={vt('Stations')} regels={m.stations} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
+                <Regels titel={alleenPartij ? vt('Extra voor de partijvelden') : vt('Extra voor de samen-onderdelen')} regels={m.extra} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
               </>
             )}
           </>

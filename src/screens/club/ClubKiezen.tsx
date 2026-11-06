@@ -5,25 +5,25 @@ import { Miniatuur } from '../../components/Miniatuur';
 import { alleOefeningen } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga, terug } from '../../router';
-import { BLOKKEN, blokKandidaten, blokNaam, type Blok } from '../../clubtraining/clubtraining';
+import { blokNaam, onderdeelKandidaten, onderdelenVan, vindOnderdeel } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
 import { t as vt } from '../../i18n/t';
 
-/** Eén oefening kiezen voor een blok, uit de bibliotheek (leeftijd en categorie van het blok). */
+/** Eén oefening kiezen voor een onderdeel, uit de bibliotheek (leeftijd en categorie van het onderdeel). */
 export function ClubKiezen({ id, blok }: { id: string; blok: string }) {
   const c = useClub(id);
-  const b = BLOKKEN.find((x) => x === blok) as Blok | undefined;
+  const b = c && vindOnderdeel(c, blok);
   if (!c || !b) return <NietGevonden />;
-  const lijst = blokKandidaten(c, b, alleOefeningen());
+  const lijst = onderdeelKandidaten(c, b, alleOefeningen());
   const kies = (oid: string) => {
     const nu = clubtrainingen.haal(id) ?? c;
-    clubtrainingen.bewaar({ ...nu, blokken: { ...nu.blokken, [b]: oid } });
+    clubtrainingen.bewaar({ ...nu, onderdelen: onderdelenVan(nu).map((o) => (o.id === blok ? { ...o, oefening: oid } : o)) });
     terug(`/club/${id}`);
   };
   return (
     <div className="pagina">
-      <Kop titel={blokNaam(b)} ouder={`/club/${id}`} />
+      <Kop titel={blokNaam(b.categorie)} ouder={`/club/${id}`} />
       <main className="inhoud">
         <p className="klein club-noot">{leeftijdNaam(c.leeftijd)}</p>
         {lijst.length === 0 ? (
@@ -34,7 +34,7 @@ export function ClubKiezen({ id, blok }: { id: string; blok: string }) {
         ) : (
           <ul className="kaarten">
             {lijst.map((o) => {
-              const gekozen = c.blokken[b] === o.id;
+              const gekozen = b.oefening === o.id;
               return (
                 <li key={o.id} className={`kies-kaart${gekozen ? ' gekozen' : ''}`}>
                   <a

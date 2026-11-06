@@ -2,31 +2,36 @@ import type { ReactNode } from 'react';
 import { Miniatuur } from '../../components/Miniatuur';
 import type { Oefening } from '../../model/types';
 import {
-  BLOK_KLEUR,
   blokNaam,
+  categorieKleur,
+  clubPlan,
   groepNaam,
   partijvelden,
-  RONDES,
-  rotatie,
+  rondeTijd,
   stationNaam,
-  stations,
   stationTrainer,
   stationVak,
   veldTrainer,
   veldVak,
-  type Blok,
+  vindOnderdeel,
   type ClubTraining,
+  type Fase,
+  type Onderdeel,
   type Partijveld,
+  type Ronde,
   type Station,
   type Vak,
 } from '../../clubtraining/clubtraining';
 import { t as vt } from '../../i18n/t';
 
 /** De delen van een clubtraining die het plan en de gedeelde weergave allebei tonen. */
-export type ClubInhoud = Pick<ClubTraining, 'groepjes' | 'kinderen' | 'trainers' | 'blokken' | 'stationTrainers' | 'veldTrainers'>;
+export type ClubInhoud = Pick<ClubTraining, 'groepjes' | 'kinderen' | 'trainers' | 'blokken' | 'onderdelen' | 'starttijd' | 'stationTrainers' | 'veldTrainers'>;
 type Vind = (id: string) => Oefening | undefined;
 
-const kleur = (b: Blok) => ({ background: BLOK_KLEUR[b].vlak, color: BLOK_KLEUR[b].tekst });
+const kleur = (categorie: string) => {
+  const k = categorieKleur(categorie);
+  return { background: k.vlak, color: k.tekst };
+};
 const plek = (v: Vak) => ({ left: `${v.x}%`, top: `${v.y}%`, width: `${v.b}%`, height: `${v.h}%` });
 
 /** Staand half veld van bovenaf (goal boven, middenlijn onder). */
@@ -47,7 +52,7 @@ function HalfVeld({ children }: { children: ReactNode }) {
   );
 }
 
-function VakKaart({ vak, blok, nr, naam, trainer, oefening, sub, opTik }: { vak: Vak; blok: Blok; nr: string; naam: string; trainer?: string; oefening?: Oefening; sub?: string; opTik?: () => void }) {
+function VakKaart({ vak, blok, nr, naam, trainer, oefening, sub, opTik }: { vak: Vak; blok: string; nr: string; naam: string; trainer?: string; oefening?: Oefening; sub?: string; opTik?: () => void }) {
   const inhoud = (
     <>
       <span className="club-vak-kop" style={kleur(blok)}>
@@ -69,43 +74,83 @@ function VakKaart({ vak, blok, nr, naam, trainer, oefening, sub, opTik }: { vak:
   );
 }
 
-/** Veldplan deel 1: de stations. */
-export function VeldplanStations({ c, vind, opStation }: { c: ClubInhoud; vind: Vind; opStation?: (s: Station) => void }) {
+const oefeningVan = (c: ClubInhoud, s: Station, vind: Vind) => {
+  const id = vindOnderdeel(c, s.onderdeel)?.oefening;
+  return id ? vind(id) : undefined;
+};
+
+/** Kop boven een veldplan: welke rondes dit zijn. */
+export const faseTitel = (f: Fase, plan: { rondes: Ronde[] }) => {
+  const a = plan.rondes[f.eerste]!.nr;
+  const b = plan.rondes[f.laatste]!.nr;
+  return a === b ? vt('Veldplan: ronde {a}', { a }) : vt('Veldplan: rondes {a}–{b}', { a, b });
+};
+
+/** Veldplan van één fase: de stations die tegelijk op het veld staan. */
+export function VeldplanStations({ c, fase, vind, opStation }: { c: ClubInhoud; fase: Fase; vind: Vind; opStation?: (s: Station) => void }) {
   return (
     <HalfVeld>
-      {stations(c.groepjes).map((s) => {
-        const id = c.blokken[s.vorm];
-        return <VakKaart key={s.nr} vak={stationVak(s, c.groepjes)} blok={s.vorm} nr={String(s.nr)} naam={stationNaam(s, c.groepjes)} trainer={stationTrainer(c, s.nr)} oefening={id ? vind(id) : undefined} opTik={opStation && (() => opStation(s))} />;
-      })}
+      {fase.stations.map((s) => (
+        <VakKaart key={s.nr} vak={stationVak(s, fase)} blok={s.vorm} nr={String(s.nr)} naam={stationNaam(s)} trainer={stationTrainer(c, s.nr)} oefening={oefeningVan(c, s, vind)} opTik={opStation && (() => opStation(s))} />
+      ))}
     </HalfVeld>
   );
 }
 
 export const veldGroepen = (v: Partijveld) => [...v.groepen.map(groepNaam), ...(v.metTrainer ? [vt('trainer')] : [])].join(' + ');
 
-/** Veldplan deel 2: de partijvelden. */
-export function VeldplanPartij({ c, vind, opVeld }: { c: ClubInhoud; vind: Vind; opVeld?: () => void }) {
+/** Een Samen-onderdeel: partijvelden, of één plek voor alle groepjes. */
+export function VeldplanSamen({ c, onderdeel, vind, opVeld }: { c: ClubInhoud; onderdeel: Onderdeel; vind: Vind; opVeld?: () => void }) {
+  const o = onderdeel.oefening ? vind(onderdeel.oefening) : undefined;
+  if (onderdeel.categorie !== 'partijvormen') {
+    return (
+      <HalfVeld>
+        <VakKaart vak={{ x: 4, y: 4, b: 92, h: 92 }} blok={onderdeel.categorie} nr="" naam={blokNaam(onderdeel.categorie)} sub={vt('Alle groepjes samen')} oefening={o} opTik={opVeld} />
+      </HalfVeld>
+    );
+  }
   const velden = partijvelden(c.groepjes);
-  const id = c.blokken.partijvormen;
-  const o = id ? vind(id) : undefined;
   return (
     <>
       <HalfVeld>
         {velden.map((v) => (
-          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok="partijvormen" nr="" naam={vt('Veld {nr}', { nr: v.nr })} sub={veldGroepen(v)} trainer={veldTrainer(c, v.nr)} oefening={o} opTik={opVeld} />
+          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok={onderdeel.categorie} nr="" naam={vt('Veld {nr}', { nr: v.nr })} sub={veldGroepen(v)} trainer={veldTrainer(c, v.nr)} oefening={o} opTik={opVeld} />
         ))}
       </HalfVeld>
-      <p className="klein club-noot">{velden.some((v) => v.metTrainer) ? vt('Oneven aantal groepjes: op het laatste veld verdeelt het groepje zich in twee teams en speelt de trainer mee als joker. Zo speelt iedereen en wacht niemand.') : vt('Twee groepjes per veld. Elk groepje is één team.')}</p>
+      <p className="klein club-noot">
+        {velden.some((v) => v.metTrainer)
+          ? vt('Oneven aantal groepjes: op het laatste veld verdeelt het groepje zich in twee teams en speelt de trainer mee als joker. Zo speelt iedereen en wacht niemand.')
+          : velden.length === 1
+            ? vt('Eén veld: groepje A tegen groepje B.')
+            : vt('Twee groepjes per veld. Elk groepje is één team.')}
+      </p>
     </>
   );
 }
 
-/** Rotatieschema: per groepje de stations in ronde 1–3 en daarna het partijveld. */
+const samenTekst = (c: ClubInhoud, o: Onderdeel, g: number) => {
+  if (o.categorie !== 'partijvormen') return vt('Samen');
+  return vt('Veld {nr}', { nr: partijvelden(c.groepjes).find((v) => v.groepen.includes(g))!.nr });
+};
+
+/** Waar iets leeg staat of dubbel moet. */
+export function PlanNoot({ c }: { c: ClubInhoud }) {
+  const p = clubPlan(c);
+  const dubbel = p.stations.some((s) => s.keer > 1);
+  const leegRondes = p.rondes.filter((r) => r.leeg.length);
+  const aantalLeeg = Math.max(0, ...leegRondes.map((r) => r.leeg.length));
+  return (
+    <>
+      {dubbel && <p className="klein club-noot">{vt('Er zijn meer groepjes dan onderdelen: daarom staan oefeningen meer dan één keer op het veld.')}</p>}
+      {leegRondes.length > 0 && <p className="klein club-noot">{vt('In {n} van de {r} rondes blijven er tot {l} stations leeg. Geen enkel groepje wacht.', { n: leegRondes.length, r: p.rondes.length, l: aantalLeeg })}</p>}
+      {p.verlengd.length > 0 && <p className="klein club-noot">{vt('Alle groepjes wisselen tegelijk, dus een ronde duurt zo lang als het langste onderdeel. Langer dan ingesteld: {w0}.', { w0: p.verlengd.map((o) => blokNaam(o.categorie)).join(', ') })}</p>}
+    </>
+  );
+}
+
+/** Rotatieschema: per groepje waar het per ronde staat, daarna per ronde de tijd, de groepjes en de trainers. */
 export function RotatieTabel({ c }: { c: ClubInhoud }) {
-  const r = rotatie(c.groepjes);
-  const velden = partijvelden(c.groepjes);
-  const lijst = stations(c.groepjes);
-  const leeg = lijst.length - c.groepjes;
+  const p = clubPlan(c);
   return (
     <>
       <div className="club-tabel-vak">
@@ -113,66 +158,98 @@ export function RotatieTabel({ c }: { c: ClubInhoud }) {
           <thead>
             <tr>
               <th scope="col">{vt('Groepje')}</th>
-              {Array.from({ length: RONDES }, (_, i) => (
-                <th key={i} scope="col">
-                  {vt('Ronde {nr}', { nr: i + 1 })}
+              {p.rondes.map((r) => (
+                <th key={r.nr} scope="col">
+                  {vt('Ronde {nr}', { nr: r.nr })}
                 </th>
               ))}
-              <th scope="col">{vt('Partij')}</th>
             </tr>
           </thead>
           <tbody>
             {Array.from({ length: c.groepjes }, (_, g) => (
               <tr key={g}>
                 <th scope="row">{groepNaam(g)}</th>
-                {r.map((ronde, i) => (
-                  <td key={i}>
-                    <span className="club-nr" style={kleur(ronde[g]!.vorm)}>
-                      {ronde[g]!.nr}
-                    </span>
+                {p.rondes.map((r) => (
+                  <td key={r.nr}>
+                    {r.samen ? (
+                      <span className="club-nr" style={kleur(r.samen.categorie)}>
+                        {samenTekst(c, r.samen, g)}
+                      </span>
+                    ) : (
+                      <span className="club-nr" style={kleur(r.plekken[g]!.vorm)}>
+                        {r.plekken[g]!.nr}
+                      </span>
+                    )}
                   </td>
                 ))}
-                <td>
-                  <span className="club-nr" style={kleur('partijvormen')}>
-                    {vt('Veld {nr}', { nr: velden.find((v) => v.groepen.includes(g))!.nr })}
-                  </span>
-                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <ul className="club-legenda">
-        {lijst.map((s) => {
-          const tr = stationTrainer(c, s.nr);
-          return (
-            <li key={s.nr}>
-              <span className="club-nr" style={kleur(s.vorm)}>
-                {s.nr}
-              </span>
-              {stationNaam(s, c.groepjes)}
-              {tr ? ` · ${tr}` : ''}
-            </li>
-          );
-        })}
-      </ul>
-      {leeg > 0 && <p className="klein club-noot">{vt('Met {g} groepjes staan er {s} stations, zodat elk groepje elke vorm één keer doet. Per ronde blijven er {l} leeg.', { g: c.groepjes, s: lijst.length, l: leeg })}</p>}
+      <PlanNoot c={c} />
+      <ol className="club-rondes">
+        {p.rondes.map((r) => (
+          <li key={r.nr} className="club-ronde-kaart">
+            <h3>
+              <span>{vt('Ronde {nr}', { nr: r.nr })}</span>
+              <span className="club-ronde-tijd">{rondeTijd(r, c.starttijd)}</span>
+            </h3>
+            <RondeLijst c={c} ronde={r} />
+          </li>
+        ))}
+      </ol>
     </>
   );
 }
 
-/** Wie staat waar in deze ronde (timer). */
-export function RondeLijst({ c, ronde }: { c: ClubInhoud; ronde: number }) {
-  const r = rotatie(c.groepjes)[ronde]!;
+/** Wie staat waar in deze ronde, en welke trainer erbij. */
+export function RondeLijst({ c, ronde }: { c: ClubInhoud; ronde: Ronde }) {
+  if (ronde.samen) {
+    const o = ronde.samen;
+    if (o.categorie !== 'partijvormen') {
+      return (
+        <ul className="club-ronde">
+          <li>
+            <span className="club-nr" style={kleur(o.categorie)}>
+              {blokNaam(o.categorie)}
+            </span>
+            {vt('Alle groepjes samen')}
+          </li>
+        </ul>
+      );
+    }
+    return (
+      <ul className="club-ronde">
+        {partijvelden(c.groepjes).map((v) => (
+          <li key={v.nr}>
+            <span className="club-nr" style={kleur(o.categorie)}>
+              {vt('Veld {nr}', { nr: v.nr })}
+            </span>
+            {[veldGroepen(v), veldTrainer(c, v.nr)].filter(Boolean).join(' · ')}
+          </li>
+        ))}
+      </ul>
+    );
+  }
   return (
     <ul className="club-ronde">
-      {r.map((s, g) => (
+      {ronde.plekken.map((s, g) => (
         <li key={g}>
           <b>{groepNaam(g)}</b>
           <span className="club-nr" style={kleur(s.vorm)}>
             {s.nr}
           </span>
-          {stationNaam(s, c.groepjes)}
+          {[stationNaam(s), stationTrainer(c, s.nr)].filter(Boolean).join(' · ')}
+        </li>
+      ))}
+      {ronde.leeg.map((s) => (
+        <li key={`leeg-${s.nr}`} className="club-ronde-leeg">
+          <b>–</b>
+          <span className="club-nr" style={kleur(s.vorm)}>
+            {s.nr}
+          </span>
+          {vt('{w0} staat leeg', { w0: stationNaam(s) })}
         </li>
       ))}
     </ul>

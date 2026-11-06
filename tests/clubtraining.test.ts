@@ -1,27 +1,23 @@
 import { describe, expect, it } from 'vitest';
 import { OEFENINGEN, vindOefening } from '../src/data/oefeningen';
 import {
-  blokKandidaten,
-  BLOK_DUUR,
   BLOKKEN,
+  clubPlan,
   dupliceer,
   genereerAlles,
-  genereerBlok,
+  genereerOnderdeel,
   groepGrootte,
   isLeeg,
   materiaal,
   naarCode,
   naarVolgendeWeek,
   nieuweClub,
+  onderdeelKandidaten,
+  onderdelenVan,
   partijvelden,
-  rotatie,
   standaardDatums,
   stationNaam,
-  stations,
-  stationsPerVorm,
   stationTrainer,
-  stationVak,
-  timerStand,
   uitCode,
   veldTrainer,
   veldVak,
@@ -33,31 +29,33 @@ import type { Oefening } from '../src/model/types';
 
 const club = (w: Partial<ClubTraining> = {}): ClubTraining => ({ ...nieuweClub('mini-5-7', 1000, 'c1'), ...w });
 const GROEPJES = [3, 4, 5, 6, 7, 8];
+const plan = (groepjes: number) => clubPlan({ groepjes });
+const stationRondes = (groepjes: number) => plan(groepjes).rondes.filter((r) => !r.samen).map((r) => r.plekken);
 
-describe('rotatieschema', () => {
+describe('rotatieschema van de Mini Talents-opzet', () => {
   it.each(GROEPJES)('%i groepjes: elk groepje doet elke vorm precies één keer', (n) => {
-    const r = rotatie(n);
+    const r = stationRondes(n);
     expect(r).toHaveLength(3);
     for (let g = 0; g < n; g++) expect(r.map((ronde) => ronde[g]!.vorm).sort()).toEqual([...VORMEN].sort());
   });
   it.each(GROEPJES)('%i groepjes: nooit twee groepjes tegelijk op een station', (n) => {
-    for (const ronde of rotatie(n)) {
+    for (const ronde of stationRondes(n)) {
       expect(ronde).toHaveLength(n);
       expect(new Set(ronde.map((s) => s.nr)).size).toBe(n);
     }
   });
   it('aantal stations: gelijk bij 3 en 6, anders zoveel als nodig', () => {
-    expect(GROEPJES.map((n) => stations(n).length)).toEqual([3, 6, 6, 6, 9, 9]);
-    expect(stations(6).map((s) => s.vorm)).toEqual(['techniek', 'techniek', 'een-tegen-een', 'een-tegen-een', 'afwerken', 'afwerken']);
-    expect(stations(6).map((s) => s.nr)).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(GROEPJES.map((n) => plan(n).stations.length)).toEqual([3, 6, 6, 6, 9, 9]);
+    expect(plan(6).stations.map((s) => s.vorm)).toEqual(['techniek', 'techniek', 'een-tegen-een', 'een-tegen-een', 'afwerken', 'afwerken']);
+    expect(plan(6).stations.map((s) => s.nr)).toEqual([1, 2, 3, 4, 5, 6]);
   });
   it('bij 6 groepjes zijn alle stations elke ronde bezet', () => {
-    for (const ronde of rotatie(6)) expect(ronde.map((s) => s.nr).sort()).toEqual([1, 2, 3, 4, 5, 6]);
+    for (const ronde of stationRondes(6)) expect(ronde.map((s) => s.nr).sort()).toEqual([1, 2, 3, 4, 5, 6]);
   });
   it('stationnamen: met nummer alleen als een vorm vaker staat', () => {
-    expect(stationNaam(stations(6)[1]!, 6)).toBe('Techniek 2');
-    expect(stationNaam(stations(3)[1]!, 3)).toBe('1 tegen 1');
-    expect(stationNaam(stations(6)[3]!, 6)).toBe('1 tegen 1 – 2');
+    expect(stationNaam(plan(6).stations[1]!)).toBe('Techniek 2');
+    expect(stationNaam(plan(3).stations[1]!)).toBe('1 tegen 1');
+    expect(stationNaam(plan(6).stations[3]!)).toBe('1 tegen 1 – 2');
   });
 });
 
@@ -75,14 +73,11 @@ describe('partijvelden', () => {
 });
 
 describe('veldplan', () => {
-  it.each(GROEPJES)('%i groepjes: vakken binnen het halve veld, niet over elkaar', (n) => {
-    const vakken = stations(n).map((s) => stationVak(s, n));
+  it.each(GROEPJES)('%i groepjes: partijvelden binnen het halve veld, niet over elkaar', (n) => {
     const velden = partijvelden(n).map((v) => veldVak(v, partijvelden(n).length));
-    for (const lijst of [vakken, velden]) {
-      for (const [i, a] of lijst.entries()) {
-        expect(a.x >= 0 && a.y >= 0 && a.x + a.b <= 100.001 && a.y + a.h <= 100.001).toBe(true);
-        for (const b of lijst.slice(i + 1)) expect(a.x + a.b <= b.x + 0.001 || b.x + b.b <= a.x + 0.001 || a.y + a.h <= b.y + 0.001 || b.y + b.h <= a.y + 0.001).toBe(true);
-      }
+    for (const [i, a] of velden.entries()) {
+      expect(a.x >= 0 && a.y >= 0 && a.x + a.b <= 100.001 && a.y + a.h <= 100.001).toBe(true);
+      for (const b of velden.slice(i + 1)) expect(a.x + a.b <= b.x + 0.001 || b.x + b.b <= a.x + 0.001 || a.y + a.h <= b.y + 0.001 || b.y + b.h <= a.y + 0.001).toBe(true);
     }
   });
 });
@@ -139,7 +134,7 @@ describe('materiaal', () => {
 describe('oefeningen kiezen en genereren', () => {
   const bron = { alle: OEFENINGEN, favorieten: new Set<string>(), toeval: () => 0.5 };
   it('kandidaten passen bij leeftijd, categorie en aantal', () => {
-    const lijst = blokKandidaten(club(), 'afwerken', OEFENINGEN);
+    const lijst = onderdeelKandidaten(club(), onderdelenVan(club())[2]!, OEFENINGEN);
     expect(lijst.length).toBeGreaterThan(10);
     for (const o of lijst) {
       expect(o.categorieen).toContain('afwerken');
@@ -149,12 +144,13 @@ describe('oefeningen kiezen en genereren', () => {
   });
   it('alles genereren vult de 4 blokken met verschillende oefeningen', () => {
     const b = genereerAlles(club(), bron);
-    expect(Object.keys(b).sort()).toEqual([...BLOKKEN].sort());
-    expect(new Set(Object.values(b)).size).toBe(4);
+    expect(b.map((o) => o.categorie)).toEqual([...BLOKKEN]);
+    expect(new Set(b.map((o) => o.oefening)).size).toBe(4);
   });
   it('opnieuw genereren geeft een andere oefening', () => {
-    const c = club({ blokken: genereerAlles(club(), bron) });
-    expect(genereerBlok(c, 'techniek', bron)).not.toBe(c.blokken.techniek);
+    const c = club({ onderdelen: genereerAlles(club(), bron) });
+    const o = onderdelenVan(c)[0]!;
+    expect(genereerOnderdeel(c, o, bron)).not.toBe(o.oefening);
   });
 });
 
@@ -163,13 +159,13 @@ describe('deellink', () => {
   it('heen en terug', () => {
     const g = uitCode(naarCode(c))!;
     expect(g).toMatchObject({ naam: 'Maandag', leeftijd: 'mini-5-7', kinderen: 30, groepjes: 5, trainers: ['Testtrainer 1', 'Testtrainer 2'], stationTrainers: { 2: 'Testtrainer 1' }, datums: c.datums });
-    expect(g.blokken).toEqual(c.blokken);
+    expect(onderdelenVan(g).map((o) => o.oefening)).toEqual(onderdelenVan(c).map((o) => o.oefening));
   });
   it('eigen oefening gaat mee', () => {
     const eigen = { ...vindOefening('veld-mt-tik-tak')!, id: 'eigen-x', eigen: true };
     const g = uitCode(naarCode({ ...c, blokken: { techniek: 'eigen-x' } }, [eigen]))!;
     expect(g.eigen?.map((o) => o.id)).toEqual(['eigen-x']);
-    expect(g.blokken.techniek).toBe('eigen-x');
+    expect(onderdelenVan(g)[0]!.oefening).toBe('eigen-x');
   });
   it('kapotte of andere code', () => {
     expect(uitCode('onzin')).toBeNull();
@@ -228,18 +224,5 @@ describe('opslaan en dupliceren', () => {
   it('groepsgrootte naar boven afgerond', () => {
     expect(groepGrootte({ kinderen: 30, groepjes: 6 })).toBe(5);
     expect(groepGrootte({ kinderen: 31, groepjes: 6 })).toBe(6);
-  });
-  it('stations per vorm', () => {
-    expect([3, 4, 6, 7, 8].map(stationsPerVorm)).toEqual([1, 2, 2, 3, 3]);
-  });
-});
-
-describe('kwartiertimer', () => {
-  it('blok en resterende tijd', () => {
-    expect(timerStand(0)).toEqual({ blok: 0, rest: BLOK_DUUR, klaar: false });
-    expect(timerStand(BLOK_DUUR - 1)).toMatchObject({ blok: 0, rest: 1 });
-    expect(timerStand(BLOK_DUUR)).toMatchObject({ blok: 1, rest: BLOK_DUUR });
-    expect(timerStand(3 * BLOK_DUUR + 10)).toMatchObject({ blok: 3, rest: BLOK_DUUR - 10 });
-    expect(timerStand(4 * BLOK_DUUR)).toMatchObject({ klaar: true, rest: 0 });
   });
 });

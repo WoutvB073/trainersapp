@@ -125,6 +125,14 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.tabs.club-tabs.club-tabs-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tabs.club-tabs.club-tabs-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .tabs.club-tabs button {
   padding-inline: 2px;
   font-size: 0.88rem;
@@ -387,4 +395,162 @@
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+/* Onderdelen zelf samenstellen (0.32.0) */
+.club-blok.slepen {
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 6px 18px rgb(16 40 26 / 0.3);
+}
+
+.club-blok-titel {
+  flex: 1;
+  min-width: 0;
+}
+
+.club-greep {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  margin: -4px 0 -4px -6px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  color: inherit;
+  background: none;
+  border: 0;
+  touch-action: none;
+  cursor: grab;
+}
+
+.club-blok-weg {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  margin: -4px -6px -4px 0;
+  color: inherit;
+}
+
+.club-blok-weg:disabled {
+  opacity: 0.35;
+}
+
+.club-blok-instellingen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 10px 12px 0;
+}
+
+.club-duur {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.club-duur input {
+  width: 68px;
+  padding: 6px 8px;
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+  background: var(--kaart);
+  color: var(--tekst);
+  font: inherit;
+}
+
+.club-soort {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border: 1px solid var(--rand);
+  border-radius: 999px;
+}
+
+.club-soort button {
+  min-height: 36px;
+  padding: 4px 12px;
+  border: 0;
+  background: none;
+  color: var(--tekst);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.club-soort button.aan {
+  background: var(--primair);
+  color: var(--op-primair);
+}
+
+.club-toevoegen {
+  margin-top: 10px;
+}
+
+.club-totaal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 0 4px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--kaart);
+  box-shadow: var(--schaduw);
+}
+
+.club-totaal strong {
+  font-size: 1.15rem;
+}
+
+.club-rondes {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.club-ronde-kaart {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--kaart);
+  box-shadow: var(--schaduw);
+}
+
+.club-ronde-kaart h3 {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.club-ronde-tijd {
+  color: var(--tekst-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.club-ronde-leeg {
+  color: var(--tekst-2);
+}
+
+/* In een rondekaart één regel per groepje: lange namen lopen anders tegen elkaar. */
+.club-ronde-kaart .club-ronde {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.club-twee .leeftijd-keuze {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.club-twee .leeftijd-keuze select {
+  width: 100%;
+  max-width: none;
 }

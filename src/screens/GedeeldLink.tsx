@@ -48,7 +48,7 @@ export function InstalleerMelding({ opTik }: { opTik: () => void }) {
 }
 
 /** Korte link `#/d/<code>`: inhoud ophalen en dan hetzelfde scherm als bij de lange link. */
-export function GedeeldLink({ code, station, partij, nietGeinstalleerd }: { code: string; station?: number; partij?: boolean; nietGeinstalleerd?: boolean }) {
+export function GedeeldLink({ code, station, partij, nietGeinstalleerd }: { code: string; station?: number; partij?: true | number; nietGeinstalleerd?: boolean }) {
   const [stand, setStand] = useState<Opgehaald | null>(null);
   useEffect(() => {
     let weg = false;
