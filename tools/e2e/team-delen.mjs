@@ -70,7 +70,14 @@ const CLUB = {
   kinderen: 30,
   groepjes: 6,
   trainers: ['Testtrainer 1', 'Testtrainer 2'],
-  blokken: { techniek: 'eigen-testoefening', 'een-tegen-een': 'veld-mt-over-de-rivier', afwerken: 'veld-mt-pionnen-omgooien', partijvormen: 'veld-mt-3-tegen-3' },
+  blokken: {},
+  // 0.33.0: twee oefeningen in het eerste onderdeel, waarvan één eigen oefening.
+  onderdelen: [
+    { id: 'techniek', categorie: 'techniek', duur: 15, soort: 'stations', oefening: 'eigen-testoefening', oefeningen: [{ oefening: 'eigen-testoefening' }, { oefening: 'veld-mt-tik-tak', minuten: 5 }] },
+    { id: 'een-tegen-een', categorie: 'een-tegen-een', duur: 15, soort: 'stations', oefening: 'veld-mt-over-de-rivier' },
+    { id: 'afwerken', categorie: 'afwerken', duur: 15, soort: 'stations', oefening: 'veld-mt-pionnen-omgooien' },
+    { id: 'partijvormen', categorie: 'partijvormen', duur: 15, soort: 'samen', oefening: 'veld-mt-3-tegen-3' },
+  ],
   stationTrainers: { 1: 'Testtrainer 1' },
   veldTrainers: {},
   afgevinkt: [],
@@ -332,6 +339,12 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await slaap(800);
   await foto(t2.page, 'station', 'Station 1 (eigen oefening van Testtrainer 1, animatie)');
   await opmaak(t2.page, `${waar} station`);
+  // Tweede oefening in hetzelfde onderdeel.
+  controle((await t2.page.$$('.club-oefening-keuze button')).length === 2, `${waar}: Oefening 1, 2 ontbreekt in het team`);
+  const eersteTitel = await t2.page.evaluate(() => document.querySelector('.detail-titel')?.textContent);
+  await t2.page.evaluate(() => document.querySelectorAll('.club-oefening-keuze button')[1]?.click());
+  await slaap(700);
+  controle((await t2.page.evaluate(() => document.querySelector('.detail-titel')?.textContent)) !== eersteTitel && !!(await t2.page.$('.detail-media canvas')), `${waar}: tweede oefening opent niet`);
   await ga(t2.page, `${basis}/partij`);
   await wachtOp(t2.page, () => !!document.querySelector('.detail-media canvas'), null, `${waar}: partijveld met animatie`);
 

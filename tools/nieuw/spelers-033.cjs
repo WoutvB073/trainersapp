@@ -81,7 +81,7 @@ const popActie = {
     },
   },
   tekening: {
-    ...leeg(25, 17),
+    ...leeg(27, 17),
     objecten: [
       pop('v1', 4.5, 6.5),
       pop('v2', 12.5, 6.5),

@@ -1,7 +1,7 @@
 // 0.33.0: meerdere oefeningen in één onderdeel van een circuittraining, op iPhone SE en laptop, in NL en EN: toevoegen (Genereer en
 // Kies), richttijd, verslepen, plan met Oefening 1, 2, 3, losse oefeningen openen (3D en 2D), materiaal, rondetimer, en de trainerslink
 // zonder app en zonder account in de WhatsApp-browser op iPhone en Android. Blad: blad-0330.png.
-// Gebruik: node tools/e2e/versie-0330.mjs [basis-url]. TAAL=nl voor één taal.
+// Gebruik: node tools/e2e/versie-0330.mjs [basis-url]. TAAL=nl voor één taal. EMULATOR=1: de korte link (`npm run emulator`).
 import { createJiti } from 'jiti';
 import { alsGeinstalleerd, BASE, blad, MAP, slaap, start } from './hulp.mjs';
 
@@ -58,10 +58,11 @@ for (const [formaat, vp] of [
     const page = await context.newPage();
     await alsGeinstalleerd(page);
     await page.evaluateOnNewDocument(
-      (taal, club) => {
+      (taal, club, emulator) => {
         try {
           localStorage.setItem('trainersapp.taal', taal);
           localStorage.setItem('trainersapp.3dAltijd', '1');
+          if (emulator) localStorage.setItem('trainersapp.emulator', '1');
           if (!localStorage.getItem('trainersapp.clubtrainingen')) localStorage.setItem('trainersapp.clubtrainingen', JSON.stringify({ versie: 1, lijst: [club] }));
         } catch {
           /* about:blank */
@@ -69,6 +70,7 @@ for (const [formaat, vp] of [
       },
       taal,
       CLUB,
+      !!process.env.EMULATOR,
     );
     page.on('pageerror', (e) => fouten.push(`${waar}: ${e.message}`));
     page.on('console', (m) => m.type() === 'error' && !/WebGL|GPU/.test(m.text()) && fouten.push(`${waar}: ${m.text().slice(0, 140)}`));
@@ -206,18 +208,24 @@ for (const [formaat, vp] of [
     await klik(page, T('Deel met trainers'));
     await page.waitForFunction(() => navigator.clipboard.readText().then((t) => t.length > 0), { timeout: 12000, polling: 200 });
     const link = (await page.evaluate(() => navigator.clipboard.readText())).split(/\r?\n/).pop();
+    if (process.env.EMULATOR) controle(link.includes('#/d/'), `${waar}: geen korte link: ${link.slice(0, 80)}`);
     for (const [toestel, ua] of Object.entries(WHATSAPP)) {
       const ander = await browser.createBrowserContext();
       const p2 = await ander.newPage();
       await p2.setUserAgent(ua);
-      await p2.evaluateOnNewDocument((taal) => {
-        try {
-          localStorage.setItem('trainersapp.taal', taal);
-          localStorage.setItem('trainersapp.3dAltijd', '1');
-        } catch {
-          /* about:blank */
-        }
-      }, taal);
+      await p2.evaluateOnNewDocument(
+        (taal, emulator) => {
+          try {
+            localStorage.setItem('trainersapp.taal', taal);
+            localStorage.setItem('trainersapp.3dAltijd', '1');
+            if (emulator) localStorage.setItem('trainersapp.emulator', '1');
+          } catch {
+            /* about:blank */
+          }
+        },
+        taal,
+        !!process.env.EMULATOR,
+      );
       p2.on('pageerror', (e) => fouten.push(`${waar} ${toestel}: ${e.message}`));
       await p2.setViewport({ width: 375, height: 667, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
       await p2.goto(link, { waitUntil: 'networkidle0' });

@@ -97,20 +97,23 @@ for (const taal of ['nl', 'en']) {
     if (blokken !== 4) problemen.push(`${waar}: ${blokken} blokken gevuld`);
     await foto('bewerken');
     const voor = await page.evaluate(() => document.querySelector('.club-blok-naam').textContent);
-    await page.evaluate(() => document.querySelector('.club-blok-knoppen button:nth-child(2)').click());
+    await page.evaluate(() => document.querySelector('.club-oefening-acties button').click());
     await slaap(200);
     const na = await page.evaluate(() => document.querySelector('.club-blok-naam').textContent);
-    if (voor === na) problemen.push(`${waar}: opnieuw genereren gaf dezelfde oefening`);
+    if (voor === na) problemen.push(`${waar}: een andere oefening gaf dezelfde oefening`);
 
     // Oefening kiezen.
     await open(`/club/${id}/kiezen/techniek`);
     await foto('kiezen');
-    const gekozen = await page.evaluate(() => document.querySelector('.kies-kaart:nth-child(2) .kaart-titel').textContent);
-    await page.click('.kies-kaart:nth-child(2) .toevoeg-knop');
+    const gekozen = await page.evaluate(() => {
+      const kaart = [...document.querySelectorAll('.kies-kaart')].find((k) => !k.classList.contains('gekozen'));
+      kaart.querySelector('.toevoeg-knop').click();
+      return kaart.querySelector('.kaart-titel').textContent;
+    });
     await slaap(300);
     await open(`/club/${id}`);
-    const nu = await page.evaluate(() => document.querySelector('.club-blok-naam').textContent);
-    if (nu !== gekozen) problemen.push(`${waar}: gekozen oefening niet bewaard (${nu})`);
+    const nu = await page.evaluate(() => [...document.querySelector('.club-blok').querySelectorAll('.club-blok-naam')].map((e) => e.textContent).join(' | '));
+    if (!nu.includes(gekozen)) problemen.push(`${waar}: gekozen oefening niet bewaard (${nu})`);
 
     // Plan.
     await open(`/club/${id}/plan`);
