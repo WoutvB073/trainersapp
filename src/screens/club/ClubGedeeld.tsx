@@ -67,7 +67,7 @@ function MateriaalLijst({ g }: { g: GedeeldeClub }) {
     <>
       <h2 className="sectie-titel">{vt('Materiaal')}</h2>
       <MateriaalBlok titel={vt('Stations')} regels={m.stations} />
-      <MateriaalBlok titel={vt('Extra voor de samen-onderdelen')} regels={m.extra} />
+      <MateriaalBlok titel={clubPlan(g).samen.every((o) => o.categorie === 'partijvormen') ? vt('Extra voor de partijvelden') : vt('Extra voor de samen-onderdelen')} regels={m.extra} />
     </>
   );
 }

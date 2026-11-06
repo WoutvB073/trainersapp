@@ -358,6 +358,8 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   controle((await t2.page.evaluate(() => document.querySelector('.opst-soort')?.textContent)) === T('Spelhervatting'), `${waar}: gedeeld bord is geen spelhervatting`);
   controle((await t2.page.evaluate(() => document.querySelector('.kop h1')?.textContent ?? '')).includes(T('Spelhervatting')), `${waar}: titel gedeeld bord`);
   await foto(t2.page, 'bord', 'Gedeelde spelhervatting');
+  await wachtOp(t2.page, (t) => [...document.querySelectorAll('button')].some((b) => b.textContent.trim().startsWith(t)), T('Kopiëren naar mijn wedstrijd'), `${waar}: knop kopiëren`);
+  await slaap(500);
   await klik(t2.page, T('Kopiëren naar mijn wedstrijd'));
   await wachtOp(t2.page, () => location.hash.startsWith('#/bord/'), null, `${waar}: bord gekopieerd`);
   controle((await lokaal(t2.page, 'borden')).includes('korte-corner'), `${waar}: koppeling met het voorbeeld is weg na kopiëren`);

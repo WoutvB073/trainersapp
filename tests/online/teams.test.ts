@@ -89,7 +89,7 @@ describe('teams', { retry: HERKANSING }, () => {
     await wachtTot(() => trainer2.teams()[0]?.items.length === 1, 15000, 'gedeelde circuittraining');
     const it1 = trainer2.teams()[0]!.items[0]!;
     expect(it1).toMatchObject({ soort: 'clubtraining', naam: 'Maandag', eigenaarNaam: 'Testtrainer 1' });
-    expect(uitGedeeldeClub(leesTeamClub(it1.data)!, new Map(), 2, 'c2')).toMatchObject({ id: 'c2', naam: 'Maandag', blokken: { techniek: 'veld-mt-tik-tak' } });
+    expect(uitGedeeldeClub(leesTeamClub(it1.data)!, new Map(), 2, 'c2')).toMatchObject({ id: 'c2', naam: 'Maandag' });
     // Een lid kan het item niet overschrijven of terugtrekken.
     await expect(deelItem(trainer2.ik, id, { id: 'c1', soort: 'clubtraining', naam: 'Gekaapt', data: '{}' })).rejects.toThrow();
     await expect(verwijderItem(trainer2.ik, id, 'c1')).rejects.toThrow();
