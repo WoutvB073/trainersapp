@@ -24,6 +24,8 @@ export const TEKENING_TEKST: Record<string, string> = {
   'keeper → rij': 'keeper → queue',
   'Rood 0 – 2 Blauw': 'Red 0 – 2 Blue',
   dobbelsteen: 'dice',
+  Start: 'Start',
+  Finish: 'Finish',
   'Station 1': 'Station 1',
   'Station 2': 'Station 2',
   'Station 3': 'Station 3',

@@ -1020,9 +1020,9 @@
   "veld-pv-golven-overtal": {
     "naam": "Waves: 1v0, 2v1, 3v2",
     "uitleg": "An attack that grows in three waves, back and forth across the pitch. Player 1 dribbles forward and shoots from about 15 m at the goal on the far side, and may not go any further (1v0). Straight after that, two attackers come on from the side that was shot at and play 2v1 against the player who just shot. Once that ball is out or scored, two more players join from the side where player 1 started and it becomes 3v2, until there is a goal or the ball goes out.",
-    "organisatie": "Pitch of 24 × 40 m with a goal at both ends. Without keepers: small goals. With keepers: E-goals, with a keeper at each end. The players stand with balls next to the goal at both ends. Afterwards they join the end where they finish.",
+    "organisatie": "Pitch of 24 × 40 m with an E-goal and a keeper at both ends. Without keepers: small goals. The players stand with balls next to the goal at both ends. Afterwards they join the end where they finish.",
     "benodigdheden": [
-      "2 small goals (with keepers: 2 E-goals)",
+      "2 E-goals (without keepers: 2 small goals)",
       "4 cones",
       "Balls",
       "Bibs"

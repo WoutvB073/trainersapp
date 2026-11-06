@@ -1,7 +1,7 @@
 // Spelersoefeningen 0.32.2: golven 1 tegen 0, 2 tegen 1, 3 tegen 2; sprinten en stoppen bij de vallende pion; hordes, zijwaarts en
 // sprint; achtjes om drie pionnen. Draaien: node tools/nieuw/spelers-0322.cjs
 const { zet } = require('./hulp.cjs');
-const { speler, trainer, bal, pion, hoedje, horde, pauze, stap } = require('./bouwstenen.cjs');
+const { keeper, speler, trainer, bal, pion, hoedje, horde, pauze, stap } = require('./bouwstenen.cjs');
 
 const B = (id, nr, x, y, extra = {}) => speler(id, nr, x, y, { team: 'B', ...extra });
 const doeltje = (id, x, y, hoek, breedte = 3) => ({ id, soort: 'klein-goal', x, y, ...(hoek ? { hoek } : {}), breedte });
@@ -14,6 +14,25 @@ const boog = (cx, cy, r, a, b, n = 5) => Array.from({ length: n + 1 }, (_, i) =>
   return [Math.round((cx + r * Math.cos(h)) * 100) / 100, Math.round((cy + r * Math.sin(h)) * 100) / 100];
 });
 
+/** Tekening een kwartslag draaien: een lang veld met twee goals past dan helemaal in beeld (zie spelers-027b.cjs). */
+function draaiKwart(t) {
+  const b = t.veld.breedte;
+  const p = ([x, y]) => [y, +(b - x).toFixed(2)];
+  const objecten = t.objecten.map((o) => {
+    const n = { ...o, x: o.y, y: +(b - o.x).toFixed(2) };
+    if (o.hoek !== undefined || o.soort === 'goal') n.hoek = (o.hoek ?? 0) - 90;
+    if (o.kijkrichting !== undefined) n.kijkrichting = o.kijkrichting - 90;
+    return n;
+  });
+  const actie = (a) => {
+    const n = { ...a };
+    for (const k of ['naar', 'duikNaar']) if (Array.isArray(a[k]) && typeof a[k][0] === 'number') n[k] = p(a[k]);
+    if (a.via) n.via = a.via.map(p);
+    return n;
+  };
+  return { ...t, veld: { ...t.veld, breedte: t.veld.lengte, lengte: b }, objecten, animatie: t.animatie.map((st) => ({ ...st, acties: st.acties.map(actie) })) };
+}
+
 // ---------- 1. Golven ----------
 const golven = {
   id: 'veld-pv-golven-overtal',
@@ -22,10 +41,11 @@ const golven = {
   uitleg:
     'Een aanval die in drie golven steeds groter wordt, heen en weer over het veld. Speler 1 dribbelt naar voren en schiet vanaf ± 15 m op het doel aan de overkant; verder mag hij niet komen (1 tegen 0). Meteen daarna komen vanaf de kant waarop geschoten is twee aanvallers op, en die spelen 2 tegen 1 tegen de speler die net schoot. Is die bal uit of gescoord, dan komen vanaf de kant waar speler 1 begon nog twee spelers bij en wordt het 3 tegen 2, tot er gescoord wordt of de bal uit is.',
   organisatie:
-    'Veld van 24 × 40 m met aan beide kanten een doel. Zonder keepers: kleine goals. Met keepers: E-goals, met aan elke kant een keeper. Aan beide kanten staan de spelers met ballen naast het doel. Daarna sluiten de spelers aan aan de kant waar ze uitkomen.',
-  benodigdheden: ['2 kleine goals (met keepers: 2 E-goals)', '4 pionnen', 'Ballen', 'Hesjes'],
+    'Veld van 24 × 40 m met aan beide kanten een E-goal en een keeper. Zonder keepers: kleine goals. Aan beide kanten staan de spelers met ballen naast het doel. Daarna sluiten de spelers aan aan de kant waar ze uitkomen.',
+  benodigdheden: ['2 E-goals (zonder keepers: 2 kleine goals)', '4 pionnen', 'Ballen', 'Hesjes'],
   spelersNodig: 5,
-  keepersNodig: 0,
+  keepersNodig: 2,
+  zonderKeepers: true,
   leeftijden: LEEFTIJDEN,
   doorwisselbaar: true,
   coachpunten: ['1 tegen 0: in hoog tempo dribbelen en op tijd schieten, vóór de lijn van 15 m', 'Overtal: dribbel op de verdediger af en speel de vrije man op het juiste moment aan', 'Schakel na elke golf meteen om: wie net aanviel, verdedigt nu'],
@@ -38,20 +58,22 @@ const golven = {
     uitleg:
       'An attack that grows in three waves, back and forth across the pitch. Player 1 dribbles forward and shoots from about 15 m at the goal on the far side, and may not go any further (1v0). Straight after that, two attackers come on from the side that was shot at and play 2v1 against the player who just shot. Once that ball is out or scored, two more players join from the side where player 1 started and it becomes 3v2, until there is a goal or the ball goes out.',
     organisatie:
-      'Pitch of 24 × 40 m with a goal at both ends. Without keepers: small goals. With keepers: E-goals, with a keeper at each end. The players stand with balls next to the goal at both ends. Afterwards they join the end where they finish.',
-    benodigdheden: ['2 small goals (with keepers: 2 E-goals)', '4 cones', 'Balls', 'Bibs'],
+      'Pitch of 24 × 40 m with an E-goal and a keeper at both ends. Without keepers: small goals. The players stand with balls next to the goal at both ends. Afterwards they join the end where they finish.',
+    benodigdheden: ['2 E-goals (without keepers: 2 small goals)', '4 cones', 'Balls', 'Bibs'],
     coachpunten: ['1v0: dribble at high speed and shoot in time, before the 15 m line', 'Overload: dribble at the defender and play the free player at the right moment', 'Switch straight away after each wave: whoever just attacked now defends'],
     variaties: {
       makkelijker: ['Bigger pitch, so there is more space', 'The defender may only start once the ball is over the halfway line'],
       moeilijker: ['After the 3v2 one more wave: 4v3', 'Finish within 8 seconds', 'Smaller pitch'],
     },
   },
-  tekening: {
+  tekening: draaiKwart({
     veld: { type: 'leeg', breedte: 26, lengte: 42 },
     camera: 'schuin',
     objecten: [
-      doeltje('gB', 13, 1, 0),
-      doeltje('gO', 13, 41, 180),
+      { id: 'gB', soort: 'goal', x: 13, y: 0.5, breedte: 5, hoogte: 2 },
+      { id: 'gO', soort: 'goal', x: 13, y: 41.5, breedte: 5, hoogte: 2, hoek: 180 },
+      keeper('k1', 1, 13, 1.9, { verdedigt: 'gB' }),
+      keeper('k2', 1, 13, 40.1, { verdedigt: 'gO' }),
       pion('p1', 1, 1),
       pion('p2', 25, 1),
       pion('p3', 1, 41),
@@ -59,19 +81,19 @@ const golven = {
       { id: 'lijn1', soort: 'hoedje', x: 4, y: 15.5, kleur: '#ffd23f' },
       { id: 'lijn2', soort: 'hoedje', x: 22, y: 15.5, kleur: '#ffd23f' },
       speler('a1', 1, 13, 38.5, { kijkrichting: -90 }),
-      speler('a2', 2, 7, 40, { kijkrichting: -90 }),
-      speler('a3', 3, 19, 40, { kijkrichting: -90 }),
-      B('b1', 4, 7, 2, { kijkrichting: 90 }),
-      B('b2', 5, 19, 2, { kijkrichting: 90 }),
+      speler('a2', 2, 9, 37.5, { kijkrichting: -90 }),
+      speler('a3', 3, 17, 37.5, { kijkrichting: -90 }),
+      B('b1', 4, 9, 4.5, { kijkrichting: 90 }),
+      B('b2', 5, 17, 4.5, { kijkrichting: 90 }),
       bal('bal1', 13, 38, 'a1'),
-      bal('bal2', 7, 2.5, 'b1'),
-      bal('bal3', 7, 39.5, 'a2'),
+      bal('bal2', 9, 5, 'b1'),
+      bal('bal3', 9, 37, 'a2'),
     ],
     animatie: [
       pauze(0.3),
       // Golf 1: 1 tegen 0.
       stap({ type: 'dribbel', wie: 'a1', naar: [13.4, 16.6], manier: 'sprint', duur: 3.6 }),
-      stap({ type: 'schot', van: 'a1', naar: [13, 1.2], hoogte: 'grond' }),
+      stap({ type: 'schot', van: 'a1', naar: [15, 0.8], hoogte: 'grond', afloop: 'vangt', duikNaar: [14.9, 1.6] }),
       // Golf 2: 2 tegen 1, de andere kant op.
       stap(
         { type: 'dribbel', wie: 'b1', naar: [9, 13], manier: 'sprint', duur: 1.9 },
@@ -89,7 +111,7 @@ const golven = {
         { type: 'loop', wie: 'b1', naar: [8.6, 31], manier: 'sprint', duur: 1.9 },
         { type: 'loop', wie: 'a1', naar: [13.2, 30], manier: 'sprint', duur: 1.9 },
       ),
-      stap({ type: 'schot', van: 'b2', naar: [13.6, 40.8], hoogte: 'grond' }),
+      stap({ type: 'schot', van: 'b2', naar: [11.2, 41.3], hoogte: 'laag', afloop: 'goal' }),
       pauze(0.3),
       // Golf 3: 3 tegen 2, vanaf de kant waar speler 1 begon.
       stap(
@@ -110,10 +132,10 @@ const golven = {
       stap({ type: 'loop', wie: 'b2', naar: [15.8, 15.4], manier: 'sprint', duur: 0.8 }, { type: 'loop', wie: 'a3', naar: [21.4, 12], manier: 'sprint', duur: 1.2 }, { type: 'dribbel', wie: 'a1', naar: [12.4, 13.4], duur: 0.9 }),
       stap({ type: 'pass', van: 'a1', naar: 'a3' }),
       stap({ type: 'dribbel', wie: 'a3', naar: [18.8, 6.6], duur: 1.1 }, { type: 'loop', wie: 'b2', naar: [16.2, 8.6], manier: 'sprint', duur: 1.1 }),
-      stap({ type: 'schot', van: 'a3', naar: [12.4, 1.2], hoogte: 'grond' }),
+      stap({ type: 'schot', van: 'a3', naar: [11.2, 0.8], hoogte: 'grond', afloop: 'vangt', duikNaar: [11.3, 1.6], vasthouden: true }),
       pauze(0.8),
     ],
-  },
+  }),
 };
 
 // ---------- 2. Vallende pion ----------
@@ -255,43 +277,74 @@ const hordesZijwaarts = {
   },
 };
 
-// ---------- 4. Achtjes om drie pionnen ----------
-const L = 6;
-const M = 11;
-const Rr = 16;
-const S1 = 27;
-const S2 = 18;
-const S3 = 9;
-const R = 2;
-const STARTY = 34.5;
-const stationPionnen = (k, y, kleur) => [L, M, Rr].map((x, i) => ({ ...pion(`${k}${i}`, x, y, kleur), hoogte: 0.45 }));
-const gat = (a, b) => (a + b) / 2;
+// ---------- 4. Achtjes om drie pionnen (tekening 25) ----------
+// De route is overgetrokken van de tekening: punten in hokjes van het stippenpapier, ten opzichte van de middelste pion van het station
+// (x naar rechts, y naar de start). Per station twee stukken, met een pijl aan het eind, zoals op de tekening.
+// De stations zijn iets groter dan op papier en de tussenruimtes iets kleiner, zodat de route op een telefoon goed leesbaar is.
+const CEL = 2;
+const CX = 9.5;
+const M3 = 7.7;
+const M2 = M3 + 9.5;
+const M1 = M2 + 9.5;
+const STARTY = M1 + 9.5;
+const FINISHY = M3 - 2.5 * CEL;
+const FINISHX = CX + 3.2 * CEL;
+const STUKKEN = [
+  { my: M1, toon: true, pijl: 'start', punten: [[0, 5.1], [0, 4.75], [0, 4], [0, 3.3], [0, 2.6]] },
+  { my: M1, punten: [[0, 2]] },
+  { my: M1, toon: true, pijl: 's1a', punten: [[0, 1.45], [-0.12, 0.9], [-0.42, 0.3], [-0.44, -0.2], [-0.1, -0.62], [0.3, -0.68], [0.97, -0.52], [1.7, -0.55], [2.42, -0.7], [2.72, -1.2], [2.45, -1.68], [1.9, -1.72], [1.48, -1.44], [1.38, -1.08]] },
+  { my: M1, toon: true, pijl: 's1b', punten: [[0.91, -0.12], [0.67, 0.12], [0.3, 0.38], [-0.06, 0.44], [-0.42, 0.38], [-0.75, 0.12], [-1.39, -0.15], [-2.06, -0.38], [-2.38, -0.66], [-2.45, -1.02], [-2.3, -1.4], [-2.06, -1.62], [-1.76, -1.9]] },
+  { my: M2, toon: true, pijl: 's2a', punten: [[-0.45, 1.58], [-0.06, 1.06], [0.24, 0.6], [0.44, 0.1], [0.3, -0.32], [0, -0.46], [-0.42, -0.36], [-0.97, -0.22], [-1.58, -0.2], [-2.06, -0.39], [-2.4, -0.76], [-2.46, -1.15], [-2.3, -1.42], [-2, -1.5], [-1.64, -1.33], [-1.21, -0.94], [-0.97, -0.64]] },
+  { my: M2, toon: true, pijl: 's2b', punten: [[-0.67, 0], [-0.42, 0.27], [-0.12, 0.44], [0.24, 0.48], [0.67, 0.39], [1.15, 0.18], [1.64, -0.15], [2.06, -0.48], [2.4, -0.92], [2.32, -1.35], [2.06, -1.62], [1.57, -1.97]] },
+  { my: M3, toon: true, pijl: 's3a', punten: [[0.46, 0.62], [0.45, 0.25], [0.3, -0.2], [0, -0.44], [-0.4, -0.45], [-1.2, -0.43], [-1.7, -0.45], [-2.13, -0.55], [-2.43, -0.86], [-2.5, -1.2], [-2.3, -1.5], [-2.03, -1.63], [-1.76, -1.54], [-1.48, -1.23], [-1.3, -0.8]] },
+  { my: M3, toon: true, pijl: 's3b', punten: [[-0.93, -0.05], [-0.74, 0.24], [-0.52, 0.4], [-0.15, 0.44], [0.4, 0.3], [1.02, -0.02], [1.7, -0.42], [2.3, -0.7]] },
+  { my: M3, punten: [[2.75, -1.1], [3.05, -1.8], [3.2, -2.5], [3.2, -3.1]] },
+];
+const afgerond = (p) => [Math.round(p[0] * 100) / 100, Math.round(p[1] * 100) / 100];
+const veldPunt = (my) => ([x, y]) => [CX + x * CEL, my + y * CEL];
 const lengte = (pad) => pad.slice(1).reduce((som, p, i) => som + Math.hypot(p[0] - pad[i][0], p[1] - pad[i][1]), 0);
 
-const beginPunt = [gat(M, Rr), STARTY + 0.7];
-// Station 1: uit de pionnen komen (tussen midden en rechts door), rechts om de rechter pion, weer tussen de twee door.
-const route1 = [[gat(M, Rr), S1 + 1.6], [gat(M, Rr), S1 - 0.6], ...boog(Rr, S1, 2.5, 195, 515, 10), [gat(M, Rr), S1 + 0.5], [gat(M, Rr), S1 - 1.8]];
-// Station 2: rechts om de middelste, links af, om de linker pion, tussen midden en links door, rechts om de rechter pion.
-const route2 = [[gat(M, Rr), S2 + 1.6], [gat(M, Rr), S2 - 0.4], ...boog(M, S2, 2.5, 320, 250, 3), ...boog(L, S2, R, 290, 90, 8), [gat(L, M), S2 + 1], [gat(L, M), S2 - 1.2], [M, S2 - 2.2], ...boog(Rr, S2, R, 250, 340, 4), [Rr + 3, S2 - 0.3], [Rr + 3.2, S2 - 1.6], [Rr + 2.4, S2 - 3]];
-// Station 3: rechts om de middelste, links om de linker, achterlangs de middelste, rechts om de rechter.
-const route3 = [[gat(M, Rr), S3 + 1.6], [gat(M, Rr), S3 - 0.4], ...boog(M, S3, 2.5, 320, 250, 3), ...boog(L, S3, R, 290, 90, 8), [M, S3 + 2.2], ...boog(Rr, S3, R, 110, 0, 4), [Rr + 2, S3 - 2], [M + 1, 4.6], [M, 3.4]];
-const eind = [M, 0.8];
-const heleRoute = [beginPunt, ...route1, ...route2, ...route3, eind];
-const SNELHEID = 4.5;
+/** Vloeiende lijn door alle punten (Catmull-Rom); geeft ook aan welke stukjes van de lijn bij welk stuk horen. */
+function vloeiend(stukken, deel = 2) {
+  const punten = stukken.flatMap((k) => k.punten.map(veldPunt(k.my)));
+  const pad = [];
+  for (let i = 0; i < punten.length - 1; i++) {
+    const [p0, p1, p2, p3] = [punten[Math.max(0, i - 1)], punten[i], punten[i + 1], punten[Math.min(punten.length - 1, i + 2)]];
+    for (let j = 0; j < deel; j++) {
+      const u = j / deel;
+      pad.push(afgerond([0, 1].map((n) => 0.5 * (2 * p1[n] + (p2[n] - p0[n]) * u + (2 * p0[n] - 5 * p1[n] + 4 * p2[n] - p3[n]) * u * u + (3 * p1[n] - p0[n] - 3 * p2[n] + p3[n]) * u * u * u))));
+    }
+  }
+  pad.push(afgerond(punten.at(-1)));
+  let begin = 0;
+  const delen = stukken.map((k) => {
+    const van = begin * deel;
+    begin += k.punten.length;
+    return { ...k, pad: pad.slice(van, (begin - 1) * deel + 1) };
+  });
+  return { pad, delen };
+}
+const { pad: heleRoute, delen } = vloeiend(STUKKEN);
+const beginPunt = heleRoute[0];
+const eind = heleRoute.at(-1);
+const SNELHEID = 4;
 const routeDuur = lengte(heleRoute) / SNELHEID;
+const tot = (naam) => heleRoute.slice(0, heleRoute.indexOf(delen.find((k) => k.pijl === naam).pad[0]) + 1);
 // Tijd waarop speler 1 bij station 2 is: vast tempo, na een korte aanloop (AANLOOP in timeline.ts).
-const deel = lengte([beginPunt, ...route1, route2[0]]) / lengte(heleRoute);
-const bijStation2 = routeDuur * (deel * 0.94 + 0.03);
-const lijn = (...pad) => ({ soort: 'loop', punten: pad });
+const bijStation2 = routeDuur * ((lengte(tot('s2a')) / lengte(heleRoute)) * 0.94 + 0.03);
+const route2 = tot('s2a').slice(0, -1);
+const lijnen = delen.filter((k) => k.toon).map((k) => ({ soort: 'loop', punten: k.pad }));
+const stationPionnen = (k, my, kleur) => [[-2, -1], [0, 0], [2, -1]].map(([x, y], i) => ({ ...pion(`${k}${i}`, CX + x * CEL, my + y * CEL, kleur), hoogte: 0.45 }));
+const cijfer = (id, my, x, y, waarde) => tekst(id, CX + x * CEL, my + y * CEL, waarde, 11);
 
 const achtjes = {
   id: 'veld-lc-achtjes-drie-pionnen',
   naam: 'Achtjes om drie pionnen',
   categorieen: ['loopcoordinatie'],
   uitleg:
-    'Vanaf het startpoortje sprint je recht vooruit naar het eerste station. Daar staan drie pionnen naast elkaar en loop je een vaste route. Station 1: tussen de pionnen uitkomen, rechts om de rechter pion heen, tussen de twee pionnen door en door naar het volgende station. Station 2: rechts om de middelste pion, links afslaan, om de linker pion heen, tussen de middelste en linker pion door en rechts om de rechter pion. Station 3: rechts om de middelste pion, links om de linker pion, achterlangs de middelste pion en rechts om de rechter pion. Daarna sprint je naar de finish.',
+    'Vanaf het startpoortje sprint je recht vooruit naar het eerste station. Elk station heeft drie pionnen in een V: de middelste staat het dichtst bij de start. Per station loop je twee stukken; de nummers 1 en 2 bij de pijlen geven de volgorde aan. Station 1: links langs de middelste pion en rechts om de rechter pion (1), dan terug tussen de twee pionnen door, achter de middelste langs en links om de linker pion (2). Station 2: rechts om de middelste pion, links afslaan en om de linker pion (1), dan tussen de linker en middelste pion door, achter de middelste langs en rechts om de rechter pion (2). Station 3: rechts om de middelste pion en links om de linker pion (1), dan achter de middelste langs en rechts om de rechter pion (2). Daarna sprint je naar de finish.',
   organisatie:
-    'Startpoortje, drie stations na elkaar en een finish, over ongeveer 33 m. Elk station heeft drie pionnen met 5 m ertussen (links, midden, rechts); de stations liggen 9 m uit elkaar. De nummers op het plaatje geven de volgorde per station. De volgende speler start als de vorige bij station 2 is.',
+    'Startpoortje, drie stations na elkaar en een finish, over ongeveer 35 m. Per station drie pionnen in een V: links en rechts 8 m uit elkaar, de middelste 2 m dichter bij de start. De stations liggen 9,5 m uit elkaar, het eerste 9,5 m na de start. De volgende speler start als de vorige bij station 2 is.',
   benodigdheden: ['9 pionnen in 3 kleuren', '4 pionnen'],
   spelersNodig: 1,
   keepersNodig: 0,
@@ -305,9 +358,9 @@ const achtjes = {
   en: {
     naam: 'Figure-of-eights round three cones',
     uitleg:
-      'From the start gate, sprint straight ahead to the first station. There are three cones side by side and you run a fixed route. Station 1: come out between the cones, go right round the right cone, through between the two cones and on to the next station. Station 2: right round the middle cone, turn left, round the left cone, through between the middle and left cones and right round the right cone. Station 3: right round the middle cone, left round the left cone, behind the middle cone and right round the right cone. Then sprint to the finish.',
+      'From the start gate, sprint straight ahead to the first station. Each station has three cones in a V: the middle one is closest to the start. At each station you run two parts; the numbers 1 and 2 by the arrows show the order. Station 1: left of the middle cone and right round the right cone (1), then back through between the two cones, behind the middle cone and left round the left cone (2). Station 2: right round the middle cone, turn left and round the left cone (1), then through between the left and middle cones, behind the middle cone and right round the right cone (2). Station 3: right round the middle cone and left round the left cone (1), then behind the middle cone and right round the right cone (2). Then sprint to the finish.',
     organisatie:
-      'Start gate, three stations in a row and a finish, over about 33 m. Each station has three cones 5 m apart (left, middle, right); the stations are 9 m apart. The numbers in the picture show the order at each station. The next player starts when the previous one reaches station 2.',
+      'Start gate, three stations in a row and a finish, over about 35 m. Per station three cones in a V: left and right 8 m apart, the middle one 2 m closer to the start. The stations are 9.5 m apart, the first 9.5 m after the start. The next player starts when the previous one reaches station 2.',
     benodigdheden: ['9 cones in 3 colours', '4 cones'],
     coachpunten: ['Stay tight round the cone: turn short, low through the knees', 'Inside foot close to the cone, already look at the next cone', 'Accelerate between the stations and only brake just before the turn'],
     variaties: {
@@ -316,29 +369,34 @@ const achtjes = {
     },
   },
   tekening: {
-    veld: { type: 'leeg', breedte: 24, lengte: 37 },
+    veld: { type: 'leeg', breedte: 19, lengte: 41 },
     camera: 'boven',
-    lijnen: [lijn(beginPunt, ...route1), lijn(route1.at(-1), ...route2), lijn(route2.at(-1), ...route3, eind)],
+    lijnen,
     objecten: [
-      ...poortje('st', gat(M, Rr), STARTY),
-      ...poortje('fi', M, 2.2),
-      ...stationPionnen('s1', S1, '#ffd23f'),
-      ...stationPionnen('s2', S2, '#1c64d8'),
-      ...stationPionnen('s3', S3, '#e03131'),
-      tekst('n1', 4.6, S1 - 3.2, 'Station 1', 11),
-      tekst('n2', 4.6, S2 - 3.2, 'Station 2', 11),
-      tekst('n3', 4.6, S3 - 3.2, 'Station 3', 11),
-      ...[[12.3, S1 + 1.7], [Rr + 3.4, S1], [12.3, S1 - 1.7]].map(([x, y], i) => tekst(`r1${i}`, x, y, String(i + 1), 8)),
-      ...[[14.7, S2 + 1.3], [L - 3.2, S2], [gat(L, M), S2 + 2.5], [Rr + 4.6, S2 + 0.4]].map(([x, y], i) => tekst(`r2${i}`, x, y, String(i + 1), 8)),
-      ...[[12.3, S3 + 0.9], [L - 3.2, S3], [M, S3 + 3.4], [Rr + 3.4, S3]].map(([x, y], i) => tekst(`r3${i}`, x, y, String(i + 1), 8)),
+      ...poortje('st', CX, STARTY),
+      ...poortje('fi', FINISHX, FINISHY),
+      ...stationPionnen('s1', M1, '#ffd23f'),
+      ...stationPionnen('s2', M2, '#1c64d8'),
+      ...stationPionnen('s3', M3, '#e03131'),
+      tekst('nStart', CX + 4.6, STARTY, 'Start', 10),
+      tekst('nFinish', FINISHX - 4.6, FINISHY, 'Finish', 10),
+      tekst('n1', 2.5, M1 + 0.2, 'Station 1', 11),
+      tekst('n2', 2.5, M2 + 0.2, 'Station 2', 11),
+      tekst('n3', 2.5, M3 + 0.2, 'Station 3', 11),
+      cijfer('c1a', M1, 1.05, -1.2, '1'),
+      cijfer('c1b', M1, -2.25, -2.3, '2'),
+      cijfer('c2a', M2, -0.45, -1, '1'),
+      cijfer('c2b', M2, 1.95, -2.35, '2'),
+      cijfer('c3a', M3, -0.75, -1.05, '1'),
+      cijfer('c3b', M3, 2.6, -0.25, '2'),
       speler('a1', 1, beginPunt[0], beginPunt[1], { kijkrichting: -90 }),
-      speler('a2', 2, beginPunt[0] + 2, beginPunt[1] + 0.3, { kijkrichting: -90 }),
+      speler('a2', 2, CX, STARTY + 2.5, { kijkrichting: -90 }),
     ],
     animatie: [
       pauze(0.4),
       stap(
         { type: 'loop', wie: 'a1', via: heleRoute.slice(1, -1), naar: eind, manier: 'sprint', duur: routeDuur, tempo: 'gelijkmatig', spoor: false },
-        { type: 'loop', wie: 'a2', via: [beginPunt, ...route1.slice(0, -1)], naar: route1.at(-1), manier: 'sprint', duur: lengte([beginPunt, ...route1]) / SNELHEID + 0.5, start: bijStation2, tempo: 'gelijkmatig', spoor: false },
+        { type: 'loop', wie: 'a2', via: [beginPunt, ...route2.slice(1, -1)], naar: route2.at(-1), manier: 'sprint', duur: lengte([[CX, STARTY + 2.5], ...route2]) / SNELHEID + 0.6, start: bijStation2, tempo: 'gelijkmatig', spoor: false },
       ),
       pauze(0.6),
     ],

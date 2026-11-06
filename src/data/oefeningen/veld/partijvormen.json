@@ -11449,15 +11449,16 @@
       "afwerken"
     ],
     "uitleg": "Een aanval die in drie golven steeds groter wordt, heen en weer over het veld. Speler 1 dribbelt naar voren en schiet vanaf ± 15 m op het doel aan de overkant; verder mag hij niet komen (1 tegen 0). Meteen daarna komen vanaf de kant waarop geschoten is twee aanvallers op, en die spelen 2 tegen 1 tegen de speler die net schoot. Is die bal uit of gescoord, dan komen vanaf de kant waar speler 1 begon nog twee spelers bij en wordt het 3 tegen 2, tot er gescoord wordt of de bal uit is.",
-    "organisatie": "Veld van 24 × 40 m met aan beide kanten een doel. Zonder keepers: kleine goals. Met keepers: E-goals, met aan elke kant een keeper. Aan beide kanten staan de spelers met ballen naast het doel. Daarna sluiten de spelers aan aan de kant waar ze uitkomen.",
+    "organisatie": "Veld van 24 × 40 m met aan beide kanten een E-goal en een keeper. Zonder keepers: kleine goals. Aan beide kanten staan de spelers met ballen naast het doel. Daarna sluiten de spelers aan aan de kant waar ze uitkomen.",
     "benodigdheden": [
-      "2 kleine goals (met keepers: 2 E-goals)",
+      "2 E-goals (zonder keepers: 2 kleine goals)",
       "4 pionnen",
       "Ballen",
       "Hesjes"
     ],
     "spelersNodig": 5,
-    "keepersNodig": 0,
+    "keepersNodig": 2,
+    "zonderKeepers": true,
     "leeftijden": [
       "jo8-11",
       "jo12-15",
@@ -11483,62 +11484,81 @@
     "tekening": {
       "veld": {
         "type": "leeg",
-        "breedte": 26,
-        "lengte": 42
+        "breedte": 42,
+        "lengte": 26
       },
       "camera": "schuin",
       "objecten": [
         {
           "id": "gB",
-          "soort": "klein-goal",
-          "x": 13,
-          "y": 1,
-          "breedte": 3
+          "soort": "goal",
+          "x": 0.5,
+          "y": 13,
+          "breedte": 5,
+          "hoogte": 2,
+          "hoek": -90
         },
         {
           "id": "gO",
-          "soort": "klein-goal",
-          "x": 13,
-          "y": 41,
-          "hoek": 180,
-          "breedte": 3
+          "soort": "goal",
+          "x": 41.5,
+          "y": 13,
+          "breedte": 5,
+          "hoogte": 2,
+          "hoek": 90
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 1.9,
+          "y": 13,
+          "verdedigt": "gB"
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 40.1,
+          "y": 13,
+          "verdedigt": "gO"
         },
         {
           "id": "p1",
           "soort": "pion",
           "x": 1,
-          "y": 1
+          "y": 25
         },
         {
           "id": "p2",
           "soort": "pion",
-          "x": 25,
+          "x": 1,
           "y": 1
         },
         {
           "id": "p3",
           "soort": "pion",
-          "x": 1,
-          "y": 41
+          "x": 41,
+          "y": 25
         },
         {
           "id": "p4",
           "soort": "pion",
-          "x": 25,
-          "y": 41
+          "x": 41,
+          "y": 1
         },
         {
           "id": "lijn1",
           "soort": "hoedje",
-          "x": 4,
-          "y": 15.5,
+          "x": 15.5,
+          "y": 22,
           "kleur": "#ffd23f"
         },
         {
           "id": "lijn2",
           "soort": "hoedje",
-          "x": 22,
-          "y": 15.5,
+          "x": 15.5,
+          "y": 4,
           "kleur": "#ffd23f"
         },
         {
@@ -11546,65 +11566,65 @@
           "soort": "speler",
           "team": "A",
           "nummer": 1,
-          "x": 13,
-          "y": 38.5,
-          "kijkrichting": -90
+          "x": 38.5,
+          "y": 13,
+          "kijkrichting": -180
         },
         {
           "id": "a2",
           "soort": "speler",
           "team": "A",
           "nummer": 2,
-          "x": 7,
-          "y": 40,
-          "kijkrichting": -90
+          "x": 37.5,
+          "y": 17,
+          "kijkrichting": -180
         },
         {
           "id": "a3",
           "soort": "speler",
           "team": "A",
           "nummer": 3,
-          "x": 19,
-          "y": 40,
-          "kijkrichting": -90
+          "x": 37.5,
+          "y": 9,
+          "kijkrichting": -180
         },
         {
           "id": "b1",
           "soort": "speler",
           "team": "B",
           "nummer": 4,
-          "x": 7,
-          "y": 2,
-          "kijkrichting": 90
+          "x": 4.5,
+          "y": 17,
+          "kijkrichting": 0
         },
         {
           "id": "b2",
           "soort": "speler",
           "team": "B",
           "nummer": 5,
-          "x": 19,
-          "y": 2,
-          "kijkrichting": 90
+          "x": 4.5,
+          "y": 9,
+          "kijkrichting": 0
         },
         {
           "id": "bal1",
           "soort": "bal",
-          "x": 13,
-          "y": 38,
+          "x": 38,
+          "y": 13,
           "bij": "a1"
         },
         {
           "id": "bal2",
           "soort": "bal",
-          "x": 7,
-          "y": 2.5,
+          "x": 5,
+          "y": 17,
           "bij": "b1"
         },
         {
           "id": "bal3",
           "soort": "bal",
-          "x": 7,
-          "y": 39.5,
+          "x": 37,
+          "y": 17,
           "bij": "a2"
         }
       ],
@@ -11619,8 +11639,8 @@
               "type": "dribbel",
               "wie": "a1",
               "naar": [
-                13.4,
-                16.6
+                16.6,
+                12.6
               ],
               "manier": "sprint",
               "duur": 3.6
@@ -11633,10 +11653,15 @@
               "type": "schot",
               "van": "a1",
               "naar": [
-                13,
-                1.2
+                0.8,
+                11
               ],
-              "hoogte": "grond"
+              "hoogte": "grond",
+              "afloop": "vangt",
+              "duikNaar": [
+                1.6,
+                11.1
+              ]
             }
           ]
         },
@@ -11646,8 +11671,8 @@
               "type": "dribbel",
               "wie": "b1",
               "naar": [
-                9,
-                13
+                13,
+                17
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11656,8 +11681,8 @@
               "type": "loop",
               "wie": "b2",
               "naar": [
-                19,
-                14
+                14,
+                7
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11666,8 +11691,8 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                11.4,
-                20
+                20,
+                14.6
               ],
               "manier": "achteruit",
               "duur": 1.7
@@ -11680,8 +11705,8 @@
               "type": "dribbel",
               "wie": "b1",
               "naar": [
-                9.6,
-                20.4
+                20.4,
+                16.4
               ],
               "duur": 1.3
             },
@@ -11689,8 +11714,8 @@
               "type": "loop",
               "wie": "b2",
               "naar": [
-                20,
-                24
+                24,
+                6
               ],
               "manier": "sprint",
               "duur": 1.5
@@ -11719,8 +11744,8 @@
               "type": "dribbel",
               "wie": "b2",
               "naar": [
-                17.4,
-                33
+                33,
+                8.6
               ],
               "duur": 1.9
             },
@@ -11728,8 +11753,8 @@
               "type": "loop",
               "wie": "b1",
               "naar": [
-                8.6,
-                31
+                31,
+                17.4
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11738,8 +11763,8 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                13.2,
-                30
+                30,
+                12.8
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11752,10 +11777,11 @@
               "type": "schot",
               "van": "b2",
               "naar": [
-                13.6,
-                40.8
+                41.3,
+                14.8
               ],
-              "hoogte": "grond"
+              "hoogte": "laag",
+              "afloop": "goal"
             }
           ]
         },
@@ -11769,8 +11795,8 @@
               "type": "dribbel",
               "wie": "a2",
               "naar": [
-                6.6,
-                30
+                30,
+                19.4
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11779,8 +11805,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                21,
-                29
+                29,
+                5
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11789,8 +11815,8 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                14,
-                24
+                24,
+                12
               ],
               "manier": "sprint",
               "duur": 1.6
@@ -11799,8 +11825,8 @@
               "type": "loop",
               "wie": "b1",
               "naar": [
-                8.4,
-                23.4
+                23.4,
+                17.6
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11809,8 +11835,8 @@
               "type": "loop",
               "wie": "b2",
               "naar": [
-                17.6,
-                25
+                25,
+                8.4
               ],
               "manier": "sprint",
               "duur": 1.9
@@ -11823,8 +11849,8 @@
               "type": "dribbel",
               "wie": "a2",
               "naar": [
-                6.2,
-                23
+                23,
+                19.8
               ],
               "duur": 1.3
             },
@@ -11832,8 +11858,8 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                13,
-                16.6
+                16.6,
+                13
               ],
               "manier": "sprint",
               "duur": 1.3
@@ -11842,8 +11868,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                21.6,
-                21
+                21,
+                4.4
               ],
               "manier": "sprint",
               "duur": 1.4
@@ -11858,8 +11884,8 @@
               "type": "loop",
               "wie": "b2",
               "naar": [
-                17,
-                18.6
+                18.6,
+                9
               ],
               "manier": "sprint",
               "duur": 1.4
@@ -11881,8 +11907,8 @@
               "type": "loop",
               "wie": "b2",
               "naar": [
-                15.8,
-                15.4
+                15.4,
+                10.2
               ],
               "manier": "sprint",
               "duur": 0.8
@@ -11891,8 +11917,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                21.4,
-                12
+                12,
+                4.6
               ],
               "manier": "sprint",
               "duur": 1.2
@@ -11901,8 +11927,8 @@
               "type": "dribbel",
               "wie": "a1",
               "naar": [
-                12.4,
-                13.4
+                13.4,
+                13.6
               ],
               "duur": 0.9
             }
@@ -11923,8 +11949,8 @@
               "type": "dribbel",
               "wie": "a3",
               "naar": [
-                18.8,
-                6.6
+                6.6,
+                7.2
               ],
               "duur": 1.1
             },
@@ -11932,8 +11958,8 @@
               "type": "loop",
               "wie": "b2",
               "naar": [
-                16.2,
-                8.6
+                8.6,
+                9.8
               ],
               "manier": "sprint",
               "duur": 1.1
@@ -11946,10 +11972,16 @@
               "type": "schot",
               "van": "a3",
               "naar": [
-                12.4,
-                1.2
+                0.8,
+                14.8
               ],
-              "hoogte": "grond"
+              "hoogte": "grond",
+              "afloop": "vangt",
+              "duikNaar": [
+                1.6,
+                14.7
+              ],
+              "vasthouden": true
             }
           ]
         },

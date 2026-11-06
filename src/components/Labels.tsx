@@ -55,7 +55,7 @@ export function Labels({ oefening, keepers }: { oefening: Oefening; keepers?: nu
       {soort === 'veld' && keepersNodig > 0 && (
         <span className={`label label-keeper${!keeperNodig(oefening) && keepers === 0 ? ' label-zonder-keeper' : ''}`}>
           <Icoon naam="keeper" maat={16} />
-          {keeperNodig(oefening) ? t('Keeper nodig') : keepers === 0 ? t('Zonder keeper: net of trainer in het doel') : t('Met keeper')}
+          {keeperNodig(oefening) ? t('Keeper nodig') : keepers === 0 ? (oefening.zonderKeepers ? t('Zonder keepers: op kleine goals') : t('Zonder keeper: net of trainer in het doel')) : t('Met keeper')}
         </span>
       )}
     </div>

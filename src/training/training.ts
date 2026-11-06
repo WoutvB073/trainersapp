@@ -29,7 +29,7 @@ export interface Training {
 
 export const MAX_AANTAL = 40;
 
-type MetKeeper = Pick<Oefening, 'spelersNodig' | 'keepersNodig'> & Partial<Pick<Oefening, 'soort' | 'tekening' | 'keeperVerplicht'>>;
+type MetKeeper = Pick<Oefening, 'spelersNodig' | 'keepersNodig'> & Partial<Pick<Oefening, 'soort' | 'tekening' | 'zonderKeepers' | 'keeperVerplicht'>>;
 
 /**
  * Is de keeper echt nodig (0.29.1)? Keeperoefeningen: ja. Spelersoefeningen met één groot doel (afwerken, positiespel met
@@ -37,7 +37,7 @@ type MetKeeper = Pick<Oefening, 'spelersNodig' | 'keepersNodig'> & Partial<Pick<
  * doelen en oefeningen met `keeperVerplicht` (de keeper speelt mee): ja. Partijvormen op minidoeltjes hebben geen keeper.
  */
 export function keeperNodig(o: MetKeeper): boolean {
-  if (o.keepersNodig <= 0) return false;
+  if (o.keepersNodig <= 0 || o.zonderKeepers) return false;
   if (o.soort !== 'veld' || !o.tekening || o.keeperVerplicht) return true;
   return o.tekening.objecten.filter((x) => x.soort === 'goal').length >= 2;
 }

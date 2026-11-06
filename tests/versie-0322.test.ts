@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { maakTijdlijn, standOp } from '../src/anim/timeline';
 import { vindOefening } from '../src/data/oefeningen';
-import { pastBij } from '../src/training/training';
+import { keeperNodig, pastBij } from '../src/training/training';
 import type { Oefening, Punt } from '../src/model/types';
 
 /** Versie 0.32.2: vier spelersoefeningen, pionnen in de hand, afremmen tot stilstand. */
@@ -69,31 +69,36 @@ describe('golven: 1 tegen 0, 2 tegen 1, 3 tegen 2', () => {
   const o = oefening('veld-pv-golven-overtal');
   const tl = maakTijdlijn(o.tekening);
 
-  it('kleine goals zonder keepers, E-goals met keepers staan erbij', () => {
-    expect(o.keepersNodig).toBe(0);
-    expect(o.tekening.objecten.filter((x) => x.soort === 'klein-goal')).toHaveLength(2);
-    expect(o.tekening.objecten.some((x) => x.soort === 'keeper')).toBe(false);
+  it('speelt op E-goals met een keeper op elk goal; zonder keepers op kleine goals blijft in de uitleg', () => {
+    expect(o.keepersNodig).toBe(2);
+    expect(o.zonderKeepers).toBe(true);
+    expect(o.tekening.objecten.filter((x) => x.soort === 'goal')).toHaveLength(2);
+    expect(o.tekening.objecten.filter((x) => x.soort === 'keeper')).toHaveLength(2);
+    expect(keeperNodig(o)).toBe(false);
     expect(pastBij(o, 5, 0)).toBe(true);
     expect(pastBij(o, 5, 2)).toBe(true);
     expect(o.organisatie).toMatch(/Zonder keepers: kleine goals/);
-    expect(o.organisatie).toMatch(/E-goals/);
+    expect(o.organisatie).toMatch(/E-goal/);
     expect(o.benodigdheden.join(' ')).toMatch(/E-goals/);
   });
 
   it('heeft alle drie de fases, om en om naar de andere kant', () => {
     const schoten = acties(o).filter((a) => a.type === 'schot');
     expect(schoten.map((a) => (a as unknown as { van: string }).van)).toEqual(['a1', 'b2', 'a3']);
-    const doelY = schoten.map((a) => (a as unknown as { naar: Punt }).naar[1]);
-    expect(doelY[0]).toBeLessThan(5);
-    expect(doelY[1]).toBeGreaterThan(35);
-    expect(doelY[2]).toBeLessThan(5);
+    const doelX = schoten.map((a) => (a as unknown as { naar: Punt }).naar[0]);
+    expect(doelX[0]).toBeLessThan(5);
+    expect(doelX[1]).toBeGreaterThan(35);
+    expect(doelX[2]).toBeLessThan(5);
+    // De keepers duiken en vangen.
+    expect(schoten.map((a) => (a as unknown as { afloop: string }).afloop)).toEqual(['vangt', 'goal', 'vangt']);
+    expect(schoten.filter((a) => (a as unknown as { duikNaar?: Punt }).duikNaar)).toHaveLength(2);
   });
 
   it('speler 1 schiet vanaf ± 15 m en komt niet verder', () => {
     const dribbel = acties(o).find((a) => a.type === 'dribbel' && a.wie === 'a1') as unknown as { naar: Punt };
-    expect(dribbel.naar[1] - 1).toBeGreaterThan(14);
-    expect(dribbel.naar[1] - 1).toBeLessThan(17);
-    const a1 = tijden(tl, 0.2).map((t) => plek(tl, 'a1', t)[1]);
+    expect(dribbel.naar[0] - 1).toBeGreaterThan(14);
+    expect(dribbel.naar[0] - 1).toBeLessThan(17);
+    const a1 = tijden(tl, 0.2).map((t) => plek(tl, 'a1', t)[0]);
     expect(a1.slice(0, 20).every((y) => y >= 16)).toBe(true);
   });
 
@@ -129,7 +134,7 @@ describe('hordes, zijwaarts en sprint', () => {
   });
 });
 
-describe('achtjes om drie pionnen', () => {
+describe('achtjes om drie pionnen (tekening 25)', () => {
   const o = oefening('veld-lc-achtjes-drie-pionnen');
   const tl = maakTijdlijn(o.tekening);
   const pion = (id: string) => {
@@ -148,64 +153,89 @@ describe('achtjes om drie pionnen', () => {
     }
     return som / (2 * Math.PI);
   };
-  const station = (y: number) => baan.filter((p) => Math.abs(p[1] - y) < 4.4);
+  /** Het stuk van de baan bij een station. */
+  const station = (k: string) => {
+    const m = pion(`${k}1`);
+    return baan.filter((p) => p[1] < m[1] + 3.2 && p[1] > m[1] - 4.4);
+  };
 
-  it('drie stations met elk een linker, middelste en rechter pion, met nummers', () => {
+  it('drie stations met de pionnen in een V: de middelste staat het dichtst bij de start', () => {
     for (const k of ['s1', 's2', 's3']) {
       const [l, m, r] = [pion(`${k}0`), pion(`${k}1`), pion(`${k}2`)];
       expect(l[0]).toBeLessThan(m[0]);
       expect(m[0]).toBeLessThan(r[0]);
       expect(l[1]).toBe(r[1]);
+      expect(m[1]).toBeGreaterThan(l[1]);
     }
     const teksten = o.tekening.objecten.filter((x) => x.soort === 'tekst').map((x) => x.tekst);
-    expect(teksten).toEqual(expect.arrayContaining(['Station 1', 'Station 2', 'Station 3', '1', '2', '3', '4']));
+    expect(teksten).toEqual(expect.arrayContaining(['Start', 'Finish', 'Station 1', 'Station 2', 'Station 3']));
+    expect(teksten.filter((x) => x === '1')).toHaveLength(3);
+    expect(teksten.filter((x) => x === '2')).toHaveLength(3);
   });
 
-  it('de route staat altijd op het plaatje en in de animatie, los van de knop Looplijnen', () => {
-    expect(o.tekening.lijnen).toHaveLength(3);
+  it('per station twee lijnen met een pijl, en de startlijn; altijd te zien, los van de knop Looplijnen', () => {
+    expect(o.tekening.lijnen).toHaveLength(7);
     expect(o.tekening.lijnen!.every((l) => l.soort === 'loop' && l.stap === undefined)).toBe(true);
     // Geen dubbele lijn: de lopers laten zelf geen spoor achter.
     expect(tl.sporen).toHaveLength(0);
   });
 
-  it('station 1: een hele ronde rechts om de rechter pion', () => {
-    expect(draaiing(station(pion('s12')[1]), pion('s12'))).toBeGreaterThan(0.7);
+  it('station 1: links langs de middelste, tegen de klok in om de rechter pion, achter de middelste langs, links om de linker', () => {
+    const b = station('s1');
+    const m = pion('s11');
+    const eerste = b.find((p) => p[1] < m[1] + 0.2)!;
+    expect(eerste[0]).toBeLessThan(m[0]);
+    expect(draaiing(b, pion('s12'))).toBeLessThan(-0.7);
+    expect(b.some((p) => Math.abs(p[0] - m[0]) < 0.4 && p[1] > m[1] + 0.5)).toBe(true);
+    const l = pion('s10');
+    expect(b.some((p) => p[0] < l[0] - 0.5 && Math.abs(p[1] - l[1]) < 0.5)).toBe(true);
+    expect(draaiing(b, l)).toBeGreaterThan(0.2);
   });
 
-  it('station 2 en 3: links om de linker pion heen', () => {
-    expect(draaiing(station(pion('s20')[1]), pion('s20'))).toBeLessThan(-0.45);
-    expect(draaiing(station(pion('s30')[1]), pion('s30'))).toBeLessThan(-0.45);
+  it('station 2: rechts om de middelste, met de klok mee om de linker pion, achter de middelste langs, rechts om de rechter', () => {
+    const b = station('s2');
+    const m = pion('s21');
+    const eerste = b.find((p) => p[1] < m[1] + 0.2)!;
+    expect(eerste[0]).toBeGreaterThan(m[0]);
+    expect(draaiing(b, pion('s20'))).toBeGreaterThan(0.7);
+    expect(b.some((p) => Math.abs(p[0] - m[0]) < 0.4 && p[1] > m[1] + 0.5)).toBe(true);
+    const r = pion('s22');
+    expect(b.some((p) => p[0] > r[0] + 0.5 && Math.abs(p[1] - r[1]) < 0.5)).toBe(true);
   });
 
-  it('station 3: achterlangs de middelste pion, dan rechts langs de rechter pion', () => {
+  it('station 3: rechts om de middelste, met de klok mee om de linker pion, achter de middelste langs, rechts langs de rechter', () => {
+    const b = station('s3');
     const m = pion('s31');
+    const eerste = b.find((p) => p[1] < m[1] + 0.2)!;
+    expect(eerste[0]).toBeGreaterThan(m[0]);
+    expect(draaiing(b, pion('s30'))).toBeGreaterThan(0.7);
+    expect(b.some((p) => Math.abs(p[0] - m[0]) < 0.4 && p[1] > m[1] + 0.5)).toBe(true);
     const r = pion('s32');
-    expect(baan.some((p) => Math.abs(p[0] - m[0]) < 0.3 && p[1] > m[1] + 1.5 && p[1] < m[1] + 3)).toBe(true);
-    expect(baan.some((p) => p[0] > r[0] + 1.5 && Math.abs(p[1] - r[1]) < 0.5)).toBe(true);
+    expect(b.some((p) => p[0] > r[0] + 0.5 && Math.abs(p[1] - r[1]) < 1)).toBe(true);
   });
 
   it('niemand raakt een pion', () => {
-    for (const x of o.tekening.objecten.filter((q) => q.soort === 'pion')) for (const p of baan) expect(afstand(p, [x.x, x.y])).toBeGreaterThan(1.2);
+    for (const x of o.tekening.objecten.filter((q) => q.soort === 'pion')) for (const p of baan) expect(afstand(p, [x.x, x.y])).toBeGreaterThan(0.5);
   });
 
   it('de volgende speler start als de vorige bij station 2 is', () => {
     const y2 = pion('s21')[1];
     const start = plek(tl, 'a2', 0);
     const t = tijden(tl).find((q) => afstand(plek(tl, 'a2', q), start) > 0.05)!;
-    expect(plek(tl, 'a1', t)[1]).toBeLessThan(y2 + 2.5);
+    expect(plek(tl, 'a1', t)[1]).toBeLessThan(y2 + 4);
     expect(plek(tl, 'a1', t)[1]).toBeGreaterThan(y2);
   });
 
   it('loopt in een vast tempo, ook om de pionnen', () => {
     const v = (t: number) => afstand(plek(tl, 'a1', t), plek(tl, 'a1', t + 0.1)) / 0.1;
-    for (const t of [4, 8, 12, 16, 20]) {
-      expect(v(t)).toBeGreaterThan(4);
-      expect(v(t)).toBeLessThan(5.2);
+    for (const t of [4, 8, 12, 16]) {
+      expect(v(t)).toBeGreaterThan(3.4);
+      expect(v(t)).toBeLessThan(4.6);
     }
   });
 
   it('eindigt bij de finish', () => {
-    expect(plek(tl, 'a1', tl.duur)[1]).toBeLessThan(2);
+    expect(plek(tl, 'a1', tl.duur)[1]).toBeLessThan(2.5);
     expect(o.doorwisselbaar).toBe(true);
   });
 });

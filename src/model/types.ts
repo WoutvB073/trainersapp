@@ -559,6 +559,8 @@ export interface Oefening {
    * doel niet nodig (net of trainer in het doel); bij twee grote doelen (partijvorm) wel. Zie `keeperNodig`.
    */
   keeperVerplicht?: boolean;
+  /** Twee grote doelen met keepers, maar het kan ook zonder keepers op kleine goals (0.33.0): komt ook mee bij 0 keepers. */
+  zonderKeepers?: boolean;
   /** Leeftijdsgroepen waarvoor de oefening geschikt is. Eigen oefeningen zonder leeftijden passen bij elke leeftijd. */
   leeftijden?: Leeftijd[];
   /** Combinatievorm: 2–4 onderdelen achter elkaar (bv. voetenwerk → vangen → duiken). Niet meer als badge getoond. */
