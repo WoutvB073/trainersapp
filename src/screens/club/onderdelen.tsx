@@ -1,11 +1,16 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Miniatuur } from '../../components/Miniatuur';
+import { OefeningBlokken } from '../../components/OefeningBlokken';
 import type { Oefening } from '../../model/types';
 import {
   blokNaam,
   categorieKleur,
   clubPlan,
   groepNaam,
+  oefeningenVan,
+  oefeningOpTijd,
+  oefeningTijden,
+  onderdelenVan,
   partijvelden,
   rondeTijd,
   stationNaam,
@@ -79,6 +84,36 @@ const oefeningVan = (c: ClubInhoud, s: Station, vind: Vind) => {
   return id ? vind(id) : undefined;
 };
 
+/** "Oefening 1, 2, 3" als er meer dan één oefening in een onderdeel staat. */
+export const oefeningNummers = (o?: Onderdeel) => {
+  const n = o ? oefeningenVan(o).length : 0;
+  return n > 1 ? vt('Oefening {lijst}', { lijst: Array.from({ length: n }, (_, i) => i + 1).join(', ') }) : undefined;
+};
+
+/** De oefeningen van een onderdeel: bij meer dan één tik je op Oefening 1, 2, 3 voor de uitleg en de animatie. */
+export function BlokOefeningen({ onderdeel, vind }: { onderdeel: Onderdeel; vind: Vind }) {
+  const [keuze, setKeuze] = useState(0);
+  const lijst = oefeningenVan(onderdeel);
+  const tijden = oefeningTijden(onderdeel);
+  const i = Math.min(keuze, Math.max(0, lijst.length - 1));
+  const o = lijst[i] ? vind(lijst[i]!.oefening) : undefined;
+  return (
+    <>
+      {lijst.length > 1 && (
+        <div className="club-oefening-keuze" role="tablist" aria-label={vt('Oefeningen')}>
+          {lijst.map((x, n) => (
+            <button key={x.oefening} type="button" role="tab" aria-selected={n === i} className={n === i ? 'aan' : ''} onClick={() => setKeuze(n)}>
+              {vt('Oefening {nr}', { nr: n + 1 })}
+              <small>{vt('{m} min', { m: tijden[n]! })}</small>
+            </button>
+          ))}
+        </div>
+      )}
+      {o ? <OefeningBlokken key={o.id} o={o} /> : <p className="leeg">{vt('Nog geen oefening')}</p>}
+    </>
+  );
+}
+
 /** Kop boven een veldplan: welke rondes dit zijn. */
 export const faseTitel = (f: Fase, plan: { rondes: Ronde[] }) => {
   const a = plan.rondes[f.eerste]!.nr;
@@ -91,7 +126,7 @@ export function VeldplanStations({ c, fase, vind, opStation }: { c: ClubInhoud; 
   return (
     <HalfVeld>
       {fase.stations.map((s) => (
-        <VakKaart key={s.nr} vak={stationVak(s, fase)} blok={s.vorm} nr={String(s.nr)} naam={stationNaam(s)} trainer={stationTrainer(c, s.nr)} oefening={oefeningVan(c, s, vind)} opTik={opStation && (() => opStation(s))} />
+        <VakKaart key={s.nr} vak={stationVak(s, fase)} blok={s.vorm} nr={String(s.nr)} naam={stationNaam(s)} sub={oefeningNummers(vindOnderdeel(c, s.onderdeel))} trainer={stationTrainer(c, s.nr)} oefening={oefeningVan(c, s, vind)} opTik={opStation && (() => opStation(s))} />
       ))}
     </HalfVeld>
   );
@@ -105,7 +140,7 @@ export function VeldplanSamen({ c, onderdeel, vind, opVeld }: { c: ClubInhoud; o
   if (onderdeel.categorie !== 'partijvormen') {
     return (
       <HalfVeld>
-        <VakKaart vak={{ x: 4, y: 4, b: 92, h: 92 }} blok={onderdeel.categorie} nr="" naam={blokNaam(onderdeel.categorie)} sub={vt('Alle groepjes samen')} oefening={o} opTik={opVeld} />
+        <VakKaart vak={{ x: 4, y: 4, b: 92, h: 92 }} blok={onderdeel.categorie} nr="" naam={blokNaam(onderdeel.categorie)} sub={[vt('Alle groepjes samen'), oefeningNummers(onderdeel)].filter(Boolean).join(' · ')} oefening={o} opTik={opVeld} />
       </HalfVeld>
     );
   }
@@ -114,7 +149,7 @@ export function VeldplanSamen({ c, onderdeel, vind, opVeld }: { c: ClubInhoud; o
     <>
       <HalfVeld>
         {velden.map((v) => (
-          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok={onderdeel.categorie} nr="" naam={vt('Veld {nr}', { nr: v.nr })} sub={veldGroepen(v)} trainer={veldTrainer(c, v.nr)} oefening={o} opTik={opVeld} />
+          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok={onderdeel.categorie} nr="" naam={vt('Veld {nr}', { nr: v.nr })} sub={[veldGroepen(v), oefeningNummers(onderdeel)].filter(Boolean).join(' · ')} trainer={veldTrainer(c, v.nr)} oefening={o} opTik={opVeld} />
         ))}
       </HalfVeld>
       <p className="klein club-noot">
@@ -146,6 +181,12 @@ export function PlanNoot({ c }: { c: ClubInhoud }) {
       {p.verlengd.length > 0 && <p className="klein club-noot">{vt('Alle groepjes wisselen tegelijk, dus een ronde duurt zo lang als het langste onderdeel. Langer dan ingesteld: {w0}.', { w0: p.verlengd.map((o) => blokNaam(o.categorie)).join(', ') })}</p>}
     </>
   );
+}
+
+/** Uitleg bij het materiaal als er meer oefeningen in een onderdeel staan. */
+export function MateriaalNoot({ c }: { c: Pick<ClubInhoud, 'onderdelen' | 'blokken'> }) {
+  if (!onderdelenVan(c).some((o) => oefeningenVan(o).length > 1)) return null;
+  return <p className="klein club-noot">{vt('De oefeningen in één onderdeel doe je na elkaar op dezelfde plek. Daarom telt per onderdeel het grootste aantal van elk soort materiaal, niet de som. Stations naast elkaar tellen wel op.')}</p>;
 }
 
 /** Rotatieschema: per groepje waar het per ronde staat, daarna per ronde de tijd, de groepjes en de trainers. */
@@ -203,8 +244,30 @@ export function RotatieTabel({ c }: { c: ClubInhoud }) {
   );
 }
 
-/** Wie staat waar in deze ronde, en welke trainer erbij. */
-export function RondeLijst({ c, ronde }: { c: ClubInhoud; ronde: Ronde }) {
+/** In de rondetimer: de oefeningen van een onderdeel, met wat nu aan de beurt is. Tik voor de uitleg en de animatie. */
+function RondeOefeningen({ o, vind, seconden, opOefening }: { o?: Onderdeel; vind: Vind; seconden: number; opOefening?: (o: Onderdeel) => void }) {
+  const lijst = o ? oefeningenVan(o) : [];
+  if (!o || lijst.length < 2) return null;
+  const tijden = oefeningTijden(o);
+  const nu = oefeningOpTijd(o, seconden);
+  return (
+    <ol className="club-ronde-oefeningen">
+      {lijst.map((x, i) => (
+        <li key={x.oefening} className={i === nu ? 'nu' : ''}>
+          <button type="button" onClick={() => opOefening?.(o)}>
+            <b>{vt('Oefening {nr}', { nr: i + 1 })}</b>
+            <span>{vind(x.oefening)?.naam ?? ''}</span>
+            <small>{vt('{m} min', { m: tijden[i]! })}</small>
+          </button>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** Wie staat waar in deze ronde, en welke trainer erbij. In de rondetimer ook de oefeningen per onderdeel (`vind`, `seconden`). */
+export function RondeLijst({ c, ronde, vind, seconden = 0, opOefening }: { c: ClubInhoud; ronde: Ronde; vind?: Vind; seconden?: number; opOefening?: (o: Onderdeel) => void }) {
+  const oefeningen = (o?: Onderdeel) => vind && <RondeOefeningen o={o} vind={vind} seconden={seconden} opOefening={opOefening} />;
   if (ronde.samen) {
     const o = ronde.samen;
     if (o.categorie !== 'partijvormen') {
@@ -215,21 +278,25 @@ export function RondeLijst({ c, ronde }: { c: ClubInhoud; ronde: Ronde }) {
               {blokNaam(o.categorie)}
             </span>
             {vt('Alle groepjes samen')}
+            {oefeningen(o)}
           </li>
         </ul>
       );
     }
     return (
-      <ul className="club-ronde">
-        {partijvelden(c.groepjes).map((v) => (
-          <li key={v.nr}>
-            <span className="club-nr" style={kleur(o.categorie)}>
-              {vt('Veld {nr}', { nr: v.nr })}
-            </span>
-            {[veldGroepen(v), veldTrainer(c, v.nr)].filter(Boolean).join(' · ')}
-          </li>
-        ))}
-      </ul>
+      <>
+        <ul className="club-ronde">
+          {partijvelden(c.groepjes).map((v) => (
+            <li key={v.nr}>
+              <span className="club-nr" style={kleur(o.categorie)}>
+                {vt('Veld {nr}', { nr: v.nr })}
+              </span>
+              {[veldGroepen(v), veldTrainer(c, v.nr)].filter(Boolean).join(' · ')}
+            </li>
+          ))}
+        </ul>
+        {oefeningen(o)}
+      </>
     );
   }
   return (
@@ -241,6 +308,7 @@ export function RondeLijst({ c, ronde }: { c: ClubInhoud; ronde: Ronde }) {
             {s.nr}
           </span>
           {[stationNaam(s), stationTrainer(c, s.nr)].filter(Boolean).join(' · ')}
+          {oefeningen(vindOnderdeel(c, s.onderdeel))}
         </li>
       ))}
       {ronde.leeg.map((s) => (

@@ -19,19 +19,25 @@ import {
   genereerAlles,
   genereerOnderdeel,
   groepGrootte,
+  MAX_BLOK_OEFENINGEN,
   MAX_DUUR,
   MAX_GROEPJES,
   MAX_KINDEREN,
   MAX_ONDERDELEN,
+  metOefeningen,
   metOefeningIds,
   MIN_GROEPJES,
   MIN_ONDERDELEN,
   naarCode,
   nieuwOnderdeel,
+  oefeningenVan,
   oefeningIds,
+  oefeningTijden,
   onderdeelKandidaten,
   onderdelenVan,
+  teVeelRichttijd,
   tijdTekst,
+  type BlokOefening,
   type ClubTraining,
   type Onderdeel,
   type OnderdeelSoort,
@@ -100,10 +106,68 @@ function SoortKeuze({ o, opZet }: { o: Onderdeel; opZet: (soort: OnderdeelSoort)
   );
 }
 
-function OnderdeelKaart({ c, o, nr, kanWeg, opWijzig, opWeg, opKies, opGenereer }: { c: ClubTraining; o: Onderdeel; nr: number; kanWeg: boolean; opWijzig: (w: Partial<Onderdeel>) => void; opWeg: () => void; opKies: () => void; opGenereer: () => void }) {
+/** Eén oefening in een onderdeel: openen, slepen, richttijd, een andere of weghalen. */
+function OefeningRij({ x, nr, meer, minuten, opRichttijd, opAnders, opWeg }: { x: BlokOefening; nr: number; meer: boolean; minuten: number; opRichttijd: (m: number | undefined) => void; opAnders: () => void; opWeg: () => void }) {
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: x.oefening });
+  const oefening = vindOefening(x.oefening);
+  const titel = vt('Oefening {nr}', { nr });
+  return (
+    <li ref={setNodeRef} style={{ transform: CSS.Transform.toString(transform), transition }} className={`club-oefening${isDragging ? ' slepen' : ''}`} data-oefening={x.oefening}>
+      {meer && (
+        <button ref={setActivatorNodeRef} type="button" className="greep club-oefening-greep" aria-label={vt('{w0} verplaatsen', { w0: titel })} {...attributes} {...listeners}>
+          <Icoon naam="grip" maat={18} />
+        </button>
+      )}
+      <div className="club-oefening-inhoud">
+        <a
+          className="club-blok-oefening"
+          href={`#/oefening/${x.oefening}`}
+          onClick={(e) => {
+            e.preventDefault();
+            ga(`/oefening/${x.oefening}`);
+          }}
+        >
+          {oefening && <Miniatuur tekening={oefening.tekening} className="club-blok-plaatje" />}
+          <span className="club-blok-naam">
+            {meer && <small>{titel}</small>}
+            {oefening?.naam ?? vt('Oefening niet gevonden')}
+          </span>
+        </a>
+        <div className="club-oefening-acties">
+          {meer && (
+            <label className="club-richttijd">
+              <span>{vt('Richttijd')}</span>
+              <input type="number" inputMode="numeric" min={1} max={MAX_DUUR} value={x.minuten ?? ''} placeholder={String(minuten)} aria-label={vt('Richttijd voor oefening {nr}', { nr })} onChange={(e) => opRichttijd(e.target.value ? Math.max(1, Math.min(MAX_DUUR, Math.round(Number(e.target.value)) || 1)) : undefined)} />
+              <span>{vt('min')}</span>
+            </label>
+          )}
+          <button type="button" className="icoon-knop" aria-label={vt('Andere oefening voor oefening {nr}', { nr })} title={vt('Andere oefening')} onClick={opAnders}>
+            <Icoon naam="herhalen" maat={18} />
+          </button>
+          <button type="button" className="icoon-knop" aria-label={vt('Oefening {nr} weghalen', { nr })} title={vt('Weghalen')} onClick={opWeg}>
+            <Icoon naam="kruis" maat={18} />
+          </button>
+        </div>
+      </div>
+    </li>
+  );
+}
+
+function OnderdeelKaart({ c, o, nr, kanWeg, opWijzig, opZetOefeningen, opWeg, opKies, opGenereer, opAnders }: { c: ClubTraining; o: Onderdeel; nr: number; kanWeg: boolean; opWijzig: (w: Partial<Onderdeel>) => void; opZetOefeningen: (lijst: BlokOefening[]) => void; opWeg: () => void; opKies: () => void; opGenereer: () => void; opAnders: (oefening: string) => void }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: o.id });
-  const oefening = o.oefening ? vindOefening(o.oefening) : undefined;
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
+  const lijst = oefeningenVan(o);
+  const tijden = oefeningTijden(o);
   const naam = blokNaam(o.categorie);
+  const sleep = (e: DragEndEvent) => {
+    if (!e.over || e.active.id === e.over.id) return;
+    const nieuw = [...lijst];
+    const van = nieuw.findIndex((x) => x.oefening === e.active.id);
+    const naar = nieuw.findIndex((x) => x.oefening === e.over!.id);
+    if (van < 0 || naar < 0) return;
+    nieuw.splice(naar, 0, nieuw.splice(van, 1)[0]!);
+    opZetOefeningen(nieuw);
+  };
   return (
     <li ref={setNodeRef} style={{ transform: CSS.Transform.toString(transform), transition }} className={`club-blok${isDragging ? ' slepen' : ''}`} data-id={o.id}>
       <h3 className="club-blok-kop" style={blokStijl(o.categorie)}>
@@ -120,31 +184,43 @@ function OnderdeelKaart({ c, o, nr, kanWeg, opWijzig, opWeg, opKies, opGenereer 
         <DuurKeuze o={o} opZet={(duur) => opWijzig({ duur })} />
         <SoortKeuze o={o} opZet={(soort) => opWijzig({ soort })} />
       </div>
-      {oefening ? (
-        <a
-          className="club-blok-oefening"
-          href={`#/oefening/${oefening.id}`}
-          onClick={(e) => {
-            e.preventDefault();
-            ga(`/oefening/${oefening.id}`);
-          }}
-        >
-          <Miniatuur tekening={oefening.tekening} className="club-blok-plaatje" />
-          <span className="club-blok-naam">{oefening.naam}</span>
-          <Icoon naam="verder" maat={20} />
-        </a>
+      {lijst.length ? (
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={sleep}>
+          <SortableContext items={lijst.map((x) => x.oefening)} strategy={verticalListSortingStrategy}>
+            <ol className="club-oefeningen">
+              {lijst.map((x, i) => (
+                <OefeningRij
+                  key={x.oefening}
+                  x={x}
+                  nr={i + 1}
+                  meer={lijst.length > 1}
+                  minuten={tijden[i]!}
+                  opRichttijd={(minuten) => opZetOefeningen(lijst.map((y) => (y.oefening === x.oefening ? { oefening: y.oefening, ...(minuten === undefined ? {} : { minuten }) } : y)))}
+                  opAnders={() => opAnders(x.oefening)}
+                  opWeg={() => opZetOefeningen(lijst.filter((y) => y.oefening !== x.oefening))}
+                />
+              ))}
+            </ol>
+          </SortableContext>
+        </DndContext>
       ) : (
         <p className="klein club-blok-leeg">{vt('{n} oefeningen passen bij dit onderdeel', { n: onderdeelKandidaten(c, o, alleOefeningen()).length })}</p>
       )}
-      <div className="club-blok-knoppen">
-        <button className="knop" onClick={opKies}>
-          {oefening ? vt('Andere kiezen') : vt('Kies oefening')}
-        </button>
-        <button className="knop" onClick={opGenereer} aria-label={vt('Genereer {blok}', { blok: naam })}>
-          <Icoon naam="herhalen" maat={18} />
-          {vt('Genereer')}
-        </button>
-      </div>
+      {teVeelRichttijd(o) && <p className="klein club-blok-leeg">{vt('De richttijden zijn samen langer dan dit onderdeel ({m} min).', { m: o.duur })}</p>}
+      {lijst.length < MAX_BLOK_OEFENINGEN && (
+        <>
+          {lijst.length > 0 && <p className="klein club-blok-toevoegen">{vt('Oefening toevoegen')}</p>}
+          <div className="club-blok-knoppen">
+            <button className="knop" onClick={opKies} aria-label={lijst.length ? vt('Oefening kiezen voor {blok}', { blok: naam }) : undefined}>
+              {lijst.length ? vt('Kies') : vt('Kies oefening')}
+            </button>
+            <button className="knop" onClick={opGenereer} aria-label={vt('Genereer {blok}', { blok: naam })}>
+              <Icoon naam="herhalen" maat={18} />
+              {vt('Genereer')}
+            </button>
+          </div>
+        </>
+      )}
     </li>
   );
 }
@@ -165,9 +241,21 @@ export function ClubBewerk({ id }: { id: string }) {
     if (w.soort) zetDelen(lijst);
     else zet({ onderdelen: lijst });
   };
-  const genereer = (o: Onderdeel) => {
+  const zetOefeningen = (oid: string, lijst: BlokOefening[]) => zet({ onderdelen: onderdelenVan(nu()).map((x) => (x.id === oid ? metOefeningen(x, lijst) : x)) });
+  /** Een andere oefening die nog niet in dit onderdeel staat. */
+  const bedenk = (oid: string) => {
+    const o = onderdelenVan(nu()).find((x) => x.id === oid)!;
     const nieuw = genereerOnderdeel(nu(), o, bron());
-    if (nieuw) zet({ onderdelen: onderdelenVan(nu()).map((x) => (x.id === o.id ? { ...x, oefening: nieuw } : x)) });
+    return nieuw && !oefeningenVan(o).some((x) => x.oefening === nieuw) ? { o, nieuw } : null;
+  };
+  const genereer = (oid: string) => {
+    const r = bedenk(oid);
+    if (r) zetOefeningen(oid, [...oefeningenVan(r.o), { oefening: r.nieuw }]);
+    else toon(vt('Geen passende oefening voor dit onderdeel.'));
+  };
+  const anders = (oid: string, oefening: string) => {
+    const r = bedenk(oid);
+    if (r) zetOefeningen(oid, oefeningenVan(r.o).map((x) => (x.oefening === oefening ? { ...x, oefening: r.nieuw } : x)));
     else toon(vt('Geen passende oefening voor dit onderdeel.'));
   };
   const sleep = (e: DragEndEvent) => {
@@ -188,7 +276,7 @@ export function ClubBewerk({ id }: { id: string }) {
 
   const delen = onderdelenVan(c);
   const plan = clubPlan(c);
-  const klaar = delen.every((o) => o.oefening);
+  const klaar = delen.every((o) => oefeningenVan(o).length > 0);
 
   return (
     <div className="pagina">
@@ -266,9 +354,11 @@ export function ClubBewerk({ id }: { id: string }) {
                   nr={i + 1}
                   kanWeg={delen.length > MIN_ONDERDELEN}
                   opWijzig={(w) => wijzig(o.id, w)}
+                  opZetOefeningen={(lijst) => zetOefeningen(o.id, lijst)}
                   opWeg={() => zetDelen(onderdelenVan(nu()).filter((x) => x.id !== o.id))}
                   opKies={() => ga(`/club/${id}/kiezen/${o.id}`)}
-                  opGenereer={() => genereer(o)}
+                  opGenereer={() => genereer(o.id)}
+                  opAnders={(oefening) => anders(o.id, oefening)}
                 />
               ))}
             </ol>

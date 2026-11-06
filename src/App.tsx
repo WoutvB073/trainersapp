@@ -13,6 +13,7 @@ import { ClubBewerk } from './screens/club/ClubBewerk';
 import { ClubKiezen } from './screens/club/ClubKiezen';
 import { ClubPlan } from './screens/club/ClubPlan';
 import { ClubTimer } from './screens/club/ClubTimer';
+import { ClubBlok } from './screens/club/ClubBlok';
 import { ClubGedeeld } from './screens/club/ClubGedeeld';
 import { ruimLegeClubsOp } from './clubtraining/opslag';
 import { MijnTrainingen } from './screens/training/MijnTrainingen';
@@ -83,6 +84,8 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <ClubKiezen key={route.id + route.blok} id={route.id} blok={route.blok} />;
     case 'club-plan':
       return <ClubPlan key={route.id} id={route.id} />;
+    case 'club-blok':
+      return <ClubBlok key={route.id + route.blok} id={route.id} blok={route.blok} />;
     case 'club-timer':
       return <ClubTimer key={route.id} id={route.id} />;
     case 'club-gedeeld':

@@ -22,6 +22,13 @@ export const BLOKKEN: readonly Blok[] = [...VORMEN, 'partijvormen'];
 
 export type OnderdeelSoort = 'stations' | 'samen';
 
+/** Eén oefening in een onderdeel (0.33.0). Zonder `minuten` krijgt hij een gelijk deel van de bloktijd. */
+export interface BlokOefening {
+  oefening: string;
+  /** Richttijd in minuten. */
+  minuten?: number;
+}
+
 export interface Onderdeel {
   /** Vast binnen de training (slepen, oefening kiezen). */
   id: string;
@@ -30,13 +37,54 @@ export interface Onderdeel {
   /** Minuten. */
   duur: number;
   soort: OnderdeelSoort;
+  /** De (eerste) oefening. Blijft altijd ingevuld, zodat oudere versies en oude links hem ook lezen. */
   oefening?: string;
+  /** Sinds 0.33.0: alleen bij meer dan één oefening of een richttijd. Lees met `oefeningenVan`, schrijf met `metOefeningen`. */
+  oefeningen?: BlokOefening[];
+}
+
+/** Oefeningen in een onderdeel, op volgorde. */
+export const oefeningenVan = (o: Pick<Onderdeel, 'oefening' | 'oefeningen'>): BlokOefening[] => (o.oefeningen?.length ? o.oefeningen : o.oefening ? [{ oefening: o.oefening }] : []);
+
+/** Onderdeel met deze oefeningen. Eén oefening zonder richttijd wordt bewaard zoals vóór 0.33.0. */
+export function metOefeningen(o: Onderdeel, lijst: BlokOefening[]): Onderdeel {
+  const { oefening: _a, oefeningen: _b, ...rest } = o;
+  void _a;
+  void _b;
+  if (!lijst.length) return rest;
+  return { ...rest, oefening: lijst[0]!.oefening, ...(lijst.length > 1 || lijst[0]!.minuten !== undefined ? { oefeningen: lijst } : {}) };
+}
+
+/** Minuten per oefening: een richttijd telt, de rest van de bloktijd gaat gelijk over de oefeningen zonder richttijd. */
+export function oefeningTijden(o: Pick<Onderdeel, 'duur' | 'oefening' | 'oefeningen'>): number[] {
+  const lijst = oefeningenVan(o);
+  const open = lijst.filter((x) => x.minuten === undefined).length;
+  const rest = Math.max(0, o.duur - lijst.reduce((som, x) => som + (x.minuten ?? 0), 0));
+  const basis = open ? Math.floor(rest / open) : 0;
+  let over = open ? rest % open : 0;
+  return lijst.map((x) => x.minuten ?? basis + (over-- > 0 ? 1 : 0));
+}
+
+/** De richttijden zijn samen langer dan het onderdeel. */
+export const teVeelRichttijd = (o: Pick<Onderdeel, 'duur' | 'oefening' | 'oefeningen'>) => oefeningenVan(o).reduce((som, x) => som + (x.minuten ?? 0), 0) > o.duur;
+
+/** Welke oefening is er na zoveel seconden in dit blok aan de beurt (index)? Na de laatste richttijd blijft het de laatste. */
+export function oefeningOpTijd(o: Pick<Onderdeel, 'duur' | 'oefening' | 'oefeningen'>, seconden: number): number {
+  const tijden = oefeningTijden(o);
+  let t = 0;
+  for (let i = 0; i < tijden.length; i += 1) {
+    t += tijden[i]! * 60;
+    if (seconden < t) return i;
+  }
+  return Math.max(0, tijden.length - 1);
 }
 
 export const MIN_GROEPJES = 2;
 export const MAX_GROEPJES = 8;
 export const MIN_ONDERDELEN = 3;
 export const MAX_ONDERDELEN = 6;
+/** Oefeningen per onderdeel. */
+export const MAX_BLOK_OEFENINGEN = 6;
 export const DUUR_KEUZES: readonly number[] = [5, 10, 12, 15, 20];
 export const MAX_DUUR = 90;
 export const MAX_KINDEREN = 200;
@@ -116,7 +164,7 @@ export const zelfOnderdelen = (): Onderdeel[] => [{ ...nieuwOnderdeel('warming-u
 const opzet = (lijst: Onderdeel[]) => JSON.stringify(lijst.map((o) => [o.categorie, o.duur, o.soort]));
 const STANDAARD_OPZETTEN = () => [opzet(onderdelenVan({})), opzet(zelfOnderdelen())];
 
-export const oefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }) => onderdelenVan(c).flatMap((o) => (o.oefening ? [o.oefening] : []));
+export const oefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }) => onderdelenVan(c).flatMap((o) => oefeningenVan(o).map((x) => x.oefening));
 
 /** Niets ingevuld: zo'n clubtraining wordt niet bewaard (de standaarddatums en een onveranderde opzet tellen niet mee). */
 export function isLeeg(c: Pick<ClubTraining, 'naam' | 'trainers' | 'blokken' | 'onderdelen' | 'sjabloon'>): boolean {
@@ -143,10 +191,7 @@ export function naarVolgendeWeek(c: ClubTraining, nu = Date.now(), id = maakId()
 
 /** Opzet bewaren als sjabloon: onderdelen, groepjes, kinderen en leeftijd. Zonder oefeningen, datums en trainers. */
 export function alsSjabloon(c: ClubTraining, naam: string, nu = Date.now(), id = maakId()): ClubTraining {
-  const onderdelen = onderdelenVan(c).map(({ oefening: _o, ...rest }) => {
-    void _o;
-    return { ...rest, id: maakId() };
-  });
+  const onderdelen = onderdelenVan(c).map((o) => ({ ...metOefeningen(o, []), id: maakId() }));
   return { ...nieuweClub(c.leeftijd, nu, id), naam: naam.trim().slice(0, 80), datums: [], kinderen: c.kinderen, groepjes: c.groepjes, onderdelen, sjabloon: true };
 }
 
@@ -399,16 +444,17 @@ export function genereerOnderdeel(c: KiesInhoud, o: Onderdeel, bron: KiesBron): 
   return (kiesOefening({ soort: 'veld', categorie: o.categorie }, context, uit) ?? kiesOefening({ soort: 'veld', categorie: o.categorie }, context, new Set()))?.id;
 }
 
-/** Alle onderdelen een (nieuwe) oefening geven. */
+/** Alle onderdelen nieuwe oefeningen geven: evenveel als er stonden, en minstens één. */
 export function genereerAlles(c: KiesInhoud, bron: KiesBron): Onderdeel[] {
-  let nu: Onderdeel[] = onderdelenVan(c).map(({ oefening: _o, ...rest }) => {
-    void _o;
-    return rest;
+  const oud = onderdelenVan(c);
+  let nu: Onderdeel[] = oud.map((o) => metOefeningen(o, []));
+  oud.forEach((o) => {
+    for (let i = 0; i < Math.max(1, oefeningenVan(o).length); i += 1) {
+      const huidig = nu.find((x) => x.id === o.id)!;
+      const id = genereerOnderdeel({ ...c, onderdelen: nu }, huidig, bron);
+      if (id && !oefeningenVan(huidig).some((x) => x.oefening === id)) nu = nu.map((x) => (x.id === o.id ? metOefeningen(x, [...oefeningenVan(x), { oefening: id }]) : x));
+    }
   });
-  for (const o of nu) {
-    const id = genereerOnderdeel({ ...c, onderdelen: nu }, o, bron);
-    if (id) nu = nu.map((x) => (x.id === o.id ? { ...x, oefening: id } : x));
-  }
   return nu;
 }
 
@@ -463,27 +509,53 @@ function tel(per: Map<string, Telling>, o: Oefening, keer: number, kinderen: num
   }
 }
 
+/** De oefeningen van een onderdeel doe je na elkaar op dezelfde plek: per soort materiaal telt het grootste aantal, niet de som. */
+function blokTelling(o: Onderdeel, vind: (id: string) => Oefening | undefined, kinderen: number, taal: Taal): Map<string, Telling> {
+  const uit = new Map<string, Telling>();
+  for (const x of oefeningenVan(o)) {
+    const oefening = vind(x.oefening);
+    if (!oefening) continue;
+    const los = new Map<string, Telling>();
+    tel(los, oefening, 1, kinderen, taal);
+    for (const [k, v] of los) {
+      const nu = uit.get(k);
+      if (!nu) {
+        uit.set(k, v);
+        continue;
+      }
+      if (v.aantal !== undefined) nu.aantal = Math.max(nu.aantal ?? 0, v.aantal);
+      for (const naam of v.bij) nu.bij.add(naam);
+    }
+  }
+  return uit;
+}
+
+/** Blok meetellen: dit materiaal staat `keer` keer tegelijk op het veld, dus dat telt op. */
+function telBlok(per: Map<string, Telling>, blok: Map<string, Telling>, keer: number) {
+  for (const [k, x] of blok) {
+    const nu = per.get(k) ?? { tekst: x.tekst, bij: new Set<string>() };
+    if (x.aantal !== undefined) nu.aantal = (nu.aantal ?? 0) + x.aantal * keer;
+    for (const naam of x.bij) nu.bij.add(naam);
+    per.set(k, nu);
+  }
+}
+
 /**
- * Wat er klaar moet staan: het materiaal per station × het aantal keer dat die oefening op het veld staat, opgeteld. Materiaal van
- * de stations gebruik je opnieuw voor de samen-onderdelen; daarvoor telt alleen wat er meer nodig is.
+ * Wat er klaar moet staan: het materiaal per station × het aantal keer dat die oefening op het veld staat, opgeteld. Staan er meer
+ * oefeningen in een onderdeel, dan telt daarbinnen het grootste aantal (zie `blokTelling`). Materiaal van de stations gebruik je
+ * opnieuw voor de samen-onderdelen; daarvoor telt alleen wat er meer nodig is.
  */
 export function materiaal(c: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokken' | 'onderdelen'>, vind: (id: string) => Oefening | undefined, taal: Taal = TAAL): Materiaal {
   const kinderen = groepGrootte(c);
   const plan = clubPlan(c);
   const deel1 = new Map<string, Telling>();
   for (const f of plan.fases) {
-    for (const o of f.onderdelen) {
-      const oefening = o.oefening ? vind(o.oefening) : undefined;
-      const keer = f.stations.filter((s) => s.onderdeel === o.id).length;
-      if (oefening) tel(deel1, oefening, keer, kinderen, taal);
-    }
+    for (const o of f.onderdelen) telBlok(deel1, blokTelling(o, vind, kinderen, taal), f.stations.filter((s) => s.onderdeel === o.id).length);
   }
   const deel2 = new Map<string, Telling>();
   for (const o of plan.samen) {
-    const oefening = o.oefening ? vind(o.oefening) : undefined;
-    if (!oefening) continue;
-    if (o.categorie === 'partijvormen') tel(deel2, oefening, partijvelden(c.groepjes).length, 2 * kinderen, taal);
-    else tel(deel2, oefening, 1, c.kinderen, taal);
+    if (o.categorie === 'partijvormen') telBlok(deel2, blokTelling(o, vind, 2 * kinderen, taal), partijvelden(c.groepjes).length);
+    else telBlok(deel2, blokTelling(o, vind, c.kinderen, taal), 1);
   }
 
   const regel = (deel: string, k: string, x: Telling, aantal?: number): MateriaalRegel => ({ sleutel: `${deel}:${k}`, tekst: aantal === undefined ? x.tekst : metAantal(k, aantal, taal), bij: [...x.bij] });
@@ -522,9 +594,12 @@ const lang = (id: string) => id.replace(/^v:/, 'veld-');
 
 type Inhoud = Pick<ClubTraining, 'naam' | 'datums' | 'leeftijd' | 'kinderen' | 'groepjes' | 'trainers' | 'blokken' | 'onderdelen' | 'starttijd' | 'stationTrainers' | 'veldTrainers'>;
 
-/** Link voor de trainers (versie 2 sinds 0.32.0: de onderdelen). Links met versie 1 blijven te lezen. */
+/**
+ * Link voor de trainers (versie 2 sinds 0.32.0: de onderdelen). Links met versie 1 blijven te lezen. Meer oefeningen in een onderdeel
+ * (0.33.0) staan als vijfde veld achter de eerste oefening; een oudere versie slaat dat over en toont de eerste.
+ */
 export function naarCode(c: Inhoud, eigen: Oefening[] = []): string {
-  const o = onderdelenVan(c).map((x) => [x.categorie, x.duur, x.soort === 'samen' ? 1 : 0, x.oefening ? kort(x.oefening) : '']);
+  const o = onderdelenVan(c).map((x) => [x.categorie, x.duur, x.soort === 'samen' ? 1 : 0, x.oefening ? kort(x.oefening) : '', ...(x.oefeningen?.length ? [x.oefeningen.map((y) => (y.minuten === undefined ? [kort(y.oefening)] : [kort(y.oefening), y.minuten]))] : [])]);
   const ids = oefeningIds(c);
   const e = eigen.filter((x) => ids.includes(x.id));
   return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(e.length ? { e } : {}) }));
@@ -538,17 +613,29 @@ const tekstenRecord = (x: unknown): Record<number, string> => {
 
 const getal = (v: unknown, min: number, max: number, standaard: number) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(min, Math.min(max, Math.round(v))) : standaard);
 
+function netteOefeningen(x: unknown): BlokOefening[] {
+  if (!Array.isArray(x)) return [];
+  const gezien = new Set<string>();
+  return (x as Partial<BlokOefening>[])
+    .filter((o) => {
+      if (!o || typeof o.oefening !== 'string' || !o.oefening || gezien.has(o.oefening)) return false;
+      gezien.add(o.oefening);
+      return true;
+    })
+    .slice(0, MAX_BLOK_OEFENINGEN)
+    .map((o) => ({ oefening: o.oefening!, ...(typeof o.minuten === 'number' && o.minuten > 0 ? { minuten: getal(o.minuten, 1, MAX_DUUR, 5) } : {}) }));
+}
+
 function netteOnderdelen(x: unknown): Onderdeel[] | undefined {
   if (!Array.isArray(x)) return undefined;
   const lijst = (x as Partial<Onderdeel>[]).filter((o) => o && typeof o.categorie === 'string' && CATEGORIEEN.includes(o.categorie)).slice(0, MAX_ONDERDELEN);
   if (!lijst.length) return undefined;
-  return lijst.map((o, i) => ({
-    id: typeof o.id === 'string' && o.id ? o.id.slice(0, 40) : `o${i + 1}`,
-    categorie: o.categorie!,
-    duur: getal(o.duur, 1, MAX_DUUR, 15),
-    soort: o.soort === 'samen' ? 'samen' : 'stations',
-    ...(typeof o.oefening === 'string' && o.oefening ? { oefening: o.oefening } : {}),
-  }));
+  return lijst.map((o, i) => {
+    const basis: Onderdeel = { id: typeof o.id === 'string' && o.id ? o.id.slice(0, 40) : `o${i + 1}`, categorie: o.categorie!, duur: getal(o.duur, 1, MAX_DUUR, 15), soort: o.soort === 'samen' ? 'samen' : 'stations' };
+    const meer = netteOefeningen(o.oefeningen);
+    if (meer.length) return metOefeningen(basis, meer);
+    return typeof o.oefening === 'string' && o.oefening ? { ...basis, oefening: o.oefening } : basis;
+  });
 }
 
 /** Controleert wat er binnenkomt (link of team): alles wat niet klopt valt terug op iets veiligs. */
@@ -580,7 +667,14 @@ export function uitCode(code: string): GedeeldeClub | null {
     const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; l?: unknown; k?: unknown; g?: unknown; t?: unknown; b?: unknown; o?: unknown; u?: unknown; s?: unknown; f?: unknown; e?: unknown };
     const basis = { naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, stationTrainers: x.s, veldTrainers: x.f, eigen: x.e };
     if (x.v === 2 && Array.isArray(x.o)) {
-      const onderdelen = (x.o as unknown[][]).map(([categorie, duur, samen, oefening], i) => ({ id: `o${i + 1}`, categorie, duur, soort: samen ? 'samen' : 'stations', oefening: typeof oefening === 'string' ? lang(oefening) : '' }));
+      const onderdelen = (x.o as unknown[][]).map(([categorie, duur, samen, oefening, meer], i) => ({
+        id: `o${i + 1}`,
+        categorie,
+        duur,
+        soort: samen ? 'samen' : 'stations',
+        oefening: typeof oefening === 'string' ? lang(oefening) : '',
+        ...(Array.isArray(meer) ? { oefeningen: (meer as unknown[][]).filter(Array.isArray).map(([id, minuten]) => ({ oefening: typeof id === 'string' ? lang(id) : '', minuten })) } : {}),
+      }));
       return netteClub({ ...basis, blokken: {}, onderdelen, starttijd: x.u });
     }
     if (x.v !== 1 || !Array.isArray(x.b)) return null;
@@ -615,7 +709,7 @@ export function leesTeamClub(data: string): GedeeldeClub | null {
 }
 
 /** Oefeningen in de onderdelen vervangen (bij delen en kopiëren krijgen meegenomen oefeningen soms een ander id). */
-export const metOefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }, nieuwId: (id: string) => string): Onderdeel[] => onderdelenVan(c).map((o) => (o.oefening ? { ...o, oefening: nieuwId(o.oefening) } : o));
+export const metOefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }, nieuwId: (id: string) => string): Onderdeel[] => onderdelenVan(c).map((o) => metOefeningen(o, oefeningenVan(o).map((x) => ({ ...x, oefening: nieuwId(x.oefening) }))));
 
 /** Gedeelde circuittraining als nieuwe eigen circuittraining: `ids` zijn de nieuwe id's van de meegekomen oefeningen. */
 export function uitGedeeldeClub(g: GedeeldeClub, ids: ReadonlyMap<string, string> = new Map(), nu = Date.now(), id = maakId()): ClubTraining {

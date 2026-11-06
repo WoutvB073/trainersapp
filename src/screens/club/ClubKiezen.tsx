@@ -5,12 +5,12 @@ import { Miniatuur } from '../../components/Miniatuur';
 import { alleOefeningen } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga, terug } from '../../router';
-import { blokNaam, onderdeelKandidaten, onderdelenVan, vindOnderdeel } from '../../clubtraining/clubtraining';
+import { blokNaam, metOefeningen, oefeningenVan, onderdeelKandidaten, onderdelenVan, vindOnderdeel } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
 import { t as vt } from '../../i18n/t';
 
-/** Eén oefening kiezen voor een onderdeel, uit de bibliotheek (leeftijd en categorie van het onderdeel). */
+/** Oefening toevoegen aan een onderdeel, uit de bibliotheek (leeftijd en categorie van het onderdeel). Nog eens tikken haalt hem weg. */
 export function ClubKiezen({ id, blok }: { id: string; blok: string }) {
   const c = useClub(id);
   const b = c && vindOnderdeel(c, blok);
@@ -18,8 +18,9 @@ export function ClubKiezen({ id, blok }: { id: string; blok: string }) {
   const lijst = onderdeelKandidaten(c, b, alleOefeningen());
   const kies = (oid: string) => {
     const nu = clubtrainingen.haal(id) ?? c;
-    clubtrainingen.bewaar({ ...nu, onderdelen: onderdelenVan(nu).map((o) => (o.id === blok ? { ...o, oefening: oid } : o)) });
-    terug(`/club/${id}`);
+    const weg = oefeningenVan(vindOnderdeel(nu, blok) ?? b).some((x) => x.oefening === oid);
+    clubtrainingen.bewaar({ ...nu, onderdelen: onderdelenVan(nu).map((o) => (o.id === blok ? metOefeningen(o, weg ? oefeningenVan(o).filter((x) => x.oefening !== oid) : [...oefeningenVan(o), { oefening: oid }]) : o)) });
+    if (!weg) terug(`/club/${id}`);
   };
   return (
     <div className="pagina">
@@ -34,7 +35,7 @@ export function ClubKiezen({ id, blok }: { id: string; blok: string }) {
         ) : (
           <ul className="kaarten">
             {lijst.map((o) => {
-              const gekozen = b.oefening === o.id;
+              const gekozen = oefeningenVan(b).some((x) => x.oefening === o.id);
               return (
                 <li key={o.id} className={`kies-kaart${gekozen ? ' gekozen' : ''}`}>
                   <a

@@ -3,10 +3,10 @@ import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
-import { blokNaam, clubNaam, clubPlan, materiaal, partijvelden, stationNaam, stationTrainer, tijdTekst, veldTrainer, vindOnderdeel, type ClubTraining, type MateriaalRegel, type Onderdeel } from '../../clubtraining/clubtraining';
+import { blokNaam, clubNaam, clubPlan, materiaal, oefeningenVan, partijvelden, stationNaam, stationTrainer, tijdTekst, veldTrainer, vindOnderdeel, type ClubTraining, type MateriaalRegel, type Onderdeel } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
-import { faseTitel, PlanNoot, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
+import { faseTitel, MateriaalNoot, PlanNoot, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
 import { t as vt } from '../../i18n/t';
 
 type Tab = 'deel1' | 'deel2' | 'rotatie' | 'materiaal';
@@ -66,7 +66,8 @@ export function ClubPlan({ id }: { id: string }) {
   const zet = (w: Partial<ClubTraining>) => clubtrainingen.bewaar({ ...(clubtrainingen.haal(id) ?? c), ...w });
   const plan = clubPlan(c);
   const open = (o?: Onderdeel) => {
-    if (o?.oefening) ga(`/oefening/${o.oefening}`);
+    if (o && oefeningenVan(o).length > 1) ga(`/club/${id}/blok/${o.id}`);
+    else if (o?.oefening) ga(`/oefening/${o.oefening}`);
   };
   const alleenPartij = plan.samen.every((o) => o.categorie === 'partijvormen');
   const metPartij = plan.samen.some((o) => o.categorie === 'partijvormen');
@@ -151,6 +152,7 @@ export function ClubPlan({ id }: { id: string }) {
               </div>
             ) : (
               <>
+                <MateriaalNoot c={c} />
                 <Regels titel={vt('Stations')} regels={m.stations} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
                 <Regels titel={alleenPartij ? vt('Extra voor de partijvelden') : vt('Extra voor de samen-onderdelen')} regels={m.extra} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
               </>

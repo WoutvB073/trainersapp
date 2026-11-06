@@ -29,6 +29,7 @@ import { useSyncExternalStore } from 'react';
  *   #/club/:id               Clubtraining: instellingen en blokken
  *   #/club/:id/kiezen/:blok  Oefening kiezen voor een blok
  *   #/club/:id/plan          Veldplan, rotatie en materiaal
+ *   #/club/:id/blok/:blok    De oefeningen van één onderdeel
  *   #/club/:id/timer         Kwartiertimer
  *   #/c/:code                Gedeelde clubtraining voor de trainers (alleen lezen)
  *   #/c/:code/station/:nr    Eén station
@@ -74,6 +75,7 @@ export type Route =
   | { naam: 'club'; id: string }
   | { naam: 'club-kiezen'; id: string; blok: string }
   | { naam: 'club-plan'; id: string }
+  | { naam: 'club-blok'; id: string; blok: string }
   | { naam: 'club-timer'; id: string }
   | { naam: 'club-gedeeld'; code: string; station?: number; partij?: true | number }
   | { naam: 'eigen-nieuw' }
@@ -88,7 +90,7 @@ export function openTraining(route: Route): string | undefined {
 
 /** De clubtraining waar deze route bij hoort; die wordt niet als leeg opgeruimd. */
 export function openClub(route: Route): string | undefined {
-  return route.naam === 'club' || route.naam === 'club-kiezen' || route.naam === 'club-plan' || route.naam === 'club-timer' ? route.id : undefined;
+  return route.naam === 'club' || route.naam === 'club-kiezen' || route.naam === 'club-plan' || route.naam === 'club-blok' || route.naam === 'club-timer' ? route.id : undefined;
 }
 
 export function leesHash(hash: string): Route {
@@ -135,6 +137,7 @@ export function leesHash(hash: string): Route {
   if (a === 'club' && b && !c) return { naam: 'club', id: b };
   if (a === 'club' && b && c === 'kiezen' && d) return { naam: 'club-kiezen', id: b, blok: d };
   if (a === 'club' && b && c === 'plan') return { naam: 'club-plan', id: b };
+  if (a === 'club' && b && c === 'blok' && d) return { naam: 'club-blok', id: b, blok: d };
   if (a === 'club' && b && c === 'timer') return { naam: 'club-timer', id: b };
   if (a === 'c' && b && c === 'station') return { naam: 'club-gedeeld', code: b, station: Math.max(1, Number(d) || 1) };
   if (a === 'c' && b && c === 'partij') return { naam: 'club-gedeeld', code: b, partij: Number(d) > 1 ? Number(d) : true };

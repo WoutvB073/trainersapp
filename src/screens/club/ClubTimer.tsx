@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { vindOefening } from '../../data/oefeningen';
+import { ga } from '../../router';
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { clubNaam, clubPlan, rondeTijd, timerStand } from '../../clubtraining/clubtraining';
@@ -187,7 +189,7 @@ export function ClubTimer({ id }: { id: string }) {
         {!klaar && (
           <>
             <p className="klein club-noot">{rondeTijd(ronde, c.starttijd)}</p>
-            <RondeLijst c={c} ronde={ronde} />
+            <RondeLijst c={c} ronde={ronde} vind={vindOefening} seconden={staat ? ronde.eind - ronde.begin - stand.rest : 0} opOefening={(o) => ga(`/club/${id}/blok/${o.id}`)} />
           </>
         )}
         {loopt && !schermAan && <p className="klein club-noot">{vt('Deze browser kan het scherm niet aan houden. Zet automatisch vergrendelen even uit.')}</p>}

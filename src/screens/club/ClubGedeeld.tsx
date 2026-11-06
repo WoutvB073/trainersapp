@@ -1,13 +1,12 @@
 import { useMemo, type ReactNode } from 'react';
 import { Kop } from '../../components/Kop';
-import { OefeningBlokken } from '../../components/OefeningBlokken';
 import { vindOefening } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga } from '../../router';
-import { clubNaam, clubPlan, groepNaam, materiaal, partijvelden, rondeTijd, stationNaam, stationTrainer, tijdTekst, uitCode, veldTrainer, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
+import { clubNaam, clubPlan, groepNaam, materiaal, oefeningenVan, partijvelden, rondeTijd, stationNaam, stationTrainer, tijdTekst, uitCode, veldTrainer, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
 import { datumTekst } from '../../training/training';
 import type { Oefening } from '../../model/types';
-import { blokNaam, blokStijl, faseTitel, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
+import { BlokOefeningen, blokNaam, blokStijl, faseTitel, MateriaalNoot, oefeningNummers, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
 import { LinkFout } from '../GedeeldLink';
 import { t as vt } from '../../i18n/t';
 
@@ -16,7 +15,7 @@ function zoeker(g: GedeeldeClub) {
 }
 
 /** Eén station of de partijvelden, voor de trainer die daar staat. */
-function Plek({ ouder, kop, kleurBlok, regels, oefening }: { ouder: string; kop: string; kleurBlok: string; regels: string[]; oefening?: Oefening }) {
+function Plek({ ouder, kop, kleurBlok, regels, onderdeel, vind }: { ouder: string; kop: string; kleurBlok: string; regels: string[]; onderdeel?: Onderdeel; vind: (id: string) => Oefening | undefined }) {
   return (
     <div className="pagina">
       <Kop titel={kop} ouder={ouder} />
@@ -29,7 +28,7 @@ function Plek({ ouder, kop, kleurBlok, regels, oefening }: { ouder: string; kop:
             </p>
           ))}
         </section>
-        {oefening ? <OefeningBlokken o={oefening} /> : <p className="leeg">{vt('Nog geen oefening')}</p>}
+        {onderdeel ? <BlokOefeningen onderdeel={onderdeel} vind={vind} /> : <p className="leeg">{vt('Nog geen oefening')}</p>}
       </main>
     </div>
   );
@@ -66,6 +65,7 @@ function MateriaalLijst({ g }: { g: GedeeldeClub }) {
   return (
     <>
       <h2 className="sectie-titel">{vt('Materiaal')}</h2>
+      <MateriaalNoot c={g} />
       <MateriaalBlok titel={vt('Stations')} regels={m.stations} />
       <MateriaalBlok titel={clubPlan(g).samen.every((o) => o.categorie === 'partijvormen') ? vt('Extra voor de partijvelden') : vt('Extra voor de samen-onderdelen')} regels={m.extra} />
     </>
@@ -87,14 +87,13 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
   if (station) {
     const s = lijst.find((x) => x.nr === station);
     if (!s) return <LinkFout />;
-    const id = vindOnderdeel(g, s.onderdeel)?.oefening;
     const tr = stationTrainer(g, s.nr);
-    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s) })} kleurBlok={s.vorm} regels={[...(tr ? [vt('Trainer: {naam}', { naam: tr })] : []), ...wieOpStation(g, s)]} oefening={id ? vind(id) : undefined} />;
+    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s) })} kleurBlok={s.vorm} regels={[...(tr ? [vt('Trainer: {naam}', { naam: tr })] : []), ...wieOpStation(g, s)]} onderdeel={vindOnderdeel(g, s.onderdeel)} vind={vind} />;
   }
   if (partij) {
     const o = plan.samen[partij === true ? 0 : partij - 1];
     if (!o) return <LinkFout />;
-    return <Plek ouder={basis} kop={blokNaam(o.categorie)} kleurBlok={o.categorie} regels={samenRegels(o)} oefening={o.oefening ? vind(o.oefening) : undefined} />;
+    return <Plek ouder={basis} kop={blokNaam(o.categorie)} kleurBlok={o.categorie} regels={samenRegels(o)} onderdeel={o} vind={vind} />;
   }
 
   return (
@@ -119,7 +118,9 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
                 </span>
                 <span className="club-station-naam">
                   {stationNaam(s)}
-                  {tr && <small>{tr}</small>}
+                  {[tr, oefeningNummers(vindOnderdeel(g, s.onderdeel))].filter(Boolean).map((x) => (
+                    <small key={x}>{x}</small>
+                  ))}
                 </span>
               </button>
             );
@@ -129,7 +130,10 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
               <span className="club-nr" style={blokStijl(o.categorie)}>
                 {o.categorie === 'partijvormen' ? 'P' : 'S'}
               </span>
-              <span className="club-station-naam">{blokNaam(o.categorie)}</span>
+              <span className="club-station-naam">
+                {blokNaam(o.categorie)}
+                {oefeningenVan(o).length > 1 && <small>{oefeningNummers(o)}</small>}
+              </span>
             </button>
           ))}
         </div>

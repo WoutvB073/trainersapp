@@ -554,3 +554,144 @@
   width: 100%;
   max-width: none;
 }
+
+/* Meer oefeningen in een onderdeel (0.33.0) */
+.club-oefeningen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.club-oefening {
+  display: flex;
+  align-items: flex-start;
+}
+
+.club-oefening + .club-oefening {
+  border-top: 1px solid var(--rand);
+}
+
+.club-oefening.slepen {
+  position: relative;
+  z-index: 2;
+  opacity: 0.9;
+}
+
+.club-oefening-greep {
+  flex: none;
+  margin: 14px 0 0 6px;
+  touch-action: none;
+}
+
+.club-oefening-inhoud {
+  flex: 1;
+  min-width: 0;
+}
+
+.club-blok-naam small {
+  display: block;
+  font-weight: 600;
+  color: var(--tekst-2);
+}
+
+.club-oefening-acties {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 4px 8px 6px 12px;
+}
+
+.club-richttijd {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+  font-size: 0.85rem;
+  color: var(--tekst-2);
+}
+
+.club-richttijd input {
+  width: 58px;
+  min-height: 36px;
+  padding: 4px 6px;
+  font: inherit;
+  color: var(--tekst);
+  background: var(--achtergrond);
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+}
+
+.club-blok-toevoegen {
+  margin: 8px 12px 0;
+  font-weight: 600;
+}
+
+.club-oefening-keuze {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+
+.club-oefening-keuze button {
+  flex: 1;
+  min-width: 92px;
+  min-height: 48px;
+  padding: 6px 8px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--tekst);
+  background: var(--kaart);
+  border: 1px solid var(--rand);
+  border-radius: 10px;
+}
+
+.club-oefening-keuze button.aan {
+  color: var(--op-primair);
+  background: var(--primair);
+  border-color: var(--primair);
+}
+
+.club-oefening-keuze small {
+  display: block;
+  font-weight: 400;
+}
+
+.club-ronde > li:has(.club-ronde-oefeningen) {
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+}
+
+.club-ronde-oefeningen {
+  flex-basis: 100%;
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.club-ronde-oefeningen button {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  width: 100%;
+  min-height: 40px;
+  align-items: center;
+  padding: 4px 8px;
+  font: inherit;
+  text-align: left;
+  color: var(--tekst);
+  background: none;
+  border: 0;
+  border-radius: 8px;
+}
+
+.club-ronde-oefeningen small {
+  margin-left: auto;
+  color: var(--tekst-2);
+}
+
+.club-ronde-oefeningen li.nu button {
+  background: var(--primair-licht);
+  font-weight: 600;
+}
