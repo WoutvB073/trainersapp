@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (06-11-2026, versie 0.32.1)
+## Status (06-11-2026, versie 0.32.2)
 
 | Fase | Status |
 |---|---|
@@ -43,6 +43,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 29. Korte deellinks, links openen zonder installatiescherm, pijl in eigen strook, synchroniseren nagelopen (0.31.3) | ✅ online – **wacht op test** |
 | 30. Circuittraining flexibel: eigen onderdelen, 2–8 groepjes, Stations/Samen, sjablonen, rondetimer (0.32.0) | ✅ online – **wacht op test** |
 | 31. Links verlopen na 180 dagen, anonieme accounts opruimen (0.32.1) | ✅ online – **wacht op test** |
+| 32. Vier spelersoefeningen: golven, vallende pion, hordes zijwaarts, achtjes; pion in de hand en afremmen (0.32.2) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1171,8 +1172,27 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Geen Firestore TTL**: dat kan niet op het gratis abonnement ("billing disabled", geprobeerd op 06-11-2026). Daarom haalt de maandelijkse opruimtaak verlopen links weg. Komt er ooit facturering, dan kan TTL op `links.verloopt` en is dat deel van de taak niet meer nodig.
 - **Anonieme accounts**: `tools/firebase-anoniem-opruimen.cjs --ouder-dan 30` verwijdert verlopen links en daarna anonieme accounts die ouder zijn dan 30 dagen en geen links meer hebben. Elke maand via `.github/workflows/anoniem-opruimen.yml` (GitHub Actions, gratis). Firebase Functions kan niet: dat vraagt het betaalde Blaze-abonnement, en het automatisch opruimen van Identity Platform kijkt niet of iemand nog links heeft. De workflow heeft het geheim `FIREBASE_SERVICE_ACCOUNT` nodig; zonder dat gebeurt er niets. Hetzelfde commando werkt ook op de eigen computer met de Firebase-CLI.
 
+## Besluiten versie 0.32.2 – vier spelersoefeningen
+- **Nieuwe oefeningen**: `veld-pv-golven-overtal`, `veld-lc-vallende-pion`, `veld-lc-hordes-zijwaarts-sprint`, `veld-lc-achtjes-drie-pionnen` (bouwscript `tools/nieuw/spelers-0322.cjs`, tests `tests/versie-0322.test.ts`).
+- **Pion in de hand**: `inHand` op een pion en de actie `losLaten`. De hand gaat naar de pion, de pion valt met de zwaartekracht en kantelt daarna om. In 2D staat hij net naast het rondje van de houder.
+- **Afremmen**: loopwijze `afremmen`: gewicht naar achteren, laag door de knieën, en daarna nog even laag stilstaan.
+- **Tempo**: `tempo` op een loop: `versnellen` en `uitlopen` sluiten zonder stilstand op elkaar aan, `gelijkmatig` is een vast tempo voor een lange route. De standaard begint traag en is halverwege het snelst.
+- **Vaste route**: de achtjes gebruiken `tekening.lijnen` zonder stapnummer, zodat de route altijd te zien is, ook op het plaatje en met de knop Looplijnen uit.
+- **Tekstlabels in 3D**: `depthWrite` staat uit, anders verbergt het doorzichtige deel van het label de lijnen eronder.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.32.2 – De foto's van tekening 19, 21 en 25 zijn niet aangekomen. Oefening 2, 3 en 4 zijn alleen uit de uitleg gebouwd. Vergelijk ze met de tekeningen, vooral oefening 4.
+- 0.32.2 – Achtjes, station 1: tussen de middelste en rechter pion door, met de klok mee helemaal om de rechter pion, en daar weer tussendoor naar voren.
+- 0.32.2 – Achtjes, station 2: langs de rechterkant van de middelste pion, naar links over de bovenkant, om de linker pion, tussen links en midden door, en over de bovenkant naar rechts. "Rechts om de rechter pion" is een haakje langs de rechterkant, daarna naar station 3.
+- 0.32.2 – Achtjes, station 3: begint als station 2, loopt om de linker pion, dan onderlangs de middelste pion ("achterlangs") en rechts langs de rechter pion naar de finish.
+- 0.32.2 – Achtjes: pionnen 5 m uit elkaar, stations 9 m uit elkaar. De nummers per station (1 tot en met 3 of 4) zijn zelf gekozen en volgen de stappen uit de uitleg. De start ligt in lijn met het gat tussen midden en rechts.
+- 0.32.2 – Achtjes: vast tempo van 4,5 m/s, omdat een hele sprint om de pionnen niet past.
+- 0.32.2 – Golven: de animatie toont kleine goals zonder keepers (keepersNodig 0), dus de oefening komt ook mee als je 0 keepers hebt. Met E-goals en keepers staat in organisatie en benodigdheden. Minimaal 5 spelers: 3 en 2 voor de laatste golf.
+- 0.32.2 – Golven: veld van 24 × 40 m. Twee gele hoedjes markeren de lijn op ± 15 m van het doel.
+- 0.32.2 – Vallende pion: banen 8 m uit elkaar. De trainer staat halverwege en kijkt naar de start. De pion valt 0,55 s voordat de speler begint met remmen (reactietijd).
+- 0.32.2 – Hordes: 3 hordes vooruit op 1 m, daarna 3 zijwaarts naar buiten (links naar links, rechts naar rechts). De spelers kijken zijwaarts vooruit.
+- 0.32.2 – Vallende pion en Achtjes kun je wel kopiëren, maar de animatie is dan niet als lijnen te bewerken: pion loslaten en tempo kan de editor niet tekenen.
 - 0.32.1 – Firestore TTL kan niet op het gratis abonnement; de opruimtaak doet dat nu en facturering is niet aangezet.
 - 0.32.1 – Een link van vóór 0.32.1 heeft nog geen einddatum en krijgt die zodra hij geopend wordt of je Mijn deellinks opent. Tot die tijd wordt hij niet opgeruimd.
 - 0.32.1 – Een verlopen link verdwijnt uit Mijn deellinks zodra je dat scherm opent.

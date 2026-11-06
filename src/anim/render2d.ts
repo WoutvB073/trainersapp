@@ -118,7 +118,8 @@ export function tekenScene(
     for (const o of objecten) {
       if (o.soort !== soort) continue;
       const m = stand.materiaal.get(o.id);
-      tekenMateriaal(b, m ? { ...o, x: m.x, y: m.y } : o, stand.net.find((n) => n.id === o.id), m);
+      const p = m && o.inHand ? naastHouder(stand, o, m) : m;
+      tekenMateriaal(b, p ? { ...o, x: p.x, y: p.y } : o, stand.net.find((n) => n.id === o.id), m);
     }
   }
 
@@ -315,6 +316,14 @@ function metDraaiing(b: Beeld, o: VeldObject, teken: (ctx: CanvasRenderingContex
   ctx.rotate(((o.hoek ?? 0) * Math.PI) / 180);
   teken(ctx);
   ctx.restore();
+}
+
+/** Een pion uit de hand zou onder het rondje van de houder verdwijnen: in 2D staat hij er net naast. */
+function naastHouder(stand: Stand, o: VeldObject, m: MateriaalStand) {
+  const h = stand.objecten.get(o.inHand!.wie);
+  if (!h) return m;
+  const d = Math.hypot(m.x - h.x, m.y - h.y) || 1;
+  return { x: h.x + ((m.x - h.x) / d) * 1.1, y: h.y + ((m.y - h.y) / d) * 1.1 };
 }
 
 function tekenMateriaal(b: Beeld, o: VeldObject, inslag?: NetInslag, m?: MateriaalStand) {

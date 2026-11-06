@@ -2162,5 +2162,1539 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-lc-vallende-pion",
+    "soort": "veld",
+    "naam": "Sprinten en stoppen bij de vallende pion",
+    "categorieen": [
+      "loopcoordinatie"
+    ],
+    "uitleg": "Twee banen naast elkaar, elk met een startpoortje en een finishpoortje. In het midden staat de trainer met in elke hand een pion. Twee spelers sprinten tegelijk. Tijdens de sprint laat de trainer één pion vallen: de speler aan die kant remt zo snel mogelijk af en staat stil, de ander sprint door tot de finish.",
+    "organisatie": "Twee banen van 20 m, 8 m uit elkaar, met pionnen als start- en finishpoortje. De trainer staat halverwege in het midden, met het gezicht naar de start, en houdt in elke hand een pion. De spelers staan in twee rijen achter de start. Na hun beurt joggen ze buitenom terug.",
+    "benodigdheden": [
+      "8 pionnen",
+      "2 pionnen voor de trainer"
+    ],
+    "spelersNodig": 2,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kijk tijdens de sprint naar de handen van de trainer",
+      "Afremmen: korte pasjes, gewicht naar achteren en laag door de knieën",
+      "Sta echt stil, met je voeten op schouderbreedte, voordat je weer weggaat"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eerst joggen in plaats van sprinten",
+        "De trainer roept bij het loslaten de kant"
+      ],
+      "moeilijker": [
+        "Soms laat de trainer geen pion vallen",
+        "Na het stoppen meteen terugsprinten naar de start",
+        "Eerst achteruit starten en dan omdraaien"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 31
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "sLa",
+          "soort": "pion",
+          "x": 4.5,
+          "y": 25
+        },
+        {
+          "id": "sLb",
+          "soort": "pion",
+          "x": 7.5,
+          "y": 25
+        },
+        {
+          "id": "sRa",
+          "soort": "pion",
+          "x": 12.5,
+          "y": 25
+        },
+        {
+          "id": "sRb",
+          "soort": "pion",
+          "x": 15.5,
+          "y": 25
+        },
+        {
+          "id": "fLa",
+          "soort": "pion",
+          "x": 4.5,
+          "y": 5
+        },
+        {
+          "id": "fLb",
+          "soort": "pion",
+          "x": 7.5,
+          "y": 5
+        },
+        {
+          "id": "fRa",
+          "soort": "pion",
+          "x": 12.5,
+          "y": 5
+        },
+        {
+          "id": "fRb",
+          "soort": "pion",
+          "x": 15.5,
+          "y": 5
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 10,
+          "y": 15,
+          "kijkrichting": 90
+        },
+        {
+          "id": "hL",
+          "soort": "pion",
+          "x": 10.5,
+          "y": 15,
+          "kleur": "#ffd23f",
+          "inHand": {
+            "wie": "t1",
+            "kant": "links"
+          }
+        },
+        {
+          "id": "hR",
+          "soort": "pion",
+          "x": 9.5,
+          "y": 15,
+          "kleur": "#ffd23f",
+          "inHand": {
+            "wie": "t1",
+            "kant": "rechts"
+          }
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 6,
+          "y": 25.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 14,
+          "y": 25.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 6,
+          "y": 28,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 14,
+          "y": 28,
+          "kijkrichting": -90
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                6,
+                15.6
+              ],
+              "manier": "sprint",
+              "duur": 2.6,
+              "tempo": "versnellen"
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                6,
+                12
+              ],
+              "manier": "afremmen",
+              "duur": 0.95,
+              "start": 2.6
+            },
+            {
+              "type": "losLaten",
+              "object": "hR",
+              "hoek": 180,
+              "start": 2.05
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                14,
+                15.6
+              ],
+              "manier": "sprint",
+              "duur": 2.6,
+              "tempo": "versnellen"
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                14,
+                3.6
+              ],
+              "manier": "sprint",
+              "duur": 2,
+              "start": 2.6,
+              "tempo": "uitlopen"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "via": [
+                [
+                  3,
+                  12
+                ],
+                [
+                  3,
+                  26
+                ]
+              ],
+              "naar": [
+                3,
+                29.6
+              ],
+              "spoor": false,
+              "duur": 3.6
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "via": [
+                [
+                  17,
+                  4
+                ]
+              ],
+              "naar": [
+                17,
+                29.6
+              ],
+              "spoor": false,
+              "duur": 4.2
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                6,
+                25.6
+              ],
+              "duur": 1
+            },
+            {
+              "type": "loop",
+              "wie": "a4",
+              "naar": [
+                14,
+                25.6
+              ],
+              "duur": 1
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-lc-hordes-zijwaarts-sprint",
+    "soort": "veld",
+    "naam": "Hordes, zijwaarts en sprint",
+    "categorieen": [
+      "loopcoordinatie"
+    ],
+    "uitleg": "Wedstrijdje tussen twee spelers, elk in een eigen baan. Eerst recht vooruit over de lage hordes, dan zijwaarts voetenwerk over drie lage hordes (in de linkerbaan naar links, in de rechterbaan naar rechts), en daarna recht vooruit sprinten naar de finish. Wie is er het eerst?",
+    "organisatie": "Twee banen naast elkaar. Per baan: 3 lage hordes achter elkaar, op 1 m afstand, dan 3 lage hordes of pionnen zijwaarts naar buiten, en 9 m verder een finishpoortje. De spelers staan in twee rijen achter de eerste horde en lopen na hun beurt buitenom terug.",
+    "benodigdheden": [
+      "12 lage hordes (of 6 hordes en 6 pionnen)",
+      "4 pionnen"
+    ],
+    "spelersNodig": 2,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Over de hordes: knieën hoog en snelle, korte contacten",
+      "Zijwaarts: neus vooruit, laag blijven en de voeten niet kruisen",
+      "Na de laatste horde meteen versnellen: eerste passen klein en krachtig"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Pionnen in plaats van hordes",
+        "Eerst zonder wedstrijdje, op techniek"
+      ],
+      "moeilijker": [
+        "Na het zijwaartse stuk een bal aannemen en afwerken",
+        "De trainer roept tijdens de hordes links of rechts",
+        "Start op een signaal met de rug naar de hordes"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 24,
+        "lengte": 22
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "lv0",
+          "soort": "horde",
+          "x": 9,
+          "y": 15,
+          "hoogte": 0.25
+        },
+        {
+          "id": "lv1",
+          "soort": "horde",
+          "x": 9,
+          "y": 14,
+          "hoogte": 0.25
+        },
+        {
+          "id": "lv2",
+          "soort": "horde",
+          "x": 9,
+          "y": 13,
+          "hoogte": 0.25
+        },
+        {
+          "id": "lz0",
+          "soort": "horde",
+          "x": 8,
+          "y": 10.8,
+          "hoek": 90,
+          "hoogte": 0.25
+        },
+        {
+          "id": "lz1",
+          "soort": "horde",
+          "x": 7,
+          "y": 10.8,
+          "hoek": 90,
+          "hoogte": 0.25
+        },
+        {
+          "id": "lz2",
+          "soort": "horde",
+          "x": 6,
+          "y": 10.8,
+          "hoek": 90,
+          "hoogte": 0.25
+        },
+        {
+          "id": "rv0",
+          "soort": "horde",
+          "x": 15,
+          "y": 15,
+          "hoogte": 0.25
+        },
+        {
+          "id": "rv1",
+          "soort": "horde",
+          "x": 15,
+          "y": 14,
+          "hoogte": 0.25
+        },
+        {
+          "id": "rv2",
+          "soort": "horde",
+          "x": 15,
+          "y": 13,
+          "hoogte": 0.25
+        },
+        {
+          "id": "rz0",
+          "soort": "horde",
+          "x": 16,
+          "y": 10.8,
+          "hoek": 90,
+          "hoogte": 0.25
+        },
+        {
+          "id": "rz1",
+          "soort": "horde",
+          "x": 17,
+          "y": 10.8,
+          "hoek": 90,
+          "hoogte": 0.25
+        },
+        {
+          "id": "rz2",
+          "soort": "horde",
+          "x": 18,
+          "y": 10.8,
+          "hoek": 90,
+          "hoogte": 0.25
+        },
+        {
+          "id": "fLa",
+          "soort": "pion",
+          "x": 3.5,
+          "y": 2
+        },
+        {
+          "id": "fLb",
+          "soort": "pion",
+          "x": 6.5,
+          "y": 2
+        },
+        {
+          "id": "fRa",
+          "soort": "pion",
+          "x": 17.5,
+          "y": 2
+        },
+        {
+          "id": "fRb",
+          "soort": "pion",
+          "x": 20.5,
+          "y": 2
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 9,
+          "y": 17,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 15,
+          "y": 17,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 9,
+          "y": 19.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 15,
+          "y": 19.6,
+          "kijkrichting": -90
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                9,
+                12
+              ],
+              "manier": "hordes"
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                15,
+                12
+              ],
+              "manier": "hordes"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "via": [
+                [
+                  8.6,
+                  10.8
+                ]
+              ],
+              "naar": [
+                5.4,
+                10.8
+              ],
+              "manier": "voetenwerk",
+              "kijk": -90
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "via": [
+                [
+                  15.4,
+                  10.8
+                ]
+              ],
+              "naar": [
+                18.6,
+                10.8
+              ],
+              "manier": "voetenwerk",
+              "kijk": -90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                5,
+                0.6
+              ],
+              "manier": "sprint",
+              "duur": 1.9
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                19,
+                0.6
+              ],
+              "manier": "sprint",
+              "duur": 2.05
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                9,
+                17
+              ],
+              "duur": 0.9
+            },
+            {
+              "type": "loop",
+              "wie": "a4",
+              "naar": [
+                15,
+                17
+              ],
+              "duur": 0.9
+            }
+          ]
+        },
+        {
+          "duur": 0.3,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-lc-achtjes-drie-pionnen",
+    "soort": "veld",
+    "naam": "Achtjes om drie pionnen",
+    "categorieen": [
+      "loopcoordinatie"
+    ],
+    "uitleg": "Vanaf het startpoortje sprint je recht vooruit naar het eerste station. Daar staan drie pionnen naast elkaar en loop je een vaste route. Station 1: tussen de pionnen uitkomen, rechts om de rechter pion heen, tussen de twee pionnen door en door naar het volgende station. Station 2: rechts om de middelste pion, links afslaan, om de linker pion heen, tussen de middelste en linker pion door en rechts om de rechter pion. Station 3: rechts om de middelste pion, links om de linker pion, achterlangs de middelste pion en rechts om de rechter pion. Daarna sprint je naar de finish.",
+    "organisatie": "Startpoortje, drie stations na elkaar en een finish, over ongeveer 33 m. Elk station heeft drie pionnen met 5 m ertussen (links, midden, rechts); de stations liggen 9 m uit elkaar. De nummers op het plaatje geven de volgorde per station. De volgende speler start als de vorige bij station 2 is.",
+    "benodigdheden": [
+      "9 pionnen in 3 kleuren",
+      "4 pionnen"
+    ],
+    "spelersNodig": 1,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Blijf dicht om de pion heen: kort draaien, laag door de knieën",
+      "Binnenvoet dicht bij de pion, kijk al naar de volgende pion",
+      "Tussen de stations versnellen en voor de draai pas afremmen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eerst joggend de route leren",
+        "Alleen station 1 en 2"
+      ],
+      "moeilijker": [
+        "Met bal aan de voet",
+        "Twee spelers tegelijk, 5 seconden na elkaar",
+        "Tijd opnemen en proberen te verbeteren"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 24,
+        "lengte": 37
+      },
+      "camera": "boven",
+      "lijnen": [
+        {
+          "soort": "loop",
+          "punten": [
+            [
+              13.5,
+              35.2
+            ],
+            [
+              13.5,
+              28.6
+            ],
+            [
+              13.5,
+              26.4
+            ],
+            [
+              13.59,
+              26.35
+            ],
+            [
+              14.3,
+              25.17
+            ],
+            [
+              15.52,
+              24.55
+            ],
+            [
+              16.9,
+              24.67
+            ],
+            [
+              18,
+              25.5
+            ],
+            [
+              18.49,
+              26.78
+            ],
+            [
+              18.23,
+              28.13
+            ],
+            [
+              17.29,
+              29.14
+            ],
+            [
+              15.96,
+              29.5
+            ],
+            [
+              14.64,
+              29.1
+            ],
+            [
+              13.73,
+              28.06
+            ],
+            [
+              13.5,
+              27.5
+            ],
+            [
+              13.5,
+              25.2
+            ]
+          ]
+        },
+        {
+          "soort": "loop",
+          "punten": [
+            [
+              13.5,
+              25.2
+            ],
+            [
+              13.5,
+              19.6
+            ],
+            [
+              13.5,
+              17.6
+            ],
+            [
+              12.92,
+              16.39
+            ],
+            [
+              12.12,
+              15.77
+            ],
+            [
+              11.15,
+              15.5
+            ],
+            [
+              10.14,
+              15.65
+            ],
+            [
+              6.68,
+              16.12
+            ],
+            [
+              5.83,
+              16.01
+            ],
+            [
+              5,
+              16.27
+            ],
+            [
+              4.36,
+              16.85
+            ],
+            [
+              4.03,
+              17.65
+            ],
+            [
+              4.07,
+              18.52
+            ],
+            [
+              4.47,
+              19.29
+            ],
+            [
+              5.15,
+              19.81
+            ],
+            [
+              6,
+              20
+            ],
+            [
+              8.5,
+              19
+            ],
+            [
+              8.5,
+              16.8
+            ],
+            [
+              11,
+              15.8
+            ],
+            [
+              15.32,
+              16.12
+            ],
+            [
+              16.09,
+              16
+            ],
+            [
+              16.85,
+              16.19
+            ],
+            [
+              17.47,
+              16.65
+            ],
+            [
+              17.88,
+              17.32
+            ],
+            [
+              19,
+              17.7
+            ],
+            [
+              19.2,
+              16.4
+            ],
+            [
+              18.4,
+              15
+            ]
+          ]
+        },
+        {
+          "soort": "loop",
+          "punten": [
+            [
+              18.4,
+              15
+            ],
+            [
+              13.5,
+              10.6
+            ],
+            [
+              13.5,
+              8.6
+            ],
+            [
+              12.92,
+              7.39
+            ],
+            [
+              12.12,
+              6.77
+            ],
+            [
+              11.15,
+              6.5
+            ],
+            [
+              10.14,
+              6.65
+            ],
+            [
+              6.68,
+              7.12
+            ],
+            [
+              5.83,
+              7.01
+            ],
+            [
+              5,
+              7.27
+            ],
+            [
+              4.36,
+              7.85
+            ],
+            [
+              4.03,
+              8.65
+            ],
+            [
+              4.07,
+              9.52
+            ],
+            [
+              4.47,
+              10.29
+            ],
+            [
+              5.15,
+              10.81
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              11,
+              11.2
+            ],
+            [
+              15.32,
+              10.88
+            ],
+            [
+              16.26,
+              10.98
+            ],
+            [
+              17.15,
+              10.64
+            ],
+            [
+              17.77,
+              9.92
+            ],
+            [
+              18,
+              9
+            ],
+            [
+              18,
+              7
+            ],
+            [
+              12,
+              4.6
+            ],
+            [
+              11,
+              3.4
+            ],
+            [
+              11,
+              0.8
+            ]
+          ]
+        }
+      ],
+      "objecten": [
+        {
+          "id": "sta",
+          "soort": "pion",
+          "x": 12,
+          "y": 34.5
+        },
+        {
+          "id": "stb",
+          "soort": "pion",
+          "x": 15,
+          "y": 34.5
+        },
+        {
+          "id": "fia",
+          "soort": "pion",
+          "x": 9.5,
+          "y": 2.2
+        },
+        {
+          "id": "fib",
+          "soort": "pion",
+          "x": 12.5,
+          "y": 2.2
+        },
+        {
+          "id": "s10",
+          "soort": "pion",
+          "x": 6,
+          "y": 27,
+          "kleur": "#ffd23f",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s11",
+          "soort": "pion",
+          "x": 11,
+          "y": 27,
+          "kleur": "#ffd23f",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s12",
+          "soort": "pion",
+          "x": 16,
+          "y": 27,
+          "kleur": "#ffd23f",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s20",
+          "soort": "pion",
+          "x": 6,
+          "y": 18,
+          "kleur": "#1c64d8",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s21",
+          "soort": "pion",
+          "x": 11,
+          "y": 18,
+          "kleur": "#1c64d8",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s22",
+          "soort": "pion",
+          "x": 16,
+          "y": 18,
+          "kleur": "#1c64d8",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s30",
+          "soort": "pion",
+          "x": 6,
+          "y": 9,
+          "kleur": "#e03131",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s31",
+          "soort": "pion",
+          "x": 11,
+          "y": 9,
+          "kleur": "#e03131",
+          "hoogte": 0.45
+        },
+        {
+          "id": "s32",
+          "soort": "pion",
+          "x": 16,
+          "y": 9,
+          "kleur": "#e03131",
+          "hoogte": 0.45
+        },
+        {
+          "id": "n1",
+          "soort": "tekst",
+          "x": 4.6,
+          "y": 23.8,
+          "tekst": "Station 1",
+          "breedte": 11
+        },
+        {
+          "id": "n2",
+          "soort": "tekst",
+          "x": 4.6,
+          "y": 14.8,
+          "tekst": "Station 2",
+          "breedte": 11
+        },
+        {
+          "id": "n3",
+          "soort": "tekst",
+          "x": 4.6,
+          "y": 5.8,
+          "tekst": "Station 3",
+          "breedte": 11
+        },
+        {
+          "id": "r10",
+          "soort": "tekst",
+          "x": 12.3,
+          "y": 28.7,
+          "tekst": "1",
+          "breedte": 8
+        },
+        {
+          "id": "r11",
+          "soort": "tekst",
+          "x": 19.4,
+          "y": 27,
+          "tekst": "2",
+          "breedte": 8
+        },
+        {
+          "id": "r12",
+          "soort": "tekst",
+          "x": 12.3,
+          "y": 25.3,
+          "tekst": "3",
+          "breedte": 8
+        },
+        {
+          "id": "r20",
+          "soort": "tekst",
+          "x": 14.7,
+          "y": 19.3,
+          "tekst": "1",
+          "breedte": 8
+        },
+        {
+          "id": "r21",
+          "soort": "tekst",
+          "x": 2.8,
+          "y": 18,
+          "tekst": "2",
+          "breedte": 8
+        },
+        {
+          "id": "r22",
+          "soort": "tekst",
+          "x": 8.5,
+          "y": 20.5,
+          "tekst": "3",
+          "breedte": 8
+        },
+        {
+          "id": "r23",
+          "soort": "tekst",
+          "x": 20.6,
+          "y": 18.4,
+          "tekst": "4",
+          "breedte": 8
+        },
+        {
+          "id": "r30",
+          "soort": "tekst",
+          "x": 12.3,
+          "y": 9.9,
+          "tekst": "1",
+          "breedte": 8
+        },
+        {
+          "id": "r31",
+          "soort": "tekst",
+          "x": 2.8,
+          "y": 9,
+          "tekst": "2",
+          "breedte": 8
+        },
+        {
+          "id": "r32",
+          "soort": "tekst",
+          "x": 11,
+          "y": 12.4,
+          "tekst": "3",
+          "breedte": 8
+        },
+        {
+          "id": "r33",
+          "soort": "tekst",
+          "x": 19.4,
+          "y": 9,
+          "tekst": "4",
+          "breedte": 8
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 13.5,
+          "y": 35.2,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 15.5,
+          "y": 35.5,
+          "kijkrichting": -90
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "via": [
+                [
+                  13.5,
+                  28.6
+                ],
+                [
+                  13.5,
+                  26.4
+                ],
+                [
+                  13.59,
+                  26.35
+                ],
+                [
+                  14.3,
+                  25.17
+                ],
+                [
+                  15.52,
+                  24.55
+                ],
+                [
+                  16.9,
+                  24.67
+                ],
+                [
+                  18,
+                  25.5
+                ],
+                [
+                  18.49,
+                  26.78
+                ],
+                [
+                  18.23,
+                  28.13
+                ],
+                [
+                  17.29,
+                  29.14
+                ],
+                [
+                  15.96,
+                  29.5
+                ],
+                [
+                  14.64,
+                  29.1
+                ],
+                [
+                  13.73,
+                  28.06
+                ],
+                [
+                  13.5,
+                  27.5
+                ],
+                [
+                  13.5,
+                  25.2
+                ],
+                [
+                  13.5,
+                  19.6
+                ],
+                [
+                  13.5,
+                  17.6
+                ],
+                [
+                  12.92,
+                  16.39
+                ],
+                [
+                  12.12,
+                  15.77
+                ],
+                [
+                  11.15,
+                  15.5
+                ],
+                [
+                  10.14,
+                  15.65
+                ],
+                [
+                  6.68,
+                  16.12
+                ],
+                [
+                  5.83,
+                  16.01
+                ],
+                [
+                  5,
+                  16.27
+                ],
+                [
+                  4.36,
+                  16.85
+                ],
+                [
+                  4.03,
+                  17.65
+                ],
+                [
+                  4.07,
+                  18.52
+                ],
+                [
+                  4.47,
+                  19.29
+                ],
+                [
+                  5.15,
+                  19.81
+                ],
+                [
+                  6,
+                  20
+                ],
+                [
+                  8.5,
+                  19
+                ],
+                [
+                  8.5,
+                  16.8
+                ],
+                [
+                  11,
+                  15.8
+                ],
+                [
+                  15.32,
+                  16.12
+                ],
+                [
+                  16.09,
+                  16
+                ],
+                [
+                  16.85,
+                  16.19
+                ],
+                [
+                  17.47,
+                  16.65
+                ],
+                [
+                  17.88,
+                  17.32
+                ],
+                [
+                  19,
+                  17.7
+                ],
+                [
+                  19.2,
+                  16.4
+                ],
+                [
+                  18.4,
+                  15
+                ],
+                [
+                  13.5,
+                  10.6
+                ],
+                [
+                  13.5,
+                  8.6
+                ],
+                [
+                  12.92,
+                  7.39
+                ],
+                [
+                  12.12,
+                  6.77
+                ],
+                [
+                  11.15,
+                  6.5
+                ],
+                [
+                  10.14,
+                  6.65
+                ],
+                [
+                  6.68,
+                  7.12
+                ],
+                [
+                  5.83,
+                  7.01
+                ],
+                [
+                  5,
+                  7.27
+                ],
+                [
+                  4.36,
+                  7.85
+                ],
+                [
+                  4.03,
+                  8.65
+                ],
+                [
+                  4.07,
+                  9.52
+                ],
+                [
+                  4.47,
+                  10.29
+                ],
+                [
+                  5.15,
+                  10.81
+                ],
+                [
+                  6,
+                  11
+                ],
+                [
+                  11,
+                  11.2
+                ],
+                [
+                  15.32,
+                  10.88
+                ],
+                [
+                  16.26,
+                  10.98
+                ],
+                [
+                  17.15,
+                  10.64
+                ],
+                [
+                  17.77,
+                  9.92
+                ],
+                [
+                  18,
+                  9
+                ],
+                [
+                  18,
+                  7
+                ],
+                [
+                  12,
+                  4.6
+                ],
+                [
+                  11,
+                  3.4
+                ]
+              ],
+              "naar": [
+                11,
+                0.8
+              ],
+              "manier": "sprint",
+              "duur": 25.835949103568467,
+              "tempo": "gelijkmatig",
+              "spoor": false
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "via": [
+                [
+                  13.5,
+                  35.2
+                ],
+                [
+                  13.5,
+                  28.6
+                ],
+                [
+                  13.5,
+                  26.4
+                ],
+                [
+                  13.59,
+                  26.35
+                ],
+                [
+                  14.3,
+                  25.17
+                ],
+                [
+                  15.52,
+                  24.55
+                ],
+                [
+                  16.9,
+                  24.67
+                ],
+                [
+                  18,
+                  25.5
+                ],
+                [
+                  18.49,
+                  26.78
+                ],
+                [
+                  18.23,
+                  28.13
+                ],
+                [
+                  17.29,
+                  29.14
+                ],
+                [
+                  15.96,
+                  29.5
+                ],
+                [
+                  14.64,
+                  29.1
+                ],
+                [
+                  13.73,
+                  28.06
+                ],
+                [
+                  13.5,
+                  27.5
+                ]
+              ],
+              "naar": [
+                13.5,
+                25.2
+              ],
+              "manier": "sprint",
+              "duur": 6.18475415155328,
+              "start": 7.2885251533449145,
+              "tempo": "gelijkmatig",
+              "spoor": false
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

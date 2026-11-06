@@ -23,6 +23,7 @@ const SNELHEID: Record<Manier, number> = {
   hordes: 2.8,
   kruispas: 3,
   verdedigend: 2.2,
+  afremmen: 3.5,
   schijn: 1.5,
 };
 const ZWAARTEKRACHT = 9.81;
@@ -44,6 +45,7 @@ export const RITME: Record<Manier, number> = {
   hordes: Math.PI / 0.8,
   kruispas: Math.PI / 0.6,
   verdedigend: 8,
+  afremmen: 9,
   schijn: 6,
 };
 /** Hoe lang een draai (nieuwe kijkrichting) duurt: de bal aan de voet draait mee, springt niet. */
@@ -67,7 +69,11 @@ const BOOG = { grond: 0, laag: 1, halfhoog: 2.5 } as const;
 const RIJ_AFSTAND = 1.6;
 const DOORSCHUIF_DUUR = 0.8;
 
-type Ease = 'mens' | 'duik' | 'bal';
+type Ease = 'mens' | 'duik' | 'bal' | 'versnel' | 'gelijk';
+
+/** `gelijk`: deel van de tijd om op gang te komen en om uit te lopen; daartussen een vast tempo. */
+const AANLOOP = 0.06;
+const VAST = 1 / (1 - AANLOOP);
 
 interface Beweging {
   /** Afgelegde weg (minstens 2 punten). */
@@ -261,9 +267,11 @@ export interface ObjectStand {
   voetOp?: number;
   /** Personen: bal tik-tak tussen de voeten: −1 (links) tot 1 (rechts). */
   tiktak?: number;
+  /** Personen: pionnen die ze vasthouden (de hand gaat naar die plek). */
+  houdt?: { kant: 'links' | 'rechts'; x: number; y: number; hoogte: number }[];
 }
 
-type MateriaalEvent = { t: number } & ({ soort: 'pak'; wie: string } | { soort: 'leg'; naar: Punt } | { soort: 'keer' } | { soort: 'val'; hoek: number; naar?: Punt } | { soort: 'op' });
+type MateriaalEvent = { t: number } & ({ soort: 'los'; hoek: number } | { soort: 'pak'; wie: string } | { soort: 'leg'; naar: Punt } | { soort: 'keer' } | { soort: 'val'; hoek: number; naar?: Punt } | { soort: 'op' });
 
 /** Stand van materiaal dat beweegt (alleen objecten met gebeurtenissen). */
 export interface MateriaalStand {
@@ -329,14 +337,24 @@ export function ease(soort: Ease, u: number): number {
   u = klem(u);
   if (soort === 'mens') return 0.5 - Math.cos(Math.PI * u) / 2;
   if (soort === 'duik') return 1 - (1 - u) * (1 - u);
+  if (soort === 'versnel') return u * u;
+  if (soort === 'gelijk') {
+    if (u < AANLOOP) return (VAST * u * u) / (2 * AANLOOP);
+    if (u > 1 - AANLOOP) return 1 - (VAST * (1 - u) * (1 - u)) / (2 * AANLOOP);
+    return VAST * (u - AANLOOP / 2);
+  }
   return u * (1.25 - 0.25 * u);
 }
+
+const TEMPO: Record<NonNullable<BeweegActie['tempo']>, Ease> = { versnellen: 'versnel', uitlopen: 'bal', gelijkmatig: 'gelijk' };
 
 /** Afgeleide van de ease (voor de snelheid op een moment). */
 function easeAfgeleide(soort: Ease, u: number): number {
   u = klem(u);
   if (soort === 'mens') return (Math.PI / 2) * Math.sin(Math.PI * u);
   if (soort === 'duik') return 2 * (1 - u);
+  if (soort === 'versnel') return 2 * u;
+  if (soort === 'gelijk') return VAST * Math.min(1, u / AANLOOP, (1 - u) / AANLOOP);
   return 1.25 - 0.5 * u;
 }
 
@@ -345,6 +363,8 @@ function easeTweede(soort: Ease, u: number): number {
   u = klem(u);
   if (soort === 'mens') return ((Math.PI * Math.PI) / 2) * Math.cos(Math.PI * u);
   if (soort === 'duik') return -2;
+  if (soort === 'versnel') return 2;
+  if (soort === 'gelijk') return u < AANLOOP ? VAST / AANLOOP : u > 1 - AANLOOP ? -VAST / AANLOOP : 0;
   return -0.5;
 }
 
@@ -414,7 +434,7 @@ function draaiOm(c: Punt, vorige: Punt, naar: Punt, straal: number, kant: 'links
 }
 
 const isBalActie = (a: Actie): a is BalActie => a.type === 'pass' || a.type === 'schot';
-const isMateriaalActie = (a: Actie): a is MateriaalActie => a.type === 'pakObject' || a.type === 'legObject' || a.type === 'keerOm' || a.type === 'valOm' || a.type === 'zetOp';
+const isMateriaalActie = (a: Actie): a is MateriaalActie => a.type === 'pakObject' || a.type === 'legObject' || a.type === 'keerOm' || a.type === 'valOm' || a.type === 'zetOp' || a.type === 'losLaten';
 /** Hoogte van iets dat je in de hand draagt. */
 const DRAAG_HOOGTE = 0.8;
 const isPersoon = (o: VeldObject | undefined) => !!o && PERSONEN.includes(o.soort);
@@ -1121,7 +1141,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
   };
   for (const o of tl.objecten.values()) if (o.houding) tl.zitten.set(o.id, [{ t: 0, soort: o.houding }]);
   // Bal op een pion en hesje als staart: bewegend materiaal, ook zonder gebeurtenissen (0.30.0).
-  for (const o of tl.objecten.values()) if (o.opHoogte !== undefined || o.drager) tl.materiaal.set(o.id, []);
+  for (const o of tl.objecten.values()) if (o.opHoogte !== undefined || o.drager || o.inHand) tl.materiaal.set(o.id, []);
 
   // Rijen: spelers op hun plek zetten, kijkend naar voren.
   for (const r of tekening.rijen ?? []) {
@@ -1381,7 +1401,8 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
       t0,
       duur: m.duur ?? (m.type === 'duik' ? DUUR_DUIK : undefined),
       manier: m.manier,
-      ease: m.type === 'duik' ? 'duik' : 'mens',
+      // Afremmen: begint op volle snelheid en loopt uit tot stilstand (zelfde verloop als een duik).
+      ease: m.type === 'duik' || m.manier === 'afremmen' ? 'duik' : m.tempo ? TEMPO[m.tempo] : 'mens',
       snelheid: m.type === 'dribbel' ? DRIBBEL : undefined,
       // Een duik zonder kijkrichting: keeper blijft het veld in kijken.
       kijk: m.type === 'duik' ? (m.kijk ?? kijkHoek(tl, o.id, t0)) : m.kijk,
@@ -2017,8 +2038,23 @@ function netInslagen(tl: Tijdlijn, t: number): NetInslag[] {
   return uit;
 }
 
-/** Keeper zet zich vlak voor een schot op zijn goal (0–1). */
+/** Na het afremmen blijft de speler even laag door de knieën staan. */
+const REM_STIL = 1.1;
+function naRemmen(tl: Tijdlijn, id: string, t: number): number {
+  for (const b of tl.bewegingen.get(id) ?? []) {
+    if (b.manier !== 'afremmen' || t < b.t0) continue;
+    const u = (t - b.t0) / (b.t1 - b.t0);
+    if (u <= 1) return ease('mens', klem(u * 1.6));
+    const na = t - b.t1;
+    if (na < REM_STIL) return 1 - ease('mens', klem((na - REM_STIL + 0.45) / 0.45));
+  }
+  return 0;
+}
+
+/** Keeper zet zich vlak voor een schot op zijn goal (0–1); een speler die afremt zakt door zijn knieën. */
 function gezet(tl: Tijdlijn, o: VeldObject, t: number): number {
+  const rem = naRemmen(tl, o.id, t);
+  if (rem > 0) return rem;
   if (!o.verdedigt) return 0;
   const g = goalVan(tl, o.verdedigt);
   if (!g) return 0;
@@ -2064,6 +2100,31 @@ function tikTakOp(tl: Tijdlijn, id: string, t: number): number | undefined {
   return undefined;
 }
 
+/** Een pion met gestrekte arm vasthouden: zo ver opzij en zo hoog (onderkant van de pion). */
+const HAND_OPZIJ = 0.5;
+const HAND_HOOGTE = 1.02;
+const ZWAARTE = 9.8;
+const VAL_DUUR = Math.sqrt((2 * HAND_HOOGTE) / ZWAARTE);
+
+function handPlek(tl: Tijdlijn, h: NonNullable<VeldObject['inHand']>, t: number) {
+  const q = positie(tl, h.wie, t);
+  const hoek = kijkHoek(tl, h.wie, t);
+  const zij = richting(hoek + 90);
+  const k = h.kant === 'rechts' ? HAND_OPZIJ : -HAND_OPZIJ;
+  return { x: q[0] + zij[0] * k, y: q[1] + zij[1] * k, hoek };
+}
+
+/** Pionnen die deze persoon nu vasthoudt. */
+function houdtOp(tl: Tijdlijn, id: string, t: number): ObjectStand['houdt'] {
+  const uit: NonNullable<ObjectStand['houdt']> = [];
+  for (const o of tl.objecten.values()) {
+    if (o.inHand?.wie !== id || (tl.materiaal.get(o.id) ?? []).some((e) => e.soort === 'los' && e.t <= t)) continue;
+    const h = handPlek(tl, o.inHand, t);
+    uit.push({ kant: o.inHand.kant, x: h.x, y: h.y, hoogte: HAND_HOOGTE + 0.3 });
+  }
+  return uit.length ? uit : undefined;
+}
+
 /** Stand van bewegend materiaal: alle gebeurtenissen tot t naspelen. */
 function materiaalStand(tl: Tijdlijn, id: string, t: number): MateriaalStand {
   const o = tl.objecten.get(id)!;
@@ -2075,10 +2136,20 @@ function materiaalStand(tl: Tijdlijn, id: string, t: number): MateriaalStand {
   let kantelHoek = 0;
   let kop = 0;
   let omgekeerd = false;
+  let inHand = o.inHand;
   for (const e of tl.materiaal.get(id) ?? []) {
     if (e.t > t) break;
     const u = (duur: number) => klem((t - e.t) / duur);
-    if (e.soort === 'pak') {
+    if (e.soort === 'los') {
+      // Valt recht naar beneden en kantelt om zodra hij de grond raakt.
+      const hand = handPlek(tl, inHand!, e.t);
+      inHand = undefined;
+      p = [hand.x, hand.y];
+      const s = t - e.t;
+      hoogte = Math.max(0, HAND_HOOGTE - 0.5 * ZWAARTE * s * s);
+      kantel = klem((s - VAL_DUUR) / 0.22);
+      kantelHoek = e.hoek;
+    } else if (e.soort === 'pak') {
       drager = e.wie;
       staart = false;
     } else if (e.soort === 'leg') {
@@ -2099,6 +2170,10 @@ function materiaalStand(tl: Tijdlijn, id: string, t: number): MateriaalStand {
       kantel = u(0.3);
       kantelHoek = e.hoek;
     }
+  }
+  if (inHand) {
+    const h = handPlek(tl, inHand, t);
+    return { x: h.x, y: h.y, hoogte: HAND_HOOGTE, kantel, kantelHoek, kop, hoek: h.hoek, gedragen: true };
   }
   if (drager) {
     const q = positie(tl, drager, t);
@@ -2127,6 +2202,11 @@ function materiaalActie(tl: Tijdlijn, a: MateriaalActie, t0: number): number {
     punt = a.naar ?? [p[0] + r[0] * 0.5, p[1] + r[1] * 0.5];
   }
   if (a.type === 'pakObject' && !wie) throw new TekeningFout(`pakObject: wie pakt "${a.object}"?`);
+  if (a.type === 'losLaten') {
+    if (!tl.objecten.get(a.object)!.inHand) throw new TekeningFout(`losLaten: niemand houdt "${a.object}" vast`);
+    voegToe(tl.materiaal, a.object, { t: t0, soort: 'los', hoek: a.hoek ?? 0 }, (x) => x.t);
+    return t0 + 0.1;
+  }
   if (wie) voegToe(tl.aantikken, wie, { t0, t1, punt, voet: false }, (e) => e.t0);
   const e: MateriaalEvent =
     a.type === 'pakObject'
@@ -2219,6 +2299,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         duikHoek: l.hoek,
         team: teamOp(tl, o.id, t),
         gezet: gezet(tl, o, t),
+        ...(tl.materiaal.size ? { houdt: houdtOp(tl, o.id, t) } : {}),
         sprong: sprongOp(tl, o.id, t),
         spreid: spreidOp(tl, o.id, t),
         zweef: zweefOp(tl, o.id, t),

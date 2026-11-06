@@ -659,6 +659,26 @@ const STIJL: Record<Exclude<Manier, 'sprong' | 'schijn'> | 'dribbel', Stijl> = {
     opzij: 0.45,
     vol: 1.1,
   },
+  // Afremmen tot stilstand: gewicht naar achteren, laag door de knieën, korte stevige pasjes, armen opzij voor de balans.
+  afremmen: {
+    ritme: [2.3, 0.2],
+    D: 0.44,
+    Smax: 0.42,
+    breed: 0.17,
+    til: 0.05,
+    piek: 0.5,
+    knie: 0.02,
+    tenen: 0.3,
+    zak: 0.12,
+    buig: 1.05,
+    veer: 0,
+    voorover: -0.02,
+    arm: 0.1,
+    armBasis: -0.15,
+    elleboog: 0.8,
+    opzij: 0.55,
+    vol: 1.1,
+  },
   kruispas: {
     D: 0.42,
     Smax: 0.6,
@@ -1807,6 +1827,12 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       gew[i] = w;
     }
   };
+  // Pionnen vasthouden: gestrekte arm naar de pion (linkerhand = index 0).
+  for (const x of s.houdt ?? []) {
+    const i = x.kant === 'links' ? 0 : 1;
+    (doelen[i] ??= new Vector3()).set(x.x, x.hoogte, x.y);
+    gew[i] = 1;
+  }
   if (inv.bal && inv.balInHanden && !werpHand && !(wp && (wp.soort === 'volley' || wp.soort === 'dropkick' || wp.soort === 'trap') && wp.u > 0.3)) {
     handen(inv.bal, 1);
   }

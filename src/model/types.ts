@@ -88,6 +88,8 @@ export interface VeldObject {
   doel?: string;
   /** Hesje: de speler die het als staart achter in zijn broek heeft (0.30.0). */
   drager?: string;
+  /** Pion die iemand met gestrekte arm vasthoudt, tot `losLaten` (0.32.2). */
+  inHand?: { wie: string; kant: 'links' | 'rechts' };
   /** Bal: ligt op deze hoogte (m), bv. op een pion, tot hij er met `valOm` af gaat of gepakt wordt (0.30.0). */
   opHoogte?: number;
   /** Klein goal: mini-goaltje zonder net, alleen het frame (0.30.0). */
@@ -273,6 +275,8 @@ export type Manier =
    * iets opzij. Zonder `kijk` staat het lijf half zijwaarts, met de rug schuin naar de looprichting (terugzakken).
    */
   | 'verdedigend'
+  /** Afremmen tot stilstand: gewicht naar achteren, laag door de knieën, korte pasjes (0.32.2). */
+  | 'afremmen'
   /** Intern: schijnbeweging (zie SchijnActie). */
   | 'schijn';
 
@@ -293,6 +297,11 @@ export interface BeweegActie extends ActieBasis {
   kijk?: number;
   /** false = geen lijn achterlaten. */
   spoor?: boolean;
+  /**
+   * Verloop van de snelheid (0.32.2; standaard rustig op gang en rustig uit). `versnellen` eindigt op volle snelheid, `uitlopen` begint
+   * daarop, zodat bewegingen zonder stilstand op elkaar aansluiten. `gelijkmatig` = vast tempo, voor een lange route.
+   */
+  tempo?: 'versnellen' | 'uitlopen' | 'gelijkmatig';
   /**
    * Duik: hoogte (m) van de handen bij de bal. Vanaf ± 0,8 m is het een hoge duik: de keeper zet af, hangt
    * horizontaal in de lucht en landt daarna op zijn zij (op een landingskussen als dat er ligt).
@@ -354,10 +363,10 @@ export interface AantikActie extends ActieBasis {
  * Materiaal bewegen (0.30.0). `pakObject`: `wie` bukt en draagt het object (hoedje, tennisbal, hoepel, hesje) in de hand.
  * `legObject`: legt het neer op `naar` (standaard voor zijn voeten). `keerOm`: draait een hoedje op zijn kop of terug.
  * `valOm`: een pion of pop valt om (`hoek` = richting), of een bal valt van een pion en rolt naar `naar`; `wie` mag leeg blijven.
- * `zetOp`: zet een omgevallen pion weer rechtop.
+ * `zetOp`: zet een omgevallen pion weer rechtop. `losLaten`: een pion uit de hand (`inHand`) valt op de grond (`hoek` = richting waarin hij omvalt).
  */
 export interface MateriaalActie extends ActieBasis {
-  type: 'pakObject' | 'legObject' | 'keerOm' | 'valOm' | 'zetOp';
+  type: 'pakObject' | 'legObject' | 'keerOm' | 'valOm' | 'zetOp' | 'losLaten';
   object: string;
   wie?: string;
   naar?: Punt;

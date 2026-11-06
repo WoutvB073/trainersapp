@@ -479,7 +479,8 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
         ctx.fillStyle = '#ffffff';
         ctx.fillText(tekst, 256, 66);
       });
-      const s = new Sprite(new SpriteMaterial({ map: tex, transparent: true }));
+      // depthWrite uit: anders verbergt het doorzichtige deel van het label de lijnen eronder.
+      const s = new Sprite(new SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
       const w = o.breedte ?? 4;
       s.scale.set(w, w / 4, 1);
       s.position.set(o.x, 0.2 + w * 0.15, o.y);
@@ -623,6 +624,7 @@ const VOL: Record<Manier, number> = {
   hordes: 2.4,
   kruispas: 2.4,
   verdedigend: 1.2,
+  afremmen: 1.2,
   schijn: 1,
 };
 
@@ -667,6 +669,11 @@ export function pose(manier: Manier | undefined, snelheid: number, fase: number,
       loop(0.3, 0.2);
       p.voorover = 0.3 * k;
       p.armenOpzij = 0.35 * k;
+      break;
+    case 'afremmen':
+      // Gewicht naar achteren, korte pasjes.
+      loop(0.3, 0.2);
+      p.voorover = -0.15 * k;
       break;
     case 'voetenwerk':
       loop(0.5, 0.55);
