@@ -118,7 +118,7 @@ function OefeningRij({ x, nr, meer, minuten, opRichttijd, opAnders, opWeg }: { x
           <Icoon naam="grip" maat={18} />
         </button>
       )}
-      <div className="club-oefening-inhoud">
+      <div className={`club-oefening-inhoud${meer ? '' : ' enkel'}`}>
         <a
           className="club-blok-oefening"
           href={`#/oefening/${x.oefening}`}

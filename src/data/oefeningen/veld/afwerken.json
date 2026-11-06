@@ -4,8 +4,7 @@
     "soort": "veld",
     "naam": "Dribbel door de poort en afronden",
     "categorieen": [
-      "afwerken",
-      "techniek"
+      "afwerken"
     ],
     "uitleg": "Dribbel vanaf 30 m op het doel af, kies op tijd de linker- of rechterpoort, versnel erdoor en rond in de zestien af in de verre hoek. Jog daarna buitenom terug naar de rij (de bal blijft in het net liggen).",
     "organisatie": "Rij met ballen op 30 m, centraal voor het doel. Twee poortjes van pionnen (2,5 m breed) op 19 m, links en rechts. Keeper in het doel.",
@@ -1411,8 +1410,7 @@
     "naam": "Ladder, aanname, slalom en schot",
     "categorieen": [
       "afwerken",
-      "loopcoordinatie",
-      "techniek"
+      "loopcoordinatie"
     ],
     "combinatievorm": true,
     "onderdelen": [
@@ -1782,7 +1780,6 @@
     "naam": "Aannemen, draaien, voorzet en afronden",
     "categorieen": [
       "afwerken",
-      "techniek",
       "pass-en-trap"
     ],
     "combinatievorm": true,
@@ -7093,6 +7090,148 @@
               }
             ]
           }
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-cv-aanname-lucht-schot",
+    "soort": "veld",
+    "naam": "Aanname uit de lucht, meenemen en schot",
+    "categorieen": [
+      "afwerken"
+    ],
+    "combinatievorm": true,
+    "onderdelen": [
+      "Aanname uit de lucht",
+      "Meenemen",
+      "Schot"
+    ],
+    "uitleg": "De trainer gooit een hoge bal naar de speler. Die neemt hem uit de lucht aan, neemt hem in dezelfde beweging mee richting het doel en schiet binnen drie aanrakingen.",
+    "organisatie": "Speler op 22 m van het doel, trainer schuin ervoor op 6 m met ballen. Keeper in het doel. Om en om aannemen met de wreef, de dij en de borst.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 1,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Zachte aanname: geef mee met de bal, zodat hij niet wegspringt",
+      "Neem de bal mee in de richting van het doel, niet stilleggen",
+      "Opkijken vóór het schot: waar staat de keeper?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bal eerst laten stuiten",
+        "Lagere worp"
+      ],
+      "moeilijker": [
+        "Verdediger in de rug",
+        "Aanname en schot in twee aanrakingen",
+        "Daarna nog een terugleg van de trainer: schot in één keer"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 24,
+        "y": -3,
+        "breedte": 22,
+        "lengte": 30
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "x": 34,
+          "y": 1.5,
+          "nummer": 1,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 8,
+          "x": 34,
+          "y": 22.5,
+          "kijkrichting": -90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 39.6,
+          "y": 19.6,
+          "kijkrichting": 150
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 39.3,
+          "y": 19.8,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "a1",
+              "worp": "onderhands",
+              "hoogte": 3.5,
+              "eindHoogte": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                34.6,
+                17.6
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                31.8,
+                0.3
+              ],
+              "hoogte": "laag",
+              "afloop": "vangt"
+            }
+          ]
+        },
+        {
+          "duur": 1.6,
+          "acties": []
         }
       ]
     }

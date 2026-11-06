@@ -4738,5 +4738,223 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-tq-vrijlopen-rug-verdediger",
+    "soort": "veld",
+    "naam": "Vrijlopen uit de rug van de verdediger",
+    "categorieen": [
+      "positiespel"
+    ],
+    "uitleg": "De middenvelder staat in de rug van een verdediger, waar de centrale verdediger hem niet kan aanspelen. Hij maakt zich vrij door opzij uit de rug van de verdediger te stappen, op het moment dat de centrale verdediger opkijkt. Hij krijgt de bal, draait open naar voren en speelt de spits diep, die met een loopactie in de ruimte achter de laatste lijn komt en afrondt.",
+    "organisatie": "Op een half veld. Centrale verdediger met ballen op 44 m van het doel, verdediger (hesje) op 33 m, middenvelder vlak achter hem, spits schuin rechts op 22 m. Keeper in het doel. Na elke actie doordraaien.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen",
+      "1 hesje"
+    ],
+    "spelersNodig": 4,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Vrijlopen op het juiste moment: als de passer opkijkt, niet eerder",
+      "Uit de rug van de verdediger naar de kant waar hij je niet ziet",
+      "Openingdraaien met de eerste aanraking en meteen diep kijken"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Verdediger blijft staan",
+        "Spits staat al vrij"
+      ],
+      "moeilijker": [
+        "Verdediger mag volgen en druk zetten",
+        "Diepe bal in één keer na de draai",
+        "Een tweede verdediger bij de spits"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 18,
+        "y": -3,
+        "breedte": 32,
+        "lengte": 50
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "c",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 34,
+          "y": 44,
+          "kijkrichting": -90
+        },
+        {
+          "id": "d",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 6,
+          "x": 34,
+          "y": 33.2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "m",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 8,
+          "x": 34,
+          "y": 30.6,
+          "kijkrichting": 90
+        },
+        {
+          "id": "s",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 41,
+          "y": 22,
+          "kijkrichting": -110
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 34,
+          "y": 43.45,
+          "bij": "c"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "m",
+              "naar": [
+                29.6,
+                33.6
+              ],
+              "manier": "sprint"
+            },
+            {
+              "type": "loop",
+              "wie": "d",
+              "naar": [
+                32.4,
+                33.4
+              ],
+              "start": 0.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "c",
+              "naar": "m"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "m",
+              "naar": [
+                29.2,
+                31.2
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "s",
+              "naar": [
+                39.6,
+                18.6
+              ],
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "m",
+              "naar": [
+                36.4,
+                11.4
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "s",
+              "naar": [
+                36.6,
+                12
+              ],
+              "manier": "sprint",
+              "start": 0.05
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "s",
+              "naar": [
+                35.4,
+                8.4
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "s",
+              "naar": [
+                31.4,
+                -0.3
+              ],
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

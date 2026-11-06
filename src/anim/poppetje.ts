@@ -1347,6 +1347,27 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     h.heup -= 0.03 * s.voetOp;
   }
 
+  // ---- balactie op de plek: de voet gaat naar de bal en neemt hem mee ----
+  if (s.truc) {
+    const { soort, u } = s.truc;
+    const i = s.truc.voet === 'rechts' ? 0 : 1;
+    const zij = kant(i);
+    const boog = Math.sin(Math.PI * u);
+    const w = Math.min(1, boog * 3);
+    const v = h.voet[i];
+    if (soort === 'binnenkant') _v.set(zij * (0.16 - 0.3 * u), MAAT.enkel + 0.06 * boog, 0.3 + 0.1 * boog);
+    else if (soort === 'buitenkant') _v.set(zij * (0.08 + 0.26 * u), MAAT.enkel + 0.06 * boog, 0.3 + 0.1 * boog);
+    else if (soort === 'zool') _v.set(zij * 0.05, MAAT.enkel + 0.18 * boog, 0.42 - 0.3 * u);
+    else if (u < 0.4) _v.set(zij * 0.12, MAAT.enkel + 0.1 * Math.sin((Math.PI * u) / 0.4), 0.1 + 0.9 * u);
+    else _v.set(zij * (0.12 - 0.57 * (u - 0.4)), MAAT.enkel + 0.03, 0.46 - (u - 0.4));
+    v.p.lerp(_v, w);
+    v.steun = 0;
+    h.heup -= 0.07 * boog;
+    h.romp.z += -zij * 0.16 * boog;
+    h.romp.x += 0.1 * boog;
+    for (const j of [0, 1] as const) h.arm[j].z = kant(j) * (0.2 + 0.4 * boog);
+  }
+
   // ---- tik-tak: de voet aan de kant van de bal tikt hem terug ----
   if (s.tiktak !== undefined) {
     for (const i of [0, 1] as const) {
@@ -1827,9 +1848,9 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
       gew[i] = w;
     }
   };
-  // Pionnen vasthouden: gestrekte arm naar de pion (linkerhand = index 0).
+  // Pionnen vasthouden: gestrekte arm naar de pion (rechterhand = index 0, zoals de voeten).
   for (const x of s.houdt ?? []) {
-    const i = x.kant === 'links' ? 0 : 1;
+    const i = x.kant === 'links' ? 1 : 0;
     (doelen[i] ??= new Vector3()).set(x.x, x.hoogte, x.y);
     gew[i] = 1;
   }

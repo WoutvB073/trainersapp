@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (06-11-2026, versie 0.32.2)
+## Status (06-11-2026, versie 0.33.0)
 
 | Fase | Status |
 |---|---|
@@ -43,7 +43,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 29. Korte deellinks, links openen zonder installatiescherm, pijl in eigen strook, synchroniseren nagelopen (0.31.3) | ✅ online – **wacht op test** |
 | 30. Circuittraining flexibel: eigen onderdelen, 2–8 groepjes, Stations/Samen, sjablonen, rondetimer (0.32.0) | ✅ online – **wacht op test** |
 | 31. Links verlopen na 180 dagen, anonieme accounts opruimen (0.32.1) | ✅ online – **wacht op test** |
-| 32. Vier spelersoefeningen: golven, vallende pion, hordes zijwaarts, achtjes; pion in de hand en afremmen (0.32.2) | ✅ online – **wacht op test** |
+| 32. Vier spelersoefeningen: golven, vallende pion, hordes zijwaarts, achtjes; pion in de hand en afremmen (0.32.2) | ✅ online, getest |
+| 33. Achtjes naar tekening 25, Golven met keepers, meer oefeningen per blok, Techniek opgeschoond, 6 techniekoefeningen, Partijspel (0.33.0) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1180,8 +1181,42 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Vaste route**: de achtjes gebruiken `tekening.lijnen` zonder stapnummer, zodat de route altijd te zien is, ook op het plaatje en met de knop Looplijnen uit.
 - **Tekstlabels in 3D**: `depthWrite` staat uit, anders verbergt het doorzichtige deel van het label de lijnen eronder.
 
+## Besluiten versie 0.33.0 – tekening 25, meer oefeningen per blok, Techniek, Partijspel
+**Route van tekening 25** (`fotos oefeningen/oefening-25.jpg.jpg`; onderaan Start, bovenaan Finish). De pionnen staan in een V: de middelste het dichtst bij de start. Per station twee lijnen met een pijl; 1 en 2 geven de volgorde.
+- **Station 1 (eerste na de start).** Stuk 1: recht op de middelste pion af, er links langs, boven de middelste langs naar rechts, onder de rechter pion door en tegen de klok in om de rechter pion, tot pijl 1 links van die pion. Stuk 2: schuin terug tussen de rechter en middelste pion door, achter de middelste langs naar links, links om de linker pion omhoog, tot pijl 2 boven de linker pion.
+- **Station 2.** Stuk 1: schuin omhoog, rechts om de middelste pion, boven de middelste langs naar links, onder de linker pion door en met de klok mee om de linker pion, tot pijl 1 rechts van die pion. Stuk 2: tussen de linker en middelste pion door, achter de middelste langs naar rechts, rechts om de rechter pion omhoog, tot pijl 2 boven de rechter pion.
+- **Station 3.** Stuk 1: omhoog, rechts om de middelste pion, naar links en met de klok mee om de linker pion, tot pijl 1 rechts van die pion. Stuk 2: achter de middelste langs naar rechts en rechts langs de rechter pion, dan naar de finish.
+- **Verschillen met de uitleg (de tekening is gevolgd):** (1) de pionnen staan niet op een rij maar in een V; (2) station 1: na "tussen de twee pionnen door" ga je op de tekening nog achter de middelste langs en links om de linker pion, en pas dan door; (3) station 2: de uitleg zegt "rechts om de linker pion", maar de tekening is dezelfde lus als station 3, waar de uitleg "links om" zegt; (4) station 2: de tekening gaat na "tussen de middelste en linker pion door" ook achter de middelste langs. Station 3 klopt helemaal.
+- **Bouw**: de lijnen zijn punt voor punt overgetrokken (`tools/nieuw/spelers-0322.cjs`, `STUKKEN`), in hokjes van het stippenpapier ten opzichte van de middelste pion, en vloeiend gemaakt.
+
+**Meer oefeningen per blok**
+- `Onderdeel.oefeningen` alleen bij meer dan één oefening of een richttijd; `oefening` blijft de eerste. Oude trainingen, oude links en oudere versies blijven zo werken. Lees met `oefeningenVan`, schrijf met `metOefeningen`.
+- De link blijft versie 2: de lijst staat als vijfde veld achter de eerste oefening.
+- Rotatie, stations en tijden blijven per blok. `oefeningTijden`: richttijd telt, de rest gaat gelijk over de andere oefeningen.
+- **Materiaal**: de oefeningen in één blok doe je na elkaar op dezelfde plek, dus daarbinnen telt per soort het grootste aantal. Stations naast elkaar tellen op. Dat staat ook bij het materiaal in de app.
+- Oefening 1, 2, 3 openen: `BlokOefeningen` (trainerslink, team, `ClubBlok` vanuit het plan en de rondetimer).
+
+**Bouwstenen**: `truc` (binnenkant, buitenkant, zool, cruijff; een schaar is een `schijn`), `zonderKeepers` op een oefening (twee grote goals, maar niet weggefilterd bij 0 keepers).
+
+**Techniek**: alleen balcontrole. Weggehaald bij 12 oefeningen (`tools/nieuw/techniek-033.cjs`, getest in `tests/versie-0330.test.ts`).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.33.0 – De foto stond niet op `tekeningen/oefening-25.jpg` maar op `fotos oefeningen/oefening-25.jpg.jpg`; die is gebruikt. De map staat niet in git. Tekening 19 en 21 stonden er niet bij, dus Hordes en Vallende pion zijn niet naar een tekening aangepast.
+- 0.33.0 – Achtjes: de stations zijn iets groter dan op papier (links en rechts 8 m uit elkaar) en de tussenruimtes iets kleiner (9,5 m), zodat de route op een telefoon leesbaar blijft. De tekening heeft geen finishpoortje; dat staat rechtsboven, bij het woord finish.
+- 0.33.0 – Achtjes: stationnamen staan erbij, ook al staan ze niet op de tekening, omdat de uitleg ze gebruikt. Tussen de stations staat geen lijn, net als op de tekening.
+- 0.33.0 – Golven ligt nu dwars in beeld, anders valt een van de goals met keeper buiten de 3D-camera. Eerste schot: keeper duikt en vangt. Tweede: doelpunt. Derde: keeper duikt en vangt.
+- 0.33.0 – Trainingsmodus: een circuittraining heeft de rondetimer als trainingsmodus; daar staan Oefening 1, 2, 3 met wat er nu aan de beurt is. De timer geeft geen extra signaal bij een nieuwe oefening binnen een blok.
+- 0.33.0 – Oefening toevoegen: maximaal 6 per blok. Tikken op een gekozen oefening in de keuzelijst haalt hem weer weg. Elke oefening heeft een knop voor een andere oefening; de oude knop "Andere kiezen" is daarmee weg.
+- 0.33.0 – Genereer voegt nu een oefening toe in plaats van te vervangen. Genereer alles geeft elk blok evenveel oefeningen als er stonden.
+- 0.33.0 – Een blok dat langer duurt omdat het naast een langer blok staat: de richttijden blijven op de ingestelde duur gebaseerd.
+- 0.33.0 – Techniek laten staan: Kaatsen tegen de rebounder en Kaatsbordpassjes (aannemen), Ludo met de bal, Piratenspel en Koning van het vak (balcontrole, geen doel), Vrijlopen en indraaien en Aannemen onder druk (aannemen en draaien).
+- 0.33.0 – Overgeslagen, vrijwel gelijk: "Aannemen en meenemen naar een kant" (`veld-tq-aannemen-meenemen`; de trainer die aanwijst staat nu bij Moeilijker) en "Dribbelen in een vak met opdrachten" (`veld-wu-dribbelen-opdrachten`; "kap" toegevoegd, nu ook JO16–19).
+- 0.33.0 – "Dribbel naar de pop en een actie" lijkt op Schijnbeweging en passeren, maar heeft drie acties, een pop en een eindpion. Daarom wel gebouwd.
+- 0.33.0 – Mini's: Slalom met de bal, Tempowisseling en Spiegeldribbel staan ook bij de mini's, met een makkelijkere variant. Pop en actie, Vierkant en Passieve verdediger niet.
+- 0.33.0 – Kameleon: de Jokerpartij is hetzelfde spel, dus die is aangepast (zelfde id) en heet nu Partijspel met kameleon. De kameleon is een speler in een eigen kleur, geen trainer meer; bij de mini's kan de trainer het zijn. Minimaal 5 spelers in plaats van 4.
+- 0.33.0 – Partijspel: de animatie toont 4 tegen 4 met keepers. Veldmaten: 30 × 20, 35 × 25, 40 × 30, 50 × 35 en 60 × 40 m.
+- 0.33.0 – Fout uit 0.32.2 opgelost: de armen van de trainer met de pionnen liepen gekruist.
 - 0.32.2 – De foto's van tekening 19, 21 en 25 zijn niet aangekomen. Oefening 2, 3 en 4 zijn alleen uit de uitleg gebouwd. Vergelijk ze met de tekeningen, vooral oefening 4.
 - 0.32.2 – Achtjes, station 1: tussen de middelste en rechter pion door, met de klok mee helemaal om de rechter pion, en daar weer tussendoor naar voren.
 - 0.32.2 – Achtjes, station 2: langs de rechterkant van de middelste pion, naar links over de bovenkant, om de linker pion, tussen links en midden door, en over de bovenkant naar rechts. "Rechts om de rechter pion" is een haakje langs de rechterkant, daarna naar station 3.

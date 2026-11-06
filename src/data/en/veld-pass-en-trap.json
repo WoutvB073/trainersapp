@@ -211,5 +211,62 @@
         "Right instead of left, or alternate"
       ]
     }
+  },
+  "veld-cv-rebounder-doeltjes": {
+    "naam": "Rebounder, turn and finish in a mini goal",
+    "uitleg": "The player passes against the rebounder twice, takes the second return with a turn away from the rebounder, dribbles to one of the two mini goals and scores.",
+    "organisatie": "Rebounder (or wall) 4 m from the player. Two mini goals 8 m behind them, left and right. The coach (or a teammate) calls which goal.",
+    "benodigdheden": [
+      "Rebounder",
+      "2 mini goals",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Pass with the inside of the foot, ankle locked",
+      "First touch on the turn: body open, take the ball towards the goal's side",
+      "Finish: place it, don't blast it"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One pass against the rebounder",
+        "Goals closer"
+      ],
+      "moeilijker": [
+        "The coach only calls the goal during the first touch",
+        "A defender starts from the rebounder",
+        "Pass with left and right alternately"
+      ]
+    },
+    "onderdelen": [
+      "Passes against the rebounder",
+      "Turn and dribble",
+      "Finish in a mini goal"
+    ]
+  },
+  "veld-tq-gerichte-aanname-voren": {
+    "naam": "Directional first touch forwards",
+    "uitleg": "The defender plays the ball into the midfielder, who has their back to goal and an opponent (mannequin) behind them. The midfielder receives on the open side and turns forwards with that first touch, away from the mannequin. Then they play straight into the striker, who finishes.",
+    "organisatie": "On half a pitch. Defender with balls 44 m from goal, midfielder at 32 m with a mannequin diagonally behind them, striker at 22 m. Keeper in goal. Rotate after each go: defender → midfielder → striker → defender.",
+    "benodigdheden": [
+      "Goal",
+      "1 mannequin",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Check over your shoulder before receiving: where is the mannequin, where is the striker?",
+      "Stand half-turned and receive on your back foot",
+      "Your first touch already goes forwards: no extra touch needed"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No mannequin",
+        "Control first, then turn"
+      ],
+      "moeilijker": [
+        "A real opponent instead of the mannequin",
+        "Play the striker in first time after the turn",
+        "The defender’s pass comes in the air"
+      ]
+    }
   }
 }

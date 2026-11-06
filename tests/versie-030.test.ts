@@ -12,7 +12,8 @@ import type { Tekening } from '../src/model/types';
 /** Versie 0.30.0: leeftijdsgroepen en Mini Talents. */
 
 const MINI = ['mini-3-5', 'mini-5-7'] as const;
-const nieuw = OEFENINGEN.filter((o) => o.id.startsWith('veld-mt-'));
+// De Jokerpartij is sinds 0.33.0 Partijspel met kameleon, voor alle leeftijden (zie tests/versie-0330.test.ts).
+const nieuw = OEFENINGEN.filter((o) => o.id.startsWith('veld-mt-') && o.id !== 'veld-mt-jokerpartij');
 const groep = (c: string) => nieuw.filter((o) => o.categorieen[0] === c);
 
 /** De bestaande oefeningen die de opdracht zeker bij de mini's noemt. */
@@ -92,12 +93,12 @@ describe('filter op leeftijd', () => {
 });
 
 describe('nieuwe mini-oefeningen', () => {
-  it('62 stuks: 17 techniek, 15 1 tegen 1, 15 afwerken, 15 partijvormen', () => {
-    expect(nieuw).toHaveLength(62);
+  it('61 stuks (zonder de Jokerpartij): 17 techniek, 15 1 tegen 1, 15 afwerken, 14 partijvormen', () => {
+    expect(nieuw).toHaveLength(61);
     expect(groep('techniek')).toHaveLength(17);
     expect(groep('een-tegen-een')).toHaveLength(15);
     expect(groep('afwerken')).toHaveLength(15);
-    expect(groep('partijvormen')).toHaveLength(15);
+    expect(groep('partijvormen')).toHaveLength(14);
   });
   it('allemaal mini’s, geen keepers, 1–2 coachpunten, animatie', () => {
     for (const o of nieuw) {

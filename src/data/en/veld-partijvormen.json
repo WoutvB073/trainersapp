@@ -799,30 +799,6 @@
       ]
     }
   },
-  "veld-mt-jokerpartij": {
-    "naam": "Joker game",
-    "uitleg": "The coach joins in as the joker: they always help the team with the ball. Pass to the coach and run into space. You’ll get it back!",
-    "organisatie": "16 × 20 m pitch with a mini-goal on both short sides. The coach plays for the team with the ball. Two groups per pitch: with 10 children, 3v3 with 2 subs per team, or 5v5. Too crowded? Set out a second pitch next to it or play with an extra ball. Swap every 2 minutes and play for 15 minutes.",
-    "benodigdheden": [
-      "2 mini-goals",
-      "4 disc cones",
-      "Bibs",
-      "Footballs"
-    ],
-    "coachpunten": [
-      "Pass and keep moving"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "A bigger pitch",
-        "Two jokers"
-      ],
-      "moeilijker": [
-        "The joker gets one touch",
-        "A smaller pitch"
-      ]
-    }
-  },
   "veld-mt-geen-uitbal": {
     "naam": "No throw-ins",
     "uitleg": "Did the ball go out? No time to wait! The coach throws in a new ball straight away. Get there quickly and keep playing.",
@@ -1041,6 +1017,60 @@
         "After the 3v2 one more wave: 4v3",
         "Finish within 8 seconds",
         "Smaller pitch"
+      ]
+    }
+  },
+  "veld-pv-partijspel": {
+    "naam": "Small-sided game",
+    "uitleg": "Just a normal game: two teams try to score in each other’s goal. Play anything from 4v4 to 8v8. Pitch size per number of players: 4v4 on 30 × 20 m, 5v5 on 35 × 25 m, 6v6 on 40 × 30 m, 7v7 on 50 × 35 m and 8v8 on 60 × 40 m. Choose keepers on full-size goals if you have keepers and want to work on finishing and build-up. Choose small goals without keepers if you have no keepers or want lots of goals and touches.",
+    "organisatie": "Pitch with a full-size goal and a keeper at each end, or without keepers one or two small goals. Two teams in bibs, balls with the coach. Play rounds of 5 to 10 minutes; with more players, rotate or use two pitches.",
+    "benodigdheden": [
+      "2 full-size goals (without keepers: 2 or 4 small goals)",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Pass and move: ask for the ball where you are free",
+      "Make the pitch big in possession, small without the ball",
+      "Switch quickly when you lose or win the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger pitch or an extra player (overload)",
+        "The coach plays for the team with the ball"
+      ],
+      "moeilijker": [
+        "Smaller pitch",
+        "Three touches maximum",
+        "A goal only counts if everyone is over the halfway line"
+      ]
+    }
+  },
+  "veld-mt-jokerpartij": {
+    "naam": "Small-sided game with a chameleon",
+    "uitleg": "A normal game with one player in a different colour: the chameleon. The chameleon always plays with the team that has the ball, so the team in possession always has one extra player. Play the ball to the chameleon and move into space. Lose the ball and the chameleon switches to the other team straight away.",
+    "organisatie": "Same set-up as Small-sided game, with a different-coloured bib for the chameleon. Minis: 16 × 20 m pitch with a mini goal at each short end, and the coach can be the chameleon. Older groups 3v3 to 8v8 plus chameleon, on small goals or with keepers on full-size goals. Change chameleon every 2 minutes.",
+    "benodigdheden": [
+      "2 small goals or mini goals",
+      "4 disc cones",
+      "Bibs in 3 colours",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Use the chameleon: play to them and keep moving",
+      "Chameleon: get free on the ball side and play quickly",
+      "Switch quickly: the chameleon switches too"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger pitch",
+        "Two chameleons"
+      ],
+      "moeilijker": [
+        "Chameleon gets one touch",
+        "Smaller pitch",
+        "The chameleon may not score"
       ]
     }
   }

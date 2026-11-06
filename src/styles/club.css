@@ -695,3 +695,17 @@
   background: var(--primair-licht);
   font-weight: 600;
 }
+
+.club-oefening-inhoud.enkel {
+  display: flex;
+  align-items: center;
+}
+
+.club-oefening-inhoud.enkel .club-blok-oefening {
+  flex: 1;
+  min-width: 0;
+}
+
+.club-oefening-inhoud.enkel .club-oefening-acties {
+  padding-top: 10px;
+}

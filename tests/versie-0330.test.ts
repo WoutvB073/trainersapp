@@ -23,7 +23,8 @@ import {
   type Onderdeel,
 } from '../src/clubtraining/clubtraining';
 import { OEFENINGEN, vindOefening } from '../src/data/oefeningen';
-import { naarBase64Url, uitBase64Url } from '../src/training/training';
+import { naarBase64Url, pastBij, uitBase64Url } from '../src/training/training';
+import { maakTijdlijn, standOp } from '../src/anim/timeline';
 import type { Oefening } from '../src/model/types';
 
 /** Versie 0.33.0: meerdere oefeningen in één onderdeel van een circuittraining. */
@@ -189,5 +190,110 @@ describe('genereren', () => {
     const ids = uit.flatMap((o) => oefeningenVan(o).map((x) => x.oefening));
     expect(new Set(ids).size).toBe(ids.length);
     for (const id of ids) expect(vindOefening(id)).toBeTruthy();
+  });
+});
+
+describe('Techniek opgeschoond', () => {
+  const WEG = ['veld-af-dribbel-afronden', 'veld-cv-ladder-slalom-schot', 'veld-cv-draaien-voorzet', 'veld-pv-1-1-doeltjes', 'veld-cv-1t1-2t1', 'veld-sp-pannavoetbal', 'veld-cv-estafette', 'veld-af-kleine-doeltjes', 'veld-cv-aanname-lucht-schot', 'veld-cv-rebounder-doeltjes', 'veld-tq-gerichte-aanname-voren', 'veld-tq-vrijlopen-rug-verdediger'];
+  const techniek = OEFENINGEN.filter((o) => o.soort === 'veld' && o.categorieen.includes('techniek'));
+
+  it('geen enkele oefening in Techniek heeft een doel, een schot of hoort bij de partijvormen', () => {
+    for (const o of techniek) {
+      expect(JSON.stringify(o.tekening.animatie ?? []), o.id).not.toContain('"type":"schot"');
+      expect(o.tekening.objecten.some((x) => x.soort === 'goal' || x.soort === 'klein-goal'), o.id).toBe(false);
+      expect(o.categorieen, o.id).not.toContain('partijvormen');
+    }
+  });
+
+  it('de aangepaste oefeningen houden hun andere categorieën en staan in het juiste bestand', () => {
+    for (const id of WEG) {
+      const o = vindOefening(id)!;
+      expect(o.categorieen, id).not.toContain('techniek');
+      expect(o.categorieen.length, id).toBeGreaterThan(0);
+      expect(OEFENINGEN.some((x) => x.id === id), id).toBe(true);
+    }
+  });
+
+  it('er blijft genoeg over voor elke leeftijdsgroep', () => {
+    for (const l of ['mini-3-5', 'mini-5-7', 'jo8-11', 'jo12-15', 'jo16-19'] as const) expect(techniek.filter((o) => o.leeftijden?.includes(l)).length, l).toBeGreaterThanOrEqual(8);
+  });
+});
+
+describe('nieuwe techniekoefeningen', () => {
+  const NIEUW = ['veld-tq-pop-actie', 'veld-tq-slalom-bal', 'veld-tq-vierkant-wendingen', 'veld-tq-tempowisseling', 'veld-tq-actie-passieve-verdediger', 'veld-tq-spiegeldribbel'];
+
+  it('staan in Techniek, met alles erop en eraan', () => {
+    for (const id of NIEUW) {
+      const o = vindOefening(id)!;
+      expect(o.categorieen[0], id).toBe('techniek');
+      expect(o.keepersNodig, id).toBe(0);
+      expect(o.doorwisselbaar, id).toBe(true);
+      expect(o.coachpunten.length, id).toBeGreaterThanOrEqual(2);
+      expect(o.coachpunten.length, id).toBeLessThanOrEqual(4);
+      expect(o.leeftijden!.length, id).toBeGreaterThan(0);
+    }
+    expect(vindOefening('veld-tq-spiegeldribbel')!.categorieen).toContain('warming-up');
+  });
+
+  it('de wendingen in het vierkant: de bal blijft bij de speler en de speler staat daarna de goede kant op', () => {
+    const tl = maakTijdlijn(vindOefening('veld-tq-vierkant-wendingen')!.tekening);
+    const acties = (vindOefening('veld-tq-vierkant-wendingen')!.tekening.animatie ?? []).flatMap((s) => ('acties' in s ? s.acties : []));
+    const soorten = new Set(acties.filter((a) => a.type === 'truc').map((a) => (a as { soort: string }).soort));
+    expect([...soorten].sort()).toEqual(['binnenkant', 'buitenkant', 'cruijff', 'zool']);
+    for (let t = 0; t < tl.duur; t += 0.1) {
+      const s = standOp(tl, t);
+      const speler = s.objecten.get('a1')!;
+      const b = s.objecten.get('b1')!;
+      expect(Math.hypot(b.x - speler.x, b.y - speler.y), `t=${t}`).toBeLessThan(1);
+    }
+    expect(tl.duur).toBeGreaterThan(10);
+  });
+
+  it('tijdens een wending komt de bal dicht bij de voeten en draait het lijf mee', () => {
+    const tl = maakTijdlijn(vindOefening('veld-tq-tempowisseling')!.tekening);
+    const momenten = Array.from({ length: Math.floor(tl.duur * 20) }, (_, i) => i / 20).filter((t) => standOp(tl, t).objecten.get('a1')!.truc);
+    expect(momenten.length).toBeGreaterThan(5);
+    const midden = momenten[Math.floor(momenten.length / 2)]!;
+    const s = standOp(tl, midden);
+    const a = s.objecten.get('a1')!;
+    const b = s.objecten.get('b1')!;
+    expect(Math.hypot(b.x - a.x, b.y - a.y)).toBeLessThan(0.4);
+    expect(standOp(tl, midden).objecten.get('a1')!.truc!.soort).toBe('binnenkant');
+    expect(standOp(tl, momenten.at(-1)! + 0.1).objecten.get('a1')!.truc).toBeUndefined();
+  });
+
+  it('bij bestaande oefeningen die vrijwel gelijk waren is de wens als variant of tekst toegevoegd', () => {
+    expect(vindOefening('veld-tq-aannemen-meenemen')!.variaties.moeilijker.join(' ')).toMatch(/trainer wijst/);
+    expect(vindOefening('veld-wu-dribbelen-opdrachten')!.uitleg).toMatch(/kap/);
+  });
+});
+
+describe('partijspel', () => {
+  const ALLE = ['mini-3-5', 'mini-5-7', 'jo8-11', 'jo12-15', 'jo16-19'];
+
+  it('Partijspel: keepers op grote goals, zonder keepers op kleine goals, veldgrootte in de uitleg, niet weggefilterd', () => {
+    const o = vindOefening('veld-pv-partijspel')!;
+    expect(o.categorieen).toEqual(['partijvormen']);
+    expect(o.leeftijden).toEqual(ALLE);
+    expect(o.keepersNodig).toBe(2);
+    expect(o.zonderKeepers).toBe(true);
+    expect(o.tekening.objecten.filter((x) => x.soort === 'goal')).toHaveLength(2);
+    expect(o.tekening.objecten.filter((x) => x.soort === 'keeper')).toHaveLength(2);
+    expect(pastBij(o, 8, 0)).toBe(true);
+    expect(pastBij(o, 8, 2)).toBe(true);
+    for (const w of ['4 tegen 4', '8 tegen 8', '30 × 20 m', '60 × 40 m', 'kleine goals']) expect(o.uitleg).toContain(w);
+  });
+
+  it('Partijspel met kameleon: de Jokerpartij zelf, nu voor alle leeftijden, met een speler in een andere kleur', () => {
+    const o = vindOefening('veld-mt-jokerpartij')!;
+    expect(o.naam).toBe('Partijspel met kameleon');
+    expect(o.leeftijden).toEqual(ALLE);
+    expect(o.keepersNodig).toBe(0);
+    expect(o.tekening.objecten.filter((x) => x.team === 'J')).toHaveLength(1);
+    expect(o.tekening.objecten.some((x) => x.soort === 'trainer')).toBe(false);
+    expect(OEFENINGEN.filter((x) => /kameleon/i.test(x.naam))).toHaveLength(1);
+    // De kameleon speelt met allebei de teams mee.
+    const passes = (o.tekening.animatie ?? []).flatMap((s) => ('acties' in s ? s.acties : [])).filter((a) => a.type === 'pass') as unknown as { van: string; naar: string }[];
+    expect(passes.filter((p) => p.naar === 'j1').map((p) => p.van)).toEqual(['a1', 'c3']);
   });
 });

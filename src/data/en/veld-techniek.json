@@ -43,6 +43,7 @@
         "A rolls the ball by hand"
       ],
       "moeilijker": [
+        "Just before the first touch, the coach points to the left or right gate",
         "A only calls 'left' or 'right' as they pass",
         "Receive with the outside of the foot",
         "An opponent behind B blocks one gate",
@@ -227,67 +228,6 @@
       ]
     }
   },
-  "veld-cv-aanname-lucht-schot": {
-    "naam": "Control out of the air, carry and shoot",
-    "uitleg": "The coach throws a high ball to the player. They control it out of the air, take it towards goal in the same movement and shoot within three touches.",
-    "organisatie": "Player 22 m from goal, coach diagonally in front at 6 m with balls. Keeper in goal. Alternate controlling with laces, thigh and chest.",
-    "benodigdheden": [
-      "Goal",
-      "Balls"
-    ],
-    "coachpunten": [
-      "Soft first touch: cushion the ball so it doesn't bounce away",
-      "Take the ball towards goal, don't stop it dead",
-      "Look up before you shoot: where is the keeper?"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Let the ball bounce first",
-        "Lower throw"
-      ],
-      "moeilijker": [
-        "A defender behind you",
-        "Control and shot in two touches",
-        "Then a lay-off from the coach: first-time shot"
-      ]
-    },
-    "onderdelen": [
-      "Control out of the air",
-      "Carry the ball",
-      "Shot"
-    ]
-  },
-  "veld-cv-rebounder-doeltjes": {
-    "naam": "Rebounder, turn and finish in a mini goal",
-    "uitleg": "The player passes against the rebounder twice, takes the second return with a turn away from the rebounder, dribbles to one of the two mini goals and scores.",
-    "organisatie": "Rebounder (or wall) 4 m from the player. Two mini goals 8 m behind them, left and right. The coach (or a teammate) calls which goal.",
-    "benodigdheden": [
-      "Rebounder",
-      "2 mini goals",
-      "Balls"
-    ],
-    "coachpunten": [
-      "Pass with the inside of the foot, ankle locked",
-      "First touch on the turn: body open, take the ball towards the goal's side",
-      "Finish: place it, don't blast it"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "One pass against the rebounder",
-        "Goals closer"
-      ],
-      "moeilijker": [
-        "The coach only calls the goal during the first touch",
-        "A defender starts from the rebounder",
-        "Pass with left and right alternately"
-      ]
-    },
-    "onderdelen": [
-      "Passes against the rebounder",
-      "Turn and dribble",
-      "Finish in a mini goal"
-    ]
-  },
   "veld-te-kleurenreactie-bal": {
     "naam": "Colour reaction with a ball",
     "uitleg": "Two players stand in the middle with a ball at their feet, facing the coach. The coach calls a colour; both players dribble as fast as they can to that disc cone, turn round it with the ball and dribble back to the middle. First back with the ball under control wins a point.",
@@ -336,58 +276,6 @@
         "The defender chooses which side to come from",
         "Play it on in two touches maximum",
         "The pass comes in the air"
-      ]
-    }
-  },
-  "veld-tq-gerichte-aanname-voren": {
-    "naam": "Directional first touch forwards",
-    "uitleg": "The defender plays the ball into the midfielder, who has their back to goal and an opponent (mannequin) behind them. The midfielder receives on the open side and turns forwards with that first touch, away from the mannequin. Then they play straight into the striker, who finishes.",
-    "organisatie": "On half a pitch. Defender with balls 44 m from goal, midfielder at 32 m with a mannequin diagonally behind them, striker at 22 m. Keeper in goal. Rotate after each go: defender → midfielder → striker → defender.",
-    "benodigdheden": [
-      "Goal",
-      "1 mannequin",
-      "Balls"
-    ],
-    "coachpunten": [
-      "Check over your shoulder before receiving: where is the mannequin, where is the striker?",
-      "Stand half-turned and receive on your back foot",
-      "Your first touch already goes forwards: no extra touch needed"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "No mannequin",
-        "Control first, then turn"
-      ],
-      "moeilijker": [
-        "A real opponent instead of the mannequin",
-        "Play the striker in first time after the turn",
-        "The defender’s pass comes in the air"
-      ]
-    }
-  },
-  "veld-tq-vrijlopen-rug-verdediger": {
-    "naam": "Getting free from behind the defender",
-    "uitleg": "The midfielder stands behind a defender, where the centre-back can’t pass to them. They get free by stepping out to the side from behind the defender, at the moment the centre-back looks up. They receive the ball, open up to face forwards and play the striker in behind, who makes a run into the space behind the last line and finishes.",
-    "organisatie": "On half a pitch. Centre-back with balls 44 m from goal, defender (bib) at 33 m, midfielder right behind them, striker diagonally to the right at 22 m. Keeper in goal. Rotate after each go.",
-    "benodigdheden": [
-      "Goal",
-      "Balls",
-      "1 bib"
-    ],
-    "coachpunten": [
-      "Get free at the right moment: when the passer looks up, not before",
-      "Step out from behind the defender to the side where they can’t see you",
-      "Open up with your first touch and look in behind straight away"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "The defender stands still",
-        "The striker is already free"
-      ],
-      "moeilijker": [
-        "The defender may follow and press",
-        "Through ball first time after the turn",
-        "A second defender on the striker"
       ]
     }
   },
@@ -784,6 +672,158 @@
       "moeilijker": [
         "Only disc cones in your colour",
         "Against the clock"
+      ]
+    }
+  },
+  "veld-tq-pop-actie": {
+    "naam": "Dribble to the mannequin and make a move",
+    "uitleg": "Dribble at pace to the mannequin. Make a move just before it, then accelerate with the ball to the cone behind the mannequin. Change the move each round: the step-over (foot over the ball, then go the other way), a body feint (body one way, ball the other) or the Cruyff turn (fake shot, drag the ball behind your standing leg and turn away).",
+    "organisatie": "Three lanes side by side, 8 m apart. Per lane a mannequin 7.5 m after the start and a cone 4.5 m behind the mannequin. Every player has a ball. After the cone, dribble back round the outside and rejoin. Change lane or move after each round.",
+    "benodigdheden": [
+      "3 mannequins",
+      "3 cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Start your move 1.5 m from the mannequin, not right on top of it",
+      "After the move, pace matters most: first two steps explosive",
+      "Keep the ball close and look up"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Slowly at first, without accelerating",
+        "A cone instead of a mannequin and one move per round"
+      ],
+      "moeilijker": [
+        "The coach calls the move just before the mannequin",
+        "Make the move with your other foot",
+        "Time it to the cone"
+      ]
+    }
+  },
+  "veld-tq-slalom-bal": {
+    "naam": "Slalom with the ball",
+    "uitleg": "Dribble the ball in a slalom through the cones. Play it a different way each round: inside only, outside only, or with the sole. Use both your left and your right foot. Turn at the last cone and come back with your other foot.",
+    "organisatie": "Two lanes side by side, 8 m apart. Per lane 5 cones in a row, 2.5 m apart. Divide the players over the lanes, each with a ball. The next player starts when the previous one reaches the third cone.",
+    "benodigdheden": [
+      "10 cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Lots of small touches: the ball stays close to your foot",
+      "Between touches, look ahead to the next cone",
+      "Low through the knees, push off after each turn"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Cones further apart",
+        "Walking pace at first",
+        "Minis: only with your best foot"
+      ],
+      "moeilijker": [
+        "Cones closer together",
+        "Only with your weaker foot",
+        "Race between the lanes"
+      ]
+    }
+  },
+  "veld-tq-vierkant-wendingen": {
+    "naam": "Square of turns",
+    "uitleg": "Four cones in a square. Dribble from cone to cone and make a different turn at each one: with the inside, with the outside, with the sole and the Cruyff turn. Accelerate to the next cone after each turn. After a lap, turn round and go the other way.",
+    "organisatie": "Square of 9 × 9 m with a cone on each corner. With bigger groups, use more squares. Two players per square, each with a ball, on opposite corners. They start at the same time and go the same way round.",
+    "benodigdheden": [
+      "4 cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Brake with small steps and make the turn low through the knees",
+      "Take the ball into the new direction in one movement",
+      "Look up and accelerate straight after the turn"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One type of turn per round",
+        "Smaller square and slower pace"
+      ],
+      "moeilijker": [
+        "Everything with your weaker foot",
+        "The coach calls the turn",
+        "A new order each round"
+      ]
+    }
+  },
+  "veld-tq-tempowisseling": {
+    "naam": "Change of pace",
+    "uitleg": "Dribble slowly to the first line. There, accelerate as fast as you can to the next line, chop the ball and dribble back slowly. It is all about the difference: really slow first, then really fast.",
+    "organisatie": "Three lanes side by side. The first line is 5 m after the start, the second line 8 m further on. Mark the lines with disc cones next to the lanes. Every player has a ball; each lane starts in turn.",
+    "benodigdheden": [
+      "8 disc cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Slow pace: ball close to your foot, look up",
+      "Accelerating: play the ball a little further ahead and take big strides",
+      "Brake with small steps before you chop"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Minis: walk, then run, and stop at the line with your foot on the ball",
+        "Lines closer together"
+      ],
+      "moeilijker": [
+        "Accelerate on the coach’s signal",
+        "Chop with your weaker foot",
+        "Accelerate again straight after the chop"
+      ]
+    }
+  },
+  "veld-tq-actie-passieve-verdediger": {
+    "naam": "Dribble and move against a passive defender",
+    "uitleg": "The defender stands still or only moves along, and does not win the ball. The dribbler goes at the defender, makes a move and gets past with a burst of speed to the line. Then swap roles. The defender goes with the move, so the dribbler learns when it works.",
+    "organisatie": "Pairs with one ball. Per pair a 12 m lane: the defender stands halfway, the dribbler starts at the end. Behind the defender is a line of disc cones. Swap after five attempts.",
+    "benodigdheden": [
+      "1 ball per pair",
+      "4 disc cones"
+    ],
+    "coachpunten": [
+      "Go straight at the defender, so he has to stop",
+      "Make the move from 1.5 to 2 m away",
+      "Go past the defender at an angle straight after the move and accelerate"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender only stands still",
+        "A mannequin or cone instead of a defender"
+      ],
+      "moeilijker": [
+        "The defender may take one step towards the ball",
+        "The dribbler chooses a side at the last moment",
+        "After the line, sprint 5 m more with the defender chasing"
+      ]
+    }
+  },
+  "veld-tq-spiegeldribbel": {
+    "naam": "Mirror dribbling in pairs",
+    "uitleg": "Two players face each other, each with a ball. The leader makes a move with the ball: dribbling, chopping, a step-over or using the sole. The other copies it straight away, as in a mirror. Swap after a minute.",
+    "organisatie": "Pairs 6 m apart, in their own 6 × 10 m area. Each has a ball. With an odd number the coach joins in.",
+    "benodigdheden": [
+      "1 ball per player",
+      "4 disc cones per pair"
+    ],
+    "coachpunten": [
+      "Watch your partner, not the ball",
+      "Leader: start slowly and make it harder and harder",
+      "Follower: stay as close to the leader as you can"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Only dribbling and stopping",
+        "Minis: the coach shows it"
+      ],
+      "moeilijker": [
+        "Swap leader every ten seconds",
+        "Only with your weaker foot",
+        "The leader may accelerate too"
       ]
     }
   }

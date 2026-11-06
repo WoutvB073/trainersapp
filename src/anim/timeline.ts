@@ -1,5 +1,5 @@
 import type {
-  MateriaalActie, Actie, AnimatieStap, BalActie, BeweegActie, HerhaalStap, LijnSoort, Manier, Punt, Rij, Stap, TegelijkStap, Team, Tekening, Waarde, VeldObject, Zithouding } from '../model/types';
+  MateriaalActie, TrucActie, Actie, AnimatieStap, BalActie, BeweegActie, HerhaalStap, LijnSoort, Manier, Punt, Rij, Stap, TegelijkStap, Team, Tekening, Waarde, VeldObject, Zithouding } from '../model/types';
 import { PERSONEN } from '../model/types';
 
 /**
@@ -136,7 +136,7 @@ const UITHALEN = 0.35;
 const UITZWAAIEN = 0.25;
 
 /** Kijkrichting vanaf t: vast, of meedraaiend met een beweging (+ verschil, bv. achteruit = 180). */
-type KijkEvent = { t: number; hoek: number } | { t: number; beweging: Beweging; verschil: number };
+type KijkEvent = { t: number; hoek: number; duur?: number } | { t: number; beweging: Beweging; verschil: number };
 
 export interface Spoor {
   soort: LijnSoort;
@@ -188,6 +188,7 @@ export interface Tijdlijn {
   voetOp: Map<string, { t0: number; t1: number }[]>;
   /** Bal tik-tak tussen de voeten. */
   tiktak: Map<string, { t0: number; t1: number }[]>;
+  trucs: Map<string, { t0: number; t1: number; soort: TrucActie['soort']; voet: 'links' | 'rechts' }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
   /** Keeper blokt een schot met zijn lichaam (moment van contact). */
@@ -267,6 +268,8 @@ export interface ObjectStand {
   voetOp?: number;
   /** Personen: bal tik-tak tussen de voeten: −1 (links) tot 1 (rechts). */
   tiktak?: number;
+  /** Personen: balactie op de plek (0.33.0); `u` = voortgang 0–1. */
+  truc?: { soort: TrucActie['soort']; voet: 'links' | 'rechts'; u: number };
   /** Personen: pionnen die ze vasthouden (de hand gaat naar die plek). */
   houdt?: { kant: 'links' | 'rechts'; x: number; y: number; hoogte: number }[];
 }
@@ -609,9 +612,10 @@ function kijkHoek(tl: Tijdlijn, id: string, t: number): number {
   }
   const nu = kijkRuw(tl, id, t);
   const e = laatste(tl.kijk.get(id), t, (x) => x.t);
-  if (!e || t - e.t >= DRAAI) return nu;
+  const draai = (e && 'duur' in e ? e.duur : undefined) ?? DRAAI;
+  if (!e || t - e.t >= draai) return nu;
   const voor = kijkRuw(tl, id, e.t - 1e-6);
-  return voor + hoekVerschil(voor, nu) * ease('mens', (t - e.t) / DRAAI);
+  return voor + hoekVerschil(voor, nu) * ease('mens', (t - e.t) / draai);
 }
 
 function kijkRuw(tl: Tijdlijn, id: string, t: number): number {
@@ -885,6 +889,14 @@ function vangOp(tl: Tijdlijn, o: VeldObject, t: number): { vang: number; hoogte:
   return { vang: w, hoogte };
 }
 
+const TRUC_DUUR: Record<TrucActie['soort'], number> = { binnenkant: 0.55, buitenkant: 0.55, zool: 0.7, cruijff: 0.85 };
+
+/** Balactie van deze persoon op dit moment. */
+function trucOp(tl: Tijdlijn, id: string, t: number): ObjectStand['truc'] {
+  for (const e of tl.trucs.get(id) ?? []) if (t >= e.t0 && t < e.t1) return { soort: e.soort, voet: e.voet, u: (t - e.t0) / (e.t1 - e.t0) };
+  return undefined;
+}
+
 /** Waar een bal zit als deze persoon hem heeft. */
 function balBijPersoon(tl: Tijdlijn, id: string, t: number): Punt {
   const o = tl.objecten.get(id)!;
@@ -907,6 +919,9 @@ function balBijPersoon(tl: Tijdlijn, id: string, t: number): Punt {
   }
   const voet = voetOpOp(tl, id, t);
   if (voet > 0) d = d + (0.42 - d) * voet;
+  // Balactie: de bal komt dicht bij de voeten en gaat met het lijf mee om.
+  const truc = trucOp(tl, id, t);
+  if (truc) d *= 1 - 0.6 * Math.sin(Math.PI * truc.u);
   // Dribbelen: de bal gaat bij elke balaanraking een stukje voor de voet uit en komt weer terug.
   if (b && !duik && o.soort !== 'keeper') d += 0.12 * (0.5 - 0.5 * Math.cos(voortgang(b, t) * RITME[b.manier]));
   return [p[0] + r[0] * d, p[1] + r[1] * d];
@@ -1136,6 +1151,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     materiaal: new Map(),
     voetOp: new Map(),
     tiktak: new Map(),
+    trucs: new Map(),
     stompen: [],
     blokken: [],
   };
@@ -1355,6 +1371,16 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
         spoor: false,
       });
       eind = Math.max(eind, t1);
+      continue;
+    }
+    if (a.type === 'truc') {
+      const duur = a.duur ?? TRUC_DUUR[a.soort];
+      const hoek = a.naar ? graden(positie(tl, o.id, t0), a.naar) : a.kijk;
+      // Cruijff: eerst de schijntrap, dan pas omdraaien.
+      const wacht = a.soort === 'cruijff' ? duur * 0.4 : 0;
+      if (hoek !== undefined) voegToe(tl.kijk, o.id, { t: t0 + wacht, hoek, duur: duur - wacht }, (e) => e.t);
+      voegToe(tl.trucs, o.id, { t0, t1: t0 + duur, soort: a.soort, voet: a.voet ?? 'rechts' }, (e) => e.t0);
+      eind = Math.max(eind, t0 + duur);
       continue;
     }
     if (a.type === 'druk' || a.type === 'dek' || a.type === 'verover' || a.type === 'panna' || a.type === 'pluk') continue; // later
@@ -2300,6 +2326,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         team: teamOp(tl, o.id, t),
         gezet: gezet(tl, o, t),
         ...(tl.materiaal.size ? { houdt: houdtOp(tl, o.id, t) } : {}),
+        ...(tl.trucs.size ? { truc: trucOp(tl, o.id, t) } : {}),
         sprong: sprongOp(tl, o.id, t),
         spreid: spreidOp(tl, o.id, t),
         zweef: zweefOp(tl, o.id, t),

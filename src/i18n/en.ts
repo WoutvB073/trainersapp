@@ -67,7 +67,7 @@ export const EN: Record<string, string> = {
   // ---- categorieën ----
   'Opwarmen met en zonder bal': 'Warming up with and without the ball',
   Techniek: 'Technique',
-  'Balbeheersing, aannemen, kappen en draaien': 'Ball mastery, receiving, cuts and turns',
+  'Dribbelen, aannemen, kappen, acties en balgevoel': 'Dribbling, first touch, turns, moves and ball feel',
   Loopcoördinatie: 'Footwork & coordination',
   'Ladders, hordes en voetenwerk': 'Ladders, hurdles and footwork',
   'Pass en trap': 'Passing & receiving',

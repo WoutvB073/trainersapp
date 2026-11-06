@@ -408,6 +408,20 @@ export interface SchijnActie extends ActieBasis {
   kant?: 'links' | 'rechts';
 }
 
+/**
+ * Balactie op de plek (0.33.0): de speler draait met de bal mee naar `kijk` (graden) of `naar`. `binnenkant` en `buitenkant` = kappen,
+ * `zool` = met de zool terugtrekken, `cruijff` = schijnschot en de bal achter het standbeen langs meenemen. Een schaar is een `schijn`.
+ */
+export interface TrucActie extends ActieBasis {
+  type: 'truc';
+  wie: string;
+  soort: 'binnenkant' | 'buitenkant' | 'zool' | 'cruijff';
+  /** Voet die de actie maakt (standaard rechts). */
+  voet?: 'links' | 'rechts';
+  kijk?: number;
+  naar?: Punt;
+}
+
 /** Druk zetten: loop naar de balbezitter (of `op`) tot op `afstand` m (standaard 1,7). */
 export interface DrukActie extends ActieBasis {
   type: 'druk';
@@ -465,7 +479,7 @@ export interface TeamActie extends ActieBasis {
 }
 
 export type Actie =
-  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie;
+  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | TrucActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie;
 
 export interface AnimatieStap {
   acties: Actie[];

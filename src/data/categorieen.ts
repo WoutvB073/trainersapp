@@ -10,7 +10,7 @@ export interface Categorie {
 export const CATEGORIEEN: Record<Soort, Categorie[]> = {
   veld: [
     { id: 'warming-up', naam: t('Warming-up'), omschrijving: t('Opwarmen met en zonder bal') },
-    { id: 'techniek', naam: t('Techniek'), omschrijving: t('Balbeheersing, aannemen, kappen en draaien') },
+    { id: 'techniek', naam: t('Techniek'), omschrijving: t('Dribbelen, aannemen, kappen, acties en balgevoel') },
     { id: 'loopcoordinatie', naam: t('Loopcoördinatie'), omschrijving: t('Ladders, hordes en voetenwerk') },
     { id: 'pass-en-trap', naam: t('Pass en trap'), omschrijving: t('Passen, aannemen en meenemen') },
     { id: 'afwerken', naam: t('Afwerken'), omschrijving: t('Scoren na een pass, dribbel of kaats') },

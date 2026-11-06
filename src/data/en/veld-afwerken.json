@@ -842,5 +842,35 @@
         "Use your other foot"
       ]
     }
+  },
+  "veld-cv-aanname-lucht-schot": {
+    "naam": "Control out of the air, carry and shoot",
+    "uitleg": "The coach throws a high ball to the player. They control it out of the air, take it towards goal in the same movement and shoot within three touches.",
+    "organisatie": "Player 22 m from goal, coach diagonally in front at 6 m with balls. Keeper in goal. Alternate controlling with laces, thigh and chest.",
+    "benodigdheden": [
+      "Goal",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Soft first touch: cushion the ball so it doesn't bounce away",
+      "Take the ball towards goal, don't stop it dead",
+      "Look up before you shoot: where is the keeper?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Let the ball bounce first",
+        "Lower throw"
+      ],
+      "moeilijker": [
+        "A defender behind you",
+        "Control and shot in two touches",
+        "Then a lay-off from the coach: first-time shot"
+      ]
+    },
+    "onderdelen": [
+      "Control out of the air",
+      "Carry the ball",
+      "Shot"
+    ]
   }
 }

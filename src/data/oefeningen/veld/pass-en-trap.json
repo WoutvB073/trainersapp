@@ -1755,5 +1755,328 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-cv-rebounder-doeltjes",
+    "soort": "veld",
+    "naam": "Rebounder, draaien en afronden op een doeltje",
+    "categorieen": [
+      "pass-en-trap",
+      "afwerken"
+    ],
+    "combinatievorm": true,
+    "onderdelen": [
+      "Kaatsen tegen de rebounder",
+      "Draaien en dribbelen",
+      "Afronden op een doeltje"
+    ],
+    "uitleg": "De speler kaatst twee keer tegen de rebounder, neemt de tweede bal aan met een draai weg van de rebounder, dribbelt naar een van de twee kleine doeltjes en scoort.",
+    "organisatie": "Rebounder (of muur) op 4 m van de speler. Twee kleine doeltjes 8 m achter hem, links en rechts. De trainer (of een medespeler) roept welk doeltje.",
+    "benodigdheden": [
+      "Rebounder",
+      "2 kleine doeltjes",
+      "Ballen"
+    ],
+    "spelersNodig": 1,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kaatsen met de binnenkant, enkel strak",
+      "Aanname in de draai: lichaam open, de bal meenemen naar de kant van het doeltje",
+      "Afronden: plaatsen, niet hard"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Één keer kaatsen",
+        "Doeltjes dichterbij"
+      ],
+      "moeilijker": [
+        "Trainer roept het doeltje pas tijdens de aanname",
+        "Verdediger start vanaf de rebounder",
+        "Kaatsen met links en rechts om en om"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "r1",
+          "soort": "rebounder",
+          "x": 10,
+          "y": 3.5,
+          "breedte": 1.6
+        },
+        {
+          "id": "kL",
+          "soort": "klein-goal",
+          "x": 4,
+          "y": 15,
+          "hoek": 180,
+          "breedte": 2.5
+        },
+        {
+          "id": "kR",
+          "soort": "klein-goal",
+          "x": 16,
+          "y": 15,
+          "hoek": 180,
+          "breedte": 2.5
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 8,
+          "x": 10,
+          "y": 7.5,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 10,
+          "y": 7.1,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "r1",
+              "terug": "a1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "r1",
+              "terug": "a1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "via": [
+                [
+                  11,
+                  8.6
+                ]
+              ],
+              "naar": [
+                14.6,
+                11.4
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                16.2,
+                15.6
+              ],
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-tq-gerichte-aanname-voren",
+    "soort": "veld",
+    "naam": "Gerichte aanname naar voren",
+    "categorieen": [
+      "pass-en-trap"
+    ],
+    "uitleg": "De verdediger speelt de middenvelder in, die met zijn rug naar het doel staat en een tegenstander (pop) in zijn rug heeft. De middenvelder neemt de bal aan op het open been en draait met die eerste aanraking naar voren, weg van de pop. Daarna speelt hij meteen de spits in, die afrondt.",
+    "organisatie": "Op een half veld. Verdediger met ballen op 44 m van het doel, middenvelder op 32 m met een pop schuin achter zich, spits op 22 m. Keeper in het doel. Na elke actie doordraaien: verdediger → middenvelder → spits → verdediger.",
+    "benodigdheden": [
+      "Goal",
+      "1 pop",
+      "Ballen"
+    ],
+    "spelersNodig": 3,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Vóór de aanname over je schouder kijken: waar staat de pop, waar is de spits?",
+      "Half gedraaid staan en aannemen met het achterste been",
+      "De eerste aanraking gaat al naar voren: geen extra tikje nodig"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Zonder pop",
+        "Eerst aannemen, dan draaien"
+      ],
+      "moeilijker": [
+        "Een echte tegenstander in plaats van de pop",
+        "Spits in één keer aanspelen na de draai",
+        "Pass van de verdediger door de lucht"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 18,
+        "y": -3,
+        "breedte": 32,
+        "lengte": 50
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "pop",
+          "soort": "pop",
+          "x": 32.4,
+          "y": 29.2
+        },
+        {
+          "id": "c",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 30,
+          "y": 44,
+          "kijkrichting": -80
+        },
+        {
+          "id": "m",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 8,
+          "x": 34,
+          "y": 32,
+          "kijkrichting": 100
+        },
+        {
+          "id": "s",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 40,
+          "y": 22,
+          "kijkrichting": 120
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 30.1,
+          "y": 43.45,
+          "bij": "c"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "c",
+              "naar": "m"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "m",
+              "naar": [
+                35.8,
+                29.8
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "m",
+              "naar": "s"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "s",
+              "naar": [
+                38.6,
+                15.4
+              ]
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "s",
+              "naar": [
+                31.2,
+                -0.3
+              ],
+              "afloop": "goal"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

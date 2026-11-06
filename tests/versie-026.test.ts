@@ -15,10 +15,10 @@ import engelsPositiespel from '../src/data/en/veld-positiespel.json';
 const NIEUW: Record<string, { categorieen: string[]; spelers: number; keepers: number }> = {
   'veld-wu-vierhoek-verdediger': { categorieen: ['warming-up', 'pass-en-trap'], spelers: 5, keepers: 0 },
   'veld-tq-aannemen-onder-druk': { categorieen: ['techniek', 'pass-en-trap'], spelers: 5, keepers: 0 },
-  'veld-tq-gerichte-aanname-voren': { categorieen: ['techniek', 'pass-en-trap'], spelers: 3, keepers: 1 },
+  'veld-tq-gerichte-aanname-voren': { categorieen: ['pass-en-trap'], spelers: 3, keepers: 1 },
   'veld-pt-y-vorm-varianten': { categorieen: ['pass-en-trap'], spelers: 7, keepers: 0 },
   'veld-wu-pentagon-kiezen': { categorieen: ['warming-up', 'pass-en-trap'], spelers: 7, keepers: 0 },
-  'veld-tq-vrijlopen-rug-verdediger': { categorieen: ['techniek', 'positiespel'], spelers: 4, keepers: 1 },
+  'veld-tq-vrijlopen-rug-verdediger': { categorieen: ['positiespel'], spelers: 4, keepers: 1 },
   'veld-af-schieten-onder-druk': { categorieen: ['afwerken'], spelers: 3, keepers: 1 },
   'veld-af-cutback': { categorieen: ['afwerken'], spelers: 3, keepers: 1 },
   'veld-af-snel-na-balwinst': { categorieen: ['afwerken', 'verdedigen-omschakelen'], spelers: 4, keepers: 1 },

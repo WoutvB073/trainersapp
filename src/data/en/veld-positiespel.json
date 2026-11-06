@@ -499,5 +499,31 @@
         "Finish within 10 seconds"
       ]
     }
+  },
+  "veld-tq-vrijlopen-rug-verdediger": {
+    "naam": "Getting free from behind the defender",
+    "uitleg": "The midfielder stands behind a defender, where the centre-back can’t pass to them. They get free by stepping out to the side from behind the defender, at the moment the centre-back looks up. They receive the ball, open up to face forwards and play the striker in behind, who makes a run into the space behind the last line and finishes.",
+    "organisatie": "On half a pitch. Centre-back with balls 44 m from goal, defender (bib) at 33 m, midfielder right behind them, striker diagonally to the right at 22 m. Keeper in goal. Rotate after each go.",
+    "benodigdheden": [
+      "Goal",
+      "Balls",
+      "1 bib"
+    ],
+    "coachpunten": [
+      "Get free at the right moment: when the passer looks up, not before",
+      "Step out from behind the defender to the side where they can’t see you",
+      "Open up with your first touch and look in behind straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender stands still",
+        "The striker is already free"
+      ],
+      "moeilijker": [
+        "The defender may follow and press",
+        "Through ball first time after the turn",
+        "A second defender on the striker"
+      ]
+    }
   }
 }
