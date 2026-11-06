@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (06-11-2026, versie 0.32.0)
+## Status (06-11-2026, versie 0.32.1)
 
 | Fase | Status |
 |---|---|
@@ -42,6 +42,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 28. Delen met team bij Circuittraining, overal link én team, sync-fouten opgelost (0.31.2) | ✅ online, getest |
 | 29. Korte deellinks, links openen zonder installatiescherm, pijl in eigen strook, synchroniseren nagelopen (0.31.3) | ✅ online – **wacht op test** |
 | 30. Circuittraining flexibel: eigen onderdelen, 2–8 groepjes, Stations/Samen, sjablonen, rondetimer (0.32.0) | ✅ online – **wacht op test** |
+| 31. Links verlopen na 180 dagen, anonieme accounts opruimen (0.32.1) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1163,8 +1164,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Sjablonen**: items in dezelfde lijst met `sjabloon: true`, zodat ze meesynchroniseren zonder nieuwe Firestore-regels.
 - **Tests**: `tests/versie-0320.test.ts` (2–8 groepjes × 3–6 onderdelen × alle verdelingen Stations/Samen, het voorbeeld met 2 groepjes), browsertest `tools/e2e/versie-0320.mjs`.
 
+## Besluiten versie 0.32.1 – synchroniseren en links opruimen
+- **Eigen toestellen, zo bedoeld**: pas je op twee eigen toestellen (hetzelfde account) dezelfde circuittraining, teamtraining, eigen oefening, opstelling of hetzelfde bord aan, dan mag de laatste versie de andere overschrijven. Dit is geen probleem en hoeft niet opgelost te worden. Hetzelfde geldt voor de instellingen en de afvinklijst.
+- **Niemand anders kan jouw items aanpassen**: eigen gegevens zijn alleen voor het eigen account; teamleden kunnen een gedeeld item bekijken en kopiëren maar niet aanpassen, ook een beheerder niet (die kan het alleen verwijderen); een deellink is alleen om te bekijken. Getest in `tests/online/regels.test.ts`.
+- **Links verlopen**: veld `verloopt` in `links/{code}`. Openen zet de termijn weer op 180 dagen, hooguit één keer per dag. De regels staan daarvoor één uitzondering toe: iedereen die de code kent mag alleen `verloopt` wijzigen, en alleen naar 179–181 dagen vanaf nu. De app kijkt zelf naar de datum: een verlopen link geeft meteen de melding. Mijn deellinks toont de datum.
+- **Geen Firestore TTL**: dat kan niet op het gratis abonnement ("billing disabled", geprobeerd op 06-11-2026). Daarom haalt de maandelijkse opruimtaak verlopen links weg. Komt er ooit facturering, dan kan TTL op `links.verloopt` en is dat deel van de taak niet meer nodig.
+- **Anonieme accounts**: `tools/firebase-anoniem-opruimen.cjs --ouder-dan 30` verwijdert verlopen links en daarna anonieme accounts die ouder zijn dan 30 dagen en geen links meer hebben. Elke maand via `.github/workflows/anoniem-opruimen.yml` (GitHub Actions, gratis). Firebase Functions kan niet: dat vraagt het betaalde Blaze-abonnement, en het automatisch opruimen van Identity Platform kijkt niet of iemand nog links heeft. De workflow heeft het geheim `FIREBASE_SERVICE_ACCOUNT` nodig; zonder dat gebeurt er niets. Hetzelfde commando werkt ook op de eigen computer met de Firebase-CLI.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.32.1 – Firestore TTL kan niet op het gratis abonnement; de opruimtaak doet dat nu en facturering is niet aangezet.
+- 0.32.1 – Een link van vóór 0.32.1 heeft nog geen einddatum en krijgt die zodra hij geopend wordt of je Mijn deellinks opent. Tot die tijd wordt hij niet opgeruimd.
+- 0.32.1 – Een verlopen link verdwijnt uit Mijn deellinks zodra je dat scherm opent.
+- 0.32.1 – "Ouder dan 30 dagen" telt vanaf het moment dat het anonieme account gemaakt is.
 - 0.32.0 – Past het aantal onderdelen niet precies bij de groepjes (bijv. 3 onderdelen bij 2 groepjes), dan kiest de app voor een station dat leeg blijft en niet voor een oefening die dubbel moet: geen enkel groepje wacht, en er is minder materiaal nodig. Bij meer groepjes dan onderdelen staan oefeningen wel dubbel, zoals bij 4 of 5 groepjes in 0.31.0. De app zegt het bij de onderdelen en bij de rotatie.
 - 0.32.0 – Instellingen, onderdelen en oefeningen staan op één scherm in plaats van twee: per onderdeel de duur, Stations/Samen en Kies/Genereer.
 - 0.32.0 – Begintijd is er als extra veld bij gekomen, zodat de rotatie echte tijden kan tonen.
