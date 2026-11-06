@@ -42,8 +42,8 @@ async function links() {
   const verlopen = [];
   let pageToken;
   do {
-    const queryParams = { pageSize: '300', 'mask.fieldPaths': ['maker', 'verloopt'], ...(pageToken ? { pageToken } : {}) };
-    const r = await c.get(`/projects/${PROJECT}/databases/(default)/documents/links`, { queryParams });
+    const vraag = `pageSize=300&mask.fieldPaths=maker&mask.fieldPaths=verloopt${pageToken ? `&pageToken=${encodeURIComponent(pageToken)}` : ''}`;
+    const r = await c.get(`/projects/${PROJECT}/databases/(default)/documents/links?${vraag}`);
     for (const d of r.body.documents ?? []) {
       const einde = Date.parse(d.fields?.verloopt?.timestampValue ?? '');
       if (einde <= Date.now()) verlopen.push(d.name.split('/documents/')[1]);
