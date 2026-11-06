@@ -57,7 +57,7 @@ service cloud.firestore {
     }
 
     // ---------- deellinks ----------
-    // Een link verloopt 180 dagen na de laatste keer openen (Firestore TTL op `verloopt`).
+    // Een link verloopt 180 dagen na de laatste keer openen (de app kijkt naar `verloopt`, de maandelijkse opruimtaak haalt hem weg).
     function geldigVerloop(v) {
       return v is timestamp && v > request.time + duration.value(179, 'd') && v <= request.time + duration.value(181, 'd');
     }

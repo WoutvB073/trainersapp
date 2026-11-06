@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "emulator": "node tools/firebase.mjs emulators:start --project demo-toptraining --only auth,firestore",
-    "regels:live": "node tools/firebase.mjs deploy --project live --only firestore",
+    "regels:live": "node tools/firebase.mjs deploy --project live --only firestore:rules",
     "test:online": "node tools/firebase.mjs emulators:exec --project demo-toptraining --only auth,firestore \"vitest run --config vitest.online.config.ts\""
   },
   "dependencies": {

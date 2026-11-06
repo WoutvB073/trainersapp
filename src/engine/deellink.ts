@@ -247,7 +247,7 @@ export async function haalLink(code: string): Promise<Opgehaald> {
     if (r.status === 404 || r.status === 403) return weg();
     if (!r.ok) throw new Error(String(r.status));
     const d = (await r.json()) as { fields?: { soort?: { stringValue?: string }; data?: { stringValue?: string }; verloopt?: { timestampValue?: string } } };
-    // Firestore ruimt verlopen links pas later op: de app kijkt zelf ook.
+    // De opruimtaak draait maandelijks: de app kijkt zelf naar de datum.
     const verloopt = leesVerloopt(d);
     if (isVerlopen(verloopt)) return weg();
     const soort = d.fields?.soort?.stringValue;

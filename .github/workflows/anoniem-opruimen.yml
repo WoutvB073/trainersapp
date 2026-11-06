@@ -1,6 +1,6 @@
-# Ruimt elke maand anonieme accounts op die ouder zijn dan 30 dagen en geen deellinks meer hebben (zie PLAN.md, 0.32.1).
+# Ruimt elke maand verlopen deellinks op, en anonieme accounts die ouder zijn dan 30 dagen en geen links meer hebben (zie PLAN.md, 0.32.1).
 # Gratis: GitHub Actions, geen Firebase Functions. Zonder het geheim FIREBASE_SERVICE_ACCOUNT doet dit niets.
-name: Anonieme accounts opruimen
+name: Links en anonieme accounts opruimen
 
 on:
   schedule:

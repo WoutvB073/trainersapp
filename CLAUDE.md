@@ -84,7 +84,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
 - `online.mjs [url]` — account, eerste keer samenvoegen, teams (code, delen, rollen) met twee testaccounts tegen de
   Firebase-emulator (`npm run emulator` moet draaien; zet `trainersapp.emulator=1`). Blad: `blad-online.png`.
   Met `ECHT=1` tegen het echte project (`toptraining-40a90`): ruimt de testaccounts vooraf en na afloop op via de app.
-- `tools/firebase-leeg.cjs` — alleen lezen: telt accounts, teams, deellinks en documenten in het echte project; na testen moet er alleen het eigen account staan (met zijn eigen teams). `tools/firebase-anoniem-opruimen.cjs <tijd>` haalt anonieme accounts van een test weg; met `--ouder-dan 30 [--proef]` de oude zonder links (ook maandelijks in `.github/workflows/anoniem-opruimen.yml`).
+- `tools/firebase-leeg.cjs` — alleen lezen: telt accounts, teams, deellinks en documenten in het echte project; na testen moet er alleen het eigen account staan (met zijn eigen teams). `tools/firebase-anoniem-opruimen.cjs <tijd>` haalt anonieme accounts van een test weg; met `--ouder-dan 30 [--proef]` verlopen links en oude anonieme accounts zonder links (ook maandelijks in `.github/workflows/anoniem-opruimen.yml`).
 - `online-opruimen.mjs [url]` — testaccounts test1/test2@example.com in het echte project verwijderen (via "Account verwijderen").
 - `deel-a.mjs [url]` — 0.17.0: Training maken (4+1, datumveld, geen lege), Training genereren (slepen, Andere oefening, geen passende), looplijnen-knop, doelnet 2D/3D + palet, Spelers/geen Combinatievorm, exporteren/importeren. Blad: `blad-deel-a.png`.
 - `deel-b.mjs [url]` — 0.18.0: Wedstrijd-tegel, opstelling (slepen/tikken/ruilen/bank/positie verslepen, formatie, spelvorm, namen, link), tactiekbord vanuit opstelling (editor, lijnen wissen, 2D/3D), spelhervattingen (voorbeeld + beginsituatie), gedeelde link op een ander toestel. Blad: `blad-deel-b.png`.
@@ -111,7 +111,7 @@ fasering en besluiten: **PLAN.md** (eerst lezen).
   `samenvoegen.ts` (puur), `teamsOnline.ts`, `online.ts` (regisseur). Zonder Firebase: `src/engine/account.ts`, `teams.ts`.
 - `npm run emulator` / `npm run test:online` (tests in `tests/online/`, Java 21 in `C:\Users\woutv\tools\java` via
   `tools/firebase.mjs`). Regels: `firestore.rules`.
-- Echt project: `toptraining-40a90` (alias `live`); regels en TTL (`firestore.indexes.json`) zetten met `npm run regels:live`. Nieuwe regels hebben
+- Echt project: `toptraining-40a90` (alias `live`); regels zetten met `npm run regels:live`. Firestore TTL kan niet op het gratis abonnement. Nieuwe regels hebben
   ~1 minuut nodig voor ze overal gelden ("geen toegang" vlak na een deploy).
 - **Testgegevens alleen neutraal:** test1@example.com, test2@example.com …, namen "Testtrainer 1/2". Nooit echte namen of
   adressen. Na testen tegen het echte project: testaccounts en hun data verwijderen.

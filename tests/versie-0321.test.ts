@@ -1,4 +1,3 @@
-import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { haalLink, isVerlopen, LINK_DAGEN, moetVerlengen } from '../src/engine/deellink';
 
@@ -55,9 +54,5 @@ describe('verlopen links', () => {
     const f = nepFetch(() => antwoord());
     expect(await haalLink(code(3))).toEqual({ soort: 'c', code: 'zABC' });
     expect(verlengingen(f)).toHaveLength(1);
-  });
-  it('TTL staat in de instellingen op het juiste veld', () => {
-    const x = JSON.parse(readFileSync('firestore.indexes.json', 'utf8')) as { fieldOverrides: { collectionGroup: string; fieldPath: string; ttl: boolean }[] };
-    expect(x.fieldOverrides).toContainEqual(expect.objectContaining({ collectionGroup: 'links', fieldPath: 'verloopt', ttl: true }));
   });
 });

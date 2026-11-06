@@ -1,5 +1,5 @@
-// Anonieme accounts opruimen. Accounts met een e-mailadres blijven altijd staan.
-//   node tools/firebase-anoniem-opruimen.cjs --ouder-dan 30 [--proef]   ouder dan 30 dagen en zonder deellinks (ook maandelijks via GitHub Actions)
+// Verlopen deellinks en anonieme accounts opruimen. Accounts met een e-mailadres blijven altijd staan.
+//   node tools/firebase-anoniem-opruimen.cjs --ouder-dan 30 [--proef]   verlopen links, en anonieme accounts van ouder dan 30 dagen zonder links (ook maandelijks via GitHub Actions)
 //   node tools/firebase-anoniem-opruimen.cjs <tijd in ms sinds 1970>    gemaakt sinds een browsertest tegen het echte project
 // Gebruikt het inloggen van de Firebase-CLI, of in GitHub Actions het serviceaccount (GOOGLE_APPLICATION_CREDENTIALS).
 // Toont alleen aantallen: nooit adressen, sleutels of andere instellingen.
@@ -35,17 +35,25 @@ function accounts() {
   }
 }
 
-/** Wie heeft nog deellinks? */
-async function makers() {
+/** Verlopen links weghalen (Firestore TTL kan niet op het gratis abonnement). Geeft terug wie er nog links heeft. */
+async function links() {
   const c = new Client({ urlPrefix: 'https://firestore.googleapis.com', apiVersion: 'v1', auth: true });
-  const uit = new Set();
+  const makers = new Set();
+  const verlopen = [];
   let pageToken;
   do {
-    const r = await c.get(`/projects/${PROJECT}/databases/(default)/documents/links`, { queryParams: { pageSize: '300', 'mask.fieldPaths': 'maker', ...(pageToken ? { pageToken } : {}) } });
-    for (const d of r.body.documents ?? []) uit.add(d.fields?.maker?.stringValue);
+    const queryParams = { pageSize: '300', 'mask.fieldPaths': ['maker', 'verloopt'], ...(pageToken ? { pageToken } : {}) };
+    const r = await c.get(`/projects/${PROJECT}/databases/(default)/documents/links`, { queryParams });
+    for (const d of r.body.documents ?? []) {
+      const einde = Date.parse(d.fields?.verloopt?.timestampValue ?? '');
+      if (einde <= Date.now()) verlopen.push(d.name.split('/documents/')[1]);
+      else makers.add(d.fields?.maker?.stringValue);
+    }
     pageToken = r.body.nextPageToken;
   } while (pageToken);
-  return uit;
+  console.log(`Verlopen links: ${verlopen.length}`);
+  if (!proef) for (const p of verlopen) await c.delete(`/projects/${PROJECT}/databases/(default)/documents/${p}`);
+  return makers;
 }
 
 (async () => {
@@ -53,7 +61,7 @@ async function makers() {
   const anoniem = accounts().filter((a) => !a.email && !(a.providerUserInfo ?? []).length);
   let weg;
   if (dagen) {
-    const metLinks = await makers();
+    const metLinks = await links();
     const grens = Date.now() - dagen * DAG;
     const oud = anoniem.filter((a) => Number(a.createdAt) < grens);
     weg = oud.filter((a) => !metLinks.has(a.localId));
