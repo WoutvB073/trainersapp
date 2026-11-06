@@ -13,7 +13,7 @@ rules_version = '2';
 //   teams/{teamId}/leden/{uid}      { rol: 'beheerder' | 'lid', naam, sinds, code? }
 //   teams/{teamId}/items/{itemId}   gedeelde oefening/training/opstelling/bord/clubtraining { soort, data, naam, eigenaar, eigenaarNaam, gewijzigd }
 //   teamCodes/{code}                { team } — om met een code te kunnen joinen
-//   links/{code}                    deellink { soort, data, maker, gemaakt } — lezen als je de code kent, ook zonder inloggen
+//   links/{code}                    deellink { soort, data, maker, gemaakt, verloopt } — lezen als je de code kent, ook zonder inloggen
 service cloud.firestore {
   match /databases/{database}/documents {
     function ingelogd() {
@@ -57,19 +57,26 @@ service cloud.firestore {
     }
 
     // ---------- deellinks ----------
+    // Een link verloopt 180 dagen na de laatste keer openen (Firestore TTL op `verloopt`).
+    function geldigVerloop(v) {
+      return v is timestamp && v > request.time + duration.value(179, 'd') && v <= request.time + duration.value(181, 'd');
+    }
     match /links/{code} {
       // Wie de code heeft mag lezen; een lijst opvragen niet.
       allow get: if true;
       allow list: if false;
-      // Aanmaken mag ingelogd (ook anoniem) en alleen op eigen naam. Wijzigen kan niemand, intrekken alleen de maker.
+      // Aanmaken mag ingelogd (ook anoniem) en alleen op eigen naam. Intrekken alleen de maker.
       allow create: if ingelogd()
         && code.matches('^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{12}$')
-        && request.resource.data.keys().hasOnly(['soort', 'data', 'maker', 'gemaakt'])
+        && request.resource.data.keys().hasOnly(['soort', 'data', 'maker', 'gemaakt', 'verloopt'])
+        && geldigVerloop(request.resource.data.verloopt)
         && request.resource.data.maker == request.auth.uid
         && request.resource.data.soort in ['t', 'c', 'o', 'w']
         && tekst(request.resource.data.data, 200000)
         && request.resource.data.gemaakt is number;
-      allow update: if false;
+      // Openen verlengt de termijn, ook zonder inloggen. Alleen dat ene veld, en alleen naar 180 dagen vanaf nu: de inhoud wijzigen kan niemand.
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['verloopt'])
+        && geldigVerloop(request.resource.data.verloopt);
       allow delete: if ingelogd() && resource.data.maker == request.auth.uid;
     }
 

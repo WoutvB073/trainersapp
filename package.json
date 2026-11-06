@@ -1,7 +1,7 @@
 {
   "name": "trainersapp",
   "private": true,
-  "version": "0.32.0",
+  "version": "0.32.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "emulator": "node tools/firebase.mjs emulators:start --project demo-toptraining --only auth,firestore",
-    "regels:live": "node tools/firebase.mjs deploy --project live --only firestore:rules",
+    "regels:live": "node tools/firebase.mjs deploy --project live --only firestore",
     "test:online": "node tools/firebase.mjs emulators:exec --project demo-toptraining --only auth,firestore \"vitest run --config vitest.online.config.ts\""
   },
   "dependencies": {

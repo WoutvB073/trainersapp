@@ -19,6 +19,14 @@ export const CODE_LENGTE = 12;
 /** Grens uit firestore.rules. */
 export const MAX_LINK = 200000;
 const LINK_WACHTTIJD = 6000;
+/** Een link verloopt zoveel dagen na de laatste keer openen. */
+export const LINK_DAGEN = 180;
+const DAG = 24 * 60 * 60 * 1000;
+
+/** Moet de termijn opnieuw beginnen? Hooguit één keer per dag, en ook bij een link van vóór 0.32.1. */
+export const moetVerlengen = (verloopt: number | undefined, nu = Date.now()) => verloopt === undefined || verloopt - nu < (LINK_DAGEN - 1) * DAG;
+export const isVerlopen = (verloopt: number | undefined, nu = Date.now()) => verloopt !== undefined && verloopt <= nu;
+const nieuwEinde = (nu = Date.now()) => nu + LINK_DAGEN * DAG;
 
 const isSoort = (x: unknown): x is LinkSoort => typeof x === 'string' && SOORTEN.includes(x);
 export const isLinkCode = (c: string) => new RegExp(`^[${CODE_TEKENS}]{${CODE_LENGTE}}$`).test(c);
@@ -72,6 +80,8 @@ export interface EigenLink {
   regel: string;
   maker: string;
   gemaakt: number;
+  /** Tijdstip waarop de link verloopt (zoals het laatst gezien). */
+  verloopt?: number;
   vingerafdruk?: string;
 }
 
@@ -119,15 +129,16 @@ async function maak(soort: LinkSoort, data: string, regel: string): Promise<stri
   const toegang = await (await online()).linkToegang();
   if (!toegang) return null;
   const gemaakt = Date.now();
+  const verloopt = nieuwEinde(gemaakt);
   for (let poging = 0; poging < 3; poging += 1) {
     const code = nieuweLinkCode();
     const r = await fetch(`${basis()}?documentId=${code}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${toegang.token}` }, // i18n-ok
-      body: JSON.stringify({ fields: { soort: { stringValue: soort }, data: { stringValue: data }, maker: { stringValue: toegang.uid }, gemaakt: { integerValue: String(gemaakt) } } }),
+      body: JSON.stringify({ fields: { soort: { stringValue: soort }, data: { stringValue: data }, maker: { stringValue: toegang.uid }, gemaakt: { integerValue: String(gemaakt) }, verloopt: { timestampValue: new Date(verloopt).toISOString() } } }),
     });
     if (r.ok) {
-      zetEigen([{ code, soort, regel, maker: toegang.uid, gemaakt, ...(afdruk ? { vingerafdruk: afdruk } : {}) }, ...eigen]);
+      zetEigen([{ code, soort, regel, maker: toegang.uid, gemaakt, verloopt, ...(afdruk ? { vingerafdruk: afdruk } : {}) }, ...eigen]);
       return code;
     }
     // De code bestond al: een nieuwe proberen.
@@ -185,24 +196,64 @@ function zetKopieen(k: Record<string, LinkInhoud>) {
   }
 }
 
-/** Inhoud van een korte link. Wat ingetrokken is, verdwijnt ook uit de kopieën. */
+/** Termijn opnieuw laten beginnen. Lukt het niet, dan volgende keer. */
+function verleng(code: string): number {
+  const verloopt = nieuwEinde();
+  void fetch(`${basis()}/${code}?updateMask.fieldPaths=verloopt&currentDocument.exists=true`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fields: { verloopt: { timestampValue: new Date(verloopt).toISOString() } } }),
+  }).catch(() => {});
+  return verloopt;
+}
+
+const leesVerloopt = (d: { fields?: { verloopt?: { timestampValue?: string } } }) => {
+  const t = Date.parse(d.fields?.verloopt?.timestampValue ?? '');
+  return Number.isNaN(t) ? undefined : t;
+};
+
+/** Mijn deellinks: hoe staat het ervoor? Openen door iemand anders verlengt de termijn, en een link kan intussen weg zijn. */
+export async function verversEigenLinks(): Promise<void> {
+  const nu = await Promise.all(
+    eigen.map(async (l) => {
+      try {
+        const r = await fetch(`${basis()}/${l.code}`, { cache: 'no-store' });
+        if (r.status === 404) return null;
+        if (!r.ok) return l;
+        const verloopt = leesVerloopt((await r.json()) as Parameters<typeof leesVerloopt>[0]);
+        if (isVerlopen(verloopt)) return null;
+        return { ...l, verloopt: verloopt === undefined ? verleng(l.code) : verloopt };
+      } catch {
+        return l;
+      }
+    }),
+  );
+  zetEigen(nu.filter((l): l is EigenLink => !!l));
+}
+
+/** Inhoud van een korte link. Wat ingetrokken of verlopen is, verdwijnt ook uit de kopieën. */
 export async function haalLink(code: string): Promise<Opgehaald> {
   if (!isLinkCode(code)) return 'weg';
   const al = geopend.get(code);
   if (al) return al;
   try {
     const r = await fetch(`${basis()}/${code}`, { cache: 'no-store' });
-    if (r.status === 404 || r.status === 403) {
+    const weg = () => {
       const { [code]: _weg, ...rest } = leesKopieen();
       void _weg;
       zetKopieen(rest);
-      return 'weg';
-    }
+      return 'weg' as const;
+    };
+    if (r.status === 404 || r.status === 403) return weg();
     if (!r.ok) throw new Error(String(r.status));
-    const d = (await r.json()) as { fields?: { soort?: { stringValue?: string }; data?: { stringValue?: string } } };
+    const d = (await r.json()) as { fields?: { soort?: { stringValue?: string }; data?: { stringValue?: string }; verloopt?: { timestampValue?: string } } };
+    // Firestore ruimt verlopen links pas later op: de app kijkt zelf ook.
+    const verloopt = leesVerloopt(d);
+    if (isVerlopen(verloopt)) return weg();
     const soort = d.fields?.soort?.stringValue;
     const data = d.fields?.data?.stringValue;
     if (!isSoort(soort) || !data) return 'weg';
+    if (moetVerlengen(verloopt)) verleng(code);
     const inhoud = { soort, code: data };
     geopend.set(code, inhoud);
     zetKopieen(Object.fromEntries([...Object.entries(leesKopieen()).filter(([k]) => k !== code), [code, inhoud] as const].slice(-MAX_KOPIEEN)));

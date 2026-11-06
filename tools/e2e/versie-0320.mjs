@@ -278,8 +278,9 @@ for (const [formaat, vp] of [
     await page.evaluate(() => {
       Object.defineProperty(navigator, 'share', { value: undefined, configurable: true });
     });
+    await page.evaluate(() => navigator.clipboard.writeText(''));
     await klik(T('Deel met trainers'));
-    await slaap(400);
+    await page.waitForFunction(() => navigator.clipboard.readText().then((t) => t.length > 0), { timeout: 12000, polling: 200 });
     const link = (await page.evaluate(() => navigator.clipboard.readText())).split(/\r?\n/).pop();
     const ander = await browser.createBrowserContext();
     const p2 = await ander.newPage();

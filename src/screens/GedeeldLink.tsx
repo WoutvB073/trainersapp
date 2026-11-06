@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Kop } from '../components/Kop';
 import { Icoon } from '../components/Icoon';
 import { APP_NAAM } from '../config';
-import { haalLink, trekLinkIn, useDeelPaneel, useEigenLinks, zetDeelPaneel, type EigenLink, type Opgehaald } from '../engine/deellink';
+import { haalLink, LINK_DAGEN, trekLinkIn, useDeelPaneel, useEigenLinks, verversEigenLinks, zetDeelPaneel, type EigenLink, type Opgehaald } from '../engine/deellink';
 import { ga } from '../router';
 import { datumTekst } from '../training/training';
 import { ClubGedeeld } from './club/ClubGedeeld';
@@ -149,7 +149,7 @@ function LinkRegel({ l, opMelding }: { l: EigenLink; opMelding: (t: string) => v
         <Icoon naam="link" maat={22} className="training-icoon" />
         <span className="rij-tekst">
           <span className="rij-titel">{l.regel}</span>
-          <span className="rij-sub">{datumTekst(new Date(l.gemaakt).toISOString().slice(0, 10))}</span>
+          <span className="rij-sub">{[datumTekst(new Date(l.gemaakt).toISOString().slice(0, 10)), l.verloopt ? vt('verloopt op {w0}', { w0: datumTekst(new Date(l.verloopt).toISOString().slice(0, 10)) }) : ''].filter(Boolean).join(' · ')}</span>
         </span>
       </span>
       <div className="training-acties">
@@ -165,6 +165,7 @@ function LinkRegel({ l, opMelding }: { l: EigenLink; opMelding: (t: string) => v
 export function MijnLinks() {
   const lijst = useEigenLinks();
   const [melding, toon] = useToast();
+  useEffect(() => void verversEigenLinks(), []);
   return (
     <div className="pagina">
       <Kop titel={vt('Mijn deellinks')} ouder="/instellingen" />
@@ -175,7 +176,7 @@ export function MijnLinks() {
           </div>
         ) : (
           <>
-            <p className="klein">{vt('Een ingetrokken link werkt bij niemand meer. Wat je deelde blijft gewoon in de app staan.')}</p>
+            <p className="klein">{vt('Een link verloopt als hij {n} dagen niet geopend is; openen verlengt de termijn. Een ingetrokken link werkt bij niemand meer. Wat je deelde blijft gewoon in de app staan.', { n: LINK_DAGEN })}</p>
             <ul className="lijst">
               {lijst.map((l) => (
                 <LinkRegel key={l.code} l={l} opMelding={toon} />

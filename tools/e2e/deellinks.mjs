@@ -279,12 +279,38 @@ for (const [wie, ua] of [['WhatsApp iPhone', UA['iPhone WhatsApp']], ['Android C
   await p.context.close();
 }
 
+// ---------- 5a. Verlopen en verlengen (alleen tegen de emulator: daar kan een einddatum van buitenaf gezet worden) ----------
+if (!ECHT) {
+  const code = pad(links.Tactiekbord).split('/').pop();
+  const url = `http://127.0.0.1:8080/v1/projects/${PROJECT}/databases/(default)/documents/links/${code}`;
+  const zetEinde = (dagen) =>
+    fetch(`${url}?updateMask.fieldPaths=verloopt`, { method: 'PATCH', headers: { Authorization: 'Bearer owner', 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { verloopt: { timestampValue: new Date(Date.now() + dagen * 864e5).toISOString() } } }) });
+  const dagenOver = async () => (Date.parse((await (await fetch(url, { headers: { Authorization: 'Bearer owner' } })).json()).fields.verloopt.timestampValue) - Date.now()) / 864e5;
+  await zetEinde(100);
+  const o = await ontvanger(UA['iPhone WhatsApp'], 'nl');
+  await ga(o.page, pad(links.Tactiekbord));
+  await o.page.waitForFunction(() => document.body.innerText.includes('Testbord'), { timeout: 8000 }).catch(() => problemen.push('link met 100 dagen opent niet'));
+  await slaap(500);
+  const over = await dagenOver();
+  console.log(`Openen verlengt: ${over.toFixed(1)} dagen`);
+  controle(over > 179.9, `openen verlengt niet: ${over} dagen`);
+  await zetEinde(-1);
+  await o.context.close();
+  const p = await ontvanger(UA['iPhone WhatsApp'], 'nl');
+  await ga(p.page, pad(links.Tactiekbord));
+  await p.page.waitForFunction(() => !!document.querySelector('.link-fout'), { timeout: 8000 }).catch(() => problemen.push('verlopen link opent nog'));
+  await p.context.close();
+  await zetEinde(180);
+}
+
 // ---------- 5. Intrekken ----------
 await ga(m.page, '/links');
 await m.page.waitForSelector('.training-regel', { timeout: 8000 }).catch(() => problemen.push('Mijn deellinks is leeg'));
 const pf = `${MAP}dl-mijnlinks.png`;
 await m.page.screenshot({ path: pf });
 shots.push([pf, 'Mijn deellinks']);
+const verloopTekst = await m.page.evaluate(() => document.querySelector('.training-regel .rij-sub')?.textContent ?? '');
+controle(/verloopt op/.test(verloopTekst), `Mijn deellinks toont niet wanneer een link verloopt: ${verloopTekst}`);
 const aantal = (await m.page.$$('.training-regel')).length;
 controle(aantal === SOORTEN.length, `Mijn deellinks: ${aantal} van ${SOORTEN.length}`);
 await m.page.evaluate(() => document.querySelector('.training-regel .icoon-knop')?.click());

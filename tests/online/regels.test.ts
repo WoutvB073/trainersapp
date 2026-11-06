@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest';
 import { assertFails, assertSucceeds, initializeTestEnvironment, type RulesTestEnvironment } from '@firebase/rules-unit-testing';
-import { deleteDoc, doc, getDoc, getDocs, collection, setDoc, updateDoc, writeBatch, type Firestore } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, getDocs, collection, setDoc, Timestamp, updateDoc, writeBatch, type Firestore } from 'firebase/firestore';
 
 // Beveiligingsregels (firestore.rules) tegen de emulator: npm run test:online.
 let env: RulesTestEnvironment;
@@ -140,7 +140,8 @@ describe('teams', () => {
 
   it('deellinks: lezen met de code, geen lijst, aanmaken op eigen naam met een grens, intrekken alleen door de maker', async () => {
     const CODE = 'ABCDEFGHJKMN';
-    const link = (maker: string) => ({ soort: 'c', data: 'zABC', maker, gemaakt: 1 });
+    const dagen = (n: number) => Timestamp.fromMillis(Date.now() + n * 24 * 60 * 60 * 1000);
+    const link = (maker: string) => ({ soort: 'c', data: 'zABC', maker, gemaakt: 1, verloopt: dagen(180) });
     // Aanmaken kan alleen ingelogd (ook anoniem) en op eigen naam.
     await assertFails(setDoc(doc(db(null), 'links', CODE), link('a')));
     await assertFails(setDoc(doc(db('a'), 'links', CODE), link('b')));
@@ -153,8 +154,16 @@ describe('teams', () => {
     // Wijzigen kan niemand, ook de maker niet; een bestaande code overschrijven dus ook niet.
     await assertFails(updateDoc(doc(db('a'), 'links', CODE), { data: 'zXYZ' }));
     await assertFails(updateDoc(doc(db('b'), 'links', CODE), { data: 'zXYZ' }));
-    await assertFails(setDoc(doc(db('a'), 'links', CODE), link('a')));
+    await assertFails(setDoc(doc(db('a'), 'links', CODE), { ...link('a'), data: 'zXYZ' }));
     await assertFails(setDoc(doc(db('b'), 'links', CODE), link('b')));
+    // Verlengen mag iedereen die de code kent, ook zonder inloggen. Alleen dat veld, en alleen naar 180 dagen vanaf nu.
+    await assertSucceeds(updateDoc(doc(db(null), 'links', CODE), { verloopt: dagen(180) }));
+    await assertSucceeds(updateDoc(doc(db('b'), 'links', CODE), { verloopt: dagen(180) }));
+    await assertFails(updateDoc(doc(db(null), 'links', CODE), { verloopt: dagen(400) }));
+    await assertFails(updateDoc(doc(db(null), 'links', CODE), { verloopt: dagen(1) }));
+    await assertFails(updateDoc(doc(db(null), 'links', CODE), { verloopt: 5 }));
+    await assertFails(updateDoc(doc(db(null), 'links', CODE), { verloopt: dagen(180), data: 'zXYZ' }));
+    await assertFails(updateDoc(doc(db('b'), 'links', CODE), { verloopt: dagen(180), maker: 'b' }));
     // Intrekken: alleen de maker.
     await assertFails(deleteDoc(doc(db(null), 'links', CODE)));
     await assertFails(deleteDoc(doc(db('b'), 'links', CODE)));
@@ -166,7 +175,30 @@ describe('teams', () => {
     await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMS'), { ...link('a'), soort: 'x' }));
     await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMT'), { ...link('a'), data: '' }));
     await assertFails(setDoc(doc(db('a'), 'links', 'kort'), link('a')));
+    // Zonder of met een verkeerde einddatum: niet.
+    const { verloopt: _v, ...zonder } = link('a');
+    void _v;
+    await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMU'), zonder));
+    await assertFails(setDoc(doc(db('a'), 'links', 'ABCDEFGHJKMV'), { ...link('a'), verloopt: dagen(500) }));
     await assertFails(setDoc(doc(db('a'), 'links', 'abcdefghjkmn'), link('a')));
+  });
+
+  it('niemand anders kan jouw items aanpassen: eigen gegevens, teamitems en deellinks', async () => {
+    await setDoc(doc(db('a'), 'users', 'a', 'clubtrainingen', 'c1'), { data: '{}', gewijzigd: 1 });
+    for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen']) {
+      await assertFails(getDoc(doc(db('b'), 'users', 'a', col, 'c1')));
+      await assertFails(setDoc(doc(db('b'), 'users', 'a', col, 'c1'), { data: 'kaap', gewijzigd: 2 }));
+      await assertFails(deleteDoc(doc(db('b'), 'users', 'a', col, 'c1')));
+      await assertFails(setDoc(doc(db(null), 'users', 'a', col, 'c1'), { data: 'kaap', gewijzigd: 2 }));
+    }
+    // Teamlid: bekijken wel, aanpassen niet (ook beheerders niet), en kopiëren gaat naar de eigen lijst.
+    await maakTeam(db('a'), 'a');
+    await join(db('b'), 'b', 'ABC234');
+    await setDoc(doc(db('b'), 'teams', 't1', 'items', 'i1'), { soort: 'clubtraining', data: '{"club":{}}', naam: 'Maandag', eigenaar: 'b', eigenaarNaam: 'B', gewijzigd: 1 });
+    await assertSucceeds(getDoc(doc(db('a'), 'teams', 't1', 'items', 'i1')));
+    await assertFails(updateDoc(doc(db('a'), 'teams', 't1', 'items', 'i1'), { data: '{"club":{"x":1}}' }));
+    await assertFails(setDoc(doc(db('a'), 'teams', 't1', 'items', 'i1'), { soort: 'clubtraining', data: '{}', naam: 'Gekaapt', eigenaar: 'a', eigenaarNaam: 'A', gewijzigd: 2 }));
+    await assertFails(getDoc(doc(db('c'), 'teams', 't1', 'items', 'i1')));
   });
 
   it('rollen: beheerders verwijderen leden, maken beheerders, vernieuwen de code; leden niet', async () => {
