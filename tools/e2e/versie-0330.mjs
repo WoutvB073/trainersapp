@@ -1,7 +1,7 @@
 // 0.33.0: meerdere oefeningen in één onderdeel van een circuittraining, op iPhone SE en laptop, in NL en EN: toevoegen (Genereer en
 // Kies), richttijd, verslepen, plan met Oefening 1, 2, 3, losse oefeningen openen (3D en 2D), materiaal, rondetimer, en de trainerslink
 // zonder app en zonder account in de WhatsApp-browser op iPhone en Android. Blad: blad-0330.png.
-// Gebruik: node tools/e2e/versie-0330.mjs [basis-url]. TAAL=nl voor één taal. EMULATOR=1: de korte link (`npm run emulator`).
+// Gebruik: node tools/e2e/versie-0330.mjs [basis-url]. TAAL=nl voor één taal. EMULATOR=1: de korte link (`npm run emulator`). ECHT=1 met de online URL: korte link op de echte site; de link wordt ingetrokken, daarna `node tools/firebase-anoniem-opruimen.cjs <starttijd>`.
 import { createJiti } from 'jiti';
 import { alsGeinstalleerd, BASE, blad, MAP, slaap, start } from './hulp.mjs';
 
@@ -74,11 +74,12 @@ for (const [formaat, vp] of [
     );
     page.on('pageerror', (e) => fouten.push(`${waar}: ${e.message}`));
     page.on('console', (m) => m.type() === 'error' && !/WebGL|GPU/.test(m.text()) && fouten.push(`${waar}: ${m.text().slice(0, 140)}`));
+    page.on('dialog', (d) => void d.accept());
     await page.setViewport(vp);
 
     const ga = async (pad) => {
-      await page.goto(`${BASE}?r=${Math.random().toString(36).slice(2)}#${pad}`, { waitUntil: 'networkidle0' });
-      await slaap(250);
+      await page.goto(`${BASE}?r=${Math.random().toString(36).slice(2)}#${pad}`, { waitUntil: process.env.ECHT ? 'domcontentloaded' : 'networkidle0' });
+      await slaap(process.env.ECHT ? 900 : 250);
     };
     const klik = async (p, tekst, sel = 'button') => {
       const ok = await p.evaluate(
@@ -203,12 +204,12 @@ for (const [formaat, vp] of [
     await ga('/club/meer');
     await page.evaluate(() => {
       Object.defineProperty(navigator, 'share', { value: undefined, configurable: true });
+      Object.defineProperty(navigator, 'clipboard', { value: { writeText: (t) => ((window.__link = t), Promise.resolve()) }, configurable: true });
     });
-    await page.evaluate(() => navigator.clipboard.writeText(''));
     await klik(page, T('Deel met trainers'));
-    await page.waitForFunction(() => navigator.clipboard.readText().then((t) => t.length > 0), { timeout: 12000, polling: 200 });
-    const link = (await page.evaluate(() => navigator.clipboard.readText())).split(/\r?\n/).pop();
-    if (process.env.EMULATOR) controle(link.includes('#/d/'), `${waar}: geen korte link: ${link.slice(0, 80)}`);
+    await page.waitForFunction(() => !!window.__link, { timeout: 20000, polling: 200 });
+    const link = (await page.evaluate(() => window.__link)).split(/\r?\n/).pop();
+    if (process.env.EMULATOR || process.env.ECHT) controle(link.includes('#/d/'), `${waar}: geen korte link: ${link.slice(0, 80)}`);
     for (const [toestel, ua] of Object.entries(WHATSAPP)) {
       const ander = await browser.createBrowserContext();
       const p2 = await ander.newPage();
@@ -228,7 +229,9 @@ for (const [formaat, vp] of [
       );
       p2.on('pageerror', (e) => fouten.push(`${waar} ${toestel}: ${e.message}`));
       await p2.setViewport({ width: 375, height: 667, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
-      await p2.goto(link, { waitUntil: 'networkidle0' });
+      // Een korte link moet eerst opgehaald worden; Firestore wordt nooit rustig, dus wachten op de knoppen.
+      await p2.goto(link, { waitUntil: 'domcontentloaded' });
+      await p2.waitForSelector('.club-station-knoppen button', { timeout: 20000 }).catch(() => problemen.push(`${waar} ${toestel}: trainerslink opent niet`));
       await slaap(400);
       const hoofd = await p2.evaluate(() => ({ titel: document.querySelector('.detail-titel')?.textContent, knop: document.querySelector('.club-station-knoppen button')?.textContent ?? '', poort: !!document.querySelector('.installeren, .installatie') }));
       controle(hoofd.titel === 'Meer oefeningen' && !hoofd.poort, `${waar} ${toestel}: trainerslink ${JSON.stringify(hoofd)}`);
@@ -250,6 +253,16 @@ for (const [formaat, vp] of [
       await opmaak(p2, `trainerslink ${toestel}`);
       if (toestel === 'iPhone' && formaat === 'SE') await foto(p2, 'link', 'Trainerslink in WhatsApp', false);
       await ander.close();
+    }
+    if (process.env.ECHT) {
+      // Tegen de echte site: de testlink meteen weer intrekken. Daarna: node tools/firebase-anoniem-opruimen.cjs <starttijd>.
+      await ga('/links');
+      await page.waitForSelector('.training-regel .icoon-knop', { timeout: 8000 }).catch(() => problemen.push(`${waar}: Mijn deellinks is leeg`));
+      for (let i = 0; i < 4 && (await page.$('.training-regel .icoon-knop')); i += 1) {
+        await page.evaluate(() => document.querySelector('.training-regel .icoon-knop').click());
+        await slaap(1200);
+      }
+      controle(!(await page.$('.training-regel')), `${waar}: link niet ingetrokken`);
     }
     await context.close();
     console.log(`${waar}: klaar`);
