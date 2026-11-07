@@ -399,6 +399,7 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await foto(t1.page, 'eigenaar', 'Eigenaar: Aanpassen');
   await klik(t1.page, T('Aanpassen'));
   await wachtOp(t1.page, () => location.hash === '#/club/club-test', null, `${waar}: Aanpassen opent de eigen circuittraining`);
+  await t1.page.waitForSelector('input[maxlength="80"]', { timeout: 8000 });
   await t1.page.$eval('input[maxlength="80"]', (e) => e.select());
   await t1.page.type('input[maxlength="80"]', 'Testcircuit nieuw');
   await slaap(300);
@@ -420,6 +421,9 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await wachtTeams(t2.page, `${waar}: teams bij Testtrainer 2`);
   await wachtOp(t2.page, (t) => [...document.querySelectorAll('button')].some((b) => b.textContent.includes(t)), T('Delen met team'), `${waar}: knop bij de kopie`);
   await klik(t2.page, T('Delen met team'));
+  // Waren de teams nog niet geladen, dan vraagt de app eerst met welk team.
+  await slaap(400);
+  await t2.page.evaluate(() => document.querySelector('[role="dialog"] .paneel-kop ~ * button, [role="dialog"] button:not(.icoon-knop)')?.click());
   await wachtTekst(t2.page, T('Gedeeld met {teams}', { teams: 'Testteam' }), `${waar}: lid deelt zijn kopie`);
   await ga(t1.page, `/team/${teamId}`);
   await wachtTekst(t1.page, 'Testcircuit', `${waar}: beheerder ziet het item van het lid`);

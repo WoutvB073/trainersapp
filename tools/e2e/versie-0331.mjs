@@ -97,12 +97,14 @@ for (const [formaat, vp] of [
       shots.push([pad, `${waar}: ${tekst}`]);
     };
     const opmaak = async (p, stap) => {
-      const r = await p.evaluate(() => ({
-        breed: document.documentElement.scrollWidth - innerWidth,
+      // Een te brede pagina maakt op een telefoon ook innerWidth groter: daarom vergelijken met het echte scherm.
+      const scherm = p.viewport().width;
+      const r = await p.evaluate((scherm) => ({
+        breed: Math.max(document.documentElement.scrollWidth, innerWidth) - scherm,
         kap: [...document.querySelectorAll('button, h1, h2, h3, small, summary b, select')]
           .filter((e) => e.offsetParent && !e.closest('.kop') && !e.closest('.club-tabel-vak') && !e.closest('.club-vak') && e.tagName !== 'SELECT' && e.scrollWidth > e.clientWidth + 2)
           .map((e) => e.textContent.slice(0, 40)),
-      }));
+      }), scherm);
       controle(r.breed <= 0, `${waar}: ${stap}: ${r.breed} px horizontaal scrollen`);
       controle(!r.kap.length, `${waar}: ${stap}: afgekapt: ${r.kap.slice(0, 3)}`);
     };

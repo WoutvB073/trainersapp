@@ -1220,7 +1220,7 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.33.1 – Aanvinken kan altijd, ook als het botst; je krijgt dan een rode melding. Verplaatsen haalt de trainer meteen bij het andere station weg.
 - 0.33.1 – Zelf ingedeelde stations en velden gaan terug naar automatisch als je onderdelen, volgorde of het aantal groepjes verandert, want de stations veranderen dan (zoals sinds 0.32.0). De indeling per groepje blijft staan zolang het aantal groepjes gelijk blijft.
 - 0.33.1 – Een nieuwe trainer na het zelf indelen wordt niet vanzelf ingedeeld: je krijgt een melding, en Automatisch verdelen verdeelt iedereen opnieuw.
-- 0.33.1 – De keuze blijven of meelopen staat bij het invoeren van de trainers. Het aanpassen per plek staat bij Veldplan, rotatie en materiaal, op de tabbladen Stations en Partij of Samen.
+- 0.33.1 – De keuze blijven of meelopen staat bij het invoeren van de trainers, onder de namen. Het aanpassen per plek staat bij Veldplan, rotatie en materiaal, op de tabbladen Stations en Partij of Samen.
 - 0.33.1 – Een sjabloon neemt geen trainers mee, ook geen indeling (zoals sinds 0.32.0).
 - 0.33.1 – Ik ben… staat ook bij een gedeelde circuittraining in een team, want dat is hetzelfde scherm.
 - 0.33.1 – Ik ben… onthoudt één naam per toestel, voor alle trainerslinks. Staat die naam niet in een training, dan is er niets gekozen.

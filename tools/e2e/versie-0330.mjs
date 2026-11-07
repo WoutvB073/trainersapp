@@ -100,12 +100,14 @@ for (const [formaat, vp] of [
       shots.push([pad, `${waar}: ${tekst}`]);
     };
     const opmaak = async (p, stap) => {
-      const r = await p.evaluate(() => ({
-        breed: document.documentElement.scrollWidth - innerWidth,
+      // Een te brede pagina maakt op een telefoon ook innerWidth groter: daarom vergelijken met het echte scherm.
+      const scherm = p.viewport().width;
+      const r = await p.evaluate((scherm) => ({
+        breed: Math.max(document.documentElement.scrollWidth, innerWidth) - scherm,
         kap: [...document.querySelectorAll('button, h1, h2, h3, small')]
           .filter((e) => e.offsetParent && !e.closest('.kop') && !e.closest('.club-tabel-vak') && !e.closest('.club-oefening-keuze') && !e.closest('.speler-vak') && !e.closest('.speler-bediening') && e.scrollWidth > e.clientWidth + 2)
           .map((e) => e.textContent.slice(0, 40)),
-      }));
+      }), scherm);
       controle(r.breed <= 0, `${waar}: ${stap}: ${r.breed} px horizontaal scrollen`);
       controle(!r.kap.length, `${waar}: ${stap}: afgekapt: ${r.kap.slice(0, 3)}`);
     };
@@ -136,30 +138,37 @@ for (const [formaat, vp] of [
     // Verslepen: de derde naar boven.
     await page.evaluate(() => document.activeElement?.blur());
     const volgorde = await rijen();
-    const r = await page.evaluate(() => {
-      const greep = [...document.querySelectorAll('.club-blok[data-id="a"] .club-oefening-greep')];
-      greep[2].scrollIntoView({ block: 'center' });
-      const a = greep[2].getBoundingClientRect();
-      const b = greep[0].getBoundingClientRect();
-      return { x: a.x + a.width / 2, y: a.y + a.height / 2, y2: b.y - 4 };
-    });
-    await slaap(200);
-    if (vp.hasTouch) {
-      await page.touchscreen.touchStart(r.x, r.y);
-      for (let i = 1; i <= 12; i += 1) {
-        await page.touchscreen.touchMove(r.x, r.y + ((r.y2 - r.y) * i) / 12);
-        await slaap(30);
+    // Eén plek per keer: bij de rand van het scherm scrolt de pagina mee.
+    for (const [van, naar] of [[2, 1], [1, 0]]) {
+      const r = await page.evaluate(
+        (van, naar) => {
+          const greep = [...document.querySelectorAll('.club-blok[data-id="a"] .club-oefening-greep')];
+          greep[van].scrollIntoView({ block: 'center' });
+          const a = greep[van].getBoundingClientRect();
+          const b = greep[naar].getBoundingClientRect();
+          return { x: a.x + a.width / 2, y: a.y + a.height / 2, y2: b.y - 4 };
+        },
+        van,
+        naar,
+      );
+      await slaap(200);
+      if (vp.hasTouch) {
+        await page.touchscreen.touchStart(r.x, r.y);
+        for (let i = 1; i <= 12; i += 1) {
+          await page.touchscreen.touchMove(r.x, r.y + ((r.y2 - r.y) * i) / 12);
+          await slaap(30);
+        }
+        await page.touchscreen.touchEnd();
+      } else {
+        await page.mouse.move(r.x, r.y);
+        await page.mouse.down();
+        await page.mouse.move(r.x, r.y + ((r.y2 - r.y) * 3) / 12, { steps: 4 });
+        await page.mouse.move(r.x, r.y2, { steps: 10 });
+        await slaap(120);
+        await page.mouse.up();
       }
-      await page.touchscreen.touchEnd();
-    } else {
-      await page.mouse.move(r.x, r.y);
-      await page.mouse.down();
-      await page.mouse.move(r.x, r.y + ((r.y2 - r.y) * 3) / 12, { steps: 4 });
-      await page.mouse.move(r.x, r.y2, { steps: 10 });
-      await slaap(120);
-      await page.mouse.up();
+      await slaap(500);
     }
-    await slaap(500);
     const nieuw = await rijen();
     controle(nieuw[0] === volgorde[2] && nieuw.length === 3, `${waar}: verslepen werkte niet: ${nieuw}`);
     await opmaak(page, 'bewerken');
