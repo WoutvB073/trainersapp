@@ -1,12 +1,12 @@
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { Kop } from '../../components/Kop';
 import { vindOefening } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga } from '../../router';
-import { clubNaam, clubPlan, groepNaam, materiaal, oefeningenVan, partijvelden, rondeTijd, stationNaam, stationTrainer, tijdTekst, uitCode, veldTrainer, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
+import { clubNaam, clubPlan, groepNaam, materiaal, mijnRondes, oefeningenVan, oefeningTijden, partijvelden, rondePlekken, rondeTijd, samenPloeg, stationNaam, stationPloeg, tijdTekst, trainerModus, trainerNamen, uitCode, veldPloeg, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
 import { datumTekst } from '../../training/training';
 import type { Oefening } from '../../model/types';
-import { BlokOefeningen, blokNaam, blokStijl, faseTitel, MateriaalNoot, oefeningNummers, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
+import { BlokOefeningen, blokNaam, blokStijl, faseTitel, MateriaalNoot, oefeningNummers, ploegTekst, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
 import { LinkFout } from '../GedeeldLink';
 import { t as vt } from '../../i18n/t';
 
@@ -34,11 +34,76 @@ function Plek({ ouder, kop, kleurBlok, regels, onderdeel, vind }: { ouder: strin
   );
 }
 
-/** Per ronde waarin dit station meedoet: wanneer en welk groepje. */
+/** Per ronde waarin dit station meedoet: wanneer, welk groepje, en de trainers als die meelopen. */
 const wieOpStation = (g: GedeeldeClub, s: Station) =>
   clubPlan(g)
     .rondes.filter((r) => r.plekken.some((x) => x.nr === s.nr))
-    .map((r) => vt('Ronde {nr}: groepje {g}', { nr: r.nr, g: groepNaam(r.plekken.findIndex((x) => x.nr === s.nr)) }) + ` (${rondeTijd(r, g.starttijd)})`);
+    .map((r) => {
+      const ploeg = trainerModus(g) === 'groepje' ? ploegTekst(rondePlekken(g, r).find((p) => p.station?.nr === s.nr)?.trainers ?? []) : '';
+      return [vt('Ronde {nr}: groepje {g}', { nr: r.nr, g: groepNaam(r.plekken.findIndex((x) => x.nr === s.nr)) }) + ` (${rondeTijd(r, g.starttijd)})`, ploeg].filter(Boolean).join(' · ');
+    });
+
+const IK_BEN = 'trainersapp.ikBen';
+
+function leesIk(): string {
+  try {
+    return localStorage.getItem(IK_BEN) ?? '';
+  } catch {
+    return '';
+  }
+}
+
+function bewaarIk(naam: string) {
+  try {
+    if (naam) localStorage.setItem(IK_BEN, naam);
+    else localStorage.removeItem(IK_BEN);
+  } catch {
+    /* niet erg: dan kies je het de volgende keer opnieuw */
+  }
+}
+
+/** "Ik ben…": je eigen plekken en oefeningen per ronde. Wordt op dit toestel onthouden. */
+function MijnRondes({ g, ik, vind, opStation, opSamen }: { g: GedeeldeClub; ik: string; vind: (id: string) => Oefening | undefined; opStation: (nr: number) => void; opSamen: (o: Onderdeel) => void }) {
+  return (
+    <>
+      <h2 className="sectie-titel">{vt('Jouw rondes')}</h2>
+      <ol className="club-mijn">
+        {mijnRondes(g, ik).map(({ ronde, plek, leeg }) => {
+          const o = plek?.onderdeel;
+          const tijden = o ? oefeningTijden(o) : [];
+          const lijst = o ? oefeningenVan(o) : [];
+          const andere = plek?.trainers.filter((n) => n !== ik) ?? [];
+          const inhoud = (
+            <>
+              <span className="club-mijn-ronde">
+                <b>{vt('Ronde {nr}', { nr: ronde.nr })}</b>
+                <span>{rondeTijd(ronde, g.starttijd)}</span>
+              </span>
+              <strong>{plek ? plek.naam : leeg ? vt('{w0} staat leeg', { w0: stationNaam(leeg) }) : vt('Geen plek in deze ronde')}</strong>
+              {plek && <small>{plek.groepen.length === g.groepjes ? vt('Alle groepjes samen') : vt('Groepje {g}', { g: plek.groepen.map(groepNaam).join(' + ') })}</small>}
+              {andere.length > 0 && <small>{vt('Samen met: {w0}', { w0: ploegTekst(andere) })}</small>}
+              {plek && lijst.length === 0 && <small>{vt('Nog geen oefening')}</small>}
+              {lijst.map((x, i) => (
+                <small key={x.oefening}>{[lijst.length > 1 ? vt('Oefening {nr}', { nr: i + 1 }) : '', vind(x.oefening)?.naam, lijst.length > 1 ? vt('{m} min', { m: tijden[i]! }) : ''].filter(Boolean).join(' · ')}</small>
+              ))}
+            </>
+          );
+          return (
+            <li key={ronde.nr}>
+              {plek ? (
+                <button type="button" className="club-mijn-kaart" onClick={() => (plek.station ? opStation(plek.station.nr) : opSamen(plek.onderdeel!))}>
+                  {inhoud}
+                </button>
+              ) : (
+                <div className="club-mijn-kaart club-mijn-vrij">{inhoud}</div>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </>
+  );
+}
 
 function MateriaalBlok({ titel, regels }: { titel: string; regels: MateriaalRegel[] }) {
   return (
@@ -80,15 +145,20 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
   const vind = zoeker(g);
   const plan = clubPlan(g);
   const lijst = plan.stations;
+  const namen = trainerNamen(g);
+  const [ikKeuze, setIk] = useState(leesIk);
+  const ik = namen.includes(ikKeuze) ? ikKeuze : '';
+  const meelopen = trainerModus(g) === 'groepje';
+  const opIk = (s: Station) => !!ik && (meelopen ? mijnRondes(g, ik).some((m) => m.plek?.station?.nr === s.nr) : stationPloeg(g, s.nr).includes(ik));
   const velden = partijvelden(g.groepjes);
   const samenPad = (i: number) => (i === 0 ? `${basis}/partij` : `${basis}/partij/${i + 1}`);
-  const samenRegels = (o: Onderdeel) => (o.categorie === 'partijvormen' ? velden.map((v) => [vt('Veld {nr}', { nr: v.nr }), veldGroepen(v), veldTrainer(g, v.nr)].filter(Boolean).join(' · ')) : [vt('Alle groepjes samen')]);
+  const samenRegels = (o: Onderdeel) => (o.categorie === 'partijvormen' ? velden.map((v) => [vt('Veld {nr}', { nr: v.nr }), veldGroepen(v), ploegTekst(veldPloeg(g, v.nr))].filter(Boolean).join(' · ')) : [[vt('Alle groepjes samen'), ploegTekst(samenPloeg(g, o))].filter(Boolean).join(' · ')]);
 
   if (station) {
     const s = lijst.find((x) => x.nr === station);
     if (!s) return <LinkFout />;
-    const tr = stationTrainer(g, s.nr);
-    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s) })} kleurBlok={s.vorm} regels={[...(tr ? [vt('Trainer: {naam}', { naam: tr })] : []), ...wieOpStation(g, s)]} onderdeel={vindOnderdeel(g, s.onderdeel)} vind={vind} />;
+    const ploeg = stationPloeg(g, s.nr);
+    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s) })} kleurBlok={s.vorm} regels={[...(ploeg.length ? [vt('Trainers: {naam}', { naam: ploegTekst(ploeg) })] : []), ...wieOpStation(g, s)]} onderdeel={vindOnderdeel(g, s.onderdeel)} vind={vind} />;
   }
   if (partij) {
     const o = plan.samen[partij === true ? 0 : partij - 1];
@@ -105,14 +175,35 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
           <h2 className="detail-titel">{clubNaam(g)}</h2>
           <p>{[g.datums.map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes }), tijdTekst(plan.totaal)].filter(Boolean).join(' · ')}</p>
           {children}
+          {namen.length > 0 && (
+            <label className="leeftijd-keuze club-ik-ben">
+              <span>{vt('Ik ben…')}</span>
+              <select
+                value={ik}
+                onChange={(e) => {
+                  setIk(e.target.value);
+                  bewaarIk(e.target.value);
+                }}
+              >
+                <option value="">{vt('Kies je naam')}</option>
+                {namen.map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
         </section>
+
+        {ik && <MijnRondes g={g} ik={ik} vind={vind} opStation={(nr) => ga(`${basis}/station/${nr}`)} opSamen={(o) => ga(samenPad(plan.samen.indexOf(o)))} />}
 
         <h2 className="sectie-titel">{vt('Open jouw station')}</h2>
         <div className="club-station-knoppen">
           {lijst.map((s) => {
-            const tr = stationTrainer(g, s.nr);
+            const tr = ploegTekst(stationPloeg(g, s.nr));
             return (
-              <button key={s.nr} className="knop" onClick={() => ga(`${basis}/station/${s.nr}`)}>
+              <button key={s.nr} className={`knop${opIk(s) ? ' club-ik' : ''}`} onClick={() => ga(`${basis}/station/${s.nr}`)}>
                 <span className="club-nr" style={blokStijl(s.vorm)}>
                   {s.nr}
                 </span>
@@ -151,7 +242,7 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
           </div>
         ))}
         <h2 className="sectie-titel">{vt('Rotatieschema')}</h2>
-        <RotatieTabel c={g} />
+        <RotatieTabel c={g} ik={ik} />
         {metMateriaal && <MateriaalLijst g={g} />}
       </main>
     </div>

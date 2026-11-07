@@ -12,11 +12,13 @@ import {
   oefeningTijden,
   onderdelenVan,
   partijvelden,
+  rondePlekken,
   rondeTijd,
+  samenPloeg,
   stationNaam,
-  stationTrainer,
+  stationPloeg,
   stationVak,
-  veldTrainer,
+  veldPloeg,
   veldVak,
   vindOnderdeel,
   type ClubTraining,
@@ -30,7 +32,7 @@ import {
 import { t as vt } from '../../i18n/t';
 
 /** De delen van een clubtraining die het plan en de gedeelde weergave allebei tonen. */
-export type ClubInhoud = Pick<ClubTraining, 'groepjes' | 'kinderen' | 'trainers' | 'blokken' | 'onderdelen' | 'starttijd' | 'stationTrainers' | 'veldTrainers'>;
+export type ClubInhoud = Pick<ClubTraining, 'groepjes' | 'kinderen' | 'trainers' | 'blokken' | 'onderdelen' | 'starttijd' | 'stationTrainers' | 'veldTrainers' | 'trainerKeuzes'>;
 type Vind = (id: string) => Oefening | undefined;
 
 const kleur = (categorie: string) => {
@@ -84,6 +86,9 @@ const oefeningVan = (c: ClubInhoud, s: Station, vind: Vind) => {
   return id ? vind(id) : undefined;
 };
 
+/** Namen achter elkaar. */
+export const ploegTekst = (lijst: string[]) => lijst.join(', ');
+
 /** "Oefening 1, 2, 3" als er meer dan één oefening in een onderdeel staat. */
 export const oefeningNummers = (o?: Onderdeel) => {
   const n = o ? oefeningenVan(o).length : 0;
@@ -126,7 +131,7 @@ export function VeldplanStations({ c, fase, vind, opStation }: { c: ClubInhoud; 
   return (
     <HalfVeld>
       {fase.stations.map((s) => (
-        <VakKaart key={s.nr} vak={stationVak(s, fase)} blok={s.vorm} nr={String(s.nr)} naam={stationNaam(s)} sub={oefeningNummers(vindOnderdeel(c, s.onderdeel))} trainer={stationTrainer(c, s.nr)} oefening={oefeningVan(c, s, vind)} opTik={opStation && (() => opStation(s))} />
+        <VakKaart key={s.nr} vak={stationVak(s, fase)} blok={s.vorm} nr={String(s.nr)} naam={stationNaam(s)} sub={oefeningNummers(vindOnderdeel(c, s.onderdeel))} trainer={ploegTekst(stationPloeg(c, s.nr))} oefening={oefeningVan(c, s, vind)} opTik={opStation && (() => opStation(s))} />
       ))}
     </HalfVeld>
   );
@@ -140,7 +145,7 @@ export function VeldplanSamen({ c, onderdeel, vind, opVeld }: { c: ClubInhoud; o
   if (onderdeel.categorie !== 'partijvormen') {
     return (
       <HalfVeld>
-        <VakKaart vak={{ x: 4, y: 4, b: 92, h: 92 }} blok={onderdeel.categorie} nr="" naam={blokNaam(onderdeel.categorie)} sub={[vt('Alle groepjes samen'), oefeningNummers(onderdeel)].filter(Boolean).join(' · ')} oefening={o} opTik={opVeld} />
+        <VakKaart vak={{ x: 4, y: 4, b: 92, h: 92 }} blok={onderdeel.categorie} nr="" naam={blokNaam(onderdeel.categorie)} sub={[vt('Alle groepjes samen'), oefeningNummers(onderdeel)].filter(Boolean).join(' · ')} trainer={ploegTekst(samenPloeg(c, onderdeel))} oefening={o} opTik={opVeld} />
       </HalfVeld>
     );
   }
@@ -149,7 +154,7 @@ export function VeldplanSamen({ c, onderdeel, vind, opVeld }: { c: ClubInhoud; o
     <>
       <HalfVeld>
         {velden.map((v) => (
-          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok={onderdeel.categorie} nr="" naam={vt('Veld {nr}', { nr: v.nr })} sub={[veldGroepen(v), oefeningNummers(onderdeel)].filter(Boolean).join(' · ')} trainer={veldTrainer(c, v.nr)} oefening={o} opTik={opVeld} />
+          <VakKaart key={v.nr} vak={veldVak(v, velden.length)} blok={onderdeel.categorie} nr="" naam={vt('Veld {nr}', { nr: v.nr })} sub={[veldGroepen(v), oefeningNummers(onderdeel)].filter(Boolean).join(' · ')} trainer={ploegTekst(veldPloeg(c, v.nr))} oefening={o} opTik={opVeld} />
         ))}
       </HalfVeld>
       <p className="klein club-noot">
@@ -190,7 +195,7 @@ export function MateriaalNoot({ c }: { c: Pick<ClubInhoud, 'onderdelen' | 'blokk
 }
 
 /** Rotatieschema: per groepje waar het per ronde staat, daarna per ronde de tijd, de groepjes en de trainers. */
-export function RotatieTabel({ c }: { c: ClubInhoud }) {
+export function RotatieTabel({ c, ik }: { c: ClubInhoud; ik?: string }) {
   const p = clubPlan(c);
   return (
     <>
@@ -236,7 +241,7 @@ export function RotatieTabel({ c }: { c: ClubInhoud }) {
               <span>{vt('Ronde {nr}', { nr: r.nr })}</span>
               <span className="club-ronde-tijd">{rondeTijd(r, c.starttijd)}</span>
             </h3>
-            <RondeLijst c={c} ronde={r} />
+            <RondeLijst c={c} ronde={r} ik={ik} />
           </li>
         ))}
       </ol>
@@ -265,19 +270,21 @@ function RondeOefeningen({ o, vind, seconden, opOefening }: { o?: Onderdeel; vin
   );
 }
 
-/** Wie staat waar in deze ronde, en welke trainer erbij. In de rondetimer ook de oefeningen per onderdeel (`vind`, `seconden`). */
-export function RondeLijst({ c, ronde, vind, seconden = 0, opOefening }: { c: ClubInhoud; ronde: Ronde; vind?: Vind; seconden?: number; opOefening?: (o: Onderdeel) => void }) {
+/** Wie staat waar in deze ronde, en welke trainers erbij. In de rondetimer ook de oefeningen per onderdeel (`vind`, `seconden`). `ik` = eigen plek uitlichten. */
+export function RondeLijst({ c, ronde, vind, seconden = 0, opOefening, ik }: { c: ClubInhoud; ronde: Ronde; vind?: Vind; seconden?: number; opOefening?: (o: Onderdeel) => void; ik?: string }) {
   const oefeningen = (o?: Onderdeel) => vind && <RondeOefeningen o={o} vind={vind} seconden={seconden} opOefening={opOefening} />;
+  const plekken = rondePlekken(c, ronde);
+  const eigen = (trainers: string[]) => (ik && trainers.includes(ik) ? 'club-ik' : undefined);
   if (ronde.samen) {
     const o = ronde.samen;
     if (o.categorie !== 'partijvormen') {
       return (
         <ul className="club-ronde">
-          <li>
+          <li className={eigen(plekken[0]!.trainers)}>
             <span className="club-nr" style={kleur(o.categorie)}>
               {blokNaam(o.categorie)}
             </span>
-            {vt('Alle groepjes samen')}
+            {[vt('Alle groepjes samen'), ploegTekst(plekken[0]!.trainers)].filter(Boolean).join(' · ')}
             {oefeningen(o)}
           </li>
         </ul>
@@ -286,12 +293,12 @@ export function RondeLijst({ c, ronde, vind, seconden = 0, opOefening }: { c: Cl
     return (
       <>
         <ul className="club-ronde">
-          {partijvelden(c.groepjes).map((v) => (
-            <li key={v.nr}>
+          {plekken.map((p) => (
+            <li key={p.sleutel} className={eigen(p.trainers)}>
               <span className="club-nr" style={kleur(o.categorie)}>
-                {vt('Veld {nr}', { nr: v.nr })}
+                {p.naam}
               </span>
-              {[veldGroepen(v), veldTrainer(c, v.nr)].filter(Boolean).join(' · ')}
+              {[veldGroepen(p.veld!), ploegTekst(p.trainers)].filter(Boolean).join(' · ')}
             </li>
           ))}
         </ul>
@@ -301,14 +308,14 @@ export function RondeLijst({ c, ronde, vind, seconden = 0, opOefening }: { c: Cl
   }
   return (
     <ul className="club-ronde">
-      {ronde.plekken.map((s, g) => (
-        <li key={g}>
+      {plekken.map((p, g) => (
+        <li key={g} className={eigen(p.trainers)}>
           <b>{groepNaam(g)}</b>
-          <span className="club-nr" style={kleur(s.vorm)}>
-            {s.nr}
+          <span className="club-nr" style={kleur(p.station!.vorm)}>
+            {p.station!.nr}
           </span>
-          {[stationNaam(s), stationTrainer(c, s.nr)].filter(Boolean).join(' · ')}
-          {oefeningen(vindOnderdeel(c, s.onderdeel))}
+          {[p.naam, ploegTekst(p.trainers)].filter(Boolean).join(' · ')}
+          {oefeningen(p.onderdeel)}
         </li>
       ))}
       {ronde.leeg.map((s) => (

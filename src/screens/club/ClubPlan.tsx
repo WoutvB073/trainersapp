@@ -3,31 +3,14 @@ import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
-import { blokNaam, clubNaam, clubPlan, materiaal, oefeningenVan, partijvelden, stationNaam, stationTrainer, tijdTekst, veldTrainer, vindOnderdeel, type ClubTraining, type MateriaalRegel, type Onderdeel } from '../../clubtraining/clubtraining';
+import { blokNaam, clubNaam, clubPlan, materiaal, oefeningenVan, tijdTekst, trainerNamen, vindOnderdeel, type ClubTraining, type MateriaalRegel, type Onderdeel } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
-import { faseTitel, MateriaalNoot, PlanNoot, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
+import { faseTitel, MateriaalNoot, PlanNoot, RotatieTabel, VeldplanSamen, VeldplanStations } from './onderdelen';
+import { SamenTrainers, StationTrainers } from './trainers';
 import { t as vt } from '../../i18n/t';
 
 type Tab = 'deel1' | 'deel2' | 'rotatie' | 'materiaal';
-
-/** Trainer kiezen per station of veld; "Automatisch" volgt de verdeling om en om, "Geen" laat de plek leeg. */
-function TrainerKeuze({ label, c, waarde, opKies }: { label: string; c: ClubTraining; waarde: string | undefined; opKies: (naam: string) => void }) {
-  const namen = c.trainers.map((x) => x.trim()).filter(Boolean);
-  return (
-    <label className="leeftijd-keuze">
-      <span>{label}</span>
-      <select value={waarde ?? ''} onChange={(e) => opKies(e.target.value)}>
-        <option value="">{vt('Geen trainer')}</option>
-        {namen.map((n) => (
-          <option key={n} value={n}>
-            {n}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
 
 function Regels({ titel, regels, c, zet }: { titel: string; regels: MateriaalRegel[]; c: ClubTraining; zet: (afgevinkt: string[]) => void }) {
   return (
@@ -70,8 +53,9 @@ export function ClubPlan({ id }: { id: string }) {
     else if (o?.oefening) ga(`/oefening/${o.oefening}`);
   };
   const alleenPartij = plan.samen.every((o) => o.categorie === 'partijvormen');
-  const metPartij = plan.samen.some((o) => o.categorie === 'partijvormen');
-  const heeftTrainers = c.trainers.some((x) => x.trim());
+  const heeftTrainers = trainerNamen(c).length > 0;
+  const nu = () => clubtrainingen.haal(id) ?? c;
+  const bewaarKeuzes = (trainerKeuzes: NonNullable<ClubTraining['trainerKeuzes']>) => zet({ trainerKeuzes });
   const alle = [...m.stations, ...m.extra];
   const klaar = alle.filter((r) => c.afgevinkt.includes(r.sleutel)).length;
   const tabs: [Tab, string][] = [
@@ -103,14 +87,7 @@ export function ClubPlan({ id }: { id: string }) {
               </div>
             ))}
             <PlanNoot c={c} />
-            {heeftTrainers && (
-              <section className="blok club-trainers">
-                <h3>{vt('Trainers per station')}</h3>
-                {plan.stations.map((s) => (
-                  <TrainerKeuze key={s.nr} label={`${s.nr}. ${stationNaam(s)}`} c={c} waarde={stationTrainer(c, s.nr)} opKies={(naam) => zet({ stationTrainers: { ...c.stationTrainers, [s.nr]: naam } })} />
-                ))}
-              </section>
-            )}
+            {heeftTrainers && <StationTrainers c={c} nu={nu} bewaar={bewaarKeuzes} />}
           </>
         )}
 
@@ -122,14 +99,8 @@ export function ClubPlan({ id }: { id: string }) {
                 <VeldplanSamen c={c} onderdeel={o} vind={vindOefening} opVeld={() => open(o)} />
               </div>
             ))}
-            {heeftTrainers && metPartij && (
-              <section className="blok club-trainers">
-                <h3>{vt('Trainers per veld')}</h3>
-                {partijvelden(c.groepjes).map((v) => (
-                  <TrainerKeuze key={v.nr} label={[vt('Veld {nr}', { nr: v.nr }), veldGroepen(v)].join(' · ')} c={c} waarde={veldTrainer(c, v.nr)} opKies={(naam) => zet({ veldTrainers: { ...c.veldTrainers, [v.nr]: naam } })} />
-                ))}
-              </section>
-            )}
+            {heeftTrainers && <SamenTrainers c={c} nu={nu} bewaar={bewaarKeuzes} />}
+            {heeftTrainers && !plan.stations.length && <StationTrainers c={c} nu={nu} bewaar={bewaarKeuzes} />}
           </>
         )}
 

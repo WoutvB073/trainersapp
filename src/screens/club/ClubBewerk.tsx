@@ -37,6 +37,9 @@ import {
   onderdelenVan,
   teVeelRichttijd,
   tijdTekst,
+  trainerModus,
+  trainerNamen,
+  zonderIndeling,
   type BlokOefening,
   type ClubTraining,
   type Onderdeel,
@@ -235,7 +238,10 @@ export function ClubBewerk({ id }: { id: string }) {
   const nu = () => clubtrainingen.haal(id) ?? c;
   const zet = (w: Partial<ClubTraining>) => clubtrainingen.bewaar({ ...nu(), ...w });
   /** Andere opzet: de trainers per station kloppen dan niet meer. */
-  const zetDelen = (onderdelen: Onderdeel[]) => zet({ onderdelen, stationTrainers: {}, veldTrainers: {} });
+  const zetDelen = (onderdelen: Onderdeel[]) => {
+    const k = nu().trainerKeuzes;
+    zet({ onderdelen, stationTrainers: {}, veldTrainers: {}, trainerKeuzes: { ...zonderIndeling(k), ...(k?.groepen ? { groepen: k.groepen } : {}) } });
+  };
   const wijzig = (oid: string, w: Partial<Onderdeel>) => {
     const lijst = onderdelenVan(nu()).map((o) => (o.id === oid ? { ...o, ...w } : o));
     if (w.soort) zetDelen(lijst);
@@ -320,7 +326,7 @@ export function ClubBewerk({ id }: { id: string }) {
             </label>
             <label className="veld">
               <span>{vt('Aantal groepjes')}</span>
-              <select value={c.groepjes} onChange={(e) => zet({ groepjes: Number(e.target.value), stationTrainers: {}, veldTrainers: {} })}>
+              <select value={c.groepjes} onChange={(e) => zet({ groepjes: Number(e.target.value), stationTrainers: {}, veldTrainers: {}, trainerKeuzes: zonderIndeling(nu().trainerKeuzes) })}>
                 {Array.from({ length: MAX_GROEPJES - MIN_GROEPJES + 1 }, (_, i) => MIN_GROEPJES + i).map((n) => (
                   <option key={n} value={n}>
                     {n}
@@ -334,6 +340,25 @@ export function ClubBewerk({ id }: { id: string }) {
             <span>{vt('Trainers (optioneel, één naam per regel)')}</span>
             <textarea rows={3} value={c.trainers.join('\n')} onChange={(e) => zet({ trainers: e.target.value.split('\n') })} />
           </label>
+          {trainerNamen(c).length > 0 && (
+            <>
+              <label className="leeftijd-keuze club-trainer-modus">
+                <span>{vt('Rotatie')}</span>
+                <select
+                  value={trainerModus(c)}
+                  onChange={(e) => {
+                    const { modus: _m, ...rest } = nu().trainerKeuzes ?? {};
+                    void _m;
+                    zet({ trainerKeuzes: e.target.value === 'groepje' ? { ...rest, modus: 'groepje' } : rest });
+                  }}
+                >
+                  <option value="station">{vt('Trainers blijven bij hun station')}</option>
+                  <option value="groepje">{vt('Trainers lopen mee met een groepje')}</option>
+                </select>
+              </label>
+              <p className="klein">{vt('Alle trainers worden automatisch verdeeld. Aanpassen doe je bij Veldplan, rotatie en materiaal.')}</p>
+            </>
+          )}
         </section>
 
         <div className="club-kop-rij">

@@ -709,3 +709,152 @@
 .club-oefening-inhoud.enkel .club-oefening-acties {
   padding-top: 10px;
 }
+
+/* Meer trainers per plek (0.33.1) */
+.club-vak-voet {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.15;
+}
+
+.club-trainer-modus select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.club-plek-kies {
+  border-top: 1px solid var(--rand);
+}
+
+.club-plek-kies summary {
+  display: grid;
+  gap: 2px;
+  min-height: 48px;
+  padding: 8px 0;
+  align-content: center;
+  cursor: pointer;
+}
+
+.club-plek-kies summary span {
+  color: var(--tekst-2);
+  font-size: 0.9rem;
+}
+
+.club-plek-kies ul {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.club-plek-kies li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 10px;
+  padding: 4px 0;
+}
+
+.club-plek-kies label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  min-width: 0;
+}
+
+.club-plek-kies input {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.club-plek-kies label small {
+  display: block;
+  color: var(--tekst-2);
+}
+
+.club-plek-kies select {
+  max-width: 100%;
+  min-height: 40px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--tekst);
+  background: var(--kaart);
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+}
+
+.club-ronde .club-nr {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* Blijft in beeld terwijl je verderop in de lijst aanvinkt. */
+.club-botsing {
+  position: sticky;
+  bottom: 8px;
+  z-index: 2;
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  color: var(--fout);
+  background: var(--fout-licht);
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.club-trainers .knop {
+  margin-top: 10px;
+}
+
+.club-ik-ben {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.club-ik,
+.club-ronde li.club-ik {
+  background: var(--primair-licht);
+  outline: 2px solid var(--primair);
+  outline-offset: 1px;
+  border-radius: 8px;
+}
+
+.club-mijn {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.club-mijn-kaart {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  text-align: left;
+  color: var(--tekst);
+  background: var(--primair-licht);
+  border: 1px solid var(--primair);
+  border-radius: 12px;
+}
+
+.club-mijn-vrij {
+  background: var(--kaart);
+  border-color: var(--rand);
+}
+
+.club-mijn-ronde {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.club-mijn-kaart small {
+  color: var(--tekst-2);
+}

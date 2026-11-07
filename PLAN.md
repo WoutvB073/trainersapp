@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (06-11-2026, versie 0.33.0)
+## Status (07-11-2026, versie 0.33.1)
 
 | Fase | Status |
 |---|---|
@@ -44,7 +44,8 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 30. Circuittraining flexibel: eigen onderdelen, 2–8 groepjes, Stations/Samen, sjablonen, rondetimer (0.32.0) | ✅ online – **wacht op test** |
 | 31. Links verlopen na 180 dagen, anonieme accounts opruimen (0.32.1) | ✅ online – **wacht op test** |
 | 32. Vier spelersoefeningen: golven, vallende pion, hordes zijwaarts, achtjes; pion in de hand en afremmen (0.32.2) | ✅ online, getest |
-| 33. Achtjes naar tekening 25, Golven met keepers, meer oefeningen per blok, Techniek opgeschoond, 6 techniekoefeningen, Partijspel (0.33.0) | ✅ online – **wacht op test** |
+| 33. Achtjes naar tekening 25, Golven met keepers, meer oefeningen per blok, Techniek opgeschoond, 6 techniekoefeningen, Partijspel (0.33.0) | ✅ online, getest |
+| 34. Meer trainers per station, meelopen met een groepje, Ik ben… in de trainerslink (0.33.1) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1200,8 +1201,30 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 
 **Techniek**: alleen balcontrole. Weggehaald bij 12 oefeningen (`tools/nieuw/techniek-033.cjs`, getest in `tests/versie-0330.test.ts`).
 
+## Besluiten versie 0.33.1 – meer trainers per station
+- **Verdelen**: `trainerIndeling` in `src/clubtraining/clubtraining.ts`. Per fase gaan alle trainers om en om over de stations, dus de stations verschillen hooguit één trainer. Partijvelden en groepjes net zo. Bij een Samen-onderdeel zonder partijvelden staat iedereen op die ene plek.
+- **Opslag**: `trainerKeuzes` (`modus`, `stations`, `velden`, `samen`, `groepen`). Zonder veld is dat soort plek automatisch. `stationTrainers` en `veldTrainers` van vóór 0.33.1 tellen nog als gekozen.
+- **Rondes**: `rondePlekken` geeft per ronde elke plek met de trainers en wordt overal gebruikt. `botsingen` kijkt per ronde, dus een trainer op stations in verschillende fases mag, en een station dat leeg staat botst in die ronde niet.
+- **Met de hand**: bij de eerste aanpassing staat de hele verdeling van dat soort plek vast (`zetPlekTrainers`), zodat de rest niet verschuift. Daarom kan het botsen. **Automatisch verdelen** zet het terug.
+- **Delen**: de keuzes gaan mee in de link (veld `p`) en het team. De link rekent verder hetzelfde uit, dus automatisch verdelen hoeft niet in de link te staan. De link past nu 30 trainers in plaats van 12.
+- **Ik ben…**: `trainersapp.ikBen`, één naam per toestel, voor alle trainerslinks.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.33.1 – Minder trainers dan stations: niemand staat meer op twee plekken tegelijk, dus er blijven stations zonder trainer (vóór 0.33.1 kreeg een trainer er meer dan één). Eerst krijgt elk onderdeel één trainer, en de app meldt welke stations er geen hebben.
+- 0.33.1 – Trainers die een bestaande training had verdeeld zonder zelf te kiezen, staan daardoor soms op een andere plek. Zelf gekozen trainers blijven staan.
+- 0.33.1 – Bij een Samen-onderdeel zonder partijvelden staan standaard alle trainers samen; dat kun je per onderdeel aanpassen.
+- 0.33.1 – Staan er meer fases op het veld (bijv. 2 groepjes en 4 onderdelen), dan worden de trainers per fase verdeeld. Een trainer heeft dus per fase een eigen station. Dat botst niet, want dat zijn andere rondes.
+- 0.33.1 – Staat een station in een ronde leeg, dan blijft de trainer daar staan. Onder Jouw rondes staat dan dat het station leeg staat.
+- 0.33.1 – Bij meelopen staan op een partijveld de trainers van beide groepjes en bij een Samen-onderdeel alle trainers. Trainers kies je dan per groepje, niet per station.
+- 0.33.1 – Aanvinken kan altijd, ook als het botst; je krijgt dan een rode melding. Verplaatsen haalt de trainer meteen bij het andere station weg.
+- 0.33.1 – Zelf ingedeelde stations en velden gaan terug naar automatisch als je onderdelen, volgorde of het aantal groepjes verandert, want de stations veranderen dan (zoals sinds 0.32.0). De indeling per groepje blijft staan zolang het aantal groepjes gelijk blijft.
+- 0.33.1 – Een nieuwe trainer na het zelf indelen wordt niet vanzelf ingedeeld: je krijgt een melding, en Automatisch verdelen verdeelt iedereen opnieuw.
+- 0.33.1 – De keuze blijven of meelopen staat bij het invoeren van de trainers. Het aanpassen per plek staat bij Veldplan, rotatie en materiaal, op de tabbladen Stations en Partij of Samen.
+- 0.33.1 – Een sjabloon neemt geen trainers mee, ook geen indeling (zoals sinds 0.32.0).
+- 0.33.1 – Ik ben… staat ook bij een gedeelde circuittraining in een team, want dat is hetzelfde scherm.
+- 0.33.1 – Ik ben… onthoudt één naam per toestel, voor alle trainerslinks. Staat die naam niet in een training, dan is er niets gekozen.
+- 0.33.1 – Op de vakjes van het veldplan passen twee regels; lange namen worden daar afgekort. De volledige lijst staat eronder, bij de stationknoppen en in de rotatie.
 - 0.33.0 – De foto stond niet op `tekeningen/oefening-25.jpg` maar op `fotos oefeningen/oefening-25.jpg.jpg`; die is gebruikt. De map staat niet in git. Tekening 19 en 21 stonden er niet bij, dus Hordes en Vallende pion zijn niet naar een tekening aangepast.
 - 0.33.0 – Achtjes: de stations zijn iets groter dan op papier (links en rechts 8 m uit elkaar) en de tussenruimtes iets kleiner (9,5 m), zodat de route op een telefoon leesbaar blijft. De tekening heeft geen finishpoortje; dat staat rechtsboven, bij het woord finish.
 - 0.33.0 – Achtjes: stationnamen staan erbij, ook al staan ze niet op de tekening, omdat de uitleg ze gebruikt. Tussen de stations staat geen lijn, net als op de tekening.

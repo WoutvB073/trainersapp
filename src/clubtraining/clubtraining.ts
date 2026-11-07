@@ -88,6 +88,7 @@ export const MAX_BLOK_OEFENINGEN = 6;
 export const DUUR_KEUZES: readonly number[] = [5, 10, 12, 15, 20];
 export const MAX_DUUR = 90;
 export const MAX_KINDEREN = 200;
+export const MAX_TRAINERS = 30;
 /** Mini Talents: 4 × 15 minuten. */
 export const BLOK_DUUR = 15 * 60;
 
@@ -110,6 +111,20 @@ export const categorieKleur = (categorie: string) => CATEGORIE_KLEUR[categorie] 
 /** Alle spelerscategorieën die je als onderdeel kunt kiezen. */
 export const CATEGORIEEN: readonly string[] = Object.keys(CATEGORIE_KLEUR);
 
+/** Indeling van de trainers die je zelf gemaakt hebt (0.33.1). Zonder veld wordt dat soort plek automatisch verdeeld. */
+export interface TrainerKeuzes {
+  /** Trainers lopen mee met een groepje. Zonder dit veld blijven ze bij hun station. */
+  modus?: 'groepje';
+  /** Op stationnummer. */
+  stations?: Record<number, string[]>;
+  /** Op veldnummer. */
+  velden?: Record<number, string[]>;
+  /** Samen-onderdelen, op id. */
+  samen?: Record<string, string[]>;
+  /** Op index van het groepje. */
+  groepen?: Record<number, string[]>;
+}
+
 export interface ClubTraining {
   id: string;
   naam: string;
@@ -127,9 +142,11 @@ export interface ClubTraining {
   starttijd?: string;
   /** Eigen sjabloon: staat niet in de lijst met trainingen, maar synchroniseert wel mee. */
   sjabloon?: boolean;
-  /** Zelf gekozen trainer per station (op nummer) en per partijveld. Niet gekozen: automatisch verdeeld. */
+  /** Vóór 0.33.1: zelf gekozen trainer per station (op nummer) en per partijveld. Niet gekozen: automatisch verdeeld. */
   stationTrainers: Record<number, string>;
   veldTrainers: Record<number, string>;
+  /** Sinds 0.33.1: meer trainers per plek. Gaat voor op de velden hierboven. */
+  trainerKeuzes?: TrainerKeuzes;
   /** Afgevinkt materiaal (zie `MateriaalRegel.sleutel`). */
   afgevinkt: string[];
   gemaakt: number;
@@ -403,17 +420,221 @@ export function veldVak(v: Partijveld, aantal: number): Vak {
 
 // ---------- trainers ----------
 
-const namen = (c: Pick<ClubTraining, 'trainers'>) => c.trainers.map((x) => x.trim()).filter(Boolean);
+/**
+ * Trainers (0.33.1): meer trainers per plek. Zonder keuzes worden alle trainers eerlijk verdeeld: per fase over de stations, en over de
+ * partijvelden of de groepjes. Bij een Samen-onderdeel zonder partijvelden staat iedereen op die ene plek. Zodra je iets aanpast, staat
+ * de hele verdeling van dat soort plek vast (`zetPlekTrainers`), zodat de rest niet verschuift; dan kan het botsen (`botsingen`).
+ * Trainingen van vóór 0.33.1 hebben alleen `stationTrainers` en `veldTrainers` met één naam per plek: die tellen nog als gekozen.
+ */
+export const trainerNamen = (c: Pick<ClubTraining, 'trainers'>) => [...new Set(c.trainers.map((x) => x.trim()).filter(Boolean))];
 
-/** Zelf gekozen trainer, anders automatisch om en om verdeeld. Een gekozen naam die niet meer bestaat telt niet. */
-function trainerVan(lijst: string[], gekozen: string | undefined, nr: number): string | undefined {
-  if (gekozen === '') return undefined;
-  if (gekozen && lijst.includes(gekozen)) return gekozen;
-  return lijst.length ? lijst[(nr - 1) % lijst.length] : undefined;
+export type TrainerModus = 'station' | 'groepje';
+export const trainerModus = (c: { trainerKeuzes?: TrainerKeuzes }): TrainerModus => (c.trainerKeuzes?.modus === 'groepje' ? 'groepje' : 'station');
+
+type TrainerInhoud = PlanInhoud & Pick<ClubTraining, 'trainers' | 'stationTrainers' | 'veldTrainers' | 'trainerKeuzes'>;
+
+interface Indeling {
+  stations: Record<number, string[]>;
+  velden: Record<number, string[]>;
+  /** Index van het groepje. */
+  groepen: Record<number, string[]>;
 }
 
-export const stationTrainer = (c: Pick<ClubTraining, 'trainers' | 'stationTrainers'>, nr: number) => trainerVan(namen(c), c.stationTrainers[nr], nr);
-export const veldTrainer = (c: Pick<ClubTraining, 'trainers' | 'veldTrainers'>, nr: number) => trainerVan(namen(c), c.veldTrainers[nr], nr);
+/** Om en om over de plekken: die verschillen hooguit één trainer. */
+function verdeel(lijst: string[], plekken: number[], uit: Record<number, string[]>) {
+  for (const p of plekken) uit[p] = [];
+  if (plekken.length) lijst.forEach((n, i) => uit[plekken[i % plekken.length]!]!.push(n));
+}
+
+/** Namen die nog bestaan, zonder dubbele. */
+const geldig = (lijst: string[] | undefined, alle: string[]) => [...new Set((lijst ?? []).filter((n) => alle.includes(n)))];
+
+/** Keuze van vóór 0.33.1: één naam, of leeg voor geen trainer. Een naam die niet meer bestaat telt niet. */
+function oudeKeuze(keuze: string | undefined, alle: string[]): string[] | undefined {
+  if (keuze === undefined) return undefined;
+  if (keuze === '') return [];
+  return alle.includes(keuze) ? [keuze] : undefined;
+}
+
+/** Plekken die al gekozen zijn houden hun trainers; de rest gaat over de andere plekken. */
+function verdeelMetOud(nrs: number[], oud: Record<number, string> | undefined, alle: string[], uit: Record<number, string[]>) {
+  const open: number[] = [];
+  const bezet = new Set<string>();
+  for (const nr of nrs) {
+    const keuze = oudeKeuze(oud?.[nr], alle);
+    if (!keuze) open.push(nr);
+    else {
+      uit[nr] = keuze;
+      keuze.forEach((n) => bezet.add(n));
+    }
+  }
+  verdeel(alle.filter((n) => !bezet.has(n)), open, uit);
+}
+
+export function trainerIndeling(c: TrainerInhoud, plan: ClubPlan = clubPlan(c)): Indeling {
+  const alle = trainerNamen(c);
+  const k = c.trainerKeuzes;
+  const stations: Record<number, string[]> = {};
+  for (const f of plan.fases) {
+    // Zijn er minder trainers dan stations, dan eerst elk onderdeel één keer.
+    const volgorde = [...f.stations].sort((x, y) => x.plek - y.plek || x.nr - y.nr).map((x) => x.nr);
+    if (k?.stations) for (const nr of volgorde) stations[nr] = geldig(k.stations[nr], alle);
+    else verdeelMetOud(volgorde, c.stationTrainers, alle, stations);
+  }
+  const velden: Record<number, string[]> = {};
+  const veldNrs = partijvelden(c.groepjes).map((v) => v.nr);
+  if (k?.velden) for (const nr of veldNrs) velden[nr] = geldig(k.velden[nr], alle);
+  else verdeelMetOud(veldNrs, c.veldTrainers, alle, velden);
+  const groepen: Record<number, string[]> = {};
+  const groepNrs = Array.from({ length: c.groepjes }, (_, g) => g);
+  if (k?.groepen) for (const g of groepNrs) groepen[g] = geldig(k.groepen[g], alle);
+  else verdeel(alle, groepNrs, groepen);
+  return { stations, velden, groepen };
+}
+
+const samen = (lijsten: string[][]) => [...new Set(lijsten.flat())];
+
+/** Trainers op dit station. Lopen ze mee met een groepje, dan hangt dat af van de ronde: zie `rondePlekken`. */
+export const stationPloeg = (c: TrainerInhoud, nr: number): string[] => (trainerModus(c) === 'groepje' ? [] : (trainerIndeling(c).stations[nr] ?? []));
+
+export function veldPloeg(c: TrainerInhoud, nr: number): string[] {
+  const ind = trainerIndeling(c);
+  if (trainerModus(c) === 'station') return ind.velden[nr] ?? [];
+  return samen((partijvelden(c.groepjes).find((v) => v.nr === nr)?.groepen ?? []).map((g) => ind.groepen[g] ?? []));
+}
+
+/** Samen-onderdeel zonder partijvelden: standaard iedereen. */
+export function samenPloeg(c: TrainerInhoud, o: Pick<Onderdeel, 'id'>): string[] {
+  const alle = trainerNamen(c);
+  const keuze = trainerModus(c) === 'station' ? c.trainerKeuzes?.samen?.[o.id] : undefined;
+  return keuze ? geldig(keuze, alle) : alle;
+}
+
+export const groepPloeg = (c: TrainerInhoud, g: number): string[] => trainerIndeling(c).groepen[g] ?? [];
+
+/** Een plek in een ronde, met wie er staat. */
+export interface RondePlek {
+  /** s:3 = station, v:1 = partijveld, o:id = Samen-onderdeel. */
+  sleutel: string;
+  naam: string;
+  trainers: string[];
+  /** Indexen van de groepjes die hier staan. */
+  groepen: number[];
+  onderdeel?: Onderdeel;
+  station?: Station;
+  veld?: Partijveld;
+}
+
+export function rondePlekken(c: TrainerInhoud, ronde: Ronde, plan: ClubPlan = clubPlan(c)): RondePlek[] {
+  const ind = trainerIndeling(c, plan);
+  const mee = trainerModus(c) === 'groepje';
+  const vanGroepen = (groepen: number[]) => samen(groepen.map((g) => ind.groepen[g] ?? []));
+  const o = ronde.samen;
+  if (o && o.categorie !== 'partijvormen') return [{ sleutel: `o:${o.id}`, naam: blokNaam(o.categorie), trainers: samenPloeg(c, o), groepen: Array.from({ length: c.groepjes }, (_, g) => g), onderdeel: o }];
+  if (o) return partijvelden(c.groepjes).map((v) => ({ sleutel: `v:${v.nr}`, naam: vt('Veld {nr}', { nr: v.nr }), trainers: mee ? vanGroepen(v.groepen) : (ind.velden[v.nr] ?? []), groepen: v.groepen, onderdeel: o, veld: v }));
+  return ronde.plekken.map((s, g) => ({ sleutel: `s:${s.nr}`, naam: stationNaam(s), trainers: mee ? (ind.groepen[g] ?? []) : (ind.stations[s.nr] ?? []), groepen: [g], onderdeel: vindOnderdeel(c, s.onderdeel), station: s }));
+}
+
+export interface Botsing {
+  naam: string;
+  /** De plekken waar deze trainer tegelijk staat. */
+  plekken: string[];
+  /** Nummers van de rondes. */
+  rondes: number[];
+}
+
+/** Trainers die in een ronde op meer plekken tegelijk staan. */
+export function botsingen(c: TrainerInhoud): Botsing[] {
+  const plan = clubPlan(c);
+  const uit = new Map<string, Botsing>();
+  for (const r of plan.rondes) {
+    const waar = new Map<string, string[]>();
+    for (const p of rondePlekken(c, r, plan)) for (const n of p.trainers) waar.set(n, [...(waar.get(n) ?? []), p.naam]);
+    for (const [naam, plekken] of waar) {
+      if (plekken.length < 2) continue;
+      const op = [...plekken].sort();
+      const k = `${naam}|${op.join('|')}`;
+      const b = uit.get(k) ?? { naam, plekken: op, rondes: [] };
+      b.rondes.push(r.nr);
+      uit.set(k, b);
+    }
+  }
+  return [...uit.values()];
+}
+
+/** Trainers die in de vaste indeling ergens geen plek hebben (bv. net toegevoegd). */
+export function nietIngedeeld(c: TrainerInhoud): string[] {
+  const plan = clubPlan(c);
+  const ind = trainerIndeling(c, plan);
+  const alle = trainerNamen(c);
+  const groepen: string[][] = trainerModus(c) === 'groepje' ? [samen(Object.values(ind.groepen))] : [...plan.fases.map((f) => samen(f.stations.map((s) => ind.stations[s.nr] ?? []))), ...(plan.samen.some((o) => o.categorie === 'partijvormen') ? [samen(Object.values(ind.velden))] : [])];
+  return alle.filter((n) => groepen.some((g) => !g.includes(n)));
+}
+
+/** Plekken zonder trainer: stations of groepjes. Leeg als er geen trainers zijn ingevuld. */
+export function zonderTrainer(c: TrainerInhoud): string[] {
+  if (!trainerNamen(c).length) return [];
+  const plan = clubPlan(c);
+  const ind = trainerIndeling(c, plan);
+  if (trainerModus(c) === 'groepje') return Array.from({ length: c.groepjes }, (_, g) => g).filter((g) => !ind.groepen[g]?.length).map(groepNaam);
+  return plan.stations.filter((s) => !ind.stations[s.nr]?.length).map((s) => String(s.nr));
+}
+
+/** Wat deze trainer per ronde doet. `leeg`: het eigen station staat deze ronde leeg. */
+export function mijnRondes(c: TrainerInhoud, naam: string): { ronde: Ronde; plek?: RondePlek; leeg?: Station }[] {
+  const plan = clubPlan(c);
+  const ind = trainerIndeling(c, plan);
+  const mee = trainerModus(c) === 'groepje';
+  return plan.rondes.map((ronde) => ({ ronde, plek: rondePlekken(c, ronde, plan).find((p) => p.trainers.includes(naam)), leeg: mee ? undefined : ronde.leeg.find((s) => ind.stations[s.nr]?.includes(naam)) }));
+}
+
+// Handmatig aanpassen. Sleutels: s:3 = station, v:1 = veld, o:id = Samen-onderdeel, g:0 = groepje.
+
+/** Trainers op een plek. */
+export function plekTrainers(c: TrainerInhoud, sleutel: string): string[] {
+  const [soort, id] = [sleutel[0], sleutel.slice(2)];
+  const ind = trainerIndeling(c);
+  if (soort === 's') return ind.stations[Number(id)] ?? [];
+  if (soort === 'v') return ind.velden[Number(id)] ?? [];
+  if (soort === 'g') return ind.groepen[Number(id)] ?? [];
+  return samenPloeg(c, { id });
+}
+
+/** Plekken die tegelijk bestaan: daar kun je een trainer naartoe verplaatsen. */
+export function buurPlekken(c: TrainerInhoud, sleutel: string): { sleutel: string; naam: string }[] {
+  const [soort, id] = [sleutel[0], sleutel.slice(2)];
+  if (soort === 's') {
+    const fase = clubPlan(c).fases.find((f) => f.stations.some((s) => s.nr === Number(id)));
+    return (fase?.stations ?? []).filter((s) => s.nr !== Number(id)).map((s) => ({ sleutel: `s:${s.nr}`, naam: `${s.nr}. ${stationNaam(s)}` }));
+  }
+  if (soort === 'v') return partijvelden(c.groepjes).filter((v) => v.nr !== Number(id)).map((v) => ({ sleutel: `v:${v.nr}`, naam: vt('Veld {nr}', { nr: v.nr }) }));
+  if (soort === 'g') return Array.from({ length: c.groepjes }, (_, g) => g).filter((g) => g !== Number(id)).map((g) => ({ sleutel: `g:${g}`, naam: vt('Groepje {g}', { g: groepNaam(g) }) }));
+  return [];
+}
+
+/** Andere trainers op een plek. De rest van de verdeling van dat soort plek staat daarna vast. */
+export function zetPlekTrainers(c: TrainerInhoud, sleutel: string, lijst: string[]): TrainerKeuzes {
+  const [soort, id] = [sleutel[0], sleutel.slice(2)];
+  const k = { ...c.trainerKeuzes };
+  const ind = trainerIndeling(c);
+  if (soort === 's') k.stations = { ...ind.stations, [Number(id)]: lijst };
+  else if (soort === 'v') k.velden = { ...ind.velden, [Number(id)]: lijst };
+  else if (soort === 'g') k.groepen = { ...ind.groepen, [Number(id)]: lijst };
+  else k.samen = { ...k.samen, [id]: lijst };
+  return k;
+}
+
+export function verplaatsTrainer(c: TrainerInhoud, naam: string, van: string, naar: string): TrainerKeuzes {
+  const zonder = zetPlekTrainers(c, van, plekTrainers(c, van).filter((n) => n !== naam));
+  const tussen = { ...c, trainerKeuzes: zonder };
+  return zetPlekTrainers(tussen, naar, [...plekTrainers(tussen, naar).filter((n) => n !== naam), naam]);
+}
+
+/** Terug naar automatisch verdelen. De keuze blijven of meelopen blijft staan. */
+export const zonderIndeling = (k: TrainerKeuzes | undefined): TrainerKeuzes => (k?.modus === 'groepje' ? { modus: 'groepje' } : {});
+
+/** Is er iets met de hand aangepast? */
+export const metHandIngedeeld = (c: Pick<ClubTraining, 'stationTrainers' | 'veldTrainers' | 'trainerKeuzes'>) => !!(c.trainerKeuzes?.stations || c.trainerKeuzes?.velden || c.trainerKeuzes?.samen || c.trainerKeuzes?.groepen || Object.keys(c.stationTrainers ?? {}).length || Object.keys(c.veldTrainers ?? {}).length);
 
 // ---------- oefeningen kiezen ----------
 
@@ -585,6 +806,7 @@ export interface GedeeldeClub {
   starttijd?: string;
   stationTrainers: Record<number, string>;
   veldTrainers: Record<number, string>;
+  trainerKeuzes?: TrainerKeuzes;
   /** Eigen oefeningen die erin zitten: die gaan in hun geheel mee. */
   eigen?: Oefening[];
 }
@@ -592,7 +814,19 @@ export interface GedeeldeClub {
 const kort = (id: string) => id.replace(/^veld-/, 'v:');
 const lang = (id: string) => id.replace(/^v:/, 'veld-');
 
-type Inhoud = Pick<ClubTraining, 'naam' | 'datums' | 'leeftijd' | 'kinderen' | 'groepjes' | 'trainers' | 'blokken' | 'onderdelen' | 'starttijd' | 'stationTrainers' | 'veldTrainers'>;
+type Inhoud = Pick<ClubTraining, 'naam' | 'datums' | 'leeftijd' | 'kinderen' | 'groepjes' | 'trainers' | 'blokken' | 'onderdelen' | 'starttijd' | 'stationTrainers' | 'veldTrainers' | 'trainerKeuzes'>;
+
+/** In de link krijgen de onderdelen nieuwe id's (o1, o2 …): daar horen ook de trainers van de Samen-onderdelen bij. */
+function keuzesVoorLink(c: Inhoud): TrainerKeuzes | undefined {
+  const k = c.trainerKeuzes;
+  if (!k || !Object.keys(k).length) return undefined;
+  if (!k.samen) return k;
+  const samen: Record<string, string[]> = {};
+  onderdelenVan(c).forEach((o, i) => {
+    if (k.samen![o.id]) samen[`o${i + 1}`] = k.samen![o.id]!;
+  });
+  return { ...k, samen };
+}
 
 /**
  * Link voor de trainers (versie 2 sinds 0.32.0: de onderdelen). Links met versie 1 blijven te lezen. Meer oefeningen in een onderdeel
@@ -602,7 +836,7 @@ export function naarCode(c: Inhoud, eigen: Oefening[] = []): string {
   const o = onderdelenVan(c).map((x) => [x.categorie, x.duur, x.soort === 'samen' ? 1 : 0, x.oefening ? kort(x.oefening) : '', ...(x.oefeningen?.length ? [x.oefeningen.map((y) => (y.minuten === undefined ? [kort(y.oefening)] : [kort(y.oefening), y.minuten]))] : [])]);
   const ids = oefeningIds(c);
   const e = eigen.filter((x) => ids.includes(x.id));
-  return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(e.length ? { e } : {}) }));
+  return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(keuzesVoorLink(c) ? { p: keuzesVoorLink(c) } : {}), ...(e.length ? { e } : {}) }));
 }
 
 const tekstenRecord = (x: unknown): Record<number, string> => {
@@ -612,6 +846,25 @@ const tekstenRecord = (x: unknown): Record<number, string> => {
 };
 
 const getal = (v: unknown, min: number, max: number, standaard: number) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(min, Math.min(max, Math.round(v))) : standaard);
+
+function netteTrainerLijsten(x: unknown): Record<string, string[]> | undefined {
+  if (!x || typeof x !== 'object') return undefined;
+  const uit: Record<string, string[]> = {};
+  for (const [k, v] of Object.entries(x)) if (Array.isArray(v)) uit[k.slice(0, 40)] = v.filter((n): n is string => typeof n === 'string').map((n) => n.slice(0, 40)).slice(0, MAX_TRAINERS);
+  return uit;
+}
+
+function netteKeuzes(x: unknown): TrainerKeuzes | undefined {
+  if (!x || typeof x !== 'object') return undefined;
+  const k = x as { [veld in keyof TrainerKeuzes]?: unknown };
+  const uit: TrainerKeuzes = {};
+  if (k.modus === 'groepje') uit.modus = 'groepje';
+  for (const veld of ['stations', 'velden', 'samen', 'groepen'] as const) {
+    const lijsten = netteTrainerLijsten(k[veld]);
+    if (lijsten) uit[veld] = lijsten;
+  }
+  return Object.keys(uit).length ? uit : undefined;
+}
 
 function netteOefeningen(x: unknown): BlokOefening[] {
   if (!Array.isArray(x)) return [];
@@ -652,20 +905,21 @@ function netteClub(x: { [k in keyof GedeeldeClub]?: unknown }): GedeeldeClub {
     leeftijd: isLeeftijd(x.leeftijd) ? x.leeftijd : 'mini-5-7',
     kinderen: getal(x.kinderen, 1, MAX_KINDEREN, 30),
     groepjes: getal(x.groepjes, MIN_GROEPJES, MAX_GROEPJES, 6),
-    trainers: Array.isArray(x.trainers) ? x.trainers.filter((n): n is string => typeof n === 'string').map((n) => n.slice(0, 40)).slice(0, 12) : [],
+    trainers: Array.isArray(x.trainers) ? x.trainers.filter((n): n is string => typeof n === 'string' && !!n.trim()).map((n) => n.slice(0, 40)).slice(0, MAX_TRAINERS) : [],
     blokken,
     ...(netteOnderdelen(x.onderdelen) ? { onderdelen: netteOnderdelen(x.onderdelen)! } : {}),
     ...(typeof x.starttijd === 'string' && /^\d{2}:\d{2}$/.test(x.starttijd) ? { starttijd: x.starttijd } : {}),
     stationTrainers: tekstenRecord(x.stationTrainers),
     veldTrainers: tekstenRecord(x.veldTrainers),
+    ...(netteKeuzes(x.trainerKeuzes) ? { trainerKeuzes: netteKeuzes(x.trainerKeuzes)! } : {}),
     ...(Array.isArray(x.eigen) && x.eigen.some(geldigeEigen) ? { eigen: x.eigen.filter(geldigeEigen).map((o) => ({ ...o, eigen: true })) } : {}),
   };
 }
 
 export function uitCode(code: string): GedeeldeClub | null {
   try {
-    const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; l?: unknown; k?: unknown; g?: unknown; t?: unknown; b?: unknown; o?: unknown; u?: unknown; s?: unknown; f?: unknown; e?: unknown };
-    const basis = { naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, stationTrainers: x.s, veldTrainers: x.f, eigen: x.e };
+    const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; l?: unknown; k?: unknown; g?: unknown; t?: unknown; b?: unknown; o?: unknown; u?: unknown; s?: unknown; f?: unknown; p?: unknown; e?: unknown };
+    const basis = { naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, stationTrainers: x.s, veldTrainers: x.f, trainerKeuzes: x.p, eigen: x.e };
     if (x.v === 2 && Array.isArray(x.o)) {
       const onderdelen = (x.o as unknown[][]).map(([categorie, duur, samen, oefening, meer], i) => ({
         id: `o${i + 1}`,
@@ -694,7 +948,7 @@ export function voorTeam(c: Inhoud, eigen: Oefening[] = []): string {
   const { naam, datums, leeftijd, kinderen, groepjes, trainers, stationTrainers, veldTrainers } = c;
   const ids = oefeningIds(c);
   const onderdelen = onderdelenVan(c);
-  return JSON.stringify({ club: { naam, datums, leeftijd, kinderen, groepjes, trainers, blokken: {}, onderdelen, ...(c.starttijd ? { starttijd: c.starttijd } : {}), stationTrainers, veldTrainers }, eigen: eigen.filter((o) => ids.includes(o.id)) });
+  return JSON.stringify({ club: { naam, datums, leeftijd, kinderen, groepjes, trainers, blokken: {}, onderdelen, ...(c.starttijd ? { starttijd: c.starttijd } : {}), stationTrainers, veldTrainers, ...(c.trainerKeuzes ? { trainerKeuzes: c.trainerKeuzes } : {}) }, eigen: eigen.filter((o) => ids.includes(o.id)) });
 }
 
 /** Gedeeld team-item lezen (null als het kapot is). */

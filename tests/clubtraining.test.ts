@@ -17,9 +17,9 @@ import {
   partijvelden,
   standaardDatums,
   stationNaam,
-  stationTrainer,
+  stationPloeg,
   uitCode,
-  veldTrainer,
+  veldPloeg,
   veldVak,
   VORMEN,
   type ClubTraining,
@@ -177,14 +177,15 @@ describe('deellink', () => {
 });
 
 describe('trainers', () => {
-  it('om en om verdeeld, zelf kiezen gaat voor, weggehaalde naam telt niet', () => {
-    const c = club({ trainers: ['Testtrainer 1', 'Testtrainer 2'] });
-    expect([1, 2, 3].map((nr) => stationTrainer(c, nr))).toEqual(['Testtrainer 1', 'Testtrainer 2', 'Testtrainer 1']);
-    expect(stationTrainer({ ...c, stationTrainers: { 1: 'Testtrainer 2' } }, 1)).toBe('Testtrainer 2');
-    expect(stationTrainer({ ...c, stationTrainers: { 1: 'Weg' } }, 1)).toBe('Testtrainer 1');
-    expect(stationTrainer({ ...c, stationTrainers: { 1: '' } }, 1)).toBeUndefined();
-    expect(veldTrainer(c, 2)).toBe('Testtrainer 2');
-    expect(stationTrainer(club(), 1)).toBeUndefined();
+  it('elke trainer één keer verdeeld, oude keuze gaat voor, weggehaalde naam telt niet', () => {
+    const c = club({ groepjes: 3, trainers: ['Testtrainer 1', 'Testtrainer 2'] });
+    expect([1, 2, 3].map((nr) => stationPloeg(c, nr))).toEqual([['Testtrainer 1'], ['Testtrainer 2'], []]);
+    expect(stationPloeg({ ...c, stationTrainers: { 1: 'Testtrainer 2' } }, 1)).toEqual(['Testtrainer 2']);
+    expect(stationPloeg({ ...c, stationTrainers: { 1: 'Testtrainer 2' } }, 2)).toEqual(['Testtrainer 1']);
+    expect(stationPloeg({ ...c, stationTrainers: { 1: 'Weg' } }, 1)).toEqual(['Testtrainer 1']);
+    expect(stationPloeg({ ...c, stationTrainers: { 1: '' } }, 1)).toEqual([]);
+    expect(veldPloeg(c, 2)).toEqual(['Testtrainer 2']);
+    expect(stationPloeg(club(), 1)).toEqual([]);
   });
 });
 
