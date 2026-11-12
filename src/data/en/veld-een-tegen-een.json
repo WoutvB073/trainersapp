@@ -164,23 +164,26 @@
   },
   "veld-mt-bal-beschermen": {
     "naam": "Shield the ball",
-    "uitleg": "The ball is your treasure. Put your body in the way and keep the ball for 20 seconds! The other child tries to knock it away. Can you do it? Count along: 1, 2, 3 …",
-    "organisatie": "Small 5 × 5 m area. The coach counts to 20, then swap. For 5 children: two play each other, the others wait in two short lines (at most 2 per line) and go next after 20 seconds. Play for 15 minutes.",
+    "uitleg": "The ball is your treasure! Put your body between the other child and the ball. The other child tries to knock the ball out of the square with their foot. Do you keep the ball in the square for 30 seconds? You get a point. Is it out? The other child gets a point. After 30 seconds you swap.",
+    "organisatie": "Squares of 5 × 5 m with 4 disc cones, two squares side by side. 15-minute station for 5 children: two play in each square, one child waits and plays the winner after 30 seconds. The coach counts out loud and calls \"swap!\".",
     "benodigdheden": [
-      "4 disc cones",
-      "1 football"
+      "8 disc cones",
+      "2 footballs"
     ],
     "coachpunten": [
-      "Your body is between the other child and the ball"
+      "Your body is between the other child and the ball",
+      "Small touches with your sole: turn away from the other child",
+      "Look over your shoulder to see where the other child is"
     ],
     "variaties": {
       "makkelijker": [
-        "Count to 10",
-        "A bigger area"
+        "The other child may only tap with one foot",
+        "A bigger square"
       ],
       "moeilijker": [
-        "A smaller area",
-        "Count to 30"
+        "A smaller square",
+        "After 10 seconds you may also dribble to the far side for an extra point",
+        "With your weaker foot"
       ]
     }
   },

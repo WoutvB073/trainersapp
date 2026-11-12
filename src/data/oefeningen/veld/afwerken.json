@@ -4059,8 +4059,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Pionnen omgooien",
@@ -4291,8 +4290,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Dribbel en schiet",
@@ -6029,8 +6027,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Hordes en schieten",
@@ -6267,8 +6264,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Om de pop",
@@ -6453,8 +6449,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Ladder en scoren",
@@ -6656,7 +6651,6 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
       "mini-5-7"
     ],
     "doorwisselbaar": true,
@@ -6882,8 +6876,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Brug en goal",

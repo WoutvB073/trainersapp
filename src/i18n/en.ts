@@ -1260,8 +1260,8 @@ export const EN: Record<string, string> = {
   'Tik rechtsboven op **☰**.': 'Tap **☰** at the top right.',
   'Tik rechtsonder op het kompas-icoon (of op **•••**).': 'Tap the compass icon at the bottom right (or **•••**).',
   // 0.30.0: leeftijdsgroepen
-  'Mini’s 3–5 jr': 'Minis 3–5 yrs',
-  'Mini’s 5–7 jr': 'Minis 5–7 yrs',
+  'Mini’s O6 (tot 6 jr)': 'Minis U6 (under 6)',
+  'Mini’s O7 (6–7 jr)': 'Minis U7 (6–7 yrs)',
   'JO8–JO11': 'U8–U11',
   'JO12–JO15': 'U12–U15',
   'JO16–JO19': 'U16–U19',

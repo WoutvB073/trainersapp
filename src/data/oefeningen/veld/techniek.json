@@ -8,7 +8,7 @@
       "warming-up",
       "spelletjes"
     ],
-    "uitleg": "Alle kinderen dribbelen met een bal in het vak. Eén of twee piraten (zonder bal) proberen een bal af te pakken en uit het vak te schieten. Wie zijn bal kwijt is, wordt ook piraat. Wie houdt het langst zijn schat (de bal)?",
+    "uitleg": "Alle kinderen dribbelen met een bal in het vak. Eén of twee piraten (zonder bal) proberen een bal af te pakken en uit het vak te schieten. Wie zijn bal kwijt is, wordt ook piraat. De trainer roept ondertussen acties: \"kap!\", \"zool!\" of \"schaar!\". En roept hij een kleur, dan mogen de piraten met dat hesje even niet tikken. Wie houdt het langst zijn schat (de bal)?",
     "organisatie": "Vak van 14 × 14 m. Iedereen een bal, behalve 1 piraat per 6 kinderen (met hesje). Rondes tot er nog 1 of 2 kinderen met bal over zijn. Voor JO7–JO9.",
     "benodigdheden": [
       "4 pionnen",
@@ -786,6 +786,7 @@
     "spelersNodig": 1,
     "keepersNodig": 0,
     "leeftijden": [
+      "mini-5-7",
       "jo8-11",
       "jo12-15",
       "jo16-19"
@@ -1005,6 +1006,7 @@
     "spelersNodig": 1,
     "keepersNodig": 0,
     "leeftijden": [
+      "mini-5-7",
       "jo8-11",
       "jo12-15",
       "jo16-19"
@@ -2713,8 +2715,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Verkeerslicht",
@@ -3167,8 +3168,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Hondje uitlaten",
@@ -3192,7 +3192,8 @@
       ],
       "moeilijker": [
         "\"Pootje\": bal met je andere voet tikken",
-        "Twee commando’s achter elkaar"
+        "Twee commando’s achter elkaar",
+        "Andere dieren: \"olifant\" (heel zachte tikjes), \"kangoeroe\" (zool op de bal en stoppen), \"raket\" (zo snel als je kunt)"
       ]
     },
     "tekening": {
@@ -3604,8 +3605,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Brandweer",
@@ -3926,8 +3926,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Kleurenpoortjes",
@@ -4219,8 +4218,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Onder de brug",
@@ -4505,15 +4503,14 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Huisjes",
     "categorieen": [
       "techniek"
     ],
-    "uitleg": "Elke hoepel is een huisje. Dribbel lekker rond. Roept de trainer \"naar huis!\", dan breng je je bal naar een huisje. Maar let op: steeds verdwijnt er een huisje. Dan moet je samen een huisje delen!",
+    "uitleg": "Elke hoepel is een eilandje. Dribbel lekker rond in de zee. Roept de trainer \"eiland!\", dan dribbel je naar een hoepel en stop je de bal erin met je zool. Telkens haalt de trainer een eilandje weg. Dan moet je samen een eiland delen: niemand valt af! Wie staat er het eerst stil?",
     "organisatie": "Vak van 12 × 12 m met 5 hoepels verspreid, voor 5 kinderen, ieder een bal. Na elke ronde pakt de trainer een hoepel weg, tot er 2 over zijn. Daarna begin je opnieuw. Speel 15 minuten.",
     "benodigdheden": [
       "5 hoepels",
@@ -4914,8 +4911,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Door het bos",
@@ -5452,8 +5448,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Rondje pion",
@@ -5684,8 +5679,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Eieren rapen",
@@ -5958,8 +5952,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Ladder en dribbel",
@@ -6127,8 +6120,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Poppenslalom",
@@ -6523,8 +6515,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Kleurenpionnen",
@@ -6728,8 +6719,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Palenpoort",
@@ -6942,8 +6932,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Hoedjes omdraaien",
@@ -7246,8 +7235,7 @@
     "soort": "veld",
     "keepersNodig": 0,
     "leeftijden": [
-      "mini-3-5",
-      "mini-5-7"
+      "mini-3-5"
     ],
     "doorwisselbaar": true,
     "naam": "Hoedjes verzamelen",
@@ -9267,7 +9255,7 @@
     "variaties": {
       "makkelijker": [
         "Alleen dribbelen en stilstaan",
-        "Mini’s: de trainer doet het voor"
+        "Mini’s: \"Volg de kapitein\": de kapitein doet iets voor met de bal en de matroos doet het na"
       ],
       "moeilijker": [
         "Elke tien seconden wisselen van voorspeler",

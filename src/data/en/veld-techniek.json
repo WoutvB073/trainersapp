@@ -320,7 +320,8 @@
       ],
       "moeilijker": [
         "\"Paw\": touch the ball with your other foot",
-        "Two commands in a row"
+        "Two commands in a row",
+        "Other animals: \"elephant\" (very soft touches), \"kangaroo\" (sole on the ball and stop), \"rocket\" (as fast as you can)"
       ]
     }
   },
@@ -396,7 +397,7 @@
   },
   "veld-mt-huisjes": {
     "naam": "Little houses",
-    "uitleg": "Every hoop is a little house. Dribble around. When the coach calls \"go home!\", take your ball to a house. But watch out: a house disappears each time. Then you have to share a house!",
+    "uitleg": "Each hoop is a little island. Dribble around in the sea. When the coach calls \"island!\", dribble to a hoop and stop the ball in it with your sole. Each time the coach takes an island away. Then you have to share an island: nobody is out! Who stops first?",
     "organisatie": "12 × 12 m area with 5 hoops spread out, for 5 children, each with a ball. After each round the coach takes one hoop away, until 2 are left. Then start again. Play for 15 minutes.",
     "benodigdheden": [
       "5 hoops",
@@ -818,7 +819,7 @@
     "variaties": {
       "makkelijker": [
         "Only dribbling and stopping",
-        "Minis: the coach shows it"
+        "Minis: \"Follow the captain\": the captain does something with the ball and the sailor copies it"
       ],
       "moeilijker": [
         "Swap leader every ten seconds",

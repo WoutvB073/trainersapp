@@ -1324,24 +1324,27 @@
     "categorieen": [
       "een-tegen-een"
     ],
-    "uitleg": "De bal is jouw schat. Zet je lijf ertussen en houd de bal 20 tellen bij je! De ander probeert de bal weg te tikken. Lukt het? Tel mee: 1, 2, 3 …",
-    "organisatie": "Klein vak van 5 × 5 m. De trainer telt tot 20; daarna wisselen. Voor 5 kinderen: twee spelen tegen elkaar, de anderen wachten in twee rijtjes (maximaal 2 per rij) en zijn na 20 seconden aan de beurt. Speel 15 minuten.",
+    "uitleg": "De bal is jouw schat! Zet je lijf tussen de ander en de bal. De ander probeert de bal met zijn voet uit het vak te tikken. Houd jij de bal 30 tellen in het vak? Dan krijg je een punt. Is hij eruit? Dan krijgt de ander een punt. Na 30 tellen wisselen jullie.",
+    "organisatie": "Vakjes van 5 × 5 m met 4 hoedjes, twee vakjes naast elkaar. Station van 15 minuten voor 5 kinderen: in elk vakje spelen er twee, één kind wacht en speelt na 30 tellen tegen de winnaar. De trainer telt hardop en roept \"wissel!\".",
     "benodigdheden": [
-      "4 hoedjes",
-      "1 voetbal"
+      "8 hoedjes",
+      "2 voetballen"
     ],
     "spelersNodig": 2,
     "coachpunten": [
-      "Je lijf staat tussen de ander en de bal"
+      "Je lijf staat tussen de ander en de bal",
+      "Zachte tikjes met je zool: draai weg van de ander",
+      "Kijk over je schouder waar de ander is"
     ],
     "variaties": {
       "makkelijker": [
-        "Tot 10 tellen",
-        "Vak groter"
+        "De ander mag alleen tikken met één voet",
+        "Groter vakje"
       ],
       "moeilijker": [
-        "Vak kleiner",
-        "Tot 30 tellen"
+        "Kleiner vakje",
+        "Na 10 tellen mag je ook naar de overkant dribbelen voor een extra punt",
+        "Met je zwakke voet"
       ]
     },
     "tekening": {

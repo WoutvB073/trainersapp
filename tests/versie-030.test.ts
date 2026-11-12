@@ -25,7 +25,8 @@ const MATERIAAL = /(voetbal|pion|hoedje|paal|palen|pop|kaatsbord|hesje|horde|hoe
 describe('leeftijdsgroepen', () => {
   it('vijf groepen in volgorde', () => {
     expect(LEEFTIJDEN.map((l) => l.id)).toEqual(['mini-3-5', 'mini-5-7', 'jo8-11', 'jo12-15', 'jo16-19']);
-    expect(LEEFTIJDEN.map((l) => l.naam)).toEqual(['Mini’s 3–5 jr', 'Mini’s 5–7 jr', 'JO8–JO11', 'JO12–JO15', 'JO16–JO19']);
+    // Sinds 0.34.1: O6 en O7 (zelfde ids).
+    expect(LEEFTIJDEN.map((l) => l.naam)).toEqual(['Mini’s O6 (tot 6 jr)', 'Mini’s O7 (6–7 jr)', 'JO8–JO11', 'JO12–JO15', 'JO16–JO19']);
   });
   it('elke oefening in de bibliotheek heeft een geldige leeftijdsgroep', () => {
     for (const o of OEFENINGEN) {
@@ -36,21 +37,17 @@ describe('leeftijdsgroepen', () => {
   it('keepers nooit bij de mini’s', () => {
     for (const o of OEFENINGEN.filter((x) => x.soort === 'keeper')) expect(o.leeftijden!.some((l) => l.startsWith('mini')), o.id).toBe(false);
   });
-  it('mini’s: de genoemde oefeningen staan in beide groepen', () => {
-    for (const id of ZEKER) expect(vindOefening(id)?.leeftijden, id).toEqual(expect.arrayContaining([...MINI]));
-  });
-  it('iedere mini-oefening staat in beide mini-groepen (3,5–7 jaar)', () => {
-    for (const o of OEFENINGEN) {
-      const aantal = MINI.filter((m) => o.leeftijden!.includes(m)).length;
-      expect(aantal === 0 || aantal === 2, o.id).toBe(true);
-    }
+  // Sinds 0.34.1 zijn de mini's O6 en O7 en staat niet elke oefening meer in allebei (tests/versie-0341.test.ts).
+  it('mini’s: de genoemde oefeningen staan in minstens één mini-groep', () => {
+    for (const id of ZEKER) expect(MINI.some((m) => vindOefening(id)?.leeftijden?.includes(m)), id).toBe(true);
   });
   it('Snelle schutter is terug, alleen voor de mini’s', () => {
     const o = vindOefening('veld-af-kleine-doeltjes')!;
     expect(o.verwijderd).toBeFalsy();
     expect(OEFENINGEN.map((x) => x.id)).toContain(o.id);
     expect(ARCHIEF.map((x) => x.id)).not.toContain(o.id);
-    expect(o.leeftijden).toEqual([...MINI]);
+    // 0.34.1: alleen O6 (te eenvoudig voor O7).
+    expect(o.leeftijden).toEqual(['mini-3-5']);
   });
   it('categorie 1 tegen 1 bij de spelers, ook bij bestaande duels', () => {
     expect(CATEGORIEEN.veld.map((c) => c.id)).toContain('een-tegen-een');
@@ -100,11 +97,12 @@ describe('nieuwe mini-oefeningen', () => {
     expect(groep('afwerken')).toHaveLength(15);
     expect(groep('partijvormen')).toHaveLength(14);
   });
-  it('allemaal mini’s, geen keepers, 1–2 coachpunten, animatie', () => {
+  it('alleen mini’s (O6, O7 of allebei), geen keepers, hooguit 3 coachpunten, animatie', () => {
     for (const o of nieuw) {
-      expect(o.leeftijden, o.id).toEqual([...MINI]);
+      expect(o.leeftijden!.length, o.id).toBeGreaterThan(0);
+      expect(o.leeftijden!.every((l) => (MINI as readonly string[]).includes(l)), o.id).toBe(true);
       expect(o.keepersNodig, o.id).toBe(0);
-      expect(o.coachpunten.length, o.id).toBeLessThanOrEqual(2);
+      expect(o.coachpunten.length, o.id).toBeLessThanOrEqual(3);
       expect(o.tekening.animatie?.length ?? 0, o.id).toBeGreaterThan(0);
     }
   });
