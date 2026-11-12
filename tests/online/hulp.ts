@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import type { ClubTraining } from '../../src/clubtraining/clubtraining';
+import type { RoosterTrainer } from '../../src/clubtraining/rooster';
 import { deleteApp } from 'firebase/app';
 import { terminate } from 'firebase/firestore';
 import { verbind, type Verbinding } from '../../src/online/firebase';
@@ -86,6 +87,7 @@ export function lokaleOpslag() {
   const opstellingen = new LijstStore<Opstelling>(apparaatLijst(plek, 'opstellingen'));
   const borden = new LijstStore<Bord>(apparaatLijst(plek, 'borden'));
   const clubtrainingen = new LijstStore<ClubTraining>(apparaatLijst(plek, 'clubtrainingen'));
+  const rooster = new LijstStore<RoosterTrainer>(apparaatLijst(plek, 'rooster'));
   let inst: Instellingen = { thema: 'standaard', modus: 'licht', aantallen: null, gewijzigd: 0 };
   const instLuisteraars = new Set<() => void>();
   const bekend = new Map<string, unknown>();
@@ -95,6 +97,7 @@ export function lokaleOpslag() {
     opstellingen,
     borden,
     clubtrainingen,
+    rooster,
     favorieten,
     instellingen: {
       lees: () => inst,
@@ -118,6 +121,7 @@ export function lokaleOpslag() {
     opstellingen,
     borden,
     clubtrainingen,
+    rooster,
     doelen,
     instellingen: () => inst,
     /** Instelling lokaal wijzigen (zoals de app dat doet). */

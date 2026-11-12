@@ -9,9 +9,10 @@ rules_version = '2';
 //   users/{uid}/trainingen/{id}     eigen trainingen   { data: JSON-tekst, gewijzigd }
 //   users/{uid}/opstellingen|borden/{id}  wedstrijd: opstellingen, tactiekborden/spelhervattingen { data, gewijzigd }
 //   users/{uid}/clubtrainingen/{id}  clubtrainingen { data, gewijzigd }
+//   users/{uid}/rooster/{id}         trainersrooster: één vaste trainer per document { data, gewijzigd }
 //   teams/{teamId}                  { naam, code, maker, gemaakt }
 //   teams/{teamId}/leden/{uid}      { rol: 'beheerder' | 'lid', naam, sinds, code? }
-//   teams/{teamId}/items/{itemId}   gedeelde oefening/training/opstelling/bord/clubtraining { soort, data, naam, eigenaar, eigenaarNaam, gewijzigd }
+//   teams/{teamId}/items/{itemId}   gedeelde oefening/training/opstelling/bord/clubtraining/rooster { soort, data, naam, eigenaar, eigenaarNaam, gewijzigd }
 //   teamCodes/{code}                { team } — om met een code te kunnen joinen
 //   links/{code}                    deellink { soort, data, maker, gemaakt, verloopt } — lezen als je de code kent, ook zonder inloggen
 service cloud.firestore {
@@ -48,8 +49,8 @@ service cloud.firestore {
         && (!('favorieten' in request.resource.data) || (request.resource.data.favorieten is list && request.resource.data.favorieten.size() <= 2000));
 
       match /{soort}/{id} {
-        allow read, delete: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen'];
-        allow create, update: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen']
+        allow read, delete: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen', 'rooster'];
+        allow create, update: if ingelogd() && request.auth.uid == uid && soort in ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen', 'rooster']
           && request.resource.data.keys().hasOnly(['data', 'gewijzigd'])
           && tekst(request.resource.data.data, 500000)
           && request.resource.data.gewijzigd is number;
@@ -137,7 +138,7 @@ service cloud.firestore {
         allow create: if isLid(team)
           && request.resource.data.keys().hasOnly(['soort', 'data', 'naam', 'eigenaar', 'eigenaarNaam', 'gewijzigd'])
           && request.resource.data.eigenaar == request.auth.uid
-          && request.resource.data.soort in ['oefening', 'training', 'opstelling', 'bord', 'clubtraining']
+          && request.resource.data.soort in ['oefening', 'training', 'opstelling', 'bord', 'clubtraining', 'rooster']
           && tekst(request.resource.data.data, 500000)
           && tekst(request.resource.data.naam, 120);
         // Aanpassen: alleen je eigen gedeelde items.

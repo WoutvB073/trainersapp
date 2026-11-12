@@ -109,6 +109,23 @@ describe('teams', () => {
     await assertFails(setDoc(doc(db('c'), 'teams', 't1', 'items', 'i4'), item('c')));
   });
 
+  it('trainersrooster (0.34.0): eigen collectie en team-item, verder niets ruimer', async () => {
+    const trainer = { data: '{"id":"r1","naam":"Testtrainer 1"}', gewijzigd: 1 };
+    await assertSucceeds(setDoc(doc(db('a'), 'users', 'a', 'rooster', 'r1'), trainer));
+    await assertSucceeds(getDoc(doc(db('a'), 'users', 'a', 'rooster', 'r1')));
+    await assertFails(setDoc(doc(db('a'), 'users', 'a', 'rooster', 'r2'), { ...trainer, extra: 1 }));
+    await assertFails(getDoc(doc(db('b'), 'users', 'a', 'rooster', 'r1')));
+    await assertFails(setDoc(doc(db('a'), 'users', 'a', 'roosters', 'r1'), trainer));
+    await maakTeam(db('a'), 'a');
+    await join(db('b'), 'b', 'ABC234');
+    const item = (eigenaar: string) => ({ soort: 'rooster', data: '{"rooster":[]}', naam: 'Trainersrooster', eigenaar, eigenaarNaam: 'Testtrainer', gewijzigd: 1 });
+    await assertSucceeds(setDoc(doc(db('b'), 'teams', 't1', 'items', 'rooster-b'), item('b')));
+    await assertSucceeds(getDoc(doc(db('a'), 'teams', 't1', 'items', 'rooster-b')));
+    await assertFails(setDoc(doc(db('a'), 'teams', 't1', 'items', 'rooster-b'), item('a')));
+    await assertFails(setDoc(doc(db('c'), 'teams', 't1', 'items', 'rooster-c'), item('c')));
+    await assertFails(setDoc(doc(db('b'), 'teams', 't1', 'items', 'x'), { ...item('b'), soort: 'iets' }));
+  });
+
   it('gedeelde circuittraining: zelfde rechten als de andere items, en verder niets ruimer', async () => {
     await maakTeam(db('a'), 'a');
     await join(db('b'), 'b', 'ABC234');
@@ -185,7 +202,8 @@ describe('teams', () => {
 
   it('niemand anders kan jouw items aanpassen: eigen gegevens, teamitems en deellinks', async () => {
     await setDoc(doc(db('a'), 'users', 'a', 'clubtrainingen', 'c1'), { data: '{}', gewijzigd: 1 });
-    for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen']) {
+    await setDoc(doc(db('a'), 'users', 'a', 'rooster', 'c1'), { data: '{}', gewijzigd: 1 });
+    for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen', 'rooster']) {
       await assertFails(getDoc(doc(db('b'), 'users', 'a', col, 'c1')));
       await assertFails(setDoc(doc(db('b'), 'users', 'a', col, 'c1'), { data: 'kaap', gewijzigd: 2 }));
       await assertFails(deleteDoc(doc(db('b'), 'users', 'a', col, 'c1')));

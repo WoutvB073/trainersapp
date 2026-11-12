@@ -5,6 +5,7 @@ import { nieuweEigen } from '../../src/eigen/eigen';
 import { nieuweTekening } from '../../src/editor/editor';
 import { nieuweTraining } from '../../src/training/training';
 import { nieuweClub } from '../../src/clubtraining/clubtraining';
+import { nieuweRoosterTrainer } from '../../src/clubtraining/rooster';
 import { nieuweOpstelling, nieuwBord, vulAan } from '../../src/wedstrijd/wedstrijd';
 import { VOORBEELDEN } from '../../src/wedstrijd/hervattingen';
 
@@ -70,6 +71,22 @@ describe('synchroniseren tussen twee toestellen (zelfde account)', { retry: HERK
     expect(a.borden.haal('b1')?.naam).toBe('Net gemaakt');
     expect(a.eigen.haal('eigen-1')?.naam).toBe('Een (aangepast)');
     sa2.stop();
+    sb.stop();
+  });
+
+  it('trainersrooster (0.34.0): synchroniseert tussen twee toestellen van hetzelfde account', async () => {
+    const tel = await toestel('test1@example.com');
+    const lap = await toestel('test1@example.com');
+    const a = lokaleOpslag();
+    const b = lokaleOpslag();
+    const sa = synchroniseer(tel, a);
+    const sb = synchroniseer(lap, b);
+    a.rooster.bewaar({ ...nieuweRoosterTrainer('2026-11-18', 1, 'r1'), naam: 'Testtrainer 1', groepen: ['O7', 'O6'], wissel: true, plek: 'loopcoordinatie' });
+    await wachtTot(() => b.rooster.haal('r1')?.naam === 'Testtrainer 1', 10000, 'rooster op het andere toestel');
+    expect(b.rooster.haal('r1')).toMatchObject({ groepen: ['O7', 'O6'], wissel: true, plek: 'loopcoordinatie' });
+    b.rooster.verwijder('r1');
+    await wachtTot(() => !a.rooster.haal('r1'), 10000, 'weggehaald op het eerste toestel');
+    sa.stop();
     sb.stop();
   });
 

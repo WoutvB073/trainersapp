@@ -535,6 +535,7 @@ export function DeelMetTeam({ soort, id, naam, breed }: { soort: TeamItem['soort
           await m.deelOefening(t.id, o);
         } else if (soort === 'training') await m.deelTraining(t.id, id);
         else if (soort === 'clubtraining') await m.deelClub(t.id, id);
+        else if (soort === 'rooster') await m.deelRooster(t.id);
         else await m.deelWedstrijd(t.id, soort, id);
       },
       vt('Gedeeld met {naam}', { naam: t.naam }),

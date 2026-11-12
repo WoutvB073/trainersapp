@@ -19,7 +19,7 @@ export interface TeamLid {
 
 export interface TeamItem {
   id: string;
-  soort: 'oefening' | 'training' | 'opstelling' | 'bord' | 'clubtraining';
+  soort: 'oefening' | 'training' | 'opstelling' | 'bord' | 'clubtraining' | 'rooster';
   naam: string;
   /** JSON: een oefening (zoals voorDelen), { training, eigen } voor een training, { club, eigen } voor een circuittraining. */
   data: string;

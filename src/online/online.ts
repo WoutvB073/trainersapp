@@ -17,7 +17,8 @@ import { eigenBackend, eigenOefeningen } from '../eigen/opslag';
 import { trainingBackend, trainingen } from '../training/opslag';
 import { favorieten, favorietenBackend } from '../engine/favorieten';
 import { bordBackend, borden, opstellingBackend, opstellingen, spelersnamen } from '../wedstrijd/opslag';
-import { clubBackend, clubtrainingen } from '../clubtraining/opslag';
+import { clubBackend, clubtrainingen, rooster, roosterBackend } from '../clubtraining/opslag';
+import { voorTeamRooster } from '../clubtraining/rooster';
 import { clubNaam, metOefeningIds, oefeningIds, voorTeam } from '../clubtraining/clubtraining';
 import { bordNaam, namenUitOpstellingen, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
@@ -124,7 +125,7 @@ async function opIngelogd(u: User): Promise<void> {
     if (!gekoppeld) {
       const aantallen = {
         eigen: eigenBackend(null).laad().length,
-        trainingen: trainingBackend(null).laad().length + clubBackend(null).laad().length,
+        trainingen: trainingBackend(null).laad().length + clubBackend(null).laad().length + roosterBackend(null).laad().length,
         favorieten: favorietenBackend(null).laad().length,
         wedstrijd: opstellingBackend(null).laad().length + bordBackend(null).laad().length,
       };
@@ -141,6 +142,7 @@ async function opIngelogd(u: User): Promise<void> {
           opstellingBackend(a.uid).bewaar(opstellingBackend(null).laad());
           bordBackend(a.uid).bewaar(bordBackend(null).laad());
           clubBackend(a.uid).bewaar(clubBackend(null).laad());
+          roosterBackend(a.uid).bewaar(roosterBackend(null).laad());
         }
       }
       opslag()?.setItem(`trainersapp.gekoppeld.${a.uid}`, String(Date.now()));
@@ -152,6 +154,7 @@ async function opIngelogd(u: User): Promise<void> {
     opstellingen.wisselBackend(opstellingBackend(a.uid));
     borden.wisselBackend(bordBackend(a.uid));
     clubtrainingen.wisselBackend(clubBackend(a.uid));
+    rooster.wisselBackend(roosterBackend(a.uid));
     teams.wisselAccount(a.uid);
   } else zetBewaardAccount(a);
   zetStatus({ account: a, sync: 'bezig' });
@@ -168,6 +171,7 @@ async function opUitgelogd(): Promise<void> {
     opstellingen.wisselBackend(opstellingBackend(null));
     borden.wisselBackend(bordBackend(null));
     clubtrainingen.wisselBackend(clubBackend(null));
+    rooster.wisselBackend(roosterBackend(null));
     teams.wisselAccount(null);
   }
   zetStatus({ account: null, sync: 'uit', samenvoegen: null });
@@ -241,6 +245,7 @@ function startSync(a: AccountInfo) {
     opstellingen,
     borden,
     clubtrainingen,
+    rooster,
     favorieten,
     instellingen: instellingenDoel(a.uid),
     bekend: {
@@ -363,7 +368,7 @@ export async function verwijderAccount(wachtwoord: string): Promise<void> {
   const links = eigenLinks().filter((l) => l.maker === u.uid).map((l) => l.code);
   for (const code of links) await deleteDoc(doc(db, 'links', code)).catch(() => {});
   vergeetLinks(links);
-  for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen']) {
+  for (const col of ['oefeningen', 'trainingen', 'opstellingen', 'borden', 'clubtrainingen', 'rooster']) {
     const s = await getDocs(collection(db, 'users', u.uid, col));
     const b = writeBatch(db);
     s.docs.forEach((d) => b.delete(d.ref));
@@ -417,6 +422,11 @@ export function deelTraining(team: string, trainingId: string): Promise<void> {
   const { eigen, nieuwId } = meeTeNemen(t.oefeningen, team);
   const data = { training: { naam: t.naam, datum: t.datum, spelers: t.spelers, keepers: t.keepers, ...(t.leeftijd ? { leeftijd: t.leeftijd } : {}), oefeningen: t.oefeningen.map(nieuwId) }, eigen };
   return T.deelItem(ik(), team, { id: t.id, soort: 'training', naam: t.naam || vt('Teamtraining'), data: JSON.stringify(data) });
+}
+
+/** Het trainersrooster met een team delen (0.34.0): een ander kan het bekijken en overnemen. Eén item per eigenaar. */
+export function deelRooster(team: string): Promise<void> {
+  return T.deelItem(ik(), team, { id: `rooster-${ik().uid}`, soort: 'rooster', naam: vt('Trainersrooster'), data: voorTeamRooster(rooster.lijst()) });
 }
 
 /** Circuittraining delen (0.31.2): ook hier gaan oefeningen mee die de teamleden niet hebben. Nog eens delen = bijwerken. */
