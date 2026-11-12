@@ -70,6 +70,8 @@ export async function blad(browser, bestanden, uit, kolommen = 3, breedte = 1500
     `<style>body{margin:0;padding:12px;background:#e9eeeb;font:600 15px system-ui}
      .g{display:grid;grid-template-columns:repeat(${kolommen},1fr);gap:12px;align-items:start}
      figure{margin:0;background:#fff;padding:6px;border-radius:8px} img{width:100%;display:block;border-radius:4px}
+     /* Heel lange schermen (bv. Alle oefeningen, 0.34.1) alleen het bovenste deel, anders wordt het blad te groot om te fotograferen. */
+     img{max-height:4000px;object-fit:cover;object-position:top}
      figcaption{padding:6px 2px 0}</style><div class="g">${items}</div>`,
   );
   await page.screenshot({ path: uit, fullPage: true });
