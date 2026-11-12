@@ -1,8 +1,9 @@
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { useState } from 'react';
-import { clubNaam, clubPlan, dupliceer, naarVolgendeWeek, nieuweClub, onderdelenVan, tijdTekst, uitSjabloon, zelfOnderdelen, type ClubTraining } from '../../clubtraining/clubtraining';
-import { clubtrainingen, echteClubs, sjablonen, useClubtrainingen } from '../../clubtraining/opslag';
+import { clubNaam, clubPlan, dupliceer, nieuweClub, onderdelenVan, tijdTekst, uitSjabloon, zelfOnderdelen, type ClubTraining } from '../../clubtraining/clubtraining';
+import { clubtrainingen, echteClubs, sjablonen, useClubtrainingen, rooster } from '../../clubtraining/opslag';
+import { volgendeWeek, vulVolgensRooster } from '../../clubtraining/rooster';
 import { datumTekst } from '../../training/training';
 import { huidigeFilters } from '../../engine/filters';
 import { ga } from '../../router';
@@ -50,7 +51,7 @@ function NieuwPaneel({ eigen, opSluit }: { eigen: ClubTraining[]; opSluit: () =>
               <button
                 className="rij rij-knop"
                 onClick={() => {
-                  const c = clubtrainingen.bewaar(uitSjabloon(s));
+                  const c = clubtrainingen.bewaar(vulVolgensRooster(uitSjabloon(s), rooster.lijst(), true));
                   ga(`/club/${c.id}`);
                 }}
               >
@@ -123,7 +124,7 @@ function Regel({ c, opMelding }: { c: ClubTraining; opMelding: (s: string) => vo
           aria-label={vt('{w0} dupliceren naar volgende week', { w0: clubNaam(c) })}
           title={vt('Dupliceer naar volgende week')}
           onClick={() => {
-            clubtrainingen.bewaar(naarVolgendeWeek(c));
+            clubtrainingen.bewaar(volgendeWeek(c, rooster.lijst()));
             opMelding(vt('Gekopieerd naar volgende week'));
           }}
         >
@@ -155,6 +156,10 @@ export function ClubLijst() {
         <button className="knop knop-primair knop-breed" onClick={() => setNieuw(true)}>
           <Icoon naam="plus" maat={20} />
           {vt('Nieuwe circuittraining')}
+        </button>
+        <button className="knop knop-breed" onClick={() => ga('/rooster')}>
+          <Icoon naam="team" maat={20} />
+          {vt('Trainersrooster')}
         </button>
         {lijst.length ? (
           <ul className="lijst club-lijst">

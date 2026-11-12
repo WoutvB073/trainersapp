@@ -293,6 +293,23 @@ for (const [taal, formaat, vp] of COMBINATIES) {
     if (naam === 'opstelling') await foto(t1.page, 'opstelling', 'Testtrainer 1: opstelling');
   }
 
+  // Trainersrooster (0.34.0): een trainer toevoegen en het rooster delen.
+  await ga(t1.page, '/rooster');
+  await klik(t1.page, T('Trainer toevoegen'));
+  await wachtOp(t1.page, () => /^#\/rooster\/./.test(location.hash), null, `${waar}: nieuwe trainer in het rooster`);
+  await vul(t1.page, '.rooster-trainer input[maxlength="40"]', 'Testtrainer 3');
+  await t1.page.evaluate(() => [...document.querySelectorAll('.rooster-keuze button')][2]?.click());
+  await slaap(300);
+  await ga(t1.page, '/rooster');
+  await wachtTekst(t1.page, 'Testtrainer 3', `${waar}: trainer in de roosterlijst`);
+  await wachtTeams(t1.page, `${waar}: teams geladen (rooster)`);
+  await klik(t1.page, T('Delen met team'));
+  await slaap(400);
+  await t1.page.evaluate(() => document.querySelector('[role="dialog"] button:not(.icoon-knop)')?.click());
+  await wachtTekst(t1.page, T('Gedeeld met {teams}', { teams: 'Testteam' }), `${waar}: rooster gedeeld`);
+  await opmaak(t1.page, `${waar} rooster`);
+  await foto(t1.page, 'rooster', 'Testtrainer 1: trainersrooster gedeeld');
+
   // De link van de eigen oefening.
   await ga(t1.page, '/oefening/eigen-testoefening');
   await t1.page.evaluate(() => {
@@ -391,6 +408,17 @@ for (const [taal, formaat, vp] of COMBINATIES) {
   await slaap(200);
   await klik(t2.page, T('Openen'), '.link-formulier button');
   await wachtOp(t2.page, () => location.hash.startsWith('#/d/'), null, `${waar}: link plakken bij Eigen oefeningen`);
+
+  // Testtrainer 2 bekijkt het rooster in het team en neemt het over.
+  await ga(t2.page, `/team/${teamId}`);
+  await wachtOp(t2.page, () => !!document.querySelector('a[href*="/rooster/"]'), null, `${waar}: rooster staat in het team`);
+  await t2.page.evaluate(() => document.querySelector('a[href*="/rooster/"]').click());
+  await wachtTekst(t2.page, 'Testtrainer 3', `${waar}: rooster in het team bekijken`);
+  await opmaak(t2.page, `${waar} teamrooster`);
+  await klik(t2.page, T('Overnemen in mijn rooster'));
+  await ga(t2.page, '/rooster');
+  await wachtTekst(t2.page, 'Testtrainer 3', `${waar}: rooster overgenomen bij Testtrainer 2`);
+  controle((await lokaal(t2.page, 'rooster')).includes('Testtrainer 3'), `${waar}: overgenomen rooster staat niet bij Testtrainer 2`);
 
   // ---------- Aanpassen en terugtrekken door de eigenaar ----------
   await ga(t1.page, `/team/${teamId}/club/club-test`);

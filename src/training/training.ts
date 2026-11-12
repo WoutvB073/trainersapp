@@ -106,6 +106,15 @@ export function datumTekst(datum: string, taal: Taal = TAAL): string {
   return `${d} ${MAANDEN[taal][m - 1]} ${j}`;
 }
 
+const WEEKDAGEN = { nl: ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'], en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] }; // i18n-ok
+
+/** "Ma 16 nov" / "Mon 16 Nov": kort, met de dag van de week. */
+export function dagTekst(datum: string, taal: Taal = TAAL): string {
+  const [j, m, d] = datum.split('-').map(Number);
+  if (!j || !m || !d) return datum;
+  return `${WEEKDAGEN[taal][new Date(Date.UTC(j, m - 1, d)).getUTCDay()]} ${d} ${MAANDEN[taal][m - 1]}`;
+}
+
 export function trainingNaam(t: Pick<Training, 'naam' | 'datum'>): string {
   if (t.naam.trim()) return t.naam.trim();
   return t.datum ? vt('Teamtraining {w0}', { w0: datumTekst(t.datum) }) : vt('Teamtraining zonder naam');

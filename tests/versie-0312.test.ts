@@ -176,7 +176,8 @@ describe('overal beide manieren van delen', () => {
     expect(lees('wedstrijd/Wedstrijd.tsx')).toMatch(/soort="bord"/);
   });
   it('de regels kennen het nieuwe soort, en alleen dat is erbij', () => {
-    expect(readFileSync('firestore.rules', 'utf8')).toContain("soort in ['oefening', 'training', 'opstelling', 'bord', 'clubtraining']");
+    // Sinds 0.34.0 ook het trainersrooster (tests/online/regels.test.ts).
+    expect(readFileSync('firestore.rules', 'utf8')).toContain("soort in ['oefening', 'training', 'opstelling', 'bord', 'clubtraining', 'rooster']");
   });
   it('Help en Engels', () => {
     const tekst = (l: typeof HELP_NL) => l.flatMap((o) => o.tekst).join(' ');

@@ -3,7 +3,8 @@ import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
-import { clubNaam, clubPlan, rondeTijd, timerStand } from '../../clubtraining/clubtraining';
+import { clubNaam, clubPlan, opDag, rondeTijd, timerStand } from '../../clubtraining/clubtraining';
+import { DagKeuze, useDag } from './dag';
 import { useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
 import { blokNaam, blokStijl, RondeLijst } from './onderdelen';
@@ -104,6 +105,7 @@ export function ClubTimer({ id }: { id: string }) {
   };
   const loopt = !!staat && staat.pauze === null;
   const schermAan = useSchermAan(loopt);
+  const [dag, kiesDag] = useDag(c?.datums ?? []);
   const rondes = c ? clubPlan(c).rondes : [];
   const stand = timerStand(staat ? ((staat.pauze ?? nu) - staat.start) / 1000 : 0, rondes);
   const klaar = !!staat && stand.klaar;
@@ -155,6 +157,7 @@ export function ClubTimer({ id }: { id: string }) {
     <div className="pagina">
       <Kop titel={clubNaam(c)} ouder={`/club/${id}`} />
       <main className="inhoud smal club-timer">
+        <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} />
         <p className="club-timer-blok" style={ronde.samen ? blokStijl(ronde.samen.categorie) : undefined}>
           {klaar ? vt('Klaar!') : blokTitel}
         </p>
@@ -189,7 +192,7 @@ export function ClubTimer({ id }: { id: string }) {
         {!klaar && (
           <>
             <p className="klein club-noot">{rondeTijd(ronde, c.starttijd)}</p>
-            <RondeLijst c={c} ronde={ronde} vind={vindOefening} seconden={staat ? ronde.eind - ronde.begin - stand.rest : 0} opOefening={(o) => ga(`/club/${id}/blok/${o.id}`)} />
+            <RondeLijst c={opDag(c, dag)} ronde={ronde} vind={vindOefening} seconden={staat ? ronde.eind - ronde.begin - stand.rest : 0} opOefening={(o) => ga(`/club/${id}/blok/${o.id}`)} />
           </>
         )}
         {loopt && !schermAan && <p className="klein club-noot">{vt('Deze browser kan het scherm niet aan houden. Zet automatisch vergrendelen even uit.')}</p>}

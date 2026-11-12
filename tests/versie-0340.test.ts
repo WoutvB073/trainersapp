@@ -20,7 +20,6 @@ import {
   zetDagTrainers,
   zetModusOveral,
   verplaatsTrainer,
-  zetPlekTrainers,
   zonderIndelingOveral,
   type ClubTraining,
   type Onderdeel,

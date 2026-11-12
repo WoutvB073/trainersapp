@@ -3,11 +3,12 @@ import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { vindOefening } from '../../data/oefeningen';
 import { ga } from '../../router';
-import { blokNaam, clubNaam, clubPlan, materiaal, oefeningenVan, tijdTekst, trainerNamen, vindOnderdeel, type ClubTraining, type MateriaalRegel, type Onderdeel } from '../../clubtraining/clubtraining';
+import { blokNaam, clubNaam, clubPlan, materiaal, oefeningenVan, opDag, tijdTekst, trainerNamen, vindOnderdeel, zetDagTrainers, type ClubTraining, type MateriaalRegel, type Onderdeel } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
 import { faseTitel, MateriaalNoot, PlanNoot, RotatieTabel, VeldplanSamen, VeldplanStations } from './onderdelen';
 import { SamenTrainers, StationTrainers } from './trainers';
+import { DagKeuze, useDag } from './dag';
 import { t as vt } from '../../i18n/t';
 
 type Tab = 'deel1' | 'deel2' | 'rotatie' | 'materiaal';
@@ -43,19 +44,22 @@ function Regels({ titel, regels, c, zet }: { titel: string; regels: MateriaalReg
 export function ClubPlan({ id }: { id: string }) {
   const c = useClub(id);
   const [tab, setTab] = useState<Tab>('deel1');
+  const [dag, kiesDag] = useDag(c?.datums ?? []);
   const m = useMemo(() => (c ? materiaal(c, vindOefening) : null), [c]);
   if (!c || !m) return <NietGevonden />;
 
   const zet = (w: Partial<ClubTraining>) => clubtrainingen.bewaar({ ...(clubtrainingen.haal(id) ?? c), ...w });
   const plan = clubPlan(c);
+  // De trainers van de gekozen dag; onderdelen en rotatie zijn voor alle dagen gelijk.
+  const cd = opDag(c, dag);
   const open = (o?: Onderdeel) => {
     if (o && oefeningenVan(o).length > 1) ga(`/club/${id}/blok/${o.id}`);
     else if (o?.oefening) ga(`/oefening/${o.oefening}`);
   };
   const alleenPartij = plan.samen.every((o) => o.categorie === 'partijvormen');
-  const heeftTrainers = trainerNamen(c).length > 0;
-  const nu = () => clubtrainingen.haal(id) ?? c;
-  const bewaarKeuzes = (trainerKeuzes: NonNullable<ClubTraining['trainerKeuzes']>) => zet({ trainerKeuzes });
+  const heeftTrainers = trainerNamen(cd).length > 0;
+  const nu = () => opDag(clubtrainingen.haal(id) ?? c, dag);
+  const bewaarKeuzes = (trainerKeuzes: NonNullable<ClubTraining['trainerKeuzes']>) => zet(zetDagTrainers(clubtrainingen.haal(id) ?? c, dag, { trainerKeuzes }));
   const alle = [...m.stations, ...m.extra];
   const klaar = alle.filter((r) => c.afgevinkt.includes(r.sleutel)).length;
   const tabs: [Tab, string][] = [
@@ -70,6 +74,7 @@ export function ClubPlan({ id }: { id: string }) {
     <div className="pagina">
       <Kop titel={clubNaam(c)} ouder={`/club/${id}`} />
       <main className="inhoud smal">
+        <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} />
         <div className={`tabs club-tabs club-tabs-${tabs.length}`} role="tablist">
           {tabs.map(([k, naam]) => (
             <button key={k} role="tab" aria-selected={actief === k} className={actief === k ? 'aan' : ''} onClick={() => setTab(k)}>
@@ -83,11 +88,11 @@ export function ClubPlan({ id }: { id: string }) {
             {plan.fases.map((f) => (
               <div key={f.nr}>
                 <h2 className="sectie-titel">{faseTitel(f, plan)}</h2>
-                <VeldplanStations c={c} fase={f} vind={vindOefening} opStation={(s) => open(vindOnderdeel(c, s.onderdeel))} />
+                <VeldplanStations c={cd} fase={f} vind={vindOefening} opStation={(s) => open(vindOnderdeel(c, s.onderdeel))} />
               </div>
             ))}
             <PlanNoot c={c} />
-            {heeftTrainers && <StationTrainers c={c} nu={nu} bewaar={bewaarKeuzes} />}
+            {heeftTrainers && <StationTrainers c={cd} nu={nu} bewaar={bewaarKeuzes} />}
           </>
         )}
 
@@ -96,18 +101,18 @@ export function ClubPlan({ id }: { id: string }) {
             {plan.samen.map((o) => (
               <div key={o.id}>
                 <h2 className="sectie-titel">{`${blokNaam(o.categorie)} · ${tijdTekst(o.duur * 60)}`}</h2>
-                <VeldplanSamen c={c} onderdeel={o} vind={vindOefening} opVeld={() => open(o)} />
+                <VeldplanSamen c={cd} onderdeel={o} vind={vindOefening} opVeld={() => open(o)} />
               </div>
             ))}
-            {heeftTrainers && <SamenTrainers c={c} nu={nu} bewaar={bewaarKeuzes} />}
-            {heeftTrainers && !plan.stations.length && <StationTrainers c={c} nu={nu} bewaar={bewaarKeuzes} />}
+            {heeftTrainers && <SamenTrainers c={cd} nu={nu} bewaar={bewaarKeuzes} />}
+            {heeftTrainers && !plan.stations.length && <StationTrainers c={cd} nu={nu} bewaar={bewaarKeuzes} />}
           </>
         )}
 
         {actief === 'rotatie' && (
           <>
             <h2 className="sectie-titel">{vt('Rotatieschema')}</h2>
-            <RotatieTabel c={c} />
+            <RotatieTabel c={cd} />
           </>
         )}
 

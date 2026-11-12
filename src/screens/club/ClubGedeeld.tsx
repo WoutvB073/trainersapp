@@ -3,8 +3,9 @@ import { Kop } from '../../components/Kop';
 import { vindOefening } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga } from '../../router';
-import { clubNaam, clubPlan, groepNaam, materiaal, mijnRondes, oefeningenVan, oefeningTijden, partijvelden, rondePlekken, rondeTijd, samenPloeg, stationNaam, stationPloeg, tijdTekst, trainerModus, trainerNamen, uitCode, veldPloeg, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
-import { datumTekst } from '../../training/training';
+import { clubNaam, clubPlan, groepNaam, materiaal, mijnRondes, oefeningenVan, oefeningTijden, opDag, partijvelden, rondePlekken, rondeTijd, samenPloeg, stationNaam, stationPloeg, tijdTekst, trainerModus, trainerNamen, uitCode, veldPloeg, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
+import { dagTekst, datumTekst } from '../../training/training';
+import { DagKeuze, useDag } from './dag';
 import type { Oefening } from '../../model/types';
 import { BlokOefeningen, blokNaam, blokStijl, faseTitel, MateriaalNoot, oefeningNummers, ploegTekst, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
 import { LinkFout } from '../GedeeldLink';
@@ -141,13 +142,19 @@ function MateriaalLijst({ g }: { g: GedeeldeClub }) {
  * Een circuittraining bekijken, alleen lezen: stations, veldplan, rotatie en per station de oefening. Gebruikt door de link
  * voor de trainers en door de gedeelde circuittraining in een team. `basis` = adres van deze pagina.
  */
-export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, metMateriaal, children }: { g: GedeeldeClub; basis: string; station?: number; partij?: true | number; kop?: string; ouder?: string; label?: string; metMateriaal?: boolean; children?: ReactNode }) {
+export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, label, metMateriaal, children }: { g: GedeeldeClub; basis: string; station?: number; partij?: true | number; kop?: string; ouder?: string; label?: string; metMateriaal?: boolean; children?: ReactNode }) {
+  const [dag, kiesDag] = useDag(heel.datums);
+  // De trainers van de gekozen dag; onderdelen en rotatie zijn voor alle dagen gelijk.
+  const g = opDag(heel, dag);
   const vind = zoeker(g);
   const plan = clubPlan(g);
   const lijst = plan.stations;
   const namen = trainerNamen(g);
   const [ikKeuze, setIk] = useState(leesIk);
   const ik = namen.includes(ikKeuze) ? ikKeuze : '';
+  // Staat de gekozen naam op een andere dag?
+  const andereDag = ikKeuze && !ik ? heel.datums.findIndex((_, i) => i !== dag && trainerNamen(opDag(heel, i)).includes(ikKeuze)) : -1;
+  const alleNamen = [...new Set([...namen, ...heel.datums.flatMap((_, i) => trainerNamen(opDag(heel, i)))])];
   const meelopen = trainerModus(g) === 'groepje';
   const opIk = (s: Station) => !!ik && (meelopen ? mijnRondes(g, ik).some((m) => m.plek?.station?.nr === s.nr) : stationPloeg(g, s.nr).includes(ik));
   const velden = partijvelden(g.groepjes);
@@ -175,24 +182,33 @@ export function ClubWeergave({ g, basis, station, partij, kop, ouder, label, met
           <h2 className="detail-titel">{clubNaam(g)}</h2>
           <p>{[g.datums.map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes }), tijdTekst(plan.totaal)].filter(Boolean).join(' · ')}</p>
           {children}
-          {namen.length > 0 && (
+          <DagKeuze datums={heel.datums} dag={dag} opKies={kiesDag} />
+          {alleNamen.length > 0 && (
             <label className="leeftijd-keuze club-ik-ben">
               <span>{vt('Ik ben…')}</span>
               <select
-                value={ik}
+                value={alleNamen.includes(ikKeuze) ? ikKeuze : ''}
                 onChange={(e) => {
                   setIk(e.target.value);
                   bewaarIk(e.target.value);
                 }}
               >
                 <option value="">{vt('Kies je naam')}</option>
-                {namen.map((n) => (
+                {alleNamen.map((n) => (
                   <option key={n} value={n}>
                     {n}
                   </option>
                 ))}
               </select>
             </label>
+          )}
+          {andereDag >= 0 && (
+            <p className="klein club-noot">
+              {vt('Je staat niet op {dag}.', { dag: dagTekst(heel.datums[dag]!) })}{' '}
+              <button className="knop-link" onClick={() => kiesDag(andereDag)}>
+                {vt('Naar {dag}', { dag: dagTekst(heel.datums[andereDag]!) })}
+              </button>
+            </p>
           )}
         </section>
 

@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (07-11-2026, versie 0.33.1)
+## Status (12-11-2026, versie 0.34.0)
 
 | Fase | Status |
 |---|---|
@@ -45,7 +45,9 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 31. Links verlopen na 180 dagen, anonieme accounts opruimen (0.32.1) | ✅ online – **wacht op test** |
 | 32. Vier spelersoefeningen: golven, vallende pion, hordes zijwaarts, achtjes; pion in de hand en afremmen (0.32.2) | ✅ online, getest |
 | 33. Achtjes naar tekening 25, Golven met keepers, meer oefeningen per blok, Techniek opgeschoond, 6 techniekoefeningen, Partijspel (0.33.0) | ✅ online, getest |
-| 34. Meer trainers per station, meelopen met een groepje, Ik ben… in de trainerslink (0.33.1) | ✅ online – **wacht op test** |
+| 34. Meer trainers per station, meelopen met een groepje, Ik ben… in de trainerslink (0.33.1) | ✅ online, getest |
+| 35. Trainers per dag en een trainersrooster (0.34.0) | ✅ online – **wacht op test** |
+| 36. Mini's: O6 en O7 apart, nieuwe oefeningen (0.34.1) | ⏳ bezig |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1209,8 +1211,30 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Delen**: de keuzes gaan mee in de link (veld `p`) en het team. De link rekent verder hetzelfde uit, dus automatisch verdelen hoeft niet in de link te staan. De link past nu 30 trainers in plaats van 12.
 - **Ik ben…**: `trainersapp.ikBen`, één naam per toestel, voor alle trainerslinks.
 
+## Besluiten versie 0.34.0 – trainers per dag en trainersrooster
+- **Per dag**: `ClubTraining.perDag` (index = die van `datums`) met per dag `trainers`, `trainerKeuzes`, `vast` en `rooster`. Zonder dag gelden `trainers` en `trainerKeuzes` zoals vóór 0.34.0. `opDag(c, dag)` geeft de training zoals hij die dag is; alle trainerfuncties werken daarop. Onderdelen, rotatie en materiaal zijn voor alle dagen gelijk.
+- **Dag kiezen**: `src/screens/club/dag.tsx` (`useDag`, `DagKeuze`). De gekozen datum wordt onthouden (`trainersapp.dag`); anders vandaag of de eerstvolgende datum.
+- **Trainerslink**: één link met bovenaan de dag (veld `pd` per dag, `gr` = groep). Ik ben… kiest uit alle namen. Staat iemand die dag niet op de lijst, dan zegt de link dat, met een knop naar de dag waarop hij wel staat.
+- **Rooster**: `src/clubtraining/rooster.ts` (puur) en `src/screens/club/Rooster.tsx` (`#/rooster`, `#/rooster/:id`, `#/team/:id/rooster/:item`). Per trainer: dagen, elke week of om de week vanaf een beginweek, groepen (ook om de week wisselend, in volgorde, met de eerste in de beginweek), en een vaste plek (categorie). Weken worden geteld vanaf de maandag van de beginweek, dus ook over een jaarwisseling klopt het.
+- **Invullen**: `vulVolgensRooster`: een training met een `groep` krijgt per datum de trainers die er die dag bij die groep zijn. Dat gebeurt bij het kiezen van de groep, bij een nieuwe training uit een sjabloon met een groep, bij andere datums (alleen dagen die het rooster nog volgden) en bij Naar volgende week (`volgendeWeek`: alle dagen weer volgens het rooster).
+- **Vaste plek**: `vast` per dag. Bij het verdelen gaat zo'n trainer eerst naar een station van zijn categorie; bij partijvormen naar de velden. Is er die dag geen onderdeel van die categorie, dan wordt hij gewoon verdeeld. Een Samen-onderdeel heeft standaard alle trainers, dus daar staat hij ook. Bij meelopen met een groepje telt de vaste plek niet.
+- **Verdelen**: `verdeel` geeft elke trainer aan de plek met de minste trainers (bij gelijk: de eerste). Zonder vaste plekken is dat hetzelfde als om en om, zoals in 0.33.1.
+- **Sync en team**: collectie `users/{uid}/rooster` (één document per trainer) en team-item soort `rooster` (id `rooster-<uid>`, één per eigenaar). Regels: alleen die twee namen erbij (`tests/online/regels.test.ts`). Overnemen voegt samen op id.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.34.0 – Trainerslink: één link met bovenaan de dag, niet een link per dag. Dan kan één bericht in de groepsapp voor beide dagen, en kiest elke trainer zelf.
+- 0.34.0 – De dagkeuze verschijnt pas bij twee datums. Met één datum werkt alles zoals vóór 0.34.0.
+- 0.34.0 – Trainers per dag pas je aan in het invulveld bij de circuittraining, met de dagkeuze erboven. De eerste aanpassing voor een dag kopieert de algemene trainers naar alle dagen, zodat de andere dag niet verandert.
+- 0.34.0 – Blijven of meelopen geldt voor alle dagen tegelijk.
+- 0.34.0 – Een training hoort bij een groep via een keuzelijst "Groep (trainersrooster)". De groepen komen uit het rooster; een nieuwe groep maak je bij een trainer in het rooster.
+- 0.34.0 – Een nieuwe trainer in het rooster staat standaard op de dag van vandaag, elke week, met deze week als beginweek.
+- 0.34.0 – Om de week wisselen kan tussen twee of meer groepen, in de volgorde die je kiest ("Begint bij"). Combineer je dat met om de week aanwezig, dan wisselt de groep per keer dat hij er is.
+- 0.34.0 – Opnieuw volgens het rooster vult alle dagen opnieuw in, ook dagen die je met de hand had aangepast.
+- 0.34.0 – Kies je een andere groep, dan worden alle dagen opnieuw ingevuld. Verander je een datum, dan alleen de dagen die het rooster nog volgden.
+- 0.34.0 – Heeft een training een groep maar staat er in het rooster niemand voor die groep, dan verandert er niets (ook niet bij Naar volgende week).
+- 0.34.0 – Een sjabloon bewaart de groep. Een nieuwe training uit dat sjabloon krijgt dus meteen de trainers uit het rooster (zodra er datums zijn).
+- 0.34.0 – Rooster overnemen uit een team: trainers met hetzelfde id worden bijgewerkt, nieuwe komen erbij. Er wordt niets weggehaald.
 - 0.33.1 – Minder trainers dan stations: niemand staat meer op twee plekken tegelijk, dus er blijven stations zonder trainer (vóór 0.33.1 kreeg een trainer er meer dan één). Eerst krijgt elk onderdeel één trainer, en de app meldt welke stations er geen hebben.
 - 0.33.1 – Trainers die een bestaande training had verdeeld zonder zelf te kiezen, staan daardoor soms op een andere plek. Zelf gekozen trainers blijven staan.
 - 0.33.1 – Bij een Samen-onderdeel zonder partijvelden staan standaard alle trainers samen; dat kun je per onderdeel aanpassen.

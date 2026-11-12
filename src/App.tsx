@@ -14,6 +14,7 @@ import { ClubKiezen } from './screens/club/ClubKiezen';
 import { ClubPlan } from './screens/club/ClubPlan';
 import { ClubTimer } from './screens/club/ClubTimer';
 import { ClubBlok } from './screens/club/ClubBlok';
+import { RoosterLijst, RoosterTrainerScherm, TeamRoosterScherm } from './screens/club/Rooster';
 import { ClubGedeeld } from './screens/club/ClubGedeeld';
 import { ruimLegeClubsOp } from './clubtraining/opslag';
 import { MijnTrainingen } from './screens/training/MijnTrainingen';
@@ -86,6 +87,12 @@ function Scherm({ route, opInstalleren }: { route: Route; opInstalleren?: () => 
       return <ClubPlan key={route.id} id={route.id} />;
     case 'club-blok':
       return <ClubBlok key={route.id + route.blok} id={route.id} blok={route.blok} />;
+    case 'rooster':
+      return <RoosterLijst />;
+    case 'rooster-trainer':
+      return <RoosterTrainerScherm key={route.id} id={route.id} />;
+    case 'teamrooster':
+      return <TeamRoosterScherm key={route.id + route.item} id={route.id} item={route.item} />;
     case 'club-timer':
       return <ClubTimer key={route.id} id={route.id} />;
     case 'club-gedeeld':

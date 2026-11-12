@@ -195,6 +195,7 @@ export function TeamScherm({ id }: { id: string }) {
   const oefeningen = t.items.filter((i) => i.soort === 'oefening');
   const trainingenTeam = t.items.filter((i) => i.soort === 'training');
   const clubsTeam = t.items.filter((i) => i.soort === 'clubtraining');
+  const roostersTeam = t.items.filter((i) => i.soort === 'rooster');
   const wedstrijdTeam = t.items.filter((i) => i.soort === 'opstelling' || i.soort === 'bord');
   const deelCode = async () => {
     const tekst = vt('Kom in mijn team "{naam}" in TopTraining: open de app, ga naar Instellingen → Teams en vul de code {code} in.', { naam: t.naam, code: t.code });
@@ -350,6 +351,33 @@ export function TeamScherm({ id }: { id: string }) {
               </li>
             ))}
           </ul>
+        )}
+
+        {roostersTeam.length > 0 && (
+          <>
+            <h2 className="sectie-titel">{vt('Gedeelde trainersroosters')}</h2>
+            <ul className="lijst">
+              {roostersTeam.map((it) => (
+                <li key={it.id} className="training-regel">
+                  <a
+                    className="rij"
+                    href={`#/team/${t.id}/rooster/${it.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      ga(`/team/${t.id}/rooster/${it.id}`);
+                    }}
+                  >
+                    <Icoon naam="team" maat={24} className="training-icoon" />
+                    <span className="rij-tekst">
+                      <span className="rij-titel">{it.naam}</span>
+                      <span className="rij-sub">{it.eigenaar === ik ? vt('Gedeeld door jou') : vt('Gedeeld door {naam}', { naam: it.eigenaarNaam })}</span>
+                    </span>
+                  </a>
+                  <div className="training-acties">{itemKnoppen(it)}</div>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
 
         <h2 className="sectie-titel">{vt('Gedeelde opstellingen en tactiekborden')}</h2>
@@ -541,7 +569,9 @@ export function DeelMetTeam({ soort, id, naam, breed }: { soort: TeamItem['soort
       vt('Gedeeld met {naam}', { naam: t.naam }),
     );
   };
-  const gedeeld = lijst.filter((t) => t.items.some((it) => it.id === id && it.eigenaar === s.account!.uid));
+  // Het rooster is één item per eigenaar.
+  const itemId = soort === 'rooster' ? `rooster-${s.account.uid}` : id;
+  const gedeeld = lijst.filter((t) => t.items.some((it) => it.id === itemId && it.eigenaar === s.account!.uid));
   return (
     <>
       <button className={breed ? 'knop knop-breed' : 'knop'} disabled={bezig} onClick={() => (lijst.length === 1 ? deel(lijst[0]!) : setOpen(true))}>

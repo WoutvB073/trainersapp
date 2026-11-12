@@ -21,7 +21,8 @@ describe('oude namen zijn weg', () => {
   it('niet in de teksten van de app', () => {
     for (const k of sleutels() as string[]) expect(k).not.toMatch(OUD_NL);
     for (const v of Object.values(en)) expect(v).not.toMatch(OUD_EN);
-  });
+    // Doorzoekt alle bronbestanden: onder volle belasting duurt dat langer dan de standaard 5 seconden.
+  }, 30000);
   it('niet in de Help', () => {
     for (const o of HELP_NL) expect([o.titel, ...o.tekst, ...(o.laatZien ?? []).map((k) => k.tekst)].join(' ')).not.toMatch(OUD_NL);
     for (const o of HELP_EN) expect([o.titel, ...o.tekst, ...(o.laatZien ?? []).map((k) => k.tekst)].join(' ')).not.toMatch(OUD_EN);

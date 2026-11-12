@@ -865,3 +865,96 @@
 .club-mijn-kaart small {
   color: var(--tekst-2);
 }
+
+/* Trainers per dag en trainersrooster (0.34.0) */
+.club-dagen {
+  margin: 0 0 10px;
+}
+
+.club-gegevens .club-dagen,
+.gedeeld-kop .club-dagen {
+  margin: 10px 0 4px;
+}
+
+.knop-link {
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--primair-tekst);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.rooster-trainer h3 {
+  margin: 16px 0 6px;
+}
+
+.rooster-keuze {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rooster-keuze button {
+  min-width: 48px;
+  min-height: 44px;
+  padding: 6px 12px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--tekst);
+  background: var(--kaart);
+  border: 1px solid var(--rand);
+  border-radius: 10px;
+}
+
+.rooster-keuze button.aan {
+  color: var(--op-primair);
+  background: var(--primair);
+  border-color: var(--primair);
+}
+
+.rooster-nieuw {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rooster-nieuw input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px 10px;
+  font: inherit;
+  color: var(--tekst);
+  background: var(--achtergrond);
+  border: 1px solid var(--rand);
+  border-radius: 10px;
+}
+
+.rooster-vink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 8px;
+}
+
+.rooster-vink input {
+  width: 22px;
+  height: 22px;
+}
+
+.rooster-kolom {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.rooster-kolom select {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}

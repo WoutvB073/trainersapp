@@ -31,6 +31,8 @@ import { useSyncExternalStore } from 'react';
  *   #/club/:id/plan          Veldplan, rotatie en materiaal
  *   #/club/:id/blok/:blok    De oefeningen van één onderdeel
  *   #/club/:id/timer         Kwartiertimer
+ *   #/rooster                Trainersrooster
+ *   #/rooster/:id            Eén trainer in het rooster
  *   #/c/:code                Gedeelde clubtraining voor de trainers (alleen lezen)
  *   #/c/:code/station/:nr    Eén station
  *   #/c/:code/partij         De partijvelden
@@ -77,6 +79,9 @@ export type Route =
   | { naam: 'club-plan'; id: string }
   | { naam: 'club-blok'; id: string; blok: string }
   | { naam: 'club-timer'; id: string }
+  | { naam: 'rooster' }
+  | { naam: 'rooster-trainer'; id: string }
+  | { naam: 'teamrooster'; id: string; item: string }
   | { naam: 'club-gedeeld'; code: string; station?: number; partij?: true | number }
   | { naam: 'eigen-nieuw' }
   | { naam: 'tekenen'; id: string }
@@ -134,6 +139,9 @@ export function leesHash(hash: string): Route {
   if (a === 'w' && b) return { naam: 'wedstrijd-gedeeld', code: b };
   if (a === 'team' && b && c === 'wedstrijd' && d) return { naam: 'teamwedstrijd', id: b, item: d };
   if (a === 'club' && !b) return { naam: 'club-lijst' };
+  if (a === 'rooster' && !b) return { naam: 'rooster' };
+  if (a === 'rooster' && b) return { naam: 'rooster-trainer', id: b };
+  if (a === 'team' && b && c === 'rooster' && d) return { naam: 'teamrooster', id: b, item: d };
   if (a === 'club' && b && !c) return { naam: 'club', id: b };
   if (a === 'club' && b && c === 'kiezen' && d) return { naam: 'club-kiezen', id: b, blok: d };
   if (a === 'club' && b && c === 'plan') return { naam: 'club-plan', id: b };
