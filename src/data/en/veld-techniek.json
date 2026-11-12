@@ -827,5 +827,183 @@
         "The leader may accelerate too"
       ]
     }
+  },
+  "veld-o7-vier-acties": {
+    "naam": "Four-move lane",
+    "uitleg": "Every cone has its own trick. At cone 1 you chop with the inside of your foot, at cone 2 you take the ball with the outside, at cone 3 you drag it back with your sole and at cone 4 you do a step-over. Then: full speed through the gate! Which lane is fastest?",
+    "organisatie": "Two 15 m lanes side by side, 5 m apart (11 × 17 m area). In each lane 4 big cones every 3 m and at the end a gate of 2 disc cones (2 m wide). 15-minute station for 5 children, each with a ball: 2 or 3 per lane. You go when the child in front of you reaches cone 3, so at most one child waits per lane. The coach calls \"go!\" and counts how often someone comes through the gate in each lane: which lane has the most after 2 minutes? Then the children swap lanes.",
+    "benodigdheden": [
+      "8 big cones",
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Small touches just before the cone",
+      "After your trick: speed up!",
+      "Look up for a moment: where is the gate?"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The same trick at every cone (chop with the inside)",
+        "Cones further apart and walk first"
+      ],
+      "moeilijker": [
+        "Everything with your weaker foot",
+        "At the start the coach calls which trick you do at each cone",
+        "After the gate a defender is waiting: play 1v1 to the line"
+      ]
+    }
+  },
+  "veld-o7-kaatsbord-wegdraaien": {
+    "naam": "Rebound and turn",
+    "uitleg": "Play the ball against the rebounder. Listen carefully: the coach calls \"left!\" or \"right!\". Take the ball straight away to that side and go through the gate as fast as you can. Who is first through the right gate?",
+    "organisatie": "Two rebounders 8 m apart (16 × 13 m area). At each rebounder a starting spot 5 m away, with a gate of 2 disc cones (2 m wide) 3 m to the left and to the right of it. 15-minute station for 5 children, each with a ball: 2 or 3 per rebounder. Two children play against their rebounder at the same time. Just before the ball comes back the coach calls \"left!\" or \"right!\". The first one through the right gate gets a point. Dribble back round the outside: then the next one is already going.",
+    "benodigdheden": [
+      "2 rebounders",
+      "8 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Watch the ball and listen to the coach",
+      "Take the ball with your first touch, don’t stop it first",
+      "After the turn: go fast!"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach calls the side before you play",
+        "Stop the ball with your sole first, then turn"
+      ],
+      "moeilijker": [
+        "The coach only raises an arm, without calling: watch carefully!",
+        "Play harder against the rebounder, so the ball comes back faster",
+        "A defender runs with you and tries to block the gate"
+      ]
+    }
+  },
+  "veld-o7-dribbelen-in-de-drukte": {
+    "naam": "Dribbling in the crowd",
+    "uitleg": "Everyone dribbles all over the narrow area. Head up! The coach holds up a disc cone. Red: call \"red!\" and put your foot on the ball. Blue: call \"blue!\" and chop the other way. Does the coach hold up fingers? Call the number and touch the ball that many times with your sole. Who is fastest?",
+    "organisatie": "Narrow 8 × 12 m area. 15-minute station for 5 children, each with a ball. The coach stands on the long side with a red and a blue disc cone and keeps holding one of them up, or a number of fingers. The first one to call it correctly and do it correctly gets a point. After 2 minutes a short rest and count the points.",
+    "benodigdheden": [
+      "6 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Between your touches, look at the coach",
+      "Small touches, then you won’t bump into anyone",
+      "See some space? Go there"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A bigger area",
+        "The coach also calls the colour"
+      ],
+      "moeilijker": [
+        "An even narrower area (6 × 12 m)",
+        "More signs: yellow = turn with the outside, a fist = step-over",
+        "Only dribble with your weaker foot"
+      ]
+    }
+  },
+  "veld-o7-poortjespassen": {
+    "naam": "Gate passing",
+    "uitleg": "You are a pair with one ball. Pass to each other through a gate: that’s a point! Then quickly choose another gate. The same gate twice in a row doesn’t count. Which pair has the most after 1 minute?",
+    "organisatie": "13 × 14 m area with 6 gates of 2 disc cones (1.5 m wide) spread around the area. 15-minute station for 5 children: two pairs and one child who plays with the coach (someone swaps after every round). Each pair has one ball. The coach calls \"go!\" and after 1 minute \"stop!\", and everyone calls out how many gates they had.",
+    "benodigdheden": [
+      "12 disc cones",
+      "3 footballs"
+    ],
+    "coachpunten": [
+      "See where your partner is and then pass",
+      "Control the ball and go straight to the next gate",
+      "Is the gate taken? Choose a free gate"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger gates (2.5 m)",
+        "Stop the ball first, then pass"
+      ],
+      "moeilijker": [
+        "Control with one foot and take it with you straight away",
+        "Only pass with your weaker foot",
+        "The coach is a tagger without a ball who can close a gate"
+      ]
+    }
+  },
+  "veld-o6-bevroren": {
+    "naam": "Frozen!",
+    "uitleg": "The coach is the ice king. Everyone dribbles around with a ball. Does the ice king tag you? Then you are frozen: put your foot on the ball and stand still. A friend can unfreeze you by dribbling a circle around you. Can the ice king freeze everyone?",
+    "organisatie": "12 × 12 m area. 15-minute station for 5 children, each with a ball. The coach (without a ball) is the ice king and calls \"frozen!\" when tagging someone. After 1 minute the coach counts how many children are frozen. Then a child may be the ice king.",
+    "benodigdheden": [
+      "4 disc cones",
+      "Bibs",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Keep your ball close, then you can get away fast",
+      "Look up: where is the ice king?",
+      "Help a friend: dribble a circle around them"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The ice king only walks",
+        "Unfreeze with a high five"
+      ],
+      "moeilijker": [
+        "Two ice kings",
+        "Unfreeze by passing the ball between your friend’s legs",
+        "Frozen? Do 5 tic-tac touches and you are free again"
+      ]
+    }
+  },
+  "veld-o6-ruilen": {
+    "naam": "Swap!",
+    "uitleg": "Everyone dribbles around with a ball. When the coach calls \"swap!\", you pass your ball to a friend and get their ball back. Then you carry on dribbling. How many times can you swap together in 1 minute?",
+    "organisatie": "12 × 12 m area. 15-minute station for 5 children, each with a ball; the coach joins in with a ball too, so everyone has a partner. The coach calls \"swap!\" and counts out loud how often it works. After 1 minute: can you get more next time?",
+    "benodigdheden": [
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look at your friend first, then pass",
+      "A soft pass with the inside of your foot",
+      "Stop the ball you get with your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Stand still first, then swap",
+        "Roll it with your foot instead of passing"
+      ],
+      "moeilijker": [
+        "Only swap with someone in a different bib",
+        "Do a chop straight after swapping",
+        "The coach calls a number: only those two swap, the rest put their foot on the ball"
+      ]
+    }
+  },
+  "veld-o6-pinguinrace": {
+    "naam": "Penguin race",
+    "uitleg": "You are penguins and the ball is your egg. Waddle with small tic-tac touches (inside left, inside right) to the middle line. Look at the coach! Red disc cone: the polar bear is coming! Turn round and dribble home fast. Blue disc cone: dribble fast to the other side. Who is safe first?",
+    "organisatie": "12 × 11 m area with a start line, a middle line at 5 m and a far side at 10 m, each made with 2 disc cones. 15-minute station for 5 children side by side, each with a ball: everyone plays at the same time. The coach stands at the side, holds up a red or a blue disc cone and calls \"polar bear!\" or \"other side!\". Whoever is safe first gets a point.",
+    "benodigdheden": [
+      "8 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Small touches between your feet, just like a penguin",
+      "Look up at the coach",
+      "Turn with your sole and then go fast"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Only the blue disc cone: always to the other side",
+        "Walk instead of running"
+      ],
+      "moeilijker": [
+        "Add a green disc cone: stop with your foot on the ball",
+        "Tic-tac with your head up, without looking at the ball",
+        "Back home with your other foot"
+      ]
+    }
   }
 }

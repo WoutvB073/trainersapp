@@ -51,7 +51,7 @@ for (const taal of ['nl', 'en']) {
     };
     const teller = () => page.evaluate(() => parseInt(document.querySelector('.filter-status span')?.textContent ?? '0', 10));
 
-    // Bibliotheek: alle spelersoefeningen, dan Mini's 3–5.
+    // Bibliotheek: alle spelersoefeningen, dan Mini's O6 (id mini-3-5, sinds 0.34.1 O6).
     await open('/veld/alle');
     await filterOpen();
     const alle = await teller();
@@ -76,7 +76,7 @@ for (const taal of ['nl', 'en']) {
     // Oefening: leeftijden en kleuteruitleg.
     await open('/oefening/veld-mt-verkeerslicht');
     const detail = await page.evaluate(() => document.querySelector('.detail-leeftijden')?.textContent);
-    if (!detail?.includes('3–5')) problemen.push(`${waar}: leeftijden niet bij de oefening (${detail})`);
+    if (!/O6|U6/.test(detail ?? '')) problemen.push(`${waar}: leeftijden niet bij de oefening (${detail})`);
 
     // Training maken: nieuwe training begint met de laatst gekozen leeftijd; alleen mini-oefeningen te kiezen.
     const id = await page.evaluate(() => {
@@ -89,13 +89,13 @@ for (const taal of ['nl', 'en']) {
     const bewerk = await page.evaluate(() => ({ keuze: document.querySelector('.leeftijd-keuze select')?.value, oranje: document.querySelector('.waarschuwing')?.textContent ?? '' }));
     await foto('training');
     if (bewerk.keuze !== 'mini-3-5') problemen.push(`${waar}: training zonder leeftijd (${bewerk.keuze})`);
-    if (!/3–5/.test(bewerk.oranje)) problemen.push(`${waar}: geen oranje melding voor de leeftijd (${bewerk.oranje})`);
+    if (!/O6|U6/.test(bewerk.oranje)) problemen.push(`${waar}: geen oranje melding voor de leeftijd (${bewerk.oranje})`);
     await open(`/training/${id}/kiezen`);
     if (!(await page.$('.filter-noot'))) await page.click('.filter-knop');
     await slaap(120);
     await foto('kiezen');
     const kiezen = await page.evaluate(() => document.querySelector('.filter-noot')?.textContent ?? '');
-    if (!/3–5/.test(kiezen)) problemen.push(`${waar}: leeftijd niet bij Oefeningen kiezen (${kiezen})`);
+    if (!/O6|U6/.test(kiezen)) problemen.push(`${waar}: leeftijd niet bij Oefeningen kiezen (${kiezen})`);
     await open(`/training/${id}/genereren`);
     await foto('genereren');
 

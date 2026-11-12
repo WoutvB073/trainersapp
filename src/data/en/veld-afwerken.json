@@ -872,5 +872,166 @@
       "Carry the ball",
       "Shot"
     ]
+  },
+  "veld-o7-schietduel": {
+    "naam": "Shooting duel",
+    "uitleg": "The coach plays a ball in between you. Run! Whoever gets the ball first may shoot at the big goal. The other one tries to stop it. Through a hole in a corner: 3 points. In the net: 1 point.",
+    "organisatie": "E-goal with a net with open corners. The coach stands 13 m from the goal, the two children to the left and right of the coach, 4 m apart (16 × 17 m area). The coach calls \"go!\" and plays the ball 6 m onto the pitch. 15-minute station for 5 children: two pairs take turns. While one pair shoots, the next one is already ready. The fifth child fetches the balls from the goal and comes in after every turn.",
+    "benodigdheden": [
+      "1 E-goal",
+      "1 net with open corners",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Run to the ball, not to the other child",
+      "Put your body between the other child and the ball",
+      "Look for a hole in a corner and shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach plays the ball closer to the goal",
+        "Every shot on goal is worth 1 point"
+      ],
+      "moeilijker": [
+        "The coach plays the ball at an angle or lets it bounce",
+        "If the defender wins the ball, they may score in a mini-goal behind the start line",
+        "You must shoot within 3 seconds of receiving the ball"
+      ]
+    }
+  },
+  "veld-o7-pop-actie-schieten": {
+    "naam": "Move at the mannequin and shoot",
+    "uitleg": "Dribble to the mannequin. Just before it the coach calls \"left!\" or \"right!\". Do a step-over or a chop and go past the mannequin on that side. Then shoot into a corner of the goal! Through a hole in a corner: 3 points. In the net: 1 point.",
+    "organisatie": "E-goal with a net with open corners. Two mannequins 7 m in front of the goal, 5 m apart, and two starting spots 14 m away (16 × 18 m area). 15-minute station for 5 children, each with a ball: 2 or 3 per starting spot. Left and right take turns: go when the other child reaches the mannequin. The coach stands between the mannequins, calls the side and counts the points per line: left against right.",
+    "benodigdheden": [
+      "1 E-goal",
+      "1 net with open corners",
+      "2 mannequins",
+      "2 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Do your move just before the mannequin, not too early",
+      "After the move: speed up and shoot straight away",
+      "Look at the hole first, then shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "You choose the side yourself",
+        "Every goal counts"
+      ],
+      "moeilijker": [
+        "Shoot with the foot furthest from the mannequin",
+        "The coach only calls at the very last moment",
+        "After the shot the coach runs with the next child as a defender"
+      ]
+    }
+  },
+  "veld-o7-draaien-en-scoren": {
+    "naam": "Turn and score",
+    "uitleg": "You stand with your back to the goal. The coach plays the ball to you. Take a quick look over your shoulder: where is the defender? Turn away to the other side and shoot into a corner of the goal!",
+    "organisatie": "E-goal with a net with open corners. The attackers stand 9 m from the goal, facing the coach 14 m away; the defenders stand 2 m behind them (16 × 17 m area). 15-minute station for 5 children: two pairs, left and right take turns. The fifth child fetches the balls and comes in after every turn. The coach calls a name and \"turn!\", and plays the ball in. Through a hole in a corner: 3 points, in the net: 1 point. After 3 balls attacker and defender swap.",
+    "benodigdheden": [
+      "1 E-goal",
+      "1 net with open corners",
+      "4 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Look over your shoulder before the ball arrives",
+      "Turn away from the defender",
+      "After turning: shoot straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender stays where they are (only in the way)",
+        "Stop the ball first, then turn"
+      ],
+      "moeilijker": [
+        "The defender may join in straight away",
+        "Turn with your first touch",
+        "The coach plays the ball in harder or at an angle"
+      ]
+    }
+  },
+  "veld-o6-au": {
+    "naam": "Ouch!",
+    "uitleg": "The coach walks around the area. Dribble up to the coach and shoot softly against their shins. A hit? Then the coach calls \"ouch!\" and jumps. You get a point! You may also knock over a tall cone. Who has the most points?",
+    "organisatie": "12 × 12 m area with 3 tall cones on the edge. 15-minute station for 5 children, each with a ball (preferably a small ball, size 3). The coach wears shin pads and walks around calmly. Every child counts their own points: hitting the coach is 1 point, knocking over a cone is 2 points. The coach calls \"ouch!\", jumps, plays the ball back and puts fallen cones back up. After 2 minutes: who has the most points?",
+    "benodigdheden": [
+      "3 tall cones",
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Dribble close and then shoot softly",
+      "Look first: where is the coach?",
+      "Shoot with the inside of your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach stands still",
+        "A bigger area, with more cones to hit"
+      ],
+      "moeilijker": [
+        "The coach walks faster and turns away",
+        "You may only hit with your other foot",
+        "You may only shoot from behind a line of disc cones 4 m away"
+      ]
+    }
+  },
+  "veld-o6-kamer-opruimen": {
+    "naam": "Tidy your room",
+    "uitleg": "What a mess in your room! Shoot all the balls into the coach’s room. But the coach is tidying up too: the coach shoots them back! When the coach calls \"stop!\", we count: which room has the fewest balls?",
+    "organisatie": "Two 9 × 8 m rooms side by side (10 × 17 m area), with a halfway line. The children are in one room, the coach in the other. 15-minute station for 5 children with 8–10 balls. The coach calls \"tidy up!\" and after 1 minute \"stop!\". Take a ball, dribble to the halfway line and shoot it into the other room, where the coach isn’t standing. Whoever tidies up the most may call \"stop!\" next round.",
+    "benodigdheden": [
+      "6 disc cones",
+      "10 footballs"
+    ],
+    "coachpunten": [
+      "Look where the coach isn’t and shoot there",
+      "Dribble to the line first, then shoot",
+      "Quickly get the next ball!"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach only shoots back now and then",
+        "A narrower room for the coach, so it’s closer"
+      ],
+      "moeilijker": [
+        "Two teams against each other (2 v 3), without the coach",
+        "Only shoot with your other foot",
+        "Stop the ball with your sole first, then shoot"
+      ]
+    }
+  },
+  "veld-o6-doeltjesjagers": {
+    "naam": "Dragon at the goals",
+    "uitleg": "There are four mini-goals and the coach is a dragon. You may not score in the goal where the dragon is standing! Dribble to a goal where the dragon isn’t and score. Get your ball and find another goal. How many goals do you score?",
+    "organisatie": "14 × 12 m area with two mini-goals on each short side. 15-minute station for 5 children, each with a ball. The coach is the dragon: the dragon walks from goal to goal and roars \"closed!\" at the goal where they stand. Every child counts their own goals; the same goal twice in a row doesn’t count. After 1 minute: who has the most?",
+    "benodigdheden": [
+      "4 mini-goals",
+      "4 disc cones",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "Look up: where is the dragon?",
+      "Go to the goal that is open",
+      "Get close and then shoot softly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The dragon stays at one goal",
+        "Bigger goals, or score from close by"
+      ],
+      "moeilijker": [
+        "Two dragons: one child becomes a dragon too (without a ball)",
+        "You may only score after a chop",
+        "The dragon may also win a ball: then 5 sole touches first before you get it back"
+      ]
+    }
   }
 }

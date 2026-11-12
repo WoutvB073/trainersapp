@@ -63,7 +63,32 @@ function stopBij(van, doel, afstand = 0.62) {
   return [+(doel[0] - ((doel[0] - van[0]) / d) * afstand).toFixed(2), +(doel[1] - ((doel[1] - van[1]) / d) * afstand).toFixed(2)];
 }
 
+/**
+ * Tekening een kwartslag draaien (0.34.1, zoals draaiKwart in spelers-027b.cjs): (x, y) → (y, breedte − x), hoeken −90.
+ * Zo staan aanvaller en verdediger in 3D (Schuin) naast elkaar in plaats van achter elkaar.
+ */
+function draaiKwart(t) {
+  const b = t.veld.breedte;
+  const p = ([x, y]) => [y, +(b - x).toFixed(2)];
+  const isPunt = (v) => Array.isArray(v) && typeof v[0] === 'number';
+  const objecten = t.objecten.map((o) => {
+    const n = { ...o, x: o.y, y: +(b - o.x).toFixed(2) };
+    if (o.hoek !== undefined) n.hoek = o.hoek - 90;
+    if (o.kijkrichting !== undefined) n.kijkrichting = o.kijkrichting - 90;
+    if (o.soort === 'zone') Object.assign(n, { breedte: o.lengte, lengte: o.breedte });
+    return n;
+  });
+  const actie = (a) => {
+    const n = { ...a };
+    for (const k of ['naar', 'terug', 'terugNaar', 'afloopNaar', 'stuitOp', 'duikNaar', 'stompNaar', 'punt']) if (isPunt(a[k])) n[k] = p(a[k]);
+    if (a.via) n.via = a.via.map(p);
+    if (a.kijk !== undefined) n.kijk = a.kijk - 90;
+    return n;
+  };
+  return { ...t, veld: { ...t.veld, breedte: t.veld.lengte, lengte: b }, objecten, animatie: t.animatie.map((st) => ({ ...st, acties: st.acties.map(actie) })) };
+}
+
 /** Dezelfde actie voor de eerste n kinderen. */
 const allen = (n, maak) => stap(...Array.from({ length: n }, (_, i) => maak(`a${i + 1}`, i)));
 
-module.exports = { MINI, KLEUREN, mini, zone, B, hoepel, kaatsbord, miniGoal, eGoal, pionHoog, pionGroot, pionKlein, tennisbal, leeg, vak, plek, stopBij, kinderen, rondje, allen, trainer, speler, bal, hoedje, stap };
+module.exports = { draaiKwart, MINI, KLEUREN, mini, zone, B, hoepel, kaatsbord, miniGoal, eGoal, pionHoog, pionGroot, pionKlein, tennisbal, leeg, vak, plek, stopBij, kinderen, rondje, allen, trainer, speler, bal, hoedje, stap };

@@ -347,5 +347,164 @@
         "The defender starts closer to the attacker"
       ]
     }
+  },
+  "veld-o7-tik-het-hoedje": {
+    "naam": "Hit the disc cone",
+    "uitleg": "Far away there is a disc cone. Hit it with your ball and you score a point! But watch out: the defender runs with you. Does the defender touch the disc cone with their foot first, or win your ball? Then the point goes to them. Do you shoot straight away, or dribble closer first?",
+    "organisatie": "Two 7 × 12 m lanes side by side, with 1 disc cone at the end of each lane, 10 m from the start. The attacker starts with the ball, the defender 2 m behind. The coach calls \"go!\". 15-minute station for 5 children: 2 pairs play, 1 child waits and plays the winner next. After every turn attacker and defender swap.",
+    "benodigdheden": [
+      "6 disc cones",
+      "2 footballs",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "See where the defender is: far away? Shoot straight away!",
+      "Shoot with your laces or the inside of your foot, not your toe",
+      "Defender: run the shortest way to the disc cone"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender starts 4 m behind you",
+        "Two disc cones side by side: hit one of them"
+      ],
+      "moeilijker": [
+        "The disc cone 12 m away and the defender only 1 m behind you",
+        "You may only hit it with your weaker foot",
+        "Two disc cones far apart: the defender can only protect one, choose the free one"
+      ]
+    }
+  },
+  "veld-o7-spiegel-naar-de-lijn": {
+    "naam": "Mirror to the line",
+    "uitleg": "You dribble along the line and the defender moves with you, just like a mirror. You choose the moment! Stop, turn or speed up, and dribble the ball over the line. Can you do it within 10 seconds? A point for you!",
+    "organisatie": "Two 10 × 5 m lanes (12 × 15 m area), each with a line of 4 disc cones along one long side. The defender stands between the attacker and the line, 2 m from the attacker. When the coach calls \"go!\" the attacker dribbles along the line and the defender mirrors. The coach counts out loud to 10. 15-minute station for 5 children: 2 pairs, 1 child waits and comes in after every turn. After every turn attacker and defender swap.",
+    "benodigdheden": [
+      "12 disc cones",
+      "2 footballs",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Draw the defender with you and then suddenly stop",
+      "After your stop: speed up to the line straight away",
+      "Defender: stay between the ball and the line"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender only walks and may not tackle",
+        "You have 15 seconds"
+      ],
+      "moeilijker": [
+        "You only have 5 seconds",
+        "The ball has to stop over the line (sole on it)",
+        "The defender may also win the ball and score over your line"
+      ]
+    }
+  },
+  "veld-o7-direct-omschakelen": {
+    "naam": "Lost it? Defend straight away!",
+    "uitleg": "You play 1v1. You score in one mini-goal, the other child in the other one. Do you win the ball? Go and score straight away! Have you lost the ball, or have you just scored? Then the coach plays a new ball straight in to the other child, and you have to get back fast to defend.",
+    "organisatie": "Two 8 × 12 m pitches side by side with a mini-goal on each short side. The coach stands between the pitches with a pile of balls. 15-minute station for 5 children: 2 pairs play, 1 child waits and comes in after 1 minute. The coach calls \"new ball!\" and plays it straight in to whoever did not lose the ball (after a goal: to the other child). Who has scored the most goals after 1 minute?",
+    "benodigdheden": [
+      "4 mini-goals",
+      "8 disc cones",
+      "Bibs",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Lost the ball? Run back straight away!",
+      "Won the ball? See where the mini-goal is and go!",
+      "Put your body between the other child and the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach waits 3 seconds with the new ball",
+        "Bigger goals (poles 2 m apart)"
+      ],
+      "moeilijker": [
+        "Two mini-goals on each side: choose the free one",
+        "You may only score after a move (chop or step-over)",
+        "A smaller pitch (6 × 10 m)"
+      ]
+    }
+  },
+  "veld-o7-reactiepoortjes": {
+    "naam": "Reaction gates",
+    "uitleg": "Around the area there are four gates: red, blue, yellow and green. The coach calls a colour. Dribble through that gate as fast as you can! The defender tries to stop you. Does the defender win the ball? Then they may go through any gate they like.",
+    "organisatie": "12 × 12 m area with a gate of 2 disc cones of one colour (2 m wide) in the middle of each side. 15-minute station for 5 children: 2 pairs play in the area at the same time, 1 child waits and comes in after every turn. The attacker has the ball, the defender stands 2 m behind. The coach calls one colour (\"red!\"), the same for everyone. Through the right gate: a point for the attacker. Ball won and through a gate yourself: a point for the defender.",
+    "benodigdheden": [
+      "12 disc cones",
+      "2 footballs",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Listen carefully and go straight away",
+      "Look up: which gate is it?",
+      "Keep the ball close to your foot when the defender is near"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender starts 4 m behind you",
+        "The coach also points at the gate"
+      ],
+      "moeilijker": [
+        "The coach calls two colours: choose the gate where the defender isn’t",
+        "The defender starts next to you instead of behind you",
+        "When the coach calls \"swap!\", the attacker gives the ball to the defender"
+      ]
+    }
+  },
+  "veld-o7-kaatsen-of-zelf": {
+    "naam": "Rebound or go yourself?",
+    "uitleg": "The rebounder is your teammate. Does the defender come close? Play the ball against the rebounder and run past them. Does the defender stay far away? Go yourself! Score in the mini-goal. After a rebound: 2 points.",
+    "organisatie": "Two 9 × 12 m pitches side by side with a mini-goal on the short side and a rebounder halfway along the long side. 15-minute station for 5 children: 2 pairs, 1 child waits and plays the winner next. The attacker starts with the ball at the start line, the defender at the mini-goal. The coach calls \"go!\" and counts the points: a goal after a rebound is 2 points, a goal after a dribble is 1 point.",
+    "benodigdheden": [
+      "2 rebounders",
+      "2 mini-goals",
+      "8 disc cones",
+      "2 footballs",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Does the defender come close? Use the rebounder!",
+      "After your pass: run past on the other side",
+      "Does the defender stay far away? Go yourself"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The defender may only walk",
+        "The rebounder closer"
+      ],
+      "moeilijker": [
+        "The defender may also block the rebounder",
+        "You must score within 8 seconds",
+        "A second rebounder on the other side: choose the free one"
+      ]
+    }
+  },
+  "veld-o6-haaien-en-visjes": {
+    "naam": "Sharks and little fish",
+    "uitleg": "You are little fish and the ball is your tail. There is a shark in the sea! When the coach calls \"swim!\", dribble to the other side. The shark tries to knock your ball away. Have you lost it? Then you become a shark too. Which little fish lasts the longest?",
+    "organisatie": "10 × 13 m area: in the middle the sea (10 × 9 m), at both ends a 2 m beach where you are safe. 15-minute station for 5 children: 4 little fish with a ball and 1 shark in a bib (to start with the coach can be the shark). The coach calls \"swim!\" and then all the fish dribble at the same time. Is there only one fish left? Then that fish has won and a new round starts with another shark. Everyone gets their ball back straight away.",
+    "benodigdheden": [
+      "8 disc cones",
+      "Bibs",
+      "1 football per child"
+    ],
+    "coachpunten": [
+      "See where the shark is and swim where the shark isn’t",
+      "Keep your ball close when the shark comes",
+      "Shark: look for a ball that is far from its owner’s foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The shark only walks (no running)",
+        "The coach is the shark and doesn’t tackle too hard"
+      ],
+      "moeilijker": [
+        "Two sharks at the same time",
+        "A narrower sea (7 m)",
+        "On the other side you have to stop the ball on the line with your sole, or it doesn’t count"
+      ]
+    }
   }
 }

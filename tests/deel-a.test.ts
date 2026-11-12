@@ -288,7 +288,11 @@ describe('A4 Doelnet', () => {
     expect(doelnetUitkomst({ ...basis, lijnen: [schot([20.5, 0])] }, schot([20.5, 0]))).toBeNull();
   });
 
-  it('ingebouwde oefeningen hebben geen doelnet, behalve Hoekenjacht (0.30.0)', () => {
-    expect(OEFENINGEN.filter((o) => o.tekening.objecten.some((x) => x.soort === 'doelnet')).map((o) => o.id)).toEqual(['veld-mt-hoekenjacht']);
+  it('ingebouwde oefeningen hebben geen doelnet, behalve Hoekenjacht (0.30.0) en de O7-afwerkvormen zonder keeper (0.34.1)', () => {
+    expect(
+      OEFENINGEN.filter((o) => o.tekening.objecten.some((x) => x.soort === 'doelnet'))
+        .map((o) => o.id)
+        .sort(),
+    ).toEqual(['veld-mt-hoekenjacht', 'veld-o7-draaien-en-scoren', 'veld-o7-pop-actie-schieten', 'veld-o7-schietduel']);
   });
 });

@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (12-11-2026, versie 0.34.0)
+## Status (12-11-2026, versie 0.34.1)
 
 | Fase | Status |
 |---|---|
@@ -47,7 +47,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 33. Achtjes naar tekening 25, Golven met keepers, meer oefeningen per blok, Techniek opgeschoond, 6 techniekoefeningen, Partijspel (0.33.0) | ✅ online, getest |
 | 34. Meer trainers per station, meelopen met een groepje, Ik ben… in de trainerslink (0.33.1) | ✅ online, getest |
 | 35. Trainers per dag en een trainersrooster (0.34.0) | ✅ online – **wacht op test** |
-| 36. Mini's: O6 en O7 apart, nieuwe oefeningen (0.34.1) | ⏳ bezig |
+| 36. Mini's: O6 en O7 apart, nieuwe oefeningen (0.34.1) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1221,6 +1221,16 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Verdelen**: `verdeel` geeft elke trainer aan de plek met de minste trainers (bij gelijk: de eerste). Zonder vaste plekken is dat hetzelfde als om en om, zoals in 0.33.1.
 - **Sync en team**: collectie `users/{uid}/rooster` (één document per trainer) en team-item soort `rooster` (id `rooster-<uid>`, één per eigenaar). Regels: alleen die twee namen erbij (`tests/online/regels.test.ts`). Overnemen voegt samen op id.
 
+## Besluiten versie 0.34.1 – mini's O6 en O7, nieuwe mini-oefeningen
+- **Groepen**: de ids blijven `mini-3-5` en `mini-5-7`; alleen de namen veranderen: Mini’s O6 (tot 6 jr) en Mini’s O7 (6–7 jr), Engels Minis U6 (under 6) en Minis U7 (6–7 yrs). Zo werken filters, teamtrainingen, circuittrainingen, links en team-items gewoon door: wat "Mini’s 3–5" was is nu O6, wat "Mini’s 5–7" was is nu O7. Er hoeft niets omgezet te worden.
+- **Indeling**: `tools/nieuw/mini-indeling-0341.cjs` zegt per mini-oefening O6, O7 of allebei (JO-groepen blijven staan). Alleen O6: 27 oefeningen zonder keuze of duel (verhaaltjes, rondjes, kleuren roepen, eenvoudige banen). Alleen O7: Ballen van de pion (tennisbal van een pion schieten). Bij O7 erbij: Kappen en draaien bij de pion, Schijnbeweging. De rest (duels, afwerken met een keuze, partijvormen) staat in allebei. **Let op:** draai je `mini-030a–d.cjs` opnieuw, draai daarna ook `mini-indeling-0341.cjs` (anders staan alle mini's weer in beide groepen en zijn de verbeteringen weg).
+- **Verbeterd in plaats van nieuw** (zelfde id): Bal beschermen (idee 3: punten, om de 30 tellen wisselen), Piratenspel (idee 10: de trainer roept acties en kleuren), 3 tegen 3 op vier doeltjes (idee 11: scoorzone zoals bij Funino), Huisjes (idee 16: eilanden, zool, telkens een eiland minder, niemand valt af), Hondje uitlaten (idee 13: olifant, kangoeroe, raket), Spiegeldribbel (idee 14: Volg de kapitein).
+- **Nieuw O7** (`tools/nieuw/mini-0341-o7.cjs`, ids `veld-o7-…`): Baan met vier acties (1), Kaatsen en wegdraaien (2), Tik het hoedje (4), Spiegel naar de lijn (5), Kwijt? Meteen verdedigen! (6), Reactiepoortjes (7), Schietduel (8), Actie bij de pop en schieten (9), Dribbelen in de drukte (12), en eigen: Kaatsen of zelf gaan?, Draaien en scoren, Poortjespassen.
+- **Nieuw O6** (`tools/nieuw/mini-0341-o6.cjs`, ids `veld-o6-…`): Haaien en visjes (15), Au! (17), en eigen: Kamer opruimen, Draak bij de doeltjes, Bevroren!, Ruilen!, Pinguïnrace.
+- **Eisen** (getest in `tests/versie-0341.test.ts`): één groep, 0 keepers, één categorie uit Techniek/1 tegen 1/Afwerken/Partijvormen/Warming-up, veldmaat in meters, 5 kinderen, 15 minuten, wat de trainer roept, een wedstrijdelement, 2–4 coachpunten, Makkelijker en minstens twee Moeilijker-stappen, alleen clubmateriaal, E-goal altijd met het net met open hoeken, Engels, en in de tekening doet (bijna) iedereen mee. Maximaal 2 wachtenden: bij duels twee veldjes of banen naast elkaar.
+- **3D**: duels waarbij aanvaller en verdediger in de kijkrichting achter elkaar stonden, zijn een kwartslag gedraaid met `draaiKwart` (nu in `mini-hulp.cjs`): Spiegel naar de lijn, Kwijt? Meteen verdedigen!, Kaatsen of zelf gaan?, Poortjespassen.
+- **Inspiratie** (alles in eigen woorden, geen namen in de app): KNVB Rinus en het onder-7-materiaal, een JO6/JO7-programma van een amateurclub, soccerxpert (U6/U7, afschermen, Funino), sessies van US Soccer, soccerhelp, clubspellen voor kleuters en de U6–U8-dribbelspellen op sportsessionplanner.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.34.0 – Trainerslink: één link met bovenaan de dag, niet een link per dag. Dan kan één bericht in de groepsapp voor beide dagen, en kiest elke trainer zelf.
@@ -1235,6 +1245,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.34.0 – Heeft een training een groep maar staat er in het rooster niemand voor die groep, dan verandert er niets (ook niet bij Naar volgende week).
 - 0.34.0 – Een sjabloon bewaart de groep. Een nieuwe training uit dat sjabloon krijgt dus meteen de trainers uit het rooster (zodra er datums zijn).
 - 0.34.0 – Rooster overnemen uit een team: trainers met hetzelfde id worden bijgewerkt, nieuwe komen erbij. Er wordt niets weggehaald.
+- 0.34.1 – De ids van de mini-groepen bleven gelijk; alleen de namen zijn O6 en O7. Bestaande trainingen met "Mini’s 3–5" zijn nu O6 en met "Mini’s 5–7" nu O7 (dat lag het meest voor de hand: de jongste groep is O6). De standaard voor een nieuwe circuittraining blijft de laatst gekozen groep, anders O7.
+- 0.34.1 – Een oefening die voor allebei past (duels, afwerken met een keuze, partijvormen) blijft in allebei staan. Alleen wat te eenvoudig is voor O7 of te moeilijk voor O6 staat in één groep.
+- 0.34.1 – De nieuwe O7-oefeningen staan alleen bij O7 (niet ook bij JO8–JO11), zodat de mini-groepen duidelijk blijven.
+- 0.34.1 – Zes ideeën lijken op een bestaande oefening: daar is de bestaande oefening beter gemaakt (zie Besluiten 0.34.1) in plaats van een bijna gelijke nieuwe.
+- 0.34.1 – Een eigen O6-idee "Schatkist" (ballen uit het midden naar je eigen huisje dribbelen) heb ik laten vallen: dat is vrijwel Schatrovers. In plaats daarvan kwam Pinguïnrace.
+- 0.34.1 – Au!: naast de schenen van de trainer zijn het hoge pionnen om om te schieten (2 punten), niet hoedjes op pionnen. Hetzelfde idee, en een hoedje dat van een pion valt kan de animatie nog niet tonen.
+- 0.34.1 – Haaien en visjes: wie zijn bal kwijt is wordt haai, zoals gevraagd; de rondes zijn kort en iedereen krijgt zijn bal meteen terug, zodat niemand lang zonder bal staat.
+- 0.34.1 – Hoepeleilanden: telkens een eiland minder, maar niemand valt af (dan deel je een eiland). Zo blijft iedereen met de bal bezig.
+- 0.34.1 – Tik het hoedje: het punt is voor de verdediger als hij het hoedje eerst met zijn voet aantikt of de bal afpakt.
+- 0.34.1 – Kwijt? Meteen verdedigen!: na een goal krijgt het andere kind de nieuwe bal (wie scoorde moet dan meteen verdedigen), zodat beide kinderen evenveel aanvallen.
+- 0.34.1 – Dribbelen in de drukte: de trainer steekt een gekleurd hoedje op (rood = voet op de bal, blauw = kap), of vingers (zo vaak met de zool tikken). Wie het eerst goed roept én het goed doet, krijgt een punt.
+- 0.34.1 – Duels met 5 kinderen: twee veldjes of banen naast elkaar, zodat er hooguit één kind wacht. Bij Reactiepoortjes spelen twee tweetallen tegelijk in één vak.
+- 0.34.1 – In de teksten roept de trainer nooit een echte naam, alleen "een naam".
 - 0.33.1 – Minder trainers dan stations: niemand staat meer op twee plekken tegelijk, dus er blijven stations zonder trainer (vóór 0.33.1 kreeg een trainer er meer dan één). Eerst krijgt elk onderdeel één trainer, en de app meldt welke stations er geen hebben.
 - 0.33.1 – Trainers die een bestaande training had verdeeld zonder zelf te kiezen, staan daardoor soms op een andere plek. Zelf gekozen trainers blijven staan.
 - 0.33.1 – Bij een Samen-onderdeel zonder partijvelden staan standaard alle trainers samen; dat kun je per onderdeel aanpassen.
