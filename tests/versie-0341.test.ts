@@ -43,7 +43,7 @@ const ALLEEN_O6 = [
   'veld-wu-overlopertje',
 ];
 const ALLEEN_O7 = ['veld-mt-tennisballen-van-de-pion'];
-const OOK_O7 = ['veld-tq-kappen-draaien', 'veld-tq-schijnbeweging'];
+const OOK_O7 = ['veld-tq-kappen-draaien', 'veld-tq-schijnbeweging', 'veld-lc-ladder-enkel', 'veld-lc-ladder-in-uit', 'veld-lc-lage-hordes', 'veld-lc-ringen', 'veld-lc-vallende-pion', 'veld-lc-hordes-zijwaarts-sprint'];
 
 const MAP = path.resolve(__dirname, '../src/data/en');
 const EN: Vertalingen = Object.assign({}, ...fs.readdirSync(MAP).map((f) => JSON.parse(fs.readFileSync(path.join(MAP, f), 'utf8'))));

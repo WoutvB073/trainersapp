@@ -1,7 +1,7 @@
 import { Kop } from '../../components/Kop';
 import { Icoon } from '../../components/Icoon';
 import { useState } from 'react';
-import { clubNaam, clubPlan, dupliceer, nieuweClub, onderdelenVan, tijdTekst, uitSjabloon, zelfOnderdelen, type ClubTraining } from '../../clubtraining/clubtraining';
+import { clubNaam, clubPlan, dupliceer, loopOnderdelen, nieuweClub, onderdelenVan, tijdTekst, uitSjabloon, zelfOnderdelen, type ClubTraining } from '../../clubtraining/clubtraining';
 import { clubtrainingen, echteClubs, sjablonen, useClubtrainingen, rooster } from '../../clubtraining/opslag';
 import { volgendeWeek, vulVolgensRooster } from '../../clubtraining/rooster';
 import { datumTekst } from '../../training/training';
@@ -14,6 +14,13 @@ import { t as vt } from '../../i18n/t';
 function maakMiniTalents() {
   const l = huidigeFilters().leeftijd;
   const c = clubtrainingen.bewaar(nieuweClub(l?.startsWith('mini') ? l : undefined));
+  ga(`/club/${c.id}`);
+}
+
+/** Mini Talents + loopcoördinatie (0.34.2): zelfde leeftijd als Mini Talents, 6 groepjes. */
+function maakLoop() {
+  const l = huidigeFilters().leeftijd;
+  const c = clubtrainingen.bewaar({ ...nieuweClub(l?.startsWith('mini') ? l : undefined), groepjes: 6, onderdelen: loopOnderdelen() });
   ga(`/club/${c.id}`);
 }
 
@@ -43,6 +50,15 @@ function NieuwPaneel({ eigen, opSluit }: { eigen: ClubTraining[]; opSluit: () =>
               <span className="rij-tekst">
                 <span className="rij-titel">{vt('Mini Talents')}</span>
                 <span className="rij-sub">{opzetTekst(nieuweClub())}</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button className="rij rij-knop club-loop-sjabloon" onClick={maakLoop}>
+              <Icoon naam="team" maat={22} className="training-icoon" />
+              <span className="rij-tekst">
+                <span className="rij-titel">{vt('Mini Talents + loopcoördinatie')}</span>
+                <span className="rij-sub">{opzetTekst({ ...nieuweClub(), groepjes: 6, onderdelen: loopOnderdelen() })}</span>
               </span>
             </button>
           </li>

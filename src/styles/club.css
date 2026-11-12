@@ -958,3 +958,37 @@
   max-width: none;
   min-width: 0;
 }
+
+/* 0.34.2: Samen met een deel van de groepjes. */
+.club-samen-keuze {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.club-samen-keuze select {
+  min-width: 0;
+  max-width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+  background: var(--kaart);
+  color: var(--tekst);
+  font: inherit;
+}
+
+.club-blok-samen {
+  padding: 6px 12px 0;
+}
+
+.club-blok-samen p {
+  margin: 4px 0;
+}
+
+.club-melding {
+  color: var(--waarschuwing);
+  font-weight: 600;
+}

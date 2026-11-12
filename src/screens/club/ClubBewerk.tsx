@@ -47,8 +47,7 @@ import {
   type BlokOefening,
   type ClubTraining,
   type Onderdeel,
-  type OnderdeelSoort,
-} from '../../clubtraining/clubtraining';
+  type OnderdeelSoort, samenPer, samenMeldingen } from '../../clubtraining/clubtraining';
 import { clubtrainingen, rooster, useClub, useRooster } from '../../clubtraining/opslag';
 import { roosterGroepen, vulVolgensRooster } from '../../clubtraining/rooster';
 import { dagTekst } from '../../training/training';
@@ -113,6 +112,25 @@ function SoortKeuze({ o, opZet }: { o: Onderdeel; opZet: (soort: OnderdeelSoort)
         </button>
       ))}
     </div>
+  );
+}
+
+/** Bij Samen (0.34.2): hoeveel groepjes er tegelijk komen. "Alle groepjes" is zoals vóór 0.34.2. */
+function SamenKeuze({ o, groepjes, opZet }: { o: Onderdeel; groepjes: number; opZet: (n: number | undefined) => void }) {
+  if (o.soort !== 'samen' || groepjes < 3) return null;
+  const nu = samenPer(o, groepjes) ?? 0;
+  return (
+    <label className="club-samen-keuze">
+      <span>{vt('Groepjes samen')}</span>
+      <select value={nu} onChange={(e) => opZet(Number(e.target.value) || undefined)} aria-label={vt('Groepjes samen bij {w0}', { w0: blokNaam(o.categorie) })}>
+        <option value={0}>{vt('Alle groepjes')}</option>
+        {Array.from({ length: groepjes - 2 }, (_, i) => i + 2).map((n) => (
+          <option key={n} value={n}>
+            {vt('{n} groepjes', { n })}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
@@ -193,7 +211,18 @@ function OnderdeelKaart({ c, o, nr, kanWeg, opWijzig, opZetOefeningen, opWeg, op
       <div className="club-blok-instellingen">
         <DuurKeuze o={o} opZet={(duur) => opWijzig({ duur })} />
         <SoortKeuze o={o} opZet={(soort) => opWijzig({ soort })} />
+        <SamenKeuze o={o} groepjes={c.groepjes} opZet={(groepjesSamen) => opWijzig({ groepjesSamen })} />
       </div>
+      {samenPer(o, c.groepjes) !== undefined && (
+        <div className="club-blok-samen">
+          <p className="klein">{vt('Per ronde komen er {n} groepjes samen op één station; de andere groepjes draaien door langs de gewone stations.', { n: samenPer(o, c.groepjes)! })}</p>
+          {samenMeldingen(c).map((m) => (
+            <p key={m} className="klein club-melding" role="note">
+              {m}
+            </p>
+          ))}
+        </div>
+      )}
       {lijst.length ? (
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={sleep}>
           <SortableContext items={lijst.map((x) => x.oefening)} strategy={verticalListSortingStrategy}>
@@ -258,7 +287,7 @@ export function ClubBewerk({ id }: { id: string }) {
   };
   const wijzig = (oid: string, w: Partial<Onderdeel>) => {
     const lijst = onderdelenVan(nu()).map((o) => (o.id === oid ? { ...o, ...w } : o));
-    if (w.soort) zetDelen(lijst);
+    if (w.soort || 'groepjesSamen' in w) zetDelen(lijst);
     else zet({ onderdelen: lijst });
   };
   const zetOefeningen = (oid: string, lijst: BlokOefening[]) => zet({ onderdelen: onderdelenVan(nu()).map((x) => (x.id === oid ? metOefeningen(x, lijst) : x)) });

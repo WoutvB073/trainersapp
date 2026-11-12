@@ -3,7 +3,7 @@ import { Kop } from '../../components/Kop';
 import { vindOefening } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga } from '../../router';
-import { clubNaam, clubPlan, groepNaam, materiaal, mijnRondes, oefeningenVan, oefeningTijden, opDag, partijvelden, rondePlekken, rondeTijd, samenPloeg, stationNaam, stationPloeg, tijdTekst, trainerModus, trainerNamen, uitCode, veldPloeg, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
+import { clubNaam, clubPlan, groepNaam, materiaal, mijnRondes, oefeningenVan, oefeningTijden, opDag, partijvelden, rondePlekken, rondeTijd, samenPloeg, stationNaam, stationPloeg, stationTitel, groepenOp, groepjesTekst, tijdTekst, trainerModus, trainerNamen, uitCode, veldPloeg, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
 import { dagTekst, datumTekst } from '../../training/training';
 import { DagKeuze, useDag } from './dag';
 import type { Oefening } from '../../model/types';
@@ -41,7 +41,7 @@ const wieOpStation = (g: GedeeldeClub, s: Station) =>
     .rondes.filter((r) => r.plekken.some((x) => x.nr === s.nr))
     .map((r) => {
       const ploeg = trainerModus(g) === 'groepje' ? ploegTekst(rondePlekken(g, r).find((p) => p.station?.nr === s.nr)?.trainers ?? []) : '';
-      return [vt('Ronde {nr}: groepje {g}', { nr: r.nr, g: groepNaam(r.plekken.findIndex((x) => x.nr === s.nr)) }) + ` (${rondeTijd(r, g.starttijd)})`, ploeg].filter(Boolean).join(' · ');
+      return [(groepenOp(r, s.nr).length > 1 ? vt('Ronde {nr}: {w0} samen', { nr: r.nr, w0: groepjesTekst(groepenOp(r, s.nr)) }) : vt('Ronde {nr}: groepje {g}', { nr: r.nr, g: groepNaam(groepenOp(r, s.nr)[0]!) })) + ` (${rondeTijd(r, g.starttijd)})`, ploeg].filter(Boolean).join(' · ');
     });
 
 const IK_BEN = 'trainersapp.ikBen';
@@ -165,7 +165,7 @@ export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, labe
     const s = lijst.find((x) => x.nr === station);
     if (!s) return <LinkFout />;
     const ploeg = stationPloeg(g, s.nr);
-    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationNaam(s) })} kleurBlok={s.vorm} regels={[...(ploeg.length ? [vt('Trainers: {naam}', { naam: ploegTekst(ploeg) })] : []), ...wieOpStation(g, s)]} onderdeel={vindOnderdeel(g, s.onderdeel)} vind={vind} />;
+    return <Plek ouder={basis} kop={vt('Station {nr}: {naam}', { nr: s.nr, naam: stationTitel(s) })} kleurBlok={s.vorm} regels={[...(ploeg.length ? [vt('Trainers: {naam}', { naam: ploegTekst(ploeg) })] : []), ...wieOpStation(g, s)]} onderdeel={vindOnderdeel(g, s.onderdeel)} vind={vind} />;
   }
   if (partij) {
     const o = plan.samen[partij === true ? 0 : partij - 1];
@@ -224,7 +224,7 @@ export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, labe
                   {s.nr}
                 </span>
                 <span className="club-station-naam">
-                  {stationNaam(s)}
+                  {stationTitel(s)}
                   {[tr, oefeningNummers(vindOnderdeel(g, s.onderdeel))].filter(Boolean).map((x) => (
                     <small key={x}>{x}</small>
                   ))}

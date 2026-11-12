@@ -43,7 +43,18 @@ const ALLEEN_O6 = [
 // Alleen O7: te moeilijk voor O6.
 const ALLEEN_O7 = ['veld-mt-tennisballen-van-de-pion'];
 // Nieuw bij O7: techniekoefeningen voor de jeugd die precies O7-techniek zijn (kappen en draaien, passeerbewegingen).
-const OOK_O7 = ['veld-tq-kappen-draaien', 'veld-tq-schijnbeweging'];
+const OOK_O7 = [
+  'veld-tq-kappen-draaien',
+  'veld-tq-schijnbeweging',
+  // 0.34.2: anders heeft O7 geen enkele Loopcoördinatie-oefening (sjabloon Mini Talents + loopcoördinatie). Loopladder, lage hordes,
+  // hoepels en pionnen heeft de club.
+  'veld-lc-ladder-enkel',
+  'veld-lc-ladder-in-uit',
+  'veld-lc-lage-hordes',
+  'veld-lc-ringen',
+  'veld-lc-vallende-pion',
+  'veld-lc-hordes-zijwaarts-sprint',
+];
 
 const lees = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
 const schrijf = (p, d) => fs.writeFileSync(p, JSON.stringify(d, null, 2) + '\n');

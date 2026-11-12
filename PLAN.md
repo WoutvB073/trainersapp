@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (12-11-2026, versie 0.34.1)
+## Status (12-11-2026, versie 0.34.2)
 
 | Fase | Status |
 |---|---|
@@ -48,6 +48,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 34. Meer trainers per station, meelopen met een groepje, Ik ben… in de trainerslink (0.33.1) | ✅ online, getest |
 | 35. Trainers per dag en een trainersrooster (0.34.0) | ✅ online – **wacht op test** |
 | 36. Mini's: O6 en O7 apart, nieuwe oefeningen (0.34.1) | ✅ online – **wacht op test** |
+| 37. Circuittraining: Samen met een deel van de groepjes, sjabloon Mini Talents + loopcoördinatie (0.34.2) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1231,6 +1232,18 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **3D**: duels waarbij aanvaller en verdediger in de kijkrichting achter elkaar stonden, zijn een kwartslag gedraaid met `draaiKwart` (nu in `mini-hulp.cjs`): Spiegel naar de lijn, Kwijt? Meteen verdedigen!, Kaatsen of zelf gaan?, Poortjespassen.
 - **Inspiratie** (alles in eigen woorden, geen namen in de app): KNVB Rinus en het onder-7-materiaal, een JO6/JO7-programma van een amateurclub, soccerxpert (U6/U7, afschermen, Funino), sessies van US Soccer, soccerhelp, clubspellen voor kleuters en de U6–U8-dribbelspellen op sportsessionplanner.
 
+## Besluiten versie 0.34.2 – Samen met een deel van de groepjes
+- **Model**: `Onderdeel.groepjesSamen` (alleen bij Samen). Leeg, of minstens het aantal groepjes = alle groepjes tegelijk, zoals vóór 0.34.2; bestaande trainingen, sjablonen, links en team-items werken dus door als Alle groepjes. Lees met `samenPer(o, groepjes)`; `inRotatie` = Stations of Samen met een deel.
+- **Rotatie** (`clubPlan`): een Samen-onderdeel met een deel van de groepjes draait mee met de Stations-onderdelen ervoor en erna (tussen twee Samen-met-alle-groepjes in). De groepjes gaan dan in vaste eenheden rond (`eenheden`: A+B, C+D, E+F …): eenheid u staat in ronde r op onderdeel (u + r) mod k. Op het gedeelde station komt de hele eenheid (`Station.samen`), op een gewoon onderdeel krijgt elk groepje van de eenheid een eigen station. Zonder gedeeld station is elke eenheid één groepje: dan is alles precies zoals vóór 0.34.2.
+- **Aantallen**: rondes = aantal onderdelen in de rotatie (zoals altijd). Stations: het gedeelde onderdeel ⌈eenheden / onderdelen⌉ stations, een gewoon onderdeel dat × de grootte van de eenheid. 6 groepjes met 2 samen bij 3 onderdelen: 3 rondes, Loopcoördinatie 1 station, 1 tegen 1 en Afwerken elk 2.
+- **Meldingen** (`samenMeldingen`, bij het onderdeel en onder het plan): groepjes gaan niet precies op (de laatste eenheid is kleiner: "Bij Loopcoördinatie komt groepje E alleen"), meer eenheden dan onderdelen (het gedeelde onderdeel staat dan op meer stations, met de tip een onderdeel toe te voegen), minder eenheden dan onderdelen (elke ronde blijft een onderdeel leeg), en twee gedeelde onderdelen met een ander aantal in één rotatie (het eerste aantal geldt).
+- **Namen**: `stationTitel` "Loopcoördinatie (2 groepjes samen)", per ronde `plekNaam` "Loopcoördinatie – groepje A en B samen". `rondePlekken` geeft één plek met beide groepjes (trainers die meelopen: van allebei).
+- **Trainers**: een station met een vaste trainer (rooster) krijgt niet ook de andere trainers zolang er andere stations zijn; zo staat de looptrainer alleen bij het gedeelde station en gaan de anderen over de rest.
+- **Materiaal en kinderen**: op het gedeelde station tellen de kinderen van alle groepjes die er samen komen (per kind-materiaal, genereren en kiezen).
+- **Link**: in de code van de deellink is het derde veld van een onderdeel 0 = Stations, 1 = Samen met alle groepjes, 2 of meer = zoveel groepjes samen. Oudere versies lezen dat laatste als Samen met alle groepjes.
+- **Sjabloon**: Mini Talents + loopcoördinatie (`loopOnderdelen`): Loopcoördinatie (Samen, 2 groepjes, 15 min), 1 tegen 1 en Afwerken (Stations, 15 min), Partijvormen (Samen, alle groepjes, 15 min), 6 groepjes. Een onaangeroerd sjabloon telt als leeg (wordt opgeruimd zoals Mini Talents).
+- **Tests**: `tests/versie-0342.test.ts`, browsertest `tools/e2e/versie-0342.mjs`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.34.0 – Trainerslink: één link met bovenaan de dag, niet een link per dag. Dan kan één bericht in de groepsapp voor beide dagen, en kiest elke trainer zelf.
@@ -1258,6 +1271,16 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.34.1 – Dribbelen in de drukte: de trainer steekt een gekleurd hoedje op (rood = voet op de bal, blauw = kap), of vingers (zo vaak met de zool tikken). Wie het eerst goed roept én het goed doet, krijgt een punt.
 - 0.34.1 – Duels met 5 kinderen: twee veldjes of banen naast elkaar, zodat er hooguit één kind wacht. Bij Reactiepoortjes spelen twee tweetallen tegelijk in één vak.
 - 0.34.1 – In de teksten roept de trainer nooit een echte naam, alleen "een naam".
+- 0.34.2 – De keuze heet "Groepjes samen" en staat alleen bij Samen: Alle groepjes, 2, 3 … tot één minder dan het aantal groepjes.
+- 0.34.2 – Groepjes die samen komen, gaan op volgorde: A+B, C+D, E+F (bij 3: A+B+C, D+E+F). Ze blijven de hele rotatie bij elkaar en splitsen alleen op de gewone stations.
+- 0.34.2 – Gaat het aantal groepjes niet op (bijv. 5 groepjes met 2 samen), dan is de laatste eenheid kleiner: groepje E komt alleen bij Loopcoördinatie. Er komt een melding, de rotatie blijft kloppen.
+- 0.34.2 – Meer eenheden dan onderdelen in de rotatie (bijv. 8 groepjes met 2 samen bij 3 onderdelen): het aantal rondes blijft gelijk en het gedeelde onderdeel staat dan op 2 stations (nooit twee duo's op één station). De melding zegt dat het met een onderdeel erbij op één station past. Een extra ronde zou de training langer maken.
+- 0.34.2 – Minder eenheden dan onderdelen (bijv. 6 groepjes met 3 samen bij 3 onderdelen): elke ronde blijft er een onderdeel leeg, met een melding. Zo blijven de trio's bij elkaar.
+- 0.34.2 – Twee gedeelde onderdelen met een ander aantal in dezelfde rotatie: het eerste aantal geldt voor allebei, met een melding.
+- 0.34.2 – Een vaste trainer (rooster) staat alleen op zijn plek; de andere trainers gaan over de stations zonder vaste trainer. Dat geldt ook als het geen gedeeld station is.
+- 0.34.2 – Het sjabloon Mini Talents + loopcoördinatie staat in de lijst bij Nieuwe circuittraining, onder Mini Talents, met de leeftijd zoals bij Mini Talents.
+- 0.34.2 – O7 had sinds 0.34.1 geen Loopcoördinatie-oefening meer, dus het sjabloon had niets te kiezen. Zes loopoefeningen staan nu ook bij O7: Loopladder (één voet per vak en zijwaarts), Lage hordes, Ringen (met hoepels), Vallende pion en Hordes zijwaarts en sprint.
+- 0.34.2 – In het overzicht per ronde staat bij een gedeeld station "A+B" (zonder spaties), zodat het op een iPhone SE op één regel blijft.
 - 0.33.1 – Minder trainers dan stations: niemand staat meer op twee plekken tegelijk, dus er blijven stations zonder trainer (vóór 0.33.1 kreeg een trainer er meer dan één). Eerst krijgt elk onderdeel één trainer, en de app meldt welke stations er geen hebben.
 - 0.33.1 – Trainers die een bestaande training had verdeeld zonder zelf te kiezen, staan daardoor soms op een andere plek. Zelf gekozen trainers blijven staan.
 - 0.33.1 – Bij een Samen-onderdeel zonder partijvelden staan standaard alle trainers samen; dat kun je per onderdeel aanpassen.

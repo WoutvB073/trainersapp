@@ -7,7 +7,7 @@ import {
   nietIngedeeld,
   partijvelden,
   plekTrainers,
-  stationNaam,
+  stationTitel,
   trainerModus,
   trainerNamen,
   verplaatsTrainer,
@@ -109,7 +109,7 @@ export function StationTrainers({ c, nu, bewaar }: { c: ClubTraining; nu: () => 
       <p className="klein">{mee ? vt('Elke trainer loopt mee met een groepje en draait mee in de rotatie.') : vt('Tik op een station om trainers aan te vinken of te verplaatsen.')}</p>
       {mee
         ? Array.from({ length: c.groepjes }, (_, g) => <PlekKiezer key={g} c={c} sleutel={`g:${g}`} titel={vt('Groepje {g}', { g: groepNaam(g) })} nu={nu} bewaar={bewaar} />)
-        : plan.stations.map((s) => <PlekKiezer key={s.nr} c={c} sleutel={`s:${s.nr}`} titel={`${s.nr}. ${stationNaam(s)}`} nu={nu} bewaar={bewaar} />)}
+        : plan.stations.map((s) => <PlekKiezer key={s.nr} c={c} sleutel={`s:${s.nr}`} titel={`${s.nr}. ${stationTitel(s)}`} nu={nu} bewaar={bewaar} />)}
       <Meldingen c={c} bewaar={bewaar} />
     </section>
   );

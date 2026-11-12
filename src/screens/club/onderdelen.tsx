@@ -16,6 +16,9 @@ import {
   rondeTijd,
   samenPloeg,
   stationNaam,
+  stationTitel,
+  samenMeldingen,
+  eenheden,
   stationPloeg,
   stationVak,
   veldPloeg,
@@ -131,7 +134,7 @@ export function VeldplanStations({ c, fase, vind, opStation }: { c: ClubInhoud; 
   return (
     <HalfVeld>
       {fase.stations.map((s) => (
-        <VakKaart key={s.nr} vak={stationVak(s, fase)} blok={s.vorm} nr={String(s.nr)} naam={stationNaam(s)} sub={oefeningNummers(vindOnderdeel(c, s.onderdeel))} trainer={ploegTekst(stationPloeg(c, s.nr))} oefening={oefeningVan(c, s, vind)} opTik={opStation && (() => opStation(s))} />
+        <VakKaart key={s.nr} vak={stationVak(s, fase)} blok={s.vorm} nr={String(s.nr)} naam={stationTitel(s)} sub={oefeningNummers(vindOnderdeel(c, s.onderdeel))} trainer={ploegTekst(stationPloeg(c, s.nr))} oefening={oefeningVan(c, s, vind)} opTik={opStation && (() => opStation(s))} />
       ))}
     </HalfVeld>
   );
@@ -183,6 +186,23 @@ export function PlanNoot({ c }: { c: ClubInhoud }) {
     <>
       {dubbel && <p className="klein club-noot">{vt('Er zijn meer groepjes dan onderdelen: daarom staan oefeningen meer dan één keer op het veld.')}</p>}
       {leegRondes.length > 0 && <p className="klein club-noot">{vt('In {n} van de {r} rondes blijven er tot {l} stations leeg. Geen enkel groepje wacht.', { n: leegRondes.length, r: p.rondes.length, l: aantalLeeg })}</p>}
+      {p.stations
+        .filter((s) => s.samen && s.plek === 0)
+        .map((s) => (
+          <p key={`samen-${s.nr}`} className="klein club-noot club-samen-noot">
+            {vt('{w0} (station {nr}): steeds {n} groepjes samen, in vaste groepjes: {w1}.', {
+              w0: blokNaam(s.vorm),
+              nr: s.nr,
+              n: s.samen!,
+              w1: eenheden(c.groepjes, s.samen).map((e) => e.map(groepNaam).join(' + ')).join(', '),
+            })}
+          </p>
+        ))}
+      {samenMeldingen(c).map((m) => (
+        <p key={m} className="klein club-noot club-melding" role="note">
+          {m}
+        </p>
+      ))}
       {p.verlengd.length > 0 && <p className="klein club-noot">{vt('Alle groepjes wisselen tegelijk, dus een ronde duurt zo lang als het langste onderdeel. Langer dan ingesteld: {w0}.', { w0: p.verlengd.map((o) => blokNaam(o.categorie)).join(', ') })}</p>}
     </>
   );
@@ -308,9 +328,9 @@ export function RondeLijst({ c, ronde, vind, seconden = 0, opOefening, ik }: { c
   }
   return (
     <ul className="club-ronde">
-      {plekken.map((p, g) => (
-        <li key={g} className={eigen(p.trainers)}>
-          <b>{groepNaam(g)}</b>
+      {plekken.map((p) => (
+        <li key={p.sleutel} className={eigen(p.trainers)}>
+          <b>{p.groepen.map(groepNaam).join('+')}</b>
           <span className="club-nr" style={kleur(p.station!.vorm)}>
             {p.station!.nr}
           </span>

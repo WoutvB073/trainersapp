@@ -4,7 +4,7 @@ import { vindCategorie } from '../data/categorieen';
 import { geldigeEigen } from '../eigen/eigen';
 import { kandidaten, kiesOefening } from '../training/genereren';
 import { maakId, metAantal, naarBase64Url, sleutel, uitBase64Url } from '../training/training';
-import { t as vt, TAAL } from '../i18n/t';
+import { lijstTekst, t as vt, TAAL } from '../i18n/t';
 import type { Taal } from '../i18n/taal';
 
 /**
@@ -41,7 +41,20 @@ export interface Onderdeel {
   oefening?: string;
   /** Sinds 0.33.0: alleen bij meer dan één oefening of een richttijd. Lees met `oefeningenVan`, schrijf met `metOefeningen`. */
   oefeningen?: BlokOefening[];
+  /**
+   * Sinds 0.34.2, alleen bij Samen: zoveel groepjes komen tegelijk op één station (2, 3 …). Leeg (of minstens het aantal groepjes) = alle
+   * groepjes tegelijk, zoals vóór 0.34.2. Lees met `samenPer`.
+   */
+  groepjesSamen?: number;
 }
+
+/** Samen met een deel van de groepjes (0.34.2): zoveel groepjes per station, of undefined bij Stations en bij Samen met alle groepjes. */
+export function samenPer(o: Pick<Onderdeel, 'soort' | 'groepjesSamen'>, groepjes: number): number | undefined {
+  return o.soort === 'samen' && o.groepjesSamen && o.groepjesSamen >= 2 && o.groepjesSamen < groepjes ? o.groepjesSamen : undefined;
+}
+
+/** Staat dit onderdeel in de rotatie (Stations, of Samen met een deel van de groepjes)? */
+export const inRotatie = (o: Pick<Onderdeel, 'soort' | 'groepjesSamen'>, groepjes: number) => o.soort === 'stations' || samenPer(o, groepjes) !== undefined;
 
 /** Oefeningen in een onderdeel, op volgorde. */
 export const oefeningenVan = (o: Pick<Onderdeel, 'oefening' | 'oefeningen'>): BlokOefening[] => (o.oefeningen?.length ? o.oefeningen : o.oefening ? [{ oefening: o.oefening }] : []);
@@ -192,8 +205,19 @@ export const nieuwOnderdeel = (categorie: string, duur = 15, id = maakId()): Ond
 /** Begin van "Zelf samenstellen". */
 export const zelfOnderdelen = (): Onderdeel[] => [{ ...nieuwOnderdeel('warming-up', 10), soort: 'samen' }, nieuwOnderdeel('techniek', 10), nieuwOnderdeel('afwerken', 10), nieuwOnderdeel('partijvormen', 15)];
 
-const opzet = (lijst: Onderdeel[]) => JSON.stringify(lijst.map((o) => [o.categorie, o.duur, o.soort]));
-const STANDAARD_OPZETTEN = () => [opzet(onderdelenVan({})), opzet(zelfOnderdelen())];
+/**
+ * Ingebouwd sjabloon Mini Talents + loopcoördinatie (0.34.2): in de week van de looptrainer komt Loopcoördinatie in plaats van Techniek,
+ * op één station waar steeds 2 groepjes samen komen. 1 tegen 1 en Afwerken blijven stations, het partijspel is met alle groepjes.
+ */
+export const loopOnderdelen = (): Onderdeel[] => [
+  { ...nieuwOnderdeel('loopcoordinatie', 15), soort: 'samen', groepjesSamen: 2 },
+  nieuwOnderdeel('een-tegen-een', 15),
+  nieuwOnderdeel('afwerken', 15),
+  nieuwOnderdeel('partijvormen', 15),
+];
+
+const opzet = (lijst: Onderdeel[]) => JSON.stringify(lijst.map((o) => [o.categorie, o.duur, o.soort, o.groepjesSamen ?? 0]));
+const STANDAARD_OPZETTEN = () => [opzet(onderdelenVan({})), opzet(zelfOnderdelen()), opzet(loopOnderdelen())];
 
 export const oefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }) => onderdelenVan(c).flatMap((o) => oefeningenVan(o).map((x) => x.oefening));
 
@@ -253,6 +277,8 @@ export interface Station {
   keer: number;
   /** Index van de fase. */
   fase: number;
+  /** Sinds 0.34.2: gedeeld station waar zoveel groepjes tegelijk komen. */
+  samen?: number;
 }
 
 /** Stations die tegelijk op het veld staan, met de rondes waarin de groepjes erlangs draaien. */
@@ -306,9 +332,37 @@ export function faseGroottes(onderdelen: number, groepjes: number): number[] {
 }
 
 /**
- * Het hele schema. Binnen een fase van k onderdelen staat groepje g in ronde r op onderdeel (g + r) mod k, plek g div k: elk
- * groepje doet elk onderdeel één keer en er staan nooit twee groepjes op één station. Alle groepjes wisselen tegelijk, dus een ronde
- * duurt zo lang als het langste onderdeel dat erin zit.
+ * Vaste eenheden voor de rotatie (0.34.2): groepjes die samen naar een gedeeld station gaan, op volgorde (A+B, C+D …). Gaat het aantal
+ * niet precies op, dan is de laatste eenheid kleiner. Zonder gedeeld station is elk groepje een eigen eenheid.
+ */
+export function eenheden(groepjes: number, per = 1): number[][] {
+  const uit: number[][] = [];
+  for (let g = 0; g < groepjes; g += per) uit.push(Array.from({ length: Math.min(per, groepjes - g) }, (_, i) => g + i));
+  return uit;
+}
+
+/** De reeksen van onderdelen die samen roteren (tussen de Samen-onderdelen met alle groepjes), met het aantal groepjes per eenheid. */
+function reeksen(lijst: Onderdeel[], groepjes: number): { delen: Onderdeel[]; per: number }[] {
+  const uit: { delen: Onderdeel[]; per: number }[] = [];
+  let delen: Onderdeel[] = [];
+  const sluit = () => {
+    if (delen.length) uit.push({ delen, per: delen.map((o) => samenPer(o, groepjes)).find((n) => n !== undefined) ?? 1 });
+    delen = [];
+  };
+  for (const o of lijst) {
+    if (inRotatie(o, groepjes)) delen.push(o);
+    else sluit();
+  }
+  sluit();
+  return uit;
+}
+
+/**
+ * Het hele schema. Binnen een fase van k onderdelen staat eenheid u in ronde r op onderdeel (u + r) mod k, plek u div k: elke eenheid
+ * doet elk onderdeel één keer en er staan nooit twee eenheden op één station. Een eenheid is één groepje, of sinds 0.34.2 een vast duo
+ * of trio als er een Samen-onderdeel met een deel van de groepjes in de reeks staat: op het gedeelde station komen ze samen, op een
+ * gewoon onderdeel krijgt elk groepje van de eenheid een eigen station. Alle groepjes wisselen tegelijk, dus een ronde duurt zo lang
+ * als het langste onderdeel dat erin zit.
  */
 export function clubPlan(c: PlanInhoud): ClubPlan {
   const lijst = onderdelenVan(c);
@@ -321,19 +375,34 @@ export function clubPlan(c: PlanInhoud): ClubPlan {
     rondes.push({ nr: rondes.length + 1, begin: tijd, eind: tijd + duur, ...w });
     tijd += duur;
   };
-  const stationBlok = (delen: Onderdeel[]) => {
+  const stationBlok = (delen: Onderdeel[], per: number) => {
+    const units = eenheden(c.groepjes, per);
     let van = 0;
-    for (const k of faseGroottes(delen.length, c.groepjes)) {
+    for (const k of faseGroottes(delen.length, units.length)) {
       const onderdelen = delen.slice(van, van + k);
       van += k;
-      const keer = Math.ceil(c.groepjes / k);
+      const keer = Math.ceil(units.length / k);
       const fase = fases.length;
-      const stations = onderdelen.flatMap((o) => Array.from({ length: keer }, (_, plek): Station => ({ nr: 0, onderdeel: o.id, vorm: o.categorie, plek, keer, fase })));
+      const gedeeld = (o: Onderdeel) => samenPer(o, c.groepjes) !== undefined;
+      const perOnderdeel = new Map<string, Station[]>();
+      for (const o of onderdelen) {
+        const aantal = gedeeld(o) ? keer : keer * per;
+        perOnderdeel.set(
+          o.id,
+          Array.from({ length: aantal }, (_, plek): Station => ({ nr: 0, onderdeel: o.id, vorm: o.categorie, plek, keer: aantal, fase, ...(gedeeld(o) ? { samen: per } : {}) })),
+        );
+      }
+      const stations = onderdelen.flatMap((o) => perOnderdeel.get(o.id)!);
       stations.forEach((x, i) => (x.nr = stationLijst.length + i + 1));
       stationLijst.push(...stations);
       const eerste = rondes.length;
       for (let r = 0; r < k; r += 1) {
-        const plekken = Array.from({ length: c.groepjes }, (_, g) => stations[((g + r) % k) * keer + Math.floor(g / k)]!);
+        const plekken: Station[] = [];
+        units.forEach((unit, u) => {
+          const o = onderdelen[(u + r) % k]!;
+          const slot = Math.floor(u / k);
+          unit.forEach((g, j) => (plekken[g] = perOnderdeel.get(o.id)![gedeeld(o) ? slot : slot * per + j]!));
+        });
         const actief = onderdelen.filter((o) => plekken.some((p) => p.onderdeel === o.id));
         const duur = Math.max(...actief.map((o) => o.duur));
         for (const o of actief) if (o.duur < duur) verlengd.add(o);
@@ -342,18 +411,21 @@ export function clubPlan(c: PlanInhoud): ClubPlan {
       fases.push({ nr: fases.length + 1, onderdelen, stations, eerste, laatste: rondes.length - 1 });
     }
   };
-  let reeks: Onderdeel[] = [];
+  const blokken = reeksen(lijst, c.groepjes);
+  let volgende = 0;
   for (const o of lijst) {
-    if (o.soort === 'stations') {
-      reeks.push(o);
+    if (inRotatie(o, c.groepjes)) {
+      // De reeks waar dit onderdeel het eerste van is, komt nu.
+      const b = blokken[volgende];
+      if (b && b.delen[0] === o) {
+        stationBlok(b.delen, b.per);
+        volgende += 1;
+      }
       continue;
     }
-    stationBlok(reeks);
-    reeks = [];
     voegToe(o.duur * 60, { plekken: [], leeg: [], samen: o });
   }
-  stationBlok(reeks);
-  return { fases, stations: stationLijst, rondes, samen: lijst.filter((o) => o.soort === 'samen'), totaal: tijd, verlengd: [...verlengd] };
+  return { fases, stations: stationLijst, rondes, samen: lijst.filter((o) => !inRotatie(o, c.groepjes)), totaal: tijd, verlengd: [...verlengd] };
 }
 
 export function stationNaam(s: Station): string {
@@ -361,6 +433,52 @@ export function stationNaam(s: Station): string {
   if (s.keer === 1) return naam;
   // "1 tegen 1 2" leest niet: bij een naam die op een cijfer eindigt een streepje ertussen.
   return /\d$/.test(naam) ? `${naam} – ${s.plek + 1}` : `${naam} ${s.plek + 1}`;
+}
+
+/** "groepje A en B" (0.34.2). */
+export const groepjesTekst = (groepen: number[]) => (groepen.length > 1 ? vt('groepjes {w0}', { w0: lijstTekst(groepen.map(groepNaam)) }) : vt('groepje {w0}', { w0: groepNaam(groepen[0] ?? 0) }));
+
+/** Naam van een gedeeld station zonder ronde: "Loopcoördinatie (2 groepjes samen)". */
+export const stationTitel = (s: Station) => (s.samen ? vt('{w0} ({n} groepjes samen)', { w0: stationNaam(s), n: s.samen }) : stationNaam(s));
+
+/** Welke groepjes in deze ronde op dit station staan. */
+export const groepenOp = (r: Pick<Ronde, 'plekken'>, nr: number) => r.plekken.flatMap((s, g) => (s.nr === nr ? [g] : []));
+
+/** Naam van een station in een ronde: "Loopcoördinatie – groepje A en B samen". */
+export function plekNaam(s: Station, r: Pick<Ronde, 'plekken'>): string {
+  const g = groepenOp(r, s.nr);
+  return s.samen && g.length > 1 ? vt('{w0} – groepje {w1} samen', { w0: stationNaam(s), w1: lijstTekst(g.map(groepNaam)) }) : stationNaam(s);
+}
+
+/**
+ * Meldingen bij Samen met een deel van de groepjes (0.34.2): als de groepjes niet precies opgaan, als het gedeelde onderdeel daardoor op
+ * meer stations moet staan, of als er in elke ronde een onderdeel leeg blijft. De rotatie kiest dan zelf de beste oplossing.
+ */
+export function samenMeldingen(c: PlanInhoud): string[] {
+  const uit: string[] = [];
+  const plan = clubPlan(c);
+  for (const b of reeksen(onderdelenVan(c), c.groepjes)) {
+    const gedeeld = b.delen.filter((o) => samenPer(o, c.groepjes) !== undefined);
+    if (!gedeeld.length) continue;
+    const naam = blokNaam(gedeeld[0]!.categorie);
+    for (const o of gedeeld.slice(1))
+      if (samenPer(o, c.groepjes) !== b.per) uit.push(vt('{w0} en {w1} staan in dezelfde rotatie met een ander aantal groepjes samen. Bij allebei komen nu {n} groepjes samen.', { w0: naam, w1: blokNaam(o.categorie), n: b.per }));
+    const units = eenheden(c.groepjes, b.per);
+    const laatste = units[units.length - 1]!;
+    if (laatste.length < b.per)
+      uit.push(
+        laatste.length === 1
+          ? vt('{g} groepjes gaan niet precies per {n}. Bij {w0} komt {w1} alleen.', { g: c.groepjes, n: b.per, w0: naam, w1: groepjesTekst(laatste) })
+          : vt('{g} groepjes gaan niet precies per {n}. Bij {w0} komen {w1} samen.', { g: c.groepjes, n: b.per, w0: naam, w1: groepjesTekst(laatste) }),
+      );
+    for (const f of plan.fases.filter((x) => x.onderdelen.some((o) => b.delen.includes(o)))) {
+      const k = f.onderdelen.length;
+      const meer = f.stations.find((s) => s.samen && s.keer > 1);
+      if (meer) uit.push(vt('Er gaan {u} keer {n} groepjes langs {k} onderdelen, dus {w0} staat op {s} stations. Wil je één station, voeg dan een onderdeel toe aan de rotatie.', { u: units.length, n: b.per, k, w0: blokNaam(meer.vorm), s: meer.keer }));
+      else if (units.length < k) uit.push(vt('Er gaan maar {u} keer {n} groepjes langs {k} onderdelen: in elke ronde blijft er een onderdeel leeg.', { u: units.length, n: b.per, k }));
+    }
+  }
+  return uit;
 }
 
 export const vindOnderdeel = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }, id: string) => onderdelenVan(c).find((o) => o.id === id);
@@ -488,12 +606,17 @@ function verdeelMetOud(nrs: number[], oud: Record<number, string> | undefined, a
   }
   for (const nr of open) uit[nr] = [];
   const rest: string[] = [];
+  const metVast = new Set<number>();
   for (const n of alle.filter((x) => !bezet.has(x))) {
     const plekken = vastOp(n).filter((p) => open.includes(p));
-    if (plekken.length) verdeel([n], plekken, uit);
-    else rest.push(n);
+    if (plekken.length) {
+      verdeel([n], plekken, uit);
+      plekken.filter((p) => uit[p]!.includes(n)).forEach((p) => metVast.add(p));
+    } else rest.push(n);
   }
-  verdeel(rest, open, uit);
+  // Sinds 0.34.2: de anderen gaan naar de stations zonder vaste trainer (de looptrainer staat alleen bij Loopcoördinatie).
+  const vrij = open.filter((p) => !metVast.has(p));
+  verdeel(rest, vrij.length ? vrij : open, uit);
 }
 
 export function trainerIndeling(c: TrainerInhoud, plan: ClubPlan = clubPlan(c)): Indeling {
@@ -557,7 +680,19 @@ export function rondePlekken(c: TrainerInhoud, ronde: Ronde, plan: ClubPlan = cl
   const o = ronde.samen;
   if (o && o.categorie !== 'partijvormen') return [{ sleutel: `o:${o.id}`, naam: blokNaam(o.categorie), trainers: samenPloeg(c, o), groepen: Array.from({ length: c.groepjes }, (_, g) => g), onderdeel: o }];
   if (o) return partijvelden(c.groepjes).map((v) => ({ sleutel: `v:${v.nr}`, naam: vt('Veld {nr}', { nr: v.nr }), trainers: mee ? vanGroepen(v.groepen) : (ind.velden[v.nr] ?? []), groepen: v.groepen, onderdeel: o, veld: v }));
-  return ronde.plekken.map((s, g) => ({ sleutel: `s:${s.nr}`, naam: stationNaam(s), trainers: mee ? (ind.groepen[g] ?? []) : (ind.stations[s.nr] ?? []), groepen: [g], onderdeel: vindOnderdeel(c, s.onderdeel), station: s }));
+  const uit: RondePlek[] = [];
+  for (const [g, s] of ronde.plekken.entries()) {
+    const al = uit.find((p) => p.station?.nr === s.nr);
+    if (al) {
+      al.groepen.push(g);
+      if (mee) al.trainers = samen([al.trainers, ind.groepen[g] ?? []]);
+      continue;
+    }
+    uit.push({ sleutel: `s:${s.nr}`, naam: stationNaam(s), trainers: mee ? (ind.groepen[g] ?? []) : (ind.stations[s.nr] ?? []), groepen: [g], onderdeel: vindOnderdeel(c, s.onderdeel), station: s });
+  }
+  // Gedeeld station: "Loopcoördinatie – groepje A en B samen".
+  for (const p of uit) if (p.station?.samen && p.groepen.length > 1) p.naam = plekNaam(p.station, ronde);
+  return uit;
 }
 
 export interface Botsing {
@@ -733,8 +868,10 @@ export interface KiesBron {
 type KiesInhoud = Pick<ClubTraining, 'kinderen' | 'groepjes' | 'leeftijd' | 'blokken' | 'onderdelen'>;
 
 /** Zoveel kinderen doen tegelijk mee: een groepje op een station, twee op een partijveld, anders iedereen. */
-export function onderdeelSpelers(c: Pick<ClubTraining, 'kinderen' | 'groepjes'>, o: Pick<Onderdeel, 'soort' | 'categorie'>): number {
+export function onderdeelSpelers(c: Pick<ClubTraining, 'kinderen' | 'groepjes'>, o: Pick<Onderdeel, 'soort' | 'categorie' | 'groepjesSamen'>): number {
   if (o.soort === 'stations') return groepGrootte(c);
+  const per = samenPer(o, c.groepjes);
+  if (per) return per * groepGrootte(c);
   return o.categorie === 'partijvormen' ? 2 * groepGrootte(c) : c.kinderen;
 }
 
@@ -856,7 +993,7 @@ export function materiaal(c: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokk
   const plan = clubPlan(c);
   const deel1 = new Map<string, Telling>();
   for (const f of plan.fases) {
-    for (const o of f.onderdelen) telBlok(deel1, blokTelling(o, vind, kinderen, taal), f.stations.filter((s) => s.onderdeel === o.id).length);
+    for (const o of f.onderdelen) telBlok(deel1, blokTelling(o, vind, kinderen * (samenPer(o, c.groepjes) ?? 1), taal), f.stations.filter((s) => s.onderdeel === o.id).length);
   }
   const deel2 = new Map<string, Telling>();
   for (const o of plan.samen) {
@@ -919,7 +1056,7 @@ function keuzesVoorLink(c: Inhoud, k: TrainerKeuzes | undefined = c.trainerKeuze
  * (0.33.0) staan als vijfde veld achter de eerste oefening; een oudere versie slaat dat over en toont de eerste.
  */
 export function naarCode(c: Inhoud, eigen: Oefening[] = []): string {
-  const o = onderdelenVan(c).map((x) => [x.categorie, x.duur, x.soort === 'samen' ? 1 : 0, x.oefening ? kort(x.oefening) : '', ...(x.oefeningen?.length ? [x.oefeningen.map((y) => (y.minuten === undefined ? [kort(y.oefening)] : [kort(y.oefening), y.minuten]))] : [])]);
+  const o = onderdelenVan(c).map((x) => [x.categorie, x.duur, x.soort === 'samen' ? (x.groepjesSamen && x.groepjesSamen >= 2 ? x.groepjesSamen : 1) : 0, x.oefening ? kort(x.oefening) : '', ...(x.oefeningen?.length ? [x.oefeningen.map((y) => (y.minuten === undefined ? [kort(y.oefening)] : [kort(y.oefening), y.minuten]))] : [])]);
   const ids = oefeningIds(c);
   const e = eigen.filter((x) => ids.includes(x.id));
   return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(keuzesVoorLink(c) ? { p: keuzesVoorLink(c) } : {}), ...(c.perDag ? { pd: c.perDag.map((d) => ({ t: d.trainers, ...(keuzesVoorLink(c, d.trainerKeuzes) ? { p: keuzesVoorLink(c, d.trainerKeuzes) } : {}), ...(d.vast ? { v: d.vast } : {}) })) } : {}), ...(c.groep ? { gr: c.groep } : {}), ...(e.length ? { e } : {}) }));
@@ -986,6 +1123,7 @@ function netteOnderdelen(x: unknown): Onderdeel[] | undefined {
   if (!lijst.length) return undefined;
   return lijst.map((o, i) => {
     const basis: Onderdeel = { id: typeof o.id === 'string' && o.id ? o.id.slice(0, 40) : `o${i + 1}`, categorie: o.categorie!, duur: getal(o.duur, 1, MAX_DUUR, 15), soort: o.soort === 'samen' ? 'samen' : 'stations' };
+    if (basis.soort === 'samen' && typeof o.groepjesSamen === 'number' && Number.isInteger(o.groepjesSamen) && o.groepjesSamen >= 2 && o.groepjesSamen <= MAX_GROEPJES) basis.groepjesSamen = o.groepjesSamen;
     const meer = netteOefeningen(o.oefeningen);
     if (meer.length) return metOefeningen(basis, meer);
     return typeof o.oefening === 'string' && o.oefening ? { ...basis, oefening: o.oefening } : basis;
@@ -1029,6 +1167,7 @@ export function uitCode(code: string): GedeeldeClub | null {
         categorie,
         duur,
         soort: samen ? 'samen' : 'stations',
+        ...(typeof samen === 'number' && samen >= 2 ? { groepjesSamen: samen } : {}),
         oefening: typeof oefening === 'string' ? lang(oefening) : '',
         ...(Array.isArray(meer) ? { oefeningen: (meer as unknown[][]).filter(Array.isArray).map(([id, minuten]) => ({ oefening: typeof id === 'string' ? lang(id) : '', minuten })) } : {}),
       }));
