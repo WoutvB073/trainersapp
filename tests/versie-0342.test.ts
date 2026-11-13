@@ -4,7 +4,6 @@ import {
   eenheden,
   groepjesTekst,
   isLeeg,
-  loopOnderdelen,
   materiaal,
   naarCode,
   nieuweClub,
@@ -23,6 +22,9 @@ import {
 } from '../src/clubtraining/clubtraining';
 import type { Oefening } from '../src/model/types';
 import { OEFENINGEN } from '../src/data/oefeningen';
+
+/** De opzet van het sjabloon Mini Talents + loopcoördinatie (0.34.2; het sjabloon is in 0.34.3 weggehaald, de opzet werkt nog). */
+const loopOnderdelen = (): Onderdeel[] => [{ ...nieuwOnderdeel('loopcoordinatie', 15), soort: 'samen', groepjesSamen: 2 }, nieuwOnderdeel('een-tegen-een', 15), nieuwOnderdeel('afwerken', 15), nieuwOnderdeel('partijvormen', 15)];
 
 /** Versie 0.34.2: Samen met een deel van de groepjes (bijv. Loopcoördinatie met 2 groepjes samen op één station). */
 
@@ -205,7 +207,7 @@ describe('opslaan, delen en sjabloon', () => {
     expect(clubPlan({ ...terug }).stations.filter((s) => s.samen)).toHaveLength(1);
   });
 
-  it('ingebouwd sjabloon Mini Talents + loopcoördinatie', () => {
+  it('opzet van het (vroegere) sjabloon Mini Talents + loopcoördinatie werkt door', () => {
     const lijst = loopOnderdelen();
     expect(lijst.map((o) => [o.categorie, o.soort, o.groepjesSamen, o.duur])).toEqual([
       ['loopcoordinatie', 'samen', 2, 15],
@@ -214,7 +216,8 @@ describe('opslaan, delen en sjabloon', () => {
       ['partijvormen', 'samen', undefined, 15],
     ]);
     const c = { ...nieuweClub('mini-5-7', 1, 'c3'), groepjes: 6, onderdelen: lijst };
-    expect(isLeeg(c)).toBe(true);
+    // Sinds 0.34.3 geen ingebouwd sjabloon meer: een training met deze opzet is niet leeg (wordt niet opgeruimd).
+    expect(isLeeg(c)).toBe(false);
     expect(isLeeg({ ...c, naam: 'Week looptrainer' })).toBe(false);
     controleer(c);
     expect(clubPlan(c).totaal).toBe(60 * 60);

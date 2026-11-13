@@ -19,7 +19,7 @@ import { favorieten, favorietenBackend } from '../engine/favorieten';
 import { bordBackend, borden, opstellingBackend, opstellingen, spelersnamen } from '../wedstrijd/opslag';
 import { clubBackend, clubtrainingen, rooster, roosterBackend } from '../clubtraining/opslag';
 import { voorTeamRooster } from '../clubtraining/rooster';
-import { clubNaam, metOefeningIds, oefeningIds, voorTeam } from '../clubtraining/clubtraining';
+import { clubNaam, metAlleOefeningIds, oefeningIds, voorTeam } from '../clubtraining/clubtraining';
 import { bordNaam, namenUitOpstellingen, opstellingNaam } from '../wedstrijd/wedstrijd';
 import { abonneerThema, kiesThema, leesKeuze, type Modus, type ThemaId } from '../engine/thema';
 import { abonneerTaal, kiesTaal, leesTaalKeuze } from '../i18n/taal';
@@ -434,5 +434,5 @@ export function deelClub(team: string, id: string): Promise<void> {
   const c = clubtrainingen.haal(id);
   if (!c) throw new T.TeamFout(vt('Circuittraining niet gevonden'));
   const { eigen, nieuwId } = meeTeNemen(oefeningIds(c), team);
-  return T.deelItem(ik(), team, { id, soort: 'clubtraining', naam: clubNaam(c), data: voorTeam({ ...c, onderdelen: metOefeningIds(c, nieuwId) }, eigen) });
+  return T.deelItem(ik(), team, { id, soort: 'clubtraining', naam: clubNaam(c), data: voorTeam({ ...c, ...metAlleOefeningIds(c, nieuwId) }, eigen) });
 }

@@ -45,13 +45,14 @@ export function ClubPlan({ id }: { id: string }) {
   const c = useClub(id);
   const [tab, setTab] = useState<Tab>('deel1');
   const [dag, kiesDag] = useDag(c?.datums ?? []);
-  const m = useMemo(() => (c ? materiaal(c, vindOefening) : null), [c]);
+  // Sinds 0.34.3 kan een dag een eigen opzet hebben: plan en materiaal van de gekozen dag.
+  const m = useMemo(() => (c ? materiaal(opDag(c, dag), vindOefening) : null), [c, dag]);
   if (!c || !m) return <NietGevonden />;
 
   const zet = (w: Partial<ClubTraining>) => clubtrainingen.bewaar({ ...(clubtrainingen.haal(id) ?? c), ...w });
-  const plan = clubPlan(c);
-  // De trainers van de gekozen dag; onderdelen en rotatie zijn voor alle dagen gelijk.
+  // De gekozen dag: trainers, en (0.34.3) eventueel een eigen opzet.
   const cd = opDag(c, dag);
+  const plan = clubPlan(cd);
   const open = (o?: Onderdeel) => {
     if (o && oefeningenVan(o).length > 1) ga(`/club/${id}/blok/${o.id}`);
     else if (o?.oefening) ga(`/oefening/${o.oefening}`);
@@ -74,7 +75,7 @@ export function ClubPlan({ id }: { id: string }) {
     <div className="pagina">
       <Kop titel={clubNaam(c)} ouder={`/club/${id}`} />
       <main className="inhoud smal">
-        <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} />
+        <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} perDag={c.perDag} />
         <div className={`tabs club-tabs club-tabs-${tabs.length}`} role="tablist">
           {tabs.map(([k, naam]) => (
             <button key={k} role="tab" aria-selected={actief === k} className={actief === k ? 'aan' : ''} onClick={() => setTab(k)}>
@@ -91,7 +92,7 @@ export function ClubPlan({ id }: { id: string }) {
                 <VeldplanStations c={cd} fase={f} vind={vindOefening} opStation={(s) => open(vindOnderdeel(c, s.onderdeel))} />
               </div>
             ))}
-            <PlanNoot c={c} />
+            <PlanNoot c={cd} />
             {heeftTrainers && <StationTrainers c={cd} nu={nu} bewaar={bewaarKeuzes} />}
           </>
         )}
@@ -128,7 +129,7 @@ export function ClubPlan({ id }: { id: string }) {
               </div>
             ) : (
               <>
-                <MateriaalNoot c={c} />
+                <MateriaalNoot c={cd} />
                 <Regels titel={vt('Stations')} regels={m.stations} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
                 <Regels titel={alleenPartij ? vt('Extra voor de partijvelden') : vt('Extra voor de samen-onderdelen')} regels={m.extra} c={c} zet={(afgevinkt) => zet({ afgevinkt })} />
               </>

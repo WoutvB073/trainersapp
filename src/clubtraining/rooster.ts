@@ -85,11 +85,13 @@ export function vulVolgensRooster<T extends Pick<ClubTraining, 'groep' | 'datums
   const perDag = c.datums.map((datum, i): DagTrainers => {
     const oud = c.perDag?.[i];
     if (!forceer && oud && !oud.rooster) return oud;
+    // Een eigen opzet voor deze dag (0.34.3) blijft staan: het rooster gaat alleen over de trainers.
+    const opzet = i > 0 && oud?.onderdelen?.length ? { onderdelen: oud.onderdelen } : {};
     const lijst = roosterVoor(rooster, groep, datum);
     const vast: Record<string, string> = {};
     for (const x of lijst) if (x.plek) vast[x.naam] = x.plek;
     const modus = (oud?.trainerKeuzes ?? c.trainerKeuzes)?.modus;
-    return { trainers: lijst.map((x) => x.naam), ...(Object.keys(vast).length ? { vast } : {}), ...(modus ? { trainerKeuzes: { modus } } : {}), rooster: true };
+    return { trainers: lijst.map((x) => x.naam), ...(Object.keys(vast).length ? { vast } : {}), ...(modus ? { trainerKeuzes: { modus } } : {}), rooster: true, ...opzet };
   });
   return { ...c, perDag };
 }

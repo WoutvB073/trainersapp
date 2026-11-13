@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { standaardDag } from '../../clubtraining/clubtraining';
+import { eigenOpzet, standaardDag, type DagTrainers } from '../../clubtraining/clubtraining';
 import { dagTekst } from '../../training/training';
 import { t as vt } from '../../i18n/t';
 
@@ -35,14 +35,15 @@ export function useDag(datums: string[]): [number, (i: number) => void] {
   return [i >= 0 ? i : standaardDag(datums), kies];
 }
 
-/** Keuze per dag ("Ma 16 nov", "Wo 18 nov"). Pas vanaf twee datums. */
-export function DagKeuze({ datums, dag, opKies }: { datums: string[]; dag: number; opKies: (i: number) => void }) {
+/** Keuze per dag ("Ma 16 nov", "Wo 18 nov"). Pas vanaf twee datums. Een dag met een eigen opzet (0.34.3) heeft het label "aangepast". */
+export function DagKeuze({ datums, dag, opKies, perDag }: { datums: string[]; dag: number; opKies: (i: number) => void; perDag?: DagTrainers[] }) {
   if (datums.length < 2) return null;
   return (
     <div className="tabs club-dagen" role="tablist" aria-label={vt('Dag')}>
       {datums.map((d, i) => (
         <button key={d + i} role="tab" aria-selected={i === dag} className={i === dag ? 'aan' : ''} onClick={() => opKies(i)}>
           {dagTekst(d)}
+          {eigenOpzet({ perDag }, i) && <small className="club-dag-eigen">{vt('aangepast')}</small>}
         </button>
       ))}
     </div>

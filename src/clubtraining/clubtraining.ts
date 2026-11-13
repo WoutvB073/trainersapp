@@ -146,6 +146,11 @@ export interface DagTrainers {
   vast?: Record<string, string>;
   /** Ingevuld volgens het rooster en niet met de hand aangepast. */
   rooster?: boolean;
+  /**
+   * Sinds 0.34.3: eigen opzet voor deze dag (onderdelen, volgorde, duur, Stations/Samen, oefeningen). Leeg = zelfde als de eerste dag.
+   * Bij de eerste dag (index 0) telt dit niet: die heeft altijd de opzet van de training zelf (`onderdelen`).
+   */
+  onderdelen?: Onderdeel[];
 }
 
 export interface ClubTraining {
@@ -205,25 +210,20 @@ export const nieuwOnderdeel = (categorie: string, duur = 15, id = maakId()): Ond
 /** Begin van "Zelf samenstellen". */
 export const zelfOnderdelen = (): Onderdeel[] => [{ ...nieuwOnderdeel('warming-up', 10), soort: 'samen' }, nieuwOnderdeel('techniek', 10), nieuwOnderdeel('afwerken', 10), nieuwOnderdeel('partijvormen', 15)];
 
-/**
- * Ingebouwd sjabloon Mini Talents + loopcoördinatie (0.34.2): in de week van de looptrainer komt Loopcoördinatie in plaats van Techniek,
- * op één station waar steeds 2 groepjes samen komen. 1 tegen 1 en Afwerken blijven stations, het partijspel is met alle groepjes.
- */
-export const loopOnderdelen = (): Onderdeel[] => [
-  { ...nieuwOnderdeel('loopcoordinatie', 15), soort: 'samen', groepjesSamen: 2 },
-  nieuwOnderdeel('een-tegen-een', 15),
-  nieuwOnderdeel('afwerken', 15),
-  nieuwOnderdeel('partijvormen', 15),
+const opzet = (lijst: Onderdeel[]) => JSON.stringify(lijst.map((o) => [o.categorie, o.duur, o.soort, o.groepjesSamen ?? 0]));
+const STANDAARD_OPZETTEN = () => [opzet(onderdelenVan({})), opzet(zelfOnderdelen())];
+
+/** Alle onderdelen: de opzet van de training en die van dagen met een eigen opzet (0.34.3). */
+export const alleOnderdelen = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>>; perDag?: DagTrainers[] }): Onderdeel[] => [
+  ...onderdelenVan(c),
+  ...(c.perDag ?? []).flatMap((d, i) => (i > 0 && d.onderdelen?.length ? d.onderdelen : [])),
 ];
 
-const opzet = (lijst: Onderdeel[]) => JSON.stringify(lijst.map((o) => [o.categorie, o.duur, o.soort, o.groepjesSamen ?? 0]));
-const STANDAARD_OPZETTEN = () => [opzet(onderdelenVan({})), opzet(zelfOnderdelen()), opzet(loopOnderdelen())];
-
-export const oefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }) => onderdelenVan(c).flatMap((o) => oefeningenVan(o).map((x) => x.oefening));
+export const oefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>>; perDag?: DagTrainers[] }) => [...new Set(alleOnderdelen(c).flatMap((o) => oefeningenVan(o).map((x) => x.oefening)))];
 
 /** Niets ingevuld: zo'n clubtraining wordt niet bewaard (de standaarddatums en een onveranderde opzet tellen niet mee). */
 export function isLeeg(c: Pick<ClubTraining, 'naam' | 'trainers' | 'blokken' | 'onderdelen' | 'sjabloon' | 'perDag' | 'groep'>): boolean {
-  return !c.sjabloon && !c.naam.trim() && !c.groep && !c.trainers.some((x) => x.trim()) && !c.perDag?.some((d) => d.trainers.some((x) => x.trim())) && !oefeningIds(c).length && STANDAARD_OPZETTEN().includes(opzet(onderdelenVan(c)));
+  return !c.sjabloon && !c.naam.trim() && !c.groep && !c.trainers.some((x) => x.trim()) && !c.perDag?.some((d) => d.trainers.some((x) => x.trim())) && !oefeningIds(c).length && !c.perDag?.some((d, i) => i > 0 && d.onderdelen?.length) && STANDAARD_OPZETTEN().includes(opzet(onderdelenVan(c)));
 }
 
 export function clubNaam(c: Pick<ClubTraining, 'naam'>): string {
@@ -481,7 +481,14 @@ export function samenMeldingen(c: PlanInhoud): string[] {
   return uit;
 }
 
-export const vindOnderdeel = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }, id: string) => onderdelenVan(c).find((o) => o.id === id);
+export const vindOnderdeel = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>>; perDag?: DagTrainers[] }, id: string) => alleOnderdelen(c).find((o) => o.id === id);
+
+/** Eén onderdeel wijzigen, waar het ook staat (de opzet van de training of een dag met een eigen opzet). */
+export function wijzigOnderdeel<T extends Pick<ClubTraining, 'onderdelen' | 'blokken' | 'perDag'>>(c: T, id: string, f: (o: Onderdeel) => Onderdeel): T {
+  if (onderdelenVan(c).some((o) => o.id === id)) return { ...c, onderdelen: onderdelenVan(c).map((o) => (o.id === id ? f(o) : o)) };
+  if (!c.perDag?.some((d) => d.onderdelen?.some((o) => o.id === id))) return c;
+  return { ...c, perDag: c.perDag.map((d) => (d.onderdelen?.some((o) => o.id === id) ? { ...d, onderdelen: d.onderdelen.map((o) => (o.id === id ? f(o) : o)) } : d)) };
+}
 
 const klokTijd = (start: string, seconden: number) => {
   const [u, m] = start.split(':').map(Number);
@@ -807,7 +814,35 @@ export function opDag<T extends MetDagen>(c: T, dag: number): T {
   const { trainerKeuzes: _k, vast: _v, ...rest } = c;
   void _k;
   void _v;
-  return { ...rest, trainers: d.trainers, stationTrainers: {}, veldTrainers: {}, ...(d.trainerKeuzes ? { trainerKeuzes: d.trainerKeuzes } : {}), ...(d.vast ? { vast: d.vast } : {}) } as T;
+  const eigen = dag > 0 && d.onderdelen?.length ? { onderdelen: d.onderdelen, blokken: {} } : {};
+  return { ...rest, ...eigen, trainers: d.trainers, stationTrainers: {}, veldTrainers: {}, ...(d.trainerKeuzes ? { trainerKeuzes: d.trainerKeuzes } : {}), ...(d.vast ? { vast: d.vast } : {}) } as T;
+}
+
+/** Heeft deze dag een eigen opzet (0.34.3)? De eerste dag nooit: die is de opzet waar "Zelfde als" naar kijkt. */
+export const eigenOpzet = (c: { perDag?: DagTrainers[] }, dag: number) => dag > 0 && !!c.perDag?.[dag]?.onderdelen?.length;
+
+/**
+ * Eigen opzet voor een dag zetten (een lijst) of weghalen (undefined = weer gelijk aan de eerste dag). De indeling van de trainers op die dag
+ * begint opnieuw (andere stations); trainers, vaste plekken en blijven/meelopen blijven.
+ */
+export function zetDagOpzet(c: Pick<ClubTraining, 'datums' | 'perDag' | 'trainers' | 'trainerKeuzes'>, dag: number, onderdelen: Onderdeel[] | undefined, opnieuwIndelen = true): Partial<ClubTraining> {
+  if (dag < 1) return {};
+  const aantal = Math.max(c.datums.length, c.perDag?.length ?? 0, dag + 1);
+  return {
+    perDag: Array.from({ length: aantal }, (_, i) => {
+      const d = dagVan(c, i);
+      if (i !== dag) return d;
+      const { onderdelen: _o, trainerKeuzes: k, ...rest } = d;
+      void _o;
+      const keuzes = opnieuwIndelen ? (k?.modus ? { modus: k.modus } : undefined) : k;
+      return { ...rest, ...(keuzes ? { trainerKeuzes: keuzes } : {}), ...(onderdelen?.length ? { onderdelen } : {}) };
+    }),
+  };
+}
+
+/** "Eigen opzet voor deze dag": een kopie van de opzet van de eerste dag, met nieuwe id's (oefeningen kiezen per onderdeel). */
+export function maakEigenOpzet(c: Pick<ClubTraining, 'datums' | 'perDag' | 'trainers' | 'trainerKeuzes' | 'onderdelen' | 'blokken'>, dag: number, id: () => string = maakId): Partial<ClubTraining> {
+  return zetDagOpzet(c, dag, onderdelenVan(c).map((o) => ({ ...o, id: id() })));
 }
 
 /** Kun je per dag kiezen? Pas vanaf twee datums. */
@@ -843,7 +878,7 @@ export function zetDagTrainers(c: Pick<ClubTraining, 'datums' | 'perDag' | 'trai
 /** Indeling overal terug naar automatisch (andere stations). Met `groepenHouden` blijft de indeling per groepje staan. */
 export function zonderIndelingOveral(c: Pick<ClubTraining, 'trainerKeuzes' | 'perDag'>, groepenHouden = false): Partial<ClubTraining> {
   const leeg = (k: TrainerKeuzes | undefined): TrainerKeuzes => ({ ...(k?.modus ? { modus: k.modus } : {}), ...(groepenHouden && k?.groepen ? { groepen: k.groepen } : {}) });
-  return { stationTrainers: {}, veldTrainers: {}, trainerKeuzes: leeg(c.trainerKeuzes), ...(c.perDag ? { perDag: c.perDag.map((d) => ({ ...d, trainerKeuzes: leeg(d.trainerKeuzes) })) } : {}) };
+  return { stationTrainers: {}, veldTrainers: {}, trainerKeuzes: leeg(c.trainerKeuzes), ...(c.perDag ? { perDag: c.perDag.map((d, i) => (eigenOpzet(c, i) ? d : { ...d, trainerKeuzes: leeg(d.trainerKeuzes) })) } : {}) };
 }
 
 /** Blijven of meelopen: voor alle dagen tegelijk. */
@@ -1055,11 +1090,14 @@ function keuzesVoorLink(c: Inhoud, k: TrainerKeuzes | undefined = c.trainerKeuze
  * Link voor de trainers (versie 2 sinds 0.32.0: de onderdelen). Links met versie 1 blijven te lezen. Meer oefeningen in een onderdeel
  * (0.33.0) staan als vijfde veld achter de eerste oefening; een oudere versie slaat dat over en toont de eerste.
  */
+const codeOnderdelen = (lijst: Onderdeel[]) =>
+  lijst.map((x) => [x.categorie, x.duur, x.soort === 'samen' ? (x.groepjesSamen && x.groepjesSamen >= 2 ? x.groepjesSamen : 1) : 0, x.oefening ? kort(x.oefening) : '', ...(x.oefeningen?.length ? [x.oefeningen.map((y) => (y.minuten === undefined ? [kort(y.oefening)] : [kort(y.oefening), y.minuten]))] : [])]);
+
 export function naarCode(c: Inhoud, eigen: Oefening[] = []): string {
-  const o = onderdelenVan(c).map((x) => [x.categorie, x.duur, x.soort === 'samen' ? (x.groepjesSamen && x.groepjesSamen >= 2 ? x.groepjesSamen : 1) : 0, x.oefening ? kort(x.oefening) : '', ...(x.oefeningen?.length ? [x.oefeningen.map((y) => (y.minuten === undefined ? [kort(y.oefening)] : [kort(y.oefening), y.minuten]))] : [])]);
+  const o = codeOnderdelen(onderdelenVan(c));
   const ids = oefeningIds(c);
   const e = eigen.filter((x) => ids.includes(x.id));
-  return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(keuzesVoorLink(c) ? { p: keuzesVoorLink(c) } : {}), ...(c.perDag ? { pd: c.perDag.map((d) => ({ t: d.trainers, ...(keuzesVoorLink(c, d.trainerKeuzes) ? { p: keuzesVoorLink(c, d.trainerKeuzes) } : {}), ...(d.vast ? { v: d.vast } : {}) })) } : {}), ...(c.groep ? { gr: c.groep } : {}), ...(e.length ? { e } : {}) }));
+  return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(keuzesVoorLink(c) ? { p: keuzesVoorLink(c) } : {}), ...(c.perDag ? { pd: c.perDag.map((d, i) => ({ t: d.trainers, ...(keuzesVoorLink(opDag(c, i), d.trainerKeuzes) ? { p: keuzesVoorLink(opDag(c, i), d.trainerKeuzes) } : {}), ...(d.vast ? { v: d.vast } : {}), ...(eigenOpzet(c, i) ? { o: codeOnderdelen(d.onderdelen!) } : {}) })) } : {}), ...(c.groep ? { gr: c.groep } : {}), ...(e.length ? { e } : {}) }));
 }
 
 const tekstenRecord = (x: unknown): Record<number, string> => {
@@ -1091,7 +1129,8 @@ function netteKeuzes(x: unknown): TrainerKeuzes | undefined {
 
 function netteDagen(x: unknown): DagTrainers[] | undefined {
   if (!Array.isArray(x)) return undefined;
-  return x.slice(0, 7).map((d: { trainers?: unknown; trainerKeuzes?: unknown; vast?: unknown; rooster?: unknown }) => {
+  return x.slice(0, 7).map((d: { trainers?: unknown; trainerKeuzes?: unknown; vast?: unknown; rooster?: unknown; onderdelen?: unknown }, i) => {
+    const eigen = i > 0 ? netteOnderdelen(d?.onderdelen) : undefined;
     const vast: Record<string, string> = {};
     if (d?.vast && typeof d.vast === 'object') for (const [n, k] of Object.entries(d.vast)) if (typeof k === 'string' && CATEGORIEEN.includes(k)) vast[n.slice(0, 40)] = k;
     const keuzes = netteKeuzes(d?.trainerKeuzes);
@@ -1100,6 +1139,7 @@ function netteDagen(x: unknown): DagTrainers[] | undefined {
       ...(keuzes ? { trainerKeuzes: keuzes } : {}),
       ...(Object.keys(vast).length ? { vast } : {}),
       ...(d?.rooster === true ? { rooster: true } : {}),
+      ...(eigen ? { onderdelen: eigen } : {}),
     };
   });
 }
@@ -1157,20 +1197,36 @@ function netteClub(x: { [k in keyof GedeeldeClub]?: unknown }): GedeeldeClub {
   };
 }
 
+/** Onderdelen uit de link (versie 2): id's o1, o2 …, of per dag d2o1, d2o2 … (0.34.3). */
+function onderdelenUitLink(lijst: unknown[][], voor = ''): Partial<Onderdeel>[] {
+  return lijst.map(([categorie, duur, samen, oefening, meer], i) => ({
+    id: `${voor}o${i + 1}`,
+    categorie,
+    duur,
+    soort: samen ? 'samen' : 'stations',
+    ...(typeof samen === 'number' && samen >= 2 ? { groepjesSamen: samen } : {}),
+    oefening: typeof oefening === 'string' ? lang(oefening) : '',
+    ...(Array.isArray(meer) ? { oefeningen: (meer as unknown[][]).filter(Array.isArray).map(([id, minuten]) => ({ oefening: typeof id === 'string' ? lang(id) : '', minuten })) } : {}),
+  })) as Partial<Onderdeel>[];
+}
+
+/** Een dag uit de link. Bij een eigen opzet horen de trainers van de Samen-onderdelen bij de id's van die dag. */
+function dagUitLink(d: { t?: unknown; p?: unknown; v?: unknown; o?: unknown }, i: number) {
+  const voor = `d${i + 1}`;
+  const eigen = i > 0 && Array.isArray(d?.o) ? onderdelenUitLink((d.o as unknown[]).filter(Array.isArray) as unknown[][], voor) : undefined;
+  let keuzes = d?.p as TrainerKeuzes | undefined;
+  if (eigen && keuzes && typeof keuzes === 'object' && keuzes.samen && typeof keuzes.samen === 'object') {
+    keuzes = { ...keuzes, samen: Object.fromEntries(Object.entries(keuzes.samen).map(([k, v]) => [`${voor}${k}`, v])) };
+  }
+  return { trainers: d?.t, trainerKeuzes: keuzes, vast: d?.v, ...(eigen ? { onderdelen: eigen } : {}) };
+}
+
 export function uitCode(code: string): GedeeldeClub | null {
   try {
     const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; l?: unknown; k?: unknown; g?: unknown; t?: unknown; b?: unknown; o?: unknown; u?: unknown; s?: unknown; f?: unknown; p?: unknown; pd?: unknown; gr?: unknown; e?: unknown };
-    const basis = { naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, stationTrainers: x.s, veldTrainers: x.f, trainerKeuzes: x.p, perDag: Array.isArray(x.pd) ? (x.pd as { t?: unknown; p?: unknown; v?: unknown }[]).map((d) => ({ trainers: d?.t, trainerKeuzes: d?.p, vast: d?.v })) : undefined, groep: x.gr, eigen: x.e };
+    const basis = { naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, stationTrainers: x.s, veldTrainers: x.f, trainerKeuzes: x.p, perDag: Array.isArray(x.pd) ? (x.pd as { t?: unknown; p?: unknown; v?: unknown; o?: unknown }[]).map((d, i) => dagUitLink(d, i)) : undefined, groep: x.gr, eigen: x.e };
     if (x.v === 2 && Array.isArray(x.o)) {
-      const onderdelen = (x.o as unknown[][]).map(([categorie, duur, samen, oefening, meer], i) => ({
-        id: `o${i + 1}`,
-        categorie,
-        duur,
-        soort: samen ? 'samen' : 'stations',
-        ...(typeof samen === 'number' && samen >= 2 ? { groepjesSamen: samen } : {}),
-        oefening: typeof oefening === 'string' ? lang(oefening) : '',
-        ...(Array.isArray(meer) ? { oefeningen: (meer as unknown[][]).filter(Array.isArray).map(([id, minuten]) => ({ oefening: typeof id === 'string' ? lang(id) : '', minuten })) } : {}),
-      }));
+      const onderdelen = onderdelenUitLink(x.o as unknown[][]);
       return netteClub({ ...basis, blokken: {}, onderdelen, starttijd: x.u });
     }
     if (x.v !== 1 || !Array.isArray(x.b)) return null;
@@ -1207,11 +1263,17 @@ export function leesTeamClub(data: string): GedeeldeClub | null {
 /** Oefeningen in de onderdelen vervangen (bij delen en kopiëren krijgen meegenomen oefeningen soms een ander id). */
 export const metOefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>> }, nieuwId: (id: string) => string): Onderdeel[] => onderdelenVan(c).map((o) => metOefeningen(o, oefeningenVan(o).map((x) => ({ ...x, oefening: nieuwId(x.oefening) }))));
 
+/** Oefeningen vervangen in de opzet van de training én in de dagen met een eigen opzet (0.34.3). */
+export function metAlleOefeningIds(c: { onderdelen?: Onderdeel[]; blokken?: Partial<Record<Blok, string>>; perDag?: DagTrainers[] }, nieuwId: (id: string) => string): { onderdelen: Onderdeel[]; perDag?: DagTrainers[] } {
+  const perDag = c.perDag?.map((d) => (d.onderdelen?.length ? { ...d, onderdelen: metOefeningIds({ onderdelen: d.onderdelen }, nieuwId) } : d));
+  return { onderdelen: metOefeningIds(c, nieuwId), ...(perDag ? { perDag } : {}) };
+}
+
 /** Gedeelde circuittraining als nieuwe eigen circuittraining: `ids` zijn de nieuwe id's van de meegekomen oefeningen. */
 export function uitGedeeldeClub(g: GedeeldeClub, ids: ReadonlyMap<string, string> = new Map(), nu = Date.now(), id = maakId()): ClubTraining {
   const { eigen: _e, ...rest } = g;
   void _e;
-  return { ...rest, blokken: {}, onderdelen: metOefeningIds(g, (x) => ids.get(x) ?? x), id, afgevinkt: [], gemaakt: nu, gewijzigd: nu };
+  return { ...rest, blokken: {}, ...metAlleOefeningIds(g, (x) => ids.get(x) ?? x), id, afgevinkt: [], gemaakt: nu, gewijzigd: nu };
 }
 
 // ---------- rondetimer ----------

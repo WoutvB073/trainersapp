@@ -5,7 +5,7 @@ import { Miniatuur } from '../../components/Miniatuur';
 import { alleOefeningen } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga, terug } from '../../router';
-import { blokNaam, metOefeningen, oefeningenVan, onderdeelKandidaten, onderdelenVan, vindOnderdeel } from '../../clubtraining/clubtraining';
+import { blokNaam, metOefeningen, oefeningenVan, onderdeelKandidaten, vindOnderdeel, wijzigOnderdeel } from '../../clubtraining/clubtraining';
 import { clubtrainingen, useClub } from '../../clubtraining/opslag';
 import { NietGevonden } from '../NietGevonden';
 import { t as vt } from '../../i18n/t';
@@ -19,7 +19,8 @@ export function ClubKiezen({ id, blok }: { id: string; blok: string }) {
   const kies = (oid: string) => {
     const nu = clubtrainingen.haal(id) ?? c;
     const weg = oefeningenVan(vindOnderdeel(nu, blok) ?? b).some((x) => x.oefening === oid);
-    clubtrainingen.bewaar({ ...nu, onderdelen: onderdelenVan(nu).map((o) => (o.id === blok ? metOefeningen(o, weg ? oefeningenVan(o).filter((x) => x.oefening !== oid) : [...oefeningenVan(o), { oefening: oid }]) : o)) });
+    // Het onderdeel kan ook bij een dag met een eigen opzet horen (0.34.3).
+    clubtrainingen.bewaar(wijzigOnderdeel(nu, blok, (o) => metOefeningen(o, weg ? oefeningenVan(o).filter((x) => x.oefening !== oid) : [...oefeningenVan(o), { oefening: oid }])));
     if (!weg) terug(`/club/${id}`);
   };
   return (

@@ -25,7 +25,6 @@ import {
   MAX_KINDEREN,
   MAX_ONDERDELEN,
   metOefeningen,
-  metOefeningIds,
   MIN_GROEPJES,
   MIN_ONDERDELEN,
   naarCode,
@@ -47,7 +46,15 @@ import {
   type BlokOefening,
   type ClubTraining,
   type Onderdeel,
-  type OnderdeelSoort, samenPer, samenMeldingen } from '../../clubtraining/clubtraining';
+  type OnderdeelSoort,
+  samenPer,
+  samenMeldingen,
+  eigenOpzet,
+  maakEigenOpzet,
+  zetDagOpzet,
+  alleOnderdelen,
+  metAlleOefeningIds,
+} from '../../clubtraining/clubtraining';
 import { clubtrainingen, rooster, useClub, useRooster } from '../../clubtraining/opslag';
 import { roosterGroepen, vulVolgensRooster } from '../../clubtraining/rooster';
 import { dagTekst } from '../../training/training';
@@ -64,7 +71,7 @@ const bron = () => ({ alle: alleOefeningen(), favorieten: favorieten.alle(), toe
 /** Code voor de link voor de trainers; eigen oefeningen gaan erin mee. */
 export function clubCode(c: ClubTraining): string {
   const { eigen, nieuwId } = meeTeNemen(oefeningIds(c));
-  return naarCode({ ...c, onderdelen: metOefeningIds(c, nieuwId) }, eigen);
+  return naarCode({ ...c, ...metAlleOefeningIds(c, nieuwId) }, eigen);
 }
 
 const ANDERS = 'anders';
@@ -94,7 +101,17 @@ function DuurKeuze({ o, opZet }: { o: Onderdeel; opZet: (duur: number) => void }
           <option value={ANDERS}>{vt('Zelf invullen')}</option>
         </select>
       </label>
-      {zelf && <input type="number" inputMode="numeric" min={1} max={MAX_DUUR} value={o.duur} aria-label={vt('Minuten voor {w0}', { w0: naam })} onChange={(e) => opZet(Math.max(1, Math.min(MAX_DUUR, Math.round(Number(e.target.value)) || 1)))} />}
+      {zelf && (
+        <input
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={MAX_DUUR}
+          value={o.duur}
+          aria-label={vt('Minuten voor {w0}', { w0: naam })}
+          onChange={(e) => opZet(Math.max(1, Math.min(MAX_DUUR, Math.round(Number(e.target.value)) || 1)))}
+        />
+      )}
     </div>
   );
 }
@@ -135,7 +152,23 @@ function SamenKeuze({ o, groepjes, opZet }: { o: Onderdeel; groepjes: number; op
 }
 
 /** Eén oefening in een onderdeel: openen, slepen, richttijd, een andere of weghalen. */
-function OefeningRij({ x, nr, meer, minuten, opRichttijd, opAnders, opWeg }: { x: BlokOefening; nr: number; meer: boolean; minuten: number; opRichttijd: (m: number | undefined) => void; opAnders: () => void; opWeg: () => void }) {
+function OefeningRij({
+  x,
+  nr,
+  meer,
+  minuten,
+  opRichttijd,
+  opAnders,
+  opWeg,
+}: {
+  x: BlokOefening;
+  nr: number;
+  meer: boolean;
+  minuten: number;
+  opRichttijd: (m: number | undefined) => void;
+  opAnders: () => void;
+  opWeg: () => void;
+}) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: x.oefening });
   const oefening = vindOefening(x.oefening);
   const titel = vt('Oefening {nr}', { nr });
@@ -165,7 +198,16 @@ function OefeningRij({ x, nr, meer, minuten, opRichttijd, opAnders, opWeg }: { x
           {meer && (
             <label className="club-richttijd">
               <span>{vt('Richttijd')}</span>
-              <input type="number" inputMode="numeric" min={1} max={MAX_DUUR} value={x.minuten ?? ''} placeholder={String(minuten)} aria-label={vt('Richttijd voor oefening {nr}', { nr })} onChange={(e) => opRichttijd(e.target.value ? Math.max(1, Math.min(MAX_DUUR, Math.round(Number(e.target.value)) || 1)) : undefined)} />
+              <input
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={MAX_DUUR}
+                value={x.minuten ?? ''}
+                placeholder={String(minuten)}
+                aria-label={vt('Richttijd voor oefening {nr}', { nr })}
+                onChange={(e) => opRichttijd(e.target.value ? Math.max(1, Math.min(MAX_DUUR, Math.round(Number(e.target.value)) || 1)) : undefined)}
+              />
               <span>{vt('min')}</span>
             </label>
           )}
@@ -181,7 +223,29 @@ function OefeningRij({ x, nr, meer, minuten, opRichttijd, opAnders, opWeg }: { x
   );
 }
 
-function OnderdeelKaart({ c, o, nr, kanWeg, opWijzig, opZetOefeningen, opWeg, opKies, opGenereer, opAnders }: { c: ClubTraining; o: Onderdeel; nr: number; kanWeg: boolean; opWijzig: (w: Partial<Onderdeel>) => void; opZetOefeningen: (lijst: BlokOefening[]) => void; opWeg: () => void; opKies: () => void; opGenereer: () => void; opAnders: (oefening: string) => void }) {
+function OnderdeelKaart({
+  c,
+  o,
+  nr,
+  kanWeg,
+  opWijzig,
+  opZetOefeningen,
+  opWeg,
+  opKies,
+  opGenereer,
+  opAnders,
+}: {
+  c: ClubTraining;
+  o: Onderdeel;
+  nr: number;
+  kanWeg: boolean;
+  opWijzig: (w: Partial<Onderdeel>) => void;
+  opZetOefeningen: (lijst: BlokOefening[]) => void;
+  opWeg: () => void;
+  opKies: () => void;
+  opGenereer: () => void;
+  opAnders: (oefening: string) => void;
+}) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: o.id });
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
   const lijst = oefeningenVan(o);
@@ -204,7 +268,14 @@ function OnderdeelKaart({ c, o, nr, kanWeg, opWijzig, opZetOefeningen, opWeg, op
         </button>
         <span>{nr}</span>
         <span className="club-blok-titel">{naam}</span>
-        <button type="button" className="icoon-knop club-blok-weg" disabled={!kanWeg} aria-label={vt('{w0} weghalen', { w0: naam })} title={kanWeg ? vt('Weghalen') : vt('Minimaal {n} onderdelen', { n: MIN_ONDERDELEN })} onClick={opWeg}>
+        <button
+          type="button"
+          className="icoon-knop club-blok-weg"
+          disabled={!kanWeg}
+          aria-label={vt('{w0} weghalen', { w0: naam })}
+          title={kanWeg ? vt('Weghalen') : vt('Minimaal {n} onderdelen', { n: MIN_ONDERDELEN })}
+          onClick={opWeg}
+        >
           <Icoon naam="kruis" maat={18} />
         </button>
       </h3>
@@ -275,8 +346,14 @@ export function ClubBewerk({ id }: { id: string }) {
   // Altijd op de nieuwste versie uit de opslag (ook bij snel achter elkaar tikken).
   const nu = () => clubtrainingen.haal(id) ?? c;
   const zet = (w: Partial<ClubTraining>) => clubtrainingen.bewaar({ ...nu(), ...w });
-  /** Andere opzet: de trainers per station kloppen dan niet meer. */
-  const zetDelen = (onderdelen: Onderdeel[]) => zet({ onderdelen, ...zonderIndelingOveral(nu(), true) });
+  // Welke opzet bewerk je (0.34.3)? De eerste dag is de opzet van de training; een andere dag alleen als die een eigen opzet heeft.
+  const toonDag = c && heeftDagen(c) ? dag : 0;
+  const bewerkDag = eigenOpzet(c, toonDag) ? toonDag : 0;
+  const delenVan = (x: ClubTraining) => (bewerkDag && eigenOpzet(x, bewerkDag) ? x.perDag![bewerkDag]!.onderdelen! : onderdelenVan(x));
+  /** Opzet bewaren; `opnieuwIndelen` bij een andere opzet (andere stations: de trainers per station kloppen dan niet meer). */
+  const zetLijst = (onderdelen: Onderdeel[], opnieuwIndelen: boolean) =>
+    bewerkDag ? zet(zetDagOpzet(nu(), bewerkDag, onderdelen, opnieuwIndelen)) : zet({ onderdelen, ...(opnieuwIndelen ? zonderIndelingOveral(nu(), true) : {}) });
+  const zetDelen = (onderdelen: Onderdeel[]) => zetLijst(onderdelen, true);
   /** Andere datums: dagen die volgens het rooster gingen, volgen het rooster op de nieuwe datum. */
   const zetDatums = (datums: string[]) => clubtrainingen.bewaar(vulVolgensRooster({ ...nu(), datums }, rooster.lijst()));
   /** Andere groep: alle dagen opnieuw volgens het rooster. */
@@ -286,15 +363,18 @@ export function ClubBewerk({ id }: { id: string }) {
     clubtrainingen.bewaar(vulVolgensRooster(groep ? { ...rest, groep } : rest, rooster.lijst(), true));
   };
   const wijzig = (oid: string, w: Partial<Onderdeel>) => {
-    const lijst = onderdelenVan(nu()).map((o) => (o.id === oid ? { ...o, ...w } : o));
-    if (w.soort || 'groepjesSamen' in w) zetDelen(lijst);
-    else zet({ onderdelen: lijst });
+    const lijst = delenVan(nu()).map((o) => (o.id === oid ? { ...o, ...w } : o));
+    zetLijst(lijst, !!w.soort || 'groepjesSamen' in w);
   };
-  const zetOefeningen = (oid: string, lijst: BlokOefening[]) => zet({ onderdelen: onderdelenVan(nu()).map((x) => (x.id === oid ? metOefeningen(x, lijst) : x)) });
+  const zetOefeningen = (oid: string, lijst: BlokOefening[]) =>
+    zetLijst(
+      delenVan(nu()).map((x) => (x.id === oid ? metOefeningen(x, lijst) : x)),
+      false,
+    );
   /** Een andere oefening die nog niet in dit onderdeel staat. */
   const bedenk = (oid: string) => {
-    const o = onderdelenVan(nu()).find((x) => x.id === oid)!;
-    const nieuw = genereerOnderdeel(nu(), o, bron());
+    const o = delenVan(nu()).find((x) => x.id === oid)!;
+    const nieuw = genereerOnderdeel(opDag(nu(), bewerkDag), o, bron());
     return nieuw && !oefeningenVan(o).some((x) => x.oefening === nieuw) ? { o, nieuw } : null;
   };
   const genereer = (oid: string) => {
@@ -304,12 +384,16 @@ export function ClubBewerk({ id }: { id: string }) {
   };
   const anders = (oid: string, oefening: string) => {
     const r = bedenk(oid);
-    if (r) zetOefeningen(oid, oefeningenVan(r.o).map((x) => (x.oefening === oefening ? { ...x, oefening: r.nieuw } : x)));
+    if (r)
+      zetOefeningen(
+        oid,
+        oefeningenVan(r.o).map((x) => (x.oefening === oefening ? { ...x, oefening: r.nieuw } : x)),
+      );
     else toon(vt('Geen passende oefening voor dit onderdeel.'));
   };
   const sleep = (e: DragEndEvent) => {
     if (!e.over || e.active.id === e.over.id) return;
-    const lijst = [...onderdelenVan(nu())];
+    const lijst = [...delenVan(nu())];
     const van = lijst.findIndex((o) => o.id === e.active.id);
     const naar = lijst.findIndex((o) => o.id === e.over!.id);
     if (van < 0 || naar < 0) return;
@@ -326,9 +410,20 @@ export function ClubBewerk({ id }: { id: string }) {
   const cd = opDag(c, dag);
   const groepen = roosterGroepen(roosterLijst, c.groep);
   const heeftTrainersOoit = trainerNamen(c).length > 0 || !!c.perDag?.some((d) => trainerNamen(d).length > 0);
-  const delen = onderdelenVan(c);
-  const plan = clubPlan(c);
-  const klaar = delen.every((o) => oefeningenVan(o).length > 0);
+  const delen = delenVan(c);
+  // Plan van de gekozen dag (eigen opzet of zelfde als de eerste dag).
+  const plan = clubPlan(cd);
+  const klaar = alleOnderdelen(c).every((o) => oefeningenVan(o).length > 0);
+  const volgt = toonDag > 0 && !bewerkDag;
+  const eerste = c.datums[0] ? dagTekst(c.datums[0]) : '';
+  const dezeDag = c.datums[toonDag] ? dagTekst(c.datums[toonDag]!) : '';
+  const eigenDagen = c.datums.map((d, i) => (eigenOpzet(c, i) ? dagTekst(d) : '')).filter(Boolean);
+  const kiesOpzet = (eigen: boolean) => {
+    if (eigen === !!bewerkDag) return;
+    if (eigen) zet(maakEigenOpzet(nu(), toonDag));
+    else if (confirm(vt('{dag} weer gelijk maken aan {eerste}? De eigen opzet van {dag} gaat weg.', { dag: dezeDag, eerste }))) zet(zetDagOpzet(nu(), toonDag, undefined));
+  };
+  const soortTekst = (o: Onderdeel) => (o.soort === 'stations' ? vt('Stations') : samenPer(o, c.groepjes) ? vt('Samen, {n} groepjes', { n: samenPer(o, c.groepjes)! }) : vt('Samen'));
 
   return (
     <div className="pagina">
@@ -368,7 +463,14 @@ export function ClubBewerk({ id }: { id: string }) {
           <div className="club-twee">
             <label className="veld">
               <span>{vt('Aantal kinderen')}</span>
-              <input type="number" inputMode="numeric" min={1} max={MAX_KINDEREN} value={c.kinderen} onChange={(e) => zet({ kinderen: Math.max(1, Math.min(MAX_KINDEREN, Math.round(Number(e.target.value)) || 1)) })} />
+              <input
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={MAX_KINDEREN}
+                value={c.kinderen}
+                onChange={(e) => zet({ kinderen: Math.max(1, Math.min(MAX_KINDEREN, Math.round(Number(e.target.value)) || 1)) })}
+              />
             </label>
             <label className="veld">
               <span>{vt('Aantal groepjes')}</span>
@@ -395,7 +497,7 @@ export function ClubBewerk({ id }: { id: string }) {
               </select>
             </label>
           )}
-          <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} />
+          <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} perDag={c.perDag} />
           <label className="veld">
             <span>{heeftDagen(c) ? vt('Trainers op {dag} (één naam per regel)', { dag: dagTekst(c.datums[dag]!) }) : vt('Trainers (optioneel, één naam per regel)')}</span>
             <textarea rows={3} value={cd.trainers.join('\n')} onChange={(e) => zet(zetDagTrainers(nu(), dag, { trainers: e.target.value.split('\n') }))} />
@@ -422,57 +524,114 @@ export function ClubBewerk({ id }: { id: string }) {
 
         <div className="club-kop-rij">
           <h2 className="sectie-titel">{vt('Onderdelen')}</h2>
-          <button className="knop" onClick={() => zet({ onderdelen: genereerAlles(nu(), bron()) })}>
-            <Icoon naam="herhalen" maat={18} />
-            {vt('Genereer alles')}
-          </button>
+          {!volgt && (
+            <button className="knop" onClick={() => zetLijst(genereerAlles(opDag(nu(), bewerkDag), bron()), false)}>
+              <Icoon naam="herhalen" maat={18} />
+              {vt('Genereer alles')}
+            </button>
+          )}
         </div>
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={sleep}>
-          <SortableContext items={delen.map((o) => o.id)} strategy={verticalListSortingStrategy}>
-            <ol className="club-blokken">
-              {delen.map((o, i) => (
-                <OnderdeelKaart
-                  key={o.id}
-                  c={c}
-                  o={o}
-                  nr={i + 1}
-                  kanWeg={delen.length > MIN_ONDERDELEN}
-                  opWijzig={(w) => wijzig(o.id, w)}
-                  opZetOefeningen={(lijst) => zetOefeningen(o.id, lijst)}
-                  opWeg={() => zetDelen(onderdelenVan(nu()).filter((x) => x.id !== o.id))}
-                  opKies={() => ga(`/club/${id}/kiezen/${o.id}`)}
-                  opGenereer={() => genereer(o.id)}
-                  opAnders={(oefening) => anders(o.id, oefening)}
-                />
-              ))}
-            </ol>
-          </SortableContext>
-        </DndContext>
-        <p className="hint">{vt('Sleep aan het greepje om de volgorde te veranderen.')}</p>
-        {delen.length < MAX_ONDERDELEN && (
-          <label className="leeftijd-keuze club-toevoegen">
-            <span>{vt('Onderdeel toevoegen')}</span>
-            <select
-              value=""
-              onChange={(e) => {
-                if (e.target.value) zetDelen([...onderdelenVan(nu()), nieuwOnderdeel(e.target.value)]);
-              }}
-            >
-              <option value="">{vt('Kies een onderdeel')}</option>
-              {CATEGORIEEN.map((k) => (
-                <option key={k} value={k}>
-                  {blokNaam(k)}
-                </option>
-              ))}
-            </select>
-          </label>
+        {heeftDagen(c) && (
+          <div className="club-dag-opzet">
+            <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} perDag={c.perDag} />
+            {toonDag > 0 && (
+              <label className="leeftijd-keuze club-opzet-keuze">
+                <span>{vt('Opzet op {dag}', { dag: dezeDag })}</span>
+                <select value={bewerkDag ? 'eigen' : 'zelfde'} onChange={(e) => kiesOpzet(e.target.value === 'eigen')}>
+                  <option value="zelfde">{vt('Zelfde als {dag}', { dag: eerste })}</option>
+                  <option value="eigen">{vt('Eigen opzet voor deze dag')}</option>
+                </select>
+              </label>
+            )}
+            <p className="klein">
+              {toonDag === 0
+                ? eigenDagen.length
+                  ? vt('Dit is de opzet van {dag}. Dagen met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.', { dag: dezeDag, w0: eigenDagen.join(', ') })
+                  : vt('Dit is de opzet van {dag}. De andere dagen veranderen mee.', { dag: dezeDag })
+                : bewerkDag
+                  ? vt('{dag} heeft een eigen opzet: wat je hier verandert, geldt alleen voor {dag}.', { dag: dezeDag })
+                  : vt('{dag} volgt de opzet van {eerste}. Kies Eigen opzet voor deze dag om hem los aan te passen.', { dag: dezeDag, eerste })}
+            </p>
+            {bewerkDag > 0 && (
+              <button className="knop club-gelijk" onClick={() => kiesOpzet(false)}>
+                <Icoon naam="herhalen" maat={18} />
+                {vt('Weer gelijk maken aan {dag}', { dag: eerste })}
+              </button>
+            )}
+          </div>
+        )}
+        {volgt ? (
+          <ol className="club-opzet-lijst">
+            {delen.map((o) => (
+              <li key={o.id}>
+                <span className="club-nr" style={blokStijl(o.categorie)}>
+                  {blokNaam(o.categorie)}
+                </span>
+                <span>
+                  {[
+                    vt('{m} min', { m: o.duur }),
+                    soortTekst(o),
+                    oefeningenVan(o)
+                      .map((x) => vindOefening(x.oefening)?.naam ?? '')
+                      .filter(Boolean)
+                      .join(', '),
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </span>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={sleep}>
+              <SortableContext items={delen.map((o) => o.id)} strategy={verticalListSortingStrategy}>
+                <ol className="club-blokken">
+                  {delen.map((o, i) => (
+                    <OnderdeelKaart
+                      key={o.id}
+                      c={cd}
+                      o={o}
+                      nr={i + 1}
+                      kanWeg={delen.length > MIN_ONDERDELEN}
+                      opWijzig={(w) => wijzig(o.id, w)}
+                      opZetOefeningen={(lijst) => zetOefeningen(o.id, lijst)}
+                      opWeg={() => zetDelen(delenVan(nu()).filter((x) => x.id !== o.id))}
+                      opKies={() => ga(`/club/${id}/kiezen/${o.id}`)}
+                      opGenereer={() => genereer(o.id)}
+                      opAnders={(oefening) => anders(o.id, oefening)}
+                    />
+                  ))}
+                </ol>
+              </SortableContext>
+            </DndContext>
+            <p className="hint">{vt('Sleep aan het greepje om de volgorde te veranderen.')}</p>
+            {delen.length < MAX_ONDERDELEN && (
+              <label className="leeftijd-keuze club-toevoegen">
+                <span>{vt('Onderdeel toevoegen')}</span>
+                <select
+                  value=""
+                  onChange={(e) => {
+                    if (e.target.value) zetDelen([...delenVan(nu()), nieuwOnderdeel(e.target.value)]);
+                  }}
+                >
+                  <option value="">{vt('Kies een onderdeel')}</option>
+                  {CATEGORIEEN.map((k) => (
+                    <option key={k} value={k}>
+                      {blokNaam(k)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+          </>
         )}
 
         <p className="club-totaal">
           <span>{vt('Totale tijd')}</span>
           <strong>{tijdTekst(plan.totaal)}</strong>
         </p>
-        <PlanNoot c={c} />
+        <PlanNoot c={cd} />
 
         <section className="club-acties">
           <button className="knop knop-primair knop-breed" onClick={() => ga(`/club/${id}/plan`)}>

@@ -144,7 +144,7 @@ function MateriaalLijst({ g }: { g: GedeeldeClub }) {
  */
 export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, label, metMateriaal, children }: { g: GedeeldeClub; basis: string; station?: number; partij?: true | number; kop?: string; ouder?: string; label?: string; metMateriaal?: boolean; children?: ReactNode }) {
   const [dag, kiesDag] = useDag(heel.datums);
-  // De trainers van de gekozen dag; onderdelen en rotatie zijn voor alle dagen gelijk.
+  // De gekozen dag: trainers, en (0.34.3) eventueel een eigen opzet.
   const g = opDag(heel, dag);
   const vind = zoeker(g);
   const plan = clubPlan(g);
@@ -182,7 +182,7 @@ export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, labe
           <h2 className="detail-titel">{clubNaam(g)}</h2>
           <p>{[g.datums.map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes }), tijdTekst(plan.totaal)].filter(Boolean).join(' · ')}</p>
           {children}
-          <DagKeuze datums={heel.datums} dag={dag} opKies={kiesDag} />
+          <DagKeuze datums={heel.datums} dag={dag} opKies={kiesDag} perDag={heel.perDag} />
           {alleNamen.length > 0 && (
             <label className="leeftijd-keuze club-ik-ben">
               <span>{vt('Ik ben…')}</span>

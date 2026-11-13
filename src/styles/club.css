@@ -992,3 +992,55 @@
   color: var(--waarschuwing);
   font-weight: 600;
 }
+
+/* 0.34.3: eigen opzet per dag. */
+.club-dagen button {
+  line-height: 1.15;
+}
+
+.club-dag-eigen {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+.club-dag-opzet {
+  margin: 0 0 12px;
+}
+
+.club-dag-opzet .club-dagen {
+  margin: 0 0 8px;
+}
+
+.club-dag-opzet > p {
+  margin: 6px 0;
+}
+
+.club-opzet-keuze select {
+  max-width: 100%;
+}
+
+.club-gelijk {
+  margin-top: 4px;
+}
+
+.club-opzet-lijst {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.club-opzet-lijst li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--rand);
+  border-radius: var(--radius);
+  background: var(--kaart);
+}

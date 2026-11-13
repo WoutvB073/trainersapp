@@ -1,4 +1,4 @@
-// 0.34.2: Samen met een deel van de groepjes op iPhone SE en laptop in NL en EN: sjabloon Mini Talents + loopcoördinatie, keuze
+// 0.34.2: Samen met een deel van de groepjes op iPhone SE en laptop in NL en EN: opzet Loopcoördinatie (2 samen) + 1 tegen 1 + Afwerken + Partij, keuze
 // "Groepjes samen" (2, 3, Alle groepjes) met meldingen, de looptrainer (vaste plek uit het rooster) alleen bij het gedeelde station,
 // Stations/Rotatie/Materiaal, de rondetimer en de trainerslink zonder app in de WhatsApp-browser (iPhone en Android) met Ik ben….
 // Blad: blad-0342.png. Gebruik: node tools/e2e/versie-0342.mjs [basis-url]. TAAL=nl voor één taal. EMULATOR=1: korte link.
@@ -115,15 +115,17 @@ for (const [formaat, vp] of [
       controle(!r.kap.length, `${waar}: ${stap}: afgekapt: ${r.kap.slice(0, 3)}`);
     };
 
-    // Sjabloon Mini Talents + loopcoördinatie.
+    // Opzet zoals het vroegere sjabloon Mini Talents + loopcoördinatie (0.34.3: sjabloon weg, de opzet werkt nog). Eén datum (maandag).
     await ga(page, '/club');
-    await klik(page, T('Nieuwe circuittraining'));
-    await page.waitForSelector('.club-loop-sjabloon');
-    await opmaak(page, 'nieuw-paneel');
-    await page.click('.club-loop-sjabloon');
+    await page.evaluate(() => {
+      const o = (id, categorie, soort, extra = {}) => ({ id, categorie, duur: 15, soort, ...extra });
+      const club = { id: 'loop', naam: '', datums: ['2026-11-23'], leeftijd: 'mini-5-7', kinderen: 30, groepjes: 6, trainers: [], blokken: {}, onderdelen: [o('a', 'loopcoordinatie', 'samen', { groepjesSamen: 2 }), o('b', 'een-tegen-een', 'stations'), o('c', 'afwerken', 'stations'), o('d', 'partijvormen', 'samen')], stationTrainers: {}, veldTrainers: {}, afgevinkt: [], gemaakt: 1, gewijzigd: 1 };
+      localStorage.setItem('trainersapp.clubtrainingen', JSON.stringify({ versie: 1, lijst: [club] }));
+    });
+    await ga(page, '/club/loop');
     await page.waitForSelector('.club-samen-keuze select');
     await slaap(300);
-    const id = (await page.evaluate(() => location.hash)).split('/')[2];
+    const id = 'loop';
     controle((await page.$$eval('.club-samen-keuze select', (x) => x.map((s) => s.value))).join() === '2,0', `${waar}: Groepjes samen niet 2 en Alle groepjes`);
     controle((await tekst(page)).includes(T('Per ronde komen er {n} groepjes samen op één station; de andere groepjes draaien door langs de gewone stations.', { n: 2 })), `${waar}: geen uitleg bij 2 groepjes samen`);
     controle(!(await page.$('.club-melding')), `${waar}: melding bij 6 groepjes en 2 samen`);
