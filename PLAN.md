@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (12-11-2026, versie 0.34.2)
+## Status (13-11-2026, versie 0.34.3)
 
 | Fase | Status |
 |---|---|
@@ -49,6 +49,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 35. Trainers per dag en een trainersrooster (0.34.0) | ✅ online – **wacht op test** |
 | 36. Mini's: O6 en O7 apart, nieuwe oefeningen (0.34.1) | ✅ online – **wacht op test** |
 | 37. Circuittraining: Samen met een deel van de groepjes, sjabloon Mini Talents + loopcoördinatie (0.34.2) | ✅ online – **wacht op test** |
+| 38. Circuittraining: per dag een eigen opzet, sjabloon Mini Talents + loopcoördinatie weg (0.34.3) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1244,6 +1245,15 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Sjabloon**: Mini Talents + loopcoördinatie (`loopOnderdelen`): Loopcoördinatie (Samen, 2 groepjes, 15 min), 1 tegen 1 en Afwerken (Stations, 15 min), Partijvormen (Samen, alle groepjes, 15 min), 6 groepjes. Een onaangeroerd sjabloon telt als leeg (wordt opgeruimd zoals Mini Talents).
 - **Tests**: `tests/versie-0342.test.ts`, browsertest `tools/e2e/versie-0342.mjs`.
 
+## Besluiten versie 0.34.3 – per dag een eigen opzet
+- **Sjabloon weg**: Mini Talents + loopcoördinatie staat niet meer bij Nieuwe circuittraining. Trainingen die ermee gemaakt zijn, hebben hun eigen onderdelen en werken gewoon door. Mini Talents blijft.
+- **Model**: `DagTrainers.onderdelen` (in `perDag`): de eigen opzet van een dag. Leeg = Zelfde als de eerste dag. De eerste dag (index 0) heeft altijd de opzet van de training zelf (`onderdelen`); daar kijken de dagen met Zelfde als naar. Bestaande trainingen, links en team-items hebben geen eigen opzet en werken dus door als Zelfde als.
+- **Rekenwerk**: `opDag(c, dag)` geeft bij een eigen opzet die onderdelen; plan, rotatie, materiaal, trainers en meldingen werken daarop, dus Stations, Samen/Partij, Rotatie, Materiaal, rondetimer en trainerslink volgen de gekozen dag. `eigenOpzet`, `maakEigenOpzet` (kopie van de eerste dag met nieuwe id's), `zetDagOpzet` (zetten of weghalen; de indeling van de trainers op die dag begint opnieuw, trainers, vaste plekken en blijven/meelopen blijven), `alleOnderdelen`, `wijzigOnderdeel` (Oefening kiezen in een dag met een eigen opzet), `metAlleOefeningIds` (delen en kopiëren).
+- **Bewerken**: bij twee datums staat boven Onderdelen een dagkeuze. Op een andere dag dan de eerste: keuze "Zelfde als [eerste dag]" (dan een overzicht van de onderdelen) of "Eigen opzet voor deze dag" (dan alles los aan te passen), en de knop "Weer gelijk maken aan [eerste dag]" met bevestiging. Een andere opzet van de eerste dag deelt alleen de dagen met Zelfde als opnieuw in.
+- **Label**: in elke dagkeuze (bewerken, plan, rondetimer, trainerslink) staat bij een dag met een eigen opzet "aangepast".
+- **Meenemen**: dupliceren en Naar volgende week kopiëren `perDag` met de opzet (het rooster vult alleen de trainers opnieuw). Delen met team neemt `perDag` mee. In de trainerslink staat per dag `o` (zelfde code als de onderdelen); de onderdelen van zo'n dag krijgen id's d2o1, d2o2 … en de trainers van Samen-onderdelen horen daarbij. Een oudere versie van de app negeert `o` en toont dan voor alle dagen de eerste opzet.
+- **Tests**: `tests/versie-0343.test.ts`, browsertest `tools/e2e/versie-0343.mjs` (blad `blad-0343.png`).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.34.0 – Trainerslink: één link met bovenaan de dag, niet een link per dag. Dan kan één bericht in de groepsapp voor beide dagen, en kiest elke trainer zelf.
@@ -1281,6 +1291,16 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.34.2 – Het sjabloon Mini Talents + loopcoördinatie staat in de lijst bij Nieuwe circuittraining, onder Mini Talents, met de leeftijd zoals bij Mini Talents.
 - 0.34.2 – O7 had sinds 0.34.1 geen Loopcoördinatie-oefening meer, dus het sjabloon had niets te kiezen. Zes loopoefeningen staan nu ook bij O7: Loopladder (één voet per vak en zijwaarts), Lage hordes, Ringen (met hoepels), Vallende pion en Hordes zijwaarts en sprint.
 - 0.34.2 – In het overzicht per ronde staat bij een gedeeld station "A+B" (zonder spaties), zodat het op een iPhone SE op één regel blijft.
+- 0.34.3 – Een training die met het weggehaalde sjabloon gemaakt is en nooit is aangeraakt, wordt niet meer als leeg opgeruimd (er is geen ingebouwde opzet meer om mee te vergelijken). Hij blijft dus gewoon in de lijst staan.
+- 0.34.3 – Per dag eigen: de onderdelen (welke, volgorde, duur, Stations/Samen, groepjes samen) en de oefeningen. Het aantal kinderen, het aantal groepjes, de leeftijd en de begintijd blijven voor alle dagen gelijk.
+- 0.34.3 – De dagkeuze voor de opzet staat boven Onderdelen en is dezelfde keuze als bij de trainers: kies je woensdag, dan zie je de trainers én de opzet van woensdag.
+- 0.34.3 – Op een dag met Zelfde als zie je de onderdelen als overzicht, niet om te bewerken; zo kan je niet per ongeluk de eerste dag aanpassen terwijl je woensdag bekijkt.
+- 0.34.3 – "Zelfde als" kiezen in de keuzelijst doet hetzelfde als de knop Weer gelijk maken, ook met bevestiging.
+- 0.34.3 – Eigen opzet maken of weer gelijk maken begint de indeling van de trainers op die dag opnieuw (andere stations); de trainers zelf, de vaste plek uit het rooster en blijven/meelopen blijven staan.
+- 0.34.3 – Weg je de eerste datum, dan wordt de tweede de eerste dag en geldt voor hem de opzet van de training; een eigen opzet van die dag telt dan niet meer.
+- 0.34.3 – Opslaan als sjabloon bewaart alleen de opzet van de eerste dag (een sjabloon heeft geen datums).
+- 0.34.3 – Het label in de dagkeuze is "aangepast" (Engels "changed").
+- 0.34.3 – De keuze Zelfde als / Eigen opzet staat onder het label (over de hele breedte), zodat "Eigen opzet voor deze dag" op een iPhone SE niet afvalt.
 - 0.33.1 – Minder trainers dan stations: niemand staat meer op twee plekken tegelijk, dus er blijven stations zonder trainer (vóór 0.33.1 kreeg een trainer er meer dan één). Eerst krijgt elk onderdeel één trainer, en de app meldt welke stations er geen hebben.
 - 0.33.1 – Trainers die een bestaande training had verdeeld zonder zelf te kiezen, staan daardoor soms op een andere plek. Zelf gekozen trainers blijven staan.
 - 0.33.1 – Bij een Samen-onderdeel zonder partijvelden staan standaard alle trainers samen; dat kun je per onderdeel aanpassen.

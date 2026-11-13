@@ -1018,7 +1018,15 @@
   margin: 6px 0;
 }
 
+/* Label boven de keuze: de keuzes zijn lang ("Eigen opzet voor deze dag") en mogen op een iPhone SE niet afvallen. */
+.club-opzet-keuze {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
 .club-opzet-keuze select {
+  width: 100%;
   max-width: 100%;
 }
 
