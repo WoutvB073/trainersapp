@@ -191,7 +191,7 @@ for (const [formaat, vp] of [
     // De eerste dag aanpassen: woensdag verandert niet mee.
     await dag(page, 0, '.club-dag-opzet .club-dagen');
     controle((await blokken())[0] === T('Techniek'), `${waar}: maandag is veranderd: ${await blokken()}`);
-    controle((await tekst(page)).includes(T('Dit is de opzet van {dag}. Dagen met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.', { dag: '', w0: '' }).split('.')[0].trim().slice(0, 20)), `${waar}: geen uitleg bij de eerste dag`);
+    controle((await tekst(page)).includes(T('Dit is de opzet van {dag}. Sessies met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.', { dag: '', w0: '' }).split('.')[0].trim().slice(0, 20)), `${waar}: geen uitleg bij de eerste dag`);
     await kiesSelect(page, '.club-blokken > li .club-duur select', '20', 2);
     const na = (await opgeslagen()).find((x) => x.id === 'dagen');
     controle(na.onderdelen.find((x) => x.id === 'afw').duur === 20, `${waar}: duur maandag niet aangepast`);

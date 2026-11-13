@@ -1069,9 +1069,9 @@
 
 .club-sessie {
   display: grid;
-  grid-template-columns: auto minmax(0, 1.5fr) minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1.25fr) minmax(0, 1fr) auto;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .club-sessie-nr {
@@ -1089,7 +1089,7 @@
 .club-sessie input {
   width: 100%;
   min-width: 0;
-  padding: 8px;
+  padding: 8px 6px;
   border: 1px solid var(--rand);
   border-radius: 8px;
   background: var(--kaart);
@@ -1100,11 +1100,11 @@
 /* Zonder wegknop (één sessie) houden datum en tijd dezelfde breedte. */
 .club-sessie:not(:has(.club-sessie-weg))::after {
   content: '';
-  width: 34px;
+  width: 30px;
 }
 
 .club-sessie-weg {
-  width: 34px;
+  width: 30px;
   height: 34px;
 }
 

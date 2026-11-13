@@ -1431,13 +1431,13 @@ export const EN: Record<string, string> = {
   // 0.34.3: eigen opzet per dag
   '{dag} weer gelijk maken aan {eerste}? De eigen opzet van {dag} gaat weg.': 'Make {dag} the same as {eerste} again? The own setup of {dag} will be removed.',
   'Samen, {n} groepjes': 'Together, {n} groups',
-  'Opzet op {dag}': 'Setup on {dag}',
+  'Opzet van {dag}': 'Setup for {dag}',
   'Zelfde als {dag}': 'Same as {dag}',
-  'Eigen opzet voor deze dag': 'Own setup for this day',
-  'Dit is de opzet van {dag}. Dagen met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.': 'This is the setup for {dag}. Days set to Same as change with it; {w0} has its own setup and does not change.',
-  'Dit is de opzet van {dag}. De andere dagen veranderen mee.': 'This is the setup for {dag}. The other days change with it.',
+  'Eigen opzet voor deze sessie': 'Own setup for this session',
+  'Dit is de opzet van {dag}. Sessies met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.': 'This is the setup for {dag}. Sessions set to Same as change with it; {w0} has its own setup and does not change.',
+  'Dit is de opzet van {dag}. De andere sessies veranderen mee.': 'This is the setup for {dag}. The other sessions change with it.',
   '{dag} heeft een eigen opzet: wat je hier verandert, geldt alleen voor {dag}.': '{dag} has its own setup: what you change here only applies to {dag}.',
-  '{dag} volgt de opzet van {eerste}. Kies Eigen opzet voor deze dag om hem los aan te passen.': '{dag} follows the setup of {eerste}. Choose Own setup for this day to change it separately.',
+  '{dag} volgt de opzet van {eerste}. Kies Eigen opzet voor deze sessie om hem los aan te passen.': '{dag} follows the setup of {eerste}. Choose Own setup for this session to change it separately.',
   'Weer gelijk maken aan {dag}': 'Make the same as {dag} again',
   aangepast: 'changed',
   // 0.34.4: sessies

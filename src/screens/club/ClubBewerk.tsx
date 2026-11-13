@@ -578,21 +578,21 @@ export function ClubBewerk({ id }: { id: string }) {
             <DagKeuze c={c} dag={dag} opKies={kiesDag} />
             {toonDag > 0 && (
               <label className="leeftijd-keuze club-opzet-keuze">
-                <span>{vt('Opzet op {dag}', { dag: dezeDag })}</span>
+                <span>{vt('Opzet van {dag}', { dag: dezeDag })}</span>
                 <select value={bewerkDag ? 'eigen' : 'zelfde'} onChange={(e) => kiesOpzet(e.target.value === 'eigen')}>
                   <option value="zelfde">{vt('Zelfde als {dag}', { dag: eerste })}</option>
-                  <option value="eigen">{vt('Eigen opzet voor deze dag')}</option>
+                  <option value="eigen">{vt('Eigen opzet voor deze sessie')}</option>
                 </select>
               </label>
             )}
             <p className="klein">
               {toonDag === 0
                 ? eigenDagen.length
-                  ? vt('Dit is de opzet van {dag}. Dagen met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.', { dag: dezeDag, w0: eigenDagen.join(', ') })
-                  : vt('Dit is de opzet van {dag}. De andere dagen veranderen mee.', { dag: dezeDag })
+                  ? vt('Dit is de opzet van {dag}. Sessies met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.', { dag: dezeDag, w0: eigenDagen.join(', ') })
+                  : vt('Dit is de opzet van {dag}. De andere sessies veranderen mee.', { dag: dezeDag })
                 : bewerkDag
                   ? vt('{dag} heeft een eigen opzet: wat je hier verandert, geldt alleen voor {dag}.', { dag: dezeDag })
-                  : vt('{dag} volgt de opzet van {eerste}. Kies Eigen opzet voor deze dag om hem los aan te passen.', { dag: dezeDag, eerste })}
+                  : vt('{dag} volgt de opzet van {eerste}. Kies Eigen opzet voor deze sessie om hem los aan te passen.', { dag: dezeDag, eerste })}
             </p>
             {bewerkDag > 0 && (
               <button className="knop club-gelijk" onClick={() => kiesOpzet(false)}>
