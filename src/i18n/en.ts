@@ -1432,6 +1432,17 @@ export const EN: Record<string, string> = {
   '{n} groepjes': '{n} groups',
   'Per ronde komen er {n} groepjes samen op één station; de andere groepjes draaien door langs de gewone stations.': 'Each round {n} groups come together at one station; the other groups rotate through the regular stations.',
   'Ronde {nr}: {w0} samen': 'Round {nr}: {w0} together',
-  'Mini Talents + loopcoördinatie': 'Mini Talents + footwork & coordination',
   '{w0} (station {nr}): steeds {n} groepjes samen, in vaste groepjes: {w1}.': '{w0} (station {nr}): always {n} groups together, in fixed sets: {w1}.',
+  // 0.34.3: eigen opzet per dag
+  '{dag} weer gelijk maken aan {eerste}? De eigen opzet van {dag} gaat weg.': 'Make {dag} the same as {eerste} again? The own setup of {dag} will be removed.',
+  'Samen, {n} groepjes': 'Together, {n} groups',
+  'Opzet op {dag}': 'Setup on {dag}',
+  'Zelfde als {dag}': 'Same as {dag}',
+  'Eigen opzet voor deze dag': 'Own setup for this day',
+  'Dit is de opzet van {dag}. Dagen met Zelfde als veranderen mee; {w0} heeft een eigen opzet en verandert niet mee.': 'This is the setup for {dag}. Days set to Same as change with it; {w0} has its own setup and does not change.',
+  'Dit is de opzet van {dag}. De andere dagen veranderen mee.': 'This is the setup for {dag}. The other days change with it.',
+  '{dag} heeft een eigen opzet: wat je hier verandert, geldt alleen voor {dag}.': '{dag} has its own setup: what you change here only applies to {dag}.',
+  '{dag} volgt de opzet van {eerste}. Kies Eigen opzet voor deze dag om hem los aan te passen.': '{dag} follows the setup of {eerste}. Choose Own setup for this day to change it separately.',
+  'Weer gelijk maken aan {dag}': 'Make the same as {dag} again',
+  aangepast: 'changed',
 };
