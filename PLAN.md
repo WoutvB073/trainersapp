@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (13-11-2026, versie 0.34.3)
+## Status (13-11-2026, versie 0.34.4)
 
 | Fase | Status |
 |---|---|
@@ -50,6 +50,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 36. Mini's: O6 en O7 apart, nieuwe oefeningen (0.34.1) | ✅ online – **wacht op test** |
 | 37. Circuittraining: Samen met een deel van de groepjes, sjabloon Mini Talents + loopcoördinatie (0.34.2) | ✅ online – **wacht op test** |
 | 38. Circuittraining: per dag een eigen opzet, sjabloon Mini Talents + loopcoördinatie weg (0.34.3) | ✅ online – **wacht op test** |
+| 39. Circuittraining: sessies (datum + begintijd, eigen aantallen, leeftijd, groep), rooster per sessie, materiaal voor de hele avond (0.34.4) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 
 ## Werkwijze
@@ -1254,6 +1255,17 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Meenemen**: dupliceren en Naar volgende week kopiëren `perDag` met de opzet (het rooster vult alleen de trainers opnieuw). Delen met team neemt `perDag` mee. In de trainerslink staat per dag `o` (zelfde code als de onderdelen); de onderdelen van zo'n dag krijgen id's d2o1, d2o2 … en de trainers van Samen-onderdelen horen daarbij. Een oudere versie van de app negeert `o` en toont dan voor alle dagen de eerste opzet.
 - **Tests**: `tests/versie-0343.test.ts`, browsertest `tools/e2e/versie-0343.mjs` (blad `blad-0343.png`).
 
+## Besluiten versie 0.34.4 – sessies
+- **Model**: een circuittraining heeft één of meer sessies. Een sessie = een plek in `datums` (dezelfde datum mag vaker) met `perDag[i]`. De eerste sessie zijn de velden van de training zelf (`starttijd`, `kinderen`, `groepjes`, `leeftijd`, `groep`, `onderdelen`). Een latere sessie kan eigen waarden hebben in `perDag[i]`: `tijd` ('' = geen tijd), `kinderen`, `groepjes`, `leeftijd`, `groep` ('' = geen groep) en (0.34.3) `onderdelen`. Zonder eigen waarde geldt die van de eerste sessie. Bestaande trainingen met twee dagen zijn zo vanzelf twee sessies met de begintijd en de aantallen van de training; er hoeft niets omgezet te worden, ook niet in oude links, team-items en sjablonen.
+- **Rekenwerk**: `opDag(c, i)` geeft de sessie zoals hij is (aantallen, leeftijd, begintijd, groep, trainers, opzet); plan, rotatie, stations, materiaal, trainersindeling en meldingen werken daarop. Bij "Zelfde als" met een ander aantal groepjes blijven onderdelen en oefeningen gelijk en wordt de rest voor die sessie opnieuw berekend (met de bestaande meldingen als het niet mooi past).
+- **Functies**: `sessieTijd`, `sessieTekst` ("Ma 16 nov 18:00"; zelfde datum zonder tijd krijgt "· 2"), `sessieSleutel` (onthouden van de gekozen sessie: datum|tijd), `zetSessie` (datum, tijd, aantallen, leeftijd, groep; een ander aantal groepjes deelt alleen de sessies opnieuw in waar het aantal echt veranderde), `voegSessieToe` (zelfde datum als de laatste, een uur later, dezelfde trainers; maximaal `MAX_SESSIES` = 6), `verwijderSessie` (gaat de eerste weg, dan wordt de tweede de eerste met zijn eigen waarden; de andere sessies blijven precies gelijk), `leeftijdMelding`, `sessiesOpDatum`, `materiaalAvond`.
+- **Leeftijd**: past een gekozen oefening niet bij de leeftijd van de sessie, dan staat er een melding (bij Onderdelen en bovenaan het plan). Er wordt niets vervangen.
+- **Rooster per sessie**: een trainer in het rooster kan een begintijd hebben (`RoosterTrainer.tijd`): dan komt hij alleen bij de sessie die dan begint. Zonder tijd komt hij bij elke sessie van zijn groep op die dag. Elke sessie kan een eigen groep hebben. `vulVolgensRooster` vult per sessie en laat de eigen waarden van een sessie staan.
+- **Materiaal**: per sessie, en bij meer sessies op dezelfde datum ook "Voor de hele avond": per soort het meeste dat in één sessie tegelijk nodig is (binnen een sessie het meeste van de stations of van de samen-onderdelen).
+- **Trainerslink**: één link met bovenaan de sessiekeuze (in de link per sessie `u` = begintijd, `k`, `g`, `l`, `gr`). Bij Ik ben… zie je de rondes van de gekozen sessie, en staat je naam ook bij een andere sessie, dan ook die ("Ook bij …"). Sta je niet bij de gekozen sessie, dan de melding met een knop naar je sessie.
+- **Schermen**: bij de circuittraining een lijst Sessies (datum, begintijd, weghalen) met Sessie toevoegen; daaronder de sessiekeuze en de instellingen van die sessie (leeftijd, kinderen, groepjes, groep, trainers). De keuze bovenaan plan, rondetimer en link is een sessiekeuze met "aangepast" bij een eigen opzet.
+- **Tests**: `tests/versie-0344.test.ts`, browsertest `tools/e2e/versie-0344.mjs` (blad `blad-0344.png`).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
 - 0.34.0 – Trainerslink: één link met bovenaan de dag, niet een link per dag. Dan kan één bericht in de groepsapp voor beide dagen, en kiest elke trainer zelf.
@@ -1301,6 +1313,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - 0.34.3 – Opslaan als sjabloon bewaart alleen de opzet van de eerste dag (een sjabloon heeft geen datums).
 - 0.34.3 – Het label in de dagkeuze is "aangepast" (Engels "changed").
 - 0.34.3 – De keuze Zelfde als / Eigen opzet staat onder het label (over de hele breedte), zodat "Eigen opzet voor deze dag" op een iPhone SE niet afvalt.
+- 0.34.4 – De sessies blijven in de volgorde waarin je ze toevoegt; ze worden niet op datum en tijd gesorteerd. De eerste in de lijst is de sessie waar "Zelfde als" naar kijkt.
+- 0.34.4 – Een nieuwe sessie komt op dezelfde datum als de laatste, een uur later (zonder tijd: zonder tijd), met dezelfde trainers. Aantallen, leeftijd, groep en opzet volgen de eerste sessie tot je ze aanpast.
+- 0.34.4 – Wat per sessie kan: datum, begintijd, aantal kinderen, aantal groepjes, leeftijd, groep uit het rooster, trainers en indeling, en de opzet. De naam van de training en blijven/meelopen gelden voor alle sessies.
+- 0.34.4 – Pas je bij de eerste sessie iets aan (bijvoorbeeld het aantal groepjes), dan veranderen de sessies zonder eigen waarde mee; sessies met een eigen waarde niet.
+- 0.34.4 – De eerste sessie weghalen: de tweede wordt de eerste en neemt zijn eigen waarden mee; de andere sessies blijven precies gelijk (waar ze de eerste volgden, krijgen ze die waarde als eigen waarde). Dit vervangt de keuze van 0.34.3 over de eerste datum.
+- 0.34.4 – Twee sessies op dezelfde datum zonder begintijd heten "Ma 16 nov · 1" en "Ma 16 nov · 2".
+- 0.34.4 – Een trainer met een begintijd in het rooster komt alleen bij de sessie met precies die begintijd. Heeft een sessie geen begintijd, dan komen alle trainers van de groep.
+- 0.34.4 – Een andere groep kiezen bij een sessie vult de trainers van alleen de sessies waarvan de groep veranderde opnieuw in. "Opnieuw volgens het rooster" doet alle sessies.
+- 0.34.4 – Bij Ik ben… zie je de rondes van een andere sessie alleen als je ook bij de gekozen sessie staat ("Ook bij …"). Sta je er niet bij, dan blijft de melding met de knop naar jouw sessie, zoals in 0.34.0.
+- 0.34.4 – De leeftijdsmelding staat bij elke sessie waar een gekozen oefening niet bij de leeftijd past, ook bij de eerste.
+- 0.34.4 – "Voor de hele avond" staat alleen bij Materiaal als er meer sessies op dezelfde datum zijn; sessies op verschillende dagen tellen niet samen. Afvinken kan ook daar.
+- 0.34.4 – Maximaal 6 sessies per circuittraining.
+- 0.34.4 – Het aantal stations bij 4 groepjes en 3 onderdelen blijft zoals de rotatie het al deed (elke oefening 2×, per ronde 2 stations leeg, met de bestaande melding).
 - 0.33.1 – Minder trainers dan stations: niemand staat meer op twee plekken tegelijk, dus er blijven stations zonder trainer (vóór 0.33.1 kreeg een trainer er meer dan één). Eerst krijgt elk onderdeel één trainer, en de app meldt welke stations er geen hebben.
 - 0.33.1 – Trainers die een bestaande training had verdeeld zonder zelf te kiezen, staan daardoor soms op een andere plek. Zelf gekozen trainers blijven staan.
 - 0.33.1 – Bij een Samen-onderdeel zonder partijvelden staan standaard alle trainers samen; dat kun je per onderdeel aanpassen.
