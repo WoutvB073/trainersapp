@@ -1,9 +1,9 @@
 import type { Leeftijd, Oefening } from '../model/types';
-import { isLeeftijd } from '../data/leeftijden';
+import { isLeeftijd, leeftijdNaam } from '../data/leeftijden';
 import { vindCategorie } from '../data/categorieen';
 import { geldigeEigen } from '../eigen/eigen';
 import { kandidaten, kiesOefening } from '../training/genereren';
-import { maakId, metAantal, naarBase64Url, sleutel, uitBase64Url } from '../training/training';
+import { dagTekst, maakId, metAantal, naarBase64Url, pastBijLeeftijd, sleutel, uitBase64Url } from '../training/training';
 import { lijstTekst, t as vt, TAAL } from '../i18n/t';
 import type { Taal } from '../i18n/taal';
 
@@ -151,7 +151,19 @@ export interface DagTrainers {
    * Bij de eerste dag (index 0) telt dit niet: die heeft altijd de opzet van de training zelf (`onderdelen`).
    */
   onderdelen?: Onderdeel[];
+  /**
+   * Sinds 0.34.4 is elke "dag" een sessie. Alleen bij sessie 2 en verder; zonder waarde geldt die van de eerste sessie (de training zelf).
+   * `tijd`: begintijd (HH:MM, '' = geen tijd); `groep`: groep uit het trainersrooster ('' = geen groep).
+   */
+  tijd?: string;
+  kinderen?: number;
+  groepjes?: number;
+  leeftijd?: Leeftijd;
+  groep?: string;
 }
+
+/** Een sessie heeft zijn eigen datum, begintijd, aantallen, leeftijd, groep, trainers en (eventueel) opzet (0.34.4). */
+export const MAX_SESSIES = 6;
 
 export interface ClubTraining {
   id: string;
@@ -223,7 +235,7 @@ export const oefeningIds = (c: { onderdelen?: Onderdeel[]; blokken?: Partial<Rec
 
 /** Niets ingevuld: zo'n clubtraining wordt niet bewaard (de standaarddatums en een onveranderde opzet tellen niet mee). */
 export function isLeeg(c: Pick<ClubTraining, 'naam' | 'trainers' | 'blokken' | 'onderdelen' | 'sjabloon' | 'perDag' | 'groep'>): boolean {
-  return !c.sjabloon && !c.naam.trim() && !c.groep && !c.trainers.some((x) => x.trim()) && !c.perDag?.some((d) => d.trainers.some((x) => x.trim())) && !oefeningIds(c).length && !c.perDag?.some((d, i) => i > 0 && d.onderdelen?.length) && STANDAARD_OPZETTEN().includes(opzet(onderdelenVan(c)));
+  return !c.sjabloon && !c.naam.trim() && !c.groep && !c.trainers.some((x) => x.trim()) && !c.perDag?.some((d) => d.trainers.some((x) => x.trim())) && !oefeningIds(c).length && !c.perDag?.some((d, i) => i > 0 && (d.onderdelen?.length || d.kinderen || d.groepjes || d.leeftijd || d.tijd || d.groep)) && STANDAARD_OPZETTEN().includes(opzet(onderdelenVan(c)));
 }
 
 export function clubNaam(c: Pick<ClubTraining, 'naam'>): string {
@@ -815,7 +827,144 @@ export function opDag<T extends MetDagen>(c: T, dag: number): T {
   void _k;
   void _v;
   const eigen = dag > 0 && d.onderdelen?.length ? { onderdelen: d.onderdelen, blokken: {} } : {};
-  return { ...rest, ...eigen, trainers: d.trainers, stationTrainers: {}, veldTrainers: {}, ...(d.trainerKeuzes ? { trainerKeuzes: d.trainerKeuzes } : {}), ...(d.vast ? { vast: d.vast } : {}) } as T;
+  const sessie = dag > 0 ? sessieVelden(d) : {};
+  return { ...rest, ...eigen, ...sessie, trainers: d.trainers, stationTrainers: {}, veldTrainers: {}, ...(d.trainerKeuzes ? { trainerKeuzes: d.trainerKeuzes } : {}), ...(d.vast ? { vast: d.vast } : {}) } as T;
+}
+
+/** De eigen waarden van een sessie (vanaf de tweede) als velden van de training: begintijd, aantallen, leeftijd en groep. */
+function sessieVelden(d: DagTrainers): Partial<ClubTraining> {
+  return {
+    ...(d.tijd !== undefined ? { starttijd: d.tijd || undefined } : {}),
+    ...(d.kinderen ? { kinderen: d.kinderen } : {}),
+    ...(d.groepjes ? { groepjes: d.groepjes } : {}),
+    ...(d.leeftijd ? { leeftijd: d.leeftijd } : {}),
+    ...(d.groep !== undefined ? { groep: d.groep || undefined } : {}),
+  };
+}
+
+type SessieInhoud = Pick<ClubTraining, 'datums' | 'perDag' | 'starttijd'>;
+
+/** Begintijd van een sessie ('' = geen). */
+export function sessieTijd(c: SessieInhoud, i: number): string {
+  const eigen = i > 0 ? c.perDag?.[i]?.tijd : undefined;
+  return eigen !== undefined ? eigen : (c.starttijd ?? '');
+}
+
+/** "Ma 16 nov 18:00". Staan twee sessies hetzelfde in de lijst (zelfde datum, geen tijd), dan met een nummer erachter. */
+export function sessieTekst(c: SessieInhoud, i: number, taal: Taal = TAAL): string {
+  const tekst = (j: number) => [c.datums[j] ? dagTekst(c.datums[j]!, taal) : '', sessieTijd(c, j)].filter(Boolean).join(' ');
+  const eigen = tekst(i);
+  return c.datums.some((_, j) => j !== i && tekst(j) === eigen) ? `${eigen} · ${i + 1}` : eigen;
+}
+
+/** Sleutel om de gekozen sessie te onthouden (datum en tijd). */
+export const sessieSleutel = (c: SessieInhoud, i: number) => `${c.datums[i] ?? ''}|${sessieTijd(c, i)}`;
+
+type SessieWijziging = Partial<Pick<DagTrainers, 'tijd' | 'kinderen' | 'groepjes' | 'leeftijd' | 'groep'>> & { datum?: string };
+type SessieClub = Pick<ClubTraining, 'datums' | 'perDag' | 'trainers' | 'trainerKeuzes' | 'starttijd' | 'kinderen' | 'groepjes' | 'leeftijd' | 'groep' | 'onderdelen' | 'blokken' | 'stationTrainers' | 'veldTrainers'>;
+
+/** Indeling op een sessie opnieuw (andere stations); blijven/meelopen blijft. */
+const zonderIndelingDag = (d: DagTrainers): DagTrainers => {
+  const { trainerKeuzes: k, ...rest } = d;
+  return { ...rest, ...(k?.modus ? { trainerKeuzes: { modus: k.modus } } : {}) };
+};
+
+/**
+ * Datum, begintijd, aantallen, leeftijd of groep van een sessie wijzigen. Bij de eerste sessie zijn dat de velden van de training zelf;
+ * sessies zonder eigen waarde volgen die. Verandert het aantal groepjes van een sessie, dan begint de indeling van de trainers daar opnieuw.
+ */
+export function zetSessie(c: SessieClub, i: number, w: SessieWijziging): Partial<ClubTraining> {
+  const datums = w.datum !== undefined ? c.datums.map((d, j) => (j === i ? w.datum! : d)) : c.datums;
+  const voor = c.datums.map((_, j) => opDag(c as ClubTraining, j).groepjes);
+  let uit: Partial<ClubTraining> = { datums };
+  if (i === 0) {
+    uit = {
+      ...uit,
+      ...(w.tijd !== undefined ? { starttijd: w.tijd || undefined } : {}),
+      ...(w.kinderen ? { kinderen: w.kinderen } : {}),
+      ...(w.groepjes ? { groepjes: w.groepjes } : {}),
+      ...(w.leeftijd ? { leeftijd: w.leeftijd } : {}),
+      ...(w.groep !== undefined ? { groep: w.groep || undefined } : {}),
+    };
+  } else {
+    const aantal = Math.max(c.datums.length, c.perDag?.length ?? 0, i + 1);
+    const { datum: _d, ...velden } = w;
+    void _d;
+    uit.perDag = Array.from({ length: aantal }, (_, j) => (j === i ? { ...dagVan(c, j), ...velden } : dagVan(c, j)));
+  }
+  const na = { ...c, ...uit } as ClubTraining;
+  if (w.groepjes === undefined) return uit;
+  // Alleen de sessies waarvan het aantal groepjes echt veranderde, opnieuw indelen.
+  const anders = na.datums.map((_, j) => opDag(na, j).groepjes !== voor[j]);
+  if (!anders.some(Boolean)) return uit;
+  const perDag = na.perDag?.map((d, j) => (anders[j] ? zonderIndelingDag(d) : d));
+  return {
+    ...uit,
+    ...(perDag ? { perDag } : {}),
+    ...(anders[0] ? { trainerKeuzes: c.trainerKeuzes?.modus ? { modus: c.trainerKeuzes.modus } : {}, stationTrainers: {}, veldTrainers: {} } : {}),
+  };
+}
+
+/** Sessie erbij: zelfde datum als de laatste, een uur later; dezelfde trainers. Aantallen, leeftijd en opzet volgen de eerste sessie. */
+export function voegSessieToe(c: SessieClub): Partial<ClubTraining> {
+  if (c.datums.length >= MAX_SESSIES) return {};
+  const i = c.datums.length - 1;
+  const datum = c.datums[i] ?? new Date().toISOString().slice(0, 10);
+  const tijd = sessieTijd(c, Math.max(0, i));
+  const later = /^\d{2}:\d{2}$/.test(tijd) ? `${String((Number(tijd.slice(0, 2)) + 1) % 24).padStart(2, '0')}${tijd.slice(2)}` : '';
+  const vorige = dagVan(c, Math.max(0, i));
+  const perDag = [...c.datums.map((_, j) => dagVan(c, j)), { trainers: [...vorige.trainers], ...(vorige.vast ? { vast: { ...vorige.vast } } : {}), tijd: later }];
+  return { datums: [...c.datums, datum], perDag };
+}
+
+/**
+ * Sessie weghalen. Gaat de eerste weg, dan wordt de tweede de eerste: zijn waarden worden die van de training. De andere sessies blijven
+ * precies zoals ze waren (waar ze de eerste volgden en dat nu anders zou worden, krijgen ze die waarde als eigen waarde).
+ */
+export function verwijderSessie(c: ClubTraining, i: number): Partial<ClubTraining> {
+  if (c.datums.length < 2 || i < 0 || i >= c.datums.length) return {};
+  const zichten = c.datums.map((_, j) => opDag(c, j));
+  const blijft = c.datums.map((_, j) => j).filter((j) => j !== i);
+  const eerste = zichten[blijft[0]!]!;
+  const dagen = blijft.map((j) => dagVan(c, j));
+  const basis: Partial<ClubTraining> = {
+    datums: blijft.map((j) => c.datums[j]!),
+    starttijd: sessieTijd(c, blijft[0]!) || undefined,
+    kinderen: eerste.kinderen,
+    groepjes: eerste.groepjes,
+    leeftijd: eerste.leeftijd,
+    groep: eerste.groep,
+    onderdelen: onderdelenVan(eerste),
+    blokken: {},
+    trainers: eerste.trainers,
+    trainerKeuzes: eerste.trainerKeuzes ?? {},
+    stationTrainers: {},
+    veldTrainers: {},
+  };
+  const perDag = dagen.map((d, k): DagTrainers => {
+    const { tijd: _t, kinderen: _k, groepjes: _g, leeftijd: _l, groep: _r, onderdelen: _o, ...kaal } = d;
+    void [_t, _k, _g, _l, _r, _o];
+    if (k === 0) return kaal;
+    const z = zichten[blijft[k]!]!;
+    const zelfdeOpzet = JSON.stringify(onderdelenVan(z)) === JSON.stringify(basis.onderdelen);
+    return {
+      ...kaal,
+      ...((z.starttijd ?? '') !== (basis.starttijd ?? '') ? { tijd: z.starttijd ?? '' } : {}),
+      ...(z.kinderen !== basis.kinderen ? { kinderen: z.kinderen } : {}),
+      ...(z.groepjes !== basis.groepjes ? { groepjes: z.groepjes } : {}),
+      ...(z.leeftijd !== basis.leeftijd ? { leeftijd: z.leeftijd } : {}),
+      ...((z.groep ?? '') !== (basis.groep ?? '') ? { groep: z.groep ?? '' } : {}),
+      ...(zelfdeOpzet ? {} : { onderdelen: onderdelenVan(z) }),
+    };
+  });
+  return { ...basis, perDag };
+}
+
+/** Oefeningen die niet bij de leeftijd van deze sessie passen (een andere leeftijd dan de eerste sessie): melding, niet stil vervangen. */
+export function leeftijdMelding(c: Pick<ClubTraining, 'leeftijd' | 'onderdelen' | 'blokken'>, vind: (id: string) => Oefening | undefined): string | undefined {
+  const namen = [...new Set(onderdelenVan(c).flatMap((o) => oefeningenVan(o).map((x) => vind(x.oefening)).filter((x): x is Oefening => !!x && !pastBijLeeftijd(x, c.leeftijd)).map((x) => x.naam)))];
+  if (!namen.length) return undefined;
+  return vt('Niet voor {leeftijd}: {w0}. Kies voor deze sessie een eigen opzet met andere oefeningen, of een andere leeftijd.', { leeftijd: leeftijdNaam(c.leeftijd), w0: lijstTekst(namen) });
 }
 
 /** Heeft deze dag een eigen opzet (0.34.3)? De eerste dag nooit: die is de opzet waar "Zelfde als" naar kijkt. */
@@ -1024,6 +1173,13 @@ function telBlok(per: Map<string, Telling>, blok: Map<string, Telling>, keer: nu
  * opnieuw voor de samen-onderdelen; daarvoor telt alleen wat er meer nodig is.
  */
 export function materiaal(c: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokken' | 'onderdelen'>, vind: (id: string) => Oefening | undefined, taal: Taal = TAAL): Materiaal {
+  const { deel1, deel2 } = tellingen(c, vind, taal);
+  const regel = (deel: string, k: string, x: Telling, aantal?: number): MateriaalRegel => ({ sleutel: `${deel}:${k}`, tekst: aantal === undefined ? x.tekst : metAantal(k, aantal, taal), bij: [...x.bij] });
+  return materiaalRegels(deel1, deel2, regel);
+}
+
+/** Wat er per soort nodig is: deel 1 = de stations, deel 2 = de samen-onderdelen. */
+function tellingen(c: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokken' | 'onderdelen'>, vind: (id: string) => Oefening | undefined, taal: Taal) {
   const kinderen = groepGrootte(c);
   const plan = clubPlan(c);
   const deel1 = new Map<string, Telling>();
@@ -1035,8 +1191,10 @@ export function materiaal(c: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokk
     if (o.categorie === 'partijvormen') telBlok(deel2, blokTelling(o, vind, 2 * kinderen, taal), partijvelden(c.groepjes).length);
     else telBlok(deel2, blokTelling(o, vind, c.kinderen, taal), 1);
   }
+  return { deel1, deel2 };
+}
 
-  const regel = (deel: string, k: string, x: Telling, aantal?: number): MateriaalRegel => ({ sleutel: `${deel}:${k}`, tekst: aantal === undefined ? x.tekst : metAantal(k, aantal, taal), bij: [...x.bij] });
+function materiaalRegels(deel1: Map<string, Telling>, deel2: Map<string, Telling>, regel: (deel: string, k: string, x: Telling, aantal?: number) => MateriaalRegel): Materiaal {
   const stationsLijst = [...deel1].map(([k, x]) => regel('1', k, x, x.aantal));
   const extra: MateriaalRegel[] = [];
   for (const [k, x] of deel2) {
@@ -1046,6 +1204,29 @@ export function materiaal(c: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokk
   }
   const opNaam = (a: MateriaalRegel, b: MateriaalRegel) => a.sleutel.localeCompare(b.sleutel);
   return { stations: stationsLijst.sort(opNaam), extra: extra.sort(opNaam) };
+}
+
+/** Sessies op dezelfde datum als sessie `i` (0.34.4), op volgorde. */
+export const sessiesOpDatum = (c: Pick<ClubTraining, 'datums'>, i: number) => c.datums.flatMap((d, j) => (d === c.datums[i] ? [j] : []));
+
+/**
+ * Materiaal voor de hele avond (0.34.4): sessies na elkaar gebruiken hetzelfde materiaal opnieuw, dus per soort telt het meeste dat in één
+ * sessie tegelijk nodig is. Binnen een sessie is dat het meeste van de stations of van de samen-onderdelen.
+ */
+export function materiaalAvond(sessies: Pick<ClubTraining, 'groepjes' | 'kinderen' | 'blokken' | 'onderdelen'>[], vind: (id: string) => Oefening | undefined, taal: Taal = TAAL): MateriaalRegel[] {
+  const uit = new Map<string, Telling>();
+  for (const s of sessies) {
+    const { deel1, deel2 } = tellingen(s, vind, taal);
+    for (const k of new Set([...deel1.keys(), ...deel2.keys()])) {
+      const a = deel1.get(k);
+      const b = deel2.get(k);
+      const nu = uit.get(k) ?? { tekst: (a ?? b)!.tekst, bij: new Set<string>() };
+      if (a?.aantal !== undefined || b?.aantal !== undefined) nu.aantal = Math.max(nu.aantal ?? 0, a?.aantal ?? 0, b?.aantal ?? 0);
+      for (const n of [...(a?.bij ?? []), ...(b?.bij ?? [])]) nu.bij.add(n);
+      uit.set(k, nu);
+    }
+  }
+  return [...uit].map(([k, x]) => ({ sleutel: `3:${k}`, tekst: x.aantal === undefined ? x.tekst : metAantal(k, x.aantal, taal), bij: [...x.bij] })).sort((a, b) => a.sleutel.localeCompare(b.sleutel));
 }
 
 // ---------- delen ----------
@@ -1097,7 +1278,7 @@ export function naarCode(c: Inhoud, eigen: Oefening[] = []): string {
   const o = codeOnderdelen(onderdelenVan(c));
   const ids = oefeningIds(c);
   const e = eigen.filter((x) => ids.includes(x.id));
-  return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(keuzesVoorLink(c) ? { p: keuzesVoorLink(c) } : {}), ...(c.perDag ? { pd: c.perDag.map((d, i) => ({ t: d.trainers, ...(keuzesVoorLink(opDag(c, i), d.trainerKeuzes) ? { p: keuzesVoorLink(opDag(c, i), d.trainerKeuzes) } : {}), ...(d.vast ? { v: d.vast } : {}), ...(eigenOpzet(c, i) ? { o: codeOnderdelen(d.onderdelen!) } : {}) })) } : {}), ...(c.groep ? { gr: c.groep } : {}), ...(e.length ? { e } : {}) }));
+  return naarBase64Url(JSON.stringify({ v: 2, n: c.naam, d: c.datums, l: c.leeftijd, k: c.kinderen, g: c.groepjes, t: c.trainers, o, ...(c.starttijd ? { u: c.starttijd } : {}), s: c.stationTrainers, f: c.veldTrainers, ...(keuzesVoorLink(c) ? { p: keuzesVoorLink(c) } : {}), ...(c.perDag ? { pd: c.perDag.map((d, i) => ({ t: d.trainers, ...(keuzesVoorLink(opDag(c, i), d.trainerKeuzes) ? { p: keuzesVoorLink(opDag(c, i), d.trainerKeuzes) } : {}), ...(d.vast ? { v: d.vast } : {}), ...(eigenOpzet(c, i) ? { o: codeOnderdelen(d.onderdelen!) } : {}), ...(i > 0 ? linkSessie(d) : {}) })) } : {}), ...(c.groep ? { gr: c.groep } : {}), ...(e.length ? { e } : {}) }));
 }
 
 const tekstenRecord = (x: unknown): Record<number, string> => {
@@ -1129,8 +1310,18 @@ function netteKeuzes(x: unknown): TrainerKeuzes | undefined {
 
 function netteDagen(x: unknown): DagTrainers[] | undefined {
   if (!Array.isArray(x)) return undefined;
-  return x.slice(0, 7).map((d: { trainers?: unknown; trainerKeuzes?: unknown; vast?: unknown; rooster?: unknown; onderdelen?: unknown }, i) => {
+  return x.slice(0, 7).map((d: { trainers?: unknown; trainerKeuzes?: unknown; vast?: unknown; rooster?: unknown; onderdelen?: unknown; tijd?: unknown; kinderen?: unknown; groepjes?: unknown; leeftijd?: unknown; groep?: unknown }, i) => {
     const eigen = i > 0 ? netteOnderdelen(d?.onderdelen) : undefined;
+    const sessie: Partial<DagTrainers> =
+      i > 0
+        ? {
+            ...(typeof d?.tijd === 'string' && (d.tijd === '' || /^\d{2}:\d{2}$/.test(d.tijd)) ? { tijd: d.tijd } : {}),
+            ...(typeof d?.kinderen === 'number' ? { kinderen: getal(d.kinderen, 1, MAX_KINDEREN, 30) } : {}),
+            ...(typeof d?.groepjes === 'number' ? { groepjes: getal(d.groepjes, MIN_GROEPJES, MAX_GROEPJES, 6) } : {}),
+            ...(isLeeftijd(d?.leeftijd) ? { leeftijd: d.leeftijd } : {}),
+            ...(typeof d?.groep === 'string' ? { groep: d.groep.trim().slice(0, 60) } : {}),
+          }
+        : {};
     const vast: Record<string, string> = {};
     if (d?.vast && typeof d.vast === 'object') for (const [n, k] of Object.entries(d.vast)) if (typeof k === 'string' && CATEGORIEEN.includes(k)) vast[n.slice(0, 40)] = k;
     const keuzes = netteKeuzes(d?.trainerKeuzes);
@@ -1140,6 +1331,7 @@ function netteDagen(x: unknown): DagTrainers[] | undefined {
       ...(Object.keys(vast).length ? { vast } : {}),
       ...(d?.rooster === true ? { rooster: true } : {}),
       ...(eigen ? { onderdelen: eigen } : {}),
+      ...sessie,
     };
   });
 }
@@ -1211,20 +1403,29 @@ function onderdelenUitLink(lijst: unknown[][], voor = ''): Partial<Onderdeel>[] 
 }
 
 /** Een dag uit de link. Bij een eigen opzet horen de trainers van de Samen-onderdelen bij de id's van die dag. */
-function dagUitLink(d: { t?: unknown; p?: unknown; v?: unknown; o?: unknown }, i: number) {
+/** Sessievelden in de link (0.34.4): u = begintijd, k = kinderen, g = groepjes, l = leeftijd, gr = groep. */
+const linkSessie = (d: DagTrainers) => ({
+  ...(d.tijd !== undefined ? { u: d.tijd } : {}),
+  ...(d.kinderen ? { k: d.kinderen } : {}),
+  ...(d.groepjes ? { g: d.groepjes } : {}),
+  ...(d.leeftijd ? { l: d.leeftijd } : {}),
+  ...(d.groep !== undefined ? { gr: d.groep } : {}),
+});
+
+function dagUitLink(d: { t?: unknown; p?: unknown; v?: unknown; o?: unknown; u?: unknown; k?: unknown; g?: unknown; l?: unknown; gr?: unknown }, i: number) {
   const voor = `d${i + 1}`;
   const eigen = i > 0 && Array.isArray(d?.o) ? onderdelenUitLink((d.o as unknown[]).filter(Array.isArray) as unknown[][], voor) : undefined;
   let keuzes = d?.p as TrainerKeuzes | undefined;
   if (eigen && keuzes && typeof keuzes === 'object' && keuzes.samen && typeof keuzes.samen === 'object') {
     keuzes = { ...keuzes, samen: Object.fromEntries(Object.entries(keuzes.samen).map(([k, v]) => [`${voor}${k}`, v])) };
   }
-  return { trainers: d?.t, trainerKeuzes: keuzes, vast: d?.v, ...(eigen ? { onderdelen: eigen } : {}) };
+  return { trainers: d?.t, trainerKeuzes: keuzes, vast: d?.v, ...(eigen ? { onderdelen: eigen } : {}), tijd: d?.u, kinderen: d?.k, groepjes: d?.g, leeftijd: d?.l, groep: d?.gr };
 }
 
 export function uitCode(code: string): GedeeldeClub | null {
   try {
     const x = JSON.parse(uitBase64Url(code)) as { v?: number; n?: unknown; d?: unknown; l?: unknown; k?: unknown; g?: unknown; t?: unknown; b?: unknown; o?: unknown; u?: unknown; s?: unknown; f?: unknown; p?: unknown; pd?: unknown; gr?: unknown; e?: unknown };
-    const basis = { naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, stationTrainers: x.s, veldTrainers: x.f, trainerKeuzes: x.p, perDag: Array.isArray(x.pd) ? (x.pd as { t?: unknown; p?: unknown; v?: unknown; o?: unknown }[]).map((d, i) => dagUitLink(d, i)) : undefined, groep: x.gr, eigen: x.e };
+    const basis = { naam: x.n, datums: x.d, leeftijd: x.l, kinderen: x.k, groepjes: x.g, trainers: x.t, stationTrainers: x.s, veldTrainers: x.f, trainerKeuzes: x.p, perDag: Array.isArray(x.pd) ? (x.pd as Parameters<typeof dagUitLink>[0][]).map((d, i) => dagUitLink(d, i)) : undefined, groep: x.gr, eigen: x.e };
     if (x.v === 2 && Array.isArray(x.o)) {
       const onderdelen = onderdelenUitLink(x.o as unknown[][]);
       return netteClub({ ...basis, blokken: {}, onderdelen, starttijd: x.u });

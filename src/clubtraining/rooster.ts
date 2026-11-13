@@ -1,4 +1,4 @@
-import { CATEGORIEEN, naarVolgendeWeek, type ClubTraining, type DagTrainers } from './clubtraining';
+import { CATEGORIEEN, naarVolgendeWeek, type ClubTraining, type DagTrainers, sessieTijd } from './clubtraining';
 import { maakId } from '../training/training';
 import { t as vt } from '../i18n/t';
 
@@ -20,6 +20,8 @@ export interface RoosterTrainer {
   wissel: boolean;
   /** Vaste plek: een categorie (bv. loopcoordinatie). */
   plek?: string;
+  /** Sinds 0.34.4: alleen bij de sessie met deze begintijd (HH:MM). Zonder = bij elke sessie van zijn groep op die dag. */
+  tijd?: string;
   gewijzigd: number;
 }
 
@@ -65,9 +67,14 @@ export function groepenOp(t: RoosterTrainer, datum: string): string[] {
   return [t.groepen[mod(Math.floor(weekIndex(t, datum) / stap), t.groepen.length)]!];
 }
 
-/** De trainers van een groep op een datum, met hun vaste plek. */
-export function roosterVoor(rooster: RoosterTrainer[], groep: string, datum: string): { naam: string; plek?: string }[] {
-  return rooster.filter((t) => t.naam.trim() && groepenOp(t, datum).includes(groep)).map((t) => ({ naam: t.naam.trim(), ...(t.plek ? { plek: t.plek } : {}) }));
+/**
+ * De trainers van een groep op een datum, met hun vaste plek. Met `tijd` (de begintijd van de sessie, 0.34.4) alleen trainers zonder tijd
+ * of met precies die tijd. Een sessie zonder begintijd krijgt iedereen van de groep.
+ */
+export function roosterVoor(rooster: RoosterTrainer[], groep: string, datum: string, tijd = ''): { naam: string; plek?: string }[] {
+  return rooster
+    .filter((t) => t.naam.trim() && groepenOp(t, datum).includes(groep) && (!t.tijd || !tijd || t.tijd === tijd))
+    .map((t) => ({ naam: t.naam.trim(), ...(t.plek ? { plek: t.plek } : {}) }));
 }
 
 /** Alle groepen uit het rooster (en eventueel die van een training), op naam. */
@@ -80,14 +87,19 @@ export function roosterGroepen(rooster: RoosterTrainer[], ...extra: (string | un
  * andere groep): dan volgt elke dag weer het rooster. Zonder groep, zonder datums of zonder trainers in het rooster voor die groep: niets.
  */
 export function vulVolgensRooster<T extends Pick<ClubTraining, 'groep' | 'datums' | 'perDag' | 'trainers' | 'trainerKeuzes'>>(c: T, rooster: RoosterTrainer[], forceer = false): T {
-  const groep = c.groep?.trim();
-  if (!groep || !c.datums.length || !rooster.some((t) => t.groepen.includes(groep))) return c;
+  // Elke sessie (0.34.4) heeft eventueel een eigen groep en begintijd.
+  const groepVan = (i: number) => (i > 0 && c.perDag?.[i]?.groep !== undefined ? c.perDag[i]!.groep : c.groep)?.trim() ?? '';
+  const metRooster = (g: string) => !!g && rooster.some((t) => t.groepen.includes(g));
+  if (!c.datums.length || !c.datums.some((_, i) => metRooster(groepVan(i)))) return c;
   const perDag = c.datums.map((datum, i): DagTrainers => {
     const oud = c.perDag?.[i];
+    const groep = groepVan(i);
+    if (!metRooster(groep)) return oud ?? { trainers: c.trainers, ...(c.trainerKeuzes ? { trainerKeuzes: c.trainerKeuzes } : {}) };
     if (!forceer && oud && !oud.rooster) return oud;
-    // Een eigen opzet voor deze dag (0.34.3) blijft staan: het rooster gaat alleen over de trainers.
-    const opzet = i > 0 && oud?.onderdelen?.length ? { onderdelen: oud.onderdelen } : {};
-    const lijst = roosterVoor(rooster, groep, datum);
+    // Een eigen opzet (0.34.3) en de eigen waarden van een sessie (0.34.4) blijven staan: het rooster gaat alleen over de trainers.
+    const { tijd, kinderen, groepjes, leeftijd, groep: eigenGroep, onderdelen } = oud ?? {};
+    const opzet = i > 0 ? { ...(onderdelen?.length ? { onderdelen } : {}), ...(tijd !== undefined ? { tijd } : {}), ...(kinderen ? { kinderen } : {}), ...(groepjes ? { groepjes } : {}), ...(leeftijd ? { leeftijd } : {}), ...(eigenGroep !== undefined ? { groep: eigenGroep } : {}) } : {};
+    const lijst = roosterVoor(rooster, groep, datum, sessieTijd(c, i));
     const vast: Record<string, string> = {};
     for (const x of lijst) if (x.plek) vast[x.naam] = x.plek;
     const modus = (oud?.trainerKeuzes ?? c.trainerKeuzes)?.modus;
@@ -111,6 +123,7 @@ export function roosterTekst(t: RoosterTrainer, categorieNaam: (id: string) => s
   const delen = [t.dagen.length ? [...t.dagen].sort().map(dagNaam).join(', ') : vt('geen dag'), t.ritme === 'om' ? vt('om de week (vanaf week {w})', { w: weekNummer(t.beginWeek) }) : vt('elke week')];
   if (t.groepen.length > 1 && t.wissel) delen.push(vt('{groepen} om de week wisselend (week {w}: {eerste})', { groepen: t.groepen.join(' / '), w: weekNummer(t.beginWeek), eerste: t.groepen[0]! }));
   else if (t.groepen.length) delen.push(t.groepen.join(', '));
+  if (t.tijd) delen.push(vt('om {tijd}', { tijd: t.tijd }));
   if (t.plek) delen.push(categorieNaam(t.plek));
   return delen.join(' · ');
 }
@@ -132,6 +145,7 @@ export function netteRooster(x: unknown, nu = Date.now()): RoosterTrainer[] {
       groepen: Array.isArray(t.groepen) ? [...new Set(t.groepen.filter((g): g is string => typeof g === 'string' && !!g.trim()).map((g) => g.trim().slice(0, 60)))].slice(0, 10) : [],
       wissel: t.wissel === true,
       ...(typeof t.plek === 'string' && CATEGORIEEN.includes(t.plek) ? { plek: t.plek } : {}),
+      ...(typeof t.tijd === 'string' && /^\d{2}:\d{2}$/.test(t.tijd) ? { tijd: t.tijd } : {}),
       gewijzigd: typeof t.gewijzigd === 'number' ? t.gewijzigd : nu,
     }));
 }
