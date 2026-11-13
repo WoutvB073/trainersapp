@@ -148,7 +148,7 @@ for (const [formaat, vp] of [
     await ga(page, '/club/o6');
     await page.waitForSelector('.club-groep select');
     await kiesSelect(page, '.club-groep select', 'O6');
-    controle((await page.$$('.club-dagen button')).length === 2, `${waar}: geen keuze per dag`);
+    controle((await page.$$('.club-gegevens .club-dagen button')).length === 2, `${waar}: geen keuze per dag`);
     await dag(page, 0);
     controle((await tekstvak()).join() === 'Testtrainer 1,Testtrainer 2', `${waar}: maandag ${await tekstvak()}`);
     await dag(page, 1);
