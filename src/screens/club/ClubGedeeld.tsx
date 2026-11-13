@@ -3,8 +3,8 @@ import { Kop } from '../../components/Kop';
 import { vindOefening } from '../../data/oefeningen';
 import { leeftijdNaam } from '../../data/leeftijden';
 import { ga } from '../../router';
-import { clubNaam, clubPlan, groepNaam, materiaal, mijnRondes, oefeningenVan, oefeningTijden, opDag, partijvelden, rondePlekken, rondeTijd, samenPloeg, stationNaam, stationPloeg, stationTitel, groepenOp, groepjesTekst, tijdTekst, trainerModus, trainerNamen, uitCode, veldPloeg, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
-import { dagTekst, datumTekst } from '../../training/training';
+import { clubNaam, clubPlan, groepNaam, materiaal, mijnRondes, oefeningenVan, oefeningTijden, opDag, partijvelden, rondePlekken, rondeTijd, samenPloeg, stationNaam, stationPloeg, stationTitel, groepenOp, groepjesTekst, sessieTekst, tijdTekst, trainerModus, trainerNamen, uitCode, veldPloeg, vindOnderdeel, type GedeeldeClub, type MateriaalRegel, type Onderdeel, type Station } from '../../clubtraining/clubtraining';
+import { datumTekst } from '../../training/training';
 import { DagKeuze, useDag } from './dag';
 import type { Oefening } from '../../model/types';
 import { BlokOefeningen, blokNaam, blokStijl, faseTitel, MateriaalNoot, oefeningNummers, ploegTekst, RotatieTabel, veldGroepen, VeldplanSamen, VeldplanStations } from './onderdelen';
@@ -64,11 +64,11 @@ function bewaarIk(naam: string) {
 }
 
 /** "Ik ben…": je eigen plekken en oefeningen per ronde. Wordt op dit toestel onthouden. */
-function MijnRondes({ g, ik, vind, opStation, opSamen }: { g: GedeeldeClub; ik: string; vind: (id: string) => Oefening | undefined; opStation: (nr: number) => void; opSamen: (o: Onderdeel) => void }) {
+function MijnRondes({ g, ik, vind, opStation, opSamen, titel }: { g: GedeeldeClub; ik: string; vind: (id: string) => Oefening | undefined; opStation: (nr: number) => void; opSamen: (o: Onderdeel) => void; titel?: string }) {
   return (
     <>
-      <h2 className="sectie-titel">{vt('Jouw rondes')}</h2>
-      <ol className="club-mijn">
+      <h2 className="sectie-titel">{titel ?? vt('Jouw rondes')}</h2>
+      <ol className={titel ? 'club-mijn club-mijn-ook' : 'club-mijn'}>
         {mijnRondes(g, ik).map(({ ronde, plek, leeg }) => {
           const o = plek?.onderdeel;
           const tijden = o ? oefeningTijden(o) : [];
@@ -143,7 +143,7 @@ function MateriaalLijst({ g }: { g: GedeeldeClub }) {
  * voor de trainers en door de gedeelde circuittraining in een team. `basis` = adres van deze pagina.
  */
 export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, label, metMateriaal, children }: { g: GedeeldeClub; basis: string; station?: number; partij?: true | number; kop?: string; ouder?: string; label?: string; metMateriaal?: boolean; children?: ReactNode }) {
-  const [dag, kiesDag] = useDag(heel.datums);
+  const [dag, kiesDag] = useDag(heel);
   // De gekozen dag: trainers, en (0.34.3) eventueel een eigen opzet.
   const g = opDag(heel, dag);
   const vind = zoeker(g);
@@ -180,9 +180,9 @@ export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, labe
         <section className="blok gedeeld-kop">
           <p className="klein">{label ?? vt('Circuittraining')}</p>
           <h2 className="detail-titel">{clubNaam(g)}</h2>
-          <p>{[g.datums.map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes }), tijdTekst(plan.totaal)].filter(Boolean).join(' · ')}</p>
+          <p>{[[...new Set(g.datums)].map((d) => datumTekst(d)).join(' · '), leeftijdNaam(g.leeftijd), vt('{g} groepjes', { g: g.groepjes }), tijdTekst(plan.totaal)].filter(Boolean).join(' · ')}</p>
           {children}
-          <DagKeuze datums={heel.datums} dag={dag} opKies={kiesDag} perDag={heel.perDag} />
+          <DagKeuze c={heel} dag={dag} opKies={kiesDag} />
           {alleNamen.length > 0 && (
             <label className="leeftijd-keuze club-ik-ben">
               <span>{vt('Ik ben…')}</span>
@@ -204,15 +204,39 @@ export function ClubWeergave({ g: heel, basis, station, partij, kop, ouder, labe
           )}
           {andereDag >= 0 && (
             <p className="klein club-noot">
-              {vt('Je staat niet op {dag}.', { dag: dagTekst(heel.datums[dag]!) })}{' '}
+              {vt('Je staat niet op {dag}.', { dag: sessieTekst(heel, dag) })}{' '}
               <button className="knop-link" onClick={() => kiesDag(andereDag)}>
-                {vt('Naar {dag}', { dag: dagTekst(heel.datums[andereDag]!) })}
+                {vt('Naar {dag}', { dag: sessieTekst(heel, andereDag) })}
               </button>
             </p>
           )}
         </section>
 
         {ik && <MijnRondes g={g} ik={ik} vind={vind} opStation={(nr) => ga(`${basis}/station/${nr}`)} opSamen={(o) => ga(samenPad(plan.samen.indexOf(o)))} />}
+        {/* Sinds 0.34.4: staat je naam ook bij een andere sessie, dan zie je die rondes ook (eerst die sessie kiezen bij het openen). */}
+        {ik &&
+          heel.datums.map((_, j) => {
+            if (j === dag || !trainerNamen(opDag(heel, j)).includes(ik)) return null;
+            const gj = opDag(heel, j);
+            const pj = clubPlan(gj);
+            return (
+              <MijnRondes
+                key={j}
+                titel={vt('Ook bij {sessie}', { sessie: sessieTekst(heel, j) })}
+                g={gj}
+                ik={ik}
+                vind={zoeker(gj)}
+                opStation={(nr) => {
+                  kiesDag(j);
+                  ga(`${basis}/station/${nr}`);
+                }}
+                opSamen={(o) => {
+                  kiesDag(j);
+                  ga(samenPad(pj.samen.indexOf(o)));
+                }}
+              />
+            );
+          })}
 
         <h2 className="sectie-titel">{vt('Open jouw station')}</h2>
         <div className="club-station-knoppen">

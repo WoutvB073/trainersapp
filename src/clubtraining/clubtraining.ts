@@ -913,7 +913,7 @@ export function voegSessieToe(c: SessieClub): Partial<ClubTraining> {
   const tijd = sessieTijd(c, Math.max(0, i));
   const later = /^\d{2}:\d{2}$/.test(tijd) ? `${String((Number(tijd.slice(0, 2)) + 1) % 24).padStart(2, '0')}${tijd.slice(2)}` : '';
   const vorige = dagVan(c, Math.max(0, i));
-  const perDag = [...c.datums.map((_, j) => dagVan(c, j)), { trainers: [...vorige.trainers], ...(vorige.vast ? { vast: { ...vorige.vast } } : {}), tijd: later }];
+  const perDag = [...c.datums.map((_, j) => dagVan(c, j)), { trainers: [...vorige.trainers], ...(vorige.vast ? { vast: { ...vorige.vast } } : {}), ...(vorige.rooster ? { rooster: true } : {}), tijd: later }];
   return { datums: [...c.datums, datum], perDag };
 }
 

@@ -105,7 +105,7 @@ export function ClubTimer({ id }: { id: string }) {
   };
   const loopt = !!staat && staat.pauze === null;
   const schermAan = useSchermAan(loopt);
-  const [dag, kiesDag] = useDag(c?.datums ?? []);
+  const [dag, kiesDag] = useDag(c);
   // De rondes van de gekozen dag (0.34.3: een dag kan een eigen opzet hebben).
   const rondes = c ? clubPlan(opDag(c, dag)).rondes : [];
   const stand = timerStand(staat ? ((staat.pauze ?? nu) - staat.start) / 1000 : 0, rondes);
@@ -158,7 +158,7 @@ export function ClubTimer({ id }: { id: string }) {
     <div className="pagina">
       <Kop titel={clubNaam(c)} ouder={`/club/${id}`} />
       <main className="inhoud smal club-timer">
-        <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} perDag={c.perDag} />
+        <DagKeuze c={c} dag={dag} opKies={kiesDag} />
         <p className="club-timer-blok" style={ronde.samen ? blokStijl(ronde.samen.categorie) : undefined}>
           {klaar ? vt('Klaar!') : blokTitel}
         </p>
@@ -192,7 +192,7 @@ export function ClubTimer({ id }: { id: string }) {
         </div>
         {!klaar && (
           <>
-            <p className="klein club-noot">{rondeTijd(ronde, c.starttijd)}</p>
+            <p className="klein club-noot">{rondeTijd(ronde, opDag(c, dag).starttijd)}</p>
             <RondeLijst c={opDag(c, dag)} ronde={ronde} vind={vindOefening} seconden={staat ? ronde.eind - ronde.begin - stand.rest : 0} opOefening={(o) => ga(`/club/${id}/blok/${o.id}`)} />
           </>
         )}

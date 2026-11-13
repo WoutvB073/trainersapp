@@ -54,10 +54,16 @@ import {
   zetDagOpzet,
   alleOnderdelen,
   metAlleOefeningIds,
+  zetSessie,
+  voegSessieToe,
+  verwijderSessie,
+  sessieTekst,
+  sessieTijd,
+  leeftijdMelding,
+  MAX_SESSIES,
 } from '../../clubtraining/clubtraining';
 import { clubtrainingen, rooster, useClub, useRooster } from '../../clubtraining/opslag';
 import { roosterGroepen, vulVolgensRooster } from '../../clubtraining/rooster';
-import { dagTekst } from '../../training/training';
 import { DagKeuze, useDag } from './dag';
 import { NietGevonden } from '../NietGevonden';
 import { deelInhoud } from '../../engine/deellink';
@@ -340,7 +346,7 @@ export function ClubBewerk({ id }: { id: string }) {
   const [melding, toon] = useToast();
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
   const roosterLijst = useRooster();
-  const [dag, kiesDag] = useDag(c?.datums ?? []);
+  const [dag, kiesDag] = useDag(c);
   if (!c) return <NietGevonden />;
 
   // Altijd op de nieuwste versie uit de opslag (ook bij snel achter elkaar tikken).
@@ -354,13 +360,29 @@ export function ClubBewerk({ id }: { id: string }) {
   const zetLijst = (onderdelen: Onderdeel[], opnieuwIndelen: boolean) =>
     bewerkDag ? zet(zetDagOpzet(nu(), bewerkDag, onderdelen, opnieuwIndelen)) : zet({ onderdelen, ...(opnieuwIndelen ? zonderIndelingOveral(nu(), true) : {}) });
   const zetDelen = (onderdelen: Onderdeel[]) => zetLijst(onderdelen, true);
-  /** Andere datums: dagen die volgens het rooster gingen, volgen het rooster op de nieuwe datum. */
-  const zetDatums = (datums: string[]) => clubtrainingen.bewaar(vulVolgensRooster({ ...nu(), datums }, rooster.lijst()));
-  /** Andere groep: alle dagen opnieuw volgens het rooster. */
-  const zetGroep = (groep: string) => {
-    const { groep: _g, ...rest } = nu();
-    void _g;
-    clubtrainingen.bewaar(vulVolgensRooster(groep ? { ...rest, groep } : rest, rooster.lijst(), true));
+  /**
+   * Een sessie wijzigen (0.34.4): datum, begintijd, aantallen, leeftijd of groep. Sessies die het rooster volgen, volgen het daarna weer
+   * (andere datum of tijd); krijgt een sessie een andere groep, dan komen daar de trainers van die groep.
+   */
+  const zetSessieOp = (i: number, w: Parameters<typeof zetSessie>[2]) => {
+    const voor = nu();
+    let na: ClubTraining = { ...voor, ...zetSessie(voor, i, w) };
+    if (w.groep !== undefined) {
+      const perDag = na.datums.map((_, j) => ({ ...(na.perDag?.[j] ?? { trainers: na.trainers }), ...(opDag(na, j).groep !== opDag(voor, j).groep ? { rooster: true } : {}) }));
+      na = { ...na, perDag };
+    }
+    clubtrainingen.bewaar(vulVolgensRooster(na, rooster.lijst()));
+  };
+  const sessieErbij = () => {
+    const voor = nu();
+    const na: ClubTraining = { ...voor, ...voegSessieToe(voor) };
+    clubtrainingen.bewaar(vulVolgensRooster(na, rooster.lijst()));
+    kiesDag(na.datums.length - 1);
+  };
+  const sessieWeg = (i: number) => {
+    if (!confirm(vt('{sessie} weghalen?', { sessie: sessieTekst(nu(), i) }))) return;
+    zet(verwijderSessie(nu(), i));
+    kiesDag(0);
   };
   const wijzig = (oid: string, w: Partial<Onderdeel>) => {
     const lijst = delenVan(nu()).map((o) => (o.id === oid ? { ...o, ...w } : o));
@@ -415,9 +437,11 @@ export function ClubBewerk({ id }: { id: string }) {
   const plan = clubPlan(cd);
   const klaar = alleOnderdelen(c).every((o) => oefeningenVan(o).length > 0);
   const volgt = toonDag > 0 && !bewerkDag;
-  const eerste = c.datums[0] ? dagTekst(c.datums[0]) : '';
-  const dezeDag = c.datums[toonDag] ? dagTekst(c.datums[toonDag]!) : '';
-  const eigenDagen = c.datums.map((d, i) => (eigenOpzet(c, i) ? dagTekst(d) : '')).filter(Boolean);
+  const eerste = c.datums[0] ? sessieTekst(c, 0) : '';
+  const dezeDag = c.datums[toonDag] ? sessieTekst(c, toonDag) : '';
+  const eigenDagen = c.datums.map((_, i) => (eigenOpzet(c, i) ? sessieTekst(c, i) : '')).filter(Boolean);
+  const zelfMetRooster = c.datums.some((_, i) => opDag(c, i).groep);
+  const leeftijdNoot = leeftijdMelding(cd, vindOefening);
   const kiesOpzet = (eigen: boolean) => {
     if (eigen === !!bewerkDag) return;
     if (eigen) zet(maakEigenOpzet(nu(), toonDag));
@@ -434,32 +458,46 @@ export function ClubBewerk({ id }: { id: string }) {
             <span>{vt('Naam')}</span>
             <input value={c.naam} placeholder={vt('Bijv. Mini Talents')} maxLength={80} onChange={(e) => zet({ naam: e.target.value })} />
           </label>
-          <div className="club-twee">
-            <label className="veld">
-              <span>{vt('Datum')}</span>
-              <input type="date" value={c.datums[0] ?? ''} onChange={(e) => zetDatums([e.target.value, c.datums[1] ?? ''].filter(Boolean))} />
-            </label>
-            <label className="veld">
-              <span>{vt('Tweede datum')}</span>
-              <input type="date" value={c.datums[1] ?? ''} onChange={(e) => zetDatums([c.datums[0] ?? '', e.target.value].filter(Boolean))} />
-            </label>
-          </div>
-          <div className="club-twee">
-            <label className="leeftijd-keuze">
-              <span>{vt('Leeftijd')}</span>
-              <select value={c.leeftijd} onChange={(e) => isLeeftijd(e.target.value) && zet({ leeftijd: e.target.value })}>
-                {LEEFTIJDEN.map((l) => (
-                  <option key={l.id} value={l.id}>
-                    {l.naam}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="veld">
-              <span>{vt('Begintijd (optioneel)')}</span>
-              <input type="time" value={c.starttijd ?? ''} onChange={(e) => zet({ starttijd: e.target.value || undefined })} />
-            </label>
-          </div>
+          <h3 className="club-sessies-titel">{vt('Sessies')}</h3>
+          <ol className="club-sessies">
+            {c.datums.map((d, i) => (
+              <li key={i} className="club-sessie">
+                <span className="club-sessie-nr">{i + 1}</span>
+                <input type="date" aria-label={vt('Datum van sessie {n}', { n: i + 1 })} value={d} onChange={(e) => e.target.value && zetSessieOp(i, { datum: e.target.value })} />
+                <input type="time" aria-label={vt('Begintijd van sessie {n}', { n: i + 1 })} value={sessieTijd(c, i)} onChange={(e) => zetSessieOp(i, { tijd: e.target.value })} />
+                {c.datums.length > 1 && (
+                  <button type="button" className="icoon-knop club-sessie-weg" aria-label={vt('Sessie {n} weghalen', { n: i + 1 })} onClick={() => sessieWeg(i)}>
+                    <Icoon naam="kruis" maat={18} />
+                  </button>
+                )}
+              </li>
+            ))}
+          </ol>
+          {c.datums.length < MAX_SESSIES && (
+            <button type="button" className="knop club-sessie-erbij" onClick={sessieErbij}>
+              <Icoon naam="plus" maat={18} />
+              {vt('Sessie toevoegen')}
+            </button>
+          )}
+          <p className="klein">{vt('Twee trainingen op één avond? Voeg een sessie toe met dezelfde datum en een andere begintijd.')}</p>
+          <DagKeuze c={c} dag={dag} opKies={kiesDag} />
+          {heeftDagen(c) && (
+            <p className="klein club-sessie-uitleg">
+              {toonDag === 0
+                ? vt('Instellingen voor {sessie}. De andere sessies nemen ze over, tenzij je ze daar zelf aanpast.', { sessie: dezeDag })
+                : vt('Instellingen voor {sessie}. Wat je hier verandert, geldt alleen voor deze sessie.', { sessie: dezeDag })}
+            </p>
+          )}
+          <label className="leeftijd-keuze club-leeftijd">
+            <span>{vt('Leeftijd')}</span>
+            <select value={cd.leeftijd} onChange={(e) => isLeeftijd(e.target.value) && zetSessieOp(toonDag, { leeftijd: e.target.value })}>
+              {LEEFTIJDEN.map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.naam}
+                </option>
+              ))}
+            </select>
+          </label>
           <div className="club-twee">
             <label className="veld">
               <span>{vt('Aantal kinderen')}</span>
@@ -468,13 +506,13 @@ export function ClubBewerk({ id }: { id: string }) {
                 inputMode="numeric"
                 min={1}
                 max={MAX_KINDEREN}
-                value={c.kinderen}
-                onChange={(e) => zet({ kinderen: Math.max(1, Math.min(MAX_KINDEREN, Math.round(Number(e.target.value)) || 1)) })}
+                value={cd.kinderen}
+                onChange={(e) => zetSessieOp(toonDag, { kinderen: Math.max(1, Math.min(MAX_KINDEREN, Math.round(Number(e.target.value)) || 1)) })}
               />
             </label>
             <label className="veld">
               <span>{vt('Aantal groepjes')}</span>
-              <select value={c.groepjes} onChange={(e) => zet({ groepjes: Number(e.target.value), ...zonderIndelingOveral(nu()) })}>
+              <select className="club-groepjes" value={cd.groepjes} onChange={(e) => zetSessieOp(toonDag, { groepjes: Number(e.target.value) })}>
                 {Array.from({ length: MAX_GROEPJES - MIN_GROEPJES + 1 }, (_, i) => MIN_GROEPJES + i).map((n) => (
                   <option key={n} value={n}>
                     {n}
@@ -483,11 +521,16 @@ export function ClubBewerk({ id }: { id: string }) {
               </select>
             </label>
           </div>
-          <p className="klein">{vt('{s} stations, ± {k} kinderen per groepje.', { s: plan.stations.length, k: groepGrootte(c) })}</p>
-          {(groepen.length > 0 || c.groep) && (
+          <p className="klein">{vt('{s} stations, ± {k} kinderen per groepje.', { s: plan.stations.length, k: groepGrootte(cd) })}</p>
+          {leeftijdNoot && (
+            <p className="klein club-melding" role="note">
+              {leeftijdNoot}
+            </p>
+          )}
+          {(groepen.length > 0 || cd.groep) && (
             <label className="leeftijd-keuze club-trainer-modus club-groep">
               <span>{vt('Groep (trainersrooster)')}</span>
-              <select value={c.groep ?? ''} onChange={(e) => zetGroep(e.target.value)}>
+              <select value={cd.groep ?? ''} onChange={(e) => zetSessieOp(toonDag, { groep: e.target.value })}>
                 <option value="">{vt('Geen groep')}</option>
                 {groepen.map((g) => (
                   <option key={g} value={g}>
@@ -497,14 +540,13 @@ export function ClubBewerk({ id }: { id: string }) {
               </select>
             </label>
           )}
-          <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} perDag={c.perDag} />
           <label className="veld">
-            <span>{heeftDagen(c) ? vt('Trainers op {dag} (één naam per regel)', { dag: dagTekst(c.datums[dag]!) }) : vt('Trainers (optioneel, één naam per regel)')}</span>
+            <span>{heeftDagen(c) ? vt('Trainers bij {dag} (één naam per regel)', { dag: dezeDag }) : vt('Trainers (optioneel, één naam per regel)')}</span>
             <textarea rows={3} value={cd.trainers.join('\n')} onChange={(e) => zet(zetDagTrainers(nu(), dag, { trainers: e.target.value.split('\n') }))} />
           </label>
           {c.perDag?.[dag]?.rooster && <p className="klein">{vt('Ingevuld volgens het trainersrooster. Pas je het hier aan, dan geldt dat alleen voor deze week.')}</p>}
-          {c.groep && (
-            <button className="knop" onClick={() => zetGroep(c.groep!)}>
+          {zelfMetRooster && (
+            <button className="knop" onClick={() => clubtrainingen.bewaar(vulVolgensRooster(nu(), rooster.lijst(), true))}>
               {vt('Opnieuw volgens het rooster')}
             </button>
           )}
@@ -533,7 +575,7 @@ export function ClubBewerk({ id }: { id: string }) {
         </div>
         {heeftDagen(c) && (
           <div className="club-dag-opzet">
-            <DagKeuze datums={c.datums} dag={dag} opKies={kiesDag} perDag={c.perDag} />
+            <DagKeuze c={c} dag={dag} opKies={kiesDag} />
             {toonDag > 0 && (
               <label className="leeftijd-keuze club-opzet-keuze">
                 <span>{vt('Opzet op {dag}', { dag: dezeDag })}</span>

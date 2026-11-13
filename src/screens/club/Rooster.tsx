@@ -169,6 +169,13 @@ export function RoosterTrainerScherm({ id }: { id: string }) {
             </label>
           )}
 
+          <h3>{vt('Sessie')}</h3>
+          <label className="leeftijd-keuze rooster-kolom rooster-tijd">
+            <span>{vt('Alleen om (begintijd)')}</span>
+            <input type="time" value={t.tijd ?? ''} onChange={(e) => zet({ tijd: e.target.value || undefined })} />
+          </label>
+          <p className="klein">{vt('Twee sessies op één avond? Vul de begintijd in, dan komt deze trainer alleen bij die sessie. Leeg: bij elke sessie van zijn groep.')}</p>
+
           <h3>{vt('Vaste plek')}</h3>
           <label className="leeftijd-keuze rooster-kolom rooster-plek">
             <span>{vt('Altijd bij een onderdeel')}</span>

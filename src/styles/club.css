@@ -1052,3 +1052,70 @@
   border-radius: var(--radius);
   background: var(--kaart);
 }
+
+/* 0.34.4: sessies. */
+.club-sessies-titel {
+  margin: 14px 0 6px;
+  font-size: 1rem;
+}
+
+.club-sessies {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.club-sessie {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1.5fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.club-sessie-nr {
+  display: inline-grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primair);
+  color: var(--op-primair);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.club-sessie input {
+  width: 100%;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+  background: var(--kaart);
+  color: var(--tekst);
+  font: inherit;
+}
+
+/* Zonder wegknop (één sessie) houden datum en tijd dezelfde breedte. */
+.club-sessie:not(:has(.club-sessie-weg))::after {
+  content: '';
+  width: 34px;
+}
+
+.club-sessie-weg {
+  width: 34px;
+  height: 34px;
+}
+
+.club-sessie-erbij {
+  margin: 0 0 6px;
+}
+
+.club-sessie-uitleg {
+  margin: 4px 0 8px;
+}
+
+.club-leeftijd select {
+  max-width: 70%;
+}
