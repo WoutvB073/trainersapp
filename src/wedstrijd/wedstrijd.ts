@@ -36,7 +36,7 @@ export interface Plek {
   id: string;
   x: number;
   y: number;
-  /** Rugnummer bij de positie (keeper 1, dan van achter naar voren). */
+  /** Rugnummer bij de positie: vaste nummering per rol (zie `formatieNummers`). Vóór 0.35.0: keeper 1, dan oplopend van achter naar voren. */
   nummer: number;
   naam?: string;
 }
@@ -57,6 +57,50 @@ export interface Opstelling {
 
 const r3 = (v: number) => Math.round(v * 1000) / 1000;
 
+/**
+ * Vaste rugnummers per positie (0.35.0), per rij van achter naar voren en binnen een rij van links naar rechts (gezien vanaf het eigen
+ * doel, dus links = de linkerkant van het team). Het systeem: keeper 1, rechtsback 2, rechter centrale verdediger 3, linker centrale
+ * verdediger 4, linksback 5, controlerende middenvelders 6 (rechts) en 8 (links), aanvallende middenvelder 10, rechtsbuiten 7,
+ * linksbuiten 11, spits 9. Bij minder spelers: drie verdedigers = 5, 3, 2; twee verdedigers = 4 en 3; één verdediger = 3; één
+ * middenvelder = 6; twee voorste spelers = 11 en 7 (of 10 en 9 als 7 en 11 al op het middenveld staan).
+ */
+const NUMMERS: Record<string, number[][]> = {
+  '11v11 1-4-3-3': [[5, 4, 3, 2], [8, 10, 6], [11, 9, 7]],
+  '11v11 1-4-4-2': [[5, 4, 3, 2], [11, 8, 6, 7], [10, 9]],
+  // Ruit op het middenveld: 4 voor de verdediging, 8 links, 6 rechts, 10 achter de spits (volgorde in de rij: 8, 4, 10, 6).
+  '11v11 1-3-4-3': [[5, 3, 2], [8, 4, 10, 6], [11, 9, 7]],
+  '11v11 1-4-2-3-1': [[5, 4, 3, 2], [8, 6], [11, 10, 7], [9]],
+  '8v8 1-3-3-1': [[5, 3, 2], [11, 6, 7], [9]],
+  '8v8 1-2-3-2': [[4, 3], [11, 6, 7], [10, 9]],
+  '8v8 1-3-2-2': [[5, 3, 2], [8, 6], [11, 7]],
+  '6v6 1-2-1-2': [[4, 3], [6], [11, 7]],
+  '6v6 1-3-2': [[5, 3, 2], [11, 7]],
+  '6v6 1-2-2-1': [[4, 3], [8, 6], [9]],
+  '4v4 1-2-1': [[3], [8, 6], [9]],
+  '4v4 2-2': [[4, 3], [11, 7]],
+};
+
+/** Rugnummers van de veldspelers per rij (achter → voor, links → rechts). Een onbekende formatie telt gewoon door. */
+export function formatieNummers(vorm: Spelvorm, formatie: string): number[][] {
+  const vast = NUMMERS[`${vorm} ${formatie}`];
+  if (vast) return vast;
+  const info = spelvorm(vorm);
+  let nr = info.keeper ? 1 : 0;
+  return formatie
+    .split('-')
+    .map(Number)
+    .slice(info.keeper ? 1 : 0)
+    .map((n) => Array.from({ length: n }, () => (nr += 1)));
+}
+
+/** Plekken die niet op de rechte lijn van hun rij staan: [x, y-verschil] per rugnummer (y kleiner = verder naar voren). */
+const VORM: Record<string, Record<number, [number | undefined, number]>> = {
+  // Driehoek met de punt naar voren: de 10 staat hoger dan de 6 en de 8.
+  '11v11 1-4-3-3': { 10: [undefined, -0.06], 8: [0.24, 0.02], 6: [0.76, 0.02] },
+  // Ruit: 4 voor de verdediging, 10 achter de spits.
+  '11v11 1-3-4-3': { 8: [0.22, 0], 4: [0.5, 0.085], 10: [0.5, -0.085], 6: [0.78, 0] },
+};
+
 /** Posities van een formatie (genormaliseerd), keeper eerst; daarna rij voor rij van achter naar voren, links naar rechts. */
 export function formatiePlekken(vorm: Spelvorm, formatie: string): Omit<Plek, 'naam'>[] {
   const info = spelvorm(vorm);
@@ -67,17 +111,31 @@ export function formatiePlekken(vorm: Spelvorm, formatie: string): Omit<Plek, 'n
     uit.push({ id: 'p1', x: 0.5, y: 0.94, nummer: 1 });
     veldRijen = rijen.slice(1);
   }
+  const nummers = formatieNummers(vorm, formatie);
+  const vorming = VORM[`${vorm} ${formatie}`] ?? {};
   const k = veldRijen.length;
   veldRijen.forEach((n, i) => {
     const y = k === 1 ? 0.6 : 0.8 - (i * 0.5) / (k - 1);
     const rand = n >= 4 ? 0.12 : n === 3 ? 0.2 : 0.3;
     for (let j = 0; j < n; j++) {
       const x = n === 1 ? 0.5 : rand + ((1 - 2 * rand) * j) / (n - 1);
-      const nr = uit.length + 1;
-      uit.push({ id: `p${nr}`, x: r3(x), y: r3(y), nummer: nr });
+      // Het id blijft doortellen (p2, p3 …), zodat opgeslagen opstellingen hun posities houden; alleen het rugnummer volgt de rol.
+      const nummer = nummers[i]?.[j] ?? uit.length + 1;
+      const [vx, dy] = vorming[nummer] ?? [undefined, 0];
+      uit.push({ id: `p${uit.length + 1}`, x: r3(vx ?? x), y: r3(y + dy), nummer });
     }
   });
   return uit;
+}
+
+/**
+ * Een opgeslagen opstelling de vaste rugnummers geven (0.35.0). De posities (id's, plek op het veld, namen) blijven precies zoals ze
+ * waren; alleen het nummer bij elke positie verandert. Een opstelling die al klopt komt ongewijzigd terug.
+ */
+export function metVasteNummers(o: Opstelling): Opstelling {
+  const perId = new Map(formatiePlekken(o.spelvorm, o.formatie).map((p) => [p.id, p.nummer]));
+  if (o.plekken.every((p) => (perId.get(p.id) ?? p.nummer) === p.nummer)) return o;
+  return { ...o, plekken: o.plekken.map((p) => ({ ...p, nummer: perId.get(p.id) ?? p.nummer })) };
 }
 
 /** Nieuwe opstelling: de spelers uit je lijst staan eerst op de bank. */
@@ -231,7 +289,8 @@ export function opgesteldBord(vorm: Spelvorm, formatieA: string, formatieB = for
     else objecten.push({ id: `a${p.nummer}`, soort: 'speler', team: 'A', nummer: p.nummer, x, y: yA(p.y), kijkrichting: -90, ...naam });
   }
   for (const p of formatiePlekken(vorm, formatieB)) {
-    const x = r3(p.x * B);
+    // Gespiegeld: de tegenstander kijkt naar beneden, dus zijn rechtsback (2) staat aan de kant met de kleine x.
+    const x = r3((1 - p.x) * B);
     if (info.keeper && p.nummer === 1) objecten.push({ id: 'k2', soort: 'keeper', nummer: 2, x, y: 1.5 });
     else objecten.push({ id: `b${p.nummer}`, soort: 'speler', team: 'B', nummer: p.nummer, x, y: r3(L - yA(p.y)), kijkrichting: 90 });
   }
@@ -243,7 +302,7 @@ export function opgesteldBord(vorm: Spelvorm, formatieA: string, formatieB = for
 export function bordUitOpstelling(o: Opstelling): Tekening {
   const info = spelvorm(o.spelvorm);
   const tegen = info.formaties.includes(o.formatie) ? o.formatie : info.formaties[0]!;
-  return opgesteldBord(o.spelvorm, o.formatie, tegen, o.plekken);
+  return opgesteldBord(o.spelvorm, o.formatie, tegen, metVasteNummers(o).plekken);
 }
 
 // ---------- delen via een link ----------

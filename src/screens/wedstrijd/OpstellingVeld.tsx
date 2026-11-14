@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { spelvorm, naarBank, verplaatsPlek, zetOpPlek, haalWeg, type Opstelling } from '../../wedstrijd/wedstrijd';
+import { spelvorm, naarBank, verplaatsPlek, zetOpPlek, haalWeg, metVasteNummers, type Opstelling } from '../../wedstrijd/wedstrijd';
 import { Icoon } from '../../components/Icoon';
 import { t } from '../../i18n/t';
 
@@ -59,7 +59,9 @@ const GRENS = [0.03, 0.97] as const;
  * los op het veld blijft hij daar staan; komt hij vlak bij een andere positie, dan klikt hij daar zichtbaar op vast (ruilen)
  * en licht die positie op vóór je loslaat. Een wissel klikt altijd vast op de dichtstbijzijnde positie.
  */
-export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: Opstelling) => void }) {
+export function OpstellingVeld({ o: bewaard, opWijzig }: { o: Opstelling; opWijzig?: (o: Opstelling) => void }) {
+  // Een opstelling van vóór 0.35.0 krijgt bij het tonen de vaste rugnummers per positie; bij de eerste wijziging worden die mee bewaard.
+  const o = metVasteNummers(bewaard);
   const info = spelvorm(o.spelvorm);
   const { breedte: B, lengte: L } = info.veld;
   const m = 2;

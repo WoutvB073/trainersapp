@@ -129,17 +129,18 @@ function aftrap(): Tekening {
     else objecten.push(aanval(`a${p.nummer}`, p.nummer, pos));
   }
   for (const p of plekken) {
-    let pos: Punt = [r2(p.x * 68), r2(105 - y(p.y))];
+    // De tegenstander gespiegeld (zijn rechtsback staat aan de kant met de kleine x).
+    let pos: Punt = [r2((1 - p.x) * 68), r2(105 - y(p.y))];
     // Buiten de middencirkel (9,15 m).
     if (Math.hypot(pos[0] - 34, pos[1] - 52.5) < 9.6) pos = [pos[0], r2(52.5 - Math.sqrt(Math.max(0, 9.6 ** 2 - (pos[0] - 34) ** 2)))];
     if (p.nummer === 1) objecten.push({ id: 'k2', soort: 'keeper', nummer: 2, x: pos[0], y: Math.max(pos[1], 1.5), kijkrichting: 90 });
     else objecten.push(speler(`b${p.nummer}`, 'B', p.nummer, pos[0], pos[1], 90));
   }
   // De middelste spits neemt de aftrap.
-  const spits = objecten.find((o) => o.id === 'a10')!;
+  const spits = objecten.find((o) => o.id === 'a9')!;
   spits.x = 34;
   spits.y = 53.1;
-  objecten.push({ id: 'bal1', soort: 'bal', x: 34, y: 53.1, bij: 'a10' });
+  objecten.push({ id: 'bal1', soort: 'bal', x: 34, y: 53.1, bij: 'a9' });
   return { ...t, objecten };
 }
 
