@@ -673,6 +673,15 @@ html[data-ontwerp='b'] .tegel-training .tegel-knoppen .knop {
   font-size: 0.98rem;
 }
 
+@media (max-width: 639px) {
+  html[data-ontwerp='b'] .tegel-training .tegel-knoppen .knop {
+    padding: 6px 4px;
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+}
+
 html[data-ontwerp='b'] .teller {
   border-radius: 6px;
   background: var(--o-vlak);

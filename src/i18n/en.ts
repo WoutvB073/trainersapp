@@ -1464,4 +1464,8 @@ export const EN: Record<string, string> = {
   'Ruilen met {naam}': 'Swap with {naam}',
   'In plaats van {naam}': 'Replaces {naam}',
   'Op positie {nummer}': 'On position {nummer}',
+  // Fase 1 (volgende stap): nagebouwde knoppen op het installatiescherm
+  'Zet op beginscherm': 'Add to Home Screen',
+  'Voeg toe': 'Add',
+  'Open als webapp': 'Open as Web App',
 };

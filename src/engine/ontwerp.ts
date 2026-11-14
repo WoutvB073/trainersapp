@@ -9,10 +9,11 @@ import { isVoorbeeld } from './voorbeeld';
 export type Ontwerp = 'huidig' | 'a' | 'b' | 'c';
 
 export const ONTWERPEN: { id: Ontwerp; kort: string; naam: string }[] = [
-  { id: 'huidig', kort: 'Nu', naam: 'Huidig' },
-  { id: 'a', kort: 'A', naam: 'Helder' },
-  { id: 'b', kort: 'B', naam: 'Stadion' },
-  { id: 'c', kort: 'C', naam: 'Zacht' },
+  // Alleen in de voorbeeldversie te zien (voor de gebruiker die kiest), dus zonder vertaling.
+  { id: 'huidig', kort: 'Nu', naam: 'Huidig' }, // i18n-ok
+  { id: 'a', kort: 'A', naam: 'Helder' }, // i18n-ok
+  { id: 'b', kort: 'B', naam: 'Stadion' }, // i18n-ok
+  { id: 'c', kort: 'C', naam: 'Zacht' }, // i18n-ok
 ];
 
 const SLEUTEL = 'trainersapp.ontwerp';

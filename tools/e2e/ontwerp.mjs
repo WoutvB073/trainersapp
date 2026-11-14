@@ -38,6 +38,8 @@ for (const richting of RICHTINGEN) {
           try {
             localStorage.setItem('trainersapp.taal', 'nl');
             localStorage.setItem('trainersapp.thema', JSON.stringify({ thema: 'standaard', modus }));
+            // De richtingen bestaan alleen in de voorbeeldversie (op localhost: deze vlag).
+            localStorage.setItem('trainersapp.voorbeeld', '1');
             if (richting === 'huidig') localStorage.removeItem('trainersapp.ontwerp');
             else localStorage.setItem('trainersapp.ontwerp', richting);
             localStorage.setItem('trainersapp.3dAltijd', '0');
@@ -52,6 +54,8 @@ for (const richting of RICHTINGEN) {
       await page.setViewport(vp);
       for (const [naam, pad, titel] of SCHERMEN) {
         await page.goto(`${BASE}?r=${Math.random().toString(36).slice(2)}#${pad}`, { waitUntil: 'networkidle0' });
+        // De wisselknop van de voorbeeldversie hoort niet op de foto.
+        await page.addStyleTag({ content: '.ontwerp-wissel{display:none!important}' });
         await slaap(naam === 'oefening' ? 900 : 350);
         const r = await page.evaluate((scherm) => {
           const breed = Math.max(document.documentElement.scrollWidth, innerWidth) - scherm;
@@ -70,17 +74,34 @@ for (const richting of RICHTINGEN) {
       }
       // Installatiescherm (iPhone in Safari, niet geïnstalleerd) hoort er ook bij.
       if (formaat === 'SE') {
-        const p2 = await context.newPage();
+        // Een eigen context: hier is de app nog niet geïnstalleerd.
+        const los = await browser.createBrowserContext();
+        const p2 = await los.newPage();
+        await p2.evaluateOnNewDocument(
+          (richting, modus) => {
+            try {
+              localStorage.setItem('trainersapp.taal', 'nl');
+              localStorage.setItem('trainersapp.thema', JSON.stringify({ thema: 'standaard', modus }));
+              localStorage.setItem('trainersapp.voorbeeld', '1');
+              if (richting !== 'huidig') localStorage.setItem('trainersapp.ontwerp', richting);
+            } catch {
+              /* about:blank */
+            }
+          },
+          richting,
+          modus,
+        );
         await p2.setUserAgent(UA.iphone26 ?? UA.iphone);
         await p2.setViewport(vp);
         await p2.goto(`${BASE}?r=${Math.random().toString(36).slice(2)}#/`, { waitUntil: 'networkidle0' });
+        await p2.addStyleTag({ content: '.ontwerp-wissel{display:none!important}' });
         await slaap(400);
         const bestand = `${MAP}sontwerp-${richting}-${formaat}-${modus}-installeren.png`;
         await p2.screenshot({ path: bestand, fullPage: true });
         shots.push([bestand, 'Installatiescherm (iPhone, Safari)']);
         const breed = await p2.evaluate((s) => Math.max(document.documentElement.scrollWidth, innerWidth) - s, vp.width);
         if (breed > 0) problemen.push(`${waar} installeren: ${breed} px te breed`);
-        await p2.close();
+        await los.close();
       }
       await blad(browser, shots, `${MAP}blad-ontwerp-${richting}-${formaat}-${modus}.png`, formaat === 'SE' ? 5 : 3, formaat === 'SE' ? 2000 : 2400);
       await context.close();
