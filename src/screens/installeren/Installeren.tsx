@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { omgeving, zetGeinstalleerd } from '../../engine/platform';
 import { useInstallatie, vraagInstallatie } from '../../engine/installeren';
-import { Icoon } from '../../components/Icoon';
+import { Icoon, type IcoonNaam } from '../../components/Icoon';
 import { APP_NAAM } from '../../config';
 import { alternatieven, HANDMATIG, sleutelVoor, uitlegVoor, type Sleutel, type Stap, type Uitleg } from './stappen';
 import { t } from '../../i18n/t';
@@ -261,6 +261,45 @@ function BrowserKnop({ opBrowserGekozen, tekst }: { opBrowserGekozen: () => void
   );
 }
 
+/**
+ * Nagebouwde knop bij een stap: zo ziet hij er op je telefoon uit (deel-knop, de regel "Zet op beginscherm", "Voeg toe", het icoon van de
+ * app). Alleen zichtbaar in de nieuwe ontwerprichtingen (fase 1 van de volgende stap); in het huidige ontwerp staat het kleine icoon er.
+ */
+function StapBeeld({ icoon }: { icoon: IcoonNaam }) {
+  if (icoon === 'plusVierkant')
+    return (
+      <span className="poort-beeld poort-beeld-rij" aria-hidden="true">
+        <span>{t('Zet op beginscherm')}</span>
+        <Icoon naam="plusVierkant" maat={22} />
+      </span>
+    );
+  if (icoon === 'plus')
+    return (
+      <span className="poort-beeld poort-beeld-tekstknop" aria-hidden="true">
+        {t('Voeg toe')}
+      </span>
+    );
+  if (icoon === 'schakelaar')
+    return (
+      <span className="poort-beeld poort-beeld-rij" aria-hidden="true">
+        <span>{t('Open als webapp')}</span>
+        <span className="poort-beeld-schakelaar" />
+      </span>
+    );
+  if (icoon === 'huis')
+    return (
+      <span className="poort-beeld poort-beeld-app" aria-hidden="true">
+        <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" width={46} height={46} />
+        <span>{APP_NAAM}</span>
+      </span>
+    );
+  return (
+    <span className="poort-beeld poort-beeld-toets" aria-hidden="true">
+      <Icoon naam={icoon} maat={26} />
+    </span>
+  );
+}
+
 function Stappen({ stappen }: { stappen: Stap[] }) {
   return (
     <ol className="poort-stappen">
@@ -271,6 +310,7 @@ function Stappen({ stappen }: { stappen: Stap[] }) {
             <Icoon naam={s.icoon} maat={24} />
           </span>
           <span className="poort-stap-tekst">{s.tekst}</span>
+          <StapBeeld icoon={s.icoon} />
         </li>
       ))}
     </ol>

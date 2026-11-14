@@ -1,0 +1,890 @@
+/*
+ * Ontwerprichtingen (fase 1 van de volgende stap). Alleen actief met `data-ontwerp` op <html> (zie src/engine/ontwerp.ts), en dat staat
+ * er alleen in de voorbeeldversie. Zonder dat attribuut verandert er niets aan het huidige ontwerp.
+ *
+ *   a = Helder   strak en licht: één lettertype, haarlijnen, veel witruimte, de clubkleur spaarzaam
+ *   b = Stadion  sportief: donkere kop met een verloop in de clubkleur, smalle hoofdletterkoppen, stevige vlakken
+ *   c = Zacht    zachte verlopen op de achtergrond, glaskaarten, ronde vormen
+ *
+ * Clubkleuren en licht/donker blijven werken: alles rekent met --primair, --accent en data-modus. Het veld en de animatie blijven gelijk.
+ * Kleuren die src/engine/thema.ts op <html> zet (achtergrond, kaart, rand, schaduw) worden hier met !important overschreven.
+ */
+
+/* ---------- alleen in de nieuwe richtingen zichtbaar ---------- */
+
+.tegel-icoon,
+.cat-icoon,
+.poort-beeld {
+  display: none;
+}
+
+html[data-ontwerp] .tegel-plaatje,
+html[data-ontwerp] .cat-plaatje {
+  display: none;
+}
+
+html[data-ontwerp] .tegel-icoon,
+html[data-ontwerp] .cat-icoon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: var(--o-icoon-vlak);
+  color: var(--o-icoon-kleur);
+}
+
+html[data-ontwerp] .tegel-icoon {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--o-icoon-rond, 14px);
+}
+
+html[data-ontwerp] .cat-icoon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--o-icoon-rond, 13px);
+}
+
+/* Rustige overgang bij het openen van een scherm (alleen doorzichtigheid: een verschuiving zou vastgezette onderdelen meenemen). */
+@keyframes o-binnen {
+  from {
+    opacity: 0;
+  }
+}
+
+html[data-ontwerp] .pagina > .inhoud {
+  animation: o-binnen 0.24s ease-out both;
+}
+
+html[data-ontwerp] .tegel,
+html[data-ontwerp] .kaart,
+html[data-ontwerp] .rij,
+html[data-ontwerp] .knop {
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  html[data-ontwerp] a.tegel:hover,
+  html[data-ontwerp] .kaart:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-ontwerp] .pagina > .inhoud {
+    animation: none;
+  }
+  html[data-ontwerp] a.tegel:hover,
+  html[data-ontwerp] .kaart:hover {
+    transform: none;
+  }
+}
+
+/* Startscherm: op een telefoon het icoon boven de tekst, links (grote tegels) of in het midden (kleine tegels). */
+@media (max-width: 639px) {
+  html[data-ontwerp] .tegel-groot .tegel-icoon {
+    align-self: flex-start;
+    width: 44px;
+    height: 44px;
+  }
+
+  html[data-ontwerp] .tegel-klein .tegel-icoon {
+    align-self: center;
+    width: 42px;
+    height: 42px;
+  }
+
+  html[data-ontwerp] .tegel-groot,
+  html[data-ontwerp] .tegel-klein {
+    gap: 8px;
+  }
+
+  html[data-ontwerp] .tegel-groot {
+    padding: 14px;
+  }
+
+  html[data-ontwerp] .tegel-klein {
+    padding: 14px 6px 12px;
+  }
+
+  html[data-ontwerp] .tegel-training {
+    padding: 14px;
+  }
+}
+
+/* ---------- installatiescherm: grote stappen met nagebouwde knoppen ---------- */
+
+html[data-ontwerp] .poort-stappen {
+  gap: 12px;
+}
+
+html[data-ontwerp] .poort-stap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'nr tekst'
+    'beeld beeld';
+  align-items: center;
+  gap: 10px 12px;
+  padding: 14px;
+  border: 1px solid var(--rand);
+  border-radius: 16px;
+  background: var(--achtergrond);
+}
+
+html[data-ontwerp] .poort-stap-icoon {
+  display: none;
+}
+
+html[data-ontwerp] .poort-stap-nr {
+  grid-area: nr;
+  width: 34px;
+  height: 34px;
+  font-size: 1.05rem;
+}
+
+html[data-ontwerp] .poort-stap-tekst {
+  grid-area: tekst;
+  font-size: 1.04rem;
+  line-height: 1.35;
+}
+
+/* Zo ziet de knop er op de telefoon uit: de kleuren van het toestel (grijs, blauw), niet die van de app. */
+html[data-ontwerp] .poort-beeld {
+  grid-area: beeld;
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: #f2f2f7;
+  color: #0a84ff;
+  font-family:
+    -apple-system,
+    system-ui,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  font-size: 1.02rem;
+}
+
+html[data-ontwerp][data-modus='donker'] .poort-beeld {
+  background: #1c1c1e;
+}
+
+html[data-ontwerp] .poort-beeld-toets {
+  justify-content: center;
+}
+
+html[data-ontwerp] .poort-beeld-toets svg {
+  box-sizing: content-box;
+  padding: 9px;
+  border-radius: 50%;
+  background: rgb(10 132 255 / 0.14);
+  box-shadow: 0 0 0 0 rgb(10 132 255 / 0.45);
+  animation: o-tik 1.8s ease-out infinite;
+}
+
+@keyframes o-tik {
+  70% {
+    box-shadow: 0 0 0 12px rgb(10 132 255 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(10 132 255 / 0);
+  }
+}
+
+html[data-ontwerp] .poort-beeld-rij {
+  justify-content: space-between;
+  gap: 12px;
+  background: #fff;
+  color: #000;
+  border: 1px solid #e3e3e8;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+}
+
+html[data-ontwerp][data-modus='donker'] .poort-beeld-rij {
+  background: #2c2c2e;
+  color: #fff;
+  border-color: #3a3a3c;
+}
+
+html[data-ontwerp] .poort-beeld-rij svg {
+  flex: none;
+  color: inherit;
+}
+
+html[data-ontwerp] .poort-beeld-tekstknop {
+  justify-content: flex-end;
+  font-weight: 600;
+}
+
+html[data-ontwerp] .poort-beeld-schakelaar {
+  position: relative;
+  flex: none;
+  width: 51px;
+  height: 31px;
+  border-radius: 999px;
+  background: #34c759;
+}
+
+html[data-ontwerp] .poort-beeld-schakelaar::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+}
+
+html[data-ontwerp] .poort-beeld-app {
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px;
+  background: linear-gradient(160deg, #4a6fa5, #23395d);
+  color: #fff;
+  font-size: 0.78rem;
+}
+
+html[data-ontwerp] .poort-beeld-app img {
+  border-radius: 11px;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-ontwerp] .poort-beeld-toets svg {
+    animation: none;
+  }
+}
+
+/* ---------- wisselknop (alleen in de voorbeeldversie aanwezig) ---------- */
+
+.ontwerp-wissel {
+  position: fixed;
+  left: max(10px, env(safe-area-inset-left));
+  bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 6px;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  line-height: 1.2;
+}
+
+.ontwerp-wissel-kop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 6px 12px 7px;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 14px;
+  background: rgb(18 22 26 / 0.9);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 650;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.3);
+}
+
+.ontwerp-wissel-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffd23f;
+}
+
+.ontwerp-wissel-keuzes {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 14px;
+  background: rgb(18 22 26 / 0.9);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.3);
+}
+
+.ontwerp-wissel-keuzes button {
+  display: grid;
+  justify-items: center;
+  min-width: 56px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+}
+
+.ontwerp-wissel-keuzes button b {
+  font-size: 0.95rem;
+}
+
+.ontwerp-wissel-keuzes button small {
+  font-size: 0.66rem;
+  opacity: 0.8;
+}
+
+.ontwerp-wissel-keuzes button.aan {
+  background: #ffd23f;
+  color: #16181a;
+}
+
+/* =====================================================================================================================
+ * A – Helder
+ * ===================================================================================================================== */
+
+html[data-ontwerp='a'] {
+  --font-kop: var(--font);
+  --radius: 18px;
+  --achtergrond: #f6f7f8 !important;
+  --kaart: #ffffff !important;
+  --rand: #e4e7eb !important;
+  --tekst: #0f1720 !important;
+  --tekst-2: #5a6572 !important;
+  --schaduw: 0 1px 2px rgb(15 23 32 / 0.04), 0 10px 30px rgb(15 23 32 / 0.06) !important;
+  --o-icoon-vlak: var(--primair-licht);
+  --o-icoon-kleur: var(--primair-tekst);
+}
+
+html[data-ontwerp='a'][data-modus='donker'] {
+  --achtergrond: #0b0d10 !important;
+  --kaart: #14181d !important;
+  --rand: #262c35 !important;
+  --tekst: #eef1f4 !important;
+  --tekst-2: #9aa5b1 !important;
+  --schaduw: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px rgb(0 0 0 / 0.3) !important;
+}
+
+html[data-ontwerp='a'] .tegel,
+html[data-ontwerp='a'] .lijst,
+html[data-ontwerp='a'] .kaart,
+html[data-ontwerp='a'] .blok,
+html[data-ontwerp='a'] .leeg,
+html[data-ontwerp='a'] .poort-kaart {
+  border: 1px solid var(--rand);
+}
+
+/* Kop: licht en doorschijnend, de titel in gewone tekstkleur. */
+html[data-ontwerp='a'] .kop {
+  background: var(--achtergrond);
+  background: color-mix(in srgb, var(--achtergrond) 84%, transparent);
+  -webkit-backdrop-filter: saturate(1.5) blur(16px);
+  backdrop-filter: saturate(1.5) blur(16px);
+  color: var(--tekst);
+  box-shadow: none;
+  border-bottom: 1px solid var(--rand);
+}
+
+html[data-ontwerp='a'] .kop-titel {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+html[data-ontwerp='a'] .kop-terug:active {
+  background: var(--primair-licht);
+}
+
+html[data-ontwerp='a'] .start-kop {
+  background: transparent;
+  color: var(--tekst);
+  padding-bottom: 8px;
+}
+
+html[data-ontwerp='a'] .start-logo {
+  border-radius: 15px;
+  box-shadow:
+    0 1px 2px rgb(15 23 32 / 0.1),
+    0 8px 20px rgb(15 23 32 / 0.14);
+}
+
+html[data-ontwerp='a'] .start-titel {
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+html[data-ontwerp='a'] .merk-2 {
+  font-weight: 400;
+  color: var(--tekst-2);
+}
+
+html[data-ontwerp='a'] .start-sub {
+  color: var(--tekst-2);
+  opacity: 1;
+  font-size: 0.92rem;
+}
+
+html[data-ontwerp='a'] .start-acties .icoon-knop,
+html[data-ontwerp='a'] .start-kop .icoon-knop {
+  color: var(--tekst-2);
+}
+
+html[data-ontwerp='a'] .tegel-titel {
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+html[data-ontwerp='a'] .tegel-sub {
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+html[data-ontwerp='a'] .tegel-training .tegel-titel {
+  font-size: 1.3rem;
+}
+
+html[data-ontwerp='a'] .tegel-training .tegel-icoon {
+  background: var(--primair);
+  color: var(--op-primair);
+}
+
+html[data-ontwerp='a'] .tegel-klein .tegel-titel {
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+html[data-ontwerp='a'] .sectie-titel {
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+}
+
+html[data-ontwerp='a'] .kaart-titel {
+  font-size: 1.04rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+html[data-ontwerp='a'] .blok h3,
+html[data-ontwerp='a'] .poort-kaart-titel {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+html[data-ontwerp='a'] .poort-titel,
+html[data-ontwerp='a'] .detail-titel {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+html[data-ontwerp='a'] .knop {
+  border-width: 1px;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgb(15 23 32 / 0.05);
+}
+
+html[data-ontwerp='a'] .teller {
+  background: var(--achtergrond);
+  color: var(--tekst-2);
+  border: 1px solid var(--rand);
+  font-weight: 650;
+}
+
+@media (min-width: 760px) and (min-height: 600px) {
+  html[data-ontwerp='a'] .tegel-titel {
+    font-size: 1.3rem;
+  }
+
+  html[data-ontwerp='a'] .tegel-klein .tegel-titel {
+    font-size: 1.05rem;
+  }
+}
+
+/* =====================================================================================================================
+ * B – Stadion
+ * ===================================================================================================================== */
+
+html[data-ontwerp='b'] {
+  --radius: 12px;
+  --achtergrond: #edf0ef !important;
+  --kaart: #ffffff !important;
+  --rand: #d6dcd9 !important;
+  --schaduw: 0 2px 4px rgb(0 0 0 / 0.06), 0 12px 28px rgb(0 0 0 / 0.1) !important;
+  /* Donker vlak in de clubkleur (terugval voor oudere browsers: bijna zwart). */
+  --o-donker-1: #101a16;
+  --o-donker-2: #070b09;
+  --o-donker-1: color-mix(in srgb, var(--primair) 52%, #05090b);
+  --o-donker-2: color-mix(in srgb, var(--primair) 14%, #04070a);
+  --o-licht: #d8f0e2;
+  --o-licht: color-mix(in srgb, var(--primair) 30%, #ffffff);
+  --o-vlak: linear-gradient(135deg, var(--o-donker-1) 0%, var(--o-donker-2) 82%);
+  --o-icoon-vlak: var(--o-vlak);
+  --o-icoon-kleur: #ffffff;
+  --o-icoon-rond: 10px;
+}
+
+html[data-ontwerp='b'][data-modus='donker'] {
+  --achtergrond: #080a09 !important;
+  --kaart: #141816 !important;
+  --rand: #2a302d !important;
+  --schaduw: 0 2px 4px rgb(0 0 0 / 0.4), 0 12px 28px rgb(0 0 0 / 0.45) !important;
+}
+
+html[data-ontwerp='b'] .kop,
+html[data-ontwerp='b'] .start-kop {
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.035) 0 34px, transparent 34px 68px),
+    var(--o-vlak);
+  color: #ffffff;
+}
+
+html[data-ontwerp='b'] .kop {
+  box-shadow: 0 3px 14px rgb(0 0 0 / 0.28);
+}
+
+html[data-ontwerp='b'] .kop-titel {
+  font-size: 1.36rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+html[data-ontwerp='b'] .start-kop {
+  padding-bottom: 54px;
+}
+
+html[data-ontwerp='b'] .start-logo {
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 2px rgb(255 255 255 / 0.16),
+    0 10px 26px rgb(0 0 0 / 0.5);
+}
+
+html[data-ontwerp='b'] .start-titel {
+  font-size: 2.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+html[data-ontwerp='b'] .merk-2 {
+  color: var(--o-licht);
+}
+
+html[data-ontwerp='b'] .start-sub {
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+html[data-ontwerp='b'] .start-kop .icoon-knop {
+  color: #ffffff;
+}
+
+/* De tegels schuiven over de onderrand van de kop. */
+html[data-ontwerp='b'] .pagina-start .inhoud {
+  margin-top: -40px;
+  padding-top: 0;
+}
+
+html[data-ontwerp='b'] .tegel-titel {
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* De drie hoofdtegels: donker vlak in de clubkleur met witte tekst. */
+html[data-ontwerp='b'] .tegel-training,
+html[data-ontwerp='b'] .tegel-groot {
+  background: var(--o-vlak);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 12px 28px rgb(0 0 0 / 0.22);
+}
+
+html[data-ontwerp='b'] .tegel-training .tegel-sub,
+html[data-ontwerp='b'] .tegel-groot .tegel-sub,
+html[data-ontwerp='b'] .tegel-groot .tegel-pijl {
+  color: rgb(255 255 255 / 0.78);
+}
+
+html[data-ontwerp='b'] .tegel-training .tegel-icoon,
+html[data-ontwerp='b'] .tegel-groot .tegel-icoon {
+  background: rgb(255 255 255 / 0.13);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+}
+
+html[data-ontwerp='b'] .tegel-training .knop {
+  border-color: rgb(255 255 255 / 0.3);
+  background: rgb(255 255 255 / 0.1);
+  color: #ffffff;
+}
+
+html[data-ontwerp='b'] .tegel-training .knop-primair {
+  border-color: #ffffff;
+  background: #ffffff;
+  color: #0b1210;
+}
+
+html[data-ontwerp='b'] .tegel-klein {
+  border-top: 3px solid var(--primair);
+}
+
+html[data-ontwerp='b'] .sectie-titel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.1em;
+}
+
+html[data-ontwerp='b'] .sectie-titel::before {
+  content: '';
+  flex: none;
+  width: 16px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--primair-tekst);
+}
+
+html[data-ontwerp='b'] .kaart-titel,
+html[data-ontwerp='b'] .blok h3,
+html[data-ontwerp='b'] .poort-kaart-titel,
+html[data-ontwerp='b'] .detail-titel {
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+html[data-ontwerp='b'] .knop {
+  border-radius: 8px;
+  font-family: var(--font-kop);
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+html[data-ontwerp='b'] .tegel-training .tegel-knoppen .knop {
+  font-size: 0.98rem;
+}
+
+html[data-ontwerp='b'] .teller {
+  border-radius: 6px;
+  background: var(--o-vlak);
+  color: #ffffff;
+}
+
+html[data-ontwerp='b'] .rij-leeg .teller {
+  background: transparent;
+  color: var(--tekst-2);
+}
+
+html[data-ontwerp='b'] .poort-stap-nr {
+  border-radius: 8px;
+}
+
+/* =====================================================================================================================
+ * C – Zacht
+ * ===================================================================================================================== */
+
+html[data-ontwerp='c'] {
+  --font-kop: var(--font);
+  --radius: 22px;
+  --achtergrond: #f2f5f3 !important;
+  --kaart: rgb(255 255 255 / 0.74) !important;
+  --rand: rgb(20 40 30 / 0.1) !important;
+  --schaduw: 0 1px 1px rgb(20 40 30 / 0.03), 0 12px 36px rgb(20 40 30 / 0.09) !important;
+  --o-glasrand: 1px solid rgb(255 255 255 / 0.7);
+  --o-verloop: var(--primair);
+  --o-verloop: linear-gradient(140deg, var(--primair) 0%, color-mix(in srgb, var(--primair) 62%, var(--accent)) 100%);
+  --o-icoon-vlak: var(--o-verloop);
+  --o-icoon-kleur: var(--op-primair);
+  --o-icoon-rond: 50%;
+}
+
+html[data-ontwerp='c'][data-modus='donker'] {
+  --achtergrond: #0c100e !important;
+  --kaart: rgb(30 37 33 / 0.7) !important;
+  --rand: rgb(255 255 255 / 0.1) !important;
+  --schaduw: 0 12px 36px rgb(0 0 0 / 0.4) !important;
+  --o-glasrand: 1px solid rgb(255 255 255 / 0.09);
+}
+
+/* Zachte kleurvlekken in de clubkleur achter alles (terugval: de effen achtergrond). */
+html[data-ontwerp='c'] body {
+  background:
+    radial-gradient(900px 520px at -10% -8%, color-mix(in srgb, var(--primair) 20%, transparent), transparent 62%),
+    radial-gradient(760px 480px at 112% 14%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 60%),
+    radial-gradient(900px 600px at 50% 118%, color-mix(in srgb, var(--primair) 12%, transparent), transparent 60%),
+    var(--achtergrond);
+  background-attachment: fixed;
+}
+
+html[data-ontwerp='c'] .tegel,
+html[data-ontwerp='c'] .lijst,
+html[data-ontwerp='c'] .blok,
+html[data-ontwerp='c'] .leeg,
+html[data-ontwerp='c'] .poort-kaart {
+  border: var(--o-glasrand);
+  -webkit-backdrop-filter: saturate(1.4) blur(18px);
+  backdrop-filter: saturate(1.4) blur(18px);
+}
+
+/* Lange lijsten met kaarten: geen vervaging per kaart (dat kost op een telefoon te veel), wel dezelfde rand. */
+html[data-ontwerp='c'] .kaart {
+  border: var(--o-glasrand);
+  background: rgb(255 255 255 / 0.9);
+}
+
+html[data-ontwerp='c'][data-modus='donker'] .kaart {
+  background: rgb(30 37 33 / 0.92);
+}
+
+html[data-ontwerp='c'] .kop {
+  background: var(--achtergrond);
+  background: color-mix(in srgb, var(--achtergrond) 62%, transparent);
+  -webkit-backdrop-filter: saturate(1.6) blur(20px);
+  backdrop-filter: saturate(1.6) blur(20px);
+  color: var(--tekst);
+  box-shadow: none;
+}
+
+html[data-ontwerp='c'] .kop-titel {
+  font-size: 1.14rem;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+}
+
+html[data-ontwerp='c'] .kop-terug {
+  color: var(--primair-tekst);
+}
+
+html[data-ontwerp='c'] .kop-terug:active {
+  background: var(--primair-licht);
+}
+
+html[data-ontwerp='c'] .start-kop {
+  background: transparent;
+  color: var(--tekst);
+  padding-bottom: 10px;
+}
+
+html[data-ontwerp='c'] .start-logo {
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgb(15 107 58 / 0.35);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--primair) 42%, transparent);
+}
+
+html[data-ontwerp='c'] .start-titel {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--primair-tekst);
+}
+
+html[data-ontwerp='c'] .merk-2 {
+  color: var(--tekst);
+}
+
+html[data-ontwerp='c'] .start-sub {
+  color: var(--tekst-2);
+  opacity: 1;
+}
+
+html[data-ontwerp='c'] .start-kop .icoon-knop {
+  color: var(--tekst-2);
+}
+
+html[data-ontwerp='c'] .tegel-icoon,
+html[data-ontwerp='c'] .cat-icoon {
+  box-shadow: 0 6px 16px rgb(15 107 58 / 0.3);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--primair) 34%, transparent);
+}
+
+html[data-ontwerp='c'] .tegel-titel {
+  font-size: 1.15rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+html[data-ontwerp='c'] .tegel-sub {
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+html[data-ontwerp='c'] .tegel-training .tegel-titel {
+  font-size: 1.32rem;
+}
+
+html[data-ontwerp='c'] .tegel-klein .tegel-titel {
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+html[data-ontwerp='c'] .sectie-titel {
+  font-size: 0.95rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--tekst);
+}
+
+html[data-ontwerp='c'] .kaart-titel {
+  font-size: 1.05rem;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+html[data-ontwerp='c'] .blok h3,
+html[data-ontwerp='c'] .poort-kaart-titel {
+  font-size: 1.08rem;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+}
+
+html[data-ontwerp='c'] .poort-titel,
+html[data-ontwerp='c'] .detail-titel {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+html[data-ontwerp='c'] .knop {
+  border-radius: 999px;
+  border-width: 1px;
+  font-weight: 650;
+}
+
+html[data-ontwerp='c'] .knop-primair,
+html[data-ontwerp='c'] .poort-knop:not(.poort-knop-tweede) {
+  border-color: transparent;
+  background: var(--o-verloop);
+  box-shadow: 0 8px 20px rgb(15 107 58 / 0.28);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--primair) 32%, transparent);
+}
+
+html[data-ontwerp='c'] .poort-knop {
+  border-radius: 999px;
+}
+
+html[data-ontwerp='c'] .teller {
+  background: var(--primair-licht);
+  color: var(--primair-tekst);
+}
+
+@media (min-width: 760px) and (min-height: 600px) {
+  html[data-ontwerp='c'] .tegel-titel {
+    font-size: 1.3rem;
+  }
+
+  html[data-ontwerp='c'] .tegel-klein .tegel-titel {
+    font-size: 1.05rem;
+  }
+}

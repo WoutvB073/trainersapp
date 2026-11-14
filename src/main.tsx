@@ -11,9 +11,12 @@ import './styles/editor.css';
 import './styles/wedstrijd.css';
 import './styles/club.css';
 import './styles/start.css';
+import './styles/ontwerp.css';
 import { App } from './App';
+import { OntwerpWissel } from './components/Voorbeeld';
 import { startServiceWorker } from './engine/update';
 import { pasThemaToe } from './engine/thema';
+import { pasOntwerpToe } from './engine/ontwerp';
 import { bewaardAccount, online } from './engine/account';
 import { onlineBeschikbaar } from './online/config';
 import { laadTaal } from './data/oefeningen';
@@ -24,6 +27,8 @@ document.documentElement.lang = TAAL;
 
 // Clubkleuren en licht/donker meteen toepassen (geen kleurflits bij het opstarten).
 pasThemaToe();
+// Ontwerprichting (alleen in de voorbeeldversie anders dan het huidige ontwerp).
+pasOntwerpToe();
 
 // Was je ingelogd? Dan de online-module laden (synchroniseren en teams). Anders blijft Firebase weg.
 if (bewaardAccount() && onlineBeschikbaar()) void online().then((m) => m.startOnline());
@@ -37,6 +42,7 @@ void laadTaal()
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
         <App />
+        <OntwerpWissel />
       </StrictMode>,
     ),
   );

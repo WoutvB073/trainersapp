@@ -11,6 +11,7 @@ import { useEigenOefeningen } from '../eigen/opslag';
 import type { Soort } from '../model/types';
 import { t } from '../i18n/t';
 import { CategoriePlaatje } from '../components/CategoriePlaatje';
+import { CategorieIcoon } from '../components/CategorieIcoon';
 
 function Rij({ pad, naam, omschrijving, aantal, gefilterd, plaatje }: { pad: string; naam: string; omschrijving: string; aantal: number; gefilterd: boolean; plaatje?: ReactNode }) {
   return (
@@ -54,7 +55,13 @@ export function Categorieen({ soort }: { soort: Soort }) {
         <h2 className="sectie-titel">{t('Categorieën')}</h2>
         <ul className="lijst">
           {CATEGORIEEN[soort].map((c) => (
-            <Rij key={c.id} pad={`${basis}/${c.id}`} naam={c.naam} omschrijving={c.omschrijving} aantal={tel(c.id)} gefilterd={gefilterd} plaatje={<CategoriePlaatje soort={soort} id={c.id} />} />
+            <Rij key={c.id} pad={`${basis}/${c.id}`} naam={c.naam} omschrijving={c.omschrijving} aantal={tel(c.id)} gefilterd={gefilterd} plaatje={
+                <>
+                  <CategoriePlaatje soort={soort} id={c.id} />
+                  <CategorieIcoon soort={soort} categorie={c.id} />
+                </>
+              }
+            />
           ))}
         </ul>
       </main>
