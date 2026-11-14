@@ -41,18 +41,32 @@ function VeldLijnen({ B, L }: { B: number; L: number }) {
 
 type Bron = { plek?: string; naam?: string };
 
+/** Waar een versleepte speler terechtkomt als je nu loslaat. */
+type Doel = { soort: 'vrij'; x: number; y: number } | { soort: 'plek'; id: string } | { soort: 'bank' } | null;
+
+/** Het ankerpunt van een positie ligt 22 px onder de bovenkant van de knop (zie `.opst-plek` in wedstrijd.css): het midden van het rondje. */
+const ANKER = 22;
+/** Zo dichtbij (px) klikt een versleepte speler vast op een andere positie (ruilen). Het rondje is 36 px. */
+const VANG = 30;
+const GRENS = [0.03, 0.97] as const;
+
 /**
  * Opstelling op het veld met de bank eronder (of ernaast). Slepen met de vinger of muis: speler van de bank op een
  * positie, twee spelers ruilen, speler naar de bank, of een positie zelf verplaatsen. Tikken kan ook: tik een speler en
  * dan een positie (of de bank).
+ *
+ * Sinds 0.35.0 schuift de speler zelf mee (met het punt waar je hem vastpakte) en is wat je ziet precies waar hij landt:
+ * los op het veld blijft hij daar staan; komt hij vlak bij een andere positie, dan klikt hij daar zichtbaar op vast (ruilen)
+ * en licht die positie op vóór je loslaat. Een wissel klikt altijd vast op de dichtstbijzijnde positie.
  */
 export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: Opstelling) => void }) {
   const info = spelvorm(o.spelvorm);
   const { breedte: B, lengte: L } = info.veld;
   const m = 2;
   const veldRef = useRef<HTMLDivElement>(null);
-  const sleep = useRef<{ bron: Bron; x0: number; y0: number; bezig: boolean } | null>(null);
-  const [geest, setGeest] = useState<{ x: number; y: number; tekst: string } | null>(null);
+  const bankRef = useRef<HTMLDivElement>(null);
+  const sleep = useRef<{ bron: Bron; x0: number; y0: number; dx: number; dy: number; bezig: boolean; doel: Doel } | null>(null);
+  const [geest, setGeest] = useState<{ x: number; y: number; bron: Bron; doel: Doel } | null>(null);
   const [keuze, setKeuze] = useState<Bron | null>(null);
   const bewerkbaar = !!opWijzig;
   const zet = (nieuw: Opstelling) => {
@@ -60,27 +74,45 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
     if (nieuw !== o) opWijzig?.(nieuw);
   };
 
-  const plekOpVeld = (x: number, y: number): [number, number] | null => {
+  /** Schermpunt → plek op het veld (0–1). Het veld heeft een rand van m meter rondom. */
+  const naarVeld = (r: DOMRect, x: number, y: number): [number, number] => [(((x - r.left) / r.width) * (B + 2 * m) - m) / B, (((y - r.top) / r.height) * (L + 2 * m) - m) / L];
+  /** Plek op het veld (0–1) → schermpunt. */
+  const naarScherm = (r: DOMRect, fx: number, fy: number): [number, number] => [r.left + ((m + fx * B) / (B + 2 * m)) * r.width, r.top + ((m + fy * L) / (L + 2 * m)) * r.height];
+
+  /**
+   * Waar komt de speler als je nu loslaat, en waar teken je hem dus? (x, y) is het ankerpunt van de meeschuivende speler. Dezelfde
+   * uitkomst wordt getekend én bij het loslaten gebruikt: wat je ziet is wat er gebeurt.
+   */
+  const bepaal = (bron: Bron, x: number, y: number, px: number, py: number): { doel: Doel; x: number; y: number } => {
     const r = veldRef.current?.getBoundingClientRect();
-    if (!r) return null;
-    // Het veld heeft een rand van m meter rondom.
-    const fx = ((x - r.left) / r.width) * (B + 2 * m) - m;
-    const fy = ((y - r.top) / r.height) * (L + 2 * m) - m;
-    return [fx / B, fy / L];
+    const b = bankRef.current?.getBoundingClientRect();
+    const binnen = (q: DOMRect | undefined, a: number, c: number) => !!q && a >= q.left && a <= q.right && c >= q.top && c <= q.bottom;
+    // Naar de bank: alleen een speler die op een positie staat.
+    if (bron.plek && bron.naam && binnen(b, px, py)) return { doel: { soort: 'bank' }, x, y };
+    if (!r || !(binnen(r, x, y) || binnen(r, px, py))) return { doel: null, x, y };
+    // Dichtstbijzijnde andere positie.
+    let beste: { id: string; d: number; sx: number; sy: number } | null = null;
+    for (const p of o.plekken) {
+      if (p.id === bron.plek) continue;
+      const [sx, sy] = naarScherm(r, p.x, p.y);
+      const d = Math.hypot(sx - x, sy - y);
+      if (!beste || d < beste.d) beste = { id: p.id, d, sx, sy };
+    }
+    // Een wissel klikt altijd vast op de dichtstbijzijnde positie; een speler op het veld alleen als hij er vlakbij komt.
+    if (bron.naam && beste && (!bron.plek || beste.d <= VANG)) return { doel: { soort: 'plek', id: beste.id }, x: beste.sx, y: beste.sy };
+    if (!bron.plek) return { doel: null, x, y };
+    // Vrij neerzetten, binnen het veld.
+    const [fx, fy] = naarVeld(r, x, y);
+    const kx = Math.max(GRENS[0], Math.min(GRENS[1], fx));
+    const ky = Math.max(GRENS[0], Math.min(GRENS[1], fy));
+    const [sx, sy] = naarScherm(r, kx, ky);
+    return { doel: { soort: 'vrij', x: kx, y: ky }, x: sx, y: sy };
   };
 
-  const laat = (bron: Bron, x: number, y: number) => {
-    const el = document.elementFromPoint(x, y);
-    const plekEl = el?.closest<HTMLElement>('[data-plek]');
-    const opBank = !!el?.closest('[data-bank]');
-    const opVeld = !!el?.closest('[data-veld]');
-    const doel = plekEl?.dataset.plek;
-    if (bron.naam && doel && doel !== bron.plek) return zet(zetOpPlek(o, bron.naam, doel));
-    if (bron.naam && bron.plek && opBank) return zet(naarBank(o, bron.plek));
-    if (bron.plek && opVeld && (!doel || doel === bron.plek)) {
-      const p = plekOpVeld(x, y);
-      if (p) return zet(verplaatsPlek(o, bron.plek, p[0], p[1]));
-    }
+  const laat = (bron: Bron, doel: Doel) => {
+    if (doel?.soort === 'plek' && bron.naam) return zet(zetOpPlek(o, bron.naam, doel.id));
+    if (doel?.soort === 'bank' && bron.plek) return zet(naarBank(o, bron.plek));
+    if (doel?.soort === 'vrij' && bron.plek) return zet(verplaatsPlek(o, bron.plek, doel.x, doel.y));
     setKeuze(null);
   };
 
@@ -96,16 +128,22 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
     if (!bewerkbaar || e.button > 0) return;
     e.preventDefault();
     e.stopPropagation();
-    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
-    sleep.current = { bron, x0: e.clientX, y0: e.clientY, bezig: false };
+    const el = e.currentTarget as HTMLElement;
+    el.setPointerCapture?.(e.pointerId);
+    // Het ankerpunt van wat je vastpakt: bij een positie het midden van het rondje, bij een wissel het midden van het naamlabel.
+    const r = el.getBoundingClientRect();
+    const ax = r.left + r.width / 2;
+    const ay = bron.plek ? r.top + ANKER : r.top + r.height / 2;
+    sleep.current = { bron, x0: e.clientX, y0: e.clientY, dx: e.clientX - ax, dy: e.clientY - ay, bezig: false, doel: null };
   };
   const beweeg = (e: React.PointerEvent) => {
     const s = sleep.current;
     if (!s) return;
     if (!s.bezig && Math.hypot(e.clientX - s.x0, e.clientY - s.y0) > 6) s.bezig = true;
     if (s.bezig) {
-      const p = s.bron.plek ? o.plekken.find((x) => x.id === s.bron.plek) : undefined;
-      setGeest({ x: e.clientX, y: e.clientY, tekst: s.bron.naam ?? String(p?.nummer ?? '') });
+      const uit = bepaal(s.bron, e.clientX - s.dx, e.clientY - s.dy, e.clientX, e.clientY);
+      s.doel = uit.doel;
+      setGeest({ x: uit.x, y: uit.y, bron: s.bron, doel: uit.doel });
     }
   };
   const op = (e: React.PointerEvent) => {
@@ -113,7 +151,7 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
     sleep.current = null;
     setGeest(null);
     if (!s) return;
-    if (s.bezig) laat(s.bron, e.clientX, e.clientY);
+    if (s.bezig) laat(s.bron, bepaal(s.bron, e.clientX - s.dx, e.clientY - s.dy, e.clientX, e.clientY).doel);
     else tik(s.bron);
   };
   const annuleer = () => {
@@ -137,9 +175,27 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
         }
       : {};
   const gekozen = (b: Bron) => !!keuze && keuze.plek === b.plek && keuze.naam === b.naam;
+  const doelPlek = geest?.doel?.soort === 'plek' ? geest.doel.id : undefined;
+  const naarDeBank = geest?.doel?.soort === 'bank';
+  const versleept = geest ? o.plekken.find((p) => p.id === geest.bron.plek) : undefined;
+  const doelVan = doelPlek ? o.plekken.find((p) => p.id === doelPlek) : undefined;
+  /** Wat er gebeurt als je nu loslaat (staat boven de meeschuivende speler). */
+  const uitleg = !geest
+    ? ''
+    : naarDeBank
+      ? t('Naar de wissels')
+      : doelVan?.naam
+        ? geest.bron.plek
+          ? t('Ruilen met {naam}', { naam: doelVan.naam })
+          : t('In plaats van {naam}', { naam: doelVan.naam })
+        : doelVan
+          ? t('Op positie {nummer}', { nummer: doelVan.nummer })
+          : !geest.doel
+            ? t('Hier kan het niet')
+            : '';
 
   return (
-    <div className={`opstelling${bewerkbaar ? ' bewerkbaar' : ''}`}>
+    <div className={`opstelling${bewerkbaar ? ' bewerkbaar' : ''}${geest ? ' sleept' : ''}`}>
       <div className="opst-veld" ref={veldRef} data-veld style={{ aspectRatio: `${B + 2 * m} / ${L + 2 * m}` }} onClick={() => keuze && !keuze.naam && setKeuze(null)}>
         <VeldLijnen B={B} L={L} />
         {o.plekken.map((p) => {
@@ -148,7 +204,7 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
             <button
               key={p.id}
               type="button"
-              className={`opst-plek${p.naam ? '' : ' leeg'}${gekozen(bron) ? ' gekozen' : ''}${info.keeper && p.nummer === 1 ? ' keeper' : ''}`}
+              className={`opst-plek${p.naam ? '' : ' leeg'}${gekozen(bron) ? ' gekozen' : ''}${info.keeper && p.nummer === 1 ? ' keeper' : ''}${geest?.bron.plek === p.id ? ' versleept' : ''}${doelPlek === p.id ? ' doel' : ''}`}
               data-plek={p.id}
               style={{ left: `${((m + p.x * B) / (B + 2 * m)) * 100}%`, top: `${((m + p.y * L) / (L + 2 * m)) * 100}%` }}
               aria-label={p.naam ? t('{naam} (positie {nummer})', { naam: p.naam, nummer: p.nummer }) : t('Positie {nummer} (leeg)', { nummer: p.nummer })}
@@ -160,7 +216,12 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
           );
         })}
       </div>
-      <div className={`opst-bank${keuze?.plek && keuze.naam ? ' doel' : ''}`} data-bank onClick={() => keuze?.plek && keuze.naam && zet(naarBank(o, keuze.plek))}>
+      <div
+        className={`opst-bank${(keuze?.plek && keuze.naam) || naarDeBank ? ' doel' : ''}`}
+        ref={bankRef}
+        data-bank
+        onClick={() => keuze?.plek && keuze.naam && zet(naarBank(o, keuze.plek))}
+      >
         <p className="opst-bank-kop">
           <Icoon naam="spelers" maat={18} />
           {t('Wissels')} <span className="teller-klein">{o.wissels.length}</span>
@@ -170,7 +231,7 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
         ) : (
           <div className="opst-wissels">
             {o.wissels.map((n) => (
-              <span key={n} className={`opst-wissel${gekozen({ naam: n }) ? ' gekozen' : ''}`}>
+              <span key={n} className={`opst-wissel${gekozen({ naam: n }) ? ' gekozen' : ''}${geest && !geest.bron.plek && geest.bron.naam === n ? ' versleept' : ''}`}>
                 <button type="button" className="opst-wissel-naam" data-naam={n} aria-label={t('{n} (wissel)', { n })} {...handlers({ naam: n })}>
                   {n}
                 </button>
@@ -194,8 +255,15 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
         </p>
       )}
       {geest && (
-        <div className="opst-geest" style={{ left: geest.x, top: geest.y }} aria-hidden="true">
-          {geest.tekst}
+        <div
+          className={`opst-plek opst-geest${geest.doel ? '' : ' kan-niet'}${versleept && !versleept.naam ? ' leeg' : ''}${info.keeper && versleept?.nummer === 1 ? ' keeper' : ''}`}
+          style={{ left: geest.x, top: geest.y }}
+          data-doel={geest.doel?.soort ?? 'geen'}
+          aria-hidden="true"
+        >
+          {uitleg && <span className="opst-geest-uitleg">{uitleg}</span>}
+          <span className="opst-nr">{versleept ? versleept.nummer : (doelVan?.nummer ?? '')}</span>
+          {geest.bron.naam && <span className="opst-naam">{geest.bron.naam}</span>}
         </div>
       )}
     </div>
