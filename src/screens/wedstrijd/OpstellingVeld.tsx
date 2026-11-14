@@ -190,9 +190,7 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
           : t('In plaats van {naam}', { naam: doelVan.naam })
         : doelVan
           ? t('Op positie {nummer}', { nummer: doelVan.nummer })
-          : !geest.doel
-            ? t('Hier kan het niet')
-            : '';
+          : '';
 
   return (
     <div className={`opstelling${bewerkbaar ? ' bewerkbaar' : ''}${geest ? ' sleept' : ''}`}>
@@ -204,7 +202,7 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
             <button
               key={p.id}
               type="button"
-              className={`opst-plek${p.naam ? '' : ' leeg'}${gekozen(bron) ? ' gekozen' : ''}${info.keeper && p.nummer === 1 ? ' keeper' : ''}${geest?.bron.plek === p.id ? ' versleept' : ''}${doelPlek === p.id ? ' doel' : ''}`}
+              className={`opst-plek${p.naam ? '' : ' onbezet'}${gekozen(bron) ? ' gekozen' : ''}${info.keeper && p.nummer === 1 ? ' keeper' : ''}${geest?.bron.plek === p.id ? ' versleept' : ''}${doelPlek === p.id ? ' doel' : ''}`}
               data-plek={p.id}
               style={{ left: `${((m + p.x * B) / (B + 2 * m)) * 100}%`, top: `${((m + p.y * L) / (L + 2 * m)) * 100}%` }}
               aria-label={p.naam ? t('{naam} (positie {nummer})', { naam: p.naam, nummer: p.nummer }) : t('Positie {nummer} (leeg)', { nummer: p.nummer })}
@@ -256,7 +254,7 @@ export function OpstellingVeld({ o, opWijzig }: { o: Opstelling; opWijzig?: (o: 
       )}
       {geest && (
         <div
-          className={`opst-plek opst-geest${geest.doel ? '' : ' kan-niet'}${versleept && !versleept.naam ? ' leeg' : ''}${info.keeper && versleept?.nummer === 1 ? ' keeper' : ''}`}
+          className={`opst-plek opst-geest${geest.doel ? '' : ' kan-niet'}${versleept && !versleept.naam ? ' onbezet' : ''}${info.keeper && versleept?.nummer === 1 ? ' keeper' : ''}`}
           style={{ left: geest.x, top: geest.y }}
           data-doel={geest.doel?.soort ?? 'geen'}
           aria-hidden="true"

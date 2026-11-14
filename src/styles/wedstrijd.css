@@ -211,7 +211,8 @@
   background: var(--keeper);
 }
 
-.opst-plek.leeg .opst-nr {
+/* Niet de klasse .leeg: die is van de lege-lijstblokken (marge en schaduw) en zette een lege positie 24 px te laag. */
+.opst-plek.onbezet .opst-nr {
   border-style: dashed;
   background: rgb(0 0 0 / 0.25);
   box-shadow: none;
@@ -310,17 +311,51 @@
   text-align: center;
 }
 
+/* De speler zelf schuift mee: zelfde vorm en hetzelfde ankerpunt als een positie, dus wat je ziet is waar hij landt. */
 .opst-geest {
   position: fixed;
   z-index: 50;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: var(--primair);
-  color: var(--op-primair);
-  font-weight: 700;
   pointer-events: none;
-  transform: translate(-50%, -130%);
-  box-shadow: 0 6px 18px rgb(0 0 0 / 0.3);
+}
+
+.opst-geest .opst-nr {
+  box-shadow: 0 8px 18px rgb(0 0 0 / 0.45);
+}
+
+.opst-geest.kan-niet {
+  opacity: 0.5;
+}
+
+.opst-geest-uitleg {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #ffd23f;
+  color: #1c1c1c;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+}
+
+/* Waar hij vandaan komt blijft vaag staan; waar hij op vastklikt licht op. */
+.opst-plek.versleept,
+.opst-wissel.versleept {
+  opacity: 0.3;
+}
+
+.opst-plek.doel .opst-nr {
+  outline: 3px solid #ffd23f;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 10px rgb(255 210 63 / 0.35);
+}
+
+.opstelling.sleept .opst-plek {
+  cursor: grabbing;
 }
 
 /* ---------- Tactiekbord ---------- */

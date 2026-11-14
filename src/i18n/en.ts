@@ -1459,4 +1459,9 @@ export const EN: Record<string, string> = {
   Sessie: 'Session',
   'Alleen om (begintijd)': 'Only at (start time)',
   'Twee sessies op één avond? Vul de begintijd in, dan komt deze trainer alleen bij die sessie. Leeg: bij elke sessie van zijn groep.': 'Two sessions on one evening? Fill in the start time and this coach only goes to that session. Empty: every session of their group.',
+  // Fase 1 (volgende stap): opstelling slepen
+  'Naar de wissels': 'To the subs',
+  'Ruilen met {naam}': 'Swap with {naam}',
+  'In plaats van {naam}': 'Replaces {naam}',
+  'Op positie {nummer}': 'On position {nummer}',
 };
