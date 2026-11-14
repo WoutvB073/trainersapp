@@ -1033,5 +1033,32 @@
         "The dragon may also win a ball: then 5 sole touches first before you get it back"
       ]
     }
+  },
+  "veld-af-schot-rebound-intikken": {
+    "naam": "Shot, rebound and tap-in",
+    "uitleg": "Two lines: a shooting line straight in front of goal and a line off to one side. The first player dribbles forward and shoots low and hard at goal. The moment the shot is taken, the player from the other line sprints towards goal. The keeper saves the ball and the second player taps in the rebound. If the ball comes back off the post or stays loose, that is a rebound too: always follow in until the ball is in the net or the keeper has it. Then swap lines.",
+    "organisatie": "On half a pitch with a keeper. Shooting line 20 m straight in front of goal (a ball each), second line 14 m out and off to one side. Shoot from about 16 m. After your turn, join the other line; collect your ball first.",
+    "benodigdheden": [
+      "Goal",
+      "2 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Shooter: shoot low and across goal, so the rebound often drops in front of goal",
+      "Runner: go the moment the shot is taken, not when the ball comes back",
+      "Follow in all the way and expect the rebound, even when the shot looks good",
+      "Tap in calmly with the inside of the foot: placement is enough"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shoot from closer in (12 m)",
+        "If there is no rebound, the coach rolls a second ball in front of goal"
+      ],
+      "moeilijker": [
+        "A defender tracks the second player",
+        "The rebound must be finished first time",
+        "The shooter follows in too: two players on the rebound"
+      ]
+    }
   }
 }

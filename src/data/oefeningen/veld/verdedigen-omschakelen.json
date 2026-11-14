@@ -1742,5 +1742,440 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-vo-kantelen-blok",
+    "soort": "veld",
+    "naam": "Kantelen als blok",
+    "categorieen": [
+      "verdedigen-omschakelen"
+    ],
+    "uitleg": "Drie aanvallers spelen de bal breed heen en weer. Vier verdedigers verdedigen samen drie poortjes en bewegen als één blok mee met de bal: ze kantelen. De verdediger het dichtst bij de bal stapt uit en zet druk, de speler naast hem geeft rugdekking (schuin achter hem) en de twee anderen schuiven naar binnen, zodat de afstanden klein blijven. Gaat de bal naar de andere kant, dan schuift het hele blok mee terwijl de bal onderweg is. De aanvallers scoren door de bal door een poortje te passen; onderscheppen de verdedigers de bal, dan is het punt voor hen.",
+    "organisatie": "Vak van 28 × 18 m. Op de ene lange zijde drie poortjes van 2,5 m, daarvoor vier verdedigers op een lijn met ± 5 m tussenruimte. Drie aanvallers aan de overkant: links, midden en rechts. Eerst spelen de aanvallers alleen breed, zodat de verdedigers het schuiven oefenen; daarna mogen ze door een poortje passen. Na 2 minuten wisselen.",
+    "benodigdheden": [
+      "6 pionnen",
+      "4 hoedjes",
+      "Ballen",
+      "Hesjes"
+    ],
+    "spelersNodig": 7,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": false,
+    "meerSpelers": "Met meer spelers: vier aanvallers tegen vier verdedigers, of wissel om de twee minuten een nieuw viertal verdedigers in.",
+    "coachpunten": [
+      "Schuif terwijl de bal onderweg is, niet pas als hij aankomt",
+      "De dichtstbijzijnde zet druk, de speler ernaast staat schuin achter hem (rugdekking)",
+      "Houd ongeveer 5 meter tussen elkaar: nooit een pass tussen twee verdedigers door",
+      "De verste verdediger laat zijn kant los en schuift naar binnen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "De aanvallers spelen in wandeltempo en houden de bal steeds even stil",
+        "Alleen breed spelen, nog niet scoren"
+      ],
+      "moeilijker": [
+        "Een vierde aanvaller tussen de verdedigers en de poortjes",
+        "De aanvallers mogen ook door een poortje dribbelen",
+        "Na balwinst scoren de verdedigers op een doeltje aan de overkant"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 30,
+        "lengte": 20
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z",
+          "soort": "zone",
+          "x": 15,
+          "y": 10,
+          "breedte": 28,
+          "lengte": 18
+        },
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 29,
+          "y": 1
+        },
+        {
+          "id": "h3",
+          "soort": "hoedje",
+          "x": 1,
+          "y": 19
+        },
+        {
+          "id": "h4",
+          "soort": "hoedje",
+          "x": 29,
+          "y": 19
+        },
+        {
+          "id": "g1a",
+          "soort": "pion",
+          "x": 5.53,
+          "y": 1
+        },
+        {
+          "id": "g1b",
+          "soort": "pion",
+          "x": 8,
+          "y": 1
+        },
+        {
+          "id": "g2a",
+          "soort": "pion",
+          "x": 13.76,
+          "y": 1
+        },
+        {
+          "id": "g2b",
+          "soort": "pion",
+          "x": 16.24,
+          "y": 1
+        },
+        {
+          "id": "g3a",
+          "soort": "pion",
+          "x": 22,
+          "y": 1
+        },
+        {
+          "id": "g3b",
+          "soort": "pion",
+          "x": 24.47,
+          "y": 1
+        },
+        {
+          "id": "d2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 7.59,
+          "y": 7.66,
+          "kijkrichting": 90
+        },
+        {
+          "id": "d3",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 3,
+          "x": 12.53,
+          "y": 7.3,
+          "kijkrichting": 90
+        },
+        {
+          "id": "d4",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 4,
+          "x": 17.47,
+          "y": 7.3,
+          "kijkrichting": 90
+        },
+        {
+          "id": "d5",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 5,
+          "x": 22.41,
+          "y": 7.66,
+          "kijkrichting": 90
+        },
+        {
+          "id": "a11",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 11,
+          "x": 4.29,
+          "y": 15.4,
+          "kijkrichting": -70
+        },
+        {
+          "id": "a10",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 15,
+          "y": 16.66,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a7",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 25.71,
+          "y": 15.4,
+          "kijkrichting": -110
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 15,
+          "y": 16.17,
+          "bij": "a10"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a10",
+              "naar": "a11"
+            },
+            {
+              "type": "loop",
+              "wie": "d2",
+              "naar": [
+                5.28,
+                12.16
+              ],
+              "manier": "sprint",
+              "start": 0.1
+            },
+            {
+              "type": "loop",
+              "wie": "d3",
+              "naar": [
+                9.07,
+                9.64
+              ],
+              "start": 0.1
+            },
+            {
+              "type": "loop",
+              "wie": "d4",
+              "naar": [
+                13.35,
+                8.56
+              ],
+              "start": 0.15
+            },
+            {
+              "type": "loop",
+              "wie": "d5",
+              "naar": [
+                17.64,
+                8.2
+              ],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "d2",
+              "naar": "a11"
+            },
+            {
+              "type": "draai",
+              "wie": "d3",
+              "naar": "a11"
+            },
+            {
+              "type": "draai",
+              "wie": "d4",
+              "naar": "a11"
+            },
+            {
+              "type": "draai",
+              "wie": "d5",
+              "naar": "a11"
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a11",
+              "naar": "a10"
+            },
+            {
+              "type": "loop",
+              "wie": "d2",
+              "naar": [
+                8.91,
+                9.28
+              ],
+              "manier": "achteruit",
+              "start": 0.1
+            },
+            {
+              "type": "loop",
+              "wie": "d3",
+              "naar": [
+                13.85,
+                11.98
+              ],
+              "start": 0.1
+            },
+            {
+              "type": "loop",
+              "wie": "d4",
+              "naar": [
+                17.8,
+                9.64
+              ],
+              "start": 0.15
+            },
+            {
+              "type": "loop",
+              "wie": "d5",
+              "naar": [
+                21.59,
+                8.56
+              ],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "d2",
+              "naar": "a10"
+            },
+            {
+              "type": "draai",
+              "wie": "d3",
+              "naar": "a10"
+            },
+            {
+              "type": "draai",
+              "wie": "d4",
+              "naar": "a10"
+            },
+            {
+              "type": "draai",
+              "wie": "d5",
+              "naar": "a10"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a10",
+              "naar": "a7"
+            },
+            {
+              "type": "loop",
+              "wie": "d5",
+              "naar": [
+                24.72,
+                12.16
+              ],
+              "manier": "sprint",
+              "start": 0.1
+            },
+            {
+              "type": "loop",
+              "wie": "d4",
+              "naar": [
+                20.93,
+                9.64
+              ],
+              "start": 0.1
+            },
+            {
+              "type": "loop",
+              "wie": "d3",
+              "naar": [
+                16.65,
+                8.56
+              ],
+              "manier": "achteruit",
+              "start": 0.15
+            },
+            {
+              "type": "loop",
+              "wie": "d2",
+              "naar": [
+                12.36,
+                8.2
+              ],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "d2",
+              "naar": "a7"
+            },
+            {
+              "type": "draai",
+              "wie": "d3",
+              "naar": "a7"
+            },
+            {
+              "type": "draai",
+              "wie": "d4",
+              "naar": "a7"
+            },
+            {
+              "type": "draai",
+              "wie": "d5",
+              "naar": "a7"
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a7",
+              "naar": [
+                15.49,
+                1.18
+              ],
+              "onderschept": "d4"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

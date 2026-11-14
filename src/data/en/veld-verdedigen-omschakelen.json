@@ -166,5 +166,34 @@
         "Goals only count after a pass from a bounce player"
       ]
     }
+  },
+  "veld-vo-kantelen-blok": {
+    "naam": "Shifting as a block",
+    "uitleg": "Three attackers move the ball from side to side. Four defenders protect three gates together and move with the ball as one block: they shift across. The defender nearest the ball steps out and presses, the player next to them covers (diagonally behind) and the other two tuck inside, so the distances stay small. When the ball goes to the other side, the whole block shifts while the ball is travelling. The attackers score by passing the ball through a gate; if the defenders intercept, the point is theirs.",
+    "organisatie": "28 × 18 m area. Three 2.5 m gates on one long side, with four defenders in a line in front of them, about 5 m apart. Three attackers on the other side: left, centre and right. At first the attackers only play from side to side, so the defenders practise shifting; then they may pass through a gate. Swap after 2 minutes.",
+    "benodigdheden": [
+      "6 cones",
+      "4 disc cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: four attackers against four defenders, or bring in a new back four every two minutes.",
+    "coachpunten": [
+      "Shift while the ball is travelling, not when it arrives",
+      "The nearest player presses, the player next to them stands diagonally behind (cover)",
+      "Keep about 5 metres between you: never a pass between two defenders",
+      "The far-side defender leaves their side and tucks inside"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The attackers play at walking pace and stop the ball each time",
+        "Side to side only, no scoring yet"
+      ],
+      "moeilijker": [
+        "A fourth attacker between the defenders and the gates",
+        "The attackers may also dribble through a gate",
+        "After winning the ball the defenders score in a mini goal at the other end"
+      ]
+    }
   }
 }

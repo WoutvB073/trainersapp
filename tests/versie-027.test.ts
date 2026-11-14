@@ -67,7 +67,7 @@ describe('nieuwe spelersoefeningen 0.27.0', () => {
   it('Verdedigen en omschakelen heeft nu een eigen bestand en genoeg oefeningen', () => {
     const lijst = OEFENINGEN.filter((x) => x.soort === 'veld' && x.categorieen.includes('verdedigen-omschakelen'));
     expect(lijst.length).toBeGreaterThanOrEqual(15);
-    expect(OEFENINGEN.filter((x) => x.categorieen[0] === 'verdedigen-omschakelen')).toHaveLength(6);
+    expect(OEFENINGEN.filter((x) => x.categorieen[0] === 'verdedigen-omschakelen').length).toBeGreaterThanOrEqual(6);
   });
 });
 

@@ -2078,5 +2078,357 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-pt-ruit-derde-man",
+    "soort": "veld",
+    "naam": "Ruit met de derde man",
+    "categorieen": [
+      "pass-en-trap"
+    ],
+    "uitleg": "Vier spelers in een ruit. De onderste speler speelt de bal in op de bovenste, die kort komt. Die kaatst in één keer af op de speler aan de zijkant, die naar binnen is gekomen. Intussen sprint de speler aan de andere zijkant als derde man de diepte in, achter de kaatser langs, en krijgt de diepe bal in de loop. Bovenaan draait het patroon om en gaat de bal op dezelfde manier terug naar beneden. Iedereen schuift door: de kaatser neemt de vrijgekomen zijkant over.",
+    "organisatie": "Ruit van 18 m lang en 12 m breed, met een pion op elke punt. Eén speler per punt, één bal. De bal gaat heen en weer; na een paar minuten de andere zijkant de diepte in laten gaan, zodat iedereen met beide voeten speelt.",
+    "benodigdheden": [
+      "4 pionnen",
+      "Ballen"
+    ],
+    "spelersNodig": 4,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kom kort op het moment dat de passer opkijkt, niet eerder",
+      "Kaats in één keer en op de goede voet: de bal mag niet stilliggen",
+      "Derde man: start op de kaats, dan krijg je de bal in de loop",
+      "Speel de diepe bal voor de man, zodat hij niet hoeft in te houden"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Kleinere ruit",
+        "Twee aanrakingen bij het kaatsen",
+        "Eerst in wandeltempo, zodat iedereen de looplijnen kent"
+      ],
+      "moeilijker": [
+        "Alles in één aanraking",
+        "Een pop of een passieve verdediger in de rug van de kaatser",
+        "Twee ballen tegelijk: één begint onder, één boven"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 20,
+        "lengte": 24
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "po",
+          "soort": "pion",
+          "x": 10,
+          "y": 22.2
+        },
+        {
+          "id": "pl",
+          "soort": "pion",
+          "x": 2.8,
+          "y": 12
+        },
+        {
+          "id": "pr",
+          "soort": "pion",
+          "x": 17.2,
+          "y": 12
+        },
+        {
+          "id": "pb",
+          "soort": "pion",
+          "x": 10,
+          "y": 1.8
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 10,
+          "y": 21,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 4,
+          "y": 12,
+          "kijkrichting": 0
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 10,
+          "y": 3,
+          "kijkrichting": 90
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 16,
+          "y": 12,
+          "kijkrichting": 180
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 10,
+          "y": 20.45,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                10,
+                8.6
+              ],
+              "duur": 1
+            },
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a3",
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                6.8,
+                12.8
+              ],
+              "start": 0.5,
+              "duur": 0.8
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a3",
+              "naar": "a2",
+              "direct": true
+            },
+            {
+              "type": "loop",
+              "wie": "a4",
+              "via": [
+                [
+                  15.4,
+                  7.2
+                ]
+              ],
+              "naar": [
+                10.8,
+                3.4
+              ],
+              "manier": "sprint",
+              "tempo": "gelijkmatig"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a2",
+              "naar": "a4",
+              "direct": true
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                16,
+                12
+              ],
+              "start": 0.1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a4",
+              "naar": [
+                10,
+                3
+              ],
+              "duur": 0.6
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "naar": [
+                4,
+                12
+              ],
+              "kijk": 0
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "truc",
+              "wie": "a4",
+              "soort": "zool",
+              "kijk": 90
+            },
+            {
+              "type": "draai",
+              "wie": "a3",
+              "kijk": 180
+            }
+          ]
+        },
+        {
+          "duur": 0.3,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                10,
+                15.4
+              ],
+              "duur": 1
+            },
+            {
+              "type": "pass",
+              "van": "a4",
+              "naar": "a1",
+              "start": 0.3
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                13.2,
+                11.2
+              ],
+              "start": 0.5,
+              "duur": 0.8
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a3",
+              "direct": true
+            },
+            {
+              "type": "loop",
+              "wie": "a2",
+              "via": [
+                [
+                  4.6,
+                  16.8
+                ]
+              ],
+              "naar": [
+                9.2,
+                20.6
+              ],
+              "manier": "sprint",
+              "tempo": "gelijkmatig"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a3",
+              "naar": "a2",
+              "direct": true
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                4,
+                12
+              ],
+              "start": 0.1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a2",
+              "naar": [
+                10,
+                21
+              ],
+              "duur": 0.6
+            },
+            {
+              "type": "loop",
+              "wie": "a3",
+              "naar": [
+                16,
+                12
+              ],
+              "kijk": 180
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "truc",
+              "wie": "a2",
+              "soort": "zool",
+              "kijk": -90
+            },
+            {
+              "type": "draai",
+              "wie": "a1",
+              "kijk": 0
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

@@ -9316,5 +9316,297 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-af-schot-rebound-intikken",
+    "soort": "veld",
+    "naam": "Schot, rebound en intikken",
+    "categorieen": [
+      "afwerken"
+    ],
+    "uitleg": "Twee rijen: een schietrij recht voor het doel en een rij schuin opzij. De eerste speler dribbelt aan en schiet laag en hard op doel. Op het moment van het schot sprint de speler uit de andere rij richting doel. De keeper keert de bal en de tweede speler tikt de rebound binnen. Komt de bal van de paal of blijft hij los liggen, dan is dat ook een rebound: altijd doorlopen tot de bal in het net ligt of de keeper hem vast heeft. Daarna wissel je van rij.",
+    "organisatie": "Op een half veld met een keeper. Schietrij op 20 m recht voor het doel (iedereen een bal), tweede rij op 14 m schuin opzij. Schieten vanaf ± 16 m. Na je beurt sluit je aan bij de andere rij; haal eerst je bal op.",
+    "benodigdheden": [
+      "Goal",
+      "2 pionnen",
+      "Ballen"
+    ],
+    "spelersNodig": 2,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Schutter: schiet laag en in de verre hoek, dan valt de rebound vaak voor het doel",
+      "Loper: start op het moment van het schot, niet pas als de bal terugkomt",
+      "Loop door tot voor het doel en reken op de rebound, ook als het schot goed lijkt",
+      "Tik rustig binnen met de binnenkant: plaatsen is genoeg"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Schieten van dichterbij (12 m)",
+        "Komt er geen rebound, dan rolt de trainer een tweede bal voor het doel"
+      ],
+      "moeilijker": [
+        "Een verdediger loopt mee met de tweede speler",
+        "De rebound moet in één keer worden afgerond",
+        "Ook de schutter loopt door: twee spelers op de rebound"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 20,
+        "y": -3,
+        "breedte": 30,
+        "lengte": 30
+      },
+      "camera": "schuin",
+      "rijen": [
+        {
+          "id": "rS",
+          "x": 30,
+          "y": 20,
+          "richting": 115,
+          "spelers": [
+            "a1",
+            "a3"
+          ]
+        },
+        {
+          "id": "rL",
+          "x": 43.5,
+          "y": 16.6,
+          "richting": 35,
+          "spelers": [
+            "a2",
+            "a4"
+          ]
+        }
+      ],
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "ps",
+          "soort": "pion",
+          "x": 31.4,
+          "y": 20.8
+        },
+        {
+          "id": "pr",
+          "soort": "pion",
+          "x": 45.2,
+          "y": 15.2
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a4",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 11,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 0,
+          "y": 0,
+          "bij": "a3"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a3"
+            ],
+            "tussen": 5.2,
+            "waarden": {
+              "loper": [
+                "a2",
+                "a4"
+              ],
+              "doel": [
+                [
+                  36.6,
+                  -0.2
+                ],
+                [
+                  31.4,
+                  -0.2
+                ]
+              ],
+              "weg": [
+                [
+                  37.6,
+                  6.4
+                ],
+                [
+                  34.4,
+                  6.8
+                ]
+              ],
+              "plek": [
+                [
+                  38.2,
+                  7.2
+                ],
+                [
+                  35,
+                  7.6
+                ]
+              ],
+              "intik": [
+                [
+                  31.8,
+                  -0.3
+                ],
+                [
+                  36.8,
+                  -0.3
+                ]
+              ]
+            },
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "dribbel",
+                    "wie": "@",
+                    "naar": [
+                      30.6,
+                      16.6
+                    ],
+                    "duur": 1.1
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@",
+                    "naar": "@doel",
+                    "hoogte": "grond",
+                    "afloop": "stompt",
+                    "afloopNaar": "@weg",
+                    "snelheid": 22
+                  },
+                  {
+                    "type": "loop",
+                    "wie": "@loper",
+                    "naar": "@plek",
+                    "manier": "sprint",
+                    "tempo": "versnellen",
+                    "start": 0.3
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "schot",
+                    "van": "@loper",
+                    "naar": "@intik",
+                    "hoogte": "grond",
+                    "afloop": "goal",
+                    "direct": true
+                  }
+                ]
+              },
+              {
+                "duur": 0.4,
+                "acties": []
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "rL"
+                  },
+                  {
+                    "type": "loop",
+                    "wie": "@loper",
+                    "naar": [
+                      26.4,
+                      11
+                    ],
+                    "spoor": false
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@loper",
+                    "rij": "rS"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

@@ -1005,5 +1005,31 @@
         "Back home with your other foot"
       ]
     }
+  },
+  "veld-tq-kruis-opendraaien": {
+    "naam": "Cross: receive and open up",
+    "uitleg": "Four children stand on the points of a cross, one child stands in the middle. The ball comes from a point into the middle. The child in the middle asks for the ball, receives it half-turned and turns with the first touch towards the next point. That is where the ball goes. That point plays straight back into the middle, and so the ball travels all the way round the cross. After one lap the middle changes: whoever gets the last ball dribbles into the middle.",
+    "organisatie": "Cross with four disc cones 5 m from the middle; a 3 × 3 m box in the middle. One child per point, one in the middle, one ball. A new child in the middle after every lap; after a few laps go round the other way.",
+    "benodigdheden": [
+      "8 disc cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Look over your shoulder before the ball arrives: where does it need to go?",
+      "Stand half-turned, so you can see the ball and the next point at the same time",
+      "Receive with your far foot and turn in the same movement",
+      "Play the ball firmly along the ground to feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Smaller cross (4 m)",
+        "Two touches allowed: stop the ball first, then turn"
+      ],
+      "moeilijker": [
+        "Go round the other way, so receive with your other foot",
+        "The coach calls a colour: that is where the ball goes",
+        "No more than two touches in the middle"
+      ]
+    }
   }
 }

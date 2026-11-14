@@ -268,5 +268,32 @@
         "The defender’s pass comes in the air"
       ]
     }
+  },
+  "veld-pt-ruit-derde-man": {
+    "naam": "Diamond with the third man",
+    "uitleg": "Four players in a diamond. The bottom player plays the ball into the top player, who comes short. They lay it off first time to the player on the side, who has come inside. Meanwhile the player on the other side sprints forward as the third man, round the back of the player who laid it off, and receives the through ball in their stride. At the top the pattern turns round and the ball goes back down the same way. Everyone rotates: the player who laid it off takes over the free side.",
+    "organisatie": "Diamond 18 m long and 12 m wide, with a cone on each point. One player per point, one ball. The ball goes back and forth; after a few minutes let the other side make the forward run, so everyone uses both feet.",
+    "benodigdheden": [
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Come short the moment the passer looks up, not before",
+      "Lay it off first time and onto the right foot: the ball must not stop",
+      "Third man: go on the lay-off, so you get the ball in your stride",
+      "Play the through ball in front of the runner, so they do not have to slow down"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Smaller diamond",
+        "Two touches for the lay-off",
+        "At walking pace first, so everyone knows the runs"
+      ],
+      "moeilijker": [
+        "Everything one touch",
+        "A mannequin or passive defender behind the player laying it off",
+        "Two balls at once: one starts at the bottom, one at the top"
+      ]
+    }
   }
 }

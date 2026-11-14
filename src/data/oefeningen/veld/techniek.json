@@ -12159,5 +12159,377 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-tq-kruis-opendraaien",
+    "soort": "veld",
+    "naam": "Kruis: aannemen en opendraaien",
+    "categorieen": [
+      "techniek",
+      "pass-en-trap"
+    ],
+    "uitleg": "Vier kinderen staan op de punten van een kruis, één kind staat in het midden. De bal komt van een punt naar het midden. Het kind in het midden vraagt om de bal, neemt hem aan met het lichaam half open en draait met de eerste aanraking naar de volgende punt. Daar speelt het de bal heen. Die punt speelt meteen weer in op het midden, en zo gaat de bal het hele kruis rond. Na een rondje wisselt het midden: wie de laatste bal krijgt, dribbelt naar het midden.",
+    "organisatie": "Kruis met vier hoedjes op 5 m van het midden; in het midden een vakje van 3 × 3 m. Eén kind per punt, één in het midden, één bal. Na elk rondje een nieuw kind in het midden; na een paar rondjes de andere kant op draaien.",
+    "benodigdheden": [
+      "8 hoedjes",
+      "1 bal"
+    ],
+    "spelersNodig": 5,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-5-7",
+      "jo8-11"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kijk over je schouder voordat de bal komt: waar moet hij heen?",
+      "Sta half open, dan zie je de bal en de volgende punt tegelijk",
+      "Neem aan met je verste voet en draai in dezelfde beweging mee",
+      "Speel de bal strak over de grond in de voeten"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Kleiner kruis (4 m)",
+        "Twee keer raken mag: eerst stilleggen, dan draaien"
+      ],
+      "moeilijker": [
+        "De andere kant op draaien, dus aannemen met je andere voet",
+        "De trainer roept een kleur: daar gaat de bal heen",
+        "In het midden maximaal twee aanrakingen"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 14,
+        "lengte": 14
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "hn",
+          "soort": "hoedje",
+          "x": 11.31,
+          "y": 2.69,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "he",
+          "soort": "hoedje",
+          "x": 11.31,
+          "y": 11.31,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "hs",
+          "soort": "hoedje",
+          "x": 2.69,
+          "y": 11.31,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "hw",
+          "soort": "hoedje",
+          "x": 2.69,
+          "y": 2.69,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "m1",
+          "soort": "hoedje",
+          "x": 7,
+          "y": 5.16
+        },
+        {
+          "id": "m2",
+          "soort": "hoedje",
+          "x": 8.84,
+          "y": 7
+        },
+        {
+          "id": "m3",
+          "soort": "hoedje",
+          "x": 5.16,
+          "y": 7
+        },
+        {
+          "id": "m4",
+          "soort": "hoedje",
+          "x": 7,
+          "y": 8.84
+        },
+        {
+          "id": "n",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 10.54,
+          "y": 3.46,
+          "kijkrichting": 135
+        },
+        {
+          "id": "e",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 10.54,
+          "y": 10.54,
+          "kijkrichting": -135
+        },
+        {
+          "id": "s",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 3.46,
+          "y": 10.54,
+          "kijkrichting": -45
+        },
+        {
+          "id": "w",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 3.46,
+          "y": 3.46,
+          "kijkrichting": 45
+        },
+        {
+          "id": "m",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 5,
+          "x": 7,
+          "y": 7,
+          "kijkrichting": -45
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 10.15,
+          "y": 3.85,
+          "bij": "n"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "m",
+              "naar": [
+                7.49,
+                6.51
+              ],
+              "duur": 0.5
+            },
+            {
+              "type": "pass",
+              "van": "n",
+              "naar": "m",
+              "start": 0.15
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "m",
+              "naar": [
+                7.85,
+                7.42
+              ],
+              "duur": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "m",
+              "naar": "e"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "m",
+              "naar": [
+                7.57,
+                7.57
+              ],
+              "duur": 0.4,
+              "kijk": 45
+            },
+            {
+              "type": "pass",
+              "van": "e",
+              "naar": "m",
+              "start": 0.15
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "m",
+              "naar": [
+                6.58,
+                7.85
+              ],
+              "duur": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "m",
+              "naar": "s"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "m",
+              "naar": [
+                6.43,
+                7.57
+              ],
+              "duur": 0.4,
+              "kijk": 135
+            },
+            {
+              "type": "pass",
+              "van": "s",
+              "naar": "m",
+              "start": 0.15
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "m",
+              "naar": [
+                6.15,
+                6.58
+              ],
+              "duur": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "m",
+              "naar": "w"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "m",
+              "naar": [
+                6.43,
+                6.43
+              ],
+              "duur": 0.4,
+              "kijk": -135
+            },
+            {
+              "type": "pass",
+              "van": "w",
+              "naar": "m",
+              "start": 0.15
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "m",
+              "naar": [
+                7.42,
+                6.15
+              ],
+              "duur": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "m",
+              "naar": "n"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "n",
+              "via": [
+                [
+                  10.11,
+                  6.15
+                ]
+              ],
+              "naar": [
+                7.28,
+                6.72
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "m",
+              "via": [
+                [
+                  7.85,
+                  3.89
+                ]
+              ],
+              "naar": [
+                10.54,
+                3.46
+              ],
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "draai",
+              "wie": "m",
+              "kijk": 135
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
   }
 ]
