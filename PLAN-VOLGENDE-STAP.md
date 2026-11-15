@@ -4,8 +4,8 @@ Status: **fase 1 is klaar, er is niets live gezet.** Alles staat op de branch `v
 voorbeeldversie. `main` en de echte app zijn niet aangeraakt. Fase 2 begint pas na jouw akkoord.
 
 - **Testlink:** https://toptraining-40a90--volgende-stap-1ggjl77v.web.app/trainersapp/
-- **Werkt tot:** 15 december 2026, 17:24 (30 dagen is het maximum; verlengen kan met `node tools/voorbeeld.mjs zet`).
-- **Voorstel oefeningen:** `VOORSTEL-OEFENINGEN.md` (157 stuks om aan te vinken).
+- **Werkt tot:** 15 december 2026, 17:38 (30 dagen is het maximum; verlengen kan met `node tools/voorbeeld.mjs zet`).
+- **Voorstel oefeningen:** `VOORSTEL-OEFENINGEN.md` (157 stuks), ook als pagina met vinkjes: https://toptraining-40a90--volgende-stap-1ggjl77v.web.app/fase1/ (gemaakt door `tools/voorbeeld-paginas.mjs`, getest met `tools/e2e/fase1-paginas.mjs`). Daar staan ook de rugnummers per formatie en de conclusie over Realistisch.
 - **Screenshots:** map `fase1-beelden/` (zie het lijstje onderaan).
 
 Inhoud: 1 voorbeeldversie en je gegevens · 2 opstelling slepen · 3 rugnummers · 4 installatiescherm · 5 ontwerprichtingen ·

@@ -28,7 +28,9 @@ function bouw() {
     console.error(`FOUT: de voorbeeld-build bevat nog Firebase-config (${metConfig.join(', ')}). Niet online gezet.`);
     process.exit(1);
   }
-  console.log('Voorbeeld gebouwd in voorbeeld/trainersapp (online staat uit).');
+  const paginas = node([path.join('tools', 'voorbeeld-paginas.mjs')], { stdio: 'inherit' });
+  if (paginas.status !== 0) process.exit(paginas.status ?? 1);
+  console.log('Voorbeeld gebouwd in voorbeeld/trainersapp (online staat uit), met de fase 1-pagina in voorbeeld/fase1.');
 }
 
 /** Firebase-CLI met --json; toont alleen wat nodig is (adres en einddatum), nooit de rest van de uitvoer. */

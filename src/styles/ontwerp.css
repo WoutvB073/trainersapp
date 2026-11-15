@@ -314,7 +314,8 @@ html[data-ontwerp] .poort-beeld-app img {
   box-shadow: 0 6px 20px rgb(0 0 0 / 0.3);
 }
 
-.ontwerp-wissel-keuzes button {
+.ontwerp-wissel-keuzes button,
+.ontwerp-wissel-fase1 {
   display: grid;
   justify-items: center;
   min-width: 56px;
@@ -323,6 +324,13 @@ html[data-ontwerp] .poort-beeld-app img {
   border-radius: 10px;
   background: transparent;
   color: #fff;
+}
+
+.ontwerp-wissel-fase1 {
+  border-left: 1px solid rgb(255 255 255 / 0.25) !important;
+  border-radius: 0 10px 10px 0 !important;
+  text-decoration: none;
+  color: #ffd23f !important;
 }
 
 .ontwerp-wissel-keuzes button b {

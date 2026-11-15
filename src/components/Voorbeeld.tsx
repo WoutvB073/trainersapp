@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { kiesOntwerp, ONTWERPEN, useOntwerp } from '../engine/ontwerp';
-import { isVoorbeeld } from '../engine/voorbeeld';
+import { isVoorbeeld, VOORBEELD_BUILD } from '../engine/voorbeeld';
 
 /**
  * Alleen in de voorbeeldversie: een zwevende knop linksonder om van ontwerprichting te wisselen (Nu, A, B, C). De tekst is alleen voor de
@@ -25,6 +25,13 @@ export function OntwerpWissel() {
               <small>{o.naam}</small>
             </button>
           ))}
+          {/* Pagina's van fase 1 (voorstel oefeningen, rugnummers, Realistisch): alleen op de testlink, buiten de app. */}
+          {VOORBEELD_BUILD && (
+            <a className="ontwerp-wissel-fase1" href="/fase1/">
+              <b>{'Fase 1' /* i18n-ok */}</b>
+              <small>{'Kiezen' /* i18n-ok */}</small>
+            </a>
+          )}
         </div>
       )}
     </div>
