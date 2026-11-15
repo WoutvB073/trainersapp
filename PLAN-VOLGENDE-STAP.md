@@ -313,7 +313,18 @@ kan het eerst twee weken als keuze bij Instellingen ("Nieuw ontwerp proberen").
 
 ## 12. Tests en screenshots
 
-**Tests op de branch:** zie de regel "Teststatus" hieronder.
+**Teststatus (15-11-2026, branch `volgende-stap`): alles slaagt.**
+
+- `npm test`: 2789 tests in 53 bestanden. `npm run build`: goed.
+- `npm run test:online` (Firebase-emulator): 33 tests.
+- Browsertests: 31 scripts, allemaal goed: opstelling, deel-b, installeren (47 combinaties × 2 talen), start, schermen, taal, thema,
+  filters, training, editor, deel-a, versie-019, -021, -026, -030, -0311, -0320, -0330, -0331, -0340, -0342, -0343, -0344, tactieken
+  (voorbeelden en spelhervattingen), club, drie-d, realistisch, ontwerp, voorbeeld (lokaal en op de testlink) en de gewone build.
+- Drie browsertests had ik eerst moeten bijwerken, omdat ze een oude verwachting hadden: de sleeptest en de test van 0.19.0 gingen
+  nog uit van de oude nummers (11 op de laatste positie, een speler 2 in 1-2-3-2), en de test van 0.26.0 verwachtte Partijvormen
+  direct na Verdedigen en omschakelen, terwijl daar sinds 0.30.0 de categorie 1 tegen 1 tussen staat. De app deed het steeds goed.
+- Niet gedraaid: de browsertests tegen de Firebase-emulator met twee accounts (online, team-delen, deellinks, sync-race). Fase 1
+  verandert niets aan inloggen, delen of synchroniseren; ze horen bij het eerste deel dat live gaat.
 
 **Screenshots** (map `fase1-beelden/`):
 

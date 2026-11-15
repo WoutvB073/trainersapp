@@ -146,14 +146,14 @@ for (const [naam, vp, modus] of [
   let t = await page.evaluate(() => window.__editor.tekening());
   controle(t.veld.breedte === 42.5 && t.veld.lengte === 64, `${naam}: veld 8 tegen 8 ${JSON.stringify(t.veld)}`);
   controle(t.objecten.filter((o) => o.soort === 'speler' || o.soort === 'keeper').length === 16, `${naam}: 16 personen op het bord`);
-  // Naam invullen bij speler a2.
-  const a2 = t.objecten.find((o) => o.id === 'a2');
+  // Naam invullen bij speler a3 (met vaste rugnummers heeft 1-2-3-2 geen 2: de verdedigers zijn 4 en 3).
+  const a2 = t.objecten.find((o) => o.id === 'a3');
   await tik(page, modus, await page.evaluate((p) => window.__editor.naarScherm(p), [a2.x, a2.y]));
   await wachtOp(page, () => !!document.querySelector('[aria-label="Naam van de speler"]'), null, `${naam}: naamveld in de editor`);
   await page.type('[aria-label="Naam van de speler"]', 'Sanne');
   await slaap(300);
   t = await page.evaluate(() => window.__editor.tekening());
-  controle(t.objecten.find((o) => o.id === 'a2')?.naam === 'Sanne' && t.namen === true, `${naam}: naam in de editor`);
+  controle(t.objecten.find((o) => o.id === 'a3')?.naam === 'Sanne' && t.namen === true, `${naam}: naam in de editor`);
   if (naam === 'telefoon') await foto(page, 'editor-naam', 'Tactiekbord 8 tegen 8 in de editor: naam bij een speler');
   await klik(page, 'Klaar', '.editor-gegevens');
   await wachtOp(page, () => !!document.querySelector('.speler-vak'), null, `${naam}: bord`);

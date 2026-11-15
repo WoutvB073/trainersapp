@@ -55,9 +55,10 @@ for (const taal of ['nl', 'en']) {
       });
       if (telling.plaatjes === 0 || telling.plaatjes < telling.titels.length - 1) fouten.push(`${waar} ${soort}: ${telling.plaatjes} plaatjes bij ${telling.titels.length} rijen`);
       if (soort === 'spelers') {
+        // Sinds 0.30.0 staat de categorie 1 tegen 1 tussen Verdedigen en omschakelen en Partijvormen.
         const i = telling.titels.indexOf(NAAM[taal]);
         if (i < 0) fouten.push(`${waar}: "${NAAM[taal]}" niet in de categorielijst`);
-        else if (!/^(Partijvormen|Small-sided games)/.test(telling.titels[i + 1] ?? '')) fouten.push(`${waar}: na "${NAAM[taal]}" komt "${telling.titels[i + 1]}"`);
+        else if (!/^(1 tegen 1|1v1)/.test(telling.titels[i + 1] ?? '')) fouten.push(`${waar}: na "${NAAM[taal]}" komt "${telling.titels[i + 1]}"`);
         if (taal === 'en' && tekst.includes('Verdedigen')) fouten.push(`${waar}: Nederlands in de Engelse lijst`);
       }
       await foto(soort, formaat === 'se');
