@@ -131,12 +131,18 @@ export function formatiePlekken(vorm: Spelvorm, formatie: string): Omit<Plek, 'n
 /**
  * Een opgeslagen opstelling de vaste rugnummers geven (0.35.0). De posities (id's, plek op het veld, namen) blijven precies zoals ze
  * waren; alleen het nummer bij elke positie verandert. Een opstelling die al klopt komt ongewijzigd terug.
+ *
+ * Dit gebeurt alleen als de gebruiker erom vraagt (knop bij de opstelling): een opstelling van vóór 0.35.0 houdt haar eigen nummers.
+ * Nieuwe opstellingen en een andere formatie krijgen de vaste nummers vanzelf (`formatiePlekken`).
  */
 export function metVasteNummers(o: Opstelling): Opstelling {
   const perId = new Map(formatiePlekken(o.spelvorm, o.formatie).map((p) => [p.id, p.nummer]));
   if (o.plekken.every((p) => (perId.get(p.id) ?? p.nummer) === p.nummer)) return o;
   return { ...o, plekken: o.plekken.map((p) => ({ ...p, nummer: perId.get(p.id) ?? p.nummer })) };
 }
+
+/** Staan de rugnummers al op de vaste plek voor deze formatie? */
+export const heeftVasteNummers = (o: Opstelling): boolean => metVasteNummers(o) === o;
 
 /** Nieuwe opstelling: de spelers uit je lijst staan eerst op de bank. */
 export function nieuweOpstelling(vorm: Spelvorm, namen: string[] = [], nu = Date.now(), id = maakId()): Opstelling {
@@ -302,7 +308,8 @@ export function opgesteldBord(vorm: Spelvorm, formatieA: string, formatieB = for
 export function bordUitOpstelling(o: Opstelling): Tekening {
   const info = spelvorm(o.spelvorm);
   const tegen = info.formaties.includes(o.formatie) ? o.formatie : info.formaties[0]!;
-  return opgesteldBord(o.spelvorm, o.formatie, tegen, metVasteNummers(o).plekken);
+  // Het bord volgt de opstelling zoals de gebruiker hem ziet (ook de nummers van een oude opstelling).
+  return opgesteldBord(o.spelvorm, o.formatie, tegen, o.plekken);
 }
 
 // ---------- delen via een link ----------

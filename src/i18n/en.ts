@@ -821,6 +821,10 @@ export const EN: Record<string, string> = {
   'Namen worden onthouden voor je volgende opstelling.': 'Names are remembered for your next line-up.',
   'Bijv. Zaterdag tegen VVA': 'E.g. Saturday vs Rovers',
   'Tactiekbord maken': 'Create tactics board',
+  'Deze opstelling heeft nog de oude rugnummers. Nieuwe opstellingen hebben een vast nummer per positie (2 rechtsback, 9 spits …).':
+    'This line-up still has the old shirt numbers. New line-ups have a fixed number per position (2 right back, 9 striker …).',
+  'Rugnummers per positie zetten': 'Use numbers by position',
+  'Rugnummers aangepast': 'Shirt numbers updated',
   'Opstelling verwijderen': 'Delete line-up',
   'Tik op Tekenen om looplijnen, passes en dribbels te tekenen. Elke lijn krijgt een stapnummer; zo speelt het af in 2D en 3D.':
     'Tap Draw to draw runs, passes and dribbles. Each line gets a step number; that is how it plays in 2D and 3D.',

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { bordUitOpstelling, formatieNummers, formatiePlekken, metVasteNummers, nieuweOpstelling, opgesteldBord, SPELVORMEN, verplaatsPlek, wisselFormatie, zetOpPlek, type Opstelling } from '../src/wedstrijd/wedstrijd';
+import { bordUitOpstelling, formatieNummers, formatiePlekken, heeftVasteNummers, metVasteNummers, nieuweOpstelling, opgesteldBord, SPELVORMEN, verplaatsPlek, wisselFormatie, zetOpPlek, type Opstelling } from '../src/wedstrijd/wedstrijd';
 import { SITUATIES } from '../src/wedstrijd/hervattingen';
 
-/** Fase 1 van de volgende stap (0.35.0): vaste rugnummers per positie. */
+/** 0.35.0: vaste rugnummers per positie (opstellingen, borden, voorbeeldtactieken en -hervattingen). */
 
 const alle = SPELVORMEN.flatMap((s) => s.formaties.map((f) => [s.id, f] as const));
 
@@ -61,12 +61,16 @@ describe('rugnummers per positie', () => {
     }
   });
 
-  it('een opgeslagen opstelling krijgt de vaste nummers; posities, namen en id’s blijven', () => {
+  it('een opgeslagen opstelling krijgt de vaste nummers alleen op verzoek; posities, namen en id’s blijven', () => {
     // Zoals vóór 0.35.0 bewaard: nummers tellen door, een positie is versleept en er staan namen op.
     const nieuw = nieuweOpstelling('11v11', ['Testspeler 1', 'Testspeler 2'], 1, 'o1');
     let oud: Opstelling = { ...nieuw, plekken: nieuw.plekken.map((p, i) => ({ ...p, nummer: i + 1 })) };
     oud = verplaatsPlek(zetOpPlek(oud, 'Testspeler 1', 'p10'), 'p10', 0.4, 0.2);
+    // Niet ongevraagd: de oude opstelling houdt haar nummers tot de gebruiker op de knop tikt.
+    expect(heeftVasteNummers(oud)).toBe(false);
+    expect(heeftVasteNummers(nieuw)).toBe(true);
     const na = metVasteNummers(oud);
+    expect(heeftVasteNummers(na)).toBe(true);
     expect(na.plekken.map((p) => p.nummer)).toEqual(formatiePlekken('11v11', '1-4-3-3').map((p) => p.nummer));
     expect(na.plekken.find((p) => p.id === 'p10')).toMatchObject({ x: 0.4, y: 0.2, naam: 'Testspeler 1', nummer: 9 });
     expect(na.wissels).toEqual(['Testspeler 2']);
@@ -86,15 +90,47 @@ describe('rugnummers per positie', () => {
     expect(o('k1')).toMatchObject({ soort: 'keeper', nummer: 1 });
     // Elf tegen elf, elk nummer één keer per team.
     for (const team of ['a', 'b']) expect(new Set(bord.objecten.filter((x) => x.id.startsWith(team) && x.soort === 'speler').map((x) => (x as { nummer?: number }).nummer)).size).toBe(10);
-    // Vanuit een oude opstelling: ook de vaste nummers.
+    // Vanuit een oude opstelling: het bord volgt de nummers van die opstelling (niet ongevraagd omnummeren).
     const oud = { ...nieuweOpstelling('8v8', [], 1, 'o2') };
     oud.plekken = oud.plekken.map((p, i) => ({ ...p, nummer: i + 1 }));
-    expect(bordUitOpstelling(oud).objecten.filter((x) => x.id.startsWith('a')).map((x) => x.id).sort()).toEqual(['a11', 'a2', 'a3', 'a5', 'a6', 'a7', 'a9']);
+    expect(bordUitOpstelling(oud).objecten.filter((x) => x.id.startsWith('a')).map((x) => x.id).sort()).toEqual(['a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8']);
+    // Na de knop (of in een nieuwe opstelling): de vaste nummers.
+    expect(bordUitOpstelling(metVasteNummers(oud)).objecten.filter((x) => x.id.startsWith('a')).map((x) => x.id).sort()).toEqual(['a11', 'a2', 'a3', 'a5', 'a6', 'a7', 'a9']);
   });
 
   it('aftrap (spelhervatting): de spits (9) neemt de aftrap', () => {
     const aftrap = SITUATIES.find((s) => s.id === 'aftrap')!.maak();
     const bal = aftrap.objecten.find((x) => x.soort === 'bal') as { bij?: string };
     expect(bal.bij).toBe('a9');
+  });
+});
+
+describe('rugnummers in de voorbeelden (0.35.0)', () => {
+  it('elke voorbeeldtactiek, voorbeeldhervatting en beginsituatie: nummers op de vaste kant, geen dubbele', async () => {
+    const { TACTIEKEN } = await import('../src/wedstrijd/tactieken');
+    const { HERVATTINGEN } = await import('../src/wedstrijd/hervattingVoorbeelden');
+    const { nummerFouten } = await import('../src/wedstrijd/nummerControle');
+    let borden = 0;
+    for (const lijst of [TACTIEKEN, HERVATTINGEN]) {
+      for (const t of lijst) {
+        for (const v of t.versies) {
+          borden++;
+          expect(nummerFouten(v.maak()), `${t.id} ${v.id}`).toEqual([]);
+        }
+      }
+    }
+    for (const s of SITUATIES) expect(nummerFouten(s.maak()), s.id).toEqual([]);
+    expect(borden).toBeGreaterThanOrEqual(50);
+  });
+
+  it('de controle vindt een 8 die rechts van de 10 staat, maar niet een diepe 6 achter de 8', async () => {
+    const { nummerFouten } = await import('../src/wedstrijd/nummerControle');
+    const bord = (spelers: [number, number, number][]) => ({
+      veld: { type: 'heel' as const },
+      objecten: spelers.map(([nummer, x, y]) => ({ id: `a${nummer}`, soort: 'speler' as const, team: 'A' as const, nummer, x, y })),
+    });
+    expect(nummerFouten(bord([[8, 42, 38], [10, 26, 38], [6, 34, 46]]))).toEqual(['A: 8 staat rechts van 10']);
+    expect(nummerFouten(bord([[8, 26, 38], [10, 42, 38], [6, 22, 54]]))).toEqual([]);
+    expect(nummerFouten(bord([[8, 40, 50], [6, 28, 50]]))).toEqual(['A: 8 staat rechts van 6']);
   });
 });

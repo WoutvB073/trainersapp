@@ -424,3 +424,17 @@
 .tactiek-uitleg li + li {
   margin-top: 4px;
 }
+
+/* Oude opstelling (vóór 0.35.0): op verzoek de vaste rugnummers per positie zetten. */
+.opst-nummers {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rand);
+}
+
+.opst-nummers p {
+  margin: 0;
+}

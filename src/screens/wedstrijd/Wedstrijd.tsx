@@ -22,6 +22,8 @@ import {
   bordUitOpstelling,
   dupliceerBord,
   dupliceerOpstelling,
+  heeftVasteNummers,
+  metVasteNummers,
   nieuwBord,
   nieuweOpstelling,
   opgesteldBord,
@@ -420,6 +422,14 @@ export function OpstellingScherm({ id }: { id: string }) {
               ))}
             </div>
             <p className="klein">{vt('Sleep spelers naar een positie of naar de wissels; sleep een lege positie om hem te verplaatsen. Tikken kan ook.')}</p>
+            {!heeftVasteNummers(o) && (
+              <div className="opst-nummers">
+                <p className="klein">{vt('Deze opstelling heeft nog de oude rugnummers. Nieuwe opstellingen hebben een vast nummer per positie (2 rechtsback, 9 spits …).')}</p>
+                <button className="knop knop-klein" onClick={() => (zet(metVasteNummers(nu())), toon(vt('Rugnummers aangepast')))}>
+                  {vt('Rugnummers per positie zetten')}
+                </button>
+              </div>
+            )}
           </section>
 
           <section className="blok">

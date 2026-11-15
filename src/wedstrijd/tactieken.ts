@@ -144,8 +144,8 @@ function blauwOpbouw433(o: Opzet) {
     .blauw(4, 43, 12)
     .blauw(5, 61, 22)
     .blauw(6, 34, 27)
-    .blauw(8, 22, 33)
-    .blauw(10, 46, 33)
+    .blauw(10, 22, 33)
+    .blauw(8, 46, 33)
     .blauw(7, 4, 46)
     .blauw(11, 61, 45)
     .blauw(9, 35, 55);
@@ -161,8 +161,8 @@ function hoogDruk11(): Tekening {
     .rood(4, 26, 67)
     .rood(5, 11, 64)
     .rood(6, 34, 46)
-    .rood(8, 42, 38)
-    .rood(10, 26, 38)
+    .rood(10, 42, 38)
+    .rood(8, 26, 38)
     .rood(7, 51, 26)
     .rood(9, 35, 21)
     .rood(11, 17, 26)
@@ -172,9 +172,9 @@ function hoogDruk11(): Tekening {
   // 2. De bal gaat naar de back: de buitenspeler zet druk, de middenvelders schuiven door, de verdediging schuift op.
   o.pass('b3', 'b2', 2)
     .loop('a11', [10.4, 25.6], 2, { sprint: true })
-    .loop('a10', [23, 36.4], 2)
+    .loop('a8', [23, 36.4], 2)
     .loop('a6', [32, 40], 2)
-    .loop('a8', [38, 34], 2)
+    .loop('a10', [38, 34], 2)
     .loop('a5', [9.5, 52], 2)
     .loop('a4', [24, 57], 2)
     .loop('a3', [39, 58], 2)
@@ -225,8 +225,8 @@ function middenblok(): Tekening {
     .blauw(2, 6, 26)
     .blauw(5, 62, 26)
     .blauw(6, 34, 30)
-    .blauw(8, 24, 40)
-    .blauw(10, 44, 39)
+    .blauw(10, 24, 40)
+    .blauw(8, 44, 39)
     .blauw(7, 8, 48)
     .blauw(11, 60, 46)
     .blauw(9, 36, 60)
@@ -282,8 +282,8 @@ function laagBlok(): Tekening {
     .blauw(6, 30, 56)
     .blauw(2, 8, 70)
     .blauw(5, 60, 70)
-    .blauw(8, 24, 72)
-    .blauw(10, 44, 72)
+    .blauw(10, 24, 72)
+    .blauw(8, 44, 72)
     .blauw(7, 10, 84)
     .blauw(11, 58, 82)
     .blauw(9, 34, 87.5)
@@ -300,7 +300,7 @@ function laagBlok(): Tekening {
     .rood(9, 36, 61)
     .bal('b6');
   // 1. Bal naar rechts: beide linies schuiven samen, de 10 zet de balbezitter onder druk.
-  o.pass('b6', 'b10', 1).loop('a10', [41, 74.6], 1);
+  o.pass('b6', 'b8', 1).loop('a10', [41, 74.6], 1);
   for (const [id, x, y] of [
     ['a11', 22, 85],
     ['a8', 31.5, 84],
@@ -313,7 +313,7 @@ function laagBlok(): Tekening {
   ] as [string, number, number][])
     o.loop(id, [x, y], 1);
   // 2. Bal op de flank: de buitenspeler zet druk, de back dekt af.
-  o.pass('b10', 'b11', 2).loop('a7', [56, 85.4], 2).loop('a2', [55, 91.4], 2);
+  o.pass('b8', 'b11', 2).loop('a7', [56, 85.4], 2).loop('a2', [55, 91.4], 2);
   // 3–5. De voorzet wordt weggekopt naar de spits die hoog bleef: counter.
   o.pass('b11', 'a3', 3, { hoog: true });
   o.pass('a3', 'a9', 4, { hoog: true });
@@ -329,8 +329,8 @@ function terugspeelbal11(): Tekening {
     .blauw(2, 8, 28)
     .blauw(5, 60, 28)
     .blauw(6, 34, 30)
-    .blauw(8, 24, 40)
-    .blauw(10, 44, 40)
+    .blauw(10, 24, 40)
+    .blauw(8, 44, 40)
     .blauw(7, 8, 50)
     .blauw(11, 60, 50)
     .blauw(9, 36, 58)
@@ -338,8 +338,8 @@ function terugspeelbal11(): Tekening {
     .rood(9, 33, 36)
     .rood(7, 50, 38)
     .rood(11, 18, 38)
-    .rood(10, 27, 46)
-    .rood(8, 41, 46)
+    .rood(8, 27, 46)
+    .rood(10, 41, 46)
     .rood(6, 34, 54)
     .rood(5, 12, 62)
     .rood(4, 27, 66)
@@ -351,8 +351,8 @@ function terugspeelbal11(): Tekening {
     .loop('a9', [33.5, 8], 1, { via: [[28.6, 24]], sprint: true })
     .loop('a11', [26.6, 19.4], 1, { sprint: true })
     .loop('a7', [42, 19.6], 1, { sprint: true })
-    .loop('a10', [32, 33.6], 1, { sprint: true })
-    .loop('a8', [41, 38], 1)
+    .loop('a8', [32, 33.6], 1, { sprint: true })
+    .loop('a10', [41, 38], 1)
     .loop('a5', [10, 32], 1, { sprint: true })
     .loop('a2', [58, 32], 1, { sprint: true })
     .loop('a6', [30, 47], 1)
@@ -360,7 +360,7 @@ function terugspeelbal11(): Tekening {
     .loop('a3', [40, 52], 1);
   // 2. De keeper moet lang; de centrale verdediger wint de kopbal.
   o.pass('k2', 'a3', 2, { hoog: true });
-  o.pass('a3', 'a8', 3);
+  o.pass('a3', 'a10', 3);
   return o.klaar();
 }
 
@@ -404,8 +404,8 @@ function fuik(): Tekening {
     .blauw(5, 60, 28)
     .blauw(6, 34, 32)
     .blauw(2, 8, 34)
-    .blauw(8, 24, 38)
-    .blauw(10, 46, 42)
+    .blauw(10, 24, 38)
+    .blauw(8, 46, 42)
     .blauw(7, 6, 52)
     .blauw(9, 34, 56)
     .blauw(11, 60, 52)
@@ -413,9 +413,9 @@ function fuik(): Tekening {
     .rood(9, 31, 25)
     .rood(11, 15, 27)
     .rood(7, 50, 32)
-    .rood(10, 26, 47)
+    .rood(8, 26, 47)
     .rood(6, 34, 50)
-    .rood(8, 42, 46)
+    .rood(10, 42, 46)
     .rood(5, 12, 61)
     .rood(4, 27, 65)
     .rood(3, 41, 65)
@@ -426,16 +426,16 @@ function fuik(): Tekening {
   // 2. De fuik: van achteren (buitenspeler), van voren (back) en van binnen (middenvelder); de rest dekt de korte passes.
   o.loop('a11', [8.8, 30.6], 2, { sprint: true })
     .loop('a5', [8.6, 38.4], 2, { sprint: true })
-    .loop('a10', [11.6, 35.6], 2, { sprint: true })
+    .loop('a8', [11.6, 35.6], 2, { sprint: true })
     .loop('a9', [20, 27], 2)
     .loop('a6', [25.4, 44.6], 2)
-    .loop('a8', [36, 40], 2)
+    .loop('a10', [36, 40], 2)
     .loop('a4', [22, 56], 2)
     .loop('a3', [38, 60.4], 2)
     .loop('a2', [48, 58], 2);
   // 3. Ingesloten: de pass langs de lijn wordt onderschept.
   o.pass('b2', 'a5', 3);
-  o.pass('a5', 'a10', 4);
+  o.pass('a5', 'a8', 4);
   return o.klaar();
 }
 
@@ -447,8 +447,8 @@ function tegenpressing11(): Tekening {
     .blauw(4, 41, 11)
     .blauw(5, 56, 14)
     .blauw(6, 33, 24)
-    .blauw(8, 22, 25)
-    .blauw(10, 46, 25)
+    .blauw(10, 22, 25)
+    .blauw(8, 46, 25)
     .blauw(7, 8, 32)
     .blauw(11, 60, 32)
     .blauw(9, 36, 46)
@@ -456,20 +456,20 @@ function tegenpressing11(): Tekening {
     .rood(9, 34, 20)
     .rood(11, 14, 22)
     .rood(7, 54, 22)
-    .rood(10, 26, 30)
-    .rood(8, 42, 30)
+    .rood(8, 26, 30)
+    .rood(10, 42, 30)
     .rood(6, 34, 40)
     .rood(5, 10, 40)
     .rood(2, 58, 40)
     .rood(4, 26, 52)
     .rood(3, 42, 52)
-    .bal('a10');
+    .bal('a8');
   // 1. Balverlies: de pass op de spits wordt onderschept.
-  o.loop('b6', [30.4, 24.7], 1).pass('a10', 'b6', 1);
+  o.loop('b6', [30.4, 24.7], 1).pass('a8', 'b6', 1);
   // 2. Meteen vijf man om de bal; de rest dekt de diepe passes.
-  o.loop('a10', [27.6, 25.6], 2, { sprint: true })
+  o.loop('a8', [27.6, 25.6], 2, { sprint: true })
     .loop('a9', [32.4, 22.2], 2, { sprint: true })
-    .loop('a8', [33.4, 27.6], 2, { sprint: true })
+    .loop('a10', [33.4, 27.6], 2, { sprint: true })
     .loop('a11', [26.6, 21.4], 2, { sprint: true })
     .loop('a6', [31, 30.4], 2, { sprint: true })
     .loop('a3', [38.4, 49], 2)
@@ -477,8 +477,8 @@ function tegenpressing11(): Tekening {
     .loop('a2', [56, 34.6], 2)
     .loop('a7', [48.6, 24], 2);
   // 3. Heroverd binnen een paar seconden, meteen door naar de spits.
-  o.pass('b6', 'a10', 3);
-  o.pass('a10', 'a9', 4);
+  o.pass('b6', 'a8', 3);
+  o.pass('a8', 'a9', 4);
   return o.klaar();
 }
 
@@ -524,8 +524,8 @@ function opbouwKeeper11(): Tekening {
     .blauw(2, 8, 45)
     .blauw(5, 60, 45)
     .blauw(6, 34, 60)
-    .blauw(8, 22, 62)
-    .blauw(10, 46, 62)
+    .blauw(10, 22, 62)
+    .blauw(8, 46, 62)
     .blauw(7, 14, 76)
     .blauw(11, 54, 76)
     .blauw(9, 34, 74)
@@ -535,8 +535,8 @@ function opbouwKeeper11(): Tekening {
     .rood(5, 14, 84)
     .rood(2, 54, 84)
     .rood(6, 34, 79)
-    .rood(10, 26, 68)
-    .rood(8, 42, 68)
+    .rood(8, 26, 68)
+    .rood(10, 42, 68)
     .rood(11, 8, 55)
     .rood(9, 34, 52)
     .rood(7, 60, 55)
@@ -548,7 +548,7 @@ function opbouwKeeper11(): Tekening {
   // 3–5. Naar de 6, die opendraait en de middenvelder vindt.
   o.pass('a4', 'a6', 3).loop('b9', [33, 79.4], 3);
   o.dribbel('a6', [39, 79], 4);
-  o.pass('a6', 'a8', 5);
+  o.pass('a6', 'a10', 5);
   return o.klaar();
 }
 
@@ -587,19 +587,19 @@ function opbouwDrie(): Tekening {
     .blauw(4, 41, 44)
     .blauw(5, 60, 42)
     .blauw(7, 12, 66)
-    .blauw(8, 26, 60)
+    .blauw(10, 26, 60)
     .blauw(6, 40, 60)
     .blauw(11, 56, 66)
     .blauw(9, 28, 76)
-    .blauw(10, 40, 76)
+    .blauw(8, 40, 76)
     .rood(1, 34, 101)
     .rood(4, 27, 90)
     .rood(3, 41, 90)
     .rood(6, 34, 80.5)
     .rood(5, 10, 82)
     .rood(2, 58, 82)
-    .rood(10, 26, 68)
-    .rood(8, 42, 68)
+    .rood(8, 26, 68)
+    .rood(10, 42, 68)
     .rood(11, 8, 55)
     .rood(9, 34, 52)
     .rood(7, 60, 55)
@@ -611,12 +611,12 @@ function opbouwDrie(): Tekening {
     .loop('a5', [6, 70], 1)
     .loop('a2', [62, 70], 1)
     .loop('b9', [27, 82], 1)
-    .loop('b10', [41, 82], 1);
+    .loop('b8', [41, 82], 1);
   // 2–5. Drie tegen twee: de vrije centrale verdediger dribbelt in en speelt de middenvelder aan.
   o.pass('k1', 'a6', 2);
-  o.pass('a6', 'a3', 3).loop('b10', [45, 84.4], 3);
+  o.pass('a6', 'a3', 3).loop('b8', [45, 84.4], 3);
   o.dribbel('a3', [50, 78], 4);
-  o.pass('a3', 'a8', 5);
+  o.pass('a3', 'a10', 5);
   return o.klaar();
 }
 
@@ -628,8 +628,8 @@ function opbouwDerdeMan(): Tekening {
     .blauw(4, 42, 38)
     .blauw(5, 60, 40)
     .blauw(7, 12, 60)
-    .blauw(8, 28, 56)
-    .blauw(6, 40, 56)
+    .blauw(6, 28, 56)
+    .blauw(8, 40, 56)
     .blauw(11, 56, 62)
     .blauw(10, 28, 70)
     .blauw(9, 38, 72)
@@ -639,18 +639,18 @@ function opbouwDerdeMan(): Tekening {
     .rood(2, 60, 76)
     .rood(5, 8, 76)
     .rood(6, 34, 76)
-    .rood(8, 46, 64)
-    .rood(10, 24, 62)
+    .rood(10, 46, 64)
+    .rood(8, 24, 62)
     .rood(7, 62, 52)
     .rood(9, 34, 44)
     .rood(11, 6, 52)
     .bal('a3');
   // 1. Centrale verdediger naar de back; de middenvelder komt kort.
-  o.pass('a3', 'a2', 1).loop('a8', [49, 67], 1).loop('b11', [58, 70.6], 1);
+  o.pass('a3', 'a2', 1).loop('a10', [49, 67], 1).loop('b11', [58, 70.6], 1);
   // 2. De back kaatst meteen op de middenvelder.
-  o.pass('a2', 'a8', 2);
+  o.pass('a2', 'a10', 2);
   // 3. De middenvelder vindt de buitenspeler in de diepte (derde man).
-  o.loop('a7', [61, 30], 3, { via: [[64, 40]], sprint: true }).pass('a8', 'a7', 3);
+  o.loop('a7', [61, 30], 3, { via: [[64, 40]], sprint: true }).pass('a10', 'a7', 3);
   o.dribbel('a7', [56, 18], 4);
   return o.klaar();
 }
@@ -663,15 +663,15 @@ function langeBal(): Tekening {
     .blauw(4, 40.5, 43.5)
     .blauw(5, 56, 42)
     .blauw(6, 34, 57.5)
-    .blauw(8, 24, 62)
-    .blauw(10, 46, 62)
+    .blauw(10, 24, 62)
+    .blauw(8, 46, 62)
     .blauw(7, 12, 66)
     .blauw(11, 56, 66)
     .blauw(9, 34, 72)
     .rood(1, 34, 100)
     .rood(9, 34, 48)
-    .rood(10, 27, 59)
-    .rood(8, 41, 59)
+    .rood(8, 27, 59)
+    .rood(10, 41, 59)
     .rood(6, 34, 66)
     .rood(11, 10, 52)
     .rood(7, 58, 52)
@@ -681,11 +681,11 @@ function langeBal(): Tekening {
     .rood(2, 60, 78)
     .bal('k1');
   // 1. Lange bal op de spits; de middenvelders sluiten aan voor de tweede bal.
-  o.pass('k1', 'a9', 1, { hoog: true }).loop('a10', [27.4, 51.6], 1).loop('a8', [40.6, 51.6], 1);
+  o.pass('k1', 'a9', 1, { hoog: true }).loop('a8', [27.4, 51.6], 1).loop('a10', [40.6, 51.6], 1);
   // 2. De spits kopt in één keer terug op de aansluitende middenvelder.
-  o.pass('a9', 'a10', 2);
+  o.pass('a9', 'a8', 2);
   // 3. De spits draait in de diepte en krijgt de bal terug.
-  o.loop('a9', [34, 34], 3, { via: [[33, 41.5]], sprint: true }).pass('a10', 'a9', 3);
+  o.loop('a9', [34, 34], 3, { via: [[33, 41.5]], sprint: true }).pass('a8', 'a9', 3);
   return o.klaar();
 }
 
@@ -703,11 +703,11 @@ function opbouw8(formatie: '1-3-2-2' | '1-3-3-1'): Tekening {
     .rood(3, 21.25, 55)
     .rood(2, 36.5, 52);
   if (formatie === '1-3-2-2') {
-    o.blauw(9, 21.25, 44).rood(6, 15, 42).rood(8, 27.5, 42).rood(9, 14, 26).rood(10, 28.5, 26).bal('k1');
+    o.blauw(9, 21.25, 44).rood(8, 15, 42).rood(6, 27.5, 42).rood(9, 14, 26).rood(10, 28.5, 26).bal('k1');
     // Keeper naar de buitenste verdediger, door naar de middenvelder, die de spits vindt; de tweede spits gaat diep.
     o.pass('k1', 'a5', 1).loop('b7', [7, 46.6], 1);
-    o.pass('a5', 'a6', 2).loop('b9', [18.6, 40.4], 2);
-    o.loop('a9', [13, 30.4], 3).pass('a6', 'a9', 3).loop('a10', [30, 15], 3, { sprint: true });
+    o.pass('a5', 'a8', 2).loop('b9', [18.6, 40.4], 2);
+    o.loop('a9', [13, 30.4], 3).pass('a8', 'a9', 3).loop('a10', [30, 15], 3, { sprint: true });
     o.pass('a9', 'a10', 4);
   } else {
     o.blauw(9, 24, 48).rood(11, 6, 38).rood(6, 21.25, 43.5).rood(7, 36.5, 38).rood(9, 21.25, 24).bal('k1');
@@ -730,18 +730,18 @@ function overlap11(): Tekening {
     .blauw(3, 30, 16)
     .blauw(2, 10, 20)
     .blauw(11, 52, 40)
-    .blauw(10, 44, 28)
+    .blauw(8, 44, 28)
     .blauw(6, 34, 30)
-    .blauw(8, 24, 28)
+    .blauw(10, 24, 28)
     .blauw(7, 12, 36)
     .blauw(9, 38, 54)
     .rood(1, 34, 100)
     .rood(7, 58, 32)
     .rood(2, 60, 48)
-    .rood(8, 44, 39)
+    .rood(10, 44, 39)
     .rood(9, 34, 20)
     .rood(11, 12, 25)
-    .rood(10, 28, 34)
+    .rood(8, 28, 34)
     .rood(6, 34, 46)
     .rood(3, 42, 62)
     .rood(4, 26, 62)
@@ -754,7 +754,7 @@ function overlap11(): Tekening {
     .pass('a7', 'a2', 2)
     .loop('a9', [38, 9], 2)
     .loop('a11', [27, 10], 2)
-    .loop('a10', [33, 14.6], 2);
+    .loop('a8', [33, 14.6], 2);
   // 3–4. Voorzet op de eerste paal, kopbal.
   o.pass('a2', 'a9', 3, { hoog: true });
   o.pass('a9', [31.5, -0.3], 4, { goal: true });
@@ -798,27 +798,27 @@ function underlap(): Tekening {
     .blauw(3, 30, 16)
     .blauw(2, 10, 20)
     .blauw(11, 56, 36)
-    .blauw(10, 40, 30)
+    .blauw(8, 40, 30)
     .blauw(6, 32, 28)
-    .blauw(8, 22, 30)
+    .blauw(10, 22, 30)
     .blauw(7, 12, 36)
     .blauw(9, 38, 54)
     .rood(1, 34, 100)
     .rood(7, 63, 30)
-    .rood(8, 46, 40)
+    .rood(10, 46, 40)
     .rood(2, 58, 50)
     .rood(9, 34, 18)
     .rood(11, 10, 24)
-    .rood(10, 28, 36)
+    .rood(8, 28, 36)
     .rood(6, 34, 48)
     .rood(3, 42, 62)
     .rood(4, 26, 62)
     .rood(5, 10, 50)
     .bal('a7');
   // 1. De buitenspeler blijft breed; de middenvelder loopt binnendoor, tussen back en centrale verdediger, en krijgt de bal.
-  o.loop('a8', [53, 16], 1, { via: [[52, 30]], sprint: true }).pass('a7', 'a8', 1).loop('a9', [40, 8], 1);
+  o.loop('a10', [53, 16], 1, { via: [[52, 30]], sprint: true }).pass('a7', 'a10', 1).loop('a9', [40, 8], 1);
   // 2–3. Lage voorzet op de eerste paal, afronden.
-  o.pass('a8', 'a9', 2);
+  o.pass('a10', 'a9', 2);
   o.pass('a9', [37, -0.3], 3, { goal: true });
   return o.klaar();
 }
@@ -831,19 +831,19 @@ function wisselKant(): Tekening {
     .blauw(4, 34, 12)
     .blauw(5, 46, 14)
     .blauw(7, 14, 30)
-    .blauw(8, 22, 24)
+    .blauw(10, 22, 24)
     .blauw(6, 30, 30)
-    .blauw(10, 38, 24)
+    .blauw(8, 38, 24)
     .blauw(11, 46, 30)
     .blauw(9, 28, 50)
     .rood(1, 34, 100)
     .rood(5, 6, 40)
-    .rood(10, 20, 36)
+    .rood(8, 20, 36)
     .rood(11, 8, 22)
     .rood(6, 32, 46)
     .rood(4, 24, 60)
     .rood(3, 44, 60)
-    .rood(8, 40, 34)
+    .rood(10, 40, 34)
     .rood(2, 60, 46)
     .rood(7, 62, 24)
     .rood(9, 30, 18)
@@ -865,27 +865,27 @@ function diepte11(): Tekening {
     .blauw(4, 40, 21)
     .blauw(5, 56, 20)
     .blauw(6, 34, 34)
-    .blauw(8, 22, 36)
-    .blauw(10, 46, 32)
+    .blauw(10, 22, 36)
+    .blauw(8, 46, 32)
     .blauw(7, 12, 42)
     .blauw(11, 58, 42)
     .blauw(9, 36, 58)
     .rood(1, 34, 100)
-    .rood(10, 32, 42)
+    .rood(8, 32, 42)
     .rood(9, 38, 24.5)
     .rood(11, 10, 26)
     .rood(7, 60, 26)
-    .rood(8, 46, 40)
+    .rood(10, 46, 40)
     .rood(6, 30, 54)
     .rood(4, 26, 66)
     .rood(3, 42, 66)
     .rood(5, 10, 56)
     .rood(2, 58, 56)
-    .bal('a10');
+    .bal('a8');
   // 1. De middenvelder neemt de bal mee en heft zijn hoofd op.
-  o.dribbel('a10', [32, 38.6], 1);
+  o.dribbel('a8', [32, 38.6], 1);
   // 2. Op dat moment loopt de spits schuin in de rug van de verdediger: steekpass.
-  o.loop('a9', [31, 11], 2, { sprint: true }).pass('a10', 'a9', 2);
+  o.loop('a9', [31, 11], 2, { sprint: true }).pass('a8', 'a9', 2);
   o.pass('a9', [37, -0.3], 3, { goal: true });
   return o.klaar();
 }
@@ -918,11 +918,11 @@ function diepte8(): Tekening {
 function counter11(): Tekening {
   const o = new Opzet('11v11')
     .blauw(1, 34, 3)
-    .blauw(10, 42, 64)
+    .blauw(8, 42, 64)
     .blauw(9, 34, 76)
     .blauw(7, 12, 70)
     .blauw(11, 58, 72)
-    .blauw(8, 24, 58)
+    .blauw(10, 24, 58)
     .blauw(6, 34, 52)
     .blauw(2, 10, 44)
     .blauw(5, 58, 46)
@@ -930,8 +930,8 @@ function counter11(): Tekening {
     .blauw(4, 42, 38)
     .rood(1, 34, 100)
     .rood(6, 37, 70)
-    .rood(10, 26, 64)
-    .rood(8, 46, 72)
+    .rood(8, 26, 64)
+    .rood(10, 46, 72)
     .rood(9, 34, 58)
     .rood(11, 12, 62)
     .rood(7, 56, 60)
@@ -939,17 +939,17 @@ function counter11(): Tekening {
     .rood(3, 40, 84)
     .rood(5, 12, 82)
     .rood(2, 56, 82)
-    .bal('b10');
+    .bal('b8');
   // 1. Balverovering op eigen helft.
-  o.loop('a6', [38.6, 69.2], 1).pass('b10', 'a6', 1);
+  o.loop('a6', [38.6, 69.2], 1).pass('b8', 'a6', 1);
   // 2. Meteen vooruit: de spits diep, de buitenspelers breed.
-  o.pass('a6', 'a10', 2)
+  o.pass('a6', 'a8', 2)
     .loop('a9', [38, 36], 2, { via: [[40, 52]], sprint: true })
     .loop('a7', [62, 40], 2, { sprint: true })
     .loop('a11', [14, 42], 2, { sprint: true });
   // 3–6. De middenvelder dribbelt op, steekpass op de spits, afronden.
-  o.dribbel('a10', [30, 48], 3).loop('a9', [36, 25], 3, { sprint: true });
-  o.pass('a10', 'a9', 4);
+  o.dribbel('a8', [30, 48], 3).loop('a9', [36, 25], 3, { sprint: true });
+  o.pass('a8', 'a9', 4);
   o.dribbel('a9', [36, 15], 5);
   o.pass('a9', [37.5, -0.3], 6, { goal: true });
   return o.klaar();
@@ -992,17 +992,17 @@ function terugleggen(): Tekening {
     .blauw(3, 28, 14)
     .blauw(2, 12, 16)
     .blauw(11, 54, 38)
-    .blauw(10, 40, 28)
+    .blauw(8, 40, 28)
     .blauw(6, 26, 24)
-    .blauw(8, 20, 32)
+    .blauw(10, 20, 32)
     .blauw(7, 10, 38)
     .blauw(9, 38, 54)
     .rood(1, 34, 100)
     .rood(7, 60, 30)
     .rood(9, 36, 20)
-    .rood(10, 30, 33)
+    .rood(8, 30, 33)
     .rood(11, 12, 24)
-    .rood(8, 46, 36)
+    .rood(10, 46, 36)
     .rood(6, 34, 46)
     .rood(2, 60, 50)
     .rood(3, 42, 62)
@@ -1012,10 +1012,10 @@ function terugleggen(): Tekening {
   // 1. De buitenspeler gaat tot de achterlijn.
   o.dribbel('a7', [62, 4], 1).loop('b5', [60, 8.4], 1);
   // 2. De spits trekt naar de eerste paal en neemt zijn man mee; de inloper komt rond de penaltystip.
-  o.loop('a9', [41, 6], 2, { sprint: true }).loop('b4', [44, 7.2], 2).loop('a10', [33, 12.4], 2, { sprint: true });
+  o.loop('a9', [41, 6], 2, { sprint: true }).loop('b4', [44, 7.2], 2).loop('a8', [33, 12.4], 2, { sprint: true });
   // 3–4. Terugleggen en in één keer afronden.
-  o.pass('a7', 'a10', 3);
-  o.pass('a10', [30.8, -0.3], 4, { goal: true });
+  o.pass('a7', 'a8', 3);
+  o.pass('a8', [30.8, -0.3], 4, { goal: true });
   return o.klaar();
 }
 
