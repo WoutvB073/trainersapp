@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "build:voorbeeld": "node tools/voorbeeld.mjs build",
+    "voorbeeld:online": "node tools/voorbeeld.mjs zet",
     "test": "vitest run",
     "emulator": "node tools/firebase.mjs emulators:start --project demo-toptraining --only auth,firestore",
     "regels:live": "node tools/firebase.mjs deploy --project live --only firestore:rules",

@@ -21,3 +21,6 @@ tools/e2e/inst-tabel.json
 
 # Meting van tools/e2e/realistisch.mjs
 tools/e2e/realistisch-meting.json
+
+# Voorbeeldversie (tools/voorbeeld.mjs)
+voorbeeld/

@@ -7,13 +7,22 @@ import { VitePWA } from 'vite-plugin-pwa';
 // Andere repositorynaam? Alleen deze regel aanpassen.
 const BASE = '/trainersapp/';
 
+// Voorbeeldversie (fase 1 van de volgende stap, zie tools/voorbeeld.mjs en src/engine/voorbeeld.ts): zelfde pad, maar een eigen map,
+// een eigen naam (zodat hij naast de echte app op je telefoon kan staan) en niet vindbaar voor zoekmachines.
+const VOORBEELD = process.env.VITE_VOORBEELD === '1';
+const voorbeeldHtml = () => ({
+  name: 'voorbeeld-html',
+  transformIndexHtml: (html: string) => html.replace('<title>TopTraining</title>', '<title>TopTraining (voorbeeld)</title><meta name="robots" content="noindex, nofollow" />'),
+});
+
 export default defineConfig({
   base: BASE,
   // Three.js (3D) staat in een eigen bestand dat pas op de detailpagina laadt; ± 560 kB is daar prima.
   // De hoofdbundel bevat alle oefeningen (JSON) en is daardoor groot (± 185 kB gzip); alles staat in de offline-cache.
-  build: { chunkSizeWarningLimit: 900 },
+  build: { chunkSizeWarningLimit: 900, ...(VOORBEELD ? { outDir: 'voorbeeld/trainersapp', emptyOutDir: true } : {}) },
   plugins: [
     react(),
+    ...(VOORBEELD ? [voorbeeldHtml()] : []),
     VitePWA({
       // Updates niet zomaar toepassen: de app toont een melding "Bijwerken".
       registerType: 'prompt',
@@ -22,8 +31,8 @@ export default defineConfig({
       manifest: {
         id: BASE,
         // Naam TopTraining; id, start_url en scope blijven /trainersapp/ (zelfde app voor wie hem al heeft).
-        name: 'TopTraining',
-        short_name: 'TopTraining',
+        name: VOORBEELD ? 'TopTraining voorbeeld' : 'TopTraining',
+        short_name: VOORBEELD ? 'TT voorbeeld' : 'TopTraining',
         description: 'Voetbaloefeningen voor spelers en keepers, met bewegende uitleg.',
         lang: 'nl',
         dir: 'ltr',
