@@ -52,6 +52,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 38. Circuittraining: per dag een eigen opzet, sjabloon Mini Talents + loopcoördinatie weg (0.34.3) | ✅ online – **wacht op test** |
 | 39. Circuittraining: sessies (datum + begintijd, eigen aantallen, leeftijd, groep), rooster per sessie, materiaal voor de hele avond (0.34.4) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
+| De volgende stap, fase 1 (onderzoek, proef en plan) | 🔄 **niet live**, wacht op akkoord. Branch `volgende-stap`, voorbeeldversie op een eigen testlink. Alles staat in **PLAN-VOLGENDE-STAP.md** (bevindingen, rugnummertabel, ontwerprichtingen, animaties, uitrol van fase 2, keuzes) en **VOORSTEL-OEFENINGEN.md** (157 oefeningen om aan te vinken). |
 
 ## Werkwijze
 - Bouwen in **kleine stappen**; na elke stap test de gebruiker op de telefoon en wachten we op akkoord.
@@ -1266,8 +1267,23 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Schermen**: bij de circuittraining een lijst Sessies (datum, begintijd, weghalen) met Sessie toevoegen; daaronder de sessiekeuze en de instellingen van die sessie (leeftijd, kinderen, groepjes, groep, trainers). De keuze bovenaan plan, rondetimer en link is een sessiekeuze met "aangepast" bij een eigen opzet.
 - **Tests**: `tests/versie-0344.test.ts`, browsertest `tools/e2e/versie-0344.mjs` (blad `blad-0344.png`).
 
+## Besluiten – de volgende stap, fase 1 (branch `volgende-stap`, niet live)
+- **Niets live**: `main` en de echte app zijn niet aangeraakt; het versienummer is op de branch nog 0.34.4. Fase 2 pas na akkoord. Het volledige verslag staat in PLAN-VOLGENDE-STAP.md.
+- **Voorbeeldversie**: `node tools/voorbeeld.mjs build | zet [dagen] | bekijk [poort] | weg` bouwt met `VITE_VOORBEELD=1` in `voorbeeld/trainersapp` en zet die op het Firebase Hosting-voorbeeldkanaal `volgende-stap` (eigen adres, verloopt na hoogstens 30 dagen). In die build is `FIREBASE_CONFIG` leeg: geen inloggen, synchroniseren, teams of korte links, dus Firestore wordt niet geraakt. Het bouwscript weigert online te zetten als het project-id toch in de build zit. Eigen naam (TopTraining voorbeeld), `noindex`. `isVoorbeeld()` (`src/engine/voorbeeld.ts`) is ook waar met localStorage `trainersapp.voorbeeld=1` (browsertests).
+- **Opstelling slepen**: `OpstellingVeld.tsx` rekent met één functie (`bepaal`) uit waar de speler landt, voor het tekenen en voor het loslaten; een kopie (`.opst-geest`) toont de landingsplek met een regel uitleg. Lege posities heten `onbezet` (de algemene klasse `leeg` zette ze 24 px te laag).
+- **Rugnummers**: `NUMMERS` en `formatieNummers` in `src/wedstrijd/wedstrijd.ts`; `metVasteNummers` zet ze bij het lezen op bestaande opstellingen (niets wordt omgeschreven); `opgesteldBord` spiegelt de tegenstander. De voorbeeldtactieken en spelhervattingen volgen in fase 2.
+- **Ontwerprichtingen**: `src/styles/ontwerp.css` is één laag die alleen werkt met `data-ontwerp="a|b|c"` op `<html>` (`src/engine/ontwerp.ts`, wisselknop `src/components/Voorbeeld.tsx`); buiten de voorbeeldversie is het altijd het huidige ontwerp. Eigen lijniconen in `CategorieIcoon.tsx` en `TegelIcoon`; het installatiescherm heeft daar stappen met nagebouwde knoppen (`StapBeeld`).
+- **Oefeningen**: voorstel in VOORSTEL-OEFENINGEN.md; vijf uitgewerkt in `tools/nieuw/volgende-stap-a.cjs` (met `draai` en `schaal` om een tekening om te rekenen). Hulp bij het bouwen: `tools/nieuw/controleer.mjs` (tijdlijn en kleinste afstand), `controleer-bal.mjs` (tijden van bal en lopers), `tools/e2e/moment.mjs` (3D op zelf gekozen tijdstippen).
+- **Proef Realistisch**: `Opties3D.realistisch` in `render3d.ts` (zon met schaduwkaart, `grasStructuur`, `luchtTextuur`); schakelaar in `AnimatieSpeler.tsx`, instelling `src/engine/realistisch.ts` (alleen in de voorbeeldversie, uit bij eenvoudige poppetjes). De bal houdt zijn schaduwvlek (hoogte aflezen). Meting: `tools/e2e/realistisch.mjs`.
+- **Tests**: `tests/volgende-stap.test.ts`, `tests/volgende-stap-oefeningen.test.ts`; browsertests `tools/e2e/opstelling.mjs`, `ontwerp.mjs`, `realistisch.mjs`, `voorbeeld.mjs`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- Volgende stap, fase 1 – De voorbeeldversie schrijft nergens naar toe (online staat uit) in plaats van naar een aparte testverzameling: zo kan er per definitie niets misgaan met echte gegevens.
+- Volgende stap, fase 1 – De iconen in de ontwerprichtingen zijn zelf getekend (geen licentie van een ander nodig); het installatiescherm gebruikt nagebouwde knoppen in plaats van schermfoto's (die verouderen en zijn van anderen).
+- Volgende stap, fase 1 – Rugnummers bij minder spelers: drie verdedigers 5, 3, 2; twee verdedigers 4 en 3; één verdediger 3; één middenvelder 6; twee voorste spelers 11 en 7 (of 10 en 9 als 7 en 11 al op het middenveld staan).
+- Volgende stap, fase 1 – Voor de proef Realistisch is niets van anderen gedownload; een proef met een realistisch figuur en echte loopbewegingen (CC0) wacht op toestemming.
+- Volgende stap, fase 1 – De test van 0.27.0 die precies zes oefeningen in Verdedigen en omschakelen telde, telt nu "minstens zes".
 - 0.34.0 – Trainerslink: één link met bovenaan de dag, niet een link per dag. Dan kan één bericht in de groepsapp voor beide dagen, en kiest elke trainer zelf.
 - 0.34.0 – De dagkeuze verschijnt pas bij twee datums. Met één datum werkt alles zoals vóór 0.34.0.
 - 0.34.0 – Trainers per dag pas je aan in het invulveld bij de circuittraining, met de dagkeuze erboven. De eerste aanpassing voor een dag kopieert de algemene trainers naar alle dagen, zodat de andere dag niet verandert.

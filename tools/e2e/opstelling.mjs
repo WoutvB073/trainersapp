@@ -169,8 +169,10 @@ for (const [naam, vp, aanraak] of [
   await toon(P('p11'), '[data-naam="Wissel 1"]');
   van = await midden('[data-naam="Wissel 1"]');
   const leeg = await cirkel('p11');
+  // Het rugnummer van die positie (vast per positie, dus niet het volgnummer van de plek).
+  const nrLeeg = (await page.$eval('[data-plek="p11"] .opst-nr', (e) => e.textContent.trim())) || '?';
   g = await sleep(van, [leeg[0] + 28, leeg[1] - 42], naam.startsWith('telefoon') ? ['wissel', 'wissel naar het veld: dichtstbijzijnde positie licht op'] : null);
-  controle(g.doelPlek === 'p11' && /11/.test(g.uitleg) && afstand(g.geest, leeg) <= 2, `${naam} F: wissel klikt niet zichtbaar vast: ${JSON.stringify(g)}`);
+  controle(g.doelPlek === 'p11' && g.uitleg.includes(nrLeeg) && afstand(g.geest, leeg) <= 2, `${naam} F: wissel klikt niet zichtbaar vast: ${JSON.stringify(g)}`);
   controle((await wie('p11')) === 'Wissel 1' && (await bank()) === 'Wissel 2', `${naam} F: wissel niet op p11: ${await wie('p11')} / bank ${await bank()}`);
 
   // G. Wissel op een bezette positie: die speler gaat naar de bank.
