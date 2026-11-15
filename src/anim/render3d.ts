@@ -26,6 +26,7 @@ import {
   Mesh,
   MeshBasicMaterial,
   MeshLambertMaterial,
+  PCFSoftShadowMap,
   Object3D,
   PerspectiveCamera,
   PlaneGeometry,
@@ -88,9 +89,15 @@ export interface Opties3D {
   looplijnen?: boolean;
   /** Eenvoudige poppetjes: minder detail, lagere resolutie (tragere telefoons). */
   eenvoudig?: boolean;
+  /**
+   * Proef (fase 1 van de volgende stap): echt zonlicht met schaduwen, gras met structuur en een luchtverloop, op de bestaande poppetjes.
+   * Met eenvoudige poppetjes blijft dit uit (die zijn juist voor tragere telefoons).
+   */
+  realistisch?: boolean;
 }
 
 const LUCHT = '#cfe6f2';
+const LUCHT_HORIZON = '#e3f0f5';
 const SPOOR_Y = 0.03;
 const SPOOR_BREED = 0.18;
 
@@ -140,6 +147,49 @@ function nummerTextuur(tekst: string, kleur: string | null): CanvasTexture {
     t.needsUpdate = true;
   });
   return t;
+}
+
+/** Vaste reeks toevalsgetallen (zelfde gras bij elke keer openen). */
+function reeks(zaad: number): () => number {
+  let s = zaad >>> 0;
+  return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
+}
+
+/** Structuur in het gras (proef Realistisch): fijne korrel en grotere, zachte vlekken, zodat de mat niet egaal is. */
+function grasStructuur(ctx: CanvasRenderingContext2D): void {
+  const { width: w, height: h } = ctx.canvas;
+  const korrel = document.createElement('canvas');
+  korrel.width = korrel.height = 128;
+  const k = korrel.getContext('2d')!;
+  const beeld = k.createImageData(128, 128);
+  const toeval = reeks(7);
+  for (let i = 0; i < beeld.data.length; i += 4) {
+    const v = toeval() < 0.5 ? 0 : 255;
+    beeld.data[i] = beeld.data[i + 1] = beeld.data[i + 2] = v;
+    beeld.data[i + 3] = Math.floor(toeval() * 26);
+  }
+  k.putImageData(beeld, 0, 0);
+  ctx.save();
+  ctx.fillStyle = ctx.createPattern(korrel, 'repeat')!;
+  ctx.fillRect(0, 0, w, h);
+  // Dezelfde korrel veel groter en zachter: lichte en donkere plekken in de mat.
+  ctx.globalAlpha = 0.42;
+  ctx.imageSmoothingEnabled = true;
+  ctx.scale(11, 11);
+  ctx.fillRect(0, 0, w / 11, h / 11);
+  ctx.restore();
+}
+
+/** Lucht met verloop (proef Realistisch): blauw bovenin, licht bij de horizon. */
+function luchtTextuur(): CanvasTexture {
+  return canvasTextuur(4, 256, (ctx) => {
+    const g = ctx.createLinearGradient(0, 0, 0, 256);
+    g.addColorStop(0, '#86bfe6');
+    g.addColorStop(0.55, '#c4e0f0');
+    g.addColorStop(1, LUCHT_HORIZON);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 4, 256);
+  });
 }
 
 function netTextuur(): CanvasTexture {
@@ -942,15 +992,43 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const materialen: Material[] = [];
   const texturen: Texture[] = [];
   const scene = new Scene();
-  scene.background = new Color(LUCHT);
+  // Proef Realistisch: alleen met de gewone poppetjes (eenvoudig is voor tragere telefoons).
+  const echt = !!opties.realistisch && !opties.eenvoudig;
+  if (echt) {
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = PCFSoftShadowMap;
+    const lucht = luchtTextuur();
+    texturen.push(lucht);
+    scene.background = lucht;
+  } else {
+    scene.background = new Color(LUCHT);
+  }
   const u = uitsnede(tekening);
   const { breedte: B, lengte: L } = veldMaten(tekening);
 
   // Licht: hemel + zon.
-  scene.add(new HemisphereLight('#ffffff', '#3d6b45', 2.1));
-  const zon = new DirectionalLight('#ffffff', 1.6);
+  scene.add(new HemisphereLight('#ffffff', '#3d6b45', echt ? 1.5 : 2.1));
+  const zon = new DirectionalLight(echt ? '#fff2da' : '#ffffff', echt ? 2.4 : 1.6);
   zon.position.set(-30, 60, 45);
   scene.add(zon);
+  if (echt) {
+    // Lagere zon die schaduwen werpt over het hele stuk veld dat in beeld is.
+    const mx = u.x + u.breedte / 2;
+    const mz = u.y + u.lengte / 2;
+    const r = Math.hypot(u.breedte, u.lengte) / 2 + 6;
+    zon.position.set(mx - r * 0.7, r * 1.25, mz + r * 0.75);
+    zon.target.position.set(mx, 0, mz);
+    scene.add(zon.target);
+    zon.castShadow = true;
+    const sc = zon.shadow.camera;
+    sc.left = sc.bottom = -r;
+    sc.right = sc.top = r;
+    sc.near = 1;
+    sc.far = r * 4;
+    zon.shadow.mapSize.set(2048, 2048);
+    zon.shadow.bias = -0.0004;
+    zon.shadow.normalBias = 0.03;
+  }
 
   // Grasmat met veldlijnen (zelfde tekenwerk als 2D) + groot grasvlak eromheen tot de horizon.
   const marge = 14;
@@ -960,7 +1038,10 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const y1 = Math.max(u.y + u.lengte, L) + marge;
   const gebied: Uitsnede = { x: x0, y: y0, breedte: x1 - x0, lengte: y1 - y0 };
   const pxPerM = klem(2048 / Math.max(gebied.breedte, gebied.lengte), 8, 32);
-  const grasTex = canvasTextuur(Math.round(gebied.breedte * pxPerM), Math.round(gebied.lengte * pxPerM), (ctx) => tekenGrasmat(ctx, ctx.canvas.width, ctx.canvas.height, tekening, gebied, kleuren));
+  const grasTex = canvasTextuur(Math.round(gebied.breedte * pxPerM), Math.round(gebied.lengte * pxPerM), (ctx) => {
+    tekenGrasmat(ctx, ctx.canvas.width, ctx.canvas.height, tekening, gebied, kleuren);
+    if (echt) grasStructuur(ctx);
+  });
   grasTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   grasTex.minFilter = LinearMipmapLinearFilter;
   const grasMat = new MeshLambertMaterial({ map: grasTex });
@@ -970,6 +1051,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const ver = new Mesh(new PlaneGeometry(2000, 2000), new MeshLambertMaterial({ color: kleuren.gras1 }));
   ver.rotation.x = -Math.PI / 2;
   ver.position.set(gras.position.x, -0.03, gras.position.z);
+  gras.receiveShadow = echt;
   scene.add(gras, ver);
   materialen.push(grasMat, ver.material as Material);
   texturen.push(grasTex);
@@ -994,6 +1076,13 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       continue;
     }
     scene.add(m);
+    if (echt) {
+      // Materiaal werpt schaduw (netten en ander doorzichtig spul niet).
+      m.traverse((x) => {
+        const mat = (x as Mesh).material as Material | undefined;
+        if ((x as Mesh).isMesh && mat && !mat.transparent) x.castShadow = true;
+      });
+    }
     if (m instanceof Group && m.userData.achterNet) goals.set(o.id, m);
   }
   const bollen = new Set<string>();
@@ -1026,11 +1115,15 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   // Poppetjes: één InstancedMesh per lichaamsdeel voor iedereen samen (zie poppetje.ts).
   const personen = tekening.objecten.filter((o) => o.soort === 'speler' || o.soort === 'keeper' || o.soort === 'trainer');
   const poppetjes = new Poppetjes(personen.length, !!opties.eenvoudig);
-  for (const m of poppetjes.lijst) scene.add(m);
+  for (const m of poppetjes.lijst) {
+    m.castShadow = m.receiveShadow = echt;
+    scene.add(m);
+  }
   const rugGeo = new PlaneGeometry(0.21, 0.21);
   const schaduwTex = schaduwTextuur();
   texturen.push(schaduwTex);
-  const schaduwMat = new MeshBasicMaterial({ map: schaduwTex, color: '#000000', transparent: true, opacity: 0.34, depthWrite: false });
+  // Met echte schaduwen blijft er een lichte vlek onder de voeten (zo staat het poppetje op het gras).
+  const schaduwMat = new MeshBasicMaterial({ map: schaduwTex, color: '#000000', transparent: true, opacity: echt ? 0.16 : 0.34, depthWrite: false });
   materialen.push(schaduwMat);
   const schaduwen = new InstancedMesh(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), schaduwMat, Math.max(1, personen.length));
   schaduwen.instanceMatrix.setUsage(DynamicDrawUsage);
@@ -1113,7 +1206,7 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
   const zetGrenzen = () => {
     const passend = doelen.boven.positie.distanceTo(doelen.boven.doel);
     controls.maxDistance = Math.min(400, passend * 2.2);
-    scene.fog = new Fog(LUCHT, passend * 2.5, passend * 7);
+    scene.fog = new Fog(echt ? LUCHT_HORIZON : LUCHT, passend * 2.5, passend * 7);
   };
   const plaats = (d: CameraDoel) => {
     camera.position.copy(d.positie);

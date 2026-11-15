@@ -69,3 +69,10 @@ describe('ontwerplaag', () => {
     }
   });
 });
+
+describe('proef Realistisch', () => {
+  it('staat buiten de voorbeeldversie altijd uit', async () => {
+    const { leesRealistisch } = await import('../src/engine/realistisch');
+    expect(leesRealistisch()).toBe(false);
+  });
+});

@@ -7,6 +7,8 @@ import { maakWeergave2D, type Weergave } from './weergave';
 import type { CameraStand, Weergave3D } from './render3d';
 import { Icoon } from '../components/Icoon';
 import { poppetjes, usePoppetjes } from '../engine/poppetjes';
+import { useRealistisch, zetRealistisch } from '../engine/realistisch';
+import { isVoorbeeld } from '../engine/voorbeeld';
 import { getal, t } from '../i18n/t';
 
 export const SNELHEDEN = [0.5, 1, 2] as const;
@@ -72,6 +74,8 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
   const [looplijnen, setLooplijnen] = useState(() => lees(LOOPLIJNEN) === '1');
   // Eenvoudige poppetjes (Instellingen, of automatisch als 3D hapert).
   const { eenvoudig } = usePoppetjes();
+  // Proef Realistisch (alleen in de voorbeeldversie te kiezen).
+  const realistisch = useRealistisch();
   const looplijnenRef = useRef(looplijnen);
 
   const teken = useCallback((sprong = false) => {
@@ -126,6 +130,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
               opFout: () => naar2D(t('3D viel weg; je ziet nu de 2D-weergave.')),
               looplijnen: looplijnenRef.current,
               eenvoudig,
+              realistisch,
             });
             zet(w);
             setCamera(tekening.camera ?? 'schuin');
@@ -142,7 +147,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
       weergaveRef.current?.opruimen();
       weergaveRef.current = null;
     };
-  }, [modus, tekening, tijdlijn, pasMaatAan, naar2D, eenvoudig]);
+  }, [modus, tekening, tijdlijn, pasMaatAan, naar2D, eenvoudig, realistisch]);
 
   // Maat volgen.
   useEffect(() => {
@@ -282,6 +287,11 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             ))}
           </div>
         </div>
+        {isVoorbeeld() && modus === '3d' && klaar3d && !eenvoudig && (
+          <button className={`speler-proef${realistisch ? ' aan' : ''}`} aria-pressed={realistisch} onClick={() => zetRealistisch(!realistisch)}>
+            {t('Realistisch (proef)')}
+          </button>
+        )}
         {uitleg && modus === '3d' && klaar3d && <div className="speler-uitleg">{aanraak ? t('Veeg om te draaien · knijp om te zoomen') : t('Sleep om te draaien · scroll om te zoomen')}</div>}
         {melding && (
           <div className="speler-melding" role="status">

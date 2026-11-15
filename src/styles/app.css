@@ -841,6 +841,27 @@ h3 {
   }
 }
 
+/* Proef Realistisch (alleen in de voorbeeldversie): schakelaar onder de cameraknoppen. */
+.speler-proef {
+  position: absolute;
+  top: 52px;
+  left: 8px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.9);
+  box-shadow: 0 1px 6px rgb(0 0 0 / 0.18);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tekst-2);
+}
+
+.speler-proef.aan {
+  background: var(--primair);
+  color: var(--op-primair);
+}
+
 .speler-laden,
 .speler-uitleg,
 .speler-melding {

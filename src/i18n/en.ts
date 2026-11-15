@@ -15,6 +15,7 @@ export const EN: Record<string, string> = {
   '3D liep niet soepel; je ziet nu eenvoudige poppetjes (aan te passen bij Instellingen).': "3D wasn't running smoothly; now showing simple figures (change this in Settings).",
   'Dit toestel is te traag voor 3D; je ziet de 2D-weergave.': 'This device is too slow for 3D; showing the 2D view.',
   '3D laden…': 'Loading 3D…',
+  'Realistisch (proef)': 'Realistic (trial)',
   Camera: 'Camera',
   Weergave: 'View',
   'Veeg om te draaien · knijp om te zoomen': 'Swipe to rotate · pinch to zoom',
