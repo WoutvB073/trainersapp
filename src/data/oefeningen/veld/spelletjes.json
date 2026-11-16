@@ -3458,68 +3458,68 @@
         {
           "id": "h1",
           "soort": "hoedje",
-          "x": 7.47,
-          "y": 2.53
+          "x": 6.31,
+          "y": 1.75
         },
         {
           "id": "h2",
           "soort": "hoedje",
-          "x": 7.47,
-          "y": 7.47
+          "x": 8.25,
+          "y": 6.31
         },
         {
           "id": "h3",
           "soort": "hoedje",
-          "x": 2.53,
-          "y": 7.47
+          "x": 3.69,
+          "y": 8.25
         },
         {
           "id": "h4",
           "soort": "hoedje",
-          "x": 2.53,
-          "y": 2.53
+          "x": 1.75,
+          "y": 3.69
         },
         {
           "id": "a1",
           "soort": "speler",
           "team": "A",
           "nummer": 1,
-          "x": 6.7,
-          "y": 3.3,
-          "kijkrichting": 135
+          "x": 5.9,
+          "y": 2.77,
+          "kijkrichting": 112
         },
         {
           "id": "a2",
           "soort": "speler",
           "team": "A",
           "nummer": 2,
-          "x": 6.7,
-          "y": 6.7,
-          "kijkrichting": -135
+          "x": 7.23,
+          "y": 5.9,
+          "kijkrichting": -158
         },
         {
           "id": "a3",
           "soort": "speler",
           "team": "A",
           "nummer": 3,
-          "x": 3.3,
-          "y": 6.7,
-          "kijkrichting": -45
+          "x": 4.1,
+          "y": 7.23,
+          "kijkrichting": -68
         },
         {
           "id": "a4",
           "soort": "speler",
           "team": "A",
           "nummer": 4,
-          "x": 3.3,
-          "y": 3.3,
-          "kijkrichting": 45
+          "x": 2.77,
+          "y": 4.1,
+          "kijkrichting": 22
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 6.31,
-          "y": 3.69,
+          "x": 5.69,
+          "y": 3.28,
           "bij": "a1"
         }
       ],

@@ -210,7 +210,7 @@ export interface BalActie extends ActieBasis {
   vangHoogte?: number;
   /**
    * 1 op 1: de keeper blokt het schot met zijn lichaam (`blokSoort`: `ster` = spreidsprong/stervorm, `knie` = knieblok,
-   * `voeten` = glijdend met de voeten vooruit);
+   * `voeten` = glijdend met de voeten vooruit). Sinds 0.37.1 kan dit ook een veldspeler zijn (`voeten` = sliding);
    * de bal kaatst af naar `afloopNaar`.
    */
   blokt?: string;

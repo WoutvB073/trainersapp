@@ -246,7 +246,7 @@ const oefeningen = [
         moeilijker: ['Two touches maximum', 'Weaker foot and head only', 'The whole circle counts out loud: who sets the record?'],
       },
     },
-    // Een achtste slag gedraaid, zodat in 3D niemand achter een ander staat.
+    // Iets gedraaid, zodat in 3D niemand achter een ander staat.
     tekening: draai(
       {
         ...leeg(10, 10),
@@ -274,7 +274,7 @@ const oefeningen = [
         ],
       },
       [5, 5],
-      45,
+      22,
     ),
   },
 

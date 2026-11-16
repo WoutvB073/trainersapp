@@ -1784,10 +1784,11 @@ function uitkomen(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: numbe
   return vlucht(tl, bal, start, t0, k.id, { ...opties, eindHoogte: hC }, a.van, 1, tC - t0);
 }
 
-/** 1 op 1: de keeper blokt het schot met zijn lichaam (spreidsprong of knieblok); de bal kaatst af. */
+/** 1 op 1: de keeper (of sinds 0.37.1 een veldspeler) blokt het schot met zijn lichaam (spreidsprong, knieblok of glijdend met de voeten vooruit); de bal kaatst af. */
 function blok(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: number, opties: VluchtOpties, kijkNaar: (p: Punt) => void): number {
   const k = tl.objecten.get(a.blokt!);
-  if (!k || k.soort !== 'keeper') throw new TekeningFout(`Blok: "${a.blokt}" is geen keeper`);
+  // Sinds 0.37.1 mag ook een veldspeler blokken (sliding of blok met het lichaam), bv. een verdediger die een schot blokt.
+  if (!k || !isPersoon(k)) throw new TekeningFout(`Blok: "${a.blokt}" is geen speler of keeper`);
   const soort = a.blokSoort ?? 'ster';
   const schat = positie(tl, k.id, t0 + 0.3);
   const r = richting(graden(schat, start));

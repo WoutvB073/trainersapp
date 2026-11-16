@@ -295,5 +295,105 @@
         "Two balls at once: one starts at the bottom, one at the top"
       ]
     }
+  },
+  "veld-pt-lange-lijn-kort-lang": {
+    "naam": "Long line: short and long pass",
+    "uitleg": "Four players stand on one line. The outside player plays a short pass into the player next to them, gets it back and then plays the long ball over the two in the middle to the player at the other end. They do the same back the other way. After a few goes, the outside and middle players swap places.",
+    "organisatie": "Four cones in one line: the outside two 25 m apart, the middle two 8 m from the outside ones. Four players, one ball. Swap places after 2 minutes.",
+    "benodigdheden": [
+      "4 cones",
+      "2 balls"
+    ],
+    "coachpunten": [
+      "Short pass firm and onto the right foot so the lay-off can be first time",
+      "Long ball: standing foot beside the ball, strike under the middle with your instep",
+      "Receiver: watch the ball in and cushion it"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shorter long ball (18 m)",
+        "The long ball may go along the ground"
+      ],
+      "moeilijker": [
+        "Long ball first time after the lay-off",
+        "The middle players move between the outside ones",
+        "Receive out of the air with one touch"
+      ]
+    }
+  },
+  "veld-pt-bewegend-poortje": {
+    "naam": "Passing through the moving gate",
+    "uitleg": "Two players together are a gate: they walk side by side, 2 m apart, slowly around the area. The others pass through the gate in pairs. Every good pass through the gate is a point. Because the gate moves, you have to watch carefully and pick the right moment.",
+    "organisatie": "20 × 20 m area. One gate of two players in bibs; the rest in pairs with one ball. Rounds of 1.5 minutes; then another pair becomes the gate.",
+    "benodigdheden": [
+      "4 cones",
+      "1 ball per pair",
+      "2 bibs"
+    ],
+    "coachpunten": [
+      "Watch where the gate is going and pass at the right moment",
+      "Pass firmly along the ground with the inside of the foot",
+      "After your pass, move straight away to a new space"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The gate stands still",
+        "Wider gate (3 m)"
+      ],
+      "moeilijker": [
+        "Two gates",
+        "The gate walks faster",
+        "One-touch passes only"
+      ]
+    }
+  },
+  "veld-pt-kaats-wissel-van-kant": {
+    "naam": "Lay-off and switch",
+    "uitleg": "The defender plays the ball into the striker, who comes short. The striker lays it off first time to the midfielder, who switches play with a long pass to the winger on the other side. The winger takes the ball on the run. Then it starts again, with the ball going the other way.",
+    "organisatie": "On half a pitch: defender at 30 m, midfielder at 22 m, striker at 14 m, two wingers wide at 20 m. Five players, two balls. After 4 goes everyone moves on one position.",
+    "benodigdheden": [
+      "6 cones",
+      "2 balls"
+    ],
+    "coachpunten": [
+      "Striker: come short the moment the defender looks up",
+      "Lay it off onto the foot furthest from the striker",
+      "Midfielder: stay open so you can switch in one movement"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The midfielder may control the ball first",
+        "Wingers closer in"
+      ],
+      "moeilijker": [
+        "A passive defender behind the striker",
+        "Switch first time",
+        "The winger finishes on a goal"
+      ]
+    }
+  },
+  "veld-pt-zeshoek-richting": {
+    "naam": "Hexagon clockwise and anticlockwise",
+    "uitleg": "Six players stand at six cones in a hexagon. The ball goes round first time to the next player, clockwise. On the whistle the direction changes: whoever gets the ball then plays it back the other way. Stay ready, because the ball can come from either side.",
+    "organisatie": "Hexagon with sides of about 6.5 m, a cone on each corner. Six players, one ball; after a minute add a second ball. The coach whistles to change direction.",
+    "benodigdheden": [
+      "6 cones",
+      "2 balls"
+    ],
+    "coachpunten": [
+      "Stay open to both neighbours so you can go either way",
+      "Play with the foot furthest from the ball",
+      "Switch straight away on the whistle"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two touches",
+        "Bigger hexagon"
+      ],
+      "moeilijker": [
+        "Two balls going opposite ways",
+        "After your pass, swap places with your neighbour"
+      ]
+    }
   }
 }
