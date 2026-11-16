@@ -525,5 +525,111 @@
         "A second defender on the striker"
       ]
     }
+  },
+  "veld-ps-rondo-twee-kleuren": {
+    "naam": "Two-colour rondo",
+    "uitleg": "Six outside players in two colours stand round the area, alternating red and blue. You may only pass to someone of the other colour. The two chasers in the middle know this and try to read the passing lane. If a chaser wins the ball, they swap with the player who lost it.",
+    "organisatie": "12 × 12 m area. Six outside players (3 red, 3 blue) and two chasers in bibs. One ball. Rounds of 2 minutes.",
+    "benodigdheden": [
+      "4 cones",
+      "1 ball",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: eight outside players and three chasers in a bigger area.",
+    "coachpunten": [
+      "Before the ball arrives, know who of the other colour is free",
+      "Play away from the chasers, not through them",
+      "Move along the line to open up a passing lane"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One chaser",
+        "Bigger area"
+      ],
+      "moeilijker": [
+        "Everything one touch",
+        "The coach changes the rule: same colour only"
+      ]
+    }
+  },
+  "veld-ps-2-1-vier-vakjes": {
+    "naam": "2v1 in four boxes",
+    "uitleg": "Four boxes in a square, with two attackers against one defender in each box. After five passes without the defender touching the ball, play the ball on to the next box. That way the ball travels round the whole square. If a defender wins the ball, they swap with the player who lost it.",
+    "organisatie": "Four 7 × 7 m boxes in a square, 2 m apart. Two attackers and a defender in each box. One ball (or two for experienced groups). New defenders after 4 minutes.",
+    "benodigdheden": [
+      "16 disc cones",
+      "2 balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: a fifth box, or 3v1 in each box.",
+    "coachpunten": [
+      "Stand at an angle to each other, never in line with the defender",
+      "After your pass, look straight away for a new angle",
+      "Passing on to the next box: firm and to feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Three passes instead of five",
+        "Bigger boxes"
+      ],
+      "moeilijker": [
+        "Two balls at once",
+        "Everything one touch",
+        "Pass on to the box diagonally opposite"
+      ]
+    }
+  },
+  "veld-ps-balbezit-hoekvakken": {
+    "naam": "Possession with target corners",
+    "uitleg": "Four against four plus two jokers, who always play with the team in possession. In each corner of the pitch there is a small box. You score a point by passing to a teammate who runs into a corner box and controls the ball there. You may not wait in a corner box: only go in when the ball is coming.",
+    "organisatie": "24 × 24 m area with a 4 × 4 m box in each corner. Two teams of four and two jokers. After a point the team keeps the ball and plays towards another corner box.",
+    "benodigdheden": [
+      "16 disc cones",
+      "Balls",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: five against five plus two jokers in a bigger area.",
+    "coachpunten": [
+      "Make the pitch big: always someone wide and deep",
+      "Only run into the corner box when the passer is ready to play",
+      "After a point, switch to the other side straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Three jokers",
+        "Bigger corner boxes"
+      ],
+      "moeilijker": [
+        "One joker",
+        "Two touches maximum",
+        "Only a point after a first-time pass"
+      ]
+    }
+  },
+  "veld-ps-overtal-zijkant": {
+    "naam": "Overload on the flank",
+    "uitleg": "Six against four on a wide strip. The team of six moves the ball round and deliberately creates an overload on one side: three against two along the touchline. As soon as a player is free there, play them in and they dribble over the end line. If the team of four wins the ball, they score by dribbling over the other line.",
+    "organisatie": "40 × 24 m strip. Six against four; each team scores by dribbling over the other team’s line. After 4 minutes two players change teams.",
+    "benodigdheden": [
+      "8 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: seven against five, or a third team that rotates in after each attack.",
+    "coachpunten": [
+      "Draw the defenders to one side with short passes",
+      "Get three players around the ball: one deep, one wide, one short",
+      "Find the free player at the moment the defender has to choose"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Seven against four",
+        "Wider strip"
+      ],
+      "moeilijker": [
+        "Six against five",
+        "Three touches maximum"
+      ]
+    }
   }
 }
