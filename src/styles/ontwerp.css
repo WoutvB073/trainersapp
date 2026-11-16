@@ -419,3 +419,45 @@ html[data-ontwerp='c'] .teller {
     font-size: 1.05rem;
   }
 }
+
+/* Telefoon liggend (weinig hoogte): de kleinere maten van start.css houden, anders past het startscherm net niet. */
+@media (orientation: landscape) and (max-height: 500px) {
+  html[data-ontwerp] .tegel-icoon {
+    width: 34px;
+    height: 34px;
+  }
+
+  html[data-ontwerp='c'] .start-titel {
+    font-size: 1.4rem;
+  }
+
+  html[data-ontwerp='c'] .tegel-titel,
+  html[data-ontwerp='c'] .tegel-training .tegel-titel,
+  html[data-ontwerp='c'] .tegel-klein .tegel-titel {
+    font-size: 0.95rem;
+  }
+
+  html[data-ontwerp='c'] .tegel-sub {
+    font-size: 0.78rem;
+    line-height: 1.25;
+  }
+}
+
+/* Heel smalle telefoons (320 px): iets kleinere letters op de tegels, zodat lange woorden heel blijven. */
+@media (max-width: 359px) {
+  html[data-ontwerp='c'] .tegel-titel {
+    font-size: 1rem;
+  }
+
+  html[data-ontwerp='c'] .tegel-training .tegel-titel {
+    font-size: 1.15rem;
+  }
+
+  html[data-ontwerp='c'] .tegel-klein .tegel-titel {
+    font-size: 0.8rem;
+  }
+
+  html[data-ontwerp='c'] .tegel-sub {
+    font-size: 0.76rem;
+  }
+}
