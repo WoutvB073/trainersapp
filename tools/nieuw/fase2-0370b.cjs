@@ -17,7 +17,11 @@ const oefeningen = [
     leeftijden: OUD,
     doorwisselbaar: false,
     meerSpelers: 'Met meer spelers: vijf tegen twee in elk vak, of een derde vak erbij.',
-    coachpunten: ['Speel weg van de verdediger, naar de kant waar hij niet staat', 'Lange pass strak en vlak, op de voet van de ontvanger', 'Na de lange pass meteen sprinten: in het andere vak heb je je nodig'],
+    coachpunten: [
+      'Speel weg van de verdediger, naar de kant waar hij niet staat',
+      'Lange pass strak en vlak, op de voet van de ontvanger',
+      'Na de lange pass meteen sprinten: in het andere vak heb je je nodig',
+    ],
     variaties: {
       makkelijker: ['Groter vak', 'Pas na drie passes overspelen'],
       moeilijker: ['Alles in één keer', 'Twee verdedigers in elk vak', 'De lange pass moet halfhoog'],
@@ -29,7 +33,11 @@ const oefeningen = [
       organisatie: 'Two 10 × 10 m boxes, 8 m apart. Four outside players and a defender in a bib in each box. If the defender wins the ball, they swap with the player who lost it.',
       benodigdheden: ['8 cones', '2 balls', '2 bibs'],
       meerSpelers: 'With more players: 5v2 in each box, or add a third box.',
-      coachpunten: ['Play away from the defender, to the side where they are not', 'Long pass firm and flat, onto the receiver’s foot', 'Sprint straight after the long pass: you are needed in the other box'],
+      coachpunten: [
+        'Play away from the defender, to the side where they are not',
+        'Long pass firm and flat, onto the receiver’s foot',
+        'Sprint straight after the long pass: you are needed in the other box',
+      ],
       variaties: {
         makkelijker: ['Bigger box', 'Switch after three passes'],
         moeilijker: ['Everything one touch', 'Two defenders in each box', 'The long pass must be at half height'],
@@ -55,12 +63,58 @@ const oefeningen = [
       ],
       animatie: [
         pauze(0.5),
-        stap({ type: 'pass', van: 'a1', naar: 'a2' }, { type: 'loop', wie: 'c1', naar: [5.6, 5.2], start: 0.2 }, { type: 'pass', van: 'a7', naar: 'a8', start: 0.2 }, { type: 'loop', wie: 'c2', naar: [26.6, 8.4], start: 0.3 }),
-        stap({ type: 'pass', van: 'a2', naar: 'a3' }, { type: 'loop', wie: 'c1', naar: [8.6, 5.4], start: 0.2 }, { type: 'pass', van: 'a8', naar: 'a5', start: 0.15 }, { type: 'loop', wie: 'c2', naar: [23.2, 8.6], start: 0.3 }),
-        stap({ type: 'pass', van: 'a3', naar: 'a4' }, { type: 'loop', wie: 'c1', naar: [8.4, 8.8], start: 0.2 }, { type: 'pass', van: 'a5', naar: 'a6', start: 0.15 }, { type: 'loop', wie: 'c2', naar: [23.4, 5.4], start: 0.3 }),
+        stap(
+          { type: 'pass', van: 'a1', naar: 'a2' },
+          { type: 'loop', wie: 'c1', naar: [5.6, 5.2], start: 0.2 },
+          { type: 'pass', van: 'a7', naar: 'a8', start: 0.2 },
+          { type: 'loop', wie: 'c2', naar: [26.6, 8.4], start: 0.3 },
+        ),
+        stap(
+          { type: 'pass', van: 'a2', naar: 'a3' },
+          { type: 'loop', wie: 'c1', naar: [8.6, 5.4], start: 0.2 },
+          { type: 'pass', van: 'a8', naar: 'a5', start: 0.15 },
+          { type: 'loop', wie: 'c2', naar: [23.2, 8.6], start: 0.3 },
+        ),
+        stap(
+          { type: 'pass', van: 'a3', naar: 'a4' },
+          { type: 'loop', wie: 'c1', naar: [8.4, 8.8], start: 0.2 },
+          { type: 'pass', van: 'a5', naar: 'a6', start: 0.15 },
+          { type: 'loop', wie: 'c2', naar: [23.4, 5.4], start: 0.3 },
+        ),
         // Vijf passes: de lange pass naar het andere vak, de passer sprint mee.
-        stap({ type: 'pass', van: 'a4', naar: 'a5' }, { type: 'loop', wie: 'a4', via: [[10, 13.2], [17, 13.2]], naar: [21.5, 11.5], manier: 'sprint', start: 0.3, tempo: 'gelijkmatig' }, { type: 'loop', wie: 'c1', naar: [7, 9.2], start: 0.1 }, { type: 'pass', van: 'a6', naar: 'a3', start: 0.6 }),
-        stap({ type: 'pass', van: 'a3', naar: 'a2' }, { type: 'pass', van: 'a5', naar: 'a8', start: 0.2 }, { type: 'loop', wie: 'a6', via: [[22, 0.7], [12, 0.7]], naar: [3.6, 1.1], manier: 'sprint', start: 0.1, tempo: 'gelijkmatig' }),
+        stap(
+          { type: 'pass', van: 'a4', naar: 'a5' },
+          {
+            type: 'loop',
+            wie: 'a4',
+            via: [
+              [10, 13.2],
+              [17, 13.2],
+            ],
+            naar: [21.5, 11.5],
+            manier: 'sprint',
+            start: 0.3,
+            tempo: 'gelijkmatig',
+          },
+          { type: 'loop', wie: 'c1', naar: [7, 9.2], start: 0.1 },
+          { type: 'pass', van: 'a6', naar: 'a3', start: 0.6 },
+        ),
+        stap(
+          { type: 'pass', van: 'a3', naar: 'a2' },
+          { type: 'pass', van: 'a5', naar: 'a8', start: 0.2 },
+          {
+            type: 'loop',
+            wie: 'a6',
+            via: [
+              [22, 0.7],
+              [12, 0.7],
+            ],
+            naar: [3.6, 1.1],
+            manier: 'sprint',
+            start: 0.1,
+            tempo: 'gelijkmatig',
+          },
+        ),
         pauze(0.8),
       ],
     },
@@ -125,9 +179,23 @@ const oefeningen = [
           { type: 'loop', wie: 'c1', naar: [13.8, 11.4], manier: 'sprint', duur: 1.6 },
           { type: 'loop', wie: 'c2', naar: [9.8, 6.8], manier: 'sprint', duur: 1.6 },
         ),
-        stap({ type: 'verover', wie: 'c1', van: 'a2' }, { type: 'dribbel', wie: 'a1', naar: [6.5, 8.5], duur: 1 }, { type: 'dribbel', wie: 'a3', naar: [12.5, 16.5], duur: 1 }, { type: 'loop', wie: 'c2', naar: [7.6, 9.6], duur: 1 }),
-        stap({ type: 'pass', van: 'c1', naar: [22, 4] }, { type: 'loop', wie: 'a2', naar: [20.2, 5.4], manier: 'sprint', start: 0.8 }, { type: 'verover', wie: 'c2', van: 'a1' }, { type: 'dribbel', wie: 'a4', naar: [18.5, 13.5], duur: 1 }),
-        stap({ type: 'pass', van: 'c2', naar: [9, 22.8] }, { type: 'loop', wie: 'a1', via: [[4.4, 11.4]], naar: [7.4, 19.6], manier: 'sprint', start: 0.8 }, { type: 'loop', wie: 'c1', naar: [13, 13], start: 0.2 }),
+        stap(
+          { type: 'verover', wie: 'c1', van: 'a2' },
+          { type: 'dribbel', wie: 'a1', naar: [6.5, 8.5], duur: 1 },
+          { type: 'dribbel', wie: 'a3', naar: [12.5, 16.5], duur: 1 },
+          { type: 'loop', wie: 'c2', naar: [7.6, 9.6], duur: 1 },
+        ),
+        stap(
+          { type: 'pass', van: 'c1', naar: [22, 4] },
+          { type: 'loop', wie: 'a2', naar: [20.2, 5.4], manier: 'sprint', start: 0.8 },
+          { type: 'verover', wie: 'c2', van: 'a1' },
+          { type: 'dribbel', wie: 'a4', naar: [18.5, 13.5], duur: 1 },
+        ),
+        stap(
+          { type: 'pass', van: 'c2', naar: [9, 22.8] },
+          { type: 'loop', wie: 'a1', via: [[4.4, 11.4]], naar: [7.4, 19.6], manier: 'sprint', start: 0.8 },
+          { type: 'loop', wie: 'c1', naar: [13, 13], start: 0.2 },
+        ),
         pauze(0.8),
       ],
     },
@@ -177,10 +245,39 @@ const oefeningen = [
       animatie: [
         pauze(0.5),
         // Lopen met de klok mee om de pionnen, de bal gaat tegen de klok in.
-        stap({ type: 'pass', van: 'a1', naar: 'a3' }, { type: 'loop', wie: 'a1', naar: [12.2, 8.4], duur: 1.6 }, { type: 'loop', wie: 'a2', naar: [6.2, 12.6], duur: 1.6 }, { type: 'loop', wie: 'a3', naar: [5, 6.4], duur: 1.6 }),
-        stap({ type: 'pass', van: 'a3', naar: 'a2' }, { type: 'loop', wie: 'a3', naar: [8.6, 3.6], duur: 1.6 }, { type: 'loop', wie: 'a1', via: [[14.8, 10.6], [14.8, 12.6]], naar: [12.6, 13.6], duur: 1.6 }, { type: 'loop', wie: 'a2', naar: [2.6, 9.6], duur: 1.6 }),
-        stap({ type: 'pass', van: 'a2', naar: 'a1' }, { type: 'loop', wie: 'a2', naar: [6.2, 5], duur: 1.6 }, { type: 'loop', wie: 'a3', naar: [11.8, 7.2], duur: 1.6 }, { type: 'loop', wie: 'a1', naar: [8.2, 12.6], duur: 1.6 }),
-        stap({ type: 'pass', van: 'a1', naar: 'a3' }, { type: 'loop', wie: 'a1', naar: [3.4, 10.4], duur: 1.6 }, { type: 'loop', wie: 'a2', naar: [9.4, 3.4], duur: 1.6 }, { type: 'loop', wie: 'a3', naar: [12.6, 11.2], duur: 1.6 }),
+        stap(
+          { type: 'pass', van: 'a1', naar: 'a3' },
+          { type: 'loop', wie: 'a1', naar: [12.2, 8.4], duur: 1.6 },
+          { type: 'loop', wie: 'a2', naar: [6.2, 12.6], duur: 1.6 },
+          { type: 'loop', wie: 'a3', naar: [5, 6.4], duur: 1.6 },
+        ),
+        stap(
+          { type: 'pass', van: 'a3', naar: 'a2' },
+          { type: 'loop', wie: 'a3', naar: [8.6, 3.6], duur: 1.6 },
+          {
+            type: 'loop',
+            wie: 'a1',
+            via: [
+              [14.8, 10.6],
+              [14.8, 12.6],
+            ],
+            naar: [12.6, 13.6],
+            duur: 1.6,
+          },
+          { type: 'loop', wie: 'a2', naar: [2.6, 9.6], duur: 1.6 },
+        ),
+        stap(
+          { type: 'pass', van: 'a2', naar: 'a1' },
+          { type: 'loop', wie: 'a2', naar: [6.2, 5], duur: 1.6 },
+          { type: 'loop', wie: 'a3', naar: [11.8, 7.2], duur: 1.6 },
+          { type: 'loop', wie: 'a1', naar: [8.2, 12.6], duur: 1.6 },
+        ),
+        stap(
+          { type: 'pass', van: 'a1', naar: 'a3' },
+          { type: 'loop', wie: 'a1', naar: [3.4, 10.4], duur: 1.6 },
+          { type: 'loop', wie: 'a2', naar: [9.4, 3.4], duur: 1.6 },
+          { type: 'loop', wie: 'a3', naar: [12.6, 11.2], duur: 1.6 },
+        ),
         pauze(0.8),
       ],
     },
@@ -193,7 +290,8 @@ const oefeningen = [
     categorieen: ['warming-up', 'techniek'],
     uitleg:
       'De trainer rolt steeds een bal het vak in. Ren erheen en stop de bal met je voet bovenop, voordat hij over de lijn rolt. Dan dribbel je hem terug naar de trainer. Lukt het? Dan krijg je een high five!',
-    organisatie: 'Vak van 10 × 10 m met een hoedje op elke hoek. De trainer staat aan één kant met een paar voetballen; 5 kinderen wachten naast hem en gaan om de beurt. Na een paar beurten rolt de trainer twee ballen tegelijk.',
+    organisatie:
+      'Vak van 10 × 10 m met een hoedje op elke hoek. De trainer staat aan één kant met een paar voetballen; 5 kinderen wachten naast hem en gaan om de beurt. Na een paar beurten rolt de trainer twee ballen tegelijk.',
     benodigdheden: ['4 hoedjes', '5 voetballen'],
     spelersNodig: 3,
     keepersNodig: 0,
@@ -208,7 +306,8 @@ const oefeningen = [
       naam: 'Catch the ball with your feet',
       uitleg:
         'The coach keeps rolling a ball into the area. Run to it and stop it by putting your foot on top before it rolls over the line. Then dribble it back to the coach. Did it work? High five!',
-      organisatie: '10 × 10 m area with a disc cone on each corner. The coach stands on one side with a few balls; 5 children wait next to the coach and take turns. After a few turns the coach rolls two balls at once.',
+      organisatie:
+        '10 × 10 m area with a disc cone on each corner. The coach stands on one side with a few balls; 5 children wait next to the coach and take turns. After a few turns the coach rolls two balls at once.',
       benodigdheden: ['4 disc cones', '5 balls'],
       coachpunten: ['Watch the ball and run to it', 'Put your foot gently on top of the ball', 'Dribble back with small touches'],
       variaties: {
@@ -271,7 +370,11 @@ const oefeningen = [
       organisatie: 'Circle with a 7 m radius, six outside players, three of them with a ball. Two players in the middle. Swap after 1 minute.',
       benodigdheden: ['6 disc cones', '3 balls'],
       meerSpelers: 'With more players: a second circle, or three players in the middle.',
-      coachpunten: ['Before laying it off, already check where your next ball is coming from', 'Lay it off to feet, with the inside of your foot', 'Open up and take a few steps towards the next player'],
+      coachpunten: [
+        'Before laying it off, already check where your next ball is coming from',
+        'Lay it off to feet, with the inside of your foot',
+        'Open up and take a few steps towards the next player',
+      ],
       variaties: {
         makkelijker: ['One player in the middle', 'Two touches'],
         moeilijker: ['The outside players serve at half height: lay it off with your instep or head', 'After the lay-off, first go round a cone in the middle'],
@@ -281,7 +384,9 @@ const oefeningen = [
       ...leeg(18, 18),
       objecten: [
         ...[0, 60, 120, 180, 240, 300].map((h, i) => hoedje(`h${i + 1}`, +(9 + 8 * Math.cos((h * Math.PI) / 180)).toFixed(2), +(9 + 8 * Math.sin((h * Math.PI) / 180)).toFixed(2), KLEUR.geel)),
-        ...[0, 60, 120, 180, 240, 300].map((h, i) => speler(`o${i + 1}`, i + 1, +(9 + 7 * Math.cos((h * Math.PI) / 180)).toFixed(2), +(9 + 7 * Math.sin((h * Math.PI) / 180)).toFixed(2), { kijkrichting: h + 180 })),
+        ...[0, 60, 120, 180, 240, 300].map((h, i) =>
+          speler(`o${i + 1}`, i + 1, +(9 + 7 * Math.cos((h * Math.PI) / 180)).toFixed(2), +(9 + 7 * Math.sin((h * Math.PI) / 180)).toFixed(2), { kijkrichting: h + 180 }),
+        ),
         B('m1', 7, 10.4, 9, { kijkrichting: 0 }),
         B('m2', 8, 7.6, 9, { kijkrichting: 180 }),
         bal('b1', 15.45, 9, 'o1'),

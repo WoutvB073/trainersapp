@@ -4138,32 +4138,32 @@
     "tekening": {
       "veld": {
         "type": "leeg",
-        "breedte": 20,
-        "lengte": 26
+        "breedte": 26,
+        "lengte": 20
       },
       "camera": "schuin",
       "objecten": [
         {
           "id": "z",
           "soort": "zone",
-          "x": 10,
-          "y": 13,
-          "breedte": 18,
-          "lengte": 24
+          "x": 13,
+          "y": 10,
+          "breedte": 24,
+          "lengte": 18
         },
         {
           "id": "g1",
           "soort": "klein-goal",
-          "x": -2,
-          "y": 13,
+          "x": 1,
+          "y": 10,
           "hoek": -90,
           "breedte": 3
         },
         {
           "id": "g2",
           "soort": "klein-goal",
-          "x": 22,
-          "y": 13,
+          "x": 25,
+          "y": 10,
           "hoek": 90,
           "breedte": 3
         },
@@ -4172,8 +4172,8 @@
           "soort": "speler",
           "team": "A",
           "nummer": 1,
-          "x": 18,
-          "y": 16,
+          "x": 21,
+          "y": 13,
           "kijkrichting": -180
         },
         {
@@ -4181,17 +4181,17 @@
           "soort": "speler",
           "team": "A",
           "nummer": 2,
-          "x": 12,
-          "y": 9,
-          "kijkrichting": 160
+          "x": 15,
+          "y": 6,
+          "kijkrichting": -200
         },
         {
           "id": "a3",
           "soort": "speler",
           "team": "A",
           "nummer": 3,
-          "x": 6,
-          "y": 15,
+          "x": 9,
+          "y": 12,
           "kijkrichting": -150
         },
         {
@@ -4199,8 +4199,8 @@
           "soort": "speler",
           "team": "B",
           "nummer": 4,
-          "x": 9,
-          "y": 12,
+          "x": 12,
+          "y": 9,
           "kijkrichting": 0
         },
         {
@@ -4208,8 +4208,8 @@
           "soort": "speler",
           "team": "B",
           "nummer": 5,
-          "x": 3,
-          "y": 18,
+          "x": 6,
+          "y": 15,
           "kijkrichting": -30
         },
         {
@@ -4217,15 +4217,15 @@
           "soort": "speler",
           "team": "B",
           "nummer": 6,
-          "x": 4,
-          "y": 8,
+          "x": 7,
+          "y": 5,
           "kijkrichting": 30
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 17.45,
-          "y": 16,
+          "x": 20.45,
+          "y": 13,
           "bij": "a1"
         }
       ],
@@ -4248,8 +4248,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                4,
-                16.2
+                7,
+                13.2
               ],
               "start": 0.2
             },
@@ -4257,8 +4257,8 @@
               "type": "loop",
               "wie": "b1",
               "naar": [
-                10.8,
-                12.2
+                13.8,
+                9.2
               ],
               "start": 0.3
             }
@@ -4270,8 +4270,8 @@
               "type": "loop",
               "wie": "a2",
               "naar": [
-                8,
-                9.5
+                11,
+                6.5
               ],
               "duur": 0.8
             },
@@ -4279,8 +4279,8 @@
               "type": "loop",
               "wie": "b3",
               "naar": [
-                5.5,
-                7.5
+                8.5,
+                4.5
               ],
               "duur": 0.8
             },
@@ -4288,8 +4288,8 @@
               "type": "loop",
               "wie": "b2",
               "naar": [
-                0.8,
-                19
+                3.8,
+                16
               ],
               "duur": 0.8
             }
@@ -4309,8 +4309,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                1.2,
-                15
+                4.2,
+                12
               ],
               "start": 0.1,
               "manier": "sprint"
@@ -4323,8 +4323,8 @@
               "type": "schot",
               "van": "a3",
               "naar": [
-                -2.4,
-                13.8
+                0.6,
+                10.8
               ],
               "direct": true,
               "hoogte": "laag",

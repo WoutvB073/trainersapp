@@ -11,7 +11,8 @@ const oefeningen = [
     categorieen: ['loopcoordinatie'],
     uitleg:
       'Je staat met je rug naar twee pionnen, een rode en een blauwe, en kijkt naar de trainer. De trainer roept een kleur. Je draait zo snel mogelijk om, sprint naar die pion en tikt hem aan. Daarna jog je terug naar je beginplek voor de volgende kleur. Wie is het eerst bij de pion?',
-    organisatie: 'Per speler twee pionnen op 5 m, 3,5 m uit elkaar; de spelers staan met hun rug ernaartoe. De trainer staat voor de spelers. Twee of drie spelers tegelijk, elk met eigen pionnen. Series van 4 starts.',
+    organisatie:
+      'Per speler twee pionnen op 5 m, 3,5 m uit elkaar; de spelers staan met hun rug ernaartoe. De trainer staat voor de spelers. Twee of drie spelers tegelijk, elk met eigen pionnen. Series van 4 starts.',
     benodigdheden: ['4 pionnen in 2 kleuren', 'Hoedjes voor de beginplekken'],
     spelersNodig: 2,
     keepersNodig: 0,
@@ -26,7 +27,8 @@ const oefeningen = [
       naam: 'Colour reaction start',
       uitleg:
         'You stand with your back to two cones, a red one and a blue one, facing the coach. The coach calls a colour. Turn as quickly as possible, sprint to that cone and touch it. Then jog back to your starting spot for the next colour. Who gets to the cone first?',
-      organisatie: 'For each player two cones 5 m away, 3.5 m apart; the players stand with their backs to them. The coach stands in front of the players. Two or three players at a time, each with their own cones. Sets of 4 starts.',
+      organisatie:
+        'For each player two cones 5 m away, 3.5 m apart; the players stand with their backs to them. The coach stands in front of the players. Two or three players at a time, each with their own cones. Sets of 4 starts.',
       benodigdheden: ['4 cones in 2 colours', 'Disc cones for the starting spots'],
       coachpunten: ['Get set on the balls of your feet, knees slightly bent', 'Turn towards the side of the cone: that is the shortest way', 'First steps short and quick, then lengthen your stride'],
       variaties: {
@@ -72,7 +74,8 @@ const oefeningen = [
     categorieen: ['loopcoordinatie', 'warming-up'],
     uitleg:
       'Je loopt de vier zijden van een vierkant, steeds op een andere manier, en je kijkt de hele tijd dezelfde kant op. Eerst sprint je vooruit, dan schuif je zijwaarts, dan loop je achteruit terug en tot slot schuif je zijwaarts naar je beginpunt. Wissel bij elke hoek zo snel mogelijk van manier.',
-    organisatie: 'Vierkant van 6 × 6 m met een pion op elke hoek; twee vierkanten naast elkaar. Eén speler per vierkant, de volgende start als de vorige bij de tweede hoek is. 4 rondes, daarna de andere kant op.',
+    organisatie:
+      'Vierkant van 6 × 6 m met een pion op elke hoek; twee vierkanten naast elkaar. Eén speler per vierkant, de volgende start als de vorige bij de tweede hoek is. 4 rondes, daarna de andere kant op.',
     benodigdheden: ['8 pionnen'],
     spelersNodig: 2,
     keepersNodig: 0,
@@ -87,7 +90,8 @@ const oefeningen = [
       naam: 'Forwards, backwards, sideways round the square',
       uitleg:
         'You go round the four sides of a square, each side in a different way, facing the same direction the whole time. First sprint forwards, then shuffle sideways, then backpedal and finally shuffle sideways back to your start. Change movement as quickly as possible at every corner.',
-      organisatie: '6 × 6 m square with a cone on each corner; two squares side by side. One player per square; the next player starts when the previous one reaches the second corner. 4 laps, then the other way round.',
+      organisatie:
+        '6 × 6 m square with a cone on each corner; two squares side by side. One player per square; the next player starts when the previous one reaches the second corner. 4 laps, then the other way round.',
       benodigdheden: ['8 cones'],
       coachpunten: ['Sideways: do not cross your feet, stay low', 'Backwards: short steps, weight forward', 'Brake briefly at the corner and go straight into the new direction'],
       variaties: {
@@ -150,7 +154,13 @@ const oefeningen = [
         { id: 'r2', x: 2.4, y: 6.4, richting: 180, spelers: ['a2', 'a4'] },
       ],
       objecten: [
-        ...[2.6, 6.4].flatMap((y, k) => [horde(`h${k}a`, 4.4, y, 90, 0.15), horde(`h${k}b`, 5.2, y, 90, 0.15), horde(`h${k}c`, 6, y, 90, 0.15), ring(`r${k}`, 10.6, y, '#ff922b'), pion(`p${k}`, 14.6, y)]),
+        ...[2.6, 6.4].flatMap((y, k) => [
+          horde(`h${k}a`, 4.4, y, 90, 0.15),
+          horde(`h${k}b`, 5.2, y, 90, 0.15),
+          horde(`h${k}c`, 6, y, 90, 0.15),
+          ring(`r${k}`, 10.6, y, '#ff922b'),
+          pion(`p${k}`, 14.6, y),
+        ]),
         speler('a1', 1, 0, 0),
         speler('a2', 2, 0, 0),
         speler('a3', 3, 0, 0),
@@ -163,12 +173,27 @@ const oefeningen = [
             spelers: ['a1', 'a2', 'a3', 'a4'],
             tussen: 2.2,
             waarden: {
-              hordes: [[6.8, 2.6], [6.8, 6.4]],
-              sprint: [[9.2, 2.6], [9.2, 6.4]],
-              hoepel: [[10.6, 2.6], [10.6, 6.4]],
-              uit: [[10.6, 1.4], [10.6, 7.6]],
+              hordes: [
+                [6.8, 2.6],
+                [6.8, 6.4],
+              ],
+              sprint: [
+                [9.2, 2.6],
+                [9.2, 6.4],
+              ],
+              hoepel: [
+                [10.6, 2.6],
+                [10.6, 6.4],
+              ],
+              uit: [
+                [10.6, 1.4],
+                [10.6, 7.6],
+              ],
               om: [[[12.4, 0.8]], [[12.4, 8.2]]],
-              terug: [[4, 0.8], [4, 8.2]],
+              terug: [
+                [4, 0.8],
+                [4, 8.2],
+              ],
               rij: ['r1', 'r2'],
             },
             stappen: [
@@ -192,7 +217,7 @@ const oefeningen = [
   {
     id: 'veld-lc-schaduwsprint',
     naam: 'Schaduwsprint',
-    categorieen: ['loopcoordinatie', 'spelletjes'],
+    categorieen: ['loopcoordinatie'],
     uitleg:
       'Twee spelers staan naast elkaar in het midden tussen twee lijnen. De ene speler kiest het moment en de kant: hij sprint plotseling naar een van de twee lijnen. De andere reageert en probeert hem te tikken voordat hij over de lijn is. Haalt hij de lijn, dan krijgt hij een punt. Na vijf keer wisselen de rollen.',
     organisatie: 'Twee lijnen van hoedjes 16 m uit elkaar; de tweetallen staan in het midden, 2 m uit elkaar. Twee of drie tweetallen naast elkaar, met genoeg ruimte ertussen.',
@@ -212,7 +237,11 @@ const oefeningen = [
         'Two players stand side by side in the middle between two lines. One player chooses the moment and the side: they suddenly sprint to one of the two lines. The other reacts and tries to tag them before they cross the line. If they reach the line, they score a point. After five goes, swap roles.',
       organisatie: 'Two lines of disc cones 16 m apart; the pairs stand in the middle, 2 m apart. Two or three pairs side by side, with plenty of space between them.',
       benodigdheden: ['12 disc cones', 'Bibs'],
-      coachpunten: ['Get set: on the balls of your feet, watch the other player’s hips', 'First step straight in the right direction, no step back first', 'Tagger: on the shoulder or back, no pushing'],
+      coachpunten: [
+        'Get set: on the balls of your feet, watch the other player’s hips',
+        'First step straight in the right direction, no step back first',
+        'Tagger: on the shoulder or back, no pushing',
+      ],
       variaties: {
         makkelijker: ['Lines closer (12 m)', 'The runner calls "now" at the start'],
         moeilijker: ['A dummy before the sprint is allowed', 'Lines further apart (20 m)', 'The tagger starts sitting down'],
@@ -221,7 +250,10 @@ const oefeningen = [
     tekening: {
       ...leeg(20, 12),
       objecten: [
-        ...[1.5, 4, 6.5, 9, 11.5].flatMap((y, i) => (i % 2 ? [] : [])).concat([1.5, 4, 6.5, 9, 11].map((y, i) => hoedje(`l${i}`, 2, y))).concat([1.5, 4, 6.5, 9, 11].map((y, i) => hoedje(`r${i}`, 18, y))),
+        ...[1.5, 4, 6.5, 9, 11.5]
+          .flatMap((y, i) => (i % 2 ? [] : []))
+          .concat([1.5, 4, 6.5, 9, 11].map((y, i) => hoedje(`l${i}`, 2, y)))
+          .concat([1.5, 4, 6.5, 9, 11].map((y, i) => hoedje(`r${i}`, 18, y))),
         speler('a1', 1, 9, 3.5, { kijkrichting: 90 }),
         B('b1', 2, 11, 3.5, { kijkrichting: 90 }),
         speler('a2', 3, 11, 8.5, { kijkrichting: -90 }),
@@ -251,7 +283,8 @@ const oefeningen = [
     categorieen: ['loopcoordinatie'],
     uitleg:
       'Welk dier ben jij? Spring als een kikker, loop als een ooievaar met je knieën hoog, schuif opzij als een krab of huppel als een paardje naar de overkant. De trainer roept het dier. Wie is het eerst aan de overkant?',
-    organisatie: 'Twee lijnen van hoedjes 8 m uit elkaar. De kinderen staan naast elkaar op de ene lijn, met 2 m ruimte. De trainer roept steeds een ander dier; terug gaat lopend. 5 kinderen, 8 tot 10 keer.',
+    organisatie:
+      'Twee lijnen van hoedjes 8 m uit elkaar. De kinderen staan naast elkaar op de ene lijn, met 2 m ruimte. De trainer roept steeds een ander dier; terug gaat lopend. 5 kinderen, 8 tot 10 keer.',
     benodigdheden: ['8 hoedjes'],
     spelersNodig: 3,
     keepersNodig: 0,
@@ -293,10 +326,18 @@ const oefeningen = [
           { type: 'loop', wie: 'a3', naar: [9.5, 3], manier: 'zijwaarts', kijk: 180 },
         ),
         pauze(0.5),
-        stap({ type: 'loop', wie: 'a1', naar: [3.5, 9.4], manier: 'wandel', kijk: 90 }, { type: 'loop', wie: 'a2', naar: [6.5, 9.4], manier: 'wandel' }, { type: 'loop', wie: 'a3', naar: [9.5, 9.4], manier: 'wandel' }),
+        stap(
+          { type: 'loop', wie: 'a1', naar: [3.5, 9.4], manier: 'wandel', kijk: 90 },
+          { type: 'loop', wie: 'a2', naar: [6.5, 9.4], manier: 'wandel' },
+          { type: 'loop', wie: 'a3', naar: [9.5, 9.4], manier: 'wandel' },
+        ),
         stap({ type: 'draai', wie: 'a1', kijk: -90 }, { type: 'draai', wie: 'a2', kijk: -90 }, { type: 'draai', wie: 'a3', kijk: -90 }),
         // Paardje: iedereen huppelt.
-        stap({ type: 'loop', wie: 'a1', naar: [3.5, 3], manier: 'huppel' }, { type: 'loop', wie: 'a2', naar: [6.5, 3], manier: 'huppel' }, { type: 'loop', wie: 'a3', naar: [9.5, 3], manier: 'huppel' }),
+        stap(
+          { type: 'loop', wie: 'a1', naar: [3.5, 3], manier: 'huppel' },
+          { type: 'loop', wie: 'a2', naar: [6.5, 3], manier: 'huppel' },
+          { type: 'loop', wie: 'a3', naar: [9.5, 3], manier: 'huppel' },
+        ),
         pauze(0.8),
       ],
     },
@@ -343,7 +384,25 @@ const oefeningen = [
             spelers: ['a1', 'a2', 'a3'],
             tussen: 4.6,
             stappen: [
-              stap({ type: 'loop', wie: '@', via: [[4.5, 4.1], [5.5, 3], [6.5, 1.9], [7.5, 3], [8.5, 4.1], [9.5, 3], [10.5, 1.9], [11.5, 3], [12.5, 4.1]], naar: [13.6, 3.2], manier: 'achteruit', kijk: 180, tempo: 'gelijkmatig' }),
+              stap({
+                type: 'loop',
+                wie: '@',
+                via: [
+                  [4.5, 4.1],
+                  [5.5, 3],
+                  [6.5, 1.9],
+                  [7.5, 3],
+                  [8.5, 4.1],
+                  [9.5, 3],
+                  [10.5, 1.9],
+                  [11.5, 3],
+                  [12.5, 4.1],
+                ],
+                naar: [13.6, 3.2],
+                manier: 'achteruit',
+                kijk: 180,
+                tempo: 'gelijkmatig',
+              }),
               stap({ type: 'draai', wie: '@', kijk: 0 }),
               stap({ type: 'loop', wie: '@', naar: [16.4, 3.4], manier: 'sprint' }),
               stap({ type: 'loop', wie: '@', via: [[17.6, 5.9]], naar: [0.8, 5.9], spoor: false, tempo: 'gelijkmatig' }),

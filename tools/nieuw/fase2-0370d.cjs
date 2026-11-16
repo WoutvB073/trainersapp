@@ -50,8 +50,38 @@ const oefeningen = [
       animatie: [
         pauze(0.5),
         stap(
-          { type: 'dribbel', wie: 'a1', via: [[10, 1.7], [11.4, 3], [10, 4.3], [7.5, 3.8], [5, 1.7], [3.6, 3], [5, 4.3]], naar: [7.5, 2.2], duur: 7, tempo: 'gelijkmatig' },
-          { type: 'dribbel', wie: 'a2', via: [[5, 6.7], [3.6, 8], [5, 9.3], [7.5, 8.8], [10, 6.7], [11.4, 8], [10, 9.3]], naar: [7.5, 7.2], duur: 7, tempo: 'gelijkmatig' },
+          {
+            type: 'dribbel',
+            wie: 'a1',
+            via: [
+              [10, 1.7],
+              [11.4, 3],
+              [10, 4.3],
+              [7.5, 3.8],
+              [5, 1.7],
+              [3.6, 3],
+              [5, 4.3],
+            ],
+            naar: [7.5, 2.2],
+            duur: 7,
+            tempo: 'gelijkmatig',
+          },
+          {
+            type: 'dribbel',
+            wie: 'a2',
+            via: [
+              [5, 6.7],
+              [3.6, 8],
+              [5, 9.3],
+              [7.5, 8.8],
+              [10, 6.7],
+              [11.4, 8],
+              [10, 9.3],
+            ],
+            naar: [7.5, 7.2],
+            duur: 7,
+            tempo: 'gelijkmatig',
+          },
         ),
         pauze(0.8),
       ],
@@ -139,8 +169,7 @@ const oefeningen = [
     },
     en: {
       naam: 'Juggling course',
-      uitleg:
-        'Keep the ball up while you walk slowly through three gates. If the ball hits the ground, start again at the last gate you reached. Who gets to the end without a mistake?',
+      uitleg: 'Keep the ball up while you walk slowly through three gates. If the ball hits the ground, start again at the last gate you reached. Who gets to the end without a mistake?',
       organisatie: 'Lane with three gates of disc cones, 2.5 m apart. Two or more lanes side by side; a ball each. Competition: who reaches the end with the fewest mistakes?',
       benodigdheden: ['8 disc cones', '1 ball per player'],
       coachpunten: ['Strike the ball with your instep, ankle locked', 'Low, soft touches keep the ball close', 'Small steps in between the touches'],

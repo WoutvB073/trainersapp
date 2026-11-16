@@ -30,7 +30,7 @@ const hoek = (h) => ((((h + 180) % 360) + 360) % 360) - 180;
 function omrekenen(t, p, graden = 0) {
   const actie = (a) => {
     const n = { ...a };
-    for (const k of ['naar', 'terug', 'stuitOp', 'terugNaar', 'afloopNaar', 'duikNaar', 'stompNaar']) if (isPunt(n[k])) n[k] = p(n[k]);
+    for (const k of ['naar', 'terug', 'stuitOp', 'terugNaar', 'afloopNaar', 'duikNaar', 'stompNaar', 'punt']) if (isPunt(n[k])) n[k] = p(n[k]);
     if (Array.isArray(n.via)) n.via = n.via.map(p);
     if (typeof n.kijk === 'number') n.kijk = hoek(n.kijk + graden);
     return n;
@@ -50,9 +50,22 @@ function omrekenen(t, p, graden = 0) {
       const n = { ...o, x, y };
       if (o.kijkrichting !== undefined) n.kijkrichting = hoek(o.kijkrichting + graden);
       if (o.hoek !== undefined && graden) n.hoek = hoek(o.hoek + graden);
+      // Een vak (zone) een kwartslag gedraaid: breedte en lengte wisselen.
+      if (o.soort === 'zone' && Math.abs(Math.abs(graden) - 90) < 0.01) Object.assign(n, { breedte: o.lengte, lengte: o.breedte });
       return n;
     }),
-    ...(t.rijen ? { rijen: t.rijen.map((r) => ({ ...r, ...Object.fromEntries([['x', p([r.x, r.y])[0]], ['y', p([r.x, r.y])[1]]]), richting: hoek((r.richting ?? 0) + graden) })) } : {}),
+    ...(t.rijen
+      ? {
+          rijen: t.rijen.map((r) => ({
+            ...r,
+            ...Object.fromEntries([
+              ['x', p([r.x, r.y])[0]],
+              ['y', p([r.x, r.y])[1]],
+            ]),
+            richting: hoek((r.richting ?? 0) + graden),
+          })),
+        }
+      : {}),
     animatie: t.animatie.map(stapOm),
   };
 }

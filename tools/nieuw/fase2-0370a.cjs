@@ -1,5 +1,6 @@
 // Fase 2, deel 3, batch 1 (0.37.0), deel a: Warming-up W1–W10 uit VOORSTEL-OEFENINGEN.md. Draaien: node tools/nieuw/fase2-0370a.cjs
 const { zet } = require('./hulp.cjs');
+const { draaiKwart } = require('./mini-hulp.cjs');
 const { speler, trainer, bal, pion, hoedje, pauze, stap, B, C, zone, leeg, doeltje, JO, OUD, MIDDEN, O6, KLEUR, lopen, dribbels, draai } = require('./fase2-hulp.cjs');
 
 const oefeningen = [
@@ -16,11 +17,7 @@ const oefeningen = [
     keepersNodig: 0,
     leeftijden: JO,
     doorwisselbaar: true,
-    coachpunten: [
-      'Weet waar je volgende nummer is voordat de bal komt',
-      'Na je pass meteen weg naar een open plek',
-      'Vraag om de bal: roep je nummer of steek je hand op',
-    ],
+    coachpunten: ['Weet waar je volgende nummer is voordat de bal komt', 'Na je pass meteen weg naar een open plek', 'Vraag om de bal: roep je nummer of steek je hand op'],
     variaties: {
       makkelijker: ['Stilstaan bij het passen', 'Groter vak'],
       moeilijker: ['Twee ballen tegelijk', 'Alleen in één keer', 'Op het fluitje de volgorde omdraaien'],
@@ -124,9 +121,51 @@ const oefeningen = [
       ],
       animatie: [
         pauze(0.5),
-        stap({ type: 'pass', van: 'a1', naar: 'a2' }, { type: 'loop', wie: 'a1', via: [[8, 0.8], [17, 0.8]], naar: [23, 8], manier: 'sprint', start: 0.35, tempo: 'gelijkmatig' }),
-        stap({ type: 'pass', van: 'b1', naar: 'b2' }, { type: 'loop', wie: 'b1', via: [[34.5, 15.2], [18, 15.2]], naar: [4, 14], manier: 'sprint', start: 0.35, tempo: 'gelijkmatig' }),
-        stap({ type: 'pass', van: 'a2', naar: 'a3' }, { type: 'loop', wie: 'a2', via: [[16, 0.8], [28, 0.8]], naar: [31, 2.5], manier: 'sprint', start: 0.35, tempo: 'gelijkmatig' }),
+        stap(
+          { type: 'pass', van: 'a1', naar: 'a2' },
+          {
+            type: 'loop',
+            wie: 'a1',
+            via: [
+              [8, 0.8],
+              [17, 0.8],
+            ],
+            naar: [23, 8],
+            manier: 'sprint',
+            start: 0.35,
+            tempo: 'gelijkmatig',
+          },
+        ),
+        stap(
+          { type: 'pass', van: 'b1', naar: 'b2' },
+          {
+            type: 'loop',
+            wie: 'b1',
+            via: [
+              [34.5, 15.2],
+              [18, 15.2],
+            ],
+            naar: [4, 14],
+            manier: 'sprint',
+            start: 0.35,
+            tempo: 'gelijkmatig',
+          },
+        ),
+        stap(
+          { type: 'pass', van: 'a2', naar: 'a3' },
+          {
+            type: 'loop',
+            wie: 'a2',
+            via: [
+              [16, 0.8],
+              [28, 0.8],
+            ],
+            naar: [31, 2.5],
+            manier: 'sprint',
+            start: 0.35,
+            tempo: 'gelijkmatig',
+          },
+        ),
         stap({ type: 'pass', van: 'b2', naar: 'b3' }, { type: 'loop', wie: 'b2', via: [[18, 6]], naar: [11, 5], manier: 'sprint', start: 0.35, tempo: 'gelijkmatig' }),
         stap({ type: 'pass', van: 'a3', naar: 'b1' }, { type: 'pass', van: 'b3', naar: 'a1', start: 0.2 }),
         pauze(0.8),
@@ -192,7 +231,12 @@ const oefeningen = [
           { type: 'loop', wie: 'c1', naar: [10, 8.6], manier: 'sprint', duur: 1.8 },
         ),
         // De tikker tikt kind 2: dat staat stil als tunnel (bal in de handen).
-        stap({ type: 'loop', wie: 'c1', naar: [11, 8.2], manier: 'sprint', duur: 0.6 }, { type: 'dribbel', wie: 'a1', naar: [10.5, 3.2], duur: 1 }, { type: 'dribbel', wie: 'a3', naar: [4, 6], duur: 1 }, { type: 'dribbel', wie: 'a4', naar: [7, 12.5], duur: 1 }),
+        stap(
+          { type: 'loop', wie: 'c1', naar: [11, 8.2], manier: 'sprint', duur: 0.6 },
+          { type: 'dribbel', wie: 'a1', naar: [10.5, 3.2], duur: 1 },
+          { type: 'dribbel', wie: 'a3', naar: [4, 6], duur: 1 },
+          { type: 'dribbel', wie: 'a4', naar: [7, 12.5], duur: 1 },
+        ),
         stap({ type: 'loop', wie: 'c1', naar: [8.4, 6], manier: 'sprint', duur: 1.4 }, { type: 'dribbel', wie: 'a1', naar: [12.5, 4.4], duur: 1.2 }),
         // Kind 1 speelt zijn bal door de tunnel en haalt hem aan de andere kant op.
         stap({ type: 'panna', wie: 'a1', door: 'a2', verder: 2.2 }, { type: 'dribbel', wie: 'a4', naar: [5, 14.5], duur: 1.4 }, { type: 'dribbel', wie: 'a3', naar: [3, 3.5], duur: 1.4 }),
@@ -225,39 +269,43 @@ const oefeningen = [
         'A small-sided game with your hands: throw the ball to each other, and you may not run while holding it. You can only score with a header or a volley from a teammate’s throw. If the ball hits the ground or the other team intercepts it, the ball goes to the other team. After a few minutes, play normal football on the same pitch.',
       organisatie: '24 × 18 m pitch with a small goal at each short end. Two teams of 3 to 5. 4 minutes of handball football, then 4 minutes of football.',
       benodigdheden: ['2 small goals', '4 cones', 'Balls', 'Bibs'],
-      coachpunten: ['Move into space, not towards the ball', 'Throw the ball in front of your teammate so they can head it on the move', 'Head with your forehead, eyes open, and direct the ball downwards'],
+      coachpunten: [
+        'Move into space, not towards the ball',
+        'Throw the ball in front of your teammate so they can head it on the move',
+        'Head with your forehead, eyes open, and direct the ball downwards',
+      ],
       variaties: {
         makkelijker: ['You may also score by throwing', 'Two bounces allowed'],
         moeilijker: ['Hold the ball for three seconds at most', 'Headers only'],
       },
     },
-    tekening: draai(
-      {
-        ...leeg(20, 26),
-        objecten: [
-          zone('z', 10, 13, 18, 24),
-          doeltje('g1', 10, 1, 0),
-          doeltje('g2', 10, 25, 180),
-          speler('a1', 1, 7, 21, { kijkrichting: -90 }),
-          speler('a2', 2, 14, 15, { kijkrichting: -110 }),
-          speler('a3', 3, 8, 9, { kijkrichting: -60 }),
-          B('b1', 4, 11, 12, { kijkrichting: 90 }),
-          B('b2', 5, 5, 6, { kijkrichting: 60 }),
-          B('b3', 6, 15, 7, { kijkrichting: 120 }),
-          bal('bal', 7, 20.45, 'a1'),
-        ],
-        animatie: [
-          pauze(0.5),
-          stap({ type: 'pass', van: 'a1', naar: 'a2', worp: 'bovenhands', hoogte: 'halfhoog', eindHoogte: 1.3 }, { type: 'loop', wie: 'a3', naar: [6.8, 7], start: 0.2 }, { type: 'loop', wie: 'b1', naar: [10.8, 13.8], start: 0.3 }),
-          stap({ type: 'loop', wie: 'a2', naar: [13.5, 11], duur: 0.8 }, { type: 'loop', wie: 'b3', naar: [15.5, 8.5], duur: 0.8 }, { type: 'loop', wie: 'b2', naar: [4, 3.8], duur: 0.8 }),
-          stap({ type: 'pass', van: 'a2', naar: 'a3', worp: 'bovenhands', hoogte: 'halfhoog', eindHoogte: 1.85 }, { type: 'loop', wie: 'a3', naar: [8, 4.2], start: 0.1, manier: 'sprint' }),
-          stap({ type: 'schot', van: 'a3', naar: [9.2, 0.6], direct: true, hoogte: 'laag', eindHoogte: 0.3 }),
-          pauze(1),
-        ],
-      },
-      [10, 13],
-      -90,
-    ),
+    tekening: draaiKwart({
+      ...leeg(20, 26),
+      objecten: [
+        zone('z', 10, 13, 18, 24),
+        doeltje('g1', 10, 1, 0),
+        doeltje('g2', 10, 25, 180),
+        speler('a1', 1, 7, 21, { kijkrichting: -90 }),
+        speler('a2', 2, 14, 15, { kijkrichting: -110 }),
+        speler('a3', 3, 8, 9, { kijkrichting: -60 }),
+        B('b1', 4, 11, 12, { kijkrichting: 90 }),
+        B('b2', 5, 5, 6, { kijkrichting: 60 }),
+        B('b3', 6, 15, 7, { kijkrichting: 120 }),
+        bal('bal', 7, 20.45, 'a1'),
+      ],
+      animatie: [
+        pauze(0.5),
+        stap(
+          { type: 'pass', van: 'a1', naar: 'a2', worp: 'bovenhands', hoogte: 'halfhoog', eindHoogte: 1.3 },
+          { type: 'loop', wie: 'a3', naar: [6.8, 7], start: 0.2 },
+          { type: 'loop', wie: 'b1', naar: [10.8, 13.8], start: 0.3 },
+        ),
+        stap({ type: 'loop', wie: 'a2', naar: [13.5, 11], duur: 0.8 }, { type: 'loop', wie: 'b3', naar: [15.5, 8.5], duur: 0.8 }, { type: 'loop', wie: 'b2', naar: [4, 3.8], duur: 0.8 }),
+        stap({ type: 'pass', van: 'a2', naar: 'a3', worp: 'bovenhands', hoogte: 'halfhoog', eindHoogte: 1.85 }, { type: 'loop', wie: 'a3', naar: [8, 4.2], start: 0.1, manier: 'sprint' }),
+        stap({ type: 'schot', van: 'a3', naar: [9.2, 0.6], direct: true, hoogte: 'laag', eindHoogte: 0.3 }),
+        pauze(1),
+      ],
+    }),
   },
 
   // W5. Twee rijen: loopvormen met een pass

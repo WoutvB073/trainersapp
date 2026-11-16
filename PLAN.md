@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (16-11-2026, versie 0.36.0)
+## Status (16-11-2026, versie 0.37.0)
 
 | Fase | Status |
 |---|---|
@@ -55,7 +55,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | De volgende stap, fase 1 (onderzoek, proef en plan) | ✅ bekeken, keuzes gemaakt (ontwerp C, alle 157 oefeningen, nummers en installatiescherm zoals voorgesteld, animaties zo realistisch als mogelijk). Verslag: **PLAN-VOLGENDE-STAP.md**. |
 | 40. Fase 2, deel 1: opstelling slepen, vaste rugnummers, installatiescherm (0.35.0) | ✅ online – **wacht op test** |
 | 41. Fase 2, deel 2: ontwerp C (Zacht) op alle schermen (0.36.0) | ✅ online – **wacht op test** |
-| 42. Fase 2, deel 3: 157 nieuwe oefeningen in batches (0.37.x) | ⏳ |
+| 42. Fase 2, deel 3: nieuwe oefeningen in batches (0.37.x) | 🔄 Batch 1 (0.37.0): 30 oefeningen in Warming-up, Loopcoördinatie, Techniek en Spelletjes – online, **wacht op test**. Nog: Pass en trap, Afwerken, Positiespel (0.37.1); Verdedigen en omschakelen, 1 tegen 1, Partijvormen (0.37.2); keepers (0.37.3). |
 | 43. Fase 2, deel 4: zo realistisch mogelijke animaties (0.38.0) | ⏳ |
 
 ## Werkwijze
@@ -1297,8 +1297,19 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Gegevens**: niets veranderd aan opslag, sync of links.
 - **Tests**: `tests/volgende-stap-oefeningen.test.ts` (ontwerp altijd c, alleen richting c in de CSS, dekkende kaarten); browsertest `tools/e2e/zacht.mjs` (29 schermen op iPhone SE en laptop, licht en donker, NL en EN, een clubkleur; niets afgekapt, geen horizontaal scrollen, geen browserfouten; bladen `blad-zacht-<formaat>-<modus>.png`). `tools/e2e/ontwerp.mjs` (de richtingen van fase 1) is weg.
 
+## Besluiten versie 0.37.0 – nieuwe oefeningen, batch 1 (fase 2, deel 3)
+- **30 oefeningen** uit VOORSTEL-OEFENINGEN.md, met animatie in 2D en 3D, Engels en alle tests: Warming-up W1–W10, Loopcoördinatie L3–L8 (zonder bal), Techniek T2–T4 en T6–T11 (alleen balcontrole), Spelletjes S2–S5 en S7. Bouwscripts `tools/nieuw/fase2-0370a–f.cjs` met hulpjes in `tools/nieuw/fase2-hulp.cjs` (`draai`, `omrekenen`, `lopen`, `dribbels`, materiaal); eisen in `tests/versie-0370.test.ts`.
+- **Overgeslagen (vrijwel gelijk aan een bestaande oefening)**: L1 Ladder twee in, twee uit (= Loopladder zijwaarts: in-in-uit-uit), L2 Hoepelhinkelbaan (= Ringen: hinkelen en spreidsprong), T1 Kapwedstrijd op de lijn (= Kappen en draaien bij de pion), T5 Kiezen bij de pop (= Dribbel naar de pop en een actie), T13 Buitenkant-slalom op tijd (= Slalom met de bal, met al een ronde alleen buitenkant), S1 Lattenschieten (= Latje-trap), S6 Doelpuntenestafette (= Snelle schutter op kleine doeltjes), S8 Ballen in de mand (= Eieren rapen / Hoedjes verzamelen).
+- **Fysieke controle**: in een hoepel afremmen of stilstaan mag nu (een hoepel ligt plat; nodig voor "Hordes en afremmen in de hoepel"). Er gewoon doorheen joggen blijft een fout. `src/anim/fysiek.ts`, getest in `tests/versie-0370.test.ts`.
+- **Lettertypes en externe verzoeken** (vraag van de gebruiker): Inter en Barlow Condensed zaten al in de app, via de pakketten `@fontsource-variable/inter` en `@fontsource/barlow-condensed` (SIL Open Font License 1.1): de bestanden staan in de build (`dist/assets/*.woff2`) en in de offline-cache van de service worker. Er wordt niets van Google Fonts of een ander adres geladen. Gemeten met `tools/e2e/extern.mjs` op de echte site: op 16 schermen (niet ingelogd) en het installatiescherm in Safari, WhatsApp en Android gaat er **geen enkel verzoek** naar buiten. Pas bij inloggen, teams, synchroniseren of korte deellinks praat de app met Firebase (Google-adressen van Firebase: identitytoolkit, securetoken, firestore). In de code van de Firebase-bibliotheek staan nog adressen voor reCAPTCHA en Google-inloggen (apis.google.com, www.google.com/recaptcha), maar die worden alleen gebruikt bij telefoonnummer- of Google-inloggen, en dat heeft de app niet. Vaste test in `tests/versie-0370.test.ts` (geen externe lettertypes of links in index.html en CSS).
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.37.0 – Acht voorstellen zijn overgeslagen omdat er al een vrijwel gelijke oefening is (zie de besluiten van 0.37.0). Wil je ze toch als aparte oefening, dan bouw ik ze alsnog met een duidelijk ander accent.
+- 0.37.0 – Dierenloop (O6): de beer (op handen en voeten) kan het poppetje nog niet; in plaats daarvan doen de kinderen een paardje (huppelen). Kikker = springen, ooievaar = knieheffen, krab = zijwaarts.
+- 0.37.0 – Tunneltikkertje: het getikte kind blijft als tunnel staan met zijn bal aan de voet (de bal in de handen nemen kan de animatie nog niet tegelijk met een panna).
+- 0.37.0 – Koppen in tweetallen en Handbalvoetbal: het vangen na een kopbal of worp is in de animatie een aanname; de uitleg zegt dat je vangt.
+- 0.37.0 – Hordes en afremmen in de hoepel: na het stilstaan stap je zijwaarts uit de hoepel voordat je teruggaat.
 - 0.36.0 – Het verloop op de knoppen gaat van iets lichter naar iets donkerder in de clubkleur, niet naar de accentkleur (dat gaf bij groen een olijfbruine knop). De kleurvlek in de accentkleur rechtsboven is zwakker gemaakt (9 % in plaats van 15 %).
 - 0.36.0 – Kaarten en panelen zijn dekkend; alleen tegels, lijsten, blokken en de installatiekaart zijn matglas (een doorzichtige kaart is in een menu of paneel onrustig en slecht leesbaar).
 - 0.36.0 – Achter de statusbalk van de geïnstalleerde app op een iPhone staat een donkere strook in de clubkleur, zodat de witte tijd en batterij leesbaar blijven boven de nu lichte kop.

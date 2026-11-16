@@ -65,13 +65,18 @@ const oefeningen = [
     categorieen: ['techniek', 'pass-en-trap'],
     uitleg:
       'Vier gekleurde pionnen staan in een kruis om je heen. De trainer speelt de bal in en roept een kleur terwijl de bal onderweg is. Neem de bal met je eerste aanraking mee in de richting van die kleur, dribbel naar de pion en speel de bal terug. Daarna loop je terug naar het midden voor de volgende bal.',
-    organisatie: 'Kruis met vier pionnen in vier kleuren op 4 m van het midden. De trainer staat op 8 m met een paar ballen. Eén speler in het midden, de volgende wacht naast de trainer. Series van 6 ballen.',
+    organisatie:
+      'Kruis met vier pionnen in vier kleuren op 4 m van het midden. De trainer staat op 8 m met een paar ballen. Eén speler in het midden, de volgende wacht naast de trainer. Series van 6 ballen.',
     benodigdheden: ['4 pionnen in 4 kleuren', 'Ballen'],
     spelersNodig: 2,
     keepersNodig: 0,
     leeftijden: MIDDEN,
     doorwisselbaar: true,
-    coachpunten: ['Klaarstaan op je voorvoeten, niet stilstaan op je hakken', 'Luister en kijk: neem de bal mee naar de goede kant', 'Eerste aanraking niet te ver: na twee passen moet je hem weer kunnen spelen'],
+    coachpunten: [
+      'Klaarstaan op je voorvoeten, niet stilstaan op je hakken',
+      'Luister en kijk: neem de bal mee naar de goede kant',
+      'Eerste aanraking niet te ver: na twee passen moet je hem weer kunnen spelen',
+    ],
     variaties: {
       makkelijker: ['De trainer roept de kleur al vóór de pass', 'Twee pionnen in plaats van vier'],
       moeilijker: ['De trainer wijst in plaats van te roepen', 'Bal halfhoog', 'Kleur roepen die je níet moet nemen'],
@@ -82,7 +87,11 @@ const oefeningen = [
         'Four coloured cones stand in a cross around you. The coach plays the ball in and calls a colour while the ball is travelling. Take your first touch towards that colour, dribble to the cone and play the ball back. Then go back to the middle for the next ball.',
       organisatie: 'Cross of four cones in four colours, 4 m from the middle. The coach stands 8 m away with a few balls. One player in the middle, the next waits beside the coach. Sets of 6 balls.',
       benodigdheden: ['4 cones in 4 colours', 'Balls'],
-      coachpunten: ['Get set on the balls of your feet, not flat on your heels', 'Listen and look: take the ball towards the right side', 'First touch not too far: after two steps you must be able to play it again'],
+      coachpunten: [
+        'Get set on the balls of your feet, not flat on your heels',
+        'Listen and look: take the ball towards the right side',
+        'First touch not too far: after two steps you must be able to play it again',
+      ],
       variaties: {
         makkelijker: ['The coach calls the colour before the pass', 'Two cones instead of four'],
         moeilijker: ['The coach points instead of calling', 'Ball at half height', 'Call the colour you must NOT go to'],
@@ -126,7 +135,8 @@ const oefeningen = [
     categorieen: ['techniek'],
     uitleg:
       'Twee spelers dribbelen naast elkaar in hun eigen baan. Op het fluitsignaal zetten ze de bal stil met hun zool, draaien om en dribbelen zo snel mogelijk terug achter hun eigen startlijn. Wie het eerst terug is met de bal onder controle, wint.',
-    organisatie: 'Twee banen van 15 m naast elkaar, 3 m uit elkaar, met een startlijn van hoedjes. Iedereen een bal. De trainer fluit ergens tussen 6 en 12 m. Wie verliest, doet 5 keer de zooltrek op de plek.',
+    organisatie:
+      'Twee banen van 15 m naast elkaar, 3 m uit elkaar, met een startlijn van hoedjes. Iedereen een bal. De trainer fluit ergens tussen 6 en 12 m. Wie verliest, doet 5 keer de zooltrek op de plek.',
     benodigdheden: ['8 hoedjes', '1 bal per speler'],
     spelersNodig: 2,
     keepersNodig: 0,
@@ -141,9 +151,14 @@ const oefeningen = [
       naam: 'Dribble race with brakes',
       uitleg:
         'Two players dribble side by side, each in their own lane. On the whistle they stop the ball with the sole of their foot, turn and dribble back behind their own start line as fast as possible. Whoever gets back first with the ball under control wins.',
-      organisatie: 'Two 15 m lanes side by side, 3 m apart, with a start line of disc cones. A ball each. The coach blows the whistle somewhere between 6 and 12 m. The loser does 5 sole drags on the spot.',
+      organisatie:
+        'Two 15 m lanes side by side, 3 m apart, with a start line of disc cones. A ball each. The coach blows the whistle somewhere between 6 and 12 m. The loser does 5 sole drags on the spot.',
       benodigdheden: ['8 disc cones', '1 ball per player'],
-      coachpunten: ['Dribble with small touches so you can brake straight away', 'Sole on top of the ball, weight on your standing leg', 'Turn towards the side of your sole and accelerate straight away'],
+      coachpunten: [
+        'Dribble with small touches so you can brake straight away',
+        'Sole on top of the ball, weight on your standing leg',
+        'Turn towards the side of your sole and accelerate straight away',
+      ],
       variaties: {
         makkelijker: ['Stand still with your foot on the ball first, then turn', 'Walking pace'],
         moeilijker: ['The coach also calls "left" or "right": turn that way', 'Brake with your weaker foot'],
@@ -233,7 +248,8 @@ const oefeningen = [
     categorieen: ['techniek', 'pass-en-trap'],
     uitleg:
       'Vier stations van een minuut, en alles doe je met je zwakke voet. Station 1: passen tegen het kaatsbord. Station 2: slalom tussen de paaltjes. Station 3: zoolrollen op de plek, de bal heen en weer onder je zool. Station 4: aannemen en meenemen van een bal die terugkomt van het kaatsbord. Na een minuut schuif je door.',
-    organisatie: 'Vier stations naast elkaar, elk ± 8 × 6 m: kaatsbord op 4 m, vijf paaltjes op 1,5 m, een vak van 3 × 3 m, een tweede kaatsbord met een poortje. Eén of twee spelers per station, iedereen een bal. 1 minuut per station, 15 seconden om te wisselen.',
+    organisatie:
+      'Vier stations naast elkaar, elk ± 8 × 6 m: kaatsbord op 4 m, vijf paaltjes op 1,5 m, een vak van 3 × 3 m, een tweede kaatsbord met een poortje. Eén of twee spelers per station, iedereen een bal. 1 minuut per station, 15 seconden om te wisselen.',
     benodigdheden: ['2 kaatsborden', '5 paaltjes', '8 hoedjes', '1 bal per speler'],
     spelersNodig: 4,
     keepersNodig: 0,
@@ -248,7 +264,8 @@ const oefeningen = [
       naam: 'Weak-foot circuit',
       uitleg:
         'Four one-minute stations, and you do everything with your weaker foot. Station 1: passes against the rebounder. Station 2: slalom through the poles. Station 3: sole rolls on the spot, the ball back and forth under your sole. Station 4: receive and take away a ball coming back off the rebounder. After a minute, move on.',
-      organisatie: 'Four stations side by side, each about 8 × 6 m: rebounder at 4 m, five poles 1.5 m apart, a 3 × 3 m box, a second rebounder with a gate. One or two players per station, a ball each. 1 minute per station, 15 seconds to change.',
+      organisatie:
+        'Four stations side by side, each about 8 × 6 m: rebounder at 4 m, five poles 1.5 m apart, a 3 × 3 m box, a second rebounder with a gate. One or two players per station, a ball each. 1 minute per station, 15 seconds to change.',
       benodigdheden: ['2 rebounders', '5 poles', '8 disc cones', '1 ball per player'],
       coachpunten: ['Weaker foot only, even when it does not work for a moment', 'Better slow and good than quick and sloppy', 'Count your good attempts and try for more next round'],
       variaties: {
@@ -265,7 +282,12 @@ const oefeningen = [
         zone('z4', 30, 5, 8, 9),
         kaatsbord('k1', 4.5, 1.6, 0),
         ...[2.4, 3.9, 5.4, 6.9, 8.4].map((y, i) => paaltje(`s${i}`, 13, y)),
-        ...[[20, 3.5], [23, 3.5], [20, 6.5], [23, 6.5]].map(([x, y], i) => hoedje(`v${i}`, x, y)),
+        ...[
+          [20, 3.5],
+          [23, 3.5],
+          [20, 6.5],
+          [23, 6.5],
+        ].map(([x, y], i) => hoedje(`v${i}`, x, y)),
         kaatsbord('k2', 30, 1.6, 0),
         hoedje('g1', 28.6, 7.6),
         hoedje('g2', 31.4, 7.6),
@@ -282,7 +304,20 @@ const oefeningen = [
         pauze(0.5),
         stap(
           { type: 'pass', van: 'a1', naar: 'k1', terug: 'a1' },
-          { type: 'dribbel', wie: 'a2', via: [[14, 8.4], [12, 6.9], [14, 5.4], [12, 3.9], [14, 2.4]], naar: [13, 1], duur: 4.4, tempo: 'gelijkmatig' },
+          {
+            type: 'dribbel',
+            wie: 'a2',
+            via: [
+              [14, 8.4],
+              [12, 6.9],
+              [14, 5.4],
+              [12, 3.9],
+              [14, 2.4],
+            ],
+            naar: [13, 1],
+            duur: 4.4,
+            tempo: 'gelijkmatig',
+          },
           { type: 'tiktak', wie: 'a3' },
           { type: 'pass', van: 'a4', naar: 'k2', terug: 'a4' },
         ),
@@ -300,7 +335,8 @@ const oefeningen = [
     categorieen: ['techniek'],
     uitleg:
       'Jij bent een auto en je bal is je auto. Rij door de wasstraat: tussen de poppen door, langs de trainers die met hesjes zwaaien. Houd je bal heel dichtbij, dan komt hij er schoon uit! Rijd daarna buitenom terug en ga nog een keer.',
-    organisatie: 'Straat van 2,5 m breed en 10 m lang met aan elke kant twee poppen; twee trainers staan erlangs met een hesje. 5 kinderen met een eigen voetbal rijden achter elkaar door de straat en buitenom terug.',
+    organisatie:
+      'Straat van 2,5 m breed en 10 m lang met aan elke kant twee poppen; twee trainers staan erlangs met een hesje. 5 kinderen met een eigen voetbal rijden achter elkaar door de straat en buitenom terug.',
     benodigdheden: ['4 poppen', '2 hesjes', '4 hoedjes', '1 voetbal per kind'],
     spelersNodig: 3,
     keepersNodig: 0,
@@ -315,7 +351,8 @@ const oefeningen = [
       naam: 'Car wash',
       uitleg:
         'You are a car and your ball is your car. Drive through the car wash: between the mannequins, past the coaches waving their bibs. Keep your ball really close and it comes out clean! Then drive back round the outside and go again.',
-      organisatie: 'A street 2.5 m wide and 10 m long with two mannequins on each side; two coaches stand alongside with a bib. 5 children, each with a ball, drive through the street one after the other and back round the outside.',
+      organisatie:
+        'A street 2.5 m wide and 10 m long with two mannequins on each side; two coaches stand alongside with a bib. 5 children, each with a ball, drive through the street one after the other and back round the outside.',
       benodigdheden: ['4 mannequins', '2 bibs', '4 disc cones', '1 ball per child'],
       coachpunten: ['Small touches, the ball stays close', 'Look where you are driving', 'Do not bump into the mannequins'],
       variaties: {
@@ -347,7 +384,11 @@ const oefeningen = [
         pauze(0.5),
         stap({ type: 'dribbel', wie: 'a1', naar: [14.6, 5.5], duur: 4.2, tempo: 'gelijkmatig' }, { type: 'dribbel', wie: 'a2', naar: [1.4, 5.5], start: 1.6, duur: 1.4 }),
         stap({ type: 'dribbel', wie: 'a1', via: [[15, 10.3]], naar: [12, 10.5], duur: 1.6 }, { type: 'dribbel', wie: 'a2', naar: [7.5, 5.5], duur: 2.4, tempo: 'gelijkmatig' }),
-        stap({ type: 'dribbel', wie: 'a2', naar: [14.6, 5.5], duur: 2.4, tempo: 'gelijkmatig' }, { type: 'dribbel', wie: 'a1', naar: [5, 10.5], duur: 2.4 }, { type: 'dribbel', wie: 'a3', naar: [1.4, 5.5], start: 1, duur: 1.4 }),
+        stap(
+          { type: 'dribbel', wie: 'a2', naar: [14.6, 5.5], duur: 2.4, tempo: 'gelijkmatig' },
+          { type: 'dribbel', wie: 'a1', naar: [5, 10.5], duur: 2.4 },
+          { type: 'dribbel', wie: 'a3', naar: [1.4, 5.5], start: 1, duur: 1.4 },
+        ),
         stap({ type: 'dribbel', wie: 'a3', naar: [8, 5.5], duur: 2.4, tempo: 'gelijkmatig' }, { type: 'dribbel', wie: 'a2', via: [[15, 0.7]], naar: [12, 0.5], duur: 2 }),
         pauze(0.8),
       ],

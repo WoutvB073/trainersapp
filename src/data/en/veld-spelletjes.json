@@ -300,5 +300,136 @@
         "A cone to dribble round before the shooting line"
       ]
     }
+  },
+  "veld-sp-rondje-om-het-doel": {
+    "naam": "Round the goal",
+    "uitleg": "Everyone stands in a line in front of the goal, with one player in goal as keeper. The front player dribbles to the shooting line and shoots. Then they run into the goal and become the new keeper; the old keeper joins the back of the line. If you concede a goal as keeper, you lose a life. Who has the most lives left out of three?",
+    "organisatie": "On half a pitch with a full-size goal (or a youth goal). Shooting line at 14 m. Everyone starts with three lives; once you are out of lives you can still shoot. Rounds of 5 minutes.",
+    "benodigdheden": [
+      "Goal",
+      "2 cones",
+      "Balls",
+      "1 goalkeeper bib"
+    ],
+    "coachpunten": [
+      "Shoot low into the corner: that is hardest for a keeper",
+      "Sprint straight after your shot: the next ball is waiting in goal",
+      "Keeper: get set on the balls of your feet, hands in front of you"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shoot from 10 m",
+        "Only lose a life for a goal, not for a save that spills"
+      ],
+      "moeilijker": [
+        "Shoot first time only, after a pass from the coach",
+        "Shoot with your weaker foot",
+        "Shooting line at 18 m"
+      ]
+    }
+  },
+  "veld-sp-voetbalbowlen": {
+    "naam": "Football bowling",
+    "uitleg": "Six tall cones stand in a triangle, like pins at bowling. Roll the ball with a firm pass along the ground and try to knock over as many cones as you can. Every cone that falls is a point. Then stand them up again for the next player.",
+    "organisatie": "Triangle of 6 tall cones (3-2-1), 30 cm apart. Passing line at 6 m (U7) to 8 m (U8–U11). Two lanes side by side, two or three children per lane; each child has two goes per round.",
+    "benodigdheden": [
+      "12 tall cones",
+      "4 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Standing foot beside the ball, toes pointing at the cones",
+      "Pass with the inside of your foot, firmly along the ground",
+      "Aim at the front cone, just slightly to one side"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer",
+        "Cones further apart"
+      ],
+      "moeilijker": [
+        "With your other foot",
+        "Further away",
+        "Receive the ball from a partner first, then strike it first time"
+      ]
+    }
+  },
+  "veld-sp-voetbalkegelen-teams": {
+    "naam": "Team skittles",
+    "uitleg": "Each team stands in its own half with four cones behind them. Try to knock over the other team’s cones with a pass along the ground, and protect your own cones by stopping their balls. You may not cross the halfway line. The team with the last cone still standing wins.",
+    "organisatie": "20 × 16 m pitch with a halfway line; four cones on each end line. Two teams of 3 or 4, with three or four balls in play. Fallen cones stay down until the end of the round.",
+    "benodigdheden": [
+      "8 cones",
+      "6 disc cones",
+      "4 balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Look up before you pass: where is a cone unprotected?",
+      "Firm along the ground makes the ball hard to stop",
+      "Defending: step behind the ball and stop it with your sole"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Fewer balls in play",
+        "Cones closer to the halfway line"
+      ],
+      "moeilijker": [
+        "One touch only",
+        "Weaker foot",
+        "More balls"
+      ]
+    }
+  },
+  "veld-sp-hooghouden-levens": {
+    "naam": "Keepy-up challenge with lives",
+    "uitleg": "In a circle of four, keep the ball up together. You may touch the ball as often as you like before passing it on, but it must not touch the ground. If you let it drop, you lose a life. Who has the most lives left after five minutes?",
+    "organisatie": "Circles of 4 players, about 5 m across, one ball per circle. Everyone starts with three lives. One bounce in between is allowed at first.",
+    "benodigdheden": [
+      "1 ball per circle",
+      "4 disc cones per circle"
+    ],
+    "coachpunten": [
+      "Play the ball softly and high enough for your teammate",
+      "Control it yourself first, then pass it on",
+      "Stay on the balls of your feet, ready to move"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One bounce is always allowed",
+        "Smaller circle"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "Weaker foot and head only",
+        "The whole circle counts out loud: who sets the record?"
+      ]
+    }
+  },
+  "veld-sp-chaosvoetbal": {
+    "naam": "Chaos football with four mini goals and three balls",
+    "uitleg": "Two teams play at the same time with three balls. Each team defends two mini goals and can score in the other team’s two. Something is happening everywhere on the pitch, so look around: where is a ball, where is a free goal? When you score, fetch the ball quickly and play on.",
+    "organisatie": "20 × 15 m pitch with two mini goals at each short end. Two teams of 4 or 5, three balls in play at once. Rounds of 3 minutes; count all the goals.",
+    "benodigdheden": [
+      "4 mini goals",
+      "4 disc cones",
+      "3 balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Look up: where is a ball nobody has?",
+      "Free goal? Dribble quickly and score",
+      "Help defend when someone comes towards your goal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two balls",
+        "Bigger pitch"
+      ],
+      "moeilijker": [
+        "Four balls",
+        "Score only after a pass"
+      ]
+    }
   }
 }
