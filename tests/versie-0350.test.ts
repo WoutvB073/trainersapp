@@ -134,3 +134,25 @@ describe('rugnummers in de voorbeelden (0.35.0)', () => {
     expect(nummerFouten(bord([[8, 40, 50], [6, 28, 50]]))).toEqual(['A: 8 staat rechts van 6']);
   });
 });
+
+describe('geen voorbeeldvlag in de live app (0.35.0)', () => {
+  it('ook met de oude testvlag in localStorage blijft alles uit', async () => {
+    const opslag = new Map<string, string>([
+      ['trainersapp.voorbeeld', '1'],
+      ['trainersapp.ontwerp', 'c'],
+      ['trainersapp.realistisch', '1'],
+    ]);
+    const oud = (globalThis as { localStorage?: unknown }).localStorage;
+    (globalThis as { localStorage?: unknown }).localStorage = { getItem: (k: string) => opslag.get(k) ?? null, setItem: () => {}, removeItem: () => {} };
+    try {
+      const { isVoorbeeld } = await import('../src/engine/voorbeeld');
+      const { leesOntwerp } = await import('../src/engine/ontwerp');
+      const { leesRealistisch } = await import('../src/engine/realistisch');
+      expect(isVoorbeeld()).toBe(false);
+      expect(leesOntwerp()).toBe('huidig');
+      expect(leesRealistisch()).toBe(false);
+    } finally {
+      (globalThis as { localStorage?: unknown }).localStorage = oud;
+    }
+  });
+});

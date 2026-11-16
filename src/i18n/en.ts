@@ -1473,4 +1473,13 @@ export const EN: Record<string, string> = {
   'Zet op beginscherm': 'Add to Home Screen',
   'Voeg toe': 'Add',
   'Open als webapp': 'Open as Web App',
+  'Open in Safari': 'Open in Safari',
+  'Gebeurde er niets? Volg dan deze stappen:': 'Nothing happened? Then follow these steps:',
+  'Werkt de knop niet op jouw telefoon? Volg dan deze stappen:': 'Button not working on your phone? Then follow these steps:',
+  Deel: 'Share',
+  'Plak en ga': 'Paste and Go',
+  'App installeren': 'Install app',
+  'Pagina toevoegen aan': 'Add page to',
+  'Toevoegen aan startscherm': 'Add to Home screen',
+  'Toevoegen aan telefoon': 'Add to phone',
 };

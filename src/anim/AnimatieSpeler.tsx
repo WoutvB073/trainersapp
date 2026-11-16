@@ -8,7 +8,7 @@ import type { CameraStand, Weergave3D } from './render3d';
 import { Icoon } from '../components/Icoon';
 import { poppetjes, usePoppetjes } from '../engine/poppetjes';
 import { useRealistisch, zetRealistisch } from '../engine/realistisch';
-import { isVoorbeeld } from '../engine/voorbeeld';
+import { VOORBEELD_BUILD } from '../engine/voorbeeld';
 import { getal, t } from '../i18n/t';
 
 export const SNELHEDEN = [0.5, 1, 2] as const;
@@ -287,7 +287,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             ))}
           </div>
         </div>
-        {isVoorbeeld() && modus === '3d' && klaar3d && !eenvoudig && (
+        {VOORBEELD_BUILD && modus === '3d' && klaar3d && !eenvoudig && (
           <button className={`speler-proef${realistisch ? ' aan' : ''}`} aria-pressed={realistisch} onClick={() => zetRealistisch(!realistisch)}>
             {t('Realistisch (proef)')}
           </button>

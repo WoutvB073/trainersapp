@@ -14,6 +14,7 @@ import './styles/start.css';
 import './styles/ontwerp.css';
 import { App } from './App';
 import { OntwerpWissel } from './components/Voorbeeld';
+import { VOORBEELD_BUILD } from './engine/voorbeeld';
 import { startServiceWorker } from './engine/update';
 import { pasThemaToe } from './engine/thema';
 import { pasOntwerpToe } from './engine/ontwerp';
@@ -42,7 +43,7 @@ void laadTaal()
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
         <App />
-        <OntwerpWissel />
+        {VOORBEELD_BUILD && <OntwerpWissel />}
       </StrictMode>,
     ),
   );
