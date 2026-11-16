@@ -1060,5 +1060,134 @@
         "The shooter follows in too: two players on the rebound"
       ]
     }
+  },
+  "veld-af-volley-aangooi": {
+    "naam": "Volley from a throw",
+    "uitleg": "The server stands beside the goal and throws the ball in a loop in front of you. Run in and shoot the ball out of the air at goal, without controlling it first. First standing from the penalty spot, then on the move. Collect your ball and join the back of the line.",
+    "organisatie": "On half a pitch with a keeper. Server 10 m out to the side of the goal, line of shooters at 18 m. The server has a pile of balls. Change server after 6 shots.",
+    "benodigdheden": [
+      "Goal",
+      "2 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Keep your eyes on the ball until you strike it",
+      "Knee over the ball and ankle locked, so it stays low",
+      "Strike the ball at knee height, not too early"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Let it bounce once first (half-volley)",
+        "Closer in"
+      ],
+      "moeilijker": [
+        "Ball from further away and higher",
+        "Left and right foot alternately",
+        "A defender tracks you"
+      ]
+    }
+  },
+  "veld-af-schieten-drie-zones": {
+    "naam": "Shooting from three zones",
+    "uitleg": "In front of goal there are three zones one behind the other: close, middle and far. The further out you shoot from, the more a goal is worth: 1, 2 or 3 points. Each player chooses which zone to shoot from. Dribble into the zone, shoot and collect your ball. Who has the most points after ten shots?",
+    "organisatie": "On half a pitch with a keeper. Three zones, each 6 m deep: 8–14 m, 14–20 m and 20–26 m. Line at 30 m, a ball each. Count the points after ten shots.",
+    "benodigdheden": [
+      "Goal",
+      "8 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Dare to choose: far is worth more, close is easier",
+      "Look up before you shoot: where is the keeper?",
+      "Strike with your instep and keep it low"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Smaller zones, closer to goal",
+        "No keeper, or a small goal"
+      ],
+      "moeilijker": [
+        "A defender chases from the line",
+        "Only first time after a pass"
+      ]
+    }
+  },
+  "veld-af-dribbel-van-opzij": {
+    "naam": "Finishing after cutting in from the side",
+    "uitleg": "You start on the wing, dribble diagonally inside and shoot with the inside of your foot into the far corner: the ball curls round the keeper. First from the left with your right foot, then from the right with your left foot. Collect your ball and join the other line.",
+    "organisatie": "On half a pitch with a keeper. Two lines on the wings, 22 m from goal and 14 m to the side. A ball each; alternate left and right.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Dribble inside until the goal opens up in front of you",
+      "Inside of your foot, curl the ball round the keeper",
+      "Aim at the far post: if you miss, the ball is still in front of goal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Start closer in",
+        "You may shoot with your instep"
+      ],
+      "moeilijker": [
+        "A defender tracks you",
+        "Cut inside after a dummy",
+        "Shoot with your weaker foot"
+      ]
+    }
+  },
+  "veld-af-twee-doelen-een-schutter": {
+    "naam": "Two goals, one shooter",
+    "uitleg": "Two goals with a keeper each face each other. The coach stands at the side and plays the ball in to the shooter in the middle. While the ball is travelling, the coach calls which goal to shoot at. Control the ball, turn to that goal and shoot. Then it is the next player’s turn.",
+    "organisatie": "Two youth goals 30 m apart, each with a keeper. The coach stands halfway at the side with balls; the shooters wait next to the coach. Sets of 6 balls.",
+    "benodigdheden": [
+      "2 youth goals",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Stand half-turned so you can see both goals",
+      "First touch already towards the right goal",
+      "Shoot quickly: within two touches"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach calls the goal before the pass",
+        "Ball along the ground"
+      ],
+      "moeilijker": [
+        "A defender in the middle",
+        "Ball at half height",
+        "Shoot first time"
+      ]
+    }
+  },
+  "veld-af-penaltykoning": {
+    "naam": "Penalty king",
+    "uitleg": "Everyone takes a penalty in turn. If you score, you stay in. If you miss or the keeper saves it, you go in goal and the keeper becomes a shooter. Whoever has scored the most penalties at the end is the penalty king.",
+    "organisatie": "On half a pitch with a full-size goal (or a youth goal at 9 m). Line behind the penalty spot, one ball per player. The keeper keeps changing; a real goalkeeper may stay in goal the whole time.",
+    "benodigdheden": [
+      "Goal",
+      "Balls",
+      "1 goalkeeper bib"
+    ],
+    "coachpunten": [
+      "Choose your corner before the run-up and do not change it",
+      "Watch the ball as you strike it, not the keeper",
+      "Keeper: stay on your feet as long as possible and only dive when the ball is struck"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer (7 m)",
+        "A small goal with no keeper"
+      ],
+      "moeilijker": [
+        "Weaker foot only",
+        "Sprint 10 m, then take the penalty straight away",
+        "Point to your corner beforehand"
+      ]
+    }
   }
 }
