@@ -241,7 +241,9 @@ export function fysiekeMeldingen(tekening: Tekening, tl: Tijdlijn = maakTijdlijn
           }
           const d = afstandTot(v, q);
           if (o.soort === 'ladder' || o.soort === 'horde' || o.soort === 'ring' || o.soort === 'stok') {
-            if (d < LIJF * 0.6 && !parcours) meld(`${id} staat/loopt in ${o.id} (${o.soort}) zonder parcours-loopwijze (t=${r2(t)})`, t, `${persoonNaam(id)} loopt door ${naam(o)} zonder voetenwerk of sprongen`, id);
+            // Een hoepel ligt plat: erin afremmen of erin stilstaan mag (stopoefening, 0.37.0).
+            const inHoepel = o.soort === 'ring' && (ps.manier === 'afremmen' || ps.snelheid < 0.3);
+            if (d < LIJF * 0.6 && !parcours && !inHoepel) meld(`${id} staat/loopt in ${o.id} (${o.soort}) zonder parcours-loopwijze (t=${r2(t)})`, t, `${persoonNaam(id)} loopt door ${naam(o)} zonder voetenwerk of sprongen`, id);
           } else if (o.soort !== 'pion' && o.soort !== 'paaltje' && d < LIJF) {
             // Pionnen en paaltjes controleert de afstandstest al (0,5 m).
             meld(`${id} loopt door ${o.id} (${o.soort}, t=${r2(t)})`, t, `${persoonNaam(id)} loopt door ${naam(o)}`, id);

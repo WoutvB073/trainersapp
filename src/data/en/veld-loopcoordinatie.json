@@ -338,5 +338,154 @@
         "Time it and try to improve"
       ]
     }
+  },
+  "veld-lc-reactiestart-kleur": {
+    "naam": "Colour reaction start",
+    "uitleg": "You stand with your back to two cones, a red one and a blue one, facing the coach. The coach calls a colour. Turn as quickly as possible, sprint to that cone and touch it. Then jog back to your starting spot for the next colour. Who gets to the cone first?",
+    "organisatie": "For each player two cones 5 m away, 3.5 m apart; the players stand with their backs to them. The coach stands in front of the players. Two or three players at a time, each with their own cones. Sets of 4 starts.",
+    "benodigdheden": [
+      "4 cones in 2 colours",
+      "Disc cones for the starting spots"
+    ],
+    "coachpunten": [
+      "Get set on the balls of your feet, knees slightly bent",
+      "Turn towards the side of the cone: that is the shortest way",
+      "First steps short and quick, then lengthen your stride"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Start facing the cones",
+        "The coach points instead of calling"
+      ],
+      "moeilijker": [
+        "The coach calls the colour you must NOT go to",
+        "Start sitting down or lying face down",
+        "Three colours"
+      ]
+    }
+  },
+  "veld-lc-vierkant-looprichtingen": {
+    "naam": "Forwards, backwards, sideways round the square",
+    "uitleg": "You go round the four sides of a square, each side in a different way, facing the same direction the whole time. First sprint forwards, then shuffle sideways, then backpedal and finally shuffle sideways back to your start. Change movement as quickly as possible at every corner.",
+    "organisatie": "6 × 6 m square with a cone on each corner; two squares side by side. One player per square; the next player starts when the previous one reaches the second corner. 4 laps, then the other way round.",
+    "benodigdheden": [
+      "8 cones"
+    ],
+    "coachpunten": [
+      "Sideways: do not cross your feet, stay low",
+      "Backwards: short steps, weight forward",
+      "Brake briefly at the corner and go straight into the new direction"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Smaller square (4 m)",
+        "Everything at jogging pace"
+      ],
+      "moeilijker": [
+        "On the whistle, reverse direction",
+        "Touch the ground at each cone",
+        "Bigger square (8 m)"
+      ]
+    }
+  },
+  "veld-lc-hordes-afremmen-hoepel": {
+    "naam": "Hurdles and stop in the hoop",
+    "uitleg": "Go over three low hurdles and then sprint a few metres more. Then brake and come to a stop in one go inside a hoop: low through the knees, feet shoulder-width apart and balanced. Hold still for two counts, then walk back round the outside and join the back of the line.",
+    "organisatie": "Three low hurdles 80 cm apart, with a hoop 3 m after them. Two lanes side by side, each with a line of 2 or 3 players. Sets of 4 runs per player.",
+    "benodigdheden": [
+      "6 low hurdles",
+      "2 hoops",
+      "2 cones"
+    ],
+    "coachpunten": [
+      "Over the hurdles: knee up, short ground contact",
+      "Braking: short last steps, weight back",
+      "Stop balanced: do not step out of the hoop"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Hoop further away, so you have more time to brake",
+        "Without hurdles"
+      ],
+      "moeilijker": [
+        "After stopping, sprint away sideways straight away",
+        "Land on one leg in the hoop",
+        "Higher hurdles"
+      ]
+    }
+  },
+  "veld-lc-schaduwsprint": {
+    "naam": "Shadow sprint",
+    "uitleg": "Two players stand side by side in the middle between two lines. One player chooses the moment and the side: they suddenly sprint to one of the two lines. The other reacts and tries to tag them before they cross the line. If they reach the line, they score a point. After five goes, swap roles.",
+    "organisatie": "Two lines of disc cones 16 m apart; the pairs stand in the middle, 2 m apart. Two or three pairs side by side, with plenty of space between them.",
+    "benodigdheden": [
+      "12 disc cones",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Get set: on the balls of your feet, watch the other player’s hips",
+      "First step straight in the right direction, no step back first",
+      "Tagger: on the shoulder or back, no pushing"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Lines closer (12 m)",
+        "The runner calls \"now\" at the start"
+      ],
+      "moeilijker": [
+        "A dummy before the sprint is allowed",
+        "Lines further apart (20 m)",
+        "The tagger starts sitting down"
+      ]
+    }
+  },
+  "veld-lc-dierenloop": {
+    "naam": "Animal walks",
+    "uitleg": "Which animal are you? Jump like a frog, walk like a stork with your knees up high, shuffle sideways like a crab or skip like a pony to the other side. The coach calls the animal. Who reaches the other side first?",
+    "organisatie": "Two lines of disc cones 8 m apart. The children stand side by side on one line, 2 m apart. The coach calls a different animal each time; walk back. 5 children, 8 to 10 goes.",
+    "benodigdheden": [
+      "8 disc cones"
+    ],
+    "coachpunten": [
+      "Frog: push off and land with both feet together",
+      "Stork: knees as high as you can",
+      "Crab: shuffle sideways, your feet do not bump into each other"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shorter distance",
+        "All the children do the same animal"
+      ],
+      "moeilijker": [
+        "Halfway, the coach calls a different animal",
+        "Round a cone and back",
+        "Like a frog over a low hurdle"
+      ]
+    }
+  },
+  "veld-lc-slalom-achteruit": {
+    "naam": "Backwards slalom",
+    "uitleg": "Backpedal through a slalom of poles, looking over your shoulder so you do not hit them. After the last pole, turn round and sprint to the cone. Walk back round the outside and join the back of the line.",
+    "organisatie": "Five poles 2 m apart, with a cone 4 m after them. One line of 3 players per slalom; the next player starts when the previous one reaches the third pole.",
+    "benodigdheden": [
+      "5 poles",
+      "2 cones"
+    ],
+    "coachpunten": [
+      "Short steps, weight on the balls of your feet",
+      "Look over your left and right shoulder in turn",
+      "Turn towards the side of the cone and accelerate straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Poles further apart (3 m)",
+        "Backwards in a straight line, no slalom"
+      ],
+      "moeilijker": [
+        "Poles closer together",
+        "The coach calls \"turn\" at any moment",
+        "With a ball: after turning, receive a pass"
+      ]
+    }
   }
 }

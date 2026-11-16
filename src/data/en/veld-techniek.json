@@ -1031,5 +1031,234 @@
         "No more than two touches in the middle"
       ]
     }
+  },
+  "veld-tq-acht-binnen-buitenkant": {
+    "naam": "Figure of eight with inside and outside",
+    "uitleg": "Dribble a figure of eight round two cones. First use only the outside of your foot, then only the inside. Keep the ball close to your foot and look up in between. Then go against the clock: how many figures of eight can you do in 30 seconds?",
+    "organisatie": "Two cones 4 m apart for each player. A ball each, two or more players side by side. Rounds of 30 seconds: outside, inside, then free against the clock.",
+    "benodigdheden": [
+      "2 cones per player",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Lots of small touches in the turn",
+      "Outside: toes in, ankle locked",
+      "Look up as you go between the cones"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Cones further apart",
+        "Inside and outside mixed"
+      ],
+      "moeilijker": [
+        "Weaker foot only",
+        "Cones closer together (3 m)",
+        "Against the clock, against a partner"
+      ]
+    }
+  },
+  "veld-tq-aannemen-halve-draai": {
+    "naam": "Receiving on the half-turn",
+    "uitleg": "The ball comes from the side. You stand half-turned and receive it with your far foot, behind your standing leg, taking it the other way in one movement. That way you turn away from an imaginary opponent. Dribble through the gate, pass the ball back to the server and join the back of the line.",
+    "organisatie": "Server 7 m to the side of the receiver. A gate of two disc cones diagonally behind the receiver, on the other side. Line of 2 or 3 receivers. Change server after 6 goes.",
+    "benodigdheden": [
+      "3 disc cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Stand half-turned so you see the ball and the gate",
+      "Let the ball come and take it with the inside of your far foot",
+      "After the touch, accelerate straight through the gate"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Stop the ball first, then take it away",
+        "Bigger gate"
+      ],
+      "moeilijker": [
+        "A passive defender behind you",
+        "Serve at half height",
+        "After the gate, pass back first time"
+      ]
+    }
+  },
+  "veld-tq-hooghoudparcours": {
+    "naam": "Juggling course",
+    "uitleg": "Keep the ball up while you walk slowly through three gates. If the ball hits the ground, start again at the last gate you reached. Who gets to the end without a mistake?",
+    "organisatie": "Lane with three gates of disc cones, 2.5 m apart. Two or more lanes side by side; a ball each. Competition: who reaches the end with the fewest mistakes?",
+    "benodigdheden": [
+      "8 disc cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Strike the ball with your instep, ankle locked",
+      "Low, soft touches keep the ball close",
+      "Small steps in between the touches"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The ball may bounce once after every touch",
+        "Drop the ball from your hands at each gate"
+      ],
+      "moeilijker": [
+        "Left and right alternately",
+        "Use thigh and head too",
+        "Gates further apart"
+      ]
+    }
+  },
+  "veld-tq-wegdraaien-zijlijn": {
+    "naam": "Turning away at the touchline",
+    "uitleg": "Dribble towards the touchline while a defender jogs alongside you. Just before the line, shield the ball: your body between the defender and the ball. Then turn away with your sole or the outside of your foot and dribble the other way, along the line. The defender only goes with you and does not win the ball yet.",
+    "organisatie": "15 × 12 m area; one long side is the touchline. Pairs, the attacker with a ball. Swap roles after 4 goes. Then the defender may challenge for real.",
+    "benodigdheden": [
+      "4 cones",
+      "1 ball per pair",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Body between ball and defender, arms wide",
+      "Turn away the moment the defender gets close",
+      "Accelerate straight after the turn, away from the defender"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Defender stays 2 m away",
+        "Sole turn only"
+      ],
+      "moeilijker": [
+        "The defender may win the ball",
+        "After turning, score in a mini goal",
+        "Turn away with your weaker foot"
+      ]
+    }
+  },
+  "veld-tq-eerste-aanraking-kleur": {
+    "naam": "First touch to the colour",
+    "uitleg": "Four coloured cones stand in a cross around you. The coach plays the ball in and calls a colour while the ball is travelling. Take your first touch towards that colour, dribble to the cone and play the ball back. Then go back to the middle for the next ball.",
+    "organisatie": "Cross of four cones in four colours, 4 m from the middle. The coach stands 8 m away with a few balls. One player in the middle, the next waits beside the coach. Sets of 6 balls.",
+    "benodigdheden": [
+      "4 cones in 4 colours",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Get set on the balls of your feet, not flat on your heels",
+      "Listen and look: take the ball towards the right side",
+      "First touch not too far: after two steps you must be able to play it again"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach calls the colour before the pass",
+        "Two cones instead of four"
+      ],
+      "moeilijker": [
+        "The coach points instead of calling",
+        "Ball at half height",
+        "Call the colour you must NOT go to"
+      ]
+    }
+  },
+  "veld-tq-dribbelrace-remmen": {
+    "naam": "Dribble race with brakes",
+    "uitleg": "Two players dribble side by side, each in their own lane. On the whistle they stop the ball with the sole of their foot, turn and dribble back behind their own start line as fast as possible. Whoever gets back first with the ball under control wins.",
+    "organisatie": "Two 15 m lanes side by side, 3 m apart, with a start line of disc cones. A ball each. The coach blows the whistle somewhere between 6 and 12 m. The loser does 5 sole drags on the spot.",
+    "benodigdheden": [
+      "8 disc cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Dribble with small touches so you can brake straight away",
+      "Sole on top of the ball, weight on your standing leg",
+      "Turn towards the side of your sole and accelerate straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Stand still with your foot on the ball first, then turn",
+        "Walking pace"
+      ],
+      "moeilijker": [
+        "The coach also calls \"left\" or \"right\": turn that way",
+        "Brake with your weaker foot"
+      ]
+    }
+  },
+  "veld-tq-koppen-tweetallen": {
+    "naam": "Heading in pairs",
+    "uitleg": "In pairs a few metres apart. One throws the ball underarm, the other heads it back so the thrower can catch it. First standing, then with a short run-up and a jump. Finally the thrower serves higher and you head it downwards in the air, into your partner’s hands.",
+    "organisatie": "Pairs 4 to 5 m apart, one ball each. Swap roles after 10 headers. From U13; use a soft ball or a smaller size for the youngest in the group.",
+    "benodigdheden": [
+      "1 ball per pair",
+      "Disc cones"
+    ],
+    "coachpunten": [
+      "Head with your forehead, eyes open, mouth closed",
+      "Attack the ball and take off from one leg when you jump",
+      "Head through the ball downwards, into your partner’s hands"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Serve from close range (3 m)",
+        "Head from kneeling first"
+      ],
+      "moeilijker": [
+        "Head towards a mini goal or a hoop",
+        "Thrower stands at an angle: head it sideways",
+        "Two headers in a row in the air"
+      ]
+    }
+  },
+  "veld-tq-circuit-andere-voet": {
+    "naam": "Weak-foot circuit",
+    "uitleg": "Four one-minute stations, and you do everything with your weaker foot. Station 1: passes against the rebounder. Station 2: slalom through the poles. Station 3: sole rolls on the spot, the ball back and forth under your sole. Station 4: receive and take away a ball coming back off the rebounder. After a minute, move on.",
+    "organisatie": "Four stations side by side, each about 8 × 6 m: rebounder at 4 m, five poles 1.5 m apart, a 3 × 3 m box, a second rebounder with a gate. One or two players per station, a ball each. 1 minute per station, 15 seconds to change.",
+    "benodigdheden": [
+      "2 rebounders",
+      "5 poles",
+      "8 disc cones",
+      "1 ball per player"
+    ],
+    "coachpunten": [
+      "Weaker foot only, even when it does not work for a moment",
+      "Better slow and good than quick and sloppy",
+      "Count your good attempts and try for more next round"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "2-minute stations at a lower tempo",
+        "Alternate both feet"
+      ],
+      "moeilijker": [
+        "Against the clock: how many good attempts in a minute?",
+        "Rebounder further away",
+        "At station 4, receive the ball in the air"
+      ]
+    }
+  },
+  "veld-tq-wasstraat": {
+    "naam": "Car wash",
+    "uitleg": "You are a car and your ball is your car. Drive through the car wash: between the mannequins, past the coaches waving their bibs. Keep your ball really close and it comes out clean! Then drive back round the outside and go again.",
+    "organisatie": "A street 2.5 m wide and 10 m long with two mannequins on each side; two coaches stand alongside with a bib. 5 children, each with a ball, drive through the street one after the other and back round the outside.",
+    "benodigdheden": [
+      "4 mannequins",
+      "2 bibs",
+      "4 disc cones",
+      "1 ball per child"
+    ],
+    "coachpunten": [
+      "Small touches, the ball stays close",
+      "Look where you are driving",
+      "Do not bump into the mannequins"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Make the street wider",
+        "Without waving bibs"
+      ],
+      "moeilijker": [
+        "Make the street narrower",
+        "Only with your other foot",
+        "Stop halfway: foot on the ball"
+      ]
+    }
   }
 }
