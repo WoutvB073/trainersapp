@@ -348,5 +348,261 @@
         "Sprint after your pass instead of jogging"
       ]
     }
+  },
+  "veld-wu-nummers-passen": {
+    "naam": "Passing by numbers",
+    "uitleg": "Everyone has a number and moves around the area at an easy pace. The ball goes round in order: 1 passes to 2, 2 to 3, and so on until the last player passes back to 1. Whoever has just passed moves straight away to a new space. After a few rounds a second ball comes in, going the other way.",
+    "organisatie": "20 × 20 m area with a cone on each corner. 6 to 8 numbered players, one ball to start. After 2 minutes add a second ball; after 4 minutes one touch only.",
+    "benodigdheden": [
+      "4 cones",
+      "2 balls",
+      "Numbered bibs (or agree the numbers)"
+    ],
+    "coachpunten": [
+      "Know where your next number is before the ball arrives",
+      "After your pass, move away straight into a free space",
+      "Ask for the ball: call your number or raise your hand"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Stand still when passing",
+        "Bigger area"
+      ],
+      "moeilijker": [
+        "Two balls at once",
+        "One touch only",
+        "On the whistle, reverse the order"
+      ]
+    }
+  },
+  "veld-wu-passen-vak-wisselen": {
+    "naam": "Pass and switch boxes",
+    "uitleg": "Two boxes side by side, a ball in each. Pass to a teammate in your own box and then sprint to the other box. There, look straight away for a free space to ask for the ball. That way you constantly have to check where you can pass and where you can get free.",
+    "organisatie": "Two 14 × 14 m boxes, 6 m apart. 3 or 4 players and one ball in each box. Players may only sprint round the outside of the boxes.",
+    "benodigdheden": [
+      "8 cones",
+      "2 balls"
+    ],
+    "coachpunten": [
+      "Look into the new box while you are sprinting: where is the ball, where is the space?",
+      "Pass firmly along the ground and onto the right foot",
+      "Curve your run to get free, so you receive on the half-turn"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Walk to the other box after passing",
+        "More players per box"
+      ],
+      "moeilijker": [
+        "Two touches maximum",
+        "A defender in each box",
+        "The coach points to the box you go to"
+      ]
+    }
+  },
+  "veld-wu-tunneltikkertje": {
+    "naam": "Tunnel tag with a ball",
+    "uitleg": "Everyone dribbles a ball around the area. One child in a bib is the tagger and has no ball. If you are tagged, pick up your ball and stand with your legs wide apart: you are a tunnel. Another child can free you by passing their ball through your tunnel and collecting it on the other side. After a minute there is a new tagger.",
+    "organisatie": "15 × 15 m area with a disc cone on each corner. A ball for everyone, a bib for the tagger. Rounds of 1 minute; whoever stays free the longest wins.",
+    "benodigdheden": [
+      "4 disc cones",
+      "1 ball per child",
+      "1 bib"
+    ],
+    "coachpunten": [
+      "Keep the ball close, so you can turn away quickly",
+      "Look up: where is the tagger and who needs freeing?",
+      "Pass gently through the tunnel and run round quickly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger area",
+        "You may also free someone by tagging them"
+      ],
+      "moeilijker": [
+        "Two taggers",
+        "Free someone with your left foot only",
+        "Smaller area"
+      ]
+    }
+  },
+  "veld-wu-handbalvoetbal": {
+    "naam": "Handball football",
+    "uitleg": "A small-sided game with your hands: throw the ball to each other, and you may not run while holding it. You can only score with a header or a volley from a teammate’s throw. If the ball hits the ground or the other team intercepts it, the ball goes to the other team. After a few minutes, play normal football on the same pitch.",
+    "organisatie": "24 × 18 m pitch with a small goal at each short end. Two teams of 3 to 5. 4 minutes of handball football, then 4 minutes of football.",
+    "benodigdheden": [
+      "2 small goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Move into space, not towards the ball",
+      "Throw the ball in front of your teammate so they can head it on the move",
+      "Head with your forehead, eyes open, and direct the ball downwards"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "You may also score by throwing",
+        "Two bounces allowed"
+      ],
+      "moeilijker": [
+        "Hold the ball for three seconds at most",
+        "Headers only"
+      ]
+    }
+  },
+  "veld-wu-rijen-loopvormen-pass": {
+    "naam": "Two lines: running drills with a pass",
+    "uitleg": "Two lines face each other. The front player of the left line goes to the middle using a running drill: high knees, heel flicks or side steps. In the middle, the front player of the right line passes them the ball; they play it straight back first time and carry on to the back of the right line. Then it is the next player’s turn, with a different running drill.",
+    "organisatie": "Two lines 20 m apart, with a cone in the middle. The right line has one ball. A different running drill each round; after 4 rounds the lines swap roles.",
+    "benodigdheden": [
+      "3 cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Neat running form: upright, arms working",
+      "Before the pass, short steps and get set",
+      "Play it back with the inside of the foot, to feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Control the ball, then play it back",
+        "Shorter distance"
+      ],
+      "moeilijker": [
+        "After the pass, sprint to the line",
+        "Play it back with your other foot",
+        "The ball comes at half height: play it back with your instep or head"
+      ]
+    }
+  },
+  "veld-wu-dubbele-rondo": {
+    "naam": "Double rondo with rotation",
+    "uitleg": "Two boxes side by side, 4v1 in each. After five passes without the defender touching the ball, the team plays the ball over to a player in the other box. Whoever plays that long pass sprints across and carries on in the other box. That way the players in each box keep changing and everyone has to keep scanning.",
+    "organisatie": "Two 10 × 10 m boxes, 8 m apart. Four outside players and a defender in a bib in each box. If the defender wins the ball, they swap with the player who lost it.",
+    "benodigdheden": [
+      "8 cones",
+      "2 balls",
+      "2 bibs"
+    ],
+    "meerSpelers": "With more players: 5v2 in each box, or add a third box.",
+    "coachpunten": [
+      "Play away from the defender, to the side where they are not",
+      "Long pass firm and flat, onto the receiver’s foot",
+      "Sprint straight after the long pass: you are needed in the other box"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger box",
+        "Switch after three passes"
+      ],
+      "moeilijker": [
+        "Everything one touch",
+        "Two defenders in each box",
+        "The long pass must be at half height"
+      ]
+    }
+  },
+  "veld-wu-balrovers": {
+    "naam": "Ball robbers",
+    "uitleg": "Everyone dribbles a ball around the area. On the whistle, two players leave their ball outside the area and become robbers: in 30 seconds they try to win as many balls as possible and play them out of the area. If you lose your ball, fetch it and carry on dribbling. Then two others are the robbers.",
+    "organisatie": "20 × 20 m area. A ball each. Rounds of 30 seconds; count how many balls the robbers play out of the area.",
+    "benodigdheden": [
+      "4 cones",
+      "1 ball per player",
+      "2 bibs"
+    ],
+    "coachpunten": [
+      "Keep your body between the robber and your ball",
+      "Look up and dribble into the free space",
+      "Robber: pick one player and force them to the edge"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One robber",
+        "Bigger area"
+      ],
+      "moeilijker": [
+        "Three robbers",
+        "Smaller area",
+        "If you lose your ball, you become a robber too"
+      ]
+    }
+  },
+  "veld-wu-driehoek-op-de-loop": {
+    "naam": "Triangle on the move",
+    "uitleg": "Three players run round three cones together. While they run, the ball goes round the other way: you pass to the player running behind you. That means you have to keep getting free and receive the ball on the move. After a few laps the running direction changes.",
+    "organisatie": "Triangle of three cones with 10 m sides. Three players and one ball. Rounds of 1 minute, then the other way round.",
+    "benodigdheden": [
+      "3 cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Pass in front of the runner so they do not have to slow down",
+      "Receive in your running direction and keep the tempo",
+      "Talk: call the name of whoever gets the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Walking pace",
+        "Two touches"
+      ],
+      "moeilijker": [
+        "Everything one touch",
+        "Add a second ball",
+        "On the whistle, change running direction"
+      ]
+    }
+  },
+  "veld-wu-ballen-vangen-voeten": {
+    "naam": "Catch the ball with your feet",
+    "uitleg": "The coach keeps rolling a ball into the area. Run to it and stop it by putting your foot on top before it rolls over the line. Then dribble it back to the coach. Did it work? High five!",
+    "organisatie": "10 × 10 m area with a disc cone on each corner. The coach stands on one side with a few balls; 5 children wait next to the coach and take turns. After a few turns the coach rolls two balls at once.",
+    "benodigdheden": [
+      "4 disc cones",
+      "5 balls"
+    ],
+    "coachpunten": [
+      "Watch the ball and run to it",
+      "Put your foot gently on top of the ball",
+      "Dribble back with small touches"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach rolls very slowly",
+        "Stopping it with your hand is allowed too"
+      ],
+      "moeilijker": [
+        "Two balls at once for two children",
+        "Stop it with your other foot",
+        "Then shoot into a mini goal"
+      ]
+    }
+  },
+  "veld-wu-cirkel-kaatsers": {
+    "naam": "Circle with two lay-off players",
+    "uitleg": "Six players stand in a circle, two players stand in the middle. An outside player passes to a middle player, who lays it off first time and turns straight away to another outside player with a ball. The two in the middle work at the same time, each with a different outside player. After a minute they swap with two outside players.",
+    "organisatie": "Circle with a 7 m radius, six outside players, three of them with a ball. Two players in the middle. Swap after 1 minute.",
+    "benodigdheden": [
+      "6 disc cones",
+      "3 balls"
+    ],
+    "meerSpelers": "With more players: a second circle, or three players in the middle.",
+    "coachpunten": [
+      "Before laying it off, already check where your next ball is coming from",
+      "Lay it off to feet, with the inside of your foot",
+      "Open up and take a few steps towards the next player"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One player in the middle",
+        "Two touches"
+      ],
+      "moeilijker": [
+        "The outside players serve at half height: lay it off with your instep or head",
+        "After the lay-off, first go round a cone in the middle"
+      ]
+    }
   }
 }
