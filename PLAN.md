@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (16-11-2026, versie 0.35.0)
+## Status (16-11-2026, versie 0.36.0)
 
 | Fase | Status |
 |---|---|
@@ -54,7 +54,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
 | De volgende stap, fase 1 (onderzoek, proef en plan) | ✅ bekeken, keuzes gemaakt (ontwerp C, alle 157 oefeningen, nummers en installatiescherm zoals voorgesteld, animaties zo realistisch als mogelijk). Verslag: **PLAN-VOLGENDE-STAP.md**. |
 | 40. Fase 2, deel 1: opstelling slepen, vaste rugnummers, installatiescherm (0.35.0) | ✅ online – **wacht op test** |
-| 41. Fase 2, deel 2: ontwerp C (Zacht) op alle schermen (0.36.0) | ⏳ |
+| 41. Fase 2, deel 2: ontwerp C (Zacht) op alle schermen (0.36.0) | ✅ online – **wacht op test** |
 | 42. Fase 2, deel 3: 157 nieuwe oefeningen in batches (0.37.x) | ⏳ |
 | 43. Fase 2, deel 4: zo realistisch mogelijke animaties (0.38.0) | ⏳ |
 
@@ -1289,8 +1289,20 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Voorbeeldversie**: de vlag `trainersapp.voorbeeld` bestaat niet meer; `isVoorbeeld()` is alleen waar in de aparte build (`VITE_VOORBEELD=1`). De wisselknop en de proefknop Realistisch zitten niet in de live build (getest: de teksten komen in `dist` niet voor).
 - **Tests**: `tests/versie-0350.test.ts` (nummers per formatie, oude opstelling niet omgenummerd, alle voorbeeldborden, geen voorbeeldvlag); browsertests `opstelling.mjs`, `installeren.mjs`, `deel-b.mjs`, `tactieken.mjs`.
 
+## Besluiten versie 0.36.0 – ontwerp Zacht (fase 2, deel 2)
+- **Ontwerp**: richting C uit fase 1 (Zacht) is het ontwerp van de app: zachte kleurvlekken in de clubkleur op de achtergrond, matglas-vlakken (tegels, lijsten, blokken), ronde knoppen met een verloop binnen de clubkleur, eigen lijniconen op het startscherm en bij de categorieën. Eén opmaaklaag (`src/styles/ontwerp.css`, actief met `data-ontwerp="c"` op <html>, dat al in `index.html` staat zodat er bij het openen geen flits van het oude ontwerp is). Richting A en B zijn weg. Alleen in de voorbeeldversie kan de wisselknop terug naar het oude ontwerp, om te vergelijken.
+- **Iconen**: de lijniconen (`src/components/CategorieIcoon.tsx`, `TegelIcoon` in `Start.tsx`, `Icoon.tsx`) zijn **zelf getekend** voor TopTraining; er is geen iconenset van anderen gebruikt, dus er geldt geen licentie van derden en er hoeft niets vermeld te worden. Letters: Inter en Barlow Condensed via @fontsource, beide **SIL Open Font License 1.1** (vrij, ook commercieel; staat bij de pakketten in node_modules).
+- **Kleuren**: alle clubkleuren in licht en donker blijven werken (alles rekent met `--primair`, `--accent`, `--op-primair`, `data-modus`). Kaarten zijn dekkend (`--kaart` wit of donkergroen), alleen de grote vlakken zijn matglas (`--o-glas`): een doorzichtige kaart scheen door menu's en panelen heen. Het verloop van de knoppen blijft binnen de clubkleur (lichter naar donkerder); met de accentkleur erin werd groen troebel olijf.
+- **Statusbalk iPhone**: de geïnstalleerde app heeft witte statusbalktekst (`black-translucent`); omdat de kop nu licht is, staat er achter de statusbalk een strook in een donkere tint van de clubkleur (in donker: de achtergrond). In de browser is die strook er niet.
+- **Gegevens**: niets veranderd aan opslag, sync of links.
+- **Tests**: `tests/volgende-stap-oefeningen.test.ts` (ontwerp altijd c, alleen richting c in de CSS, dekkende kaarten); browsertest `tools/e2e/zacht.mjs` (29 schermen op iPhone SE en laptop, licht en donker, NL en EN, een clubkleur; niets afgekapt, geen horizontaal scrollen, geen browserfouten; bladen `blad-zacht-<formaat>-<modus>.png`). `tools/e2e/ontwerp.mjs` (de richtingen van fase 1) is weg.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.36.0 – Het verloop op de knoppen gaat van iets lichter naar iets donkerder in de clubkleur, niet naar de accentkleur (dat gaf bij groen een olijfbruine knop). De kleurvlek in de accentkleur rechtsboven is zwakker gemaakt (9 % in plaats van 15 %).
+- 0.36.0 – Kaarten en panelen zijn dekkend; alleen tegels, lijsten, blokken en de installatiekaart zijn matglas (een doorzichtige kaart is in een menu of paneel onrustig en slecht leesbaar).
+- 0.36.0 – Achter de statusbalk van de geïnstalleerde app op een iPhone staat een donkere strook in de clubkleur, zodat de witte tijd en batterij leesbaar blijven boven de nu lichte kop.
+- 0.36.0 – De getekende tegel- en categorieplaatjes (vóór 0.36) worden niet meer getoond; ze blijven in de code (de test van 0.26.0 vraagt een plaatje per categorie) en de voorbeeldversie gebruikt ze in het oude ontwerp.
 - 0.35.0 – Een opstelling van vóór 0.35.0 houdt haar nummers tot je op **Rugnummers per positie zetten** tikt (de knop staat alleen bij zo'n oude opstelling). Een tactiekbord dat je daaruit maakt, volgt de nummers van de opstelling.
 - 0.35.0 – In de voorbeeldtactieken zijn alleen de nummers gewisseld (8 ↔ 10, en in twee borden 8 ↔ 6), niet de plekken of de looplijnen; de uitleg noemt alleen de 6 en die klopte al. In "Diepte achter de verdediging" bleef de diepe 6 achter de 8 staan (andere linie).
 - 0.35.0 – "Open in Safari" staat alleen op een iPhone met iOS 17 of nieuer in de browser van een app; daaronder blijven de stappen staan, voor als de knop op dat toestel niets doet.
