@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (13-11-2026, versie 0.34.4)
+## Status (16-11-2026, versie 0.35.0)
 
 | Fase | Status |
 |---|---|
@@ -52,7 +52,11 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 38. Circuittraining: per dag een eigen opzet, sjabloon Mini Talents + loopcoördinatie weg (0.34.3) | ✅ online – **wacht op test** |
 | 39. Circuittraining: sessies (datum + begintijd, eigen aantallen, leeftijd, groep), rooster per sessie, materiaal voor de hele avond (0.34.4) | ✅ online – **wacht op test** |
 | 8. Later: delen met andere trainers (product) | ⏳ (animatie in de editor is in 0.14.0 gebouwd) |
-| De volgende stap, fase 1 (onderzoek, proef en plan) | 🔄 **niet live**, wacht op akkoord. Branch `volgende-stap`, voorbeeldversie op een eigen testlink. Alles staat in **PLAN-VOLGENDE-STAP.md** (bevindingen, rugnummertabel, ontwerprichtingen, animaties, uitrol van fase 2, keuzes) en **VOORSTEL-OEFENINGEN.md** (157 oefeningen om aan te vinken). |
+| De volgende stap, fase 1 (onderzoek, proef en plan) | ✅ bekeken, keuzes gemaakt (ontwerp C, alle 157 oefeningen, nummers en installatiescherm zoals voorgesteld, animaties zo realistisch als mogelijk). Verslag: **PLAN-VOLGENDE-STAP.md**. |
+| 40. Fase 2, deel 1: opstelling slepen, vaste rugnummers, installatiescherm (0.35.0) | ✅ online – **wacht op test** |
+| 41. Fase 2, deel 2: ontwerp C (Zacht) op alle schermen (0.36.0) | ⏳ |
+| 42. Fase 2, deel 3: 157 nieuwe oefeningen in batches (0.37.x) | ⏳ |
+| 43. Fase 2, deel 4: zo realistisch mogelijke animaties (0.38.0) | ⏳ |
 
 ## Werkwijze
 - Bouwen in **kleine stappen**; na elke stap test de gebruiker op de telefoon en wachten we op akkoord.
@@ -1277,8 +1281,21 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Proef Realistisch**: `Opties3D.realistisch` in `render3d.ts` (zon met schaduwkaart, `grasStructuur`, `luchtTextuur`); schakelaar in `AnimatieSpeler.tsx`, instelling `src/engine/realistisch.ts` (alleen in de voorbeeldversie, uit bij eenvoudige poppetjes). De bal houdt zijn schaduwvlek (hoogte aflezen). Meting: `tools/e2e/realistisch.mjs`.
 - **Tests**: `tests/volgende-stap.test.ts`, `tests/volgende-stap-oefeningen.test.ts`; browsertests `tools/e2e/opstelling.mjs`, `ontwerp.mjs`, `realistisch.mjs`, `voorbeeld.mjs`.
 
+## Besluiten versie 0.35.0 – opstelling, rugnummers, installatiescherm (fase 2, deel 1)
+- **Slepen in de opstelling**: zoals in fase 1 (`OpstellingVeld.tsx`, `bepaal`, `.opst-geest`): wat je ziet is waar de speler landt, met een regel uitleg ("Ruilen met …", "Op positie 7", "Naar de wissels").
+- **Rugnummers**: vast per positie (`NUMMERS`, `formatieNummers`, tabel in PLAN-VOLGENDE-STAP.md, ook de twijfelgevallen zoals voorgesteld). Nieuwe opstellingen, een andere formatie en nieuwe borden krijgen ze vanzelf. **Bestaande opstellingen worden niet ongevraagd omgenummerd**: een opstelling van vóór 0.35.0 houdt haar nummers, met de knop **Rugnummers per positie zetten** (`heeftVasteNummers`, `metVasteNummers`) zet de gebruiker ze zelf om. Een bord uit een oude opstelling volgt de nummers van die opstelling. Opgeslagen borden veranderen niet.
+- **Voorbeelden**: in 17 voorbeeldtactieken (16 × 11 tegen 11 en de 8 tegen 8-opbouw 1-3-2-2) en de ingestudeerde aftrap stonden de 8 en de 10 (of de 8 en de 6) verkeerd om. Alleen de nummers en id's zijn gewisseld; plekken, lijnen en uitleg zijn gelijk gebleven. Controle voor alle 60 borden: `src/wedstrijd/nummerControle.ts` (`nummerFouten`), in `tests/versie-0350.test.ts` en `node tools/nummers-audit.mjs`. Een diepe 6 recht achter de 8 telt niet als fout (andere linie).
+- **Installatiescherm**: elke stap is een kaart met een groot cijfer, één zin en een **nagebouwde knop** in de stijl van het toestel (`Stap.beeld` in `stappen.tsx`: toets, rij, knop, schakelaar, app; `platformVan` kiest iPhone-blauw of Android/computer-grijs). Stappen zonder beeld houden hun icoon. In de browser van een app op een iPhone (WhatsApp, Instagram …) staat bovenaan **Open in Safari** (`safariLink`: `x-safari-https://…`, vanaf iOS 17); gebeurt er na 1,6 s niets, dan staat er "Gebeurde er niets? Volg dan deze stappen:" boven de stappen.
+- **Voorbeeldversie**: de vlag `trainersapp.voorbeeld` bestaat niet meer; `isVoorbeeld()` is alleen waar in de aparte build (`VITE_VOORBEELD=1`). De wisselknop en de proefknop Realistisch zitten niet in de live build (getest: de teksten komen in `dist` niet voor).
+- **Tests**: `tests/versie-0350.test.ts` (nummers per formatie, oude opstelling niet omgenummerd, alle voorbeeldborden, geen voorbeeldvlag); browsertests `opstelling.mjs`, `installeren.mjs`, `deel-b.mjs`, `tactieken.mjs`.
+
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.35.0 – Een opstelling van vóór 0.35.0 houdt haar nummers tot je op **Rugnummers per positie zetten** tikt (de knop staat alleen bij zo'n oude opstelling). Een tactiekbord dat je daaruit maakt, volgt de nummers van de opstelling.
+- 0.35.0 – In de voorbeeldtactieken zijn alleen de nummers gewisseld (8 ↔ 10, en in twee borden 8 ↔ 6), niet de plekken of de looplijnen; de uitleg noemt alleen de 6 en die klopte al. In "Diepte achter de verdediging" bleef de diepe 6 achter de 8 staan (andere linie).
+- 0.35.0 – "Open in Safari" staat alleen op een iPhone met iOS 17 of nieuer in de browser van een app; daaronder blijven de stappen staan, voor als de knop op dat toestel niets doet.
+- 0.35.0 – De nagebouwde knoppen hebben de kleuren van het toestel (iPhone blauw, Android en computer grijs), niet de clubkleur: zo herken je ze op je telefoon.
+- 0.35.0 – Het installatiescherm is in het huidige ontwerp vernieuwd (niet pas met ontwerp C), omdat nieuwe gebruikers het als eerste zien.
 - Volgende stap, fase 1 – De voorbeeldversie schrijft nergens naar toe (online staat uit) in plaats van naar een aparte testverzameling: zo kan er per definitie niets misgaan met echte gegevens.
 - Volgende stap, fase 1 – De iconen in de ontwerprichtingen zijn zelf getekend (geen licentie van een ander nodig); het installatiescherm gebruikt nagebouwde knoppen in plaats van schermfoto's (die verouderen en zijn van anderen).
 - Volgende stap, fase 1 – Rugnummers bij minder spelers: drie verdedigers 5, 3, 2; twee verdedigers 4 en 3; één verdediger 3; één middenvelder 6; twee voorste spelers 11 en 7 (of 10 en 9 als 7 en 11 al op het middenveld staan).
