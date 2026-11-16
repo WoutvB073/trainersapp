@@ -195,5 +195,160 @@
         "After winning the ball the defenders score in a mini goal at the other end"
       ]
     }
+  },
+  "veld-vo-onderscheppen-passlijn": {
+    "naam": "Intercepting in the passing lane",
+    "uitleg": "Two passers play the ball to each other; a defender stands to the side between them. They read the pass, step in front at the right moment and play the ball first time into the mini goal. If it does not work, they reset for the next pass. After five attempts, change the defender.",
+    "organisatie": "Passers 12 m apart, the defender 3 m to the side of the passing line. A mini goal 10 m behind the defender. Three players, one ball; take turns as defender.",
+    "benodigdheden": [
+      "1 mini goal",
+      "4 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Watch the passer’s hips and foot to see where the ball is going",
+      "Wait for the moment of the pass, then step in",
+      "Intercept with the foot closest to the mini goal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Defender stands closer to the passing line",
+        "Passers pass more softly"
+      ],
+      "moeilijker": [
+        "The passers may fake a pass",
+        "Two mini goals: score in the one on the side of the ball"
+      ]
+    }
+  },
+  "veld-vo-sliding-blok": {
+    "naam": "Slide and block",
+    "uitleg": "The attacker dribbles towards the mini goal and shoots. The defender comes from the side and blocks the shot with a slide: low, leg stretched towards the ball and foot firm. Then the other way round. Practise this on a soft surface (grass) and never studs-up into the ball.",
+    "organisatie": "15 × 12 m area with a mini goal. Pairs: the attacker dribbles from 12 m, the defender starts 4 m to the side. Walking pace first, then at speed. Swap after 4 goes.",
+    "benodigdheden": [
+      "1 mini goal",
+      "4 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Only slide as the shot comes, not before",
+      "Slide low along the ground with the leg nearest the ball",
+      "Always go for the ball, never the attacker’s ankles"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Block standing up: step into the ball’s path and keep your foot firm",
+        "Attacker shoots softly"
+      ],
+      "moeilijker": [
+        "The attacker may fake a shot",
+        "Defender starts further away",
+        "After the block, win the ball and dribble away"
+      ]
+    }
+  },
+  "veld-vo-druk-terugspeelbal": {
+    "naam": "Pressing the back pass",
+    "uitleg": "The red team builds up from the keeper; blue waits patiently. Blue’s trigger is the backward pass: when a midfielder plays the ball back to a defender, blue’s striker sprints at them straight away, at an angle, so the pass back to the keeper is closed. The rest of blue push up and lock onto their player. If blue wins the ball, they score on the goal.",
+    "organisatie": "On half a pitch, 36 × 30 m, with a youth goal and keeper. Red: keeper, three defenders and a midfielder. Blue: four players. Swap roles after 5 attacks.",
+    "benodigdheden": [
+      "Youth goal",
+      "6 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "meerSpelers": "With more players: five against five with two midfielders, or red may score on two mini goals on the halfway line.",
+    "coachpunten": [
+      "Wait for the trigger: the backward pass, not before",
+      "Striker: press at an angle so the keeper is shut out",
+      "All together: when one moves, the whole team moves"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Red plays at walking pace",
+        "Red has one player fewer"
+      ],
+      "moeilijker": [
+        "Red may also play long to a target player",
+        "Blue must score within 6 seconds"
+      ]
+    }
+  },
+  "veld-vo-duel-in-de-lucht": {
+    "naam": "Aerial duel",
+    "uitleg": "The coach throws the ball high between two players. Both jump for the ball; whoever wins it heads it to their own partner. If that works, it is a point. Take off from one leg, use your arms to get up (not to push) and head the ball with your forehead.",
+    "organisatie": "Two pairs: the headers in the middle, their partners 8 m away on each side. The coach throws from 6 m. After 6 balls the headers swap with their partners. From U17; use a soft ball for players who are still learning.",
+    "benodigdheden": [
+      "Balls",
+      "4 disc cones",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Take a short run-up and jump off one leg",
+      "Arms up for balance, not against your opponent",
+      "Eyes open and head through the ball to your partner"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Head without an opponent first",
+        "Lower throw"
+      ],
+      "moeilijker": [
+        "Head the ball into a mini goal",
+        "Ball from the side, like a cross"
+      ]
+    }
+  },
+  "veld-vo-bewaker-schat": {
+    "naam": "Guard the treasure",
+    "uitleg": "There is a tall cone in a hoop: that is the treasure. You are the guard. The attacker dribbles round the hoop and tries to knock the cone over with a shot. Always stay between the ball and the cone. If the cone falls, swap roles.",
+    "organisatie": "10 × 10 m area with a hoop and a tall cone in the middle. Pairs, the attacker with a ball. Nobody may go into the hoop. Rounds of 45 seconds.",
+    "benodigdheden": [
+      "1 hoop",
+      "1 tall cone",
+      "4 disc cones",
+      "1 ball per pair"
+    ],
+    "coachpunten": [
+      "Watch the ball, not the other player’s feet",
+      "Small steps sideways, stay between the ball and the treasure",
+      "Low through your knees so you can move quickly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger hoop, so the guard can stand closer",
+        "The attacker may only shoot softly"
+      ],
+      "moeilijker": [
+        "Two cones in two hoops",
+        "Two attackers against one guard"
+      ]
+    }
+  },
+  "veld-vo-omschakelen-fluitje": {
+    "naam": "Switch on the whistle",
+    "uitleg": "Four against four on two mini goals. On the whistle, the team with the ball leaves it, and the coach immediately plays a new ball in to the other team. Whoever was attacking now has to defend straight away; whoever was defending attacks straight away. Who switches the fastest?",
+    "organisatie": "25 × 20 m pitch with a mini goal at each short end. Two teams of four. The coach stands on the touchline with balls and whistles every 20 to 40 seconds.",
+    "benodigdheden": [
+      "2 mini goals",
+      "4 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Turn round straight after the whistle: do not watch first",
+      "The nearest defender presses, the rest recover behind the ball",
+      "Attackers: play forward quickly while the others are not yet set"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Only whistle when the ball is still",
+        "Three against three"
+      ],
+      "moeilijker": [
+        "The new ball is played in behind the defenders",
+        "A goal within 6 seconds of the whistle counts double"
+      ]
+    }
   }
 }
