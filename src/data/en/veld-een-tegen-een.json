@@ -506,5 +506,157 @@
         "On the other side you have to stop the ball on the line with your sole, or it doesn’t count"
       ]
     }
+  },
+  "veld-een-duel-uit-de-draai": {
+    "naam": "Duel from a turn",
+    "uitleg": "Two players stand back to back, with the ball to the side between them. On the signal they turn: whoever gets to the ball first attacks the other player’s mini goal; the other defends. Score, or win the ball and score yourself. Then new starting positions.",
+    "organisatie": "16 × 12 m area with a mini goal at each short end. Pairs; the coach places the ball and gives the signal. Duels of up to 15 seconds.",
+    "benodigdheden": [
+      "2 mini goals",
+      "4 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Turn towards the side of the ball: that is the quickest",
+      "Whoever has the ball: go forward straight away, do not wait",
+      "Whoever misses the ball: switch straight away and get between the ball and your goal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Start facing each other",
+        "Bigger goals"
+      ],
+      "moeilijker": [
+        "Start sitting or lying face down",
+        "Ball further from both players",
+        "Two goals at each end"
+      ]
+    }
+  },
+  "veld-een-1-1-van-opzij": {
+    "naam": "1v1 from the side",
+    "uitleg": "The attacker dribbles forward from the end line. The defender starts from the side and comes at them at an angle. The attacker chooses: cut inside in front of the defender, or accelerate round the outside. Score in one of the two mini goals at the end.",
+    "organisatie": "18 × 14 m area with two mini goals at the far end. Line of attackers on the end line, line of defenders at the side, halfway. After your turn, join the other line.",
+    "benodigdheden": [
+      "2 mini goals",
+      "6 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Attacker: see in time where the defender is coming from",
+      "Cut inside if they come too fast, go round the outside if they are too late",
+      "Defender: not straight at the ball but at an angle, between ball and goal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Defender starts further away",
+        "One big goal"
+      ],
+      "moeilijker": [
+        "Defender starts closer",
+        "The attacker must score within 6 seconds"
+      ]
+    }
+  },
+  "veld-een-1-1-tijdklok": {
+    "naam": "1v1 against the clock",
+    "uitleg": "The attacker receives the ball and has six seconds to score on the goal with a keeper. The coach counts down out loud. The defender does not have to win the ball: if they hold the attacker up for six seconds, they win. The attacker learns to choose quickly and the defender learns to delay.",
+    "organisatie": "On half a pitch with a keeper. Attacker starts at 25 m, defender at 18 m. The coach plays the ball in and counts. Swap roles after 4 duels.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Attacker: go forward straight away and make the defender choose",
+      "Defender: do not dive in, stay low and track",
+      "Attacker: shoot straight after your move, not another one"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eight seconds",
+        "Defender starts further away"
+      ],
+      "moeilijker": [
+        "Four seconds",
+        "A second defender joins after three seconds"
+      ]
+    }
+  },
+  "veld-een-1-1-lange-bal": {
+    "naam": "1v1 after a long ball",
+    "uitleg": "The coach plays a long, high ball to the attacker. The defender stands a few metres away and comes at them as soon as the ball is played. The attacker takes their first touch away from the defender and then plays out the 1v1 on the goal with a keeper.",
+    "organisatie": "On half a pitch with a keeper. The coach stands on the halfway line with balls, the attacker at 26 m, the defender at 20 m. Swap after 4 duels.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Before the ball arrives, check where the defender is",
+      "First touch away from the pressure, into space",
+      "After the touch, attack the defender straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Ball along the ground",
+        "Defender starts further away"
+      ],
+      "moeilijker": [
+        "Defender starts closer",
+        "Control out of the air with one touch"
+      ]
+    }
+  },
+  "veld-een-schat-van-de-trainer": {
+    "naam": "Steal the coach’s treasure",
+    "uitleg": "The coach is a pirate and the ball is the treasure. The coach dribbles around slowly. Try to win the ball together! Got it? Then dribble quickly to your hoop. Then the pirate gets the treasure back and you can try again.",
+    "organisatie": "12 × 12 m area with a hoop in one corner. The coach dribbles slowly with a ball; 5 children without a ball try to win it. Whoever has the ball dribbles to the hoop.",
+    "benodigdheden": [
+      "4 disc cones",
+      "1 hoop",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Watch the ball, not the coach",
+      "Put your foot in when the ball is far from the coach’s foot",
+      "Together: come from different sides"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach dribbles very slowly",
+        "Bigger area"
+      ],
+      "moeilijker": [
+        "The coach may go faster",
+        "Two coaches, each with a treasure"
+      ]
+    }
+  },
+  "veld-een-1-1-joker": {
+    "naam": "1v1 with a wall-pass joker",
+    "uitleg": "A 1v1 on a mini goal, with a joker running along the touchline. If you cannot get past, you may pass to the joker, who plays it back into the space behind the defender. Then you must score yourself. The joker always plays for whoever has the ball.",
+    "organisatie": "20 × 12 m area with a mini goal at each end. Joker outside the area along one touchline. Duels of up to 20 seconds; after three duels someone else is the joker.",
+    "benodigdheden": [
+      "2 mini goals",
+      "6 disc cones",
+      "Balls",
+      "1 bib"
+    ],
+    "coachpunten": [
+      "Try it yourself first: the joker is the way out",
+      "Use the joker when the defender is tight on you, and sprint away straight away",
+      "Joker: lay it off into space, not to feet"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two jokers, one on each side",
+        "Bigger area"
+      ],
+      "moeilijker": [
+        "The joker may only be used once per duel",
+        "The return pass must be first time"
+      ]
+    }
   }
 }
