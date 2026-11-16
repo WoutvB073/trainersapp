@@ -26,7 +26,7 @@ export function nummerFouten(tekening: Tekening): string[] {
     const spelers = tekening.objecten.filter((o) => o.soort === 'speler' && o.team === team);
     const nrs = spelers.map((s) => s.nummer);
     const dubbel = nrs.filter((n, i) => nrs.indexOf(n) !== i);
-    if (dubbel.length) fouten.push(`${team}: dubbel nummer ${[...new Set(dubbel)].join(', ')}`);
+    if (dubbel.length) fouten.push(`${team}: dubbel nummer ${[...new Set(dubbel)].join(', ')}`); // i18n-ok
     if (!heel) continue;
     // Team A valt naar boven aan (links = kleine x); team B naar beneden (links = grote x).
     const eigen = (x: number) => (team === 'A' ? x : B - x);
@@ -37,7 +37,7 @@ export function nummerFouten(tekening: Tekening): string[] {
       if (!l || !r) continue;
       // De 8 en de 6 alleen vergelijken als ze naast elkaar spelen; een diepe 6 staat vaak recht achter de 8.
       if (links === 8 && rechts === 6 && Math.abs(l.y - r.y) > 5) continue;
-      if (eigen(l.x) > eigen(r.x) + 0.5) fouten.push(`${team}: ${links} staat rechts van ${rechts}`);
+      if (eigen(l.x) > eigen(r.x) + 0.5) fouten.push(`${team}: ${links} staat rechts van ${rechts}`); // i18n-ok
     }
   }
   return fouten;

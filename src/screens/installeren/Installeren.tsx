@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { omgeving, zetGeinstalleerd } from '../../engine/platform';
 import { useInstallatie, vraagInstallatie } from '../../engine/installeren';
-import { Icoon, type IcoonNaam } from '../../components/Icoon';
+import { Icoon } from '../../components/Icoon';
 import { APP_NAAM } from '../../config';
-import { alternatieven, HANDMATIG, sleutelVoor, uitlegVoor, type Sleutel, type Stap, type Uitleg } from './stappen';
+import { alternatieven, HANDMATIG, platformVan, sleutelVoor, uitlegVoor, type Beeld, type Sleutel, type Stap, type Uitleg } from './stappen';
 import { t } from '../../i18n/t';
 import { zin } from '../../i18n/zin';
 
@@ -13,6 +13,14 @@ const link = () => location.href.split('#')[0]!;
 export function chromeLink(adres: string): string {
   const u = new URL(adres);
   return `intent://${u.host}${u.pathname}${u.search}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(adres)};end`;
+}
+
+/**
+ * iPhone/iPad: deze pagina in Safari openen vanuit de browser van een app (WhatsApp, Instagram …). Werkt vanaf iOS 17; gebeurt er
+ * niets, dan volgt de gebruiker de stappen die eronder staan.
+ */
+export function safariLink(adres: string): string {
+  return adres.replace(/^https:\/\//, 'x-safari-https://').replace(/^http:\/\//, 'x-safari-http://');
 }
 
 async function kopieer(tekst: string): Promise<boolean> {
@@ -86,6 +94,7 @@ export function Installeren({ computer = false, alGeinstalleerd = false, opBrows
   const knop = zelf && !!uitleg.installeerKnop && installatie.kanVragen;
   const pijl = zelf && !knop ? uitleg.pijl : undefined;
   const anders = alternatieven(sleutel, omgeving);
+  const platform = platformVan(sleutel);
 
   const installeer = async () => {
     if (await vraagInstallatie()) setGelukt(true);
@@ -109,11 +118,11 @@ export function Installeren({ computer = false, alGeinstalleerd = false, opBrows
             </button>
             <details className="poort-zelf">
               <summary>{t('Zo doe je het zelf')}</summary>
-              <Stappen stappen={uitleg.stappen} />
+              <Stappen stappen={uitleg.stappen} platform={platform} />
             </details>
           </>
         ) : (
-          <UitlegInhoud uitleg={uitleg} />
+          <UitlegInhoud uitleg={uitleg} platform={platform} safari={zelf} />
         )}
         <Knoppen uitleg={uitleg} android={omgeving.os === 'android'} />
         {uitleg.tip && <p className="poort-tip">{uitleg.tip}</p>}
@@ -135,7 +144,7 @@ export function Installeren({ computer = false, alGeinstalleerd = false, opBrows
           {anders.map((a, i) => (
             <div key={i} className="poort-alternatief">
               <h3 className="poort-alternatief-titel">{a.titel}</h3>
-              <UitlegInhoud uitleg={a} />
+              <UitlegInhoud uitleg={a} platform={platform} />
               {a !== uitleg && <Knoppen uitleg={a} android={omgeving.os === 'android'} />}
             </div>
           ))}
@@ -216,12 +225,43 @@ function Kop() {
   );
 }
 
-function UitlegInhoud({ uitleg }: { uitleg: Uitleg }) {
+function UitlegInhoud({ uitleg, platform, safari = false }: { uitleg: Uitleg; platform: Platform; safari?: boolean }) {
   return (
     <>
       {uitleg.intro && <p className="poort-intro">{uitleg.intro}</p>}
-      {uitleg.stappen.length > 0 && <Stappen stappen={uitleg.stappen} />}
+      {safari && uitleg.openInSafari && <SafariKnop />}
+      {uitleg.stappen.length > 0 && <Stappen stappen={uitleg.stappen} platform={platform} />}
     </>
+  );
+}
+
+type Platform = ReturnType<typeof platformVan>;
+
+/** Eén tik in plaats van de stappen: de pagina in Safari openen. Lukt dat niet op dit toestel, dan staan de stappen eronder. */
+function SafariKnop() {
+  const [mislukt, setMislukt] = useState(false);
+  const open = () => {
+    setMislukt(false);
+    // Nog in beeld na anderhalve seconde? Dan heeft de knop op dit toestel niets gedaan.
+    window.setTimeout(() => {
+      if (document.visibilityState === 'visible') setMislukt(true);
+    }, 1600);
+    try {
+      window.location.href = safariLink(location.href);
+    } catch {
+      setMislukt(true);
+    }
+  };
+  return (
+    <div className="poort-safari">
+      <button className="poort-knop" onClick={open}>
+        <Icoon naam="kompas" />
+        {t('Open in Safari')}
+      </button>
+      <p className={`poort-safari-uitleg${mislukt ? ' is-mislukt' : ''}`} role="status">
+        {mislukt ? t('Gebeurde er niets? Volg dan deze stappen:') : t('Werkt de knop niet op jouw telefoon? Volg dan deze stappen:')}
+      </p>
+    </div>
   );
 }
 
@@ -261,32 +301,29 @@ function BrowserKnop({ opBrowserGekozen, tekst }: { opBrowserGekozen: () => void
   );
 }
 
-/**
- * Nagebouwde knop bij een stap: zo ziet hij er op je telefoon uit (deel-knop, de regel "Zet op beginscherm", "Voeg toe", het icoon van de
- * app). Alleen zichtbaar in de nieuwe ontwerprichtingen (fase 1 van de volgende stap); in het huidige ontwerp staat het kleine icoon er.
- */
-function StapBeeld({ icoon }: { icoon: IcoonNaam }) {
-  if (icoon === 'plusVierkant')
+/** Nagebouwde knop bij een stap: zo ziet hij er op je telefoon uit (zie `Beeld` in stappen.tsx). */
+function StapBeeld({ beeld }: { beeld: Beeld }) {
+  if (beeld.soort === 'rij')
     return (
       <span className="poort-beeld poort-beeld-rij" aria-hidden="true">
-        <span>{t('Zet op beginscherm')}</span>
-        <Icoon naam="plusVierkant" maat={22} />
+        <span>{beeld.tekst}</span>
+        {beeld.icoon && <Icoon naam={beeld.icoon} maat={22} />}
       </span>
     );
-  if (icoon === 'plus')
+  if (beeld.soort === 'knop')
     return (
       <span className="poort-beeld poort-beeld-tekstknop" aria-hidden="true">
-        {t('Voeg toe')}
+        {beeld.tekst}
       </span>
     );
-  if (icoon === 'schakelaar')
+  if (beeld.soort === 'schakelaar')
     return (
       <span className="poort-beeld poort-beeld-rij" aria-hidden="true">
-        <span>{t('Open als webapp')}</span>
+        <span>{beeld.tekst}</span>
         <span className="poort-beeld-schakelaar" />
       </span>
     );
-  if (icoon === 'huis')
+  if (beeld.soort === 'app')
     return (
       <span className="poort-beeld poort-beeld-app" aria-hidden="true">
         <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" width={46} height={46} />
@@ -295,22 +332,25 @@ function StapBeeld({ icoon }: { icoon: IcoonNaam }) {
     );
   return (
     <span className="poort-beeld poort-beeld-toets" aria-hidden="true">
-      <Icoon naam={icoon} maat={26} />
+      <Icoon naam={beeld.icoon} maat={26} />
     </span>
   );
 }
 
-function Stappen({ stappen }: { stappen: Stap[] }) {
+function Stappen({ stappen, platform }: { stappen: Stap[]; platform: Platform }) {
   return (
-    <ol className="poort-stappen">
+    <ol className={`poort-stappen poort-stappen--${platform}`}>
       {stappen.map((s, i) => (
-        <li key={i} className="poort-stap">
+        <li key={i} className={`poort-stap${s.beeld ? ' met-beeld' : ''}`}>
           <span className="poort-stap-nr">{i + 1}</span>
-          <span className="poort-stap-icoon">
-            <Icoon naam={s.icoon} maat={24} />
-          </span>
           <span className="poort-stap-tekst">{s.tekst}</span>
-          <StapBeeld icoon={s.icoon} />
+          {s.beeld ? (
+            <StapBeeld beeld={s.beeld} />
+          ) : (
+            <span className="poort-stap-icoon">
+              <Icoon naam={s.icoon} maat={24} />
+            </span>
+          )}
         </li>
       ))}
     </ol>

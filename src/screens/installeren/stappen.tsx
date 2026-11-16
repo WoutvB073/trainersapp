@@ -13,10 +13,25 @@ export { zin };
  * Puur, getest in tests/installeren.test.ts.
  */
 
+/**
+ * Nagebouwde knop bij een stap (0.35.0): zo ziet hij er op je telefoon uit. `toets` = een ronde knop met een icoon (Deel, •••),
+ * `rij` = een regel uit een menu ("Zet op beginscherm"), `knop` = een tekstknop ("Voeg toe"), `schakelaar` = een regel met een
+ * schakelaar die aan staat, `app` = het icoon van de app op het beginscherm. Zonder beeld is de stap alleen tekst.
+ */
+export type Beeld = { soort: 'toets'; icoon: IcoonNaam } | { soort: 'rij'; tekst: string; icoon?: IcoonNaam } | { soort: 'knop'; tekst: string } | { soort: 'schakelaar'; tekst: string } | { soort: 'app' };
+
 export interface Stap {
   icoon: IcoonNaam;
   tekst: ReactNode;
+  beeld?: Beeld;
 }
+
+const toets = (icoon: IcoonNaam): Beeld => ({ soort: 'toets', icoon });
+const rij = (tekst: string, icoon?: IcoonNaam): Beeld => ({ soort: 'rij', tekst, ...(icoon ? { icoon } : {}) });
+const knop = (tekst: string): Beeld => ({ soort: 'knop', tekst });
+
+/** De stijl van de nagebouwde knoppen: die van het toestel (iPhone/iPad, Android of computer). */
+export const platformVan = (s: Sleutel): 'ios' | 'android' | 'computer' => (s.startsWith('ios') || s === 'inapp-ios' ? 'ios' : s.startsWith('computer') ? 'computer' : 'android');
 
 export interface Uitleg {
   titel: string;
@@ -29,6 +44,8 @@ export interface Uitleg {
   kopieerLink?: boolean;
   /** Android: knop "Openen in Chrome" (intent-link). */
   openInChrome?: boolean;
+  /** iPhone/iPad in de browser van een app: knop "Open in Safari" (werkt niet op elke iOS-versie; de stappen blijven eronder staan). */
+  openInSafari?: boolean;
   /** Wijzende pijl naar de knop in de browserbalk (buiten de pagina). */
   pijl?: 'onder-midden' | 'onder-rechts' | 'boven-rechts';
   tip?: ReactNode;
@@ -59,9 +76,13 @@ export type Sleutel =
   | 'computer-anders'
   | 'onbekend';
 
-const OPEN_APP: Stap = { icoon: 'huis', tekst: zin('Open {app} voortaan via het nieuwe icoon.') };
-const VOEG_TOE: Stap = { icoon: 'plus', tekst: zin('Tik rechtsboven op **Voeg toe**.') };
-const ZET_OP_BEGINSCHERM: Stap = { icoon: 'plusVierkant', tekst: zin('Kies **Zet op beginscherm** (zie je het niet? Scroll omlaag).') };
+const OPEN_APP: Stap = { icoon: 'huis', tekst: zin('Open {app} voortaan via het nieuwe icoon.'), beeld: { soort: 'app' } };
+const VOEG_TOE: Stap = { icoon: 'plus', tekst: zin('Tik rechtsboven op **Voeg toe**.'), beeld: knop(t('Voeg toe')) };
+const ZET_OP_BEGINSCHERM: Stap = { icoon: 'plusVierkant', tekst: zin('Kies **Zet op beginscherm** (zie je het niet? Scroll omlaag).'), beeld: rij(t('Zet op beginscherm'), 'plusVierkant') };
+const DEEL = toets('deel');
+const MEER = toets('meer');
+const PUNTJES = toets('puntjes');
+const MENU = toets('menu');
 
 /** Vanaf iOS 16.4 kan "Zet op beginscherm" ook in Chrome, Edge en Firefox (via Delen). */
 const kanVanuitElkeBrowser = (o: Omgeving) => o.iosVersie === undefined || o.iosVersie >= 16.4;
@@ -123,10 +144,10 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
       return {
         titel: t('Zet de app op je beginscherm'),
         stappen: [
-          { icoon: 'meer', tekst: o.tablet ? zin('Tik rechtsboven op **•••**.') : zin('Tik rechtsonder op **•••**.') },
-          { icoon: 'deel', tekst: zin('Tik op **Deel**.') },
+          { icoon: 'meer', tekst: o.tablet ? zin('Tik rechtsboven op **•••**.') : zin('Tik rechtsonder op **•••**.'), beeld: MEER },
+          { icoon: 'deel', tekst: zin('Tik op **Deel**.'), beeld: rij(t('Deel'), 'deel') },
           ZET_OP_BEGINSCHERM,
-          { icoon: 'schakelaar', tekst: zin('Laat **Open als webapp** aan staan en tik op **Voeg toe**.') },
+          { icoon: 'schakelaar', tekst: zin('Laat **Open als webapp** aan staan en tik op **Voeg toe**.'), beeld: { soort: 'schakelaar', tekst: t('Open als webapp') } },
           OPEN_APP,
         ],
         pijl: o.tablet ? 'boven-rechts' : 'onder-rechts',
@@ -134,21 +155,21 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
     case 'ios-safari':
       return {
         titel: t('Zet de app op je beginscherm'),
-        stappen: [{ icoon: 'deel', tekst: o.tablet ? zin('Tik rechtsboven op de **Deel**-knop.') : zin('Tik onderin op de **Deel**-knop.') }, ZET_OP_BEGINSCHERM, VOEG_TOE, OPEN_APP],
+        stappen: [{ icoon: 'deel', tekst: o.tablet ? zin('Tik rechtsboven op de **Deel**-knop.') : zin('Tik onderin op de **Deel**-knop.'), beeld: DEEL }, ZET_OP_BEGINSCHERM, VOEG_TOE, OPEN_APP],
         pijl: o.tablet ? 'boven-rechts' : 'onder-midden',
       };
     case 'ios-chrome':
       return {
         titel: t('Zet de app op je beginscherm'),
-        stappen: [{ icoon: 'deel', tekst: zin('Tik rechts in de adresbalk op de **Deel**-knop.') }, ZET_OP_BEGINSCHERM, VOEG_TOE, OPEN_APP],
+        stappen: [{ icoon: 'deel', tekst: zin('Tik rechts in de adresbalk op de **Deel**-knop.'), beeld: DEEL }, ZET_OP_BEGINSCHERM, VOEG_TOE, OPEN_APP],
         pijl: 'boven-rechts',
       };
     case 'ios-edge':
       return {
         titel: t('Zet de app op je beginscherm'),
         stappen: [
-          { icoon: 'meer', tekst: o.tablet ? zin('Tik rechtsboven op **•••**.') : zin('Tik onderin op **•••**.') },
-          { icoon: 'deel', tekst: zin('Tik op **Delen**.') },
+          { icoon: 'meer', tekst: o.tablet ? zin('Tik rechtsboven op **•••**.') : zin('Tik onderin op **•••**.'), beeld: MEER },
+          { icoon: 'deel', tekst: zin('Tik op **Delen**.'), beeld: rij(t('Delen'), 'deel') },
           ZET_OP_BEGINSCHERM,
           VOEG_TOE,
           OPEN_APP,
@@ -159,8 +180,8 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
       return {
         titel: t('Zet de app op je beginscherm'),
         stappen: [
-          { icoon: 'menu', tekst: o.tablet ? zin('Tik rechtsboven op **☰**.') : zin('Tik rechtsonder op **☰**.') },
-          { icoon: 'deel', tekst: zin('Tik op **Delen**.') },
+          { icoon: 'menu', tekst: o.tablet ? zin('Tik rechtsboven op **☰**.') : zin('Tik rechtsonder op **☰**.'), beeld: MENU },
+          { icoon: 'deel', tekst: zin('Tik op **Delen**.'), beeld: rij(t('Delen'), 'deel') },
           ZET_OP_BEGINSCHERM,
           VOEG_TOE,
           OPEN_APP,
@@ -171,7 +192,7 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
       return {
         titel: t('Zet de app op je beginscherm'),
         intro: zin('Zoek in deze browser de **Deel**-knop (vaak in het menu) en kies daar **Zet op beginscherm**. Lukt dat niet, open deze pagina dan in **Safari**.'),
-        stappen: [{ icoon: 'deel', tekst: zin('Tik op de **Deel**-knop of open het menu en kies **Delen**.') }, ZET_OP_BEGINSCHERM, VOEG_TOE, OPEN_APP],
+        stappen: [{ icoon: 'deel', tekst: zin('Tik op de **Deel**-knop of open het menu en kies **Delen**.'), beeld: DEEL }, ZET_OP_BEGINSCHERM, VOEG_TOE, OPEN_APP],
         kopieerLink: true,
       };
     case 'ios-oud':
@@ -181,7 +202,7 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
         stappen: [
           { icoon: 'kopieer', tekst: zin('Tik hieronder op **Kopieer link**.') },
           { icoon: 'kompas', tekst: zin('Open de app **Safari**.') },
-          { icoon: 'plusVierkant', tekst: zin('Tik op de adresbalk, kies **Plak en ga** en volg daar de stappen.') },
+          { icoon: 'plusVierkant', tekst: zin('Tik op de adresbalk, kies **Plak en ga** en volg daar de stappen.'), beeld: rij(t('Plak en ga')) },
         ],
         kopieerLink: true,
       };
@@ -191,9 +212,9 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
       return {
         titel: t('Zet de app op je startscherm'),
         stappen: [
-          { icoon: 'puntjes', tekst: zin('Tik rechtsboven op **⋮**.') },
-          { icoon: 'download', tekst: zin('Kies **App installeren** of **Toevoegen aan startscherm**.') },
-          { icoon: 'vink', tekst: zin('Tik op **Installeren**.') },
+          { icoon: 'puntjes', tekst: zin('Tik rechtsboven op **⋮**.'), beeld: PUNTJES },
+          { icoon: 'download', tekst: zin('Kies **App installeren** of **Toevoegen aan startscherm**.'), beeld: rij(t('App installeren'), 'download') },
+          { icoon: 'vink', tekst: zin('Tik op **Installeren**.'), beeld: knop(t('Installeren')) },
           OPEN_APP,
         ],
         installeerKnop: true,
@@ -203,9 +224,9 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
       return {
         titel: t('Zet de app op je startscherm'),
         stappen: [
-          { icoon: 'menu', tekst: o.tablet ? zin('Tik rechtsboven op **☰**.') : zin('Tik rechtsonder op **☰**.') },
-          { icoon: 'plusVierkant', tekst: zin('Kies **Pagina toevoegen aan** en dan **Startscherm**.') },
-          { icoon: 'vink', tekst: zin('Tik op **Toevoegen**.') },
+          { icoon: 'menu', tekst: o.tablet ? zin('Tik rechtsboven op **☰**.') : zin('Tik rechtsonder op **☰**.'), beeld: MENU },
+          { icoon: 'plusVierkant', tekst: zin('Kies **Pagina toevoegen aan** en dan **Startscherm**.'), beeld: rij(t('Pagina toevoegen aan'), 'plusVierkant') },
+          { icoon: 'vink', tekst: zin('Tik op **Toevoegen**.'), beeld: knop(t('Toevoegen')) },
           OPEN_APP,
         ],
         installeerKnop: true,
@@ -215,9 +236,9 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
       return {
         titel: t('Zet de app op je startscherm'),
         stappen: [
-          { icoon: 'puntjes', tekst: zin('Tik op **⋮** (rechtsboven of rechtsonder, naast de adresbalk).') },
-          { icoon: 'download', tekst: zin('Kies **Installeren** of **Toevoegen aan startscherm**.') },
-          { icoon: 'vink', tekst: zin('Tik op **Toevoegen**.') },
+          { icoon: 'puntjes', tekst: zin('Tik op **⋮** (rechtsboven of rechtsonder, naast de adresbalk).'), beeld: PUNTJES },
+          { icoon: 'download', tekst: zin('Kies **Installeren** of **Toevoegen aan startscherm**.'), beeld: rij(t('Toevoegen aan startscherm'), 'download') },
+          { icoon: 'vink', tekst: zin('Tik op **Toevoegen**.'), beeld: knop(t('Toevoegen')) },
           OPEN_APP,
         ],
       };
@@ -225,9 +246,9 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
       return {
         titel: t('Zet de app op je startscherm'),
         stappen: [
-          { icoon: 'meer', tekst: o.tablet ? zin('Tik rechtsboven op **•••**.') : zin('Tik onderin op **•••**.') },
-          { icoon: 'download', tekst: zin('Kies **Toevoegen aan telefoon** (of **App installeren**).') },
-          { icoon: 'vink', tekst: zin('Tik op **Installeren**.') },
+          { icoon: 'meer', tekst: o.tablet ? zin('Tik rechtsboven op **•••**.') : zin('Tik onderin op **•••**.'), beeld: MEER },
+          { icoon: 'download', tekst: zin('Kies **Toevoegen aan telefoon** (of **App installeren**).'), beeld: rij(t('Toevoegen aan telefoon'), 'download') },
+          { icoon: 'vink', tekst: zin('Tik op **Installeren**.'), beeld: knop(t('Installeren')) },
           OPEN_APP,
         ],
         installeerKnop: true,
@@ -276,13 +297,15 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
           : zin('Je bekijkt deze pagina in de browser van een app. Daar kun je {app} niet installeren.'),
         stappen: [
           menu?.[0] === 'kompas'
-            ? { icoon: 'kompas', tekst: zin('Tik rechtsonder op het kompas-icoon (of op **•••**).') }
+            ? { icoon: 'kompas', tekst: zin('Tik rechtsonder op het kompas-icoon (of op **•••**).'), beeld: toets('kompas') }
             : menu
-              ? { icoon: menu[0] === '⋮' ? 'puntjes' : 'meer', tekst: zin('Tik op **{knop}** (meestal rechtsboven).', { knop: menu[0] }) }
-              : { icoon: ios ? 'meer' : 'puntjes', tekst: ios ? zin('Tik op **•••** of het kompas-icoon.') : zin('Tik rechtsboven op **⋮**.') },
+              ? { icoon: menu[0] === '⋮' ? 'puntjes' : 'meer', tekst: zin('Tik op **{knop}** (meestal rechtsboven).', { knop: menu[0] }), beeld: menu[0] === '⋮' ? PUNTJES : MEER }
+              : { icoon: ios ? 'meer' : 'puntjes', tekst: ios ? zin('Tik op **•••** of het kompas-icoon.') : zin('Tik rechtsboven op **⋮**.'), beeld: ios ? MEER : PUNTJES },
           {
             icoon: menu?.[0] === 'kompas' ? 'deel' : 'kompas',
             tekst: menu ? zin('Kies **{keuze}**.', { keuze: menu[1] }) : ios ? zin('Kies **Open in Safari** (of **Open in browser**).') : zin('Kies **Openen in Chrome** (of **Openen in browser**).'),
+            // Na het kompas-icoon van WhatsApp sta je al in Safari: daar is geen menuregel meer.
+            ...(menu?.[0] === 'kompas' ? {} : { beeld: rij(menu ? menu[1] : ios ? t('Open in Safari') : t('Openen in Chrome'), 'kompas') }),
           },
           {
             icoon: ios ? 'deel' : 'download',
@@ -291,6 +314,8 @@ export function uitlegVoor(s: Sleutel, o: Omgeving): Uitleg {
         ],
         kopieerLink: true,
         openInChrome: !ios,
+        // De snelkoppeling naar Safari bestaat vanaf iOS 17; ouder: alleen de stappen.
+        openInSafari: ios && (o.iosVersie === undefined || o.iosVersie >= 17),
         tip: zin('Lukt dat niet? Kopieer de link en plak hem in de adresbalk van {doel}.', { doel }),
       };
     }
