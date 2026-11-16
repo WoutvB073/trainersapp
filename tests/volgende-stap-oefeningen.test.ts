@@ -59,8 +59,8 @@ describe('vijf uitgewerkte oefeningen', () => {
 });
 
 describe('ontwerplaag', () => {
-  it('buiten de voorbeeldversie is het altijd het huidige ontwerp', () => {
-    expect(leesOntwerp()).toBe('huidig');
+  it('de app gebruikt altijd ontwerp Zacht (c); terug naar het oude kan alleen in de voorbeeldversie', () => {
+    expect(leesOntwerp()).toBe('c');
   });
 
   it('elke categorie heeft een eigen lijnicoon', () => {
@@ -74,5 +74,16 @@ describe('proef Realistisch', () => {
   it('staat buiten de voorbeeldversie altijd uit', async () => {
     const { leesRealistisch } = await import('../src/engine/realistisch');
     expect(leesRealistisch()).toBe(false);
+  });
+});
+
+describe('ontwerp Zacht (0.36.0)', () => {
+  it('index.html start meteen in ontwerp c, en de CSS kent alleen nog richting c', async () => {
+    const fs = await import('node:fs');
+    expect(fs.readFileSync('index.html', 'utf8')).toContain('data-ontwerp="c"');
+    const css = fs.readFileSync('src/styles/ontwerp.css', 'utf8');
+    expect(css).not.toMatch(/data-ontwerp='[ab]'/);
+    // Kaarten zijn dekkend (een doorzichtige kaart schijnt door menu's en panelen heen).
+    expect(css).toMatch(/--kaart: #ffffff !important/);
   });
 });

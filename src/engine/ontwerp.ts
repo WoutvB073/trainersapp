@@ -1,31 +1,27 @@
 import { useSyncExternalStore } from 'react';
-import { isVoorbeeld } from './voorbeeld';
+import { VOORBEELD_BUILD } from './voorbeeld';
 
 /**
- * Ontwerprichtingen (fase 1 van de volgende stap). In de voorbeeldversie kies je met een knop tussen het huidige ontwerp en drie nieuwe
- * richtingen; de keuze zet `data-ontwerp` op <html> en `src/styles/ontwerp.css` doet de rest. Buiten de voorbeeldversie is het altijd het
- * huidige ontwerp: de echte app verandert niet.
+ * Ontwerp van de app (0.36.0): Zacht, in fase 1 richting C (`src/styles/ontwerp.css`, `data-ontwerp="c"` op <html>). Alleen in de
+ * voorbeeldversie kun je met de wisselknop terug naar het oude ontwerp ('huidig'), om te vergelijken; de live app is altijd 'c'.
  */
-export type Ontwerp = 'huidig' | 'a' | 'b' | 'c';
+export type Ontwerp = 'huidig' | 'c';
 
 export const ONTWERPEN: { id: Ontwerp; kort: string; naam: string }[] = [
-  // Alleen in de voorbeeldversie te zien (voor de gebruiker die kiest), dus zonder vertaling.
-  { id: 'huidig', kort: 'Nu', naam: 'Huidig' }, // i18n-ok
-  { id: 'a', kort: 'A', naam: 'Helder' }, // i18n-ok
-  { id: 'b', kort: 'B', naam: 'Stadion' }, // i18n-ok
-  { id: 'c', kort: 'C', naam: 'Zacht' }, // i18n-ok
+  // Alleen in de voorbeeldversie te zien, dus zonder vertaling.
+  { id: 'huidig', kort: 'Oud', naam: 'Vóór 0.36' }, // i18n-ok
+  { id: 'c', kort: 'Nu', naam: 'Zacht' }, // i18n-ok
 ];
 
 const SLEUTEL = 'trainersapp.ontwerp';
 const luisteraars = new Set<() => void>();
 
 export function leesOntwerp(): Ontwerp {
-  if (!isVoorbeeld()) return 'huidig';
+  if (!VOORBEELD_BUILD) return 'c';
   try {
-    const v = localStorage.getItem(SLEUTEL);
-    return v === 'a' || v === 'b' || v === 'c' ? v : 'huidig';
+    return localStorage.getItem(SLEUTEL) === 'huidig' ? 'huidig' : 'c';
   } catch {
-    return 'huidig';
+    return 'c';
   }
 }
 
@@ -38,7 +34,7 @@ export function pasOntwerpToe(o: Ontwerp = leesOntwerp()): void {
 
 export function kiesOntwerp(o: Ontwerp): void {
   try {
-    if (o === 'huidig') localStorage.removeItem(SLEUTEL);
+    if (o === 'c') localStorage.removeItem(SLEUTEL);
     else localStorage.setItem(SLEUTEL, o);
   } catch {
     /* niet erg: dan geldt de keuze tot je de app sluit */
@@ -53,6 +49,6 @@ export function useOntwerp(): Ontwerp {
       luisteraars.add(f);
       return () => luisteraars.delete(f);
     },
-    () => (typeof document === 'undefined' ? 'huidig' : ((document.documentElement.dataset.ontwerp as Ontwerp | undefined) ?? 'huidig')),
+    () => (typeof document === 'undefined' ? 'c' : ((document.documentElement.dataset.ontwerp as Ontwerp | undefined) ?? 'huidig')),
   );
 }

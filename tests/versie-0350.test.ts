@@ -149,7 +149,7 @@ describe('geen voorbeeldvlag in de live app (0.35.0)', () => {
       const { leesOntwerp } = await import('../src/engine/ontwerp');
       const { leesRealistisch } = await import('../src/engine/realistisch');
       expect(isVoorbeeld()).toBe(false);
-      expect(leesOntwerp()).toBe('huidig');
+      expect(leesOntwerp()).toBe('c');
       expect(leesRealistisch()).toBe(false);
     } finally {
       (globalThis as { localStorage?: unknown }).localStorage = oud;
