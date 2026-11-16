@@ -1073,5 +1073,161 @@
         "The chameleon may not score"
       ]
     }
+  },
+  "veld-pv-goal-in-het-midden": {
+    "naam": "Game with a goal in the middle",
+    "uitleg": "In the middle of the area there is one goal without a net, with a keeper who plays for everyone. You can score from both sides. When the keeper gets the ball, they roll it out to the side and the team that gets it attacks. Move the ball quickly around the goal: the keeper cannot be on both sides at once.",
+    "organisatie": "28 × 28 m area with a goal without a net in the middle (two tall cones or flags also work). 3v3 and a neutral keeper. Rounds of 4 minutes, then another keeper.",
+    "benodigdheden": [
+      "1 youth goal without a net (or 2 flags)",
+      "4 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "See where the keeper is and play to the other side",
+      "After losing the ball: press straight away, the goal is always close",
+      "Shoot quickly, before the keeper can turn round"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger goal",
+        "Overload for the team in possession (a joker)"
+      ],
+      "moeilijker": [
+        "Only score after a pass",
+        "Two goals in the middle"
+      ]
+    }
+  },
+  "veld-pv-5-5-drie-aanrakingen": {
+    "naam": "5v5 with a maximum of three touches",
+    "uitleg": "A normal 5v5 game with keepers, but you may touch the ball no more than three times. Touch it more and the other team gets a free kick. A first-time goal counts double. Everyone has to look ahead before the ball arrives.",
+    "organisatie": "40 × 44 m area with two youth goals and keepers. 5v5. Rounds of 6 minutes. The coach counts out loud when in doubt.",
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "Check over your shoulder before the ball arrives: then you know what to do",
+      "Offer yourself, so your teammate always has a pass",
+      "Take your first touch so that you can carry on straight away"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Four touches",
+        "A joker with unlimited touches"
+      ],
+      "moeilijker": [
+        "Two touches",
+        "Only first-time goals count"
+      ]
+    }
+  },
+  "veld-pv-overtal-4-3": {
+    "naam": "Attacking overload 4v3",
+    "uitleg": "A 4v4 game with keepers, but the team without the ball plays with three: one defender waits behind their own goal line. When their team wins the ball, they come onto the pitch and someone from the other team goes behind their own goal line. The attack is always 4v3, and you learn to make the most of the overload.",
+    "organisatie": "28 × 34 m area with two youth goals and keepers. 4v4. Each time possession changes, the player furthest from the ball goes behind their goal line. Rounds of 5 minutes.",
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "Attackers: find the free player, there is always one",
+      "Commit the defender before you pass",
+      "Defenders: keep the ball in front of you and close the middle"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger area",
+        "Two defenders wait (4v2)"
+      ],
+      "moeilijker": [
+        "Smaller area",
+        "Score within 10 seconds"
+      ]
+    }
+  },
+  "veld-pv-3-3-scorer-keept": {
+    "naam": "3v3 with swapping keepers",
+    "uitleg": "Two teams of four: three play on the pitch and one is in goal. Whoever scores immediately becomes their own team’s keeper, and the keeper comes out onto the pitch. Everyone keeps goal at some point and everyone wants to score. The keeper may use their hands.",
+    "organisatie": "20 × 28 m area with two youth goals. Two teams of four. After a goal, the keeper who has just gone in goal restarts with a roll-out. Rounds of 6 minutes.",
+    "benodigdheden": [
+      "2 youth goals",
+      "4 disc cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "Swap quickly after a goal, the game carries on straight away",
+      "As keeper too: roll the ball out quickly to a free teammate",
+      "Dare to shoot, also from further out"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger goals",
+        "A joker who plays for the attacking team"
+      ],
+      "moeilijker": [
+        "Only score after a pass",
+        "The keeper may only use their feet"
+      ]
+    }
+  },
+  "veld-pv-twee-tegen-de-trainer": {
+    "naam": "Two against the coach",
+    "uitleg": "There are two of you, playing together against the coach. Score in the little goal! Is the coach coming at you? Then pass to your buddy. After a goal, the other child starts with the ball.",
+    "organisatie": "12 × 12 m area with a mini goal at one end. Two children with a ball against the coach. After three goals or one minute, the next pair has a go.",
+    "benodigdheden": [
+      "1 mini goal",
+      "4 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Is the coach coming at you? Pass!",
+      "Buddy: move a little to the side, so the ball can reach you",
+      "Close to the goal: shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach walks very slowly",
+        "Bigger goal"
+      ],
+      "moeilijker": [
+        "Only score once you have both had the ball",
+        "Two goals, the coach chooses which one to defend"
+      ]
+    }
+  },
+  "veld-pv-6-6-vaste-zones": {
+    "naam": "6v6 with fixed zones",
+    "uitleg": "The pitch is split into three zones. In each zone it is two against two: defenders against attackers and midfielders against midfielders. Everyone stays in their own zone, but one player may go forward with the ball into the next zone. That creates an extra player going forward, and you learn when to step up.",
+    "organisatie": "40 × 60 m area with two goals and keepers, split into three zones of 20 m. Each team has two defenders, two midfielders and two attackers. After losing the ball, the player who stepped up goes straight back. Rounds of 6 minutes.",
+    "benodigdheden": [
+      "2 goals",
+      "12 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "meerSpelers": "With more players: 7v7 with three midfielders, or swap one player per zone each round.",
+    "coachpunten": [
+      "Step up when you have space ahead with the ball: that makes an extra player",
+      "After losing the ball: the player who stepped up sprints straight back",
+      "Defenders when outnumbered: keep the ball in front of you and wait for help"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two players may step up",
+        "Wider zones"
+      ],
+      "moeilijker": [
+        "Only step up with a pass, not by dribbling",
+        "Score within 5 seconds of stepping up"
+      ]
+    }
   }
 }
