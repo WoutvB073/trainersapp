@@ -395,5 +395,132 @@
         "After your pass, swap places with your neighbour"
       ]
     }
+  },
+  "veld-pt-wreef-20-meter": {
+    "naam": "Driven passes over 20 metres",
+    "uitleg": "In pairs, 20 m apart. Drive the ball firmly along the ground with your instep to your partner. At the receiver there is a gate of two cones: if the ball goes through, it is a point. The receiver controls it and plays it back the same way. Which pair has the most points after two minutes?",
+    "organisatie": "Pairs 20 m apart, with a 2 m gate at each player. Two or more pairs side by side, 4 m apart. Rounds of 2 minutes; every other round with your other foot.",
+    "benodigdheden": [
+      "4 cones per pair",
+      "1 ball per pair"
+    ],
+    "coachpunten": [
+      "Standing foot beside the ball, knee over the ball",
+      "Strike the middle of the ball with your instep, ankle locked",
+      "Follow through towards your partner and the ball stays low"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "15 m",
+        "Wider gate"
+      ],
+      "moeilijker": [
+        "25 m",
+        "Narrower gate",
+        "Control and play back in two touches"
+      ]
+    }
+  },
+  "veld-pt-halve-volley-hand": {
+    "naam": "Half-volley from the hands",
+    "uitleg": "In pairs, 8 m apart. Drop the ball from your hands and strike it firmly to your partner just as it hits the ground. Your partner controls it, picks it up and does the same back. This trains good timing and a firm ankle.",
+    "organisatie": "Pairs 8 m apart, one ball each. Two or more pairs side by side. After 10 goes, increase the distance to 12 m.",
+    "benodigdheden": [
+      "1 ball per pair",
+      "4 disc cones"
+    ],
+    "coachpunten": [
+      "Drop the ball straight down, do not throw it",
+      "Strike it exactly as it hits the ground",
+      "Ankle locked and over the ball, so it stays low"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Let it bounce once, then strike it",
+        "Closer"
+      ],
+      "moeilijker": [
+        "The receiver controls it out of the air without a bounce",
+        "With your weaker foot",
+        "Aim at a mini goal"
+      ]
+    }
+  },
+  "veld-pt-onder-de-horde": {
+    "naam": "Passing under the hurdle",
+    "uitleg": "Two children pass the ball to each other under a hurdle. If the ball does not touch the hurdle, it is a point. Pass gently and accurately with the inside of your foot. Which pair has the most points?",
+    "organisatie": "Pairs 6 m apart with a tall hurdle in the middle. Two or three pairs side by side. Rounds of 1 minute; every other round with your other foot.",
+    "benodigdheden": [
+      "1 hurdle per pair",
+      "1 ball per pair",
+      "4 disc cones per pair"
+    ],
+    "coachpunten": [
+      "Pass with the inside of your foot, foot sideways on",
+      "Look at the hurdle, then at the ball",
+      "Stop the ball with your sole before passing back"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer (4 m)",
+        "Taller hurdle"
+      ],
+      "moeilijker": [
+        "Lower hurdle",
+        "Pass back first time",
+        "Further away (8 m)"
+      ]
+    }
+  },
+  "veld-pt-kaatsbordtennis": {
+    "naam": "Rebounder tennis",
+    "uitleg": "Two players, one rebounder. You take turns playing against the rebounder, like squash: after your pass your partner must play the ball back, then you again. If the other player cannot play the ball back within the box, you win a point. Who gets to five first?",
+    "organisatie": "Rebounder with a 6 × 5 m box in front of it. Two players, one ball. You may take one touch to stop the ball, then you must play.",
+    "benodigdheden": [
+      "1 rebounder",
+      "4 disc cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Play firmly and at an angle, so it is hard for the other player",
+      "After your pass, make room for your partner straight away",
+      "Stay on the balls of your feet: the ball can come from any angle"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two touches allowed",
+        "Bigger box"
+      ],
+      "moeilijker": [
+        "Everything one touch",
+        "Left and right foot alternately",
+        "Two against two"
+      ]
+    }
+  },
+  "veld-pt-h-vorm": {
+    "naam": "Pass and follow in an H shape",
+    "uitleg": "The cones are laid out in the shape of an H. The ball goes from the top-left line through the two players in the middle to the player at the top right: play in, lay off, play on. Everyone follows their pass and takes the next position. The top-right player dribbles back round the outside to the line, and then the next round starts.",
+    "organisatie": "Two lines of cones 16 m long with two cones in the middle, 6 m apart. Six players: two in the top-left line, one at each middle cone, one at the top right and one at the bottom right as a spare. Two balls; after 3 minutes go the other way.",
+    "benodigdheden": [
+      "6 cones",
+      "2 balls"
+    ],
+    "coachpunten": [
+      "Follow your pass, but do not get in the way of the next pass",
+      "Middle players: stand half-turned so you can play the ball on in the running direction",
+      "Timing: only ask for the ball when the passer is ready"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two touches",
+        "Shorter distances"
+      ],
+      "moeilijker": [
+        "Everything one touch",
+        "Two balls at once, from both sides",
+        "Finish with a shot on goal"
+      ]
+    }
   }
 }
