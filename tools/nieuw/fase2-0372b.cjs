@@ -2,7 +2,7 @@
 // (correctie van de gebruiker, 17-11-2026): pass en trap P2, P4, P11, P13 en afwerken A2, A5, A6, A7, A12.
 // Draaien: node tools/nieuw/fase2-0372b.cjs
 const { zet } = require('./hulp.cjs');
-const { goal, keeper, speler, trainer, bal, pion, hoedje, pop, pauze, stap, B, zone, leeg, ring, JO, OUD, MIDDEN, O6, KLEUR } = require('./fase2-hulp.cjs');
+const { goal, keeper, speler, trainer, bal, pion, hoedje, pop, pauze, stap, B, zone, leeg, ring, JO, OUD, MIDDEN, O6, KLEUR, omrekenen, draai } = require('./fase2-hulp.cjs');
 
 const halfVeld = (weergave) => ({ veld: { type: 'half' }, weergave, camera: 'schuin' });
 
@@ -37,8 +37,9 @@ const oefeningen = [
         moeilijker: ['A defender in the middle', 'Play on first time after checking in'],
       },
     },
-    tekening: {
-      ...leeg(20, 16),
+    // Veld iets breder en alles 1 m opzij: speler 2 bleef in 3D niet helemaal in beeld.
+    tekening: omrekenen({
+      ...leeg(22, 16),
       objecten: [
         pion('pa', 2.2, 10.4),
         pion('pb', 17.8, 10.4),
@@ -56,7 +57,7 @@ const oefeningen = [
         stap({ type: 'loop', wie: 'a1', naar: [3.6, 11.8], manier: 'sprint', duur: 0.6 }, { type: 'pass', van: 'a3', naar: 'a1', start: 0.2 }),
         pauze(0.6),
       ],
-    },
+    }, ([x, y]) => [x + 1, y]),
   },
 
   // P4. Vierkant met twee ballen tegen de klok
@@ -89,8 +90,9 @@ const oefeningen = [
         moeilijker: ['One touch only', 'On the whistle, change direction'],
       },
     },
-    tekening: {
-      ...leeg(18, 18),
+    // Veld 22 × 22 en alles 2 m verschoven: de wachtende spelers bleven in 3D niet in beeld.
+    tekening: omrekenen({
+      ...leeg(22, 22),
       objecten: [
         zone('z', 9, 9, 12, 12),
         speler('a1', 1, 3, 15, { kijkrichting: 0 }),
@@ -130,7 +132,7 @@ const oefeningen = [
         ),
         pauze(0.6),
       ],
-    },
+    }, ([x, y]) => [x + 2, y + 2]),
   },
 
   // P11. Tikkie-takkie-estafette
@@ -163,8 +165,10 @@ const oefeningen = [
         moeilijker: ['One touch only', 'With your other foot'],
       },
     },
-    tekening: {
-      ...leeg(18, 18),
+    // Een kwartslag gedraaid: de rijen staan in 3D naast elkaar, niet achter elkaar.
+    tekening: omrekenen(
+      draai({
+      ...leeg(20, 18),
       objecten: [
         speler('a1', 1, 5, 3, { kijkrichting: 90 }),
         speler('a3', 3, 5, 1.2, { kijkrichting: 90 }),
@@ -196,7 +200,9 @@ const oefeningen = [
         stap({ type: 'pass', van: 'a3', naar: 'a1' }, { type: 'pass', van: 'b3', naar: 'b1', start: 0.2 }),
         pauze(0.6),
       ],
-    },
+    }, [9, 9], 90),
+      ([x, y]) => [x + 1, y],
+    ),
   },
 
   // P13. Rollen naar de hoepel (O6)
@@ -285,7 +291,7 @@ const oefeningen = [
       },
     },
     tekening: {
-      ...halfVeld({ x: 16, y: -3, breedte: 44, lengte: 32 }),
+      ...halfVeld({ x: 12, y: -3, breedte: 50, lengte: 32 }),
       objecten: [
         goal,
         keeper('k1', 1, 34, 1.5, { verdedigt: 'g1' }),

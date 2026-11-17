@@ -253,7 +253,7 @@ const oefeningen = [
       },
     },
     tekening: {
-      ...leeg(40, 16.4),
+      ...leeg(40, 16.4, 'boven'),
       objecten: veldObjecten,
       lijnen: doorschuiven,
       animatie: [pauze(0.5), stap(...veldActies), pauze(1.2)],

@@ -10832,9 +10832,9 @@
         "type": "half"
       },
       "weergave": {
-        "x": 16,
+        "x": 12,
         "y": -3,
-        "breedte": 44,
+        "breedte": 50,
         "lengte": 32
       },
       "camera": "schuin",

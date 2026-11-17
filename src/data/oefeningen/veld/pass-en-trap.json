@@ -4400,7 +4400,7 @@
     "tekening": {
       "veld": {
         "type": "leeg",
-        "breedte": 20,
+        "breedte": 22,
         "lengte": 16
       },
       "camera": "schuin",
@@ -4408,19 +4408,19 @@
         {
           "id": "pa",
           "soort": "pion",
-          "x": 2.2,
+          "x": 3.2,
           "y": 10.4
         },
         {
           "id": "pb",
           "soort": "pion",
-          "x": 17.8,
+          "x": 18.8,
           "y": 10.4
         },
         {
           "id": "pc",
           "soort": "pion",
-          "x": 8.4,
+          "x": 9.4,
           "y": 1.6
         },
         {
@@ -4428,7 +4428,7 @@
           "soort": "speler",
           "team": "A",
           "nummer": 1,
-          "x": 3.4,
+          "x": 4.4,
           "y": 12,
           "kijkrichting": 0
         },
@@ -4437,23 +4437,23 @@
           "soort": "speler",
           "team": "A",
           "nummer": 2,
-          "x": 16.6,
+          "x": 17.6,
           "y": 12,
-          "kijkrichting": 180
+          "kijkrichting": -180
         },
         {
           "id": "a3",
           "soort": "speler",
           "team": "A",
           "nummer": 3,
-          "x": 10,
+          "x": 11,
           "y": 3.2,
           "kijkrichting": 90
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 3.95,
+          "x": 4.95,
           "y": 12,
           "bij": "a1"
         }
@@ -4469,7 +4469,7 @@
               "type": "loop",
               "wie": "a2",
               "naar": [
-                18.2,
+                19.2,
                 14
               ],
               "duur": 0.8
@@ -4482,7 +4482,7 @@
               "type": "loop",
               "wie": "a2",
               "naar": [
-                16.2,
+                17.2,
                 11.8
               ],
               "manier": "sprint",
@@ -4498,7 +4498,7 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                11.6,
+                12.6,
                 1.4
               ],
               "start": 0.5,
@@ -4512,7 +4512,7 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                10.4,
+                11.4,
                 3.6
               ],
               "manier": "sprint",
@@ -4528,7 +4528,7 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                1.6,
+                2.6,
                 14.2
               ],
               "start": 0.5,
@@ -4542,7 +4542,7 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                3.6,
+                4.6,
                 11.8
               ],
               "manier": "sprint",
@@ -4601,16 +4601,16 @@
     "tekening": {
       "veld": {
         "type": "leeg",
-        "breedte": 18,
-        "lengte": 18
+        "breedte": 22,
+        "lengte": 22
       },
       "camera": "schuin",
       "objecten": [
         {
           "id": "z",
           "soort": "zone",
-          "x": 9,
-          "y": 9,
+          "x": 11,
+          "y": 11,
           "breedte": 12,
           "lengte": 12
         },
@@ -4619,8 +4619,8 @@
           "soort": "speler",
           "team": "A",
           "nummer": 1,
-          "x": 3,
-          "y": 15,
+          "x": 5,
+          "y": 17,
           "kijkrichting": 0
         },
         {
@@ -4628,8 +4628,8 @@
           "soort": "speler",
           "team": "A",
           "nummer": 5,
-          "x": 1.4,
-          "y": 16.6,
+          "x": 3.4,
+          "y": 18.6,
           "kijkrichting": 0
         },
         {
@@ -4637,8 +4637,8 @@
           "soort": "speler",
           "team": "A",
           "nummer": 2,
-          "x": 15,
-          "y": 15,
+          "x": 17,
+          "y": 17,
           "kijkrichting": -90
         },
         {
@@ -4646,40 +4646,40 @@
           "soort": "speler",
           "team": "A",
           "nummer": 3,
-          "x": 15,
-          "y": 3,
-          "kijkrichting": 180
+          "x": 17,
+          "y": 5,
+          "kijkrichting": -180
         },
         {
           "id": "a6",
           "soort": "speler",
           "team": "A",
           "nummer": 6,
-          "x": 16.6,
-          "y": 1.4,
-          "kijkrichting": 180
+          "x": 18.6,
+          "y": 3.4,
+          "kijkrichting": -180
         },
         {
           "id": "a4",
           "soort": "speler",
           "team": "A",
           "nummer": 4,
-          "x": 3,
-          "y": 3,
+          "x": 5,
+          "y": 5,
           "kijkrichting": 90
         },
         {
           "id": "b1",
           "soort": "bal",
-          "x": 3.55,
-          "y": 15,
+          "x": 5.55,
+          "y": 17,
           "bij": "a1"
         },
         {
           "id": "b2",
           "soort": "bal",
-          "x": 14.45,
-          "y": 3,
+          "x": 16.45,
+          "y": 5,
           "bij": "a3"
         }
       ],
@@ -4700,13 +4700,13 @@
               "wie": "a1",
               "via": [
                 [
-                  9,
-                  17
+                  11,
+                  19
                 ]
               ],
               "naar": [
-                16.6,
-                16.8
+                18.6,
+                18.8
               ],
               "manier": "sprint",
               "start": 0.3
@@ -4721,13 +4721,13 @@
               "wie": "a3",
               "via": [
                 [
-                  9,
-                  1
+                  11,
+                  3
                 ]
               ],
               "naar": [
-                1.4,
-                1.2
+                3.4,
+                3.2
               ],
               "manier": "sprint",
               "start": 0.3
@@ -4736,8 +4736,8 @@
               "type": "loop",
               "wie": "a5",
               "naar": [
-                3,
-                15
+                5,
+                17
               ],
               "start": 0.7,
               "duur": 0.8
@@ -4746,8 +4746,8 @@
               "type": "loop",
               "wie": "a6",
               "naar": [
-                15,
-                3
+                17,
+                5
               ],
               "start": 0.7,
               "duur": 0.8
@@ -4766,13 +4766,13 @@
               "wie": "a2",
               "via": [
                 [
-                  17,
-                  9
+                  19,
+                  11
                 ]
               ],
               "naar": [
-                16.8,
-                1.4
+                18.8,
+                3.4
               ],
               "manier": "sprint",
               "start": 0.3
@@ -4787,13 +4787,13 @@
               "wie": "a4",
               "via": [
                 [
-                  1,
-                  9
+                  3,
+                  11
                 ]
               ],
               "naar": [
-                1.2,
-                16.6
+                3.2,
+                18.6
               ],
               "manier": "sprint",
               "start": 0.3
@@ -4802,8 +4802,8 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                15,
-                15
+                17,
+                17
               ],
               "start": 0.9,
               "duur": 0.8
@@ -4812,8 +4812,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                3,
-                3
+                5,
+                5
               ],
               "start": 0.9,
               "duur": 0.8
@@ -4832,13 +4832,13 @@
               "wie": "a6",
               "via": [
                 [
-                  9,
-                  1
+                  11,
+                  3
                 ]
               ],
               "naar": [
-                1.4,
-                1.2
+                3.4,
+                3.2
               ],
               "manier": "sprint",
               "start": 0.3
@@ -4853,13 +4853,13 @@
               "wie": "a5",
               "via": [
                 [
-                  9,
-                  17
+                  11,
+                  19
                 ]
               ],
               "naar": [
-                16.6,
-                16.8
+                18.6,
+                18.8
               ],
               "manier": "sprint",
               "start": 0.3
@@ -4868,8 +4868,8 @@
               "type": "loop",
               "wie": "a2",
               "naar": [
-                15,
-                3
+                17,
+                5
               ],
               "start": 0.9,
               "duur": 0.8
@@ -4878,8 +4878,8 @@
               "type": "loop",
               "wie": "a4",
               "naar": [
-                3,
-                15
+                5,
+                17
               ],
               "start": 0.9,
               "duur": 0.8
@@ -4932,7 +4932,7 @@
     "tekening": {
       "veld": {
         "type": "leeg",
-        "breedte": 18,
+        "breedte": 20,
         "lengte": 18
       },
       "camera": "schuin",
@@ -4942,67 +4942,67 @@
           "soort": "speler",
           "team": "A",
           "nummer": 1,
-          "x": 5,
-          "y": 3,
-          "kijkrichting": 90
+          "x": 16,
+          "y": 5,
+          "kijkrichting": -180
         },
         {
           "id": "a3",
           "soort": "speler",
           "team": "A",
           "nummer": 3,
-          "x": 5,
-          "y": 1.2,
-          "kijkrichting": 90
+          "x": 17.8,
+          "y": 5,
+          "kijkrichting": -180
         },
         {
           "id": "a2",
           "soort": "speler",
           "team": "A",
           "nummer": 2,
-          "x": 5,
-          "y": 13,
-          "kijkrichting": -90
+          "x": 6,
+          "y": 5,
+          "kijkrichting": 0
         },
         {
           "id": "b1",
           "soort": "speler",
           "team": "B",
           "nummer": 1,
-          "x": 13,
-          "y": 3,
-          "kijkrichting": 90
+          "x": 16,
+          "y": 13,
+          "kijkrichting": -180
         },
         {
           "id": "b3",
           "soort": "speler",
           "team": "B",
           "nummer": 3,
-          "x": 13,
-          "y": 1.2,
-          "kijkrichting": 90
+          "x": 17.8,
+          "y": 13,
+          "kijkrichting": -180
         },
         {
           "id": "b2",
           "soort": "speler",
           "team": "B",
           "nummer": 2,
-          "x": 13,
+          "x": 6,
           "y": 13,
-          "kijkrichting": -90
+          "kijkrichting": 0
         },
         {
           "id": "ba",
           "soort": "bal",
-          "x": 5,
-          "y": 3.55,
+          "x": 15.45,
+          "y": 5,
           "bij": "a1"
         },
         {
           "id": "bb",
           "soort": "bal",
-          "x": 13,
-          "y": 3.55,
+          "x": 15.45,
+          "y": 13,
           "bij": "b1"
         }
       ],
@@ -5023,17 +5023,17 @@
               "wie": "a1",
               "via": [
                 [
-                  6.8,
-                  9
+                  10,
+                  6.8
                 ],
                 [
-                  6.8,
-                  14.6
+                  4.4,
+                  6.8
                 ]
               ],
               "naar": [
-                5,
-                15.2
+                3.8,
+                5
               ],
               "manier": "sprint",
               "start": 0.3
@@ -5042,8 +5042,8 @@
               "type": "loop",
               "wie": "a3",
               "naar": [
-                5,
-                3
+                16,
+                5
               ],
               "start": 0.6,
               "duur": 0.9
@@ -5059,17 +5059,17 @@
               "wie": "b1",
               "via": [
                 [
-                  14.8,
-                  9
+                  10,
+                  14.8
                 ],
                 [
-                  14.8,
-                  14.6
+                  4.4,
+                  14.8
                 ]
               ],
               "naar": [
-                13,
-                15.2
+                3.8,
+                13
               ],
               "manier": "sprint",
               "start": 0.5
@@ -5078,8 +5078,8 @@
               "type": "loop",
               "wie": "b3",
               "naar": [
-                13,
-                3
+                16,
+                13
               ],
               "start": 0.8,
               "duur": 0.9
@@ -5098,17 +5098,17 @@
               "wie": "a2",
               "via": [
                 [
-                  3.2,
-                  7
+                  12,
+                  3.2
                 ],
                 [
-                  3.2,
-                  1.4
+                  17.6,
+                  3.2
                 ]
               ],
               "naar": [
-                5,
-                0.8
+                18.2,
+                5
               ],
               "manier": "sprint",
               "start": 0.3
@@ -5117,8 +5117,8 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                5,
-                13
+                6,
+                5
               ],
               "start": 0.7,
               "duur": 0.9
@@ -5134,17 +5134,17 @@
               "wie": "b2",
               "via": [
                 [
-                  11.2,
-                  7
+                  12,
+                  11.2
                 ],
                 [
-                  11.2,
-                  1.4
+                  17.6,
+                  11.2
                 ]
               ],
               "naar": [
-                13,
-                0.8
+                18.2,
+                13
               ],
               "manier": "sprint",
               "start": 0.6
@@ -5153,7 +5153,7 @@
               "type": "loop",
               "wie": "b1",
               "naar": [
-                13,
+                6,
                 13
               ],
               "start": 0.9,

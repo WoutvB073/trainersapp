@@ -507,57 +507,6 @@
       ]
     }
   },
-  "veld-een-vier-doeltjes-kruis": {
-    "naam": "Four goals in a cross",
-    "uitleg": "One against one in a square with a mini goal in the middle of each side. Red defends the top and left goals, blue the bottom and right ones. You score in either of the other player’s two goals. Because the goals are round a corner, one move lets you change direction: see which goal is open.",
-    "organisatie": "14 × 14 m square with four mini goals, one in the middle of each side. Duels of 45 seconds; after a goal the other player starts with the ball in the middle. Waiting pairs beside the square.",
-    "benodigdheden": [
-      "4 mini goals",
-      "4 disc cones",
-      "Balls"
-    ],
-    "coachpunten": [
-      "Let the defender choose which goal to cover, and go for the other one",
-      "A cut or turn takes you to the other goal in one go",
-      "Defender: stand between the ball and both goals"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Bigger square",
-        "Bigger goals"
-      ],
-      "moeilijker": [
-        "Smaller square",
-        "A goal only counts after a move"
-      ]
-    }
-  },
-  "veld-een-krokodillenrivier-twee-oevers": {
-    "naam": "Crocodile river with two banks",
-    "uitleg": "There are two rivers, one after the other, and a crocodile lives in each one. Dribble your ball through the first river without the crocodile taking it, and then through the second. Get past both and you may score in the little goal! The crocodiles stay in their own river. If a crocodile takes your ball, you swap with it.",
-    "organisatie": "A 12 × 20 m lane with two rivers 4 m wide (disc cones) and a 3 m bank between them. A crocodile in a bib in each river. A mini goal at the end. The children go in turn, each with a ball.",
-    "benodigdheden": [
-      "1 mini goal",
-      "10 disc cones",
-      "Footballs",
-      "2 bibs"
-    ],
-    "coachpunten": [
-      "Dribble past the crocodile on the side where it is not",
-      "After the river, slow down for a moment: see where the second crocodile is",
-      "Crocodile: stay in your river, low with bent knees"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Narrower rivers",
-        "The crocodile may only walk"
-      ],
-      "moeilijker": [
-        "Wider rivers",
-        "Two crocodiles in the second river"
-      ]
-    }
-  },
   "veld-een-duel-uit-de-draai": {
     "naam": "Duel from a turn",
     "uitleg": "Two players stand back to back, a few metres apart, each facing their own mini goal. The ball lies between them, behind their backs. On the signal they turn: whoever gets to the ball first attacks the other player’s mini goal; the other defends. Score, or win the ball and score yourself. Then new starting positions.",
@@ -707,6 +656,57 @@
       "moeilijker": [
         "The joker may only be used once per duel",
         "The return pass must be first time"
+      ]
+    }
+  },
+  "veld-een-vier-doeltjes-kruis": {
+    "naam": "Four goals in a cross",
+    "uitleg": "One against one in a square with a mini goal in the middle of each side. Red defends the top and left goals, blue the bottom and right ones. You score in either of the other player’s two goals. Because the goals are round a corner, one move lets you change direction: see which goal is open.",
+    "organisatie": "14 × 14 m square with four mini goals, one in the middle of each side. Duels of 45 seconds; after a goal the other player starts with the ball in the middle. Waiting pairs beside the square.",
+    "benodigdheden": [
+      "4 mini goals",
+      "4 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Let the defender choose which goal to cover, and go for the other one",
+      "A cut or turn takes you to the other goal in one go",
+      "Defender: stand between the ball and both goals"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger square",
+        "Bigger goals"
+      ],
+      "moeilijker": [
+        "Smaller square",
+        "A goal only counts after a move"
+      ]
+    }
+  },
+  "veld-een-krokodillenrivier-twee-oevers": {
+    "naam": "Crocodile river with two banks",
+    "uitleg": "There are two rivers, one after the other, and a crocodile lives in each one. Dribble your ball through the first river without the crocodile taking it, and then through the second. Get past both and you may score in the little goal! The crocodiles stay in their own river. If a crocodile takes your ball, you swap with it.",
+    "organisatie": "A 12 × 20 m lane with two rivers 4 m wide (disc cones) and a 3 m bank between them. A crocodile in a bib in each river. A mini goal at the end. The children go in turn, each with a ball.",
+    "benodigdheden": [
+      "1 mini goal",
+      "10 disc cones",
+      "Footballs",
+      "2 bibs"
+    ],
+    "coachpunten": [
+      "Dribble past the crocodile on the side where it is not",
+      "After the river, slow down for a moment: see where the second crocodile is",
+      "Crocodile: stay in your river, low with bent knees"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Narrower rivers",
+        "The crocodile may only walk"
+      ],
+      "moeilijker": [
+        "Wider rivers",
+        "Two crocodiles in the second river"
       ]
     }
   }

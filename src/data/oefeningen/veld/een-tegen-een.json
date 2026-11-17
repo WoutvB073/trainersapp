@@ -4680,452 +4680,6 @@
     }
   },
   {
-    "id": "veld-een-vier-doeltjes-kruis",
-    "soort": "veld",
-    "naam": "Vier doeltjes in het kruis",
-    "categorieen": [
-      "een-tegen-een"
-    ],
-    "uitleg": "Eén tegen één in een vierkant met in het midden van elke zijde een doeltje. Rood verdedigt de doeltjes boven en links, blauw die van onder en rechts. Je scoort in een van de twee doeltjes van de ander. Omdat de doeltjes om een hoek liggen, kun je met één actie van richting wisselen: kijk welk doeltje open ligt.",
-    "organisatie": "Vierkant van 14 × 14 m met vier kleine doeltjes, één in het midden van elke zijde. Duels van 45 seconden; na een doelpunt begint de ander met de bal in het midden. Wachtende tweetallen naast het vak.",
-    "benodigdheden": [
-      "4 kleine doeltjes",
-      "4 hoedjes",
-      "Ballen"
-    ],
-    "spelersNodig": 2,
-    "keepersNodig": 0,
-    "leeftijden": [
-      "jo8-11",
-      "jo12-15"
-    ],
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Laat de verdediger kiezen welk doeltje hij dekt, en ga naar het andere",
-      "Een kap of draai brengt je in één keer naar het andere doeltje",
-      "Verdediger: sta tussen de bal en beide doeltjes in"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Groter vierkant",
-        "Grotere doeltjes"
-      ],
-      "moeilijker": [
-        "Kleiner vierkant",
-        "Een goal telt pas na een actie"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 16,
-        "lengte": 16
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "z",
-          "soort": "zone",
-          "x": 8,
-          "y": 8,
-          "breedte": 14,
-          "lengte": 14
-        },
-        {
-          "id": "gN",
-          "soort": "klein-goal",
-          "x": 8,
-          "y": 1,
-          "hoek": 0,
-          "breedte": 2
-        },
-        {
-          "id": "gS",
-          "soort": "klein-goal",
-          "x": 8,
-          "y": 15,
-          "hoek": 180,
-          "breedte": 2
-        },
-        {
-          "id": "gW",
-          "soort": "klein-goal",
-          "x": 1,
-          "y": 8,
-          "hoek": -90,
-          "breedte": 2
-        },
-        {
-          "id": "gE",
-          "soort": "klein-goal",
-          "x": 15,
-          "y": 8,
-          "hoek": 90,
-          "breedte": 2
-        },
-        {
-          "id": "a1",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 1,
-          "x": 6,
-          "y": 6.6,
-          "kijkrichting": 45
-        },
-        {
-          "id": "b1",
-          "soort": "speler",
-          "team": "B",
-          "nummer": 2,
-          "x": 9.6,
-          "y": 10.2,
-          "kijkrichting": -135
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 6.4,
-          "y": 7,
-          "bij": "a1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.5,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "naar": [
-                6.8,
-                9.2
-              ]
-            },
-            {
-              "type": "loop",
-              "wie": "b1",
-              "naar": [
-                8.2,
-                11.4
-              ],
-              "manier": "verdedigend"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schijn",
-              "wie": "a1",
-              "kant": "rechts"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "via": [
-                [
-                  9,
-                  8.4
-                ]
-              ],
-              "naar": [
-                12,
-                7.8
-              ],
-              "manier": "sprint"
-            },
-            {
-              "type": "loop",
-              "wie": "b1",
-              "naar": [
-                10.6,
-                10.2
-              ],
-              "manier": "verdedigend",
-              "start": 0.3
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "a1",
-              "naar": [
-                15.3,
-                8.2
-              ],
-              "hoogte": "grond"
-            }
-          ]
-        },
-        {
-          "duur": 0.8,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
-    "id": "veld-een-krokodillenrivier-twee-oevers",
-    "soort": "veld",
-    "naam": "Krokodillenrivier met twee oevers",
-    "categorieen": [
-      "een-tegen-een"
-    ],
-    "uitleg": "Er stromen twee rivieren achter elkaar, en in elke rivier woont een krokodil. Dribbel met je bal door de eerste rivier zonder dat de krokodil hem pakt, en dan door de tweede. Kom je langs allebei, dan mag je scoren in het goaltje! De krokodillen blijven in hun eigen rivier. Pakt een krokodil je bal, dan ruil je met hem.",
-    "organisatie": "Baan van 12 × 20 m met twee rivieren van 4 m breed (hoedjes), met 3 m oever ertussen. In elke rivier een krokodil met een hesje. Aan het eind een mini-goaltje. De kinderen gaan om de beurt, ieder met een bal.",
-    "benodigdheden": [
-      "1 mini-goaltje",
-      "10 hoedjes",
-      "Voetballen",
-      "2 hesjes"
-    ],
-    "spelersNodig": 3,
-    "keepersNodig": 0,
-    "leeftijden": [
-      "mini-5-7"
-    ],
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Dribbel de krokodil voorbij aan de kant waar hij níet staat",
-      "Na de rivier even rustig: kijk waar de tweede krokodil is",
-      "Krokodil: blijf in je rivier, laag door je knieën"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Smallere rivieren",
-        "De krokodil mag alleen lopen"
-      ],
-      "moeilijker": [
-        "Bredere rivieren",
-        "Twee krokodillen in de tweede rivier"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 12,
-        "lengte": 22
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "r1",
-          "soort": "zone",
-          "x": 6,
-          "y": 15,
-          "breedte": 10,
-          "lengte": 4,
-          "kleur": "#1c64d8"
-        },
-        {
-          "id": "r2",
-          "soort": "zone",
-          "x": 6,
-          "y": 8,
-          "breedte": 10,
-          "lengte": 4,
-          "kleur": "#1c64d8"
-        },
-        {
-          "id": "g1",
-          "soort": "klein-goal",
-          "x": 6,
-          "y": 1.4,
-          "hoek": 0,
-          "breedte": 1.5,
-          "hoogte": 0.9,
-          "lengte": 0.7,
-          "zonderNet": true
-        },
-        {
-          "id": "a1",
-          "soort": "speler",
-          "team": "A",
-          "nummer": 1,
-          "x": 6,
-          "y": 20,
-          "kijkrichting": -90
-        },
-        {
-          "id": "k1",
-          "soort": "speler",
-          "team": "B",
-          "nummer": 2,
-          "x": 5,
-          "y": 15,
-          "kijkrichting": 90
-        },
-        {
-          "id": "k2",
-          "soort": "speler",
-          "team": "B",
-          "nummer": 3,
-          "x": 7,
-          "y": 8,
-          "kijkrichting": 90
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 6,
-          "y": 19.45,
-          "bij": "a1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.5,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "naar": [
-                6,
-                18.4
-              ]
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [
-                6.2,
-                15.8
-              ],
-              "manier": "verdedigend"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schijn",
-              "wie": "a1",
-              "kant": "rechts"
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [
-                6.8,
-                15.6
-              ],
-              "manier": "verdedigend",
-              "duur": 0.5
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "via": [
-                [
-                  3.4,
-                  15.6
-                ]
-              ],
-              "naar": [
-                3.8,
-                11.8
-              ],
-              "manier": "sprint"
-            },
-            {
-              "type": "loop",
-              "wie": "k1",
-              "naar": [
-                5.2,
-                14.8
-              ],
-              "manier": "verdedigend",
-              "start": 0.2
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "naar": [
-                5.4,
-                11.2
-              ]
-            },
-            {
-              "type": "loop",
-              "wie": "k2",
-              "naar": [
-                5.8,
-                8.8
-              ],
-              "manier": "verdedigend"
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "dribbel",
-              "wie": "a1",
-              "via": [
-                [
-                  8.4,
-                  8.6
-                ]
-              ],
-              "naar": [
-                8,
-                5
-              ],
-              "manier": "sprint"
-            },
-            {
-              "type": "loop",
-              "wie": "k2",
-              "naar": [
-                6.4,
-                7.4
-              ],
-              "manier": "verdedigend",
-              "start": 0.3
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "schot",
-              "van": "a1",
-              "naar": [
-                6.2,
-                1
-              ],
-              "hoogte": "grond"
-            }
-          ]
-        },
-        {
-          "duur": 0.8,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
     "id": "veld-een-duel-uit-de-draai",
     "soort": "veld",
     "naam": "Duel uit de draai",
@@ -6360,6 +5914,452 @@
               "naar": [
                 21.2,
                 7.4
+              ],
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-een-vier-doeltjes-kruis",
+    "soort": "veld",
+    "naam": "Vier doeltjes in het kruis",
+    "categorieen": [
+      "een-tegen-een"
+    ],
+    "uitleg": "Eén tegen één in een vierkant met in het midden van elke zijde een doeltje. Rood verdedigt de doeltjes boven en links, blauw die van onder en rechts. Je scoort in een van de twee doeltjes van de ander. Omdat de doeltjes om een hoek liggen, kun je met één actie van richting wisselen: kijk welk doeltje open ligt.",
+    "organisatie": "Vierkant van 14 × 14 m met vier kleine doeltjes, één in het midden van elke zijde. Duels van 45 seconden; na een doelpunt begint de ander met de bal in het midden. Wachtende tweetallen naast het vak.",
+    "benodigdheden": [
+      "4 kleine doeltjes",
+      "4 hoedjes",
+      "Ballen"
+    ],
+    "spelersNodig": 2,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Laat de verdediger kiezen welk doeltje hij dekt, en ga naar het andere",
+      "Een kap of draai brengt je in één keer naar het andere doeltje",
+      "Verdediger: sta tussen de bal en beide doeltjes in"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Groter vierkant",
+        "Grotere doeltjes"
+      ],
+      "moeilijker": [
+        "Kleiner vierkant",
+        "Een goal telt pas na een actie"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 16,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z",
+          "soort": "zone",
+          "x": 8,
+          "y": 8,
+          "breedte": 14,
+          "lengte": 14
+        },
+        {
+          "id": "gN",
+          "soort": "klein-goal",
+          "x": 8,
+          "y": 1,
+          "hoek": 0,
+          "breedte": 2
+        },
+        {
+          "id": "gS",
+          "soort": "klein-goal",
+          "x": 8,
+          "y": 15,
+          "hoek": 180,
+          "breedte": 2
+        },
+        {
+          "id": "gW",
+          "soort": "klein-goal",
+          "x": 1,
+          "y": 8,
+          "hoek": -90,
+          "breedte": 2
+        },
+        {
+          "id": "gE",
+          "soort": "klein-goal",
+          "x": 15,
+          "y": 8,
+          "hoek": 90,
+          "breedte": 2
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 6,
+          "y": 6.6,
+          "kijkrichting": 45
+        },
+        {
+          "id": "b1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 9.6,
+          "y": 10.2,
+          "kijkrichting": -135
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 6.4,
+          "y": 7,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                6.8,
+                9.2
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "b1",
+              "naar": [
+                8.2,
+                11.4
+              ],
+              "manier": "verdedigend"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schijn",
+              "wie": "a1",
+              "kant": "rechts"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "via": [
+                [
+                  9,
+                  8.4
+                ]
+              ],
+              "naar": [
+                12,
+                7.8
+              ],
+              "manier": "sprint"
+            },
+            {
+              "type": "loop",
+              "wie": "b1",
+              "naar": [
+                10.6,
+                10.2
+              ],
+              "manier": "verdedigend",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                15.3,
+                8.2
+              ],
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "veld-een-krokodillenrivier-twee-oevers",
+    "soort": "veld",
+    "naam": "Krokodillenrivier met twee oevers",
+    "categorieen": [
+      "een-tegen-een"
+    ],
+    "uitleg": "Er stromen twee rivieren achter elkaar, en in elke rivier woont een krokodil. Dribbel met je bal door de eerste rivier zonder dat de krokodil hem pakt, en dan door de tweede. Kom je langs allebei, dan mag je scoren in het goaltje! De krokodillen blijven in hun eigen rivier. Pakt een krokodil je bal, dan ruil je met hem.",
+    "organisatie": "Baan van 12 × 20 m met twee rivieren van 4 m breed (hoedjes), met 3 m oever ertussen. In elke rivier een krokodil met een hesje. Aan het eind een mini-goaltje. De kinderen gaan om de beurt, ieder met een bal.",
+    "benodigdheden": [
+      "1 mini-goaltje",
+      "10 hoedjes",
+      "Voetballen",
+      "2 hesjes"
+    ],
+    "spelersNodig": 3,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Dribbel de krokodil voorbij aan de kant waar hij níet staat",
+      "Na de rivier even rustig: kijk waar de tweede krokodil is",
+      "Krokodil: blijf in je rivier, laag door je knieën"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Smallere rivieren",
+        "De krokodil mag alleen lopen"
+      ],
+      "moeilijker": [
+        "Bredere rivieren",
+        "Twee krokodillen in de tweede rivier"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 22
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "r1",
+          "soort": "zone",
+          "x": 6,
+          "y": 15,
+          "breedte": 10,
+          "lengte": 4,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "r2",
+          "soort": "zone",
+          "x": 6,
+          "y": 8,
+          "breedte": 10,
+          "lengte": 4,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "g1",
+          "soort": "klein-goal",
+          "x": 6,
+          "y": 1.4,
+          "hoek": 0,
+          "breedte": 1.5,
+          "hoogte": 0.9,
+          "lengte": 0.7,
+          "zonderNet": true
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 6,
+          "y": 20,
+          "kijkrichting": -90
+        },
+        {
+          "id": "k1",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 2,
+          "x": 5,
+          "y": 15,
+          "kijkrichting": 90
+        },
+        {
+          "id": "k2",
+          "soort": "speler",
+          "team": "B",
+          "nummer": 3,
+          "x": 7,
+          "y": 8,
+          "kijkrichting": 90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 6,
+          "y": 19.45,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                6,
+                18.4
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                6.2,
+                15.8
+              ],
+              "manier": "verdedigend"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schijn",
+              "wie": "a1",
+              "kant": "rechts"
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                6.8,
+                15.6
+              ],
+              "manier": "verdedigend",
+              "duur": 0.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "via": [
+                [
+                  3.4,
+                  15.6
+                ]
+              ],
+              "naar": [
+                3.8,
+                11.8
+              ],
+              "manier": "sprint"
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                5.2,
+                14.8
+              ],
+              "manier": "verdedigend",
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "naar": [
+                5.4,
+                11.2
+              ]
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [
+                5.8,
+                8.8
+              ],
+              "manier": "verdedigend"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "dribbel",
+              "wie": "a1",
+              "via": [
+                [
+                  8.4,
+                  8.6
+                ]
+              ],
+              "naar": [
+                8,
+                5
+              ],
+              "manier": "sprint"
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [
+                6.4,
+                7.4
+              ],
+              "manier": "verdedigend",
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a1",
+              "naar": [
+                6.2,
+                1
               ],
               "hoogte": "grond"
             }
