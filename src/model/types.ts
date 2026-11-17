@@ -96,6 +96,8 @@ export interface VeldObject {
   zonderNet?: boolean;
   /** Keeper mag buiten het doelgebied komen (bv. 1 tegen keeper). */
   uitkomen?: boolean;
+  /** Bal: in de linker- of rechterhand van wie hem in de handen heeft (0.37.3), zodat iemand twee ballen tegelijk vasthoudt. */
+  hand?: 'links' | 'rechts';
   /** Bal: een reactiebal (stuit alle kanten op) of tennisbal (klein). */
   variant?: 'reactiebal' | 'tennisbal';
   /** Keeper: begint in kniezit of hurkzit (tot hij beweegt of duikt). */
@@ -109,7 +111,7 @@ export interface VeldObject {
    */
   hoogte?: number;
   tekst?: string;
-  /** Optionele eigen kleur (zone/vak, hoedje, pion, ring, ladder, horde). Een zone wordt een doorzichtig gekleurd vlak. */
+  /** Optionele eigen kleur (zone/vak, hoedje, pion, ring, ladder, horde, en sinds 0.37.3 een bal). Een zone wordt een doorzichtig gekleurd vlak. */
   kleur?: string;
 }
 
@@ -237,8 +239,16 @@ export interface BalActie extends ActieBasis {
   terugNaar?: Punt;
   /** Welke bal (standaard de bal die `van` heeft). */
   bal?: string;
-  /** Pass over de grond onder deze horde door (0.30.0): de fysieke controle laat dat toe. */
+  /**
+   * Pass over de grond onder deze horde door (0.30.0), of (0.37.3) een lage bal tussen de benen door van deze persoon
+   * (die staat `wijdbeens`): de fysieke controle laat dat toe.
+   */
   onderdoor?: string;
+  /**
+   * Effect (0.37.3): de bal draait in een boog, zoveel meter opzij op het midden van de vlucht. Positief = naar rechts,
+   * gezien vanaf wie de bal speelt (bv. een indraaiende of uitdraaiende voorzet).
+   */
+  effect?: number;
   /** Hoogte van de bal (optioneel, zie BalHoogte). */
   hoogte?: BalHoogte;
   /** Verouderd: `hoog: true` = `hoogte: 'hoog'`. Blijft werken voor oude tekeningen. */
@@ -379,6 +389,12 @@ export interface VoetOpBalActie extends ActieBasis {
   wie: string;
 }
 
+/** Wijdbeens staan (0.37.3), bv. zodat een bal tussen de benen door kan. Standaard 2 s. */
+export interface WijdbeensActie extends ActieBasis {
+  type: 'wijdbeens';
+  wie: string;
+}
+
 /**
  * Een arm recht omhoog steken als teken (0.37.2), bv. de trainer die op het laatste moment aangeeft langs welke kant je gaat.
  * Standaard 1,2 s (inclusief omhoog en weer omlaag).
@@ -490,7 +506,7 @@ export interface TeamActie extends ActieBasis {
 }
 
 export type Actie =
-  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | TrucActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie | TekenActie;
+  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | TrucActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie | TekenActie | WijdbeensActie;
 
 export interface AnimatieStap {
   acties: Actie[];

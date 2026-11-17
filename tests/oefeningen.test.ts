@@ -95,6 +95,8 @@ describe('animaties: niet door elkaar of door materiaal heen', () => {
           for (let j = i + 1; j < personen.length; j++) {
             const b = s.objecten.get(personen[j]!)!;
             const d = Math.hypot(a.x - b.x, a.y - b.y);
+            // Een hoge duik over iemand die op de grond ligt (0.37.3): ze raken elkaar niet.
+            if ((a.liggen > 0.5 && b.zweef > 0.3) || (b.liggen > 0.5 && a.zweef > 0.3)) continue;
             if (d < (DICHTBIJ[o.id] ?? 1.5)) problemen.push(`${personen[i]}–${personen[j]} ${d.toFixed(2)} m op t=${t.toFixed(2)}`);
           }
           for (const m of materiaal) {

@@ -105,7 +105,7 @@ const oefeningen = [
 
   // KH4. Tippen om de paal
   {
-    id: 'keeper-hd-tippen-om-de-paal',
+    id: 'keeper-hd-om-de-paal-tippen',
     naam: 'Tippen om de paal',
     categorieen: ['hoog-duiken'],
     uitleg:

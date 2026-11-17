@@ -161,7 +161,7 @@ export function tekenScene(
   for (const o of objecten) {
     if (o.soort !== 'bal') continue;
     const s = stand.objecten.get(o.id);
-    if (s) tekenBal(b, s, personen, o.variant);
+    if (s) tekenBal(b, s, personen, o.variant, o.kleur);
   }
   for (const o of objecten) if (o.soort === 'tekst') tekenTekst(b, o);
 }
@@ -917,7 +917,7 @@ function handschoen(ctx: CanvasRenderingContext2D, x: number, y: number, r: numb
   ctx.restore();
 }
 
-function tekenBal(b: Beeld, s: ObjectStand, personen: Punt[], variant?: VeldObject['variant']) {
+function tekenBal(b: Beeld, s: ObjectStand, personen: Punt[], variant?: VeldObject['variant'], kleur?: string) {
   const { ctx } = b;
   let c = px(b, [s.x, s.y]);
   const r = maat(b, 0.3, 4.5) * (1 + s.hoogte * 0.09);
@@ -939,7 +939,7 @@ function tekenBal(b: Beeld, s: ObjectStand, personen: Punt[], variant?: VeldObje
     ctx.arc(c[0] + d, c[1] + d, maat(b, 0.3, 4.5), 0, Math.PI * 2);
     ctx.fill();
   }
-  ctx.fillStyle = variant === 'tennisbal' ? '#d4e83a' : variant === 'reactiebal' ? '#ffd23f' : '#ffffff';
+  ctx.fillStyle = kleur ?? (variant === 'tennisbal' ? '#d4e83a' : variant === 'reactiebal' ? '#ffd23f' : '#ffffff');
   ctx.strokeStyle = '#1b1b1b';
   ctx.lineWidth = Math.max(1.2 * b.dpr, r * 0.22);
   ctx.beginPath();

@@ -1154,6 +1154,11 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       materialen.push(m);
       mesh = new Mesh(o.variant === 'reactiebal' ? new IcosahedronGeometry(BAL_R * 0.8, 0) : balGeo, m);
       if (o.variant === 'tennisbal') mesh.scale.setScalar(0.55);
+    } else if (o.kleur) {
+      // Gekleurde bal (0.37.3): de vlakken van de bal in die kleur, de naden blijven donker.
+      const m = new MeshLambertMaterial({ map: balTex, color: o.kleur });
+      materialen.push(m);
+      mesh = new Mesh(balGeo, m);
     } else {
       mesh = new Mesh(balGeo, balMat);
     }

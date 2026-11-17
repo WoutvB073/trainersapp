@@ -132,8 +132,8 @@ export function fysiekeMeldingen(tekening: Tekening, tl: Tijdlijn = maakTijdlijn
   const goals = tekening.objecten.filter((o) => o.soort === 'goal' || o.soort === 'klein-goal');
   const personen = tekening.objecten.filter((o) => PERSONEN.includes(o.soort)).map((o) => o.id);
   const panna = new Set(alleActies(tekening.animatie ?? []).flatMap((a) => (a.type === 'panna' ? [a.wie + '>' + a.door] : [])));
-  // Hordes waar een bal bewust onderdoor gaat (0.30.0).
-  const onderdoor = new Set(alleActies(tekening.animatie ?? []).flatMap((a) => (a.type === 'pass' && a.onderdoor ? [a.onderdoor] : [])));
+  // Hordes waar een bal bewust onderdoor gaat (0.30.0), en personen die wijdbeens staan voor een lage bal (0.37.3).
+  const onderdoor = new Set(alleActies(tekening.animatie ?? []).flatMap((a) => ((a.type === 'pass' || a.type === 'schot') && a.onderdoor ? [a.onderdoor] : [])));
 
   // ---------- ballen ----------
   for (const [bal, lijst] of tl.balEvents) {
@@ -199,6 +199,8 @@ export function fysiekeMeldingen(tekening: Tekening, tl: Tijdlijn = maakTijdlijn
             const ps = s.objecten.get(id)!;
             // Liggend, of bewust tussen de benen door (panna).
             if (ps.liggen > 0.3 || panna.has(`${e.passeerder}>${id}`)) continue;
+            // Wijdbeens: een lage bal gaat tussen de benen door (0.37.3).
+            if (onderdoor.has(id) && ps.spreid > 0.5 && h < 0.4) continue;
             if (Math.hypot(ps.x - p[0], ps.y - p[1]) < LIJF + BAL_R - 0.03) meld(`bal ${bal} gaat door ${id} heen (t=${r2(t)})`, t, `De bal gaat dwars door ${persoonNaam(id)} heen`, e.passeerder ?? undefined);
           }
         }

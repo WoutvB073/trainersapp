@@ -104,6 +104,8 @@ type BalEvent =
       daarna: string | null;
       /** De passeerder springt hier niet bij, ook al vertrekt de bal hoog (worp, tip tijdens een duik). */
       geenSprong?: boolean;
+      /** Effect (0.37.3): meters opzij op het midden van de vlucht, positief = naar rechts gezien vanaf de passeerder. */
+      effect?: number;
     };
 
 /** Gaan liggen (duik) of opstaan, geleidelijk tussen t en t1. */
@@ -190,6 +192,8 @@ export interface Tijdlijn {
   tiktak: Map<string, { t0: number; t1: number }[]>;
   /** Arm omhoog als teken (0.37.2). */
   tekens: Map<string, { t0: number; t1: number; kant: 'links' | 'rechts' }[]>;
+  /** Wijdbeens staan (0.37.3). */
+  wijdbeens: Map<string, { t0: number; t1: number }[]>;
   trucs: Map<string, { t0: number; t1: number; soort: TrucActie['soort']; voet: 'links' | 'rechts' }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
@@ -942,13 +946,24 @@ function balStand(tl: Tijdlijn, balId: string, t: number): Pick<ObjectStand, 'x'
     const o = tl.objecten.get(balId)!;
     return plek([o.x, o.y]);
   }
-  const vast = (houder: string) => ({ ...plek(balBijPersoon(tl, houder, t), houder), hoogte: handHoogte(tl, houder, balId, t) });
+  const vast = (houder: string) => {
+    const hoogte = handHoogte(tl, houder, balId, t);
+    const p = balBijPersoon(tl, houder, t);
+    // Twee ballen tegelijk in de handen (0.37.3): elke bal in zijn eigen hand, iets opzij.
+    const hand = tl.objecten.get(balId)?.hand;
+    if (hand && hoogte > 0.3) {
+      const zij = richting(kijkHoek(tl, houder, t) + 90);
+      const k = hand === 'rechts' ? 0.22 : -0.22;
+      return { ...plek([p[0] + zij[0] * k, p[1] + zij[1] * k], houder), hoogte };
+    }
+    return { ...plek(p, houder), hoogte };
+  };
   if (e.soort === 'vast') return vast(e.houder);
   if (e.soort === 'los') return plek(e.punt);
   if (t < e.t1) {
     const u = (t - e.t0) / (e.t1 - e.t0);
-    const p = lerp(e.van, e.naar, ease('bal', u));
     const f = ease('bal', u);
+    const p = boogPunt(e.van, e.naar, f, e.effect);
     // Over de grond uit of naar de handen: snel naar het gras, en pas aan het eind omhoog naar de handen.
     const h = e.top <= 0.05 ? e.h0 * klem(1 - u / 0.25) + e.h1 * klem((u - 0.85) / 0.15) : boog(e.top, f) + e.h0 + (e.h1 - e.h0) * f;
     return { x: p[0], y: p[1], hoogte: h, houder: null, vlucht: { van: e.passeerder, naar: e.daarna, u, top: e.top } };
@@ -1156,6 +1171,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     voetOp: new Map(),
     tiktak: new Map(),
     tekens: new Map(),
+    wijdbeens: new Map(),
     trucs: new Map(),
     stompen: [],
     blokken: [],
@@ -1298,6 +1314,12 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
     if (a.type === 'voetOpBal') {
       const t1 = t0 + (a.duur ?? 1.2);
       voegToe(tl.voetOp, o.id, { t0, t1 }, (e) => e.t0);
+      eind = Math.max(eind, t1);
+      continue;
+    }
+    if (a.type === 'wijdbeens') {
+      const t1 = t0 + (a.duur ?? 2);
+      voegToe(tl.wijdbeens, o.id, { t0, t1 }, (e) => e.t0);
       eind = Math.max(eind, t1);
       continue;
     }
@@ -1640,7 +1662,17 @@ function balActie(tl: Tijdlijn, a: BalActie, T: number): number {
  * Een bal van `start` naar een persoon (komt aan waar die dan is) of naar een punt.
  * `trager` rekt de standaardduur op (bv. na een rebounder). Geeft de aankomsttijd terug.
  */
-type VluchtOpties = Pick<BalActie, 'type' | 'hoogte' | 'hoog' | 'eindHoogte' | 'snelheid'> & { h0?: number; geenSprong?: boolean };
+type VluchtOpties = Pick<BalActie, 'type' | 'hoogte' | 'hoog' | 'eindHoogte' | 'snelheid' | 'effect'> & { h0?: number; geenSprong?: boolean };
+
+/** Punt op een vlucht (fractie f), met effect: een boog opzij die op het midden `effect` meter is (0.37.3). */
+function boogPunt(van: Punt, naar: Punt, f: number, effect?: number): Punt {
+  const p = lerp(van, naar, f);
+  if (!effect) return p;
+  const d = afstand(van, naar) || 1;
+  const rechts: Punt = [-(naar[1] - van[1]) / d, (naar[0] - van[0]) / d];
+  const k = effect * 4 * f * (1 - f);
+  return [p[0] + rechts[0] * k, p[1] + rechts[1] * k];
+}
 
 function vlucht(tl: Tijdlijn, bal: string, start: Punt, t0: number, naar: string | Punt, a: VluchtOpties, passeerder: string, trager = 1, duur?: number): number {
   let doel: Punt;
@@ -1691,9 +1723,10 @@ function vlucht(tl: Tijdlijn, bal: string, start: Punt, t0: number, naar: string
   if (ontvanger && a.eindHoogte === undefined && tl.objecten.get(ontvanger)?.soort === 'keeper') {
     h1 = ligging(tl, ontvanger, t1).liggen > 0.5 ? 0.3 + zweefOp(tl, ontvanger, t1) : top > 0.05 ? 1.1 - zitLager(tl, ontvanger, t1) : 0.15;
   }
-  voegToe(tl.balEvents, bal, { soort: 'vlucht', t0, t1, van: start, naar: doel, top, h0: a.h0 ?? 0, h1, passeerder, daarna: ontvanger, geenSprong: a.geenSprong }, (e) => e.t0);
-  // Een bal recht omhoog (hooghouden) laat geen lijn achter.
-  if (afstand(start, doel) >= 0.2) tl.sporen.push({ soort: 'bal', pad: [start, doel], van: start, naar: doel, t0, t1, ease: 'bal', top, id: bal });
+  voegToe(tl.balEvents, bal, { soort: 'vlucht', t0, t1, van: start, naar: doel, top, h0: a.h0 ?? 0, h1, passeerder, daarna: ontvanger, geenSprong: a.geenSprong, ...(a.effect ? { effect: a.effect } : {}) }, (e) => e.t0);
+  // Een bal recht omhoog (hooghouden) laat geen lijn achter; met effect volgt het spoor de boog.
+  const pad = a.effect ? Array.from({ length: 13 }, (_, i) => boogPunt(start, doel, i / 12, a.effect)) : [start, doel];
+  if (afstand(start, doel) >= 0.2) tl.sporen.push({ soort: 'bal', pad, van: start, naar: doel, t0, t1, ease: 'bal', top, id: bal });
   return t1;
 }
 
@@ -2035,6 +2068,8 @@ function panna(tl: Tijdlijn, wie: VeldObject, door: VeldObject, t0: number, verd
 function spreidOp(tl: Tijdlijn, id: string, t: number): number {
   const p = positie(tl, id, t);
   let w = 0;
+  // Wijdbeens staan (0.37.3): in 0,3 s de benen uit elkaar en aan het eind weer bij elkaar.
+  for (const e of tl.wijdbeens.get(id) ?? []) if (t >= e.t0 && t <= e.t1) w = Math.max(w, Math.min(1, (t - e.t0) / 0.3, (e.t1 - t) / 0.3));
   for (const lijst of tl.balEvents.values()) {
     for (const e of lijst) {
       if (e.soort !== 'vlucht' || e.top > 0.6 || e.passeerder === id || e.daarna === id) continue;
