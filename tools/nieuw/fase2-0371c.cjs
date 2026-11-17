@@ -197,10 +197,11 @@ const oefeningen = [
     categorieen: ['afwerken'],
     uitleg:
       'Twee doelen met elk een keeper staan tegenover elkaar. De trainer staat aan de zijkant en speelt de bal in op de schutter in het midden. Terwijl de bal onderweg is roept hij op welk doel je moet schieten. Neem de bal aan, draai naar dat doel en schiet. Daarna is de volgende aan de beurt.',
-    organisatie: 'Twee jeugdgoals op 30 m van elkaar, elk met een keeper. De trainer staat halverwege aan de zijkant met ballen; de schutters wachten naast hem. Series van 6 ballen.',
+    organisatie: 'Twee jeugdgoals op 30 m van elkaar, elk met een keeper. De trainer staat halverwege aan de zijkant met ballen; de schutters wachten naast hem. Series van 6 ballen. Geen keepers? Schiet dan op de lege doelen of op kleine doeltjes.',
     benodigdheden: ['2 jeugdgoals', '4 pionnen', 'Ballen'],
     spelersNodig: 2,
     keepersNodig: 2,
+    zonderKeepers: true,
     leeftijden: OUD,
     doorwisselbaar: true,
     coachpunten: ['Sta half open, zodat je beide doelen kunt zien', 'Eerste aanraking al in de richting van het goede doel', 'Snel schieten: binnen twee aanrakingen'],
@@ -212,7 +213,7 @@ const oefeningen = [
       naam: 'Two goals, one shooter',
       uitleg:
         'Two goals with a keeper each face each other. The coach stands at the side and plays the ball in to the shooter in the middle. While the ball is travelling, the coach calls which goal to shoot at. Control the ball, turn to that goal and shoot. Then it is the next player’s turn.',
-      organisatie: 'Two youth goals 30 m apart, each with a keeper. The coach stands halfway at the side with balls; the shooters wait next to the coach. Sets of 6 balls.',
+      organisatie: 'Two youth goals 30 m apart, each with a keeper. The coach stands halfway at the side with balls; the shooters wait next to the coach. Sets of 6 balls. No keepers? Then shoot at the empty goals or at mini goals.',
       benodigdheden: ['2 youth goals', '4 cones', 'Balls'],
       coachpunten: ['Stand half-turned so you can see both goals', 'First touch already towards the right goal', 'Shoot quickly: within two touches'],
       variaties: {

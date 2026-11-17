@@ -3887,8 +3887,8 @@
       "pass-en-trap",
       "spelletjes"
     ],
-    "uitleg": "Twee spelers, één kaatsbord. Je speelt om de beurt tegen het kaatsbord, net als bij squash: na jouw pass moet je maatje de bal terugspelen, en daarna jij weer. Lukt het de ander niet om de bal binnen het vak terug te spelen, dan krijg jij een punt. Wie heeft het eerst er vijf?",
-    "organisatie": "Kaatsbord met een vak van 6 × 5 m ervoor. Twee spelers, één bal. Je mag de bal één keer raken om hem stil te leggen, dan moet je spelen.",
+    "uitleg": "Twee spelers, één kaatsbord. Je speelt om de beurt tegen het kaatsbord, net als bij squash: na jouw pass speelt je maatje de bal terug, en daarna jij weer. De bal mag maar één keer stuiten voordat de ander hem terugspeelt. Stuit hij twee keer, of komt hij buiten het vak, dan krijg jij een punt. Wie heeft het eerst er vijf?",
+    "organisatie": "Kaatsbord met een vak van 6 × 5 m ervoor. Twee spelers, één bal. Speel halfhoog tegen het bord, zodat de bal met een stuit terugkomt. Je mag hem één keer raken om hem onder controle te brengen, dan moet je spelen.",
     "benodigdheden": [
       "1 kaatsbord",
       "4 hoedjes",
@@ -3910,6 +3910,7 @@
     "variaties": {
       "makkelijker": [
         "Twee keer raken mag",
+        "De bal mag twee keer stuiten",
         "Groter vak"
       ],
       "moeilijker": [
@@ -3994,7 +3995,9 @@
               "type": "pass",
               "van": "a1",
               "naar": "k1",
-              "terug": "b1"
+              "terug": "b1",
+              "hoogte": "laag",
+              "terugHoogte": "laag"
             },
             {
               "type": "loop",
@@ -4015,6 +4018,8 @@
               "van": "b1",
               "naar": "k1",
               "terug": "a1",
+              "hoogte": "laag",
+              "terugHoogte": "laag",
               "direct": true
             },
             {
@@ -4036,6 +4041,8 @@
               "van": "a1",
               "naar": "k1",
               "terug": "b1",
+              "hoogte": "laag",
+              "terugHoogte": "laag",
               "direct": true
             },
             {
@@ -4057,6 +4064,8 @@
               "van": "b1",
               "naar": "k1",
               "terug": "a1",
+              "hoogte": "laag",
+              "terugHoogte": "laag",
               "direct": true
             }
           ]

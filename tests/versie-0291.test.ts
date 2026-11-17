@@ -21,6 +21,10 @@ const KEEPER_NODIG = [
   'veld-vo-hoog-druk-loont',
   'veld-vo-omschakelen-kaatsers',
   'veld-ps-opbouw-4-keeper-2',
+  // 0.37.1: partijvormen op twee grote doelen.
+  'veld-pv-5-5-drie-aanrakingen',
+  'veld-pv-overtal-4-3',
+  'veld-pv-6-6-vaste-zones',
 ];
 
 describe('keeper nodig of niet', () => {

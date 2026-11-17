@@ -167,8 +167,8 @@ const oefeningen = [
     naam: 'Kaatsbordtennis',
     categorieen: ['pass-en-trap', 'spelletjes'],
     uitleg:
-      'Twee spelers, één kaatsbord. Je speelt om de beurt tegen het kaatsbord, net als bij squash: na jouw pass moet je maatje de bal terugspelen, en daarna jij weer. Lukt het de ander niet om de bal binnen het vak terug te spelen, dan krijg jij een punt. Wie heeft het eerst er vijf?',
-    organisatie: 'Kaatsbord met een vak van 6 × 5 m ervoor. Twee spelers, één bal. Je mag de bal één keer raken om hem stil te leggen, dan moet je spelen.',
+      'Twee spelers, één kaatsbord. Je speelt om de beurt tegen het kaatsbord, net als bij squash: na jouw pass speelt je maatje de bal terug, en daarna jij weer. De bal mag maar één keer stuiten voordat de ander hem terugspeelt. Stuit hij twee keer, of komt hij buiten het vak, dan krijg jij een punt. Wie heeft het eerst er vijf?',
+    organisatie: 'Kaatsbord met een vak van 6 × 5 m ervoor. Twee spelers, één bal. Speel halfhoog tegen het bord, zodat de bal met een stuit terugkomt. Je mag hem één keer raken om hem onder controle te brengen, dan moet je spelen.',
     benodigdheden: ['1 kaatsbord', '4 hoedjes', '1 bal'],
     spelersNodig: 2,
     keepersNodig: 0,
@@ -176,18 +176,18 @@ const oefeningen = [
     doorwisselbaar: true,
     coachpunten: ['Speel strak en schuin, dan is het lastig voor de ander', 'Na je pass meteen ruimte maken voor je maatje', 'Klaarstaan op je voorvoeten, de bal kan alle kanten op komen'],
     variaties: {
-      makkelijker: ['Twee keer raken mag', 'Groter vak'],
+      makkelijker: ['Twee keer raken mag', 'De bal mag twee keer stuiten', 'Groter vak'],
       moeilijker: ['Alles in één keer', 'Om en om links en rechts', 'Twee tegen twee'],
     },
     en: {
       naam: 'Rebounder tennis',
       uitleg:
-        'Two players, one rebounder. You take turns playing against the rebounder, like squash: after your pass your partner must play the ball back, then you again. If the other player cannot play the ball back within the box, you win a point. Who gets to five first?',
-      organisatie: 'Rebounder with a 6 × 5 m box in front of it. Two players, one ball. You may take one touch to stop the ball, then you must play.',
+        'Two players, one rebounder. You take turns playing against the rebounder, like squash: after your pass your partner plays the ball back, then you again. The ball may bounce only once before the other player plays it back. If it bounces twice, or ends up outside the box, you win a point. Who gets to five first?',
+      organisatie: 'Rebounder with a 6 × 5 m box in front of it. Two players, one ball. Play the ball at half height against the rebounder, so it comes back with a bounce. You may take one touch to control it, then you must play.',
       benodigdheden: ['1 rebounder', '4 disc cones', '1 ball'],
       coachpunten: ['Play firmly and at an angle, so it is hard for the other player', 'After your pass, make room for your partner straight away', 'Stay on the balls of your feet: the ball can come from any angle'],
       variaties: {
-        makkelijker: ['Two touches allowed', 'Bigger box'],
+        makkelijker: ['Two touches allowed', 'The ball may bounce twice', 'Bigger box'],
         moeilijker: ['Everything one touch', 'Left and right foot alternately', 'Two against two'],
       },
     },
@@ -205,10 +205,10 @@ const oefeningen = [
       ],
       animatie: [
         pauze(0.5),
-        stap({ type: 'pass', van: 'a1', naar: 'k1', terug: 'b1' }, { type: 'loop', wie: 'a1', naar: [3.6, 7.2], start: 0.4, duur: 0.8 }),
-        stap({ type: 'pass', van: 'b1', naar: 'k1', terug: 'a1', direct: true }, { type: 'loop', wie: 'b1', naar: [8.4, 7.4], start: 0.3, duur: 0.8 }),
-        stap({ type: 'pass', van: 'a1', naar: 'k1', terug: 'b1', direct: true }, { type: 'loop', wie: 'a1', naar: [4.6, 6.4], start: 0.3, duur: 0.8 }),
-        stap({ type: 'pass', van: 'b1', naar: 'k1', terug: 'a1', direct: true }),
+        stap({ type: 'pass', van: 'a1', naar: 'k1', terug: 'b1', hoogte: 'laag', terugHoogte: 'laag' }, { type: 'loop', wie: 'a1', naar: [3.6, 7.2], start: 0.4, duur: 0.8 }),
+        stap({ type: 'pass', van: 'b1', naar: 'k1', terug: 'a1', hoogte: 'laag', terugHoogte: 'laag', direct: true }, { type: 'loop', wie: 'b1', naar: [8.4, 7.4], start: 0.3, duur: 0.8 }),
+        stap({ type: 'pass', van: 'a1', naar: 'k1', terug: 'b1', hoogte: 'laag', terugHoogte: 'laag', direct: true }, { type: 'loop', wie: 'a1', naar: [4.6, 6.4], start: 0.3, duur: 0.8 }),
+        stap({ type: 'pass', van: 'b1', naar: 'k1', terug: 'a1', hoogte: 'laag', terugHoogte: 'laag', direct: true }),
         pauze(0.8),
       ],
     },

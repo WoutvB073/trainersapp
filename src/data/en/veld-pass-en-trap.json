@@ -474,8 +474,8 @@
   },
   "veld-pt-kaatsbordtennis": {
     "naam": "Rebounder tennis",
-    "uitleg": "Two players, one rebounder. You take turns playing against the rebounder, like squash: after your pass your partner must play the ball back, then you again. If the other player cannot play the ball back within the box, you win a point. Who gets to five first?",
-    "organisatie": "Rebounder with a 6 × 5 m box in front of it. Two players, one ball. You may take one touch to stop the ball, then you must play.",
+    "uitleg": "Two players, one rebounder. You take turns playing against the rebounder, like squash: after your pass your partner plays the ball back, then you again. The ball may bounce only once before the other player plays it back. If it bounces twice, or ends up outside the box, you win a point. Who gets to five first?",
+    "organisatie": "Rebounder with a 6 × 5 m box in front of it. Two players, one ball. Play the ball at half height against the rebounder, so it comes back with a bounce. You may take one touch to control it, then you must play.",
     "benodigdheden": [
       "1 rebounder",
       "4 disc cones",
@@ -489,6 +489,7 @@
     "variaties": {
       "makkelijker": [
         "Two touches allowed",
+        "The ball may bounce twice",
         "Bigger box"
       ],
       "moeilijker": [
