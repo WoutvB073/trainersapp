@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (17-11-2026, versie 0.37.1)
+## Status (17-11-2026, versie 0.37.2)
 
 | Fase | Status |
 |---|---|
@@ -55,7 +55,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | De volgende stap, fase 1 (onderzoek, proef en plan) | ✅ bekeken, keuzes gemaakt (ontwerp C, alle 157 oefeningen, nummers en installatiescherm zoals voorgesteld, animaties zo realistisch als mogelijk). Verslag: **PLAN-VOLGENDE-STAP.md**. |
 | 40. Fase 2, deel 1: opstelling slepen, vaste rugnummers, installatiescherm (0.35.0) | ✅ online – **wacht op test** |
 | 41. Fase 2, deel 2: ontwerp C (Zacht) op alle schermen (0.36.0) | ✅ online – **wacht op test** |
-| 42. Fase 2, deel 3: nieuwe oefeningen in batches (0.37.x) | 🔄 Batch 1 (0.37.0): 30 oefeningen in Warming-up, Loopcoördinatie, Techniek en Spelletjes – online, **wacht op test**. Batch 2 (0.37.1): 36 oefeningen in Pass en trap, Afwerken, Positiespel, Verdedigen en omschakelen, 1 tegen 1 en Partijvormen – online, **wacht op test**. Nog: de eerder overgeslagen voorstellen opnieuw bekijken en alles bouwen wat niet praktisch exact gelijk is aan een bestaande oefening (0.37.2, correctie van de gebruiker op 17-11), daarna de 51 keepersoefeningen (0.37.3 en verder). |
+| 42. Fase 2, deel 3: nieuwe oefeningen in batches (0.37.x) | 🔄 Batch 1 (0.37.0): 30 oefeningen in Warming-up, Loopcoördinatie, Techniek en Spelletjes – online, **wacht op test**. Batch 2 (0.37.1): 36 oefeningen in Pass en trap, Afwerken, Positiespel, Verdedigen en omschakelen, 1 tegen 1 en Partijvormen – online, **wacht op test**. Batch 3 (0.37.2): 29 eerder overgeslagen voorstellen die toch anders zijn, en de bouwsteen "arm omhoog" – online, **wacht op test**. 7 voorstellen zijn praktisch exact gelijk aan een bestaande oefening (zie 0.37.1). Nog: de 51 keepersoefeningen (0.37.3 en verder). |
 | 43. Fase 2, deel 4: zo realistisch mogelijke animaties (0.38.0) | ⏳ |
 
 ## Werkwijze
@@ -1303,6 +1303,13 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Fysieke controle**: in een hoepel afremmen of stilstaan mag nu (een hoepel ligt plat; nodig voor "Hordes en afremmen in de hoepel"). Er gewoon doorheen joggen blijft een fout. `src/anim/fysiek.ts`, getest in `tests/versie-0370.test.ts`.
 - **Lettertypes en externe verzoeken** (vraag van de gebruiker): Inter en Barlow Condensed zaten al in de app, via de pakketten `@fontsource-variable/inter` en `@fontsource/barlow-condensed` (SIL Open Font License 1.1): de bestanden staan in de build (`dist/assets/*.woff2`) en in de offline-cache van de service worker. Er wordt niets van Google Fonts of een ander adres geladen. Gemeten met `tools/e2e/extern.mjs` op de echte site: op 16 schermen (niet ingelogd) en het installatiescherm in Safari, WhatsApp en Android gaat er **geen enkel verzoek** naar buiten. Pas bij inloggen, teams, synchroniseren of korte deellinks praat de app met Firebase (Google-adressen van Firebase: identitytoolkit, securetoken, firestore). In de code van de Firebase-bibliotheek staan nog adressen voor reCAPTCHA en Google-inloggen (apis.google.com, www.google.com/recaptcha), maar die worden alleen gebruikt bij telefoonnummer- of Google-inloggen, en dat heeft de app niet. Vaste test in `tests/versie-0370.test.ts` (geen externe lettertypes of links in index.html en CSS).
 
+## Besluiten versie 0.37.2 – eerder overgeslagen voorstellen (fase 2, deel 3)
+- **29 oefeningen** uit de eerder overgeslagen voorstellen (correctie van de gebruiker): L2, T1, T5, T13, S6, S8, P2, P4, P11, P13, A2, A5, A6, A7, A12, PS1, PS3, PS4, PS7, V2, V3, V4, V8, V9, D6, D7, PV1, PV6, PV9. Bouwscripts `tools/nieuw/fase2-0372a–d.cjs`; eisen in `tests/versie-0372.test.ts`. Zo staan er nu 95 nieuwe spelersoefeningen uit het voorstel in de app (106 voorstellen: 95 gebouwd, 4 ★ al sinds 0.35.0, 7 exact gelijk).
+- **Bouwsteen "arm omhoog"** (`teken`): een persoon steekt de linker- of rechterarm recht omhoog (standaard 1,2 s, omhoog en omlaag in 0,25 s), in 3D met de hand boven het hoofd en in 2D als hand naast het poppetje. Nodig voor "Kiezen bij de pop", waar de trainer op het laatste moment de kant aangeeft. `src/model/types.ts` (TekenActie), `src/anim/timeline.ts`, `src/anim/poppetje.ts`, `src/anim/render2d.ts`; getest in `tests/versie-0372.test.ts`.
+- **Toernooi op vier veldjes**: het doorschuiven (winnaars naar links, verliezers naar rechts) staat als vaste pijlen in de tekening; de animatie toont op elk veldje een doelpunt.
+- **Keeper nodig**: 4 tegen 4 met drie teams, Partij met een schietlijn en 3 tegen 2 en meteen 2 tegen 3 terug (twee grote doelen), en Positiespel met de keeper als extra man (de keeper speelt mee). `tests/versie-0291.test.ts`.
+- **Duel uit de draai** (0.37.1): de verdediger eindigt iets opzij, zodat de twee spelers op het laatste moment in 3D niet achter elkaar staan.
+
 ## Besluiten versie 0.37.1 – nieuwe oefeningen, batch 2 (fase 2, deel 3)
 - **36 oefeningen** uit VOORSTEL-OEFENINGEN.md, met animatie in 2D en 3D, Engels en alle tests: Pass en trap P3, P5–P10, P12, P14; Afwerken A3, A4, A8–A10; Positiespel PS5, PS6, PS8, PS10; Verdedigen en omschakelen V5–V7, V10–V12; 1 tegen 1 D1–D3, D5, D8, D9; Partijvormen PV2–PV4, PV7, PV8, PV10. Bouwscripts `tools/nieuw/fase2-0371a–g.cjs`; eisen in `tests/versie-0371.test.ts`. De geplande batches 0.37.1 en 0.37.2 zijn samengevoegd, omdat er bij het bouwen veel werd overgeslagen.
 - **Overgeslagen voorstellen opnieuw bekijken (correctie van de gebruiker, 17-11-2026)**: alle 157 voorstellen zijn goedgekeurd. Een voorstel dat alleen lijkt op een bestaande oefening (zelfde elementen, maar andere opzet, uitvoering, aantallen of regels) gaat er wél in, voor variatie; alleen een voorstel dat praktisch exact gelijk is aan een bestaande oefening wordt overgeslagen. De 36 overgeslagen voorstellen uit 0.37.0 en 0.37.1 (L1, L2, T1, T5, T13, S1, S6, S8, P2, P4, P11, P13, A2, A5–A7, A11, A12, PS1–PS4, PS7, PS9, V2–V4, V8, V9, D4, D6, D7, PV1, PV5, PV6, PV9) staan in VOORSTEL-OEFENINGEN.md weer op "opnieuw bekijken" en komen in 0.37.2. De ★-voorstellen (T12, P1, A1, V1) zaten al sinds 0.35.0 in de app.
@@ -1322,6 +1329,14 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.37.2 – Hoepelhinkelbaan: "kruislings" is uitgewerkt als om en om links en rechts springen (oranje hoepels in een zigzag).
+- 0.37.2 – Kiezen bij de pop: de trainer steekt zijn arm op; je gaat langs de pop aan de kant van die arm, gezien vanaf jou (zijn linkerarm is voor jou rechts).
+- 0.37.2 – Vierkant met twee ballen tegen de klok: "tegen de klok" is de stopwatch (zoveel mogelijk passes in een minuut), niet de draairichting.
+- 0.37.2 – Rollen naar de hoepel: de hoepels liggen een stukje naast elkaar, zodat een bal niet door een andere hoepel rolt.
+- 0.37.2 – Aannemen met de rug naar het doel: de animatie toont het wegdraaien; het kaatsen staat in de uitleg (de kaatsvorm bestond al).
+- 0.37.2 – Kanonnen: de trainer laat zich na een doelpunt op zijn billen vallen en staat weer op.
+- 0.37.2 – Toernooi 2 tegen 2: met 8 kinderen twee veldjes, met 16 alle vier; het doorschuiven staat als pijlen in de tekening.
+- 0.37.2 – 4 tegen 4 met drie teams: het team dat een goal tegen krijgt, loopt aan de ene kant het veld uit en het wachtende team komt er aan de andere kant in.
 - 0.37.1 – De geplande batches 0.37.1 (Pass en trap, Afwerken, Positiespel) en 0.37.2 (Verdedigen, 1 tegen 1, Partijvormen) zijn samen één versie geworden (36 oefeningen), omdat er veel werd overgeslagen. Na jouw correctie komen de overgeslagen voorstellen in 0.37.2, de keepers daarna.
 - 0.37.1 – Partij met een goal in het midden: een jeugdgoal zonder net (of twee vlaggen) met één neutrale keeper; pakt hij de bal, dan rolt hij hem naar de zijkant en wie hem krijgt valt aan.
 - 0.37.1 – Overtal 4 tegen 3: na elk balverlies gaat de speler die het verst van de bal staat achter zijn eigen doellijn; hij komt het veld in zodra zijn team de bal verovert.
