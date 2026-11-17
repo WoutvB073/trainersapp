@@ -3653,5 +3653,654 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-wu-vangen-vier-pionnen",
+    "soort": "keeper",
+    "naam": "Vangen in de loop om vier pionnen",
+    "categorieen": [
+      "warming-up"
+    ],
+    "uitleg": "Vier pionnen in een klein vierkant voor het doel. De keeper beweegt langs de zijden: zijwaarts, naar voren en achteruit, steeds met zijn gezicht naar de trainer. Bij elke pion gooit de trainer een bal: vangen, terug gooien en meteen door naar de volgende pion. Na twee rondes de andere kant op.",
+    "organisatie": "Vierkant van 4 × 4 m vlak voor het doel, de trainer met een bal op 9 m. Vier ballen per ronde, twee rondes per kant.",
+    "benodigdheden": [
+      "Goal",
+      "4 pionnen",
+      "Bal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kleine snelle pasjes, voeten niet kruisen bij zijwaarts",
+      "Bij het vangen even stil: beide voeten aan de grond",
+      "Handen al klaar voor de bal komt"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Groter vierkant, rustiger tempo",
+        "Alleen ballen op borsthoogte"
+      ],
+      "moeilijker": [
+        "Ballen op wisselende hoogte",
+        "Twee trainers die om de beurt gooien"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 25,
+        "y": -3,
+        "breedte": 18,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 31.6,
+          "y": 2.4
+        },
+        {
+          "id": "p2",
+          "soort": "pion",
+          "x": 36.4,
+          "y": 2.4
+        },
+        {
+          "id": "p3",
+          "soort": "pion",
+          "x": 36.4,
+          "y": 7.2
+        },
+        {
+          "id": "p4",
+          "soort": "pion",
+          "x": 31.6,
+          "y": 7.2
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 32.4,
+          "y": 3.2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34,
+          "y": 12,
+          "kijkrichting": -90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 34,
+          "y": 11.45,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                35.6,
+                3.2
+              ],
+              "manier": "zijwaarts",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                35.6,
+                6.4
+              ],
+              "manier": "voetenwerk",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                32.4,
+                6.4
+              ],
+              "manier": "zijwaarts",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.9
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                32.4,
+                3.2
+              ],
+              "manier": "achteruit",
+              "kijk": 90
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-wu-pass-pass-vang",
+    "soort": "keeper",
+    "naam": "Pass, pass, vang",
+    "categorieen": [
+      "warming-up",
+      "passing"
+    ],
+    "uitleg": "De trainer speelt de bal laag in. De keeper speelt hem in één keer met de binnenkant van zijn voet terug, schuift een stukje op en doet dat nog een keer. De derde bal gooit de trainer door de lucht: die vangt de keeper. Zo wisselen voeten en handen elkaar af, en blijft de keeper steeds in beweging.",
+    "organisatie": "Keeper in het doel, de trainer op 8 m met een bal. Series van drie ballen (pass, pass, vang); na elke serie schuift de keeper naar de andere kant van het doel.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Passen: standbeen naast de bal, enkel vast",
+      "Na de pass meteen weer in de basishouding",
+      "Vangen: handen in een W achter de bal"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eerst aannemen, dan passen",
+        "Ballen rustiger"
+      ],
+      "moeilijker": [
+        "Passen met je andere voet",
+        "De derde bal halfhoog naast je: duiken"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 25,
+        "y": -3,
+        "breedte": 18,
+        "lengte": 15
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 33,
+          "y": 1.8,
+          "kijkrichting": 90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34,
+          "y": 9.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 34,
+          "y": 9.05,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "voet",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34.6,
+                1.9
+              ],
+              "manier": "zijwaarts",
+              "kijk": 90,
+              "duur": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "voet",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                33.4,
+                2.4
+              ],
+              "manier": "voetenwerk",
+              "kijk": 90,
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": "grond"
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-wu-spiegelen",
+    "soort": "keeper",
+    "naam": "Spiegelen op de doellijn",
+    "categorieen": [
+      "warming-up"
+    ],
+    "uitleg": "Twee keepers staan tegenover elkaar, elk op een lijn. De ene bepaalt: hij schuift zijwaarts heen en weer en verandert onverwacht van richting. De ander volgt hem als een spiegelbeeld en blijft recht tegenover hem. Op het teken van de trainer gooit die een bal naar de volger: vangen en terug. Daarna wisselen de rollen.",
+    "organisatie": "Twee lijnen van hoedjes van 8 m lang, 4 m uit elkaar. De trainer staat aan de zijkant met een bal. Rondes van 30 seconden.",
+    "benodigdheden": [
+      "8 hoedjes",
+      "Bal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "In de basishouding blijven: knieën licht gebogen, gewicht op de voorvoeten",
+      "Kijk naar de heupen van de ander, niet naar zijn voeten",
+      "Op het teken: eerst stilstaan, dan vangen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Kortere lijnen",
+        "De leider beweegt rustiger"
+      ],
+      "moeilijker": [
+        "Ook naar voren en achteruit",
+        "De bal kan naar allebei"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 14,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 4,
+          "y": 10
+        },
+        {
+          "id": "h3",
+          "soort": "hoedje",
+          "x": 8,
+          "y": 2
+        },
+        {
+          "id": "h4",
+          "soort": "hoedje",
+          "x": 8,
+          "y": 10
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 4,
+          "y": 6,
+          "kijkrichting": 0
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 2,
+          "x": 8,
+          "y": 6,
+          "kijkrichting": 180
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 11.4,
+          "y": 9.6,
+          "kijkrichting": -150
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 11,
+          "y": 9.25,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                4,
+                3.4
+              ],
+              "manier": "zijwaarts",
+              "kijk": 0
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [
+                8,
+                3.6
+              ],
+              "manier": "zijwaarts",
+              "kijk": 180,
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                4,
+                8.4
+              ],
+              "manier": "zijwaarts",
+              "kijk": 0
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [
+                8,
+                8.2
+              ],
+              "manier": "zijwaarts",
+              "kijk": 180,
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                4,
+                5.6
+              ],
+              "manier": "zijwaarts",
+              "kijk": 0
+            },
+            {
+              "type": "loop",
+              "wie": "k2",
+              "naar": [
+                8,
+                5.8
+              ],
+              "manier": "zijwaarts",
+              "kijk": 180,
+              "start": 0.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k2",
+              "worp": "onderhands",
+              "hoogte": 1.4
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 1.2
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

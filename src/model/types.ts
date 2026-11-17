@@ -68,7 +68,7 @@ export interface VeldObject {
   soort: ObjectSoort;
   x: number;
   y: number;
-  /** Speler: team A/B, C = extra hesjeskleur. */
+  /** Speler: team A/B, C = extra hesjeskleur. Keeper met een team (0.37.3): draagt een hesje in die kleur (bv. handbal met keepers). */
   team?: Team;
   nummer?: number;
   /** Bal: id van wie de bal aan het begin heeft. */

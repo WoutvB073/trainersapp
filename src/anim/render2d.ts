@@ -187,6 +187,8 @@ export function tekenGrasmat(ctx: CanvasRenderingContext2D, breedtePx: number, h
 
 /** Kleur van een persoon (team, keeper, trainer). */
 export function persoonKleur(o: VeldObject, k: Kleuren, team: Team | undefined = o.team): string {
+  // Keeper in een hesje van een team (0.37.3): de kleur van dat team; de handschoenen blijven.
+  if (o.soort === 'keeper' && team) return team === 'B' ? k.teamB : team === 'C' ? k.teamC : team === 'J' ? k.joker : k.teamA;
   // Meerdere keepers: elk nummer een eigen tint (1 standaard, 2 donkerder, 3 lichter).
   if (o.soort === 'keeper') return o.nummer === 2 ? k.keeper2 : o.nummer === 3 ? k.keeper3 : k.keeper;
   if (o.soort === 'trainer') return k.trainer;

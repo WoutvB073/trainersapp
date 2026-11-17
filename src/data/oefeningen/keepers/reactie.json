@@ -3773,5 +3773,416 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-re-schuin-kaatsbord",
+    "soort": "keeper",
+    "naam": "Bal tegen het kaatsbord en redden",
+    "categorieen": [
+      "reactie"
+    ],
+    "uitleg": "Voor het doel staat een kaatsbord, schuin gedraaid. De trainer schiet de bal tegen het bord; de bal kaatst van richting naar het doel. De keeper ziet pas laat waar de bal heen gaat en moet snel reageren: vangen, duiken of wegtikken.",
+    "organisatie": "Kaatsbord op 6 m voor het doel, schuin gedraaid. De trainer met ballen op 10 m, schuin naast het bord. Series van vijf; daarna het bord de andere kant op draaien.",
+    "benodigdheden": [
+      "Goal",
+      "1 kaatsbord",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kijk naar het bord, niet naar de trainer",
+      "Klein en snel in je basishouding, gewicht op de voorvoeten",
+      "Reageer met je handen eerst"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bord verder van het doel",
+        "Rustiger schieten"
+      ],
+      "moeilijker": [
+        "Bord dichterbij",
+        "Twee borden, de trainer kiest"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 25,
+        "y": -3,
+        "breedte": 20,
+        "lengte": 18
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "kb",
+          "soort": "rebounder",
+          "x": 36.4,
+          "y": 6.2,
+          "hoek": 150
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "kijkrichting": 90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 40,
+          "y": 11.6,
+          "kijkrichting": -120
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 39.7,
+          "y": 11.1,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "kb",
+              "terug": "k1",
+              "terugHoogte": "grond",
+              "duikNaar": [
+                32.6,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-re-liggen-bal-liggen",
+    "soort": "keeper",
+    "naam": "Liggen, bal, liggen, bal",
+    "categorieen": [
+      "reactie"
+    ],
+    "uitleg": "De keeper ligt op zijn buik voor het doel. Op het teken komt hij zo snel mogelijk overeind en staat hij in zijn basishouding voor de bal die de trainer op zijn lichaam gooit: vangen, terug gooien en meteen weer gaan liggen. Zo een paar keer achter elkaar, steeds snel omhoog.",
+    "organisatie": "Keeper 2 m voor het doel, de trainer op 6 m met een bal. Series van vier, dan rust.",
+    "benodigdheden": [
+      "Goal",
+      "Bal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Omhoog via je handen en één knie, niet eerst op je knieën zitten",
+      "Eerst staan, dan vangen",
+      "Kijk de bal al aan terwijl je opstaat"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Beginnen in kniezit",
+        "De trainer wacht tot de keeper staat"
+      ],
+      "moeilijker": [
+        "Beginnen op je rug",
+        "Bal naast de keeper: na het opstaan duiken"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 27,
+        "y": -3,
+        "breedte": 14,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 2.4,
+          "kijkrichting": 90,
+          "houding": "buik"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34,
+          "y": 8.4,
+          "kijkrichting": -90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 34,
+          "y": 7.85,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "t1",
+              "worp": "onderhands",
+              "hoogte": 1.2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "zitten",
+              "wie": "k1",
+              "houding": "buik"
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-re-pass-opzij-schot",
+    "soort": "keeper",
+    "naam": "Schot van dichtbij na een pass opzij",
+    "categorieen": [
+      "reactie",
+      "een-op-een"
+    ],
+    "uitleg": "Een schutter op 12 m speelt de bal breed naar een tweede schutter op 6 m schuin voor het doel. De keeper verplaatst zich snel mee, maar staat stil in zijn basishouding op het moment dat de tweede schutter schiet. Daarna reageren: vangen, duiken of blokken.",
+    "organisatie": "Keeper in het doel, schutter 1 op 12 m in het midden, schutter 2 op 6 m schuin. Na vier ballen wisselen de schutters; daarna van de andere kant.",
+    "benodigdheden": [
+      "Goal",
+      "2 pionnen",
+      "Ballen"
+    ],
+    "spelersNodig": 2,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Verplaatsen met kleine pasjes, zijwaarts, niet kruisen",
+      "Op tijd stilstaan: het schot komt snel",
+      "Van dichtbij: laag blijven, handen naast je lichaam"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Schutter 2 neemt eerst aan",
+        "Schutter 2 verder weg"
+      ],
+      "moeilijker": [
+        "Schutter 2 mag ook terugleggen",
+        "Twee schutters breed, schutter 1 kiest"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 24,
+        "y": -3,
+        "breedte": 22,
+        "lengte": 18
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 9,
+          "x": 34.4,
+          "y": 12,
+          "kijkrichting": -90
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 10,
+          "x": 39.4,
+          "y": 6.4,
+          "kijkrichting": -150
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 34.4,
+          "y": 11.45,
+          "bij": "a1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": "a2"
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                35.4,
+                1.8
+              ],
+              "manier": "zijwaarts",
+              "kijk": 90,
+              "start": 0.2,
+              "duur": 0.7
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "a2",
+              "naar": [
+                36.6,
+                0.4
+              ],
+              "hoogte": "laag",
+              "afloop": "vangt",
+              "direct": true
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

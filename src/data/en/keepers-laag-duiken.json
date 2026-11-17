@@ -446,5 +446,127 @@
         "After the first ball, a second one straight to the other corner"
       ]
     }
+  },
+  "keeper-ld-door-het-poortje": {
+    "naam": "Diving through the gate",
+    "uitleg": "At an angle in front of the keeper there is a gate of two cones on each side. The coach throws the ball low just past the gate. The keeper dives forwards through the gate onto the ball, not sideways or backwards. You learn to close the angle while you dive. Then the other side.",
+    "organisatie": "Keeper in the middle of the goal, a 1.4 m gate at an angle in front on both sides. The coach 8 m away with balls. Four balls per side.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "First step forwards at an angle, through the gate",
+      "Hands to the ball first, pin it to the ground",
+      "Get up quickly and back to the middle"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Wider gate",
+        "Dive from a kneeling position"
+      ],
+      "moeilijker": [
+        "Gate further away",
+        "The coach picks the side at the last moment"
+      ]
+    }
+  },
+  "keeper-ld-stap-over-de-stok": {
+    "naam": "Low ball after a step over the stick",
+    "uitleg": "Next to the keeper a stick lies on the ground. They step sideways over the stick without touching it and immediately dive low to the ball the coach throws into the corner. Get up, back over the stick and the next ball to the other side.",
+    "organisatie": "Two sticks on the ground, 1 m left and right of the middle of the goal. The coach 9 m away with balls. Three balls per side.",
+    "benodigdheden": [
+      "Goal",
+      "2 sticks",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Small quick steps over the stick, knees up",
+      "After the step, push off straight away with the leg on the diving side",
+      "Stay low: the dive goes flat over the ground"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A pause after the step first",
+        "Ball closer"
+      ],
+      "moeilijker": [
+        "Two steps over two sticks",
+        "Ball further into the corner"
+      ]
+    }
+  },
+  "keeper-ld-twee-ballen-een-kant": {
+    "naam": "Two balls in quick succession on one side",
+    "uitleg": "A metre beside the post a ball lies still. The coach throws a low ball to the same side. The keeper dives, catches and puts the ball down, gets straight up and then dives on the still ball a metre further on. Getting up quickly is what matters most here.",
+    "organisatie": "Keeper in the middle of the goal, one ball still beside the post. The coach 8 m away with balls. Two sets per side.",
+    "benodigdheden": [
+      "Goal",
+      "Balls"
+    ],
+    "coachpunten": [
+      "After the first ball: put it aside and get up via your knee",
+      "Already look at the second ball while you get up",
+      "The second dive also goes forwards, not backwards"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Second ball closer",
+        "A short rest between the two balls"
+      ],
+      "moeilijker": [
+        "The coach throws the second ball too",
+        "Second ball on the other side"
+      ]
+    }
+  },
+  "keeper-ld-rollen-klemmen": {
+    "naam": "Roll and clamp",
+    "uitleg": "The coach rolls the ball gently a little to one side of the keeper. The keeper drops onto their side with their hands behind the ball: one hand behind it, one on top. They pin the ball to the ground and bring the top knee up in front of it, so the ball cannot escape. Left and right in turn.",
+    "organisatie": "Keeper on the goal line or on soft ground, the coach 4 m away. First from kneeling, then standing. Four balls per side.",
+    "benodigdheden": [
+      "Goal (or 2 cones)",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Fall onto your side, not your stomach or back",
+      "One hand behind the ball, one on top",
+      "Top knee up, in front of the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "From kneeling",
+        "Calmer ball"
+      ],
+      "moeilijker": [
+        "Ball further away",
+        "After clamping, get up straight away for a second ball"
+      ]
+    }
+  },
+  "keeper-ld-na-schijnschot": {
+    "naam": "Low dive after a dummy shot",
+    "uitleg": "The coach dribbles towards goal, pretends to shoot, drags the ball behind their standing leg and then shoots low into the other corner. The keeper stays in the set position until the ball has really gone: whoever dives on the dummy is on the wrong foot. Only then dive, to the right side.",
+    "organisatie": "Keeper in goal, the coach with balls 14 m out; they dribble to about 10 m. A real shot and a dummy in turn, so the keeper cannot guess.",
+    "benodigdheden": [
+      "Goal",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Stay put until the ball has left the foot",
+      "Weight on the balls of your feet, so you can go either way",
+      "Watch the ball, not the shooter’s body"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Dummy without dribbling on, calm shot",
+        "Only to one side"
+      ],
+      "moeilijker": [
+        "A second dummy",
+        "Shot from closer in"
+      ]
+    }
   }
 }
