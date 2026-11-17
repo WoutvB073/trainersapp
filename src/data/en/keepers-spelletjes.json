@@ -275,5 +275,29 @@
         "After a save, a rebound as well"
       ]
     }
+  },
+  "keeper-sp-trefbal": {
+    "naam": "Dodgeball for keepers",
+    "uitleg": "Two keepers each stand in a box, facing each other. In turn you throw the ball underarm and low at the other keeper: hit them below the knee and it is a point. If the other keeper catches the ball, it is a save and no point. Who gets to five points first?",
+    "organisatie": "Two 5 × 6 m boxes, 2 m apart. You stay in your own box. Play to five points, then a new round.",
+    "benodigdheden": [
+      "8 disc cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Throw low and hard, at the feet",
+      "Defending: stay low, hands already near the ground",
+      "Catch the ball with two hands, or step aside"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Hitting below the hip counts",
+        "Boxes further apart"
+      ],
+      "moeilijker": [
+        "Weaker hand only",
+        "Two balls at once"
+      ]
+    }
   }
 }

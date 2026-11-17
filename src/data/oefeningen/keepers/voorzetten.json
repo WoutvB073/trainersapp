@@ -3759,5 +3759,174 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-vz-indraaiend-uitdraaiend",
+    "soort": "keeper",
+    "naam": "Indraaiend en uitdraaiend",
+    "categorieen": [
+      "voorzetten"
+    ],
+    "uitleg": "De buitenspeler geeft om de beurt een indraaiende voorzet (die met een boog naar het doel toe draait) en een uitdraaiende (die van het doel af draait). Bij een indraaiende bal staat de keeper iets dieper in zijn doel en komt hij kort uit; bij een uitdraaiende bal staat hij verder voor zijn doel en komt hij ver uit. Zie aan de aanloop en de voet van de buitenspeler welke het wordt.",
+    "organisatie": "Keeper in het doel, de buitenspeler met ballen op 18 m langs de zijlijn. Series van zes voorzetten, om en om; daarna van de andere kant.",
+    "benodigdheden": [
+      "Goal",
+      "2 pionnen",
+      "Ballen"
+    ],
+    "spelersNodig": 1,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Indraaiend: kort uitkomen, de bal komt naar je toe",
+      "Uitdraaiend: ver uitkomen, de bal draait van je weg",
+      "Kijk naar de voet en de aanloop van de buitenspeler"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eerst alleen indraaiend",
+        "Voorzetten uit de hand met een boog"
+      ],
+      "moeilijker": [
+        "De buitenspeler kiest zelf",
+        "Een aanvaller in de zestien"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 22,
+        "y": -3,
+        "breedte": 34,
+        "lengte": 22
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34.4,
+          "y": 1.4,
+          "verdedigt": "g1",
+          "uitkomen": true
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 7,
+          "x": 52,
+          "y": 13,
+          "kijkrichting": -150
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 51.5,
+          "y": 12.75,
+          "bij": "a1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 52.8,
+          "y": 14
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": [
+                36.4,
+                3.6
+              ],
+              "hoogte": "hoog",
+              "effect": 2.4,
+              "uitkomen": "k1"
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": [
+                44,
+                10
+              ],
+              "worp": "onderhands",
+              "hoogte": "grond"
+            },
+            {
+              "type": "loop",
+              "wie": "a1",
+              "naar": [
+                52.6,
+                13.6
+              ],
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                34.6,
+                2.6
+              ],
+              "duur": 1
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "a1",
+              "naar": [
+                35,
+                7.8
+              ],
+              "hoogte": "hoog",
+              "effect": -2.4,
+              "uitkomen": "k1",
+              "bal": "b2"
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

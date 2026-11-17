@@ -4302,5 +4302,199 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-wu-handbal",
+    "soort": "keeper",
+    "naam": "Handbal met keepers",
+    "categorieen": [
+      "warming-up",
+      "spelletjes"
+    ],
+    "uitleg": "Twee tegen twee met de handen op twee kleine doeltjes. Met de bal lopen mag niet: je gooit en vangt, en wie geen bal heeft loopt zich vrij. Scoren mag alleen met een stuit: de bal moet vóór het doeltje de grond raken. Zo oefen je vangen, werpen en kijken in een spel.",
+    "organisatie": "Vak van 20 × 12 m met op elke korte kant een klein doeltje. Twee keepers per team in hesjes. Rondes van 3 minuten; wie scoort, krijgt de bal niet terug: de ander begint.",
+    "benodigdheden": [
+      "2 kleine doeltjes",
+      "4 hoedjes",
+      "1 bal",
+      "Hesjes in 2 kleuren"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 4,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Vangen met twee handen, de bal meteen tegen je borst",
+      "Kijk eerst waar je maatje vrij staat, dan gooien",
+      "Stuitbal naar de hoek, laag en hard"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Ook zonder stuit scoren",
+        "Groter vak"
+      ],
+      "moeilijker": [
+        "Alleen met je zwakke hand gooien",
+        "Na drie passes pas scoren"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 22,
+        "lengte": 14
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z",
+          "soort": "zone",
+          "x": 11,
+          "y": 7,
+          "breedte": 20,
+          "lengte": 12
+        },
+        {
+          "id": "gW",
+          "soort": "klein-goal",
+          "x": 1,
+          "y": 7,
+          "hoek": -90,
+          "breedte": 2
+        },
+        {
+          "id": "gE",
+          "soort": "klein-goal",
+          "x": 21,
+          "y": 7,
+          "hoek": 90,
+          "breedte": 2
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 8,
+          "y": 5.4,
+          "team": "A",
+          "kijkrichting": 0
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 2,
+          "x": 12.4,
+          "y": 9.4,
+          "team": "A",
+          "kijkrichting": 0
+        },
+        {
+          "id": "k3",
+          "soort": "keeper",
+          "nummer": 3,
+          "x": 14.6,
+          "y": 5.4,
+          "team": "B",
+          "kijkrichting": 180
+        },
+        {
+          "id": "k4",
+          "soort": "keeper",
+          "nummer": 4,
+          "x": 17.4,
+          "y": 8.6,
+          "team": "B",
+          "kijkrichting": 180
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 8.55,
+          "y": 5.4,
+          "bij": "k1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "k2",
+              "worp": "bovenhands",
+              "hoogte": 1.4
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                15.8,
+                3.6
+              ],
+              "manier": "sprint",
+              "start": 0.6
+            },
+            {
+              "type": "loop",
+              "wie": "k3",
+              "naar": [
+                14.4,
+                7.6
+              ],
+              "start": 0.5
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": "k1",
+              "worp": "bovenhands",
+              "hoogte": 1.6
+            },
+            {
+              "type": "loop",
+              "wie": "k4",
+              "naar": [
+                18.6,
+                6.6
+              ],
+              "start": 0.3
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "k1",
+              "naar": [
+                21.3,
+                7.6
+              ],
+              "worp": "bovenhands",
+              "stuitOp": [
+                19.4,
+                6.2
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

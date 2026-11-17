@@ -455,5 +455,31 @@
         "The ball can go to either keeper"
       ]
     }
+  },
+  "keeper-wu-handbal": {
+    "naam": "Handball for keepers",
+    "uitleg": "Two against two with your hands, on two mini goals. You may not run with the ball: you throw and catch, and whoever has no ball moves into space. You can only score with a bounce: the ball must hit the ground in front of the goal. You practise catching, throwing and looking up in a game.",
+    "organisatie": "20 × 12 m area with a mini goal at each short end. Two keepers per team in bibs. Rounds of 3 minutes; whoever scores does not get the ball back: the other team starts.",
+    "benodigdheden": [
+      "2 mini goals",
+      "4 disc cones",
+      "1 ball",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "Catch with two hands, ball straight to your chest",
+      "First see where your partner is free, then throw",
+      "Bounce it into the corner, low and hard"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Goals without a bounce count too",
+        "Bigger area"
+      ],
+      "moeilijker": [
+        "Throw with your weaker hand only",
+        "Only score after three passes"
+      ]
+    }
   }
 }

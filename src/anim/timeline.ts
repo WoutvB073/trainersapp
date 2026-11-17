@@ -117,6 +117,8 @@ interface HoudingEvent {
   hoek?: number;
   /** Hoge duik: hoogte van de handen bij de bal (m). */
   hoog?: number;
+  /** Duik over iets heen (0.37.3): al vroeg in de duik op de hoogste stand. */
+  vroeg?: boolean;
 }
 
 type WorpSoort = NonNullable<BalActie['worp']>;
@@ -725,7 +727,8 @@ function zweefOp(tl: Tijdlijn, id: string, t: number): number {
     if (e.t > t) break;
     if (e.houding !== 'duik') continue;
     const piek = Math.max(0, (e.hoog ?? 0) - 0.35);
-    if (t <= e.t1) sprong = piek * ease('mens', klem((t - e.t) / Math.max(0.01, e.t1 - e.t)));
+    const u = klem((t - e.t) / Math.max(0.01, e.t1 - e.t));
+    if (t <= e.t1) sprong = piek * (e.vroeg ? Math.sin((Math.PI / 2) * klem(u / 0.55)) : ease('mens', u));
     else {
       const val = klem((t - e.t1) / 0.35);
       sprong = piek * (1 - val * val);
@@ -1895,7 +1898,7 @@ function naarDuik(tl: Tijdlijn, a: BalActie, bal: string, start: Punt, t0: numbe
   const duikDuur = Math.min(0.55, duur - 0.1);
   const tD = t1 - duikDuur;
   // Zit hij (kniezit/hurkzit) of staat hij nog stil: duiken vanaf de plek waar hij dan is.
-  voegToe(tl.houdingen, k!.id, { t: tD, t1, houding: 'duik', hoek: graden(van, naar), hoog: a.duikHoogte }, (x) => x.t);
+  voegToe(tl.houdingen, k!.id, { t: tD, t1, houding: 'duik', hoek: graden(van, naar), hoog: a.duikHoogte, ...(a.duikOver ? { vroeg: true } : {}) }, (x) => x.t);
   beweeg(tl, k!, { pad: [positie(tl, k!.id, tD), naar], t0: tD, duur: duikDuur, ease: 'duik', kijk: kijkHoek(tl, k!.id, tD), spoor: false });
   kijkNaar(handen);
   return vlucht(tl, bal, start, t0, k!.id, opties, passeerder, 1, duur);

@@ -395,5 +395,29 @@
         "Ball higher and further"
       ]
     }
+  },
+  "keeper-hd-over-de-liggende-keeper": {
+    "naam": "Over the lying keeper",
+    "uitleg": "A second keeper lies face down beside the keeper. The coach throws a high ball at an angle over them. The keeper pushes off powerfully, dives over the lying keeper to the ball, catches it in the air and lands on their side. You learn to push off high and far instead of falling sideways. Then the keepers swap.",
+    "organisatie": "Keeper in goal, the second keeper lying 2 m beside them (face down, arms by the body). The coach 6 m away with balls. Three balls, then swap; then the other way.",
+    "benodigdheden": [
+      "Goal",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Push off with the leg nearest the ball, powerfully upwards",
+      "Your body goes over the keeper, not beside them",
+      "Lying keeper: lie still, arms by your body"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "A cone or hurdle instead of a keeper",
+        "Lower ball"
+      ],
+      "moeilijker": [
+        "The lying keeper kneels",
+        "Ball further into the corner"
+      ]
+    }
   }
 }

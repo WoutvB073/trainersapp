@@ -204,6 +204,8 @@ export interface BalActie extends ActieBasis {
    */
   duikNaar?: Punt;
   duikHoogte?: number;
+  /** Hoge duik over iets of iemand heen (0.37.3), bv. een liggende keeper: de keeper is al vroeg in de duik hoog. */
+  duikOver?: string;
   /**
    * Voorzet: deze keeper komt uit, loopt naar de bal en vangt hem in de sprong op het hoogste punt (± 2,5 m, of
    * `vangHoogte`). Met `stompNaar` stompt hij de bal weg (`vuisten`: 1 of 2, standaard 2).

@@ -4184,5 +4184,442 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-re-door-de-benen",
+    "soort": "keeper",
+    "naam": "Schot door de benen van een speler",
+    "categorieen": [
+      "reactie"
+    ],
+    "uitleg": "Een speler staat wijdbeens 3 m voor de keeper. De trainer schiet laag: soms tussen de benen van de speler door, soms er net langs. De keeper ziet de bal pas laat en moet in zijn basishouding blijven tot hij weet waar de bal heen gaat: dan vangen of duiken.",
+    "organisatie": "Keeper in het doel, de speler wijdbeens op 3 m (gezicht naar de trainer), de trainer op 10 m met ballen. Series van vijf; na elke serie wisselt de speler.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 1,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Kijk tussen de benen door naar de bal, niet naar de speler",
+      "Blijf laag in je basishouding, gewicht naar voren",
+      "Late bal: handen eerst, kort reageren"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Speler verder van het doel",
+        "Alleen tussen de benen door"
+      ],
+      "moeilijker": [
+        "Speler dichterbij",
+        "De speler mag de bal ook met een voet van richting veranderen"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 26,
+        "y": -3,
+        "breedte": 16,
+        "lengte": 16
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1",
+          "kijkrichting": 90
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 4,
+          "x": 34.3,
+          "y": 4.6,
+          "kijkrichting": 90
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34.6,
+          "y": 11,
+          "kijkrichting": -90
+        },
+        {
+          "id": "b1",
+          "soort": "bal",
+          "x": 34.6,
+          "y": 10.45,
+          "bij": "t1"
+        },
+        {
+          "id": "b2",
+          "soort": "bal",
+          "x": 35.7,
+          "y": 11.6
+        }
+      ],
+      "animatie": [
+        {
+          "acties": [
+            {
+              "type": "wijdbeens",
+              "wie": "a1",
+              "duur": 7.5
+            },
+            {
+              "type": "loop",
+              "wie": "t1",
+              "naar": [
+                34.6,
+                11
+              ],
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": [
+                33.8,
+                0.4
+              ],
+              "hoogte": "grond",
+              "afloop": "vangt",
+              "vasthouden": true,
+              "onderdoor": "a1"
+            }
+          ]
+        },
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "t1",
+              "naar": [
+                35.4,
+                12.1
+              ],
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "schot",
+              "van": "t1",
+              "naar": [
+                37,
+                0.4
+              ],
+              "hoogte": "grond",
+              "afloop": "vangt",
+              "bal": "b2"
+            }
+          ]
+        },
+        {
+          "duur": 1.2,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-re-kleur-van-de-bal",
+    "soort": "keeper",
+    "naam": "Kleur van de bal",
+    "categorieen": [
+      "reactie"
+    ],
+    "uitleg": "De trainer houdt in elke hand een bal: een rode en een gele. Hij gooit ze tegelijk, de een links en de ander rechts naast de keeper, en roept op het moment van de worp één kleur. De keeper duikt naar de bal met die kleur en laat de andere gaan. In het voorbeeld roept de trainer \"rood\".",
+    "organisatie": "Keeper in het doel, de trainer op 6 m met ballen in twee kleuren (of twee ballen met verschillende hesjes eromheen). Series van vier, de trainer roept steeds een andere kleur.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen in 2 kleuren"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Wacht op het woord, kies dan meteen",
+      "Handen eerst naar de bal met de goede kleur",
+      "Laat de andere bal echt gaan, ook al komt hij dichtbij"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "De trainer roept vóór de worp",
+        "Ballen dichter bij de keeper"
+      ],
+      "moeilijker": [
+        "Drie kleuren",
+        "De trainer roept de kleur die je níet moet pakken"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 26,
+        "y": -3,
+        "breedte": 16,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.6,
+          "kijkrichting": 90,
+          "verdedigt": "g1"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34,
+          "y": 6.6,
+          "kijkrichting": -90
+        },
+        {
+          "id": "rood",
+          "soort": "bal",
+          "x": 33.8,
+          "y": 6.05,
+          "bij": "t1",
+          "kleur": "#e03131",
+          "hand": "links"
+        },
+        {
+          "id": "geel",
+          "soort": "bal",
+          "x": 34.2,
+          "y": 6.05,
+          "bij": "t1",
+          "kleur": "#ffd23f",
+          "hand": "rechts"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 1,
+              "eindHoogte": 0.6,
+              "duikNaar": [
+                31.8,
+                2.1
+              ],
+              "duikHoogte": 0.5,
+              "bal": "rood"
+            },
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": [
+                36.4,
+                0.3
+              ],
+              "worp": "onderhands",
+              "hoogte": 1,
+              "bal": "geel"
+            }
+          ]
+        },
+        {
+          "duur": 0.9,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
+    "id": "keeper-re-twee-tennisballen",
+    "soort": "keeper",
+    "naam": "Twee tennisballen",
+    "categorieen": [
+      "reactie"
+    ],
+    "uitleg": "De trainer houdt in elke hand een tennisbal, met gestrekte armen op schouderhoogte. Hij laat ze tegelijk vallen. De keeper staat een paar meter verderop en moet ze allebei vangen voordat ze voor de tweede keer de grond raken: snel starten, laag gaan en met elke hand een bal pakken.",
+    "organisatie": "De trainer en de keeper staan 3 m van elkaar. Series van vijf; gaat het goed, dan een stap verder weg.",
+    "benodigdheden": [
+      "2 tennisballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Op de voorvoeten staan, klaar om te starten",
+      "Kijk naar de handen van de trainer, niet naar zijn gezicht",
+      "Laag gaan, je handen naar de ballen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eén tennisbal",
+        "Dichterbij"
+      ],
+      "moeilijker": [
+        "Verder weg",
+        "De trainer laat ze na elkaar vallen, met een korte pauze"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 12,
+        "lengte": 10
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 4.6,
+          "y": 5,
+          "kijkrichting": 0
+        },
+        {
+          "id": "ta",
+          "soort": "bal",
+          "x": 5.1,
+          "y": 4.8,
+          "bij": "t1",
+          "variant": "tennisbal",
+          "hand": "links"
+        },
+        {
+          "id": "tb",
+          "soort": "bal",
+          "x": 5.1,
+          "y": 5.2,
+          "bij": "t1",
+          "variant": "tennisbal",
+          "hand": "rechts"
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 8,
+          "y": 5,
+          "kijkrichting": 180
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.7,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.05,
+              "stuitOp": [
+                5.5,
+                4.7
+              ],
+              "eindHoogte": 0.4,
+              "bal": "ta"
+            },
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.05,
+              "stuitOp": [
+                5.5,
+                5.3
+              ],
+              "eindHoogte": 0.4,
+              "bal": "tb"
+            },
+            {
+              "type": "loop",
+              "wie": "k1",
+              "naar": [
+                6.6,
+                5
+              ],
+              "manier": "sprint",
+              "start": 0.1,
+              "duur": 0.45
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

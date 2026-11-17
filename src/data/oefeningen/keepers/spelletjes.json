@@ -2454,5 +2454,132 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-sp-trefbal",
+    "soort": "keeper",
+    "naam": "Trefbal voor keepers",
+    "categorieen": [
+      "spelletjes"
+    ],
+    "uitleg": "Twee keepers staan elk in een vak, tegenover elkaar. Om de beurt gooi je de bal onderhands en laag naar de ander: raak je hem onder de knie, dan is het een punt. Vangt de ander de bal, dan is het een redding en geen punt. Wie heeft het eerst vijf punten?",
+    "organisatie": "Twee vakken van 5 × 6 m op 2 m van elkaar. Je blijft in je eigen vak. Spelen tot vijf punten, dan een nieuwe ronde.",
+    "benodigdheden": [
+      "8 hoedjes",
+      "1 bal"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Gooi laag en hard, naar de voeten",
+      "Verdedigen: laag blijven, handen al bij de grond",
+      "Vang de bal met twee handen, of stap opzij"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Raken onder de heup telt",
+        "Vakken verder uit elkaar"
+      ],
+      "moeilijker": [
+        "Alleen met je zwakke hand",
+        "Twee ballen tegelijk"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 14,
+        "lengte": 9
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "z1",
+          "soort": "zone",
+          "x": 3.5,
+          "y": 4.5,
+          "breedte": 5,
+          "lengte": 6
+        },
+        {
+          "id": "z2",
+          "soort": "zone",
+          "x": 10.5,
+          "y": 4.5,
+          "breedte": 5,
+          "lengte": 6
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 3.6,
+          "y": 4.5,
+          "kijkrichting": 0
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 2,
+          "x": 10.4,
+          "y": 4.5,
+          "kijkrichting": 180
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 4.15,
+          "y": 4.5,
+          "bij": "k1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "k2",
+              "worp": "onderhands",
+              "hoogte": 0.5,
+              "eindHoogte": 0.35
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k2",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 0.5,
+              "eindHoogte": 0.3,
+              "terug": [
+                1.4,
+                6.6
+              ]
+            }
+          ]
+        },
+        {
+          "duur": 1,
+          "acties": []
+        }
+      ]
+    }
   }
 ]

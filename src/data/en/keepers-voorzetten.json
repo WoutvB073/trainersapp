@@ -487,5 +487,30 @@
         "A player right in front of the keeper"
       ]
     }
+  },
+  "keeper-vz-indraaiend-uitdraaiend": {
+    "naam": "Inswinging and outswinging crosses",
+    "uitleg": "The winger alternates an inswinging cross (curling towards the goal) and an outswinging one (curling away from it). For an inswinger the keeper stands a little deeper and comes out a short way; for an outswinger they stand further off the line and come out a long way. Read from the winger’s run-up and foot which one is coming.",
+    "organisatie": "Keeper in goal, the winger with balls 18 m out along the touchline. Sets of six crosses, alternating; then from the other side.",
+    "benodigdheden": [
+      "Goal",
+      "2 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Inswinger: come out a short way, the ball comes towards you",
+      "Outswinger: come out a long way, the ball curls away from you",
+      "Watch the winger’s foot and run-up"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Inswingers only at first",
+        "Crosses thrown with an arc"
+      ],
+      "moeilijker": [
+        "The winger chooses",
+        "An attacker in the box"
+      ]
+    }
   }
 }

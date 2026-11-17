@@ -3007,5 +3007,132 @@
         }
       ]
     }
+  },
+  {
+    "id": "keeper-hd-over-de-liggende-keeper",
+    "soort": "keeper",
+    "naam": "Over de liggende keeper",
+    "categorieen": [
+      "hoog-duiken"
+    ],
+    "uitleg": "Een tweede keeper ligt op zijn buik naast de keeper. De trainer gooit een hoge bal schuin over hem heen. De keeper zet krachtig af, duikt over de liggende keeper heen naar de bal, vangt hem in de vlucht en landt op zijn zij. Zo leer je hoog en ver af te zetten in plaats van opzij te vallen. Daarna wisselen de keepers.",
+    "organisatie": "Keeper in het doel, de tweede keeper ligt 2 m naast hem (op zijn buik, armen bij het lijf). De trainer op 6 m met ballen. Drie ballen, dan wisselen; daarna de andere kant op.",
+    "benodigdheden": [
+      "Goal",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 2,
+    "leeftijden": [
+      "jo12-15",
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Afzetten met het been het dichtst bij de bal, krachtig omhoog",
+      "Je lichaam gaat over de keeper heen, niet ernaast",
+      "Liggende keeper: stil liggen, armen bij je lijf"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Een pion of horde in plaats van een keeper",
+        "Bal lager"
+      ],
+      "moeilijker": [
+        "De liggende keeper zit op zijn knieën",
+        "Bal verder in de hoek"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 26,
+        "y": -3,
+        "breedte": 16,
+        "lengte": 12
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.8,
+          "kijkrichting": 90
+        },
+        {
+          "id": "k2",
+          "soort": "keeper",
+          "nummer": 2,
+          "x": 32.1,
+          "y": 2.5,
+          "kijkrichting": 90,
+          "houding": "buik"
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34.6,
+          "y": 7,
+          "kijkrichting": -100
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 34.5,
+          "y": 6.45,
+          "bij": "t1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 2.6,
+              "eindHoogte": 1.6,
+              "duikNaar": [
+                30.2,
+                2.2
+              ],
+              "duikHoogte": 1.4,
+              "duikOver": "k2"
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "opstaan",
+              "wie": "k1"
+            }
+          ]
+        },
+        {
+          "duur": 0.4,
+          "acties": []
+        }
+      ]
+    }
   }
 ]
