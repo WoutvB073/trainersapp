@@ -192,7 +192,7 @@ const oefeningen = [
     uitleg:
       'Dribbel een slalom tussen de pionnen door en raak de bal alleen met de buitenkant van je voet. Na de laatste pion dribbel je door de finish. De trainer klokt je tijd: kun je de volgende keer sneller, zonder dat je een pion raakt?',
     organisatie: 'Zes pionnen op een rij, 2 m uit elkaar, met een finish van twee hoedjes 3 m na de laatste pion. De trainer staat bij de finish met een stopwatch. Terug langs de buitenkant, met de andere voet de volgende keer.',
-    benodigdheden: ['6 pionnen', '2 hoedjes', 'Ballen'],
+    benodigdheden: ['6 pionnen', '2 hoedjes', 'Voetballen'],
     spelersNodig: 1,
     keepersNodig: 0,
     leeftijden: ['mini-5-7', 'jo8-11'],
@@ -207,7 +207,7 @@ const oefeningen = [
       uitleg:
         'Dribble a slalom between the cones and touch the ball only with the outside of your foot. After the last cone, dribble through the finish. The coach times you: can you be quicker next time, without touching a cone?',
       organisatie: 'Six cones in a row, 2 m apart, with a finish of two disc cones 3 m after the last cone. The coach stands at the finish with a stopwatch. Go back round the outside, and use the other foot next time.',
-      benodigdheden: ['6 cones', '2 disc cones', 'Balls'],
+      benodigdheden: ['6 cones', '2 disc cones', 'Footballs'],
       coachpunten: ['Small touches with the outside, keep the ball close to your foot', 'Look up now and then at the next cone', 'Right of the cone: right foot; left: left foot'],
       variaties: {
         makkelijker: ['Cones further apart', 'Inside and outside allowed'],

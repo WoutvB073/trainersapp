@@ -25,13 +25,18 @@ const KEEPER_NODIG = [
   'veld-pv-5-5-drie-aanrakingen',
   'veld-pv-overtal-4-3',
   'veld-pv-6-6-vaste-zones',
+  // 0.37.2: twee grote doelen, en de keeper als extra man in de opbouw.
+  'veld-vo-3-2-en-2-3-terug',
+  'veld-pv-4-4-drie-teams',
+  'veld-pv-schietlijn',
+  'veld-ps-keeper-extra-man',
 ];
 
 describe('keeper nodig of niet', () => {
   it('alleen partijvormen op twee grote doelen en de opbouw met de keeper hebben echt een keeper nodig', () => {
     const nodig = veld.filter((o) => keeperNodig(o)).map((o) => o.id);
     expect(nodig.sort()).toEqual([...KEEPER_NODIG].sort());
-    for (const id of KEEPER_NODIG.filter((i) => i !== 'veld-ps-opbouw-4-keeper-2')) expect(groteDoelen(id), id).toBe(2);
+    for (const id of KEEPER_NODIG.filter((i) => i !== 'veld-ps-opbouw-4-keeper-2' && i !== 'veld-ps-keeper-extra-man')) expect(groteDoelen(id), id).toBe(2);
   });
   it('alle overige spelersoefeningen met een keeper kunnen ook zonder (net of trainer in het doel)', () => {
     const optioneel = veld.filter((o) => o.keepersNodig > 0 && !KEEPER_NODIG.includes(o.id));

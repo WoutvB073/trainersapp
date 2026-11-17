@@ -45,7 +45,7 @@ const oefeningen = [
         stap({ type: 'loop', wie: 'a1', naar: [8.4, 7.1], manier: 'sprint', duur: 0.55 }, { type: 'loop', wie: 'b1', naar: [10.7, 7.2], manier: 'sprint', duur: 0.55 }),
         stap({ type: 'dribbel', wie: 'a1', naar: [10.4, 9.4] }, { type: 'loop', wie: 'b1', naar: [12.4, 8.4], manier: 'verdedigend' }),
         stap({ type: 'schijn', wie: 'a1', kant: 'links' }),
-        stap({ type: 'dribbel', wie: 'a1', naar: [13.8, 10.4], manier: 'sprint' }, { type: 'loop', wie: 'b1', naar: [13.8, 8.4], manier: 'verdedigend', start: 0.15 }),
+        stap({ type: 'dribbel', wie: 'a1', naar: [13.8, 10.4], manier: 'sprint' }, { type: 'loop', wie: 'b1', naar: [14.8, 8.2], manier: 'verdedigend', start: 0.15 }),
         stap({ type: 'schot', van: 'a1', naar: [17.2, 7.4], hoogte: 'grond' }),
         pauze(0.8),
       ],
