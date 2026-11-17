@@ -90,7 +90,14 @@ export interface TekenOpties {
   looplijnen?: boolean;
 }
 
-export function tekenScene(ctx: CanvasRenderingContext2D, breedtePx: number, hoogtePx: number, tekening: Tekening, stand: Stand, opties: TekenOpties): void {
+export function tekenScene(
+  ctx: CanvasRenderingContext2D,
+  breedtePx: number,
+  hoogtePx: number,
+  tekening: Tekening,
+  stand: Stand,
+  opties: TekenOpties,
+): void {
   const u = uitsnede(tekening);
   const schaal = Math.min(breedtePx / u.breedte, hoogtePx / u.lengte);
   const b: Beeld = {
@@ -106,37 +113,13 @@ export function tekenScene(ctx: CanvasRenderingContext2D, breedtePx: number, hoo
   tekenLijnen(b, tekening, k);
 
   const objecten = tekening.objecten;
-  const onder: VeldObject['soort'][] = [
-    'zone',
-    'kooi',
-    'keepersmat',
-    'ladder',
-    'stok',
-    'horde',
-    'ring',
-    'hoedje',
-    'pion',
-    'paaltje',
-    'bank',
-    'muurtje',
-    'pop',
-    'rebounder',
-    'klein-goal',
-    'goal',
-    'doelnet',
-    'net',
-  ];
+  const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'pop', 'rebounder', 'klein-goal', 'goal', 'doelnet', 'net'];
   for (const soort of onder) {
     for (const o of objecten) {
       if (o.soort !== soort) continue;
       const m = stand.materiaal.get(o.id);
       const p = m && o.inHand ? naastHouder(stand, o, m) : m;
-      tekenMateriaal(
-        b,
-        p ? { ...o, x: p.x, y: p.y } : o,
-        stand.net.find((n) => n.id === o.id),
-        m,
-      );
+      tekenMateriaal(b, p ? { ...o, x: p.x, y: p.y } : o, stand.net.find((n) => n.id === o.id), m);
     }
   }
 
@@ -214,14 +197,7 @@ export function persoonKleur(o: VeldObject, k: Kleuren, team: Team | undefined =
 export function doorzichtig(kleur: string, alpha: number): string {
   const h = kleur.trim();
   if (h.startsWith('#')) {
-    const v =
-      h.length === 4
-        ? h
-            .slice(1)
-            .split('')
-            .map((c) => c + c)
-            .join('')
-        : h.slice(1, 7);
+    const v = h.length === 4 ? h.slice(1).split('').map((c) => c + c).join('') : h.slice(1, 7);
     const n = parseInt(v, 16);
     return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
   }

@@ -1,23 +1,5 @@
 import type {
-  MateriaalActie,
-  TrucActie,
-  Actie,
-  AnimatieStap,
-  BalActie,
-  BeweegActie,
-  HerhaalStap,
-  LijnSoort,
-  Manier,
-  Punt,
-  Rij,
-  Stap,
-  TegelijkStap,
-  Team,
-  Tekening,
-  Waarde,
-  VeldObject,
-  Zithouding,
-} from '../model/types';
+  MateriaalActie, TrucActie, Actie, AnimatieStap, BalActie, BeweegActie, HerhaalStap, LijnSoort, Manier, Punt, Rij, Stap, TegelijkStap, Team, Tekening, Waarde, VeldObject, Zithouding } from '../model/types';
 import { PERSONEN } from '../model/types';
 
 /**
@@ -296,9 +278,7 @@ export interface ObjectStand {
   houdt?: { kant: 'links' | 'rechts'; x: number; y: number; hoogte: number }[];
 }
 
-type MateriaalEvent = { t: number } & (
-  { soort: 'los'; hoek: number } | { soort: 'pak'; wie: string } | { soort: 'leg'; naar: Punt } | { soort: 'keer' } | { soort: 'val'; hoek: number; naar?: Punt } | { soort: 'op' }
-);
+type MateriaalEvent = { t: number } & ({ soort: 'los'; hoek: number } | { soort: 'pak'; wie: string } | { soort: 'leg'; naar: Punt } | { soort: 'keer' } | { soort: 'val'; hoek: number; naar?: Punt } | { soort: 'op' });
 
 /** Stand van materiaal dat beweegt (alleen objecten met gebeurtenissen). */
 export interface MateriaalStand {
@@ -461,8 +441,7 @@ function draaiOm(c: Punt, vorige: Punt, naar: Punt, straal: number, kant: 'links
 }
 
 const isBalActie = (a: Actie): a is BalActie => a.type === 'pass' || a.type === 'schot';
-const isMateriaalActie = (a: Actie): a is MateriaalActie =>
-  a.type === 'pakObject' || a.type === 'legObject' || a.type === 'keerOm' || a.type === 'valOm' || a.type === 'zetOp' || a.type === 'losLaten';
+const isMateriaalActie = (a: Actie): a is MateriaalActie => a.type === 'pakObject' || a.type === 'legObject' || a.type === 'keerOm' || a.type === 'valOm' || a.type === 'zetOp' || a.type === 'losLaten';
 /** Hoogte van iets dat je in de hand draagt. */
 const DRAAG_HOOGTE = 0.8;
 const isPersoon = (o: VeldObject | undefined) => !!o && PERSONEN.includes(o.soort);

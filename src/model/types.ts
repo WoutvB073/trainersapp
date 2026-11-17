@@ -490,25 +490,7 @@ export interface TeamActie extends ActieBasis {
 }
 
 export type Actie =
-  | BalActie
-  | BeweegActie
-  | PersoonActie
-  | AansluitActie
-  | TeamActie
-  | SchijnActie
-  | TrucActie
-  | DrukActie
-  | DekActie
-  | VeroverActie
-  | PannaActie
-  | ZitActie
-  | PlukActie
-  | DraaiActie
-  | AantikActie
-  | MateriaalActie
-  | VoetOpBalActie
-  | TikTakActie
-  | TekenActie;
+  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | TrucActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie | TekenActie;
 
 export interface AnimatieStap {
   acties: Actie[];
