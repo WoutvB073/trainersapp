@@ -57,11 +57,11 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] opnieuw bekijken | T1 | Kapwedstrijd op de lijn | Dribbel heen en weer tussen twee lijnen op 5 meter: wie maakt in 30 tellen de meeste kappen precies op de lijn? | JO8–15 | 2 / 0 | Klassiek |
+| [ ] 0.37.2 | T1 | Kapwedstrijd op de lijn | Dribbel heen en weer tussen twee lijnen op 5 meter: wie maakt in 30 tellen de meeste kappen precies op de lijn? | JO8–15 | 2 / 0 | Klassiek |
 | [x] 0.37.0 | T2 | Acht met binnen- en buitenkant | Dribbel een acht om twee pionnen: eerst alleen met de buitenkant, dan alleen met de binnenkant, daarna op tijd. | JO8–15 | 1 / 0 | Klassiek |
 | [x] 0.37.0 | T3 | Aannemen op de halve draai | De bal komt van opzij: open je lichaam en neem hem achter je standbeen langs mee naar het poortje aan de andere kant. | JO12–19 | 3 / 0 | VT |
 | [x] 0.37.0 | T4 | Hooghoudparcours | Houd de bal hoog terwijl je door drie poortjes loopt; valt hij, dan begin je bij het laatste poortje opnieuw. | JO12–19 | 1 / 0 | Eigen |
-| [ ] opnieuw bekijken | T5 | Kiezen bij de pop | Dribbel naar de pop; de trainer steekt op het laatste moment links of rechts op en aan die kant ga je er met je actie langs. | JO8–15 | 4 / 0 | Eigen |
+| [ ] 0.37.2 | T5 | Kiezen bij de pop | Dribbel naar de pop; de trainer steekt op het laatste moment links of rechts op en aan die kant ga je er met je actie langs. | JO8–15 | 4 / 0 | Eigen |
 | [x] 0.37.0 | T6 | Wegdraaien bij de zijlijn | Dribbel naar de lijn, scherm de bal af en draai weg met je zool of buitenkant terwijl een verdediger rustig meeloopt. | JO12–19 | 2 / 0 | KNVB |
 | [x] 0.37.0 | T7 | Eerste aanraking naar de kleur | Vier pionnen in een kruis om je heen; de trainer speelt in en roept een kleur: neem de bal in één keer die kant op mee. | JO8–15 | 3 / 0 | SCW |
 | [x] 0.37.0 | T8 | Dribbelrace met remmen | Twee banen naast elkaar: op het fluitje stop je de bal met je zool, draai je en sprint je terug achter je eigen lijn. | JO8–11 | 2 / 0 | Klassiek |
@@ -69,14 +69,14 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 | [x] 0.37.0 | T10 | Circuit met je andere voet | Vier stations van een minuut, alles met je zwakke voet: kaatsbord, slalom, zoolrol en aannemen. | JO8–19 | 4 / 0 | Eigen |
 | [x] 0.37.0 | T11 | Wasstraat | Dribbel door een straat van poppen en trainers die met hesjes zwaaien: houd je bal dichtbij, dan komt hij er schoon uit. | O6 | 4 / 0 | Eigen |
 | [x] 0.35.0 (★) | T12 | ★ Kruis: aannemen en opendraaien | Vier kinderen op de punten van een kruis, één in het midden: neem aan, draai open en speel door naar de volgende punt. | O7, JO8–11 | 5 / 0 | KNVB |
-| [ ] opnieuw bekijken | T13 | Buitenkant-slalom op tijd | Slalom met alleen de buitenkant van je voet; de trainer klokt en je probeert je eigen tijd te verbeteren. | O7, JO8–11 | 1 / 0 | Eigen |
+| [ ] 0.37.2 | T13 | Buitenkant-slalom op tijd | Slalom met alleen de buitenkant van je voet; de trainer klokt en je probeert je eigen tijd te verbeteren. | O7, JO8–11 | 1 / 0 | Eigen |
 
 ## Loopcoördinatie (8)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] opnieuw bekijken | L1 | Ladder: twee in, twee uit | Zijwaarts door de ladder met twee voeten in het vak en twee erbuiten, gevolgd door een sprint van 5 meter. | JO8–19 | 1 / 0 | Klassiek |
-| [ ] opnieuw bekijken | L2 | Hoepelhinkelbaan | Hink en spring door een baan van hoepels (één voet, twee voeten, kruislings) en sprint naar de pion. | O6, O7 | 1 / 0 | CLUB |
+| — (= Loopladder zijwaarts: in-in-uit-uit) | L1 | Ladder: twee in, twee uit | Zijwaarts door de ladder met twee voeten in het vak en twee erbuiten, gevolgd door een sprint van 5 meter. | JO8–19 | 1 / 0 | Klassiek |
+| [ ] 0.37.2 | L2 | Hoepelhinkelbaan | Hink en spring door een baan van hoepels (één voet, twee voeten, kruislings) en sprint naar de pion. | O6, O7 | 1 / 0 | CLUB |
 | [x] 0.37.0 | L3 | Reactiestart op kleur | Je staat met je rug naar twee gekleurde pionnen; de trainer roept een kleur en je draait en sprint naar die pion. | JO8–15 | 2 / 0 | Klassiek |
 | [x] 0.37.0 | L4 | Vooruit, achteruit, zijwaarts in het vierkant | Loop de vier zijden van een vierkant steeds anders: sprint, zijwaarts, achteruit, zijwaarts, met je gezicht naar dezelfde kant. | JO12–19 | 1 / 0 | Klassiek |
 | [x] 0.37.0 | L5 | Hordes en afremmen in de hoepel | Drie lage hordes en dan in één pas tot stilstand komen in een hoepel: laag zitten en in balans blijven. | JO8–15 | 1 / 0 | Eigen |
@@ -89,18 +89,18 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
 | [x] 0.35.0 (★) | P1 | ★ Ruit met de derde man | Vier spelers in een ruit: inspelen, kaatsen en de derde man loopt in de ruimte en krijgt de diepe bal. | JO12–19 | 4 / 0 | VT |
-| [ ] opnieuw bekijken | P2 | Driehoek met in- en uitdraaien | In de driehoek loop je eerst weg van de bal en kom je dan in: aannemen open gedraaid en doorpassen. | JO8–15 | 3 / 0 | SX |
+| [ ] 0.37.2 | P2 | Driehoek met in- en uitdraaien | In de driehoek loop je eerst weg van de bal en kom je dan in: aannemen open gedraaid en doorpassen. | JO8–15 | 3 / 0 | SX |
 | [x] 0.37.1 | P3 | Lange lijn: korte en lange pass | Vier spelers op één lijn: kort inspelen, kaatsen en de lange bal over de middelste twee heen. | JO12–19 | 4 / 0 | VT |
-| [ ] opnieuw bekijken | P4 | Vierkant met twee ballen tegen de klok | Vier hoeken en twee ballen tegelijk: pass en volg je bal, zonder dat de ballen elkaar inhalen. | JO8–15 | 6 / 0 | Klassiek |
+| [ ] 0.37.2 | P4 | Vierkant met twee ballen tegen de klok | Vier hoeken en twee ballen tegelijk: pass en volg je bal, zonder dat de ballen elkaar inhalen. | JO8–15 | 6 / 0 | Klassiek |
 | [x] 0.37.1 | P5 | Passen door het bewegende poortje | Twee spelers houden samen een poortje vast en lopen langzaam; de anderen passen er in tweetallen doorheen. | JO8–11 | 6 / 0 | Eigen |
 | [x] 0.37.1 | P6 | Kaats en wissel van kant | Inspelen op de spits, kaatsen op de middenvelder en dan de bal verleggen naar de vrije buitenspeler. | JO12–19 | 5 / 0 | KNVB |
 | [x] 0.37.1 | P7 | Zeshoek met de klok mee en tegen | Zes pionnen: de bal gaat met één aanraking rond; op het fluitje draait de richting om. | JO12–19 | 6 / 0 | SX |
 | [x] 0.37.1 | P8 | Passen met de wreef over 20 meter | In tweetallen een strakke bal over de grond met de wreef; tel hoe vaak hij tussen de twee pionnen aankomt. | JO12–19 | 2 / 0 | Klassiek |
 | [x] 0.37.1 | P9 | Halve volley uit de hand | Laat de bal vallen en trap hem na de stuit strak naar je maatje, die hem vangt of aanneemt. | JO12–19 | 2 / 0 | Klassiek |
 | [x] 0.37.1 | P10 | Passen onder de horde door | Pass de bal onder een horde door naar je maatje; elke goede pass is een punt, raak je de horde dan niet. | O7, JO8–11 | 2 / 0 | Eigen |
-| [ ] opnieuw bekijken | P11 | Tikkie-takkie-estafette | Twee teams in rijen tegenover elkaar: pass naar de overkant en sluit daar aan; welk team haalt het eerst 20 passes? | JO8–15 | 6 / 0 | Klassiek |
+| [ ] 0.37.2 | P11 | Tikkie-takkie-estafette | Twee teams in rijen tegenover elkaar: pass naar de overkant en sluit daar aan; welk team haalt het eerst 20 passes? | JO8–15 | 6 / 0 | Klassiek |
 | [x] 0.37.1 | P12 | Kaatsbordtennis | Om de beurt tegen het kaatsbord: de bal mag maar één keer stuiten voordat de ander hem terugspeelt. | JO8–19 | 2 / 0 | Eigen |
-| [ ] opnieuw bekijken | P13 | Rollen naar de hoepel | Rol of pass de bal zo zacht dat hij in de hoepel blijft liggen; elke hoepel verder weg is meer punten. | O6 | 2 / 0 | Eigen |
+| [ ] 0.37.2 | P13 | Rollen naar de hoepel | Rol of pass de bal zo zacht dat hij in de hoepel blijft liggen; elke hoepel verder weg is meer punten. | O6 | 2 / 0 | Eigen |
 | [x] 0.37.1 | P14 | Passen en doorlopen in het H-vorm | Zes spelers in een H: de bal gaat via de middelste twee naar de overkant en iedereen schuift een plek door. | JO12–19 | 6 / 0 | SX |
 
 ## Afwerken (12)
@@ -108,31 +108,31 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
 | [x] 0.35.0 (★) | A1 | ★ Schot, rebound en intikken | De eerste speler schiet, de keeper keert de bal en de tweede speler loopt door en tikt de rebound binnen. | JO8–19 | 2 / 1 | SCW |
-| [ ] opnieuw bekijken | A2 | Afronden op de tweede paal | Een lage voorzet achter de verdediging langs; de spits komt bij de eerste paal, de buitenspeler tikt binnen bij de tweede. | JO12–19 | 3 / 1 | KNVB |
+| [ ] 0.37.2 | A2 | Afronden op de tweede paal | Een lage voorzet achter de verdediging langs; de spits komt bij de eerste paal, de buitenspeler tikt binnen bij de tweede. | JO12–19 | 3 / 1 | KNVB |
 | [x] 0.37.1 | A3 | Volley na een aangooi | De aangever gooit van opzij en je schiet de bal uit de lucht op doel: eerst uit stand, dan in de loop. | JO12–19 | 2 / 1 | Klassiek |
 | [x] 0.37.1 | A4 | Schieten in drie zones | Hoe verder de zone van het doel, hoe meer punten een goal waard is; elke speler kiest zelf waar hij schiet. | JO8–15 | 3 / 1 | SX |
-| [ ] opnieuw bekijken | A5 | Aannemen met de rug naar het doel en schieten | Bal in de voeten, een verdediger in je rug: kaats of draai, en rond binnen drie tellen af. | JO12–19 | 3 / 1 | SX |
-| [ ] opnieuw bekijken | A6 | Voorzet van de achterlijn en koppen | De buitenspeler haalt de achterlijn en geeft hoog voor; twee spelers lopen kruislings in en koppen. | JO12–19 | 3 / 1 | KNVB |
-| [ ] opnieuw bekijken | A7 | Eén-tweetje en schot | Speel een één-tweetje met de kaatser langs de pop en schiet in één keer vanaf de rand van de zestien. | JO8–15 | 2 / 1 | Klassiek |
+| [ ] 0.37.2 | A5 | Aannemen met de rug naar het doel en schieten | Bal in de voeten, een verdediger in je rug: kaats of draai, en rond binnen drie tellen af. | JO12–19 | 3 / 1 | SX |
+| [ ] 0.37.2 | A6 | Voorzet van de achterlijn en koppen | De buitenspeler haalt de achterlijn en geeft hoog voor; twee spelers lopen kruislings in en koppen. | JO12–19 | 3 / 1 | KNVB |
+| [ ] 0.37.2 | A7 | Eén-tweetje en schot | Speel een één-tweetje met de kaatser langs de pop en schiet in één keer vanaf de rand van de zestien. | JO8–15 | 2 / 1 | Klassiek |
 | [x] 0.37.1 | A8 | Afronden na een dribbel van opzij | Dribbel vanaf de zijkant naar binnen en schiet met je binnenkant in de verre hoek. | JO8–19 | 1 / 1 | Klassiek |
 | [x] 0.37.1 | A9 | Twee doelen, één schutter | Twee doelen tegenover elkaar; de trainer speelt in en roept welk doel: aannemen, draaien en schieten. | JO12–19 | 2 / 2 | Eigen |
 | [x] 0.37.1 | A10 | Penaltykoning | Iedereen neemt om de beurt een penalty; wie mist gaat in het doel, wie scoort blijft schutter. | JO8–19 | 3 / 1 | Klassiek |
-| [ ] opnieuw bekijken | A11 | Schieten op het net met de gaten | Vanaf drie afstanden schieten op het net met open hoeken: 3 punten door een gat, 1 punt in het net. | O7, JO8–11 | 2 / 0 | Eigen |
-| [ ] opnieuw bekijken | A12 | Kanonnen | Schiet je bal zo hard je kunt in het grote goal; de trainer staat erin en doet alsof hij omvalt bij elk doelpunt. | O6 | 3 / 0 | US |
+| — (= Hoekenjacht) | A11 | Schieten op het net met de gaten | Vanaf drie afstanden schieten op het net met open hoeken: 3 punten door een gat, 1 punt in het net. | O7, JO8–11 | 2 / 0 | Eigen |
+| [ ] 0.37.2 | A12 | Kanonnen | Schiet je bal zo hard je kunt in het grote goal; de trainer staat erin en doet alsof hij omvalt bij elk doelpunt. | O6 | 3 / 0 | US |
 
 ## Positiespel (10)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] opnieuw bekijken | PS1 | Rondo 3 tegen 1 in twee vakken | Drie tegen één in een vak; na vier passes speel je over naar het andere vak, waar de verdediger moet volgen. | JO8–15 | 4 / 0 | SX |
-| [ ] opnieuw bekijken | PS2 | Positiespel 4 tegen 2 naar 2 tegen 4 | Vier tegen twee in het ene vak; bij balverovering spelen de twee uit naar hun maatjes in het andere vak. | JO12–19 | 8 / 0 | SX |
-| [ ] opnieuw bekijken | PS3 | 3 tegen 3 met vier kaatsers | Drie tegen drie in het midden met een kaatser op elke zijde: tien passes is een punt. | JO12–19 | 10 / 0 | KNVB |
-| [ ] opnieuw bekijken | PS4 | Opbouwen door het middenvak | Drie zones: de verdedigers spelen via een middenvelder in het middenvak naar de aanvallers aan de overkant. | JO12–19 | 9 / 0 | KNVB |
+| [ ] 0.37.2 | PS1 | Rondo 3 tegen 1 in twee vakken | Drie tegen één in een vak; na vier passes speel je over naar het andere vak, waar de verdediger moet volgen. | JO8–15 | 4 / 0 | SX |
+| — (= Omschakelen tussen twee vakken) | PS2 | Positiespel 4 tegen 2 naar 2 tegen 4 | Vier tegen twee in het ene vak; bij balverovering spelen de twee uit naar hun maatjes in het andere vak. | JO12–19 | 8 / 0 | SX |
+| [ ] 0.37.2 | PS3 | 3 tegen 3 met vier kaatsers | Drie tegen drie in het midden met een kaatser op elke zijde: tien passes is een punt. | JO12–19 | 10 / 0 | KNVB |
+| [ ] 0.37.2 | PS4 | Opbouwen door het middenvak | Drie zones: de verdedigers spelen via een middenvelder in het middenvak naar de aanvallers aan de overkant. | JO12–19 | 9 / 0 | KNVB |
 | [x] 0.37.1 | PS5 | Rondo met twee kleuren | Zes buitenspelers in twee kleuren: je mag alleen naar de andere kleur passen, de twee jagers lezen dat. | JO12–19 | 8 / 0 | Eigen |
 | [x] 0.37.1 | PS6 | 2 tegen 1 in vier vakjes | In elk vakje twee tegen één; na vijf passes speel je door naar het vakje ernaast. | JO8–15 | 9 / 0 | Klassiek |
-| [ ] opnieuw bekijken | PS7 | Positiespel met de keeper als extra man | Vijf tegen drie op een helft met de keeper als vrije man achterin: uitspelen over de middenlijn. | JO12–19 | 8 / 1 | KNVB |
+| [ ] 0.37.2 | PS7 | Positiespel met de keeper als extra man | Vijf tegen drie op een helft met de keeper als vrije man achterin: uitspelen over de middenlijn. | JO12–19 | 8 / 1 | KNVB |
 | [x] 0.37.1 | PS8 | Balbezit met doelgebieden | Vier tegen vier plus twee jokers; een punt als je een medespeler aanspeelt in een van de vier hoekvakjes. | JO12–19 | 10 / 0 | SCW |
-| [ ] opnieuw bekijken | PS9 | Lummelen 3 tegen 1 | Drie kinderen spelen elkaar de bal toe en de lummel in het midden probeert hem aan te raken. | O7, JO8–11 | 4 / 0 | Klassiek |
+| — (= Rondo 3 tegen 1 in de driehoek) | PS9 | Lummelen 3 tegen 1 | Drie kinderen spelen elkaar de bal toe en de lummel in het midden probeert hem aan te raken. | O7, JO8–11 | 4 / 0 | Klassiek |
 | [x] 0.37.1 | PS10 | Overtal aan de zijkant | Zes tegen vier op een brede strook: maak aan één kant een overtal en speel de vrije man aan. | JO16–19 | 10 / 0 | KNVB |
 
 ## Verdedigen en omschakelen (12)
@@ -140,14 +140,14 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
 | [x] 0.35.0 (★) | V1 | ★ Kantelen als blok | Drie aanvallers spelen de bal breed; vier verdedigers schuiven samen mee en houden de afstanden klein. | JO12–19 | 7 / 0 | KNVB |
-| [ ] opnieuw bekijken | V2 | Rugdekking geven | Twee tegen twee: de eerste verdediger zet druk, de tweede staat schuin achter hem en vangt de actie op. | JO12–19 | 4 / 0 | KNVB |
-| [ ] opnieuw bekijken | V3 | Terugverdedigen na balverlies | De aanvaller start met voorsprong, de verdediger sprint van achteren terug en moet tussen de bal en het doel komen. | JO12–19 | 2 / 1 | SCW |
-| [ ] opnieuw bekijken | V4 | 3 tegen 2 en meteen 2 tegen 3 terug | Na een schot of balverovering valt het andere team direct de andere kant op aan. | JO12–19 | 6 / 2 | SCW |
+| [ ] 0.37.2 | V2 | Rugdekking geven | Twee tegen twee: de eerste verdediger zet druk, de tweede staat schuin achter hem en vangt de actie op. | JO12–19 | 4 / 0 | KNVB |
+| [ ] 0.37.2 | V3 | Terugverdedigen na balverlies | De aanvaller start met voorsprong, de verdediger sprint van achteren terug en moet tussen de bal en het doel komen. | JO12–19 | 2 / 1 | SCW |
+| [ ] 0.37.2 | V4 | 3 tegen 2 en meteen 2 tegen 3 terug | Na een schot of balverovering valt het andere team direct de andere kant op aan. | JO12–19 | 6 / 2 | SCW |
 | [x] 0.37.1 | V5 | Onderscheppen in de passlijn | Twee passers en een verdediger ertussen: lees de pass, stap ervoor en speel de bal in één keer naar het doeltje. | JO8–15 | 3 / 0 | Eigen |
 | [x] 0.37.1 | V6 | De sliding en het blok | Op een zachte ondergrond: blokkeer het schot met je voet of maak een sliding op een rollende bal. | JO12–19 | 2 / 0 | Klassiek |
 | [x] 0.37.1 | V7 | Druk zetten op de terugspeelbal | Het sein is de pass naar achteren: de spits sluit door op de verdediger, de rest schuift aan. | JO12–19 | 8 / 1 | KNVB |
-| [ ] opnieuw bekijken | V8 | Vier seconden terugveroveren | Na balverlies heeft je team vier tellen om de bal terug te pakken; lukt dat, dan telt je goal dubbel. | JO12–19 | 8 / 0 | SCW |
-| [ ] opnieuw bekijken | V9 | Verdedigen in ondertal 2 tegen 3 | Twee verdedigers vertragen drie aanvallers tot de derde verdediger terug is gesprint. | JO12–19 | 6 / 1 | SX |
+| [ ] 0.37.2 | V8 | Vier seconden terugveroveren | Na balverlies heeft je team vier tellen om de bal terug te pakken; lukt dat, dan telt je goal dubbel. | JO12–19 | 8 / 0 | SCW |
+| [ ] 0.37.2 | V9 | Verdedigen in ondertal 2 tegen 3 | Twee verdedigers vertragen drie aanvallers tot de derde verdediger terug is gesprint. | JO12–19 | 6 / 1 | SX |
 | [x] 0.37.1 | V10 | Duel in de lucht | Twee spelers springen om een aangegooide bal; wie hem wegkopt naar zijn eigen maatje krijgt een punt. | JO16–19 | 4 / 0 | KNVB |
 | [x] 0.37.1 | V11 | Bewaker van de schat | Jij bewaakt een pion in een hoepel; de aanvaller probeert hem om te schieten: blijf tussen bal en pion. | O7, JO8–11 | 2 / 0 | Eigen |
 | [x] 0.37.1 | V12 | Omschakelen op het fluitje | Partijtje 4 tegen 4; op het fluitje laat je de bal liggen en speelt iedereen verder met de bal van de trainer. | JO8–15 | 8 / 0 | Eigen |
@@ -159,10 +159,10 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 | [x] 0.37.1 | D1 | Duel uit de draai | Je staat rug aan rug met de bal tussen jullie in; op het teken draai je en speel je 1 tegen 1 op twee doeltjes. | JO8–15 | 2 / 0 | Klassiek |
 | [x] 0.37.1 | D2 | 1 tegen 1 van opzij | De verdediger komt van de zijkant in; snijd naar binnen of ga buitenom en scoor in het doeltje. | JO8–19 | 2 / 0 | SX |
 | [x] 0.37.1 | D3 | 1 tegen 1 met een tijdklok | Je hebt zes tellen om te scoren; de trainer telt hardop af en de verdediger hoeft alleen maar te vertragen. | JO12–19 | 2 / 1 | Eigen |
-| [ ] opnieuw bekijken | D4 | Duelladder | Wie wint gaat een veldje omhoog, wie verliest een veldje omlaag: na tien minuten staat de sterkste bovenaan. | JO8–19 | 6 / 0 | Klassiek |
+| — (= Koning van het veld) | D4 | Duelladder | Wie wint gaat een veldje omhoog, wie verliest een veldje omlaag: na tien minuten staat de sterkste bovenaan. | JO8–19 | 6 / 0 | Klassiek |
 | [x] 0.37.1 | D5 | 1 tegen 1 na een lange bal | De aanvaller neemt een lange bal aan terwijl de verdediger aansluit: eerste aanraking weg van de druk. | JO12–19 | 3 / 1 | KNVB |
-| [ ] opnieuw bekijken | D6 | Vier doeltjes in het kruis | Eén tegen één in een vierkant met op elke zijde een doeltje: scoor in een van de twee doeltjes van de ander. | JO8–15 | 2 / 0 | SX |
-| [ ] opnieuw bekijken | D7 | Krokodillenrivier met twee oevers | Twee rivieren achter elkaar met elk een krokodil: kom je langs allebei, dan mag je scoren. | O7 | 3 / 0 | Eigen |
+| [ ] 0.37.2 | D6 | Vier doeltjes in het kruis | Eén tegen één in een vierkant met op elke zijde een doeltje: scoor in een van de twee doeltjes van de ander. | JO8–15 | 2 / 0 | SX |
+| [ ] 0.37.2 | D7 | Krokodillenrivier met twee oevers | Twee rivieren achter elkaar met elk een krokodil: kom je langs allebei, dan mag je scoren. | O7 | 3 / 0 | Eigen |
 | [x] 0.37.1 | D8 | Wie pakt de schat van de trainer? | De trainer dribbelt langzaam rond; pak samen zijn bal af en dribbel hem naar jullie hoepel. | O6 | 3 / 0 | US |
 | [x] 0.37.1 | D9 | 1 tegen 1 met een meelopende joker | Kom je er niet langs, dan mag je de joker naast het veld aanspelen en de bal terugvragen. | JO12–19 | 3 / 0 | SX |
 
@@ -170,29 +170,29 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] opnieuw bekijken | PV1 | 4 tegen 4 met drie teams | Drie teams van vier: wie een goal tegen krijgt gaat eruit en het wachtende team komt er meteen in. | JO8–19 | 12 / 2 | Klassiek |
+| [ ] 0.37.2 | PV1 | 4 tegen 4 met drie teams | Drie teams van vier: wie een goal tegen krijgt gaat eruit en het wachtende team komt er meteen in. | JO8–19 | 12 / 2 | Klassiek |
 | [x] 0.37.1 | PV2 | Partij met een goal in het midden | Eén goal met twee kanten in het midden van het veld; je mag aan beide kanten scoren. | JO8–15 | 6 / 1 | Eigen |
 | [x] 0.37.1 | PV3 | 5 tegen 5 met maximaal drie aanrakingen | Gewoon partijspel, maar je mag de bal hooguit drie keer raken; een goal uit één aanraking telt dubbel. | JO12–19 | 10 / 2 | SCW |
 | [x] 0.37.1 | PV4 | Overtal in de aanval 4 tegen 3 | Het team met de bal heeft altijd een speler meer, omdat één verdediger achter zijn eigen doellijn wacht. | JO12–19 | 8 / 2 | KNVB |
-| [ ] opnieuw bekijken | PV5 | Partij met eindvakken | Je scoort door een medespeler aan te spelen die in het eindvak inloopt; daar mag je niet stil staan wachten. | JO8–15 | 8 / 0 | KNVB |
-| [ ] opnieuw bekijken | PV6 | Toernooi 2 tegen 2 op vier veldjes | Korte wedstrijdjes van twee minuten; winnaars schuiven op naar het ene veldje, verliezers naar het andere. | O7, JO8–11 | 8 / 0 | CLUB |
+| — (= Eindzonespel 4 tegen 4) | PV5 | Partij met eindvakken | Je scoort door een medespeler aan te spelen die in het eindvak inloopt; daar mag je niet stil staan wachten. | JO8–15 | 8 / 0 | KNVB |
+| [ ] 0.37.2 | PV6 | Toernooi 2 tegen 2 op vier veldjes | Korte wedstrijdjes van twee minuten; winnaars schuiven op naar het ene veldje, verliezers naar het andere. | O7, JO8–11 | 8 / 0 | CLUB |
 | [x] 0.37.1 | PV7 | 3 tegen 3 met keepers die wisselen | Wie scoort wordt keeper van zijn team, zodat iedereen keept en iedereen scoort. | JO8–11 | 8 / 0 | Eigen |
 | [x] 0.37.1 | PV8 | Twee tegen de trainer | Twee kinderen spelen samen tegen de trainer op één doeltje: pass als hij op je af komt. | O6, O7 | 2 / 0 | US |
-| [ ] opnieuw bekijken | PV9 | Partij met een schietlijn | Scoren mag alleen van achter de schietlijn op 12 meter; een goal van dichterbij telt niet. | JO12–19 | 8 / 2 | SX |
+| [ ] 0.37.2 | PV9 | Partij met een schietlijn | Scoren mag alleen van achter de schietlijn op 12 meter; een goal van dichterbij telt niet. | JO12–19 | 8 / 2 | SX |
 | [x] 0.37.1 | PV10 | 6 tegen 6 met vaste zones | Verdedigers, middenvelders en aanvallers blijven in hun eigen zone; één speler mag met de bal mee naar de volgende. | JO16–19 | 12 / 2 | KNVB |
 
 ## Spelletjes (8)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] opnieuw bekijken | S1 | Lattenschieten | Vanaf de rand van de zestien probeer je de lat te raken; wie het eerst drie keer raak schiet, wint. | JO8–19 | 2 / 0 | Klassiek |
+| — (= Latje-trap) | S1 | Lattenschieten | Vanaf de rand van de zestien probeer je de lat te raken; wie het eerst drie keer raak schiet, wint. | JO8–19 | 2 / 0 | Klassiek |
 | [x] 0.37.0 | S2 | Rondje om het doel | Iedereen staat in een rij: schieten, keeper worden en weer aansluiten; wie een goal tegen krijgt verliest een leven. | JO8–19 | 5 / 0 | Klassiek |
 | [x] 0.37.0 | S3 | Voetbalbowlen | Zet zes hoge pionnen in een driehoek en probeer ze met één rollende bal allemaal om te krijgen. | O7, JO8–11 | 2 / 0 | Eigen |
 | [x] 0.37.0 | S4 | Voetbalkegelen in teams | Elk team bewaakt zijn eigen pionnen en probeert die van de ander om te passen; het team met de laatste pion wint. | JO8–15 | 6 / 0 | Klassiek |
 | [x] 0.37.0 | S5 | Hooghoudwedstrijd met levens | In een kring houd je samen de bal hoog; wie hem laat vallen verliest een leven. | JO12–19 | 4 / 0 | Klassiek |
-| [ ] opnieuw bekijken | S6 | Doelpuntenestafette | Twee rijen: dribbel naar de schietlijn, scoor in het mini-goaltje en ren terug om de volgende aan te tikken. | O7, JO8–11 | 4 / 0 | CLUB |
+| [ ] 0.37.2 | S6 | Doelpuntenestafette | Twee rijen: dribbel naar de schietlijn, scoor in het mini-goaltje en ren terug om de volgende aan te tikken. | O7, JO8–11 | 4 / 0 | CLUB |
 | [x] 0.37.0 | S7 | Chaosvoetbal met vier doeltjes en drie ballen | Twee teams, vier doeltjes en drie ballen tegelijk: overal gebeurt iets en iedereen heeft een bal. | O7, JO8–11 | 8 / 0 | Eigen |
-| [ ] opnieuw bekijken | S8 | Ballen in de mand | Wie dribbelt de meeste ballen uit het middenvak naar de hoepel van zijn eigen team, zonder handen? | O6 | 4 / 0 | SSP |
+| [ ] 0.37.2 | S8 | Ballen in de mand | Wie dribbelt de meeste ballen uit het middenvak naar de hoepel van zijn eigen team, zonder handen? | O6 | 4 / 0 | SSP |
 
 ---
 
