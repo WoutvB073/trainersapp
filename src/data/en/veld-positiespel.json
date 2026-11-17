@@ -631,5 +631,108 @@
         "Three touches maximum"
       ]
     }
+  },
+  "veld-ps-rondo-3-1-twee-vakken": {
+    "naam": "3v1 rondo in two boxes",
+    "uitleg": "Three players keep the ball against one defender in the first box. After four passes, play the ball over to the empty box next to it; one player sprints there early to receive it and the other two follow. The defender must follow and starts hunting again in the new box. If the defender wins the ball, they swap with the player who lost it.",
+    "organisatie": "Two 8 × 8 m boxes side by side, 2 m apart. Three attackers and one defender in a bib. After 2 minutes the defender changes.",
+    "benodigdheden": [
+      "8 disc cones",
+      "1 ball",
+      "1 bib"
+    ],
+    "coachpunten": [
+      "Stay available: stand beside the defender, not behind",
+      "The switch: one player is already on the way before the ball is played",
+      "Defender: switch quickly, straight into the new box"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger boxes",
+        "Switch after three passes"
+      ],
+      "moeilijker": [
+        "Two touches",
+        "Two defenders (3v2)"
+      ]
+    }
+  },
+  "veld-ps-3-3-vier-kaatsers": {
+    "naam": "3v3 with four wall players",
+    "uitleg": "Three against three in the box, with a wall player on each side. The wall players play for the team in possession but stay on their line. Ten passes in a row (the wall players count too) is a point. If the other team wins the ball, the count starts again, for them.",
+    "organisatie": "16 × 16 m box. Two teams of three in the box, four wall players in another colour, one on each side. Rounds of 3 minutes; then two wall players swap with a team.",
+    "benodigdheden": [
+      "4 cones",
+      "Balls",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: 4v4 with four wall players, or a second box next to it.",
+    "coachpunten": [
+      "Use the wall players to move the ball to the free side",
+      "Become available again straight after your pass",
+      "Wall player: one or two touches, to the player who is free"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Six passes is a point",
+        "Bigger box"
+      ],
+      "moeilijker": [
+        "Wall players play one touch",
+        "No passing back to the player who passed to you"
+      ]
+    }
+  },
+  "veld-ps-opbouw-via-middenvak": {
+    "naam": "Building up through the middle zone",
+    "uitleg": "Three zones. Red has three defenders in the first zone, one midfielder in the middle zone and two attackers in the last zone. Blue defends with two players in the middle zone and one in the last zone. The ball must go to the attackers via the midfielder: if it does, that is a point. A long ball over the middle zone does not count. Everyone stays in their own zone.",
+    "organisatie": "28 × 36 m area in three zones of 12 m. Red 6, blue 3. After a point or losing the ball, red starts again at the back. After 4 minutes the roles change.",
+    "benodigdheden": [
+      "12 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "meerSpelers": "With more players: two midfielders against three in the middle zone, or an extra attacker.",
+    "coachpunten": [
+      "Midfielder: keep moving until you are free, and check before the ball arrives",
+      "Defenders: move the ball quickly until the midfielder is free",
+      "Pass to the foot away from the defender"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Two midfielders",
+        "One blue player in the middle zone"
+      ],
+      "moeilijker": [
+        "The midfielder may only touch it twice",
+        "One blue player may press in the first zone"
+      ]
+    }
+  },
+  "veld-ps-keeper-extra-man": {
+    "naam": "Positional play with the keeper as an extra player",
+    "uitleg": "Five against three on half a pitch, with the keeper as the free player at the back. Red starts with the keeper and tries to play out over the halfway line: dribble over it with the ball. You may always pass back to the keeper, so it is always six against three. If blue wins the ball, they may shoot at goal straight away.",
+    "organisatie": "On a 40 × 35 m half with a goal and keeper. Red 5 + keeper, blue 3. After a point or a goal, red starts again with the keeper. After 5 minutes three players change roles.",
+    "benodigdheden": [
+      "Goal",
+      "6 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "Keeper: offer yourself, and play quickly to the side with space",
+      "Make the pitch big: wide and deep",
+      "After a back pass: move the ball quickly to the other side"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Blue with two",
+        "Bigger pitch"
+      ],
+      "moeilijker": [
+        "Blue with four",
+        "Two touches maximum"
+      ]
+    }
   }
 }

@@ -350,5 +350,135 @@
         "A goal within 6 seconds of the whistle counts double"
       ]
     }
+  },
+  "veld-vo-rugdekking": {
+    "naam": "Covering your teammate",
+    "uitleg": "Two against two. The first defender presses the ball. The second stands at an angle behind them, on the goal side, and gives cover: if the attacker gets past the first defender, the second steps in straight away. Then the roles change: whoever is closest to the ball becomes the first defender. After winning the ball, the defenders may score through the cone gate on the other side.",
+    "organisatie": "16 × 20 m area. Two mini goals behind the defenders, a cone gate on the other side. Attackers start with the ball; duels of 30 seconds. Swap after 4 attacks.",
+    "benodigdheden": [
+      "2 mini goals",
+      "6 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "First defender: press, but do not dive in",
+      "Second defender: at an angle behind the first, 2–3 m away",
+      "Talk: \"I’ve got you covered\" and \"go\""
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Narrower area",
+        "Attackers may only go one way"
+      ],
+      "moeilijker": [
+        "Bigger area",
+        "A third attacker who may join in"
+      ]
+    }
+  },
+  "veld-vo-terugverdedigen": {
+    "naam": "Recovering after losing the ball",
+    "uitleg": "The coach plays the ball long. The attacker starts a few metres ahead; the defender sprints back from behind. The aim: get between the ball and the goal as quickly as possible, and only then slow down and defend. If that works, the defender forces the attacker wide and blocks the shot. Then the roles change.",
+    "organisatie": "On half a pitch with a keeper. The coach at the halfway line with balls, the attacker at 32 m, the defender 4 m behind. Swap after every attack.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Do not sprint to the ball, but to the space between ball and goal",
+      "Once goal-side: slow down, get low and force the attacker wide",
+      "Block with your body behind the ball, not with a loose foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Defender starts closer to the attacker",
+        "No keeper, on a big goal"
+      ],
+      "moeilijker": [
+        "Defender starts further away",
+        "Attacker may also pass to a teammate"
+      ]
+    }
+  },
+  "veld-vo-3-2-en-2-3-terug": {
+    "naam": "3v2 and straight back 2v3",
+    "uitleg": "Three attackers play against two defenders on a goal with a keeper. After the shot (or if the defenders win the ball) play goes straight the other way: the two defenders attack the other goal, and the three attackers must get back as quickly as possible to defend. You practise using an overload and switching straight away.",
+    "organisatie": "36 × 40 m area with two youth goals and keepers. Three red, two blue. After the second attack the next five start. After a save the keeper plays the ball straight out to a blue player.",
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "Attackers: finish quickly, the overload does not last",
+      "Defenders after the switch: go forward straight away, do not wait",
+      "The keeper distributes quickly: the tempo is in the first pass"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "After a save red may first get back calmly",
+        "Smaller area"
+      ],
+      "moeilijker": [
+        "Finish within 8 seconds",
+        "A third blue player may join after the switch"
+      ]
+    }
+  },
+  "veld-vo-vier-seconden": {
+    "naam": "Win it back in four seconds",
+    "uitleg": "Four against four on two mini goals. If you lose the ball, your team has four seconds to win it back. The coach counts down out loud. If you succeed and then score, your goal counts double. The players nearest the ball press together straight away; the rest close the passing lanes.",
+    "organisatie": "28 × 22 m area with a mini goal at each short end. Two teams of four, the coach along the touchline. Rounds of 4 minutes.",
+    "benodigdheden": [
+      "2 mini goals",
+      "8 disc cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "meerSpelers": "With more players: 5v5 in a bigger area, or swap a team every round.",
+    "coachpunten": [
+      "After losing the ball, switch straight away: do not sulk, hunt",
+      "Press in twos, from two sides",
+      "Not within four seconds? Get back behind the ball quickly"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Six seconds",
+        "A joker who always helps defend"
+      ],
+      "moeilijker": [
+        "Three seconds",
+        "After winning it back, score within five seconds"
+      ]
+    }
+  },
+  "veld-vo-ondertal-2-3": {
+    "naam": "Defending outnumbered 2v3",
+    "uitleg": "Three attackers against two defenders. The defenders do not dive in, but drop back and hold the attackers up until the third defender has sprinted back: they start behind the attackers. Then it becomes three against three. The attackers try to score before that happens.",
+    "organisatie": "On half a pitch with a keeper. Attackers start at 32 m, the two defenders at 20 m, the third defender 6 m behind the attackers. After each attack everyone moves on one role.",
+    "benodigdheden": [
+      "Goal",
+      "6 cones",
+      "Balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Do not dive in: drop back and buy time",
+      "Close the middle together and force the attackers wide",
+      "Talk: say when the third defender is back"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Third defender starts closer",
+        "Attackers three touches maximum"
+      ],
+      "moeilijker": [
+        "Third defender starts further away",
+        "Attackers must score within 8 seconds"
+      ]
+    }
   }
 }
