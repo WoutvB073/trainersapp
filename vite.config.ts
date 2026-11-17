@@ -18,8 +18,22 @@ const voorbeeldHtml = () => ({
 export default defineConfig({
   base: BASE,
   // Three.js (3D) staat in een eigen bestand dat pas op de detailpagina laadt; ± 560 kB is daar prima.
-  // De hoofdbundel bevat alle oefeningen (JSON) en is daardoor groot (± 185 kB gzip); alles staat in de offline-cache.
-  build: { chunkSizeWarningLimit: 900, ...(VOORBEELD ? { outDir: 'voorbeeld/trainersapp', emptyOutDir: true } : {}) },
+  // De oefeningen (JSON) staan in twee eigen bestanden (veld en keepers, 0.37.1): samen met de code werd de hoofdbundel groter dan 2 MB,
+  // en dan neemt de service worker hem niet meer op in de offline-cache (de build stopt dan met een fout, zodat je het merkt).
+  build: {
+    chunkSizeWarningLimit: 1600,
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            { name: 'oefeningen-veld', test: /src[\\/]data[\\/]oefeningen[\\/](veld[\\/]|archief)/ },
+            { name: 'oefeningen-keepers', test: /src[\\/]data[\\/]oefeningen[\\/]keepers[\\/]/ },
+          ],
+        },
+      },
+    },
+    ...(VOORBEELD ? { outDir: 'voorbeeld/trainersapp', emptyOutDir: true } : {}),
+  },
   plugins: [
     react(),
     ...(VOORBEELD ? [voorbeeldHtml()] : []),

@@ -94,7 +94,8 @@ const oefeningen = [
         moeilijker: ['Two gates', 'The gate walks faster', 'One-touch passes only'],
       },
     },
-    tekening: {
+    // Een kwartslag gedraaid: zo staan de twee spelers van het poortje in 3D naast elkaar (niet achter elkaar).
+    tekening: draai({
       ...leeg(22, 22),
       objecten: [
         zone('z', 11, 11, 20, 20),
@@ -126,7 +127,7 @@ const oefeningen = [
         stap({ type: 'loop', wie: 'g1', naar: [11, 14.5], manier: 'wandel', duur: 4.4 }, { type: 'loop', wie: 'g2', naar: [11, 16.5], manier: 'wandel', duur: 4.4 }, { type: 'pass', van: 'a2', naar: 'a1', start: 3.6 }),
         pauze(0.8),
       ],
-    },
+    }, [11, 11], 90),
   },
 
   // P6. Kaats en wissel van kant

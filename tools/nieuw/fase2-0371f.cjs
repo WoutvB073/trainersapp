@@ -12,7 +12,7 @@ const oefeningen = [
     naam: 'Duel uit de draai',
     categorieen: ['een-tegen-een'],
     uitleg:
-      'Twee spelers staan met hun rug naar elkaar, de bal ligt opzij tussen hen in. Op het teken draaien ze om: wie het eerst bij de bal is, valt aan op het doeltje van de ander; de ander verdedigt. Scoor of verover de bal en scoor zelf. Daarna nieuwe startposities.',
+      'Twee spelers staan met hun rug naar elkaar, een paar meter uit elkaar, en kijken elk naar hun eigen doeltje. De bal ligt tussen hen in, achter hun rug. Op het teken draaien ze om: wie het eerst bij de bal is, valt aan op het doeltje van de ander; de ander verdedigt. Scoor of verover de bal en scoor zelf. Daarna nieuwe startposities.',
     organisatie: 'Vak van 16 × 12 m met op elke korte kant een klein doeltje. Tweetallen; de trainer legt de bal neer en geeft het teken. Duels van maximaal 15 seconden.',
     benodigdheden: ['2 kleine doeltjes', '4 hoedjes', 'Ballen'],
     spelersNodig: 2,
@@ -27,7 +27,7 @@ const oefeningen = [
     en: {
       naam: 'Duel from a turn',
       uitleg:
-        'Two players stand back to back, with the ball to the side between them. On the signal they turn: whoever gets to the ball first attacks the other player’s mini goal; the other defends. Score, or win the ball and score yourself. Then new starting positions.',
+        'Two players stand back to back, a few metres apart, each facing their own mini goal. The ball lies between them, behind their backs. On the signal they turn: whoever gets to the ball first attacks the other player’s mini goal; the other defends. Score, or win the ball and score yourself. Then new starting positions.',
       organisatie: '16 × 12 m area with a mini goal at each short end. Pairs; the coach places the ball and gives the signal. Duels of up to 15 seconds.',
       benodigdheden: ['2 mini goals', '4 disc cones', 'Balls'],
       coachpunten: ['Turn towards the side of the ball: that is the quickest', 'Whoever has the ball: go forward straight away, do not wait', 'Whoever misses the ball: switch straight away and get between the ball and your goal'],
@@ -38,14 +38,14 @@ const oefeningen = [
     },
     tekening: {
       ...leeg(18, 14),
-      objecten: [zone('z', 9, 7, 16, 12), doeltje('g1', 1, 7, -90), doeltje('g2', 17, 7, 90), speler('a1', 1, 8, 6, { kijkrichting: -90 }), B('b1', 2, 10, 6, { kijkrichting: 90 }), trainer(9, 12.4, -90), bal('bal', 9, 9)],
+      objecten: [zone('z', 9, 7, 16, 12), doeltje('g1', 1, 7, -90), doeltje('g2', 17, 7, 90), speler('a1', 1, 6.6, 7, { kijkrichting: 180 }), B('b1', 2, 11.4, 7, { kijkrichting: 0 }), trainer(9, 12.4, -90), bal('bal', 9, 7)],
       animatie: [
         pauze(0.8),
-        stap({ type: 'draai', wie: 'a1', kijk: 60 }, { type: 'draai', wie: 'b1', kijk: 120, start: 0.12 }),
-        stap({ type: 'loop', wie: 'a1', naar: [8.6, 8.6], manier: 'sprint', duur: 0.6 }, { type: 'loop', wie: 'b1', naar: [10.8, 7.6], manier: 'sprint', duur: 0.6 }),
-        stap({ type: 'dribbel', wie: 'a1', naar: [11.6, 9.6], manier: 'sprint' }, { type: 'loop', wie: 'b1', naar: [13.4, 8.2], manier: 'verdedigend' }),
+        stap({ type: 'draai', wie: 'a1', kijk: 0 }, { type: 'draai', wie: 'b1', kijk: 180, start: 0.15 }),
+        stap({ type: 'loop', wie: 'a1', naar: [8.4, 7.1], manier: 'sprint', duur: 0.55 }, { type: 'loop', wie: 'b1', naar: [10.7, 7.2], manier: 'sprint', duur: 0.55 }),
+        stap({ type: 'dribbel', wie: 'a1', naar: [10.4, 9.4] }, { type: 'loop', wie: 'b1', naar: [12.4, 8.4], manier: 'verdedigend' }),
         stap({ type: 'schijn', wie: 'a1', kant: 'links' }),
-        stap({ type: 'dribbel', wie: 'a1', naar: [14.6, 10.4], manier: 'sprint' }, { type: 'loop', wie: 'b1', naar: [14.4, 8], manier: 'verdedigend' }),
+        stap({ type: 'dribbel', wie: 'a1', naar: [13.8, 10.4], manier: 'sprint' }, { type: 'loop', wie: 'b1', naar: [13.8, 8.4], manier: 'verdedigend', start: 0.15 }),
         stap({ type: 'schot', van: 'a1', naar: [17.2, 7.4], hoogte: 'grond' }),
         pauze(0.8),
       ],

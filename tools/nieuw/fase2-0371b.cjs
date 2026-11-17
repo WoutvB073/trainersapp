@@ -1,7 +1,7 @@
 // Fase 2, deel 3, batch 2 (0.37.1), deel b: Pass en trap P8, P9, P10, P12, P14 uit VOORSTEL-OEFENINGEN.md.
 // Draaien: node tools/nieuw/fase2-0371b.cjs
 const { zet } = require('./hulp.cjs');
-const { speler, bal, pion, hoedje, horde, pauze, stap, B, zone, leeg, kaatsbord, JO, OUD, MIDDEN, KLEUR } = require('./fase2-hulp.cjs');
+const { speler, bal, pion, hoedje, horde, pauze, stap, B, zone, leeg, kaatsbord, JO, OUD, MIDDEN, KLEUR, omrekenen } = require('./fase2-hulp.cjs');
 
 const oefeningen = [
   // P8. Passen met de wreef over 20 meter
@@ -244,8 +244,9 @@ const oefeningen = [
         moeilijker: ['Everything one touch', 'Two balls at once, from both sides', 'Finish with a shot on goal'],
       },
     },
-    tekening: {
-      ...leeg(24, 16),
+    // 2 m omlaag op een veld van 24 × 18: de terugdribbel buitenom blijft in 2D in beeld (niet onder de knoppen).
+    tekening: omrekenen({
+      ...leeg(24, 18),
       rijen: [{ id: 'rL', x: 3, y: 3.4, richting: 150, spelers: ['a1', 'a5'] }],
       objecten: [
         pion('pa', 3, 2.2),
@@ -271,7 +272,7 @@ const oefeningen = [
         stap({ type: 'aansluiten', wie: 'a4', rij: 'rL' }),
         pauze(0.8),
       ],
-    },
+    }, ([x, y]) => [x, y + 2]),
   },
 ];
 

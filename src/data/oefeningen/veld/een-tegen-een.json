@@ -4686,7 +4686,7 @@
     "categorieen": [
       "een-tegen-een"
     ],
-    "uitleg": "Twee spelers staan met hun rug naar elkaar, de bal ligt opzij tussen hen in. Op het teken draaien ze om: wie het eerst bij de bal is, valt aan op het doeltje van de ander; de ander verdedigt. Scoor of verover de bal en scoor zelf. Daarna nieuwe startposities.",
+    "uitleg": "Twee spelers staan met hun rug naar elkaar, een paar meter uit elkaar, en kijken elk naar hun eigen doeltje. De bal ligt tussen hen in, achter hun rug. Op het teken draaien ze om: wie het eerst bij de bal is, valt aan op het doeltje van de ander; de ander verdedigt. Scoor of verover de bal en scoor zelf. Daarna nieuwe startposities.",
     "organisatie": "Vak van 16 × 12 m met op elke korte kant een klein doeltje. Tweetallen; de trainer legt de bal neer en geeft het teken. Duels van maximaal 15 seconden.",
     "benodigdheden": [
       "2 kleine doeltjes",
@@ -4753,18 +4753,18 @@
           "soort": "speler",
           "team": "A",
           "nummer": 1,
-          "x": 8,
-          "y": 6,
-          "kijkrichting": -90
+          "x": 6.6,
+          "y": 7,
+          "kijkrichting": 180
         },
         {
           "id": "b1",
           "soort": "speler",
           "team": "B",
           "nummer": 2,
-          "x": 10,
-          "y": 6,
-          "kijkrichting": 90
+          "x": 11.4,
+          "y": 7,
+          "kijkrichting": 0
         },
         {
           "id": "t1",
@@ -4777,7 +4777,7 @@
           "id": "bal",
           "soort": "bal",
           "x": 9,
-          "y": 9
+          "y": 7
         }
       ],
       "animatie": [
@@ -4790,13 +4790,13 @@
             {
               "type": "draai",
               "wie": "a1",
-              "kijk": 60
+              "kijk": 0
             },
             {
               "type": "draai",
               "wie": "b1",
-              "kijk": 120,
-              "start": 0.12
+              "kijk": 180,
+              "start": 0.15
             }
           ]
         },
@@ -4806,21 +4806,21 @@
               "type": "loop",
               "wie": "a1",
               "naar": [
-                8.6,
-                8.6
+                8.4,
+                7.1
               ],
               "manier": "sprint",
-              "duur": 0.6
+              "duur": 0.55
             },
             {
               "type": "loop",
               "wie": "b1",
               "naar": [
-                10.8,
-                7.6
+                10.7,
+                7.2
               ],
               "manier": "sprint",
-              "duur": 0.6
+              "duur": 0.55
             }
           ]
         },
@@ -4830,17 +4830,16 @@
               "type": "dribbel",
               "wie": "a1",
               "naar": [
-                11.6,
-                9.6
-              ],
-              "manier": "sprint"
+                10.4,
+                9.4
+              ]
             },
             {
               "type": "loop",
               "wie": "b1",
               "naar": [
-                13.4,
-                8.2
+                12.4,
+                8.4
               ],
               "manier": "verdedigend"
             }
@@ -4861,7 +4860,7 @@
               "type": "dribbel",
               "wie": "a1",
               "naar": [
-                14.6,
+                13.8,
                 10.4
               ],
               "manier": "sprint"
@@ -4870,10 +4869,11 @@
               "type": "loop",
               "wie": "b1",
               "naar": [
-                14.4,
-                8
+                13.8,
+                8.4
               ],
-              "manier": "verdedigend"
+              "manier": "verdedigend",
+              "start": 0.15
             }
           ]
         },
