@@ -523,5 +523,103 @@
         "Finish with a shot on goal"
       ]
     }
+  },
+  "veld-pt-driehoek-in-uitdraaien": {
+    "naam": "Triangle with checking away and in",
+    "uitleg": "Three players in a triangle. Before you receive the ball, first move a few steps away from it and then come short towards it: that creates space. Receive the ball on the half turn, with your first touch already towards the next player, and play on. As soon as you have played, move away again to come in once more.",
+    "organisatie": "Triangle of three cones, 12 m sides. One player at each cone, one ball. After 2 minutes go the other way (then you open up with your other foot).",
+    "benodigdheden": [
+      "3 cones",
+      "1 ball"
+    ],
+    "coachpunten": [
+      "Away first, then towards the ball: that is how you get free",
+      "Open up: your body already faces the next player",
+      "Pass to the foot your partner will receive with"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Bigger triangle",
+        "Two touches always allowed"
+      ],
+      "moeilijker": [
+        "A defender in the middle",
+        "Play on first time after checking in"
+      ]
+    }
+  },
+  "veld-pt-vierkant-twee-ballen-klok": {
+    "naam": "Square with two balls against the clock",
+    "uitleg": "Six players spread over the four corners of a square: two at each of two diagonally opposite corners. Two balls go round at the same time: pass to the next corner and follow your ball. The balls must not catch each other up. How many passes can you make together in one minute? Then try to beat it.",
+    "organisatie": "12 × 12 m square with a cone on each corner. Six players: two at corners A and C, one at B and D. Two balls at A and C. Whoever follows waits behind the cone until it is their turn. The coach times and counts out loud.",
+    "benodigdheden": [
+      "4 cones",
+      "2 balls"
+    ],
+    "coachpunten": [
+      "Receive towards the next corner, so you can play straight away",
+      "Firm along the ground, to the right foot",
+      "Sprint straight after your pass, but wait behind the cone"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "One ball",
+        "Bigger square"
+      ],
+      "moeilijker": [
+        "One touch only",
+        "On the whistle, change direction"
+      ]
+    }
+  },
+  "veld-pt-tikkie-takkie-estafette": {
+    "naam": "Tiki-taka relay",
+    "uitleg": "Two teams, each in two lines facing each other. Pass the ball to the front player of the line opposite and join the back of that line, round the outside. The ball goes back and forth. Each team counts out loud: which team is first to 20 good passes? A pass that goes wide does not count.",
+    "organisatie": "For each team two lines 10 m apart (cones), the two teams 8 m side by side. Three or more players per team, one ball per team. The coach gives the start signal.",
+    "benodigdheden": [
+      "4 cones",
+      "2 balls",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Receive the ball towards the other side",
+      "Quick but accurate: a bad pass costs more time",
+      "Join round the outside, not through the line"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Lines closer together",
+        "Up to 10 passes"
+      ],
+      "moeilijker": [
+        "One touch only",
+        "With your other foot"
+      ]
+    }
+  },
+  "veld-pt-rollen-naar-de-hoepel": {
+    "naam": "Roll it into the hoop",
+    "uitleg": "In front of you there are three hoops, each a bit further away. Pass your ball so gently that it stays in a hoop. The yellow hoop is 1 point, the blue one 2 points and the red one, furthest away, 3 points. Does it roll right through? Then you get no point. Fetch your ball and try again!",
+    "organisatie": "Three hoops 3, 5 and 7 m from the start line (disc cones), a little apart, so a ball does not roll through another hoop. Two children side by side, each with a ball. They take turns and fetch their own ball.",
+    "benodigdheden": [
+      "3 hoops",
+      "2 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Gently, with the inside of your foot",
+      "First look at the hoop you choose",
+      "Your standing foot next to the ball"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Hoops closer",
+        "The ball may also stop in the hoop with a second little touch"
+      ],
+      "moeilijker": [
+        "With your other foot",
+        "Take turns choosing a hoop for each other"
+      ]
+    }
   }
 }

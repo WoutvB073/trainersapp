@@ -1189,5 +1189,131 @@
         "Point to your corner beforehand"
       ]
     }
+  },
+  "veld-af-tweede-paal": {
+    "naam": "Finishing at the far post",
+    "uitleg": "The winger dribbles to the byline and plays a low, hard cross behind the defence, between the keeper and the defenders. The striker runs to the near post to draw attention, and lets the ball run. The winger from the other side comes in behind the defence to the far post and taps it in. Then from the other side.",
+    "organisatie": "On half a pitch with a keeper. Right winger with balls at 25 m, striker in the middle at 18 m, left winger at 20 m. After three crosses the roles change and the cross comes from the left.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Cross low and hard, between keeper and defence",
+      "The striker goes to the near post and lets it run",
+      "Far post: arrive late, at full speed, and tap it into the near corner"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Cross along the ground from the edge of the box",
+        "No keeper"
+      ],
+      "moeilijker": [
+        "A defender tracking back",
+        "The striker may also finish: decide in time"
+      ]
+    }
+  },
+  "veld-af-rug-naar-doel-draaien": {
+    "naam": "Receiving with your back to goal and shooting",
+    "uitleg": "The server plays the ball into the feet of the striker, who has their back to goal. A defender comes in behind them. The striker decides: if the defender is tight, they lay it back to the server and spin away for the return pass; if the defender gives space, they turn on their own. They must finish within three seconds of receiving. In the example the striker turns.",
+    "organisatie": "On half a pitch with a keeper. Server at 30 m, striker at 19 m with their back to goal, defender 2–3 m behind. The coach counts out loud to three. After four turns, striker and defender swap.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Check over your shoulder before the ball arrives: where is the defender?",
+      "Space? Turn away from the defender as you receive",
+      "Tight on you? Lay it off and spin away for the return"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "At first the defender may only follow",
+        "Five seconds"
+      ],
+      "moeilijker": [
+        "The defender may do everything straight away",
+        "Two seconds"
+      ]
+    }
+  },
+  "veld-af-voorzet-kruislings-koppen": {
+    "naam": "Cross from the byline and headers",
+    "uitleg": "The winger dribbles to the byline and plays a high cross. Two players make crossing runs: the one starting on the left runs to the near post, the one starting on the right to the far post. Crossing makes them hard to follow for a defender. The player the ball reaches heads it down into the corner.",
+    "organisatie": "On half a pitch with a keeper. Winger with balls at 25 m along the touchline, two strikers side by side at 18 m. After three crosses the roles change; then from the other side.",
+    "benodigdheden": [
+      "Goal",
+      "4 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Cross over in time, but not too early: arrive as the ball arrives",
+      "Take off from one leg and head down with your forehead",
+      "Winger: look up before you cross to see where the strikers are"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Throw the cross from your hands",
+        "No keeper"
+      ],
+      "moeilijker": [
+        "A defender following the strikers",
+        "Cross first time after a pass"
+      ]
+    }
+  },
+  "veld-af-een-tweetje-schot": {
+    "naam": "One-two and shot",
+    "uitleg": "Dribble towards the mannequin. Next to it stands a wall player. Pass to them when you get close, run past the mannequin and get the ball back in your stride. Shoot first time from the edge of the box, low into the corner. The wall player then fetches the ball and becomes the next shooter.",
+    "organisatie": "On half a pitch with a keeper. Mannequin at 21 m, wall player 3 m beside it. Line of shooters with balls at 30 m. After each shot everyone moves on one place: the shooter becomes the wall player, the wall player joins the line.",
+    "benodigdheden": [
+      "Goal",
+      "1 mannequin",
+      "2 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Only pass to the wall player when the mannequin is close",
+      "After your pass, accelerate past the mannequin",
+      "Shooting first time: watch the ball, standing foot beside it"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Control first, then shoot",
+        "No keeper, on a big goal"
+      ],
+      "moeilijker": [
+        "A defender instead of the mannequin",
+        "Shoot with your other foot"
+      ]
+    }
+  },
+  "veld-af-kanonnen": {
+    "naam": "Cannons",
+    "uitleg": "You are cannons! Shoot your ball into the big goal as hard as you can. The coach stands in the goal and pretends to fall over from the power of every goal. Fetch your ball and shoot again. Who can make the coach fall over the most?",
+    "organisatie": "Big goal with the coach in it. Shooting line of disc cones at 7 m. Three children side by side, each with a ball; they shoot in turn. The coach does not stop the ball, but drops to the ground after every goal.",
+    "benodigdheden": [
+      "1 big goal",
+      "4 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Take a few steps run-up",
+      "Shoot with your laces, toes pointing down",
+      "Watch the ball as you shoot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Closer",
+        "Stop the ball before you shoot"
+      ],
+      "moeilijker": [
+        "Further away",
+        "Shoot with your other foot"
+      ]
+    }
   }
 }
