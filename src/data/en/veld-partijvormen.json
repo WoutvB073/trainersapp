@@ -1229,5 +1229,84 @@
         "Score within 5 seconds of stepping up"
       ]
     }
+  },
+  "veld-pv-4-4-drie-teams": {
+    "naam": "4v4 with three teams",
+    "uitleg": "Three teams of four. Two teams play 4v4 with keepers; the third team waits beside the pitch. Whoever concedes a goal comes off at once and the waiting team comes straight on: the keeper plays a new ball in straight away. There is always pressure and hardly any break.",
+    "organisatie": "30 × 36 m area with two youth goals and keepers. Three teams of four in bibs; the waiting team stands beside the pitch at the halfway line. Play for 15 minutes; each team counts its goals.",
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones",
+      "Balls",
+      "Bibs in 3 colours"
+    ],
+    "meerSpelers": "With more players: three teams of five on a bigger pitch, or four teams and two pitches.",
+    "coachpunten": [
+      "After a goal: change quickly, the new team starts straight away",
+      "The waiting team watches: how does the team that stays on play?",
+      "Dare to finish: a goal keeps your team on"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The new team gets the ball",
+        "Bigger pitch"
+      ],
+      "moeilijker": [
+        "After 2 minutes without a goal, the team with fewer chances also comes off",
+        "Three touches maximum"
+      ]
+    }
+  },
+  "veld-pv-toernooi-2-2-vier-veldjes": {
+    "naam": "2v2 tournament on four pitches",
+    "uitleg": "Four little pitches side by side, with a two-minute 2v2 game on each. Then the winners move one pitch to the left and the losers one pitch to the right. Whoever wins on the pitch furthest left stays there: that is the champions’ pitch. If it is a draw, a penalty decides.",
+    "organisatie": "Four 8 × 12 m pitches side by side, 2 m apart, each with two mini goals. Pairs in bibs; with 8 children you play on two pitches, with 16 on all four. The coach blows the whistle to start and stop.",
+    "benodigdheden": [
+      "8 mini goals",
+      "16 disc cones",
+      "Footballs",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Play together: pass when your partner is free",
+      "After the whistle, move on quickly, the next game starts straight away",
+      "Win well and lose well: shake hands"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Three-minute games",
+        "Bigger goals"
+      ],
+      "moeilijker": [
+        "One-minute games",
+        "A goal only counts after a pass"
+      ]
+    }
+  },
+  "veld-pv-schietlijn": {
+    "naam": "Game with a shooting line",
+    "uitleg": "A 4v4 game with keepers. In front of each goal there is a shooting line at 12 metres: you may only score from behind that line. A goal from closer in does not count. You learn to shoot from distance, and as a defender you learn that you have to press even far from your goal.",
+    "organisatie": "32 × 44 m area with two youth goals and keepers. Shooting line of cones 12 m from each goal. Two teams of four. Rounds of 6 minutes.",
+    "benodigdheden": [
+      "2 youth goals",
+      "8 cones",
+      "Balls",
+      "Bibs in 2 colours"
+    ],
+    "coachpunten": [
+      "Look up before you shoot: if there is space, shoot straight away",
+      "Low and hard, into the corner",
+      "Defenders: press the ball already at the shooting line"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shooting line at 9 m",
+        "A goal from close in counts too, one from distance counts double"
+      ],
+      "moeilijker": [
+        "Shooting line at 15 m",
+        "Only first-time shots count"
+      ]
+    }
   }
 }
