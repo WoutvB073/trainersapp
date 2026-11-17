@@ -1260,5 +1260,79 @@
         "Stop halfway: foot on the ball"
       ]
     }
+  },
+  "veld-tq-kapwedstrijd-lijn": {
+    "naam": "Cut-back race on the line",
+    "uitleg": "Two players dribble side by side back and forth between two lines 5 metres apart. On each line you make a cut: the ball must change direction exactly on the line. Who makes the most cuts in 30 seconds? Vary your cut: inside, outside, sole.",
+    "organisatie": "Two lines of disc cones 5 m apart, with a lane for each player (3–4 m wide). Pairs side by side; the coach counts down 30 seconds and each player counts their own cuts out loud. Then 30 seconds of rest.",
+    "benodigdheden": [
+      "6 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Small touches just before the line, so you can stop it exactly",
+      "Speed up straight after the cut",
+      "Use both feet and different cuts"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Lines 7 m apart",
+        "Every cut counts, even just off the line"
+      ],
+      "moeilijker": [
+        "Weaker foot only",
+        "A different cut every time"
+      ]
+    }
+  },
+  "veld-tq-kiezen-bij-de-pop": {
+    "naam": "Choose at the mannequin",
+    "uitleg": "Dribble at speed towards the mannequin. The coach stands a few metres behind it and, at the last moment, raises their left or right arm. Go past the mannequin on that side with a move, such as a step-over or a body feint, and then accelerate. So look up at the coach while you dribble.",
+    "organisatie": "Mannequin in the middle, the coach 4–5 m behind it. Line of players with a ball 7 m from the mannequin. The coach only raises an arm when the player is 2–3 m from the mannequin. After the move, dribble back round the outside.",
+    "benodigdheden": [
+      "1 mannequin",
+      "2 cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Look up at the coach while you dribble",
+      "Make your move just before the mannequin",
+      "Accelerate straight after the move"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "The coach raises an arm earlier",
+        "No move: just choose the right side"
+      ],
+      "moeilijker": [
+        "The coach waits until the very last moment",
+        "A different move every time"
+      ]
+    }
+  },
+  "veld-tq-buitenkant-slalom-tijd": {
+    "naam": "Outside-foot slalom against the clock",
+    "uitleg": "Dribble a slalom between the cones and touch the ball only with the outside of your foot. After the last cone, dribble through the finish. The coach times you: can you be quicker next time, without touching a cone?",
+    "organisatie": "Six cones in a row, 2 m apart, with a finish of two disc cones 3 m after the last cone. The coach stands at the finish with a stopwatch. Go back round the outside, and use the other foot next time.",
+    "benodigdheden": [
+      "6 cones",
+      "2 disc cones",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Small touches with the outside, keep the ball close to your foot",
+      "Look up now and then at the next cone",
+      "Right of the cone: right foot; left: left foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Cones further apart",
+        "Inside and outside allowed"
+      ],
+      "moeilijker": [
+        "Cones closer together",
+        "Weaker foot only"
+      ]
+    }
   }
 }

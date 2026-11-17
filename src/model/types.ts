@@ -379,6 +379,17 @@ export interface VoetOpBalActie extends ActieBasis {
   wie: string;
 }
 
+/**
+ * Een arm recht omhoog steken als teken (0.37.2), bv. de trainer die op het laatste moment aangeeft langs welke kant je gaat.
+ * Standaard 1,2 s (inclusief omhoog en weer omlaag).
+ */
+export interface TekenActie extends ActieBasis {
+  type: 'teken';
+  wie: string;
+  /** Welke arm, gezien vanuit de persoon zelf. */
+  kant: 'links' | 'rechts';
+}
+
 /** Bal heen en weer tikken tussen de binnenkanten van de voeten (0.30.0), standaard 2 s. Lopend: met een `dribbel` tegelijk. */
 export interface TikTakActie extends ActieBasis {
   type: 'tiktak';
@@ -479,7 +490,25 @@ export interface TeamActie extends ActieBasis {
 }
 
 export type Actie =
-  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | TrucActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie;
+  | BalActie
+  | BeweegActie
+  | PersoonActie
+  | AansluitActie
+  | TeamActie
+  | SchijnActie
+  | TrucActie
+  | DrukActie
+  | DekActie
+  | VeroverActie
+  | PannaActie
+  | ZitActie
+  | PlukActie
+  | DraaiActie
+  | AantikActie
+  | MateriaalActie
+  | VoetOpBalActie
+  | TikTakActie
+  | TekenActie;
 
 export interface AnimatieStap {
   acties: Actie[];

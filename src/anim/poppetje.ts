@@ -1854,6 +1854,14 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     (doelen[i] ??= new Vector3()).set(x.x, x.hoogte, x.y);
     gew[i] = 1;
   }
+  // Teken (0.37.2): de arm recht omhoog, iets naar buiten (net niet helemaal gestrekt).
+  if (s.teken && s.teken.u > 0) {
+    const i = s.teken.kant === 'links' ? 1 : 0;
+    if (gew[i]! < s.teken.u) {
+      doelen[i] = sk.romp.localToWorld(new Vector3(kant(i) * (MAAT.schouderX + 0.07), MAAT.schouderY + MAAT.bovenarm + MAAT.onderarm - 0.05, 0.04));
+      gew[i] = s.teken.u;
+    }
+  }
   if (inv.bal && inv.balInHanden && !werpHand && !(wp && (wp.soort === 'volley' || wp.soort === 'dropkick' || wp.soort === 'trap') && wp.u > 0.3)) {
     handen(inv.bal, 1);
   }

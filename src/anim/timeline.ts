@@ -1,5 +1,23 @@
 import type {
-  MateriaalActie, TrucActie, Actie, AnimatieStap, BalActie, BeweegActie, HerhaalStap, LijnSoort, Manier, Punt, Rij, Stap, TegelijkStap, Team, Tekening, Waarde, VeldObject, Zithouding } from '../model/types';
+  MateriaalActie,
+  TrucActie,
+  Actie,
+  AnimatieStap,
+  BalActie,
+  BeweegActie,
+  HerhaalStap,
+  LijnSoort,
+  Manier,
+  Punt,
+  Rij,
+  Stap,
+  TegelijkStap,
+  Team,
+  Tekening,
+  Waarde,
+  VeldObject,
+  Zithouding,
+} from '../model/types';
 import { PERSONEN } from '../model/types';
 
 /**
@@ -188,6 +206,8 @@ export interface Tijdlijn {
   voetOp: Map<string, { t0: number; t1: number }[]>;
   /** Bal tik-tak tussen de voeten. */
   tiktak: Map<string, { t0: number; t1: number }[]>;
+  /** Arm omhoog als teken (0.37.2). */
+  tekens: Map<string, { t0: number; t1: number; kant: 'links' | 'rechts' }[]>;
   trucs: Map<string, { t0: number; t1: number; soort: TrucActie['soort']; voet: 'links' | 'rechts' }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
@@ -270,11 +290,15 @@ export interface ObjectStand {
   tiktak?: number;
   /** Personen: balactie op de plek (0.33.0); `u` = voortgang 0–1. */
   truc?: { soort: TrucActie['soort']; voet: 'links' | 'rechts'; u: number };
+  /** Personen: arm omhoog als teken (0.37.2); `u` 0–1 (omhoog in 0,25 s, en weer omlaag). */
+  teken?: { kant: 'links' | 'rechts'; u: number };
   /** Personen: pionnen die ze vasthouden (de hand gaat naar die plek). */
   houdt?: { kant: 'links' | 'rechts'; x: number; y: number; hoogte: number }[];
 }
 
-type MateriaalEvent = { t: number } & ({ soort: 'los'; hoek: number } | { soort: 'pak'; wie: string } | { soort: 'leg'; naar: Punt } | { soort: 'keer' } | { soort: 'val'; hoek: number; naar?: Punt } | { soort: 'op' });
+type MateriaalEvent = { t: number } & (
+  { soort: 'los'; hoek: number } | { soort: 'pak'; wie: string } | { soort: 'leg'; naar: Punt } | { soort: 'keer' } | { soort: 'val'; hoek: number; naar?: Punt } | { soort: 'op' }
+);
 
 /** Stand van materiaal dat beweegt (alleen objecten met gebeurtenissen). */
 export interface MateriaalStand {
@@ -437,7 +461,8 @@ function draaiOm(c: Punt, vorige: Punt, naar: Punt, straal: number, kant: 'links
 }
 
 const isBalActie = (a: Actie): a is BalActie => a.type === 'pass' || a.type === 'schot';
-const isMateriaalActie = (a: Actie): a is MateriaalActie => a.type === 'pakObject' || a.type === 'legObject' || a.type === 'keerOm' || a.type === 'valOm' || a.type === 'zetOp' || a.type === 'losLaten';
+const isMateriaalActie = (a: Actie): a is MateriaalActie =>
+  a.type === 'pakObject' || a.type === 'legObject' || a.type === 'keerOm' || a.type === 'valOm' || a.type === 'zetOp' || a.type === 'losLaten';
 /** Hoogte van iets dat je in de hand draagt. */
 const DRAAG_HOOGTE = 0.8;
 const isPersoon = (o: VeldObject | undefined) => !!o && PERSONEN.includes(o.soort);
@@ -1151,6 +1176,7 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     materiaal: new Map(),
     voetOp: new Map(),
     tiktak: new Map(),
+    tekens: new Map(),
     trucs: new Map(),
     stompen: [],
     blokken: [],
@@ -1293,6 +1319,12 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
     if (a.type === 'voetOpBal') {
       const t1 = t0 + (a.duur ?? 1.2);
       voegToe(tl.voetOp, o.id, { t0, t1 }, (e) => e.t0);
+      eind = Math.max(eind, t1);
+      continue;
+    }
+    if (a.type === 'teken') {
+      const t1 = t0 + (a.duur ?? 1.2);
+      voegToe(tl.tekens, o.id, { t0, t1, kant: a.kant }, (e) => e.t0);
       eind = Math.max(eind, t1);
       continue;
     }
@@ -2116,6 +2148,12 @@ function sprongOp(tl: Tijdlijn, id: string, t: number): number {
 }
 
 /** Voet op de bal: 0–1, met 0,2 s om de voet erop te zetten en eraf te halen. */
+/** Arm omhoog (teken): omhoog in 0,25 s, vasthouden, en in 0,25 s weer omlaag. */
+function tekenOp(tl: Tijdlijn, id: string, t: number): Pick<ObjectStand, 'teken'> {
+  for (const e of tl.tekens.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return { teken: { kant: e.kant, u: Math.min(1, (t - e.t0) / 0.25, (e.t1 - t) / 0.25) } };
+  return {};
+}
+
 function voetOpOp(tl: Tijdlijn, id: string, t: number): number {
   for (const e of tl.voetOp.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return Math.min(1, (t - e.t0) / 0.2, (e.t1 - t) / 0.2);
   return 0;
@@ -2328,6 +2366,7 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         gezet: gezet(tl, o, t),
         ...(tl.materiaal.size ? { houdt: houdtOp(tl, o.id, t) } : {}),
         ...(tl.trucs.size ? { truc: trucOp(tl, o.id, t) } : {}),
+        ...(tl.tekens.size ? tekenOp(tl, o.id, t) : {}),
         sprong: sprongOp(tl, o.id, t),
         spreid: spreidOp(tl, o.id, t),
         zweef: zweefOp(tl, o.id, t),

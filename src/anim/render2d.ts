@@ -90,14 +90,7 @@ export interface TekenOpties {
   looplijnen?: boolean;
 }
 
-export function tekenScene(
-  ctx: CanvasRenderingContext2D,
-  breedtePx: number,
-  hoogtePx: number,
-  tekening: Tekening,
-  stand: Stand,
-  opties: TekenOpties,
-): void {
+export function tekenScene(ctx: CanvasRenderingContext2D, breedtePx: number, hoogtePx: number, tekening: Tekening, stand: Stand, opties: TekenOpties): void {
   const u = uitsnede(tekening);
   const schaal = Math.min(breedtePx / u.breedte, hoogtePx / u.lengte);
   const b: Beeld = {
@@ -113,13 +106,37 @@ export function tekenScene(
   tekenLijnen(b, tekening, k);
 
   const objecten = tekening.objecten;
-  const onder: VeldObject['soort'][] = ['zone', 'kooi', 'keepersmat', 'ladder', 'stok', 'horde', 'ring', 'hoedje', 'pion', 'paaltje', 'bank', 'muurtje', 'pop', 'rebounder', 'klein-goal', 'goal', 'doelnet', 'net'];
+  const onder: VeldObject['soort'][] = [
+    'zone',
+    'kooi',
+    'keepersmat',
+    'ladder',
+    'stok',
+    'horde',
+    'ring',
+    'hoedje',
+    'pion',
+    'paaltje',
+    'bank',
+    'muurtje',
+    'pop',
+    'rebounder',
+    'klein-goal',
+    'goal',
+    'doelnet',
+    'net',
+  ];
   for (const soort of onder) {
     for (const o of objecten) {
       if (o.soort !== soort) continue;
       const m = stand.materiaal.get(o.id);
       const p = m && o.inHand ? naastHouder(stand, o, m) : m;
-      tekenMateriaal(b, p ? { ...o, x: p.x, y: p.y } : o, stand.net.find((n) => n.id === o.id), m);
+      tekenMateriaal(
+        b,
+        p ? { ...o, x: p.x, y: p.y } : o,
+        stand.net.find((n) => n.id === o.id),
+        m,
+      );
     }
   }
 
@@ -197,7 +214,14 @@ export function persoonKleur(o: VeldObject, k: Kleuren, team: Team | undefined =
 export function doorzichtig(kleur: string, alpha: number): string {
   const h = kleur.trim();
   if (h.startsWith('#')) {
-    const v = h.length === 4 ? h.slice(1).split('').map((c) => c + c).join('') : h.slice(1, 7);
+    const v =
+      h.length === 4
+        ? h
+            .slice(1)
+            .split('')
+            .map((c) => c + c)
+            .join('')
+        : h.slice(1, 7);
     const n = parseInt(v, 16);
     return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
   }
@@ -830,6 +854,19 @@ function tekenPersoon(b: Beeld, o: VeldObject, s: ObjectStand, k: Kleuren, keepe
       const ver = r * (1.0 + 0.4 * v);
       for (const k of [-1, 1]) handschoen(ctx, Math.cos(h + k * breed) * ver, Math.sin(h + k * breed) * ver, r, b);
     }
+  }
+
+  // Arm omhoog als teken (0.37.2): een hand naast het poppetje, aan die kant.
+  if (s.teken && s.teken.u > 0 && s.houding !== 'duik') {
+    const h = (s.hoek * Math.PI) / 180 + (s.teken.kant === 'rechts' ? Math.PI / 2 : -Math.PI / 2);
+    const d = r * (1.0 + 0.4 * s.teken.u);
+    ctx.fillStyle = '#f2c39a';
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = Math.max(1, r * 0.12);
+    ctx.beginPath();
+    ctx.arc(Math.cos(h) * d, Math.sin(h) * d, r * 0.38 * s.teken.u, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
   }
 
   const label = o.soort === 'trainer' ? 'T' : o.nummer !== undefined ? String(o.nummer) : '';

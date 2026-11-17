@@ -431,5 +431,56 @@
         "Score only after a pass"
       ]
     }
+  },
+  "veld-sp-doelpuntenestafette": {
+    "naam": "Goal relay",
+    "uitleg": "Two teams in a line, everyone with a ball. On the signal the first child dribbles to the shooting line and shoots at their team’s mini goal. Scored? Leave your ball, run back and tag the next child: only then may they go. Missed? Get your ball first and try again. Which team is first to have everyone score?",
+    "organisatie": "Two lanes side by side, 6 m apart. Start 13 m from the mini goal, shooting line of disc cones at 5 m. Lines of 2 to 4 children, each with a ball. Collect the balls together after each round.",
+    "benodigdheden": [
+      "2 mini goals",
+      "6 disc cones",
+      "Footballs"
+    ],
+    "coachpunten": [
+      "Dribble quickly, but shoot calmly",
+      "Look at the goal before you shoot",
+      "Tag with your hand, only then go"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Shooting line closer",
+        "Bigger goals"
+      ],
+      "moeilijker": [
+        "Shoot with your other foot",
+        "Dribble round a cone before the shooting line"
+      ]
+    }
+  },
+  "veld-sp-ballen-in-de-mand": {
+    "naam": "Balls in the basket",
+    "uitleg": "There are lots of balls in the middle. Each team has a basket on its side: two hoops. On the signal, run to the middle, take a ball with your feet and dribble it to your basket. Stop it in a hoop, without using your hands! Then fetch the next one. Which team has the most balls in its basket when the middle is empty?",
+    "organisatie": "16 × 12 m area with a 4 × 4 m box full of balls in the middle (more balls than children). Two hoops as a basket at each short end. Two teams of 2 to 4 children. Then put the balls back and play again.",
+    "benodigdheden": [
+      "4 hoops",
+      "8 disc cones",
+      "Footballs",
+      "Bibs"
+    ],
+    "coachpunten": [
+      "Small touches, keep the ball at your foot",
+      "Look where you are going: there are other children",
+      "Stop the ball in the hoop with your foot"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Basket closer to the middle",
+        "Bigger basket (three hoops)"
+      ],
+      "moeilijker": [
+        "Other foot only",
+        "You may also take a ball from the other team’s basket"
+      ]
+    }
   }
 }

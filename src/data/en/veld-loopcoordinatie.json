@@ -487,5 +487,29 @@
         "With a ball: after turning, receive a pass"
       ]
     }
+  },
+  "veld-lc-hoepelhinkelbaan": {
+    "naam": "Hoop hopscotch",
+    "uitleg": "Jump through the hoop track! In the yellow hoops you hop on one foot. In the blue hoops you jump with both feet together. At the orange hoops you jump across: left and right in turn. After the last hoop, run to the cone as fast as you can.",
+    "organisatie": "A track of 9 hoops: 3 yellow in a row, 2 blue and 4 orange alternating left and right. A cone 3 m after the last hoop. Lines of no more than 3 children; with more children, set up a second track next to it.",
+    "benodigdheden": [
+      "9 hoops",
+      "1 cone"
+    ],
+    "coachpunten": [
+      "Land softly, on the balls of your feet",
+      "Your arms help you",
+      "Speed up straight after the last hoop"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Fewer hoops",
+        "Hop on your stronger leg"
+      ],
+      "moeilijker": [
+        "Hop on your other leg",
+        "On the coach’s signal, change direction after the track"
+      ]
+    }
   }
 }

@@ -6299,5 +6299,263 @@
         }
       ]
     }
+  },
+  {
+    "id": "veld-lc-hoepelhinkelbaan",
+    "soort": "veld",
+    "naam": "Hoepelhinkelbaan",
+    "categorieen": [
+      "loopcoordinatie"
+    ],
+    "uitleg": "Spring door de hoepelbaan! In de gele hoepels hinkel je op één voet. In de blauwe hoepels spring je met twee voeten tegelijk. Bij de oranje hoepels spring je kruislings: om en om links en rechts. Na de laatste hoepel ren je zo snel als je kunt naar de pion.",
+    "organisatie": "Een baan van 9 hoepels: 3 gele op een rij, 2 blauwe en 4 oranje om en om links en rechts. Een pion 3 m na de laatste hoepel. Rij van hooguit 3 kinderen; met meer kinderen een tweede baan ernaast.",
+    "benodigdheden": [
+      "9 hoepels",
+      "1 pion"
+    ],
+    "spelersNodig": 1,
+    "keepersNodig": 0,
+    "leeftijden": [
+      "mini-3-5",
+      "mini-5-7"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Land zacht, op je voorvoet",
+      "Je armen helpen mee",
+      "Na de laatste hoepel meteen versnellen"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Minder hoepels",
+        "Hinkelen op je sterkste been"
+      ],
+      "moeilijker": [
+        "Hinkelen op je andere been",
+        "Op het teken van de trainer van richting veranderen na de baan"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 19,
+        "lengte": 8
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "r1",
+          "soort": "ring",
+          "x": 5,
+          "y": 4,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "r2",
+          "soort": "ring",
+          "x": 5.9,
+          "y": 4,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "r3",
+          "soort": "ring",
+          "x": 6.8,
+          "y": 4,
+          "kleur": "#ffd23f"
+        },
+        {
+          "id": "r4",
+          "soort": "ring",
+          "x": 7.9,
+          "y": 4,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "r5",
+          "soort": "ring",
+          "x": 9,
+          "y": 4,
+          "kleur": "#1c64d8"
+        },
+        {
+          "id": "r6",
+          "soort": "ring",
+          "x": 10.1,
+          "y": 3.45,
+          "kleur": "#ff922b"
+        },
+        {
+          "id": "r7",
+          "soort": "ring",
+          "x": 11,
+          "y": 4.55,
+          "kleur": "#ff922b"
+        },
+        {
+          "id": "r8",
+          "soort": "ring",
+          "x": 11.9,
+          "y": 3.45,
+          "kleur": "#ff922b"
+        },
+        {
+          "id": "r9",
+          "soort": "ring",
+          "x": 12.8,
+          "y": 4.55,
+          "kleur": "#ff922b"
+        },
+        {
+          "id": "p1",
+          "soort": "pion",
+          "x": 16.4,
+          "y": 4
+        },
+        {
+          "id": "a1",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a2",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "id": "a3",
+          "soort": "speler",
+          "team": "A",
+          "nummer": 3,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "rijen": [
+        {
+          "id": "rij",
+          "x": 3.4,
+          "y": 4,
+          "richting": 180,
+          "spelers": [
+            "a1",
+            "a2",
+            "a3"
+          ]
+        }
+      ],
+      "animatie": [
+        {
+          "herhaal": {
+            "spelers": [
+              "a1",
+              "a2",
+              "a3"
+            ],
+            "tussen": 2.8,
+            "stappen": [
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "via": [
+                      [
+                        5,
+                        4
+                      ],
+                      [
+                        5.9,
+                        4
+                      ],
+                      [
+                        6.8,
+                        4
+                      ],
+                      [
+                        7.9,
+                        4
+                      ],
+                      [
+                        9,
+                        4
+                      ],
+                      [
+                        10.1,
+                        3.45
+                      ],
+                      [
+                        11,
+                        4.55
+                      ],
+                      [
+                        11.9,
+                        3.45
+                      ],
+                      [
+                        12.8,
+                        4.55
+                      ]
+                    ],
+                    "naar": [
+                      13.7,
+                      4.1
+                    ],
+                    "manier": "sprong"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "naar": [
+                      15.6,
+                      4
+                    ],
+                    "manier": "sprint"
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "loop",
+                    "wie": "@",
+                    "via": [
+                      [
+                        16.4,
+                        6.2
+                      ]
+                    ],
+                    "naar": [
+                      5,
+                      6.2
+                    ],
+                    "spoor": false
+                  }
+                ]
+              },
+              {
+                "acties": [
+                  {
+                    "type": "aansluiten",
+                    "wie": "@",
+                    "rij": "rij"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
   }
 ]
