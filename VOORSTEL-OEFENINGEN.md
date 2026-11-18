@@ -202,97 +202,97 @@ Leeftijden: O6 en O7 (mini's), JO8–11, JO12–15, JO16–19. "Spelers / keeper
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KW1 | Vangen in de loop om vier pionnen | De keeper beweegt zijwaarts om een vierkant en vangt bij elke pion een bal van de trainer. | JO8–19 | 0 / 1 | SSP |
-| [ ] | KW2 | Bal om je lichaam en vangen | Draai de bal om je middel en benen, gooi hem op, klap in je handen en vang hem op het hoogste punt. | JO8–15 | 0 / 1 | Klassiek |
-| [ ] | KW3 | Handbal met keepers | Twee tegen twee met de handen op twee doeltjes: lopen met de bal mag niet, scoren alleen met een stuit. | JO8–19 | 0 / 4 | FA |
-| [ ] | KW4 | Pass, pass, vang | De keeper speelt twee keer met de voet terug en vangt de derde bal uit de lucht; steeds in beweging. | JO12–19 | 0 / 1 | RF |
-| [ ] | KW5 | Spiegelen op de doellijn | Twee keepers tegenover elkaar: de een beweegt zijwaarts en de ander volgt; op het teken een bal vangen. | JO8–19 | 0 / 2 | Klassiek |
+| [x] 0.37.3 | KW1 | Vangen in de loop om vier pionnen | De keeper beweegt zijwaarts om een vierkant en vangt bij elke pion een bal van de trainer. | JO8–19 | 0 / 1 | SSP |
+| [x] 0.37.3 | KW2 | Bal om je lichaam en vangen | Draai de bal om je middel en benen, gooi hem op, klap in je handen en vang hem op het hoogste punt. | JO8–15 | 0 / 1 | Klassiek |
+| [x] 0.37.3 | KW3 | Handbal met keepers | Twee tegen twee met de handen op twee doeltjes: lopen met de bal mag niet, scoren alleen met een stuit. | JO8–19 | 0 / 4 | FA |
+| [x] 0.37.3 | KW4 | Pass, pass, vang | De keeper speelt twee keer met de voet terug en vangt de derde bal uit de lucht; steeds in beweging. | JO12–19 | 0 / 1 | RF |
+| [x] 0.37.3 | KW5 | Spiegelen op de doellijn | Twee keepers tegenover elkaar: de een beweegt zijwaarts en de ander volgt; op het teken een bal vangen. | JO8–19 | 0 / 2 | Klassiek |
 
 ## Laag duiken (6)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KL1 | ★ Zit, sta op en duik | De keeper zit op de grond, staat snel op en duikt laag naar de bal die de trainer naast hem rolt. | JO8–19 | 0 / 1 | SSP |
-| [ ] | KL2 | Duiken door het poortje | Een poortje van twee pionnen naast de keeper: hij duikt erdoor naar voren op de bal, niet naar achteren. | JO8–19 | 0 / 1 | Klassiek |
-| [ ] | KL3 | Lage bal na een stap over de stok | Stap zijwaarts over een stok op de grond en duik meteen laag naar de bal in de hoek. | JO12–19 | 0 / 1 | YC |
-| [ ] | KL4 | Twee ballen kort na elkaar aan één kant | Duik op de eerste bal, sta op en pak de tweede bal die een meter verder ligt. | JO12–19 | 0 / 1 | RF |
-| [ ] | KL5 | Rollen en klemmen | De trainer rolt de bal zacht langs de keeper: val op je zij, klem de bal met twee handen en je bovenste knie ervoor. | JO8–11 | 0 / 1 | HK |
-| [ ] | KL6 | Lage duik na een schijnschot | De trainer doet alsof hij schiet en legt dan de bal in de andere hoek: blijf staan tot de bal echt weg is. | JO12–19 | 0 / 1 | Eigen |
+| [x] 0.35.0 (★) | KL1 | ★ Zit, sta op en duik | De keeper zit op de grond, staat snel op en duikt laag naar de bal die de trainer naast hem rolt. | JO8–19 | 0 / 1 | SSP |
+| [x] 0.37.3 | KL2 | Duiken door het poortje | Een poortje van twee pionnen naast de keeper: hij duikt erdoor naar voren op de bal, niet naar achteren. | JO8–19 | 0 / 1 | Klassiek |
+| [x] 0.37.3 | KL3 | Lage bal na een stap over de stok | Stap zijwaarts over een stok op de grond en duik meteen laag naar de bal in de hoek. | JO12–19 | 0 / 1 | YC |
+| [x] 0.37.3 | KL4 | Twee ballen kort na elkaar aan één kant | Duik op de eerste bal, sta op en pak de tweede bal die een meter verder ligt. | JO12–19 | 0 / 1 | RF |
+| [x] 0.37.3 | KL5 | Rollen en klemmen | De trainer rolt de bal zacht langs de keeper: val op je zij, klem de bal met twee handen en je bovenste knie ervoor. | JO8–11 | 0 / 1 | HK |
+| [x] 0.37.3 | KL6 | Lage duik na een schijnschot | De trainer doet alsof hij schiet en legt dan de bal in de andere hoek: blijf staan tot de bal echt weg is. | JO12–19 | 0 / 1 | Eigen |
 
 ## Hoog duiken (5)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KH1 | Hoge bal uit de hand van de trainer | De trainer gooit de bal schuin omhoog naast de keeper: afzetten met het dichtste been en vangen in de vlucht. | JO12–19 | 0 / 1 | RF |
-| [ ] | KH2 | Over de liggende keeper | Een tweede keeper ligt op de grond; de eerste duikt eroverheen naar een hoge bal en landt op zijn zij. | JO12–19 | 0 / 2 | Klassiek |
-| [ ] | KH3 | Kruising of hoek | De trainer roept 'hoog' of 'laag' terwijl hij schiet: de keeper kiest pas na het woord. | JO12–19 | 0 / 1 | Eigen |
-| [ ] | KH4 | Tippen om de paal | Een schot richting de bovenhoek: de keeper tikt de bal met zijn bovenste hand om de paal. | JO12–19 | 0 / 1 | YC |
-| [ ] | KH5 | Stap, stap, vlucht | Twee snelle passen zijwaarts langs een pion en dan een hoge duik naar de aangegooide bal. | JO8–15 | 0 / 1 | SSP |
+| [x] 0.37.3 | KH1 | Hoge bal uit de hand van de trainer | De trainer gooit de bal schuin omhoog naast de keeper: afzetten met het dichtste been en vangen in de vlucht. | JO12–19 | 0 / 1 | RF |
+| [x] 0.37.3 | KH2 | Over de liggende keeper | Een tweede keeper ligt op de grond; de eerste duikt eroverheen naar een hoge bal en landt op zijn zij. | JO12–19 | 0 / 2 | Klassiek |
+| [x] 0.37.3 | KH3 | Kruising of hoek | De trainer roept 'hoog' of 'laag' terwijl hij schiet: de keeper kiest pas na het woord. | JO12–19 | 0 / 1 | Eigen |
+| [x] 0.37.3 | KH4 | Tippen om de paal | Een schot richting de bovenhoek: de keeper tikt de bal met zijn bovenste hand om de paal. | JO12–19 | 0 / 1 | YC |
+| [x] 0.37.3 | KH5 | Stap, stap, vlucht | Twee snelle passen zijwaarts langs een pion en dan een hoge duik naar de aangegooide bal. | JO8–15 | 0 / 1 | SSP |
 
 ## Bal verwerken (7)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KB1 | W-loop en vangen | De keeper loopt een W tussen vier pionnen en vangt bij elke punt een bal: laag, op de buik, op de borst en boven het hoofd. | JO8–19 | 0 / 1 | SSP |
-| [ ] | KB2 | Vangen na een draai | De keeper staat met zijn rug naar de trainer, draait op het teken en verwerkt de bal die al onderweg is. | JO12–19 | 0 / 1 | Klassiek |
-| [ ] | KB3 | Natte bal: klemmen tegen de borst | Harde ballen op het lichaam die je niet schoon kunt vangen: borst erachter en de bal tegen je aan klemmen. | JO12–19 | 0 / 1 | HK |
-| [ ] | KB4 | Stuitbal voor de keeper | De bal stuit vlak voor de keeper: knie naar de grond en de bal met twee handen van onderen opscheppen. | JO8–15 | 0 / 1 | Klassiek |
-| [ ] | KB5 | Vangen met een stoorzender | Een speler loopt voor de keeper langs op het moment van het schot: blijf naar de bal kijken. | JO12–19 | 1 / 1 | YC |
-| [ ] | KB6 | Tien ballen, tien keer vangen | Twee keepers tellen samen: hoeveel van de tien ballen vang je in één keer schoon, zonder los te laten? | JO8–11 | 0 / 2 | Eigen |
-| [ ] | KB7 | Bal uit de lucht na een lob | De bal komt met een boog: stap achteruit met kleine passen en vang hem boven je hoofd, voor de lijn. | JO12–19 | 0 / 1 | FIFA |
+| [x] 0.37.3 | KB1 | W-loop en vangen | De keeper loopt een W tussen vier pionnen en vangt bij elke punt een bal: laag, op de buik, op de borst en boven het hoofd. | JO8–19 | 0 / 1 | SSP |
+| [x] 0.37.3 | KB2 | Vangen na een draai | De keeper staat met zijn rug naar de trainer, draait op het teken en verwerkt de bal die al onderweg is. | JO12–19 | 0 / 1 | Klassiek |
+| [x] 0.37.3 | KB3 | Natte bal: klemmen tegen de borst | Harde ballen op het lichaam die je niet schoon kunt vangen: borst erachter en de bal tegen je aan klemmen. | JO12–19 | 0 / 1 | HK |
+| [x] 0.37.3 | KB4 | Stuitbal voor de keeper | De bal stuit vlak voor de keeper: knie naar de grond en de bal met twee handen van onderen opscheppen. | JO8–15 | 0 / 1 | Klassiek |
+| [x] 0.37.3 | KB5 | Vangen met een stoorzender | Een speler loopt voor de keeper langs op het moment van het schot: blijf naar de bal kijken. | JO12–19 | 1 / 1 | YC |
+| [x] 0.37.3 | KB6 | Tien ballen, tien keer vangen | Twee keepers tellen samen: hoeveel van de tien ballen vang je in één keer schoon, zonder los te laten? | JO8–11 | 0 / 2 | Eigen |
+| [x] 0.37.3 | KB7 | Bal uit de lucht na een lob | De bal komt met een boog: stap achteruit met kleine passen en vang hem boven je hoofd, voor de lijn. | JO12–19 | 0 / 1 | FIFA |
 
 ## Voorzetten (6)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KV1 | Voorzet uit de hand aan de eerste paal | De trainer gooit vanaf de zijkant: de keeper start in het midden, stapt uit en vangt bij de eerste paal. | JO8–15 | 0 / 1 | FIFA |
-| [ ] | KV2 | Roepen: 'los' of 'weg' | Bij elke voorzet roept de keeper hard wat hij doet; de verdediger laat de bal dan gaan of kopt hem weg. | JO12–19 | 1 / 1 | KNVB |
-| [ ] | KV3 | Hoge bal met een schild | De trainer duwt licht met een stootkussen terwijl de keeper omhoog gaat: knie omhoog en sterk in de lucht. | JO16–19 | 0 / 1 | Klassiek |
-| [ ] | KV4 | Indraaiend en uitdraaiend | Om de beurt een voorzet die naar het doel toe draait en een die ervan af draait: bepaal je beginplek. | JO12–19 | 1 / 1 | FIFA |
-| [ ] | KV5 | Lage voorzet onderscheppen | De buitenspeler geeft hard en laag voor; de keeper duikt naar voren en pakt de bal voor de spits. | JO12–19 | 2 / 1 | FIFA |
-| [ ] | KV6 | Corner met drukte voor de goal | Drie poppen en twee spelers in de vijf: de keeper zoekt zijn weg erdoorheen en stompt of vangt. | JO16–19 | 2 / 1 | Eigen |
+| [x] 0.37.3 | KV1 | Voorzet uit de hand aan de eerste paal | De trainer gooit vanaf de zijkant: de keeper start in het midden, stapt uit en vangt bij de eerste paal. | JO8–15 | 0 / 1 | FIFA |
+| [x] 0.37.3 | KV2 | Roepen: 'los' of 'weg' | Bij elke voorzet roept de keeper hard wat hij doet; de verdediger laat de bal dan gaan of kopt hem weg. | JO12–19 | 1 / 1 | KNVB |
+| [x] 0.37.3 | KV3 | Hoge bal met een schild | De trainer duwt licht met een stootkussen terwijl de keeper omhoog gaat: knie omhoog en sterk in de lucht. | JO16–19 | 0 / 1 | Klassiek |
+| [x] 0.37.3 | KV4 | Indraaiend en uitdraaiend | Om de beurt een voorzet die naar het doel toe draait en een die ervan af draait: bepaal je beginplek. | JO12–19 | 1 / 1 | FIFA |
+| [x] 0.37.3 | KV5 | Lage voorzet onderscheppen | De buitenspeler geeft hard en laag voor; de keeper duikt naar voren en pakt de bal voor de spits. | JO12–19 | 2 / 1 | FIFA |
+| [x] 0.37.3 | KV6 | Corner met drukte voor de goal | Drie poppen en twee spelers in de vijf: de keeper zoekt zijn weg erdoorheen en stompt of vangt. | JO16–19 | 2 / 1 | Eigen |
 
 ## Passing (6)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KP1 | Uittrap naar het doelwit | Trap vanaf de grond naar een vak op 25 meter; elke bal die in het vak stuit is een punt. | JO12–19 | 0 / 1 | RF |
-| [ ] | KP2 | Aannemen links, spelen rechts | De terugspeelbal komt op je ene voet en je speelt met je andere naar de back aan de overkant. | JO8–19 | 0 / 1 | Klassiek |
-| [ ] | KP3 | Uitworp over de eerste linie | Vang de bal en gooi hem bovenhands over twee poppen heen in de loop van de middenvelder. | JO12–19 | 1 / 1 | RF |
-| [ ] | KP4 | Driehoek met de centrale verdedigers | De keeper is het punt van een driehoek met twee verdedigers en verlegt het spel onder lichte druk. | JO12–19 | 3 / 1 | KNVB |
-| [ ] | KP5 | Rollen naar het poortje | Rol de bal onderhands door een poortje naar je maatje; elke keer een meter verder weg. | JO8–11 | 0 / 2 | Eigen |
-| [ ] | KP6 | Chip over de spits | Een spits zet druk van voren: de keeper tilt de bal met een korte wip over hem heen naar de middenvelder. | JO16–19 | 2 / 1 | Eigen |
+| [x] 0.37.3 | KP1 | Uittrap naar het doelwit | Trap vanaf de grond naar een vak op 25 meter; elke bal die in het vak stuit is een punt. | JO12–19 | 0 / 1 | RF |
+| [x] 0.37.3 | KP2 | Aannemen links, spelen rechts | De terugspeelbal komt op je ene voet en je speelt met je andere naar de back aan de overkant. | JO8–19 | 0 / 1 | Klassiek |
+| [x] 0.37.3 | KP3 | Uitworp over de eerste linie | Vang de bal en gooi hem bovenhands over twee poppen heen in de loop van de middenvelder. | JO12–19 | 1 / 1 | RF |
+| [x] 0.37.3 | KP4 | Driehoek met de centrale verdedigers | De keeper is het punt van een driehoek met twee verdedigers en verlegt het spel onder lichte druk. | JO12–19 | 3 / 1 | KNVB |
+| [x] 0.37.3 | KP5 | Rollen naar het poortje | Rol de bal onderhands door een poortje naar je maatje; elke keer een meter verder weg. | JO8–11 | 0 / 2 | Eigen |
+| [x] 0.37.3 | KP6 | Chip over de spits | Een spits zet druk van voren: de keeper tilt de bal met een korte wip over hem heen naar de middenvelder. | JO16–19 | 2 / 1 | Eigen |
 
 ## 1 op 1 (5)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | K11 | Uitkomen tot de pion | De aanvaller dribbelt recht op het doel af; de keeper komt uit tot de pion en maakt zich daar groot. | JO8–15 | 1 / 1 | SSP |
-| [ ] | K12 | Duel in een smalle baan | Eén tegen één in een baan van 15 bij 20 meter met een laag doel: de keeper kiest uitkomen of wachten. | JO12–19 | 1 / 1 | HK |
-| [ ] | K13 | De bal van opzij afpakken | De aanvaller probeert om de keeper heen te gaan: duik op de bal op het moment dat hij hem van zijn voet laat. | JO12–19 | 1 / 1 | YC |
-| [ ] | K14 | Twee aanvallers, één keeper | Twee tegen de keeper: blijf bij de balbezitter tot de pass en schuif dan snel door naar de ander. | JO12–19 | 2 / 1 | Eigen |
-| [ ] | K15 | Wie is het eerst bij de bal? | De trainer rolt de bal tussen keeper en aanvaller in; de keeper kiest: pakken of het doel verdedigen. | JO8–15 | 1 / 1 | Klassiek |
+| [x] 0.37.3 | K11 | Uitkomen tot de pion | De aanvaller dribbelt recht op het doel af; de keeper komt uit tot de pion en maakt zich daar groot. | JO8–15 | 1 / 1 | SSP |
+| [x] 0.37.3 | K12 | Duel in een smalle baan | Eén tegen één in een baan van 15 bij 20 meter met een laag doel: de keeper kiest uitkomen of wachten. | JO12–19 | 1 / 1 | HK |
+| [x] 0.37.3 | K13 | De bal van opzij afpakken | De aanvaller probeert om de keeper heen te gaan: duik op de bal op het moment dat hij hem van zijn voet laat. | JO12–19 | 1 / 1 | YC |
+| [x] 0.37.3 | K14 | Twee aanvallers, één keeper | Twee tegen de keeper: blijf bij de balbezitter tot de pass en schuif dan snel door naar de ander. | JO12–19 | 2 / 1 | Eigen |
+| [x] 0.37.3 | K15 | Wie is het eerst bij de bal? | De trainer rolt de bal tussen keeper en aanvaller in; de keeper kiest: pakken of het doel verdedigen. | JO8–15 | 1 / 1 | Klassiek |
 
 ## Reactie (6)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KR1 | Bal tegen het kaatsbord en redden | De trainer schiet tegen een schuin kaatsbord voor het doel: de keeper ziet pas laat waar de bal heen gaat. | JO12–19 | 0 / 1 | RF |
-| [ ] | KR2 | Twee tennisballen | De trainer laat twee tennisballen tegelijk vallen: vang ze allebei voor de tweede stuit. | JO8–19 | 0 / 1 | Klassiek |
-| [ ] | KR3 | Schot door de benen van een speler | Een speler staat wijdbeens voor de keeper en de trainer schiet door zijn benen of langs hem heen. | JO12–19 | 1 / 1 | Klassiek |
-| [ ] | KR4 | Liggen, bal, liggen, bal | De keeper ligt op zijn buik, komt omhoog voor een bal op het lichaam en gaat meteen weer liggen. | JO12–19 | 0 / 1 | SSP |
-| [ ] | KR5 | Kleur van de bal | De trainer heeft twee ballen in verschillende kleuren en roept bij het schot welke je moet pakken. | JO12–19 | 0 / 1 | Eigen |
-| [ ] | KR6 | Schot van dichtbij na een pass opzij | De bal gaat breed naar een tweede schutter op zes meter: verplaatsen en in je keepershouding staan voor het schot. | JO12–19 | 2 / 1 | YC |
+| [x] 0.37.3 | KR1 | Bal tegen het kaatsbord en redden | De trainer schiet tegen een schuin kaatsbord voor het doel: de keeper ziet pas laat waar de bal heen gaat. | JO12–19 | 0 / 1 | RF |
+| [x] 0.37.3 | KR2 | Twee tennisballen | De trainer laat twee tennisballen tegelijk vallen: vang ze allebei voor de tweede stuit. | JO8–19 | 0 / 1 | Klassiek |
+| [x] 0.37.3 | KR3 | Schot door de benen van een speler | Een speler staat wijdbeens voor de keeper en de trainer schiet door zijn benen of langs hem heen. | JO12–19 | 1 / 1 | Klassiek |
+| [x] 0.37.3 | KR4 | Liggen, bal, liggen, bal | De keeper ligt op zijn buik, komt omhoog voor een bal op het lichaam en gaat meteen weer liggen. | JO12–19 | 0 / 1 | SSP |
+| [x] 0.37.3 | KR5 | Kleur van de bal | De trainer heeft twee ballen in verschillende kleuren en roept bij het schot welke je moet pakken. | JO12–19 | 0 / 1 | Eigen |
+| [x] 0.37.3 | KR6 | Schot van dichtbij na een pass opzij | De bal gaat breed naar een tweede schutter op zes meter: verplaatsen en in je keepershouding staan voor het schot. | JO12–19 | 2 / 1 | YC |
 
 ## Spelletjes (5)
 
 | ✔ | Nr | Naam | Uitleg | Leeftijd | Spelers / keepers | Inspiratie |
 |---|---|---|---|---|---|---|
-| [ ] | KS1 | Keeperstennis | Twee keepers gooien de bal over een net van hordes; hij moet in het vak van de ander stuiten. | JO8–19 | 0 / 2 | Klassiek |
-| [ ] | KS2 | Vier doeltjes, één keeper | De keeper verdedigt vier mini-goaltjes in een vierkant tegen twee schutters: blijven bewegen en kiezen. | JO12–19 | 2 / 1 | FA |
-| [ ] | KS3 | Vangen om punten | Elke schone vangbal is twee punten, klemmen één punt en loslaten nul: wie heeft er na tien ballen de meeste? | JO8–15 | 0 / 2 | Eigen |
-| [ ] | KS4 | Trefbal voor keepers | Twee keepers proberen elkaar met een onderhandse worp onder de knie te raken; vangen mag en telt als redding. | JO8–15 | 0 / 2 | Eigen |
-| [ ] | KS5 | Penaltyduel tussen keepers | De keepers nemen om de beurt een penalty op elkaar: lezen van de aanloop en lang blijven staan. | JO12–19 | 0 / 2 | Klassiek |
+| [x] 0.37.3 | KS1 | Keeperstennis | Twee keepers gooien de bal over een net van hordes; hij moet in het vak van de ander stuiten. | JO8–19 | 0 / 2 | Klassiek |
+| [x] 0.37.3 | KS2 | Vier doeltjes, één keeper | De keeper verdedigt vier mini-goaltjes in een vierkant tegen twee schutters: blijven bewegen en kiezen. | JO12–19 | 2 / 1 | FA |
+| [x] 0.37.3 | KS3 | Vangen om punten | Elke schone vangbal is twee punten, klemmen één punt en loslaten nul: wie heeft er na tien ballen de meeste? | JO8–15 | 0 / 2 | Eigen |
+| [x] 0.37.3 | KS4 | Trefbal voor keepers | Twee keepers proberen elkaar met een onderhandse worp onder de knie te raken; vangen mag en telt als redding. | JO8–15 | 0 / 2 | Eigen |
+| [x] 0.37.3 | KS5 | Penaltyduel tussen keepers | De keepers nemen om de beurt een penalty op elkaar: lezen van de aanloop en lang blijven staan. | JO12–19 | 0 / 2 | Klassiek |
 
 ---
 
