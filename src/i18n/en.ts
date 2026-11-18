@@ -15,7 +15,7 @@ export const EN: Record<string, string> = {
   '3D liep niet soepel; je ziet nu eenvoudige poppetjes (aan te passen bij Instellingen).': "3D wasn't running smoothly; now showing simple figures (change this in Settings).",
   'Dit toestel is te traag voor 3D; je ziet de 2D-weergave.': 'This device is too slow for 3D; showing the 2D view.',
   '3D laden…': 'Loading 3D…',
-  'Realistisch (proef)': 'Realistic (trial)',
+  '3D liep niet soepel; je ziet nu de gewone poppetjes (aan te passen bij Instellingen).': "3D wasn't running smoothly; now showing the standard figures (change this in Settings).",
   Camera: 'Camera',
   Weergave: 'View',
   'Veeg om te draaien · knijp om te zoomen': 'Swipe to rotate · pinch to zoom',
@@ -462,11 +462,19 @@ export const EN: Record<string, string> = {
   Donker: 'Dark',
   Automatisch: 'Automatic',
   '3D-animaties': '3D animations',
-  'Eenvoudige poppetjes': 'Simple figures',
-  'Automatisch aangezet, omdat 3D op dit apparaat niet soepel liep. Zet hem uit om de gewone poppetjes weer te proberen.':
-    "Switched on automatically because 3D wasn't running smoothly on this device. Switch it off to try the normal figures again.",
-  'Lichtere poppetjes en een iets lagere beeldscherpte, voor oudere of tragere telefoons. Gaat vanzelf aan als 3D niet soepel loopt.':
-    "Lighter figures and slightly lower resolution, for older or slower phones. Switches on automatically if 3D isn't running smoothly.",
+  'Poppetjes in 3D': 'Figures in 3D',
+  Realistisch: 'Realistic',
+  Gewoon: 'Standard',
+  Eenvoudig: 'Simple',
+  'Zonlicht met schaduwen, gras met structuur en echtere spelers met shirt, broek, kousen en schoenen.':
+    'Sunlight with shadows, textured grass and more lifelike players with shirt, shorts, socks and boots.',
+  'De vertrouwde poppetjes, zonder schaduwen. Lichter dan Realistisch.': 'The familiar figures, without shadows. Lighter than Realistic.',
+  'Lichtere poppetjes en een iets lagere beeldscherpte, voor oudere of tragere telefoons.': 'Lighter figures and slightly lower resolution, for older or slower phones.',
+  'Automatisch lager gezet, omdat 3D op dit apparaat niet soepel liep.': "Lowered automatically because 3D wasn't running smoothly on this device.",
+  'Zelf gekozen. Loopt 3D niet soepel, dan zie je de 2D-weergave.': "Your own choice. If 3D isn't running smoothly, you'll see the 2D view.",
+  'Automatisch: de app begint met Realistisch en kiest vanzelf een lichtere weergave als 3D niet soepel loopt.':
+    "Automatic: the app starts with Realistic and switches to a lighter view by itself if 3D isn't running smoothly.",
+  'Weer automatisch laten kiezen': 'Let the app choose again',
   Instellingen: 'Settings',
   Clubkleuren: 'Club colours',
   'De kleuren van de app. Het veld en de teamkleuren in de animaties blijven altijd hetzelfde.': 'The colours of the app. The pitch and the team colours in the animations always stay the same.',

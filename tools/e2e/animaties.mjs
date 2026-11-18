@@ -126,6 +126,8 @@ async function nieuwePagina(breedte, hoogte, dpr, mobiel = false) {
   await page.evaluateOnNewDocument(() => {
     try {
       localStorage.setItem('trainersapp.testCamera', '1');
+      // Meten zonder automatisch terugvallen (anders verandert het niveau of de weergave tijdens de meting).
+      localStorage.setItem('trainersapp.3dAltijd', '1');
     } catch {
       /* about:blank */
     }
@@ -217,9 +219,10 @@ if (ALLEEN === 'alles' || ALLEEN === 'snelheid') {
       });
   });
   const cdp = await page.target().createCDPSession();
-  const meet = async (rem, camera, eenvoudig = false) => {
+  // niveau (0.38.0): 'realistisch', 'gewoon' of 'eenvoudig' (een build van vóór 0.38.0 kent alleen eenvoudig; de rest is daar gewoon).
+  const meet = async (rem, camera, niveau = 'gewoon') => {
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: rem });
-    await page.evaluate((e) => (e ? localStorage.setItem('trainersapp.poppetjes', 'eenvoudig') : localStorage.removeItem('trainersapp.poppetjes')), eenvoudig).catch(() => {});
+    await page.evaluate((n) => localStorage.setItem('trainersapp.poppetjes', n), niveau).catch(() => {});
     await open(page, `#/w/${code}`);
     await page.evaluate((c) => [...document.querySelectorAll('.speler-groep button')].find((b) => b.textContent === c)?.click(), camera);
     await slaap(1200);
@@ -256,9 +259,11 @@ if (ALLEEN === 'alles' || ALLEEN === 'snelheid') {
     );
   };
   const uit = {};
-  for (const rem of [1, 4, 6]) for (const cam of ['Schuin', 'Boven']) uit[`${cam} cpu×${rem}`] = await meet(rem, cam);
-  uit.infoGewoon = await page.evaluate(() => window.__info3d?.() ?? null);
-  for (const rem of [4, 6]) uit[`eenvoudig Schuin cpu×${rem}`] = await meet(rem, 'Schuin', true);
+  for (const niveau of ['realistisch', 'gewoon']) {
+    for (const rem of [1, 4, 6]) for (const cam of ['Schuin', 'Boven']) uit[`${niveau} ${cam} cpu×${rem}`] = await meet(rem, cam, niveau);
+    uit[`info ${niveau}`] = await page.evaluate(() => window.__info3d?.() ?? null);
+  }
+  for (const rem of [4, 6]) uit[`eenvoudig Schuin cpu×${rem}`] = await meet(rem, 'Schuin', 'eenvoudig');
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   // Hoeveel tekenopdrachten (draw calls) en driehoeken per beeld.
   uit.infoEenvoudig = await page.evaluate(() => window.__info3d?.() ?? null);

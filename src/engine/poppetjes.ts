@@ -1,42 +1,62 @@
 import { useSyncExternalStore } from 'react';
 
 /**
- * Instelling "Eenvoudige poppetjes" (3D): lichtere figuren en een lagere resolutie voor tragere telefoons.
- * Alleen op dit apparaat (het gaat om de snelheid van het toestel, dus niet meegesynchroniseerd).
- * - KEUZE: wat de gebruiker zelf koos ('eenvoudig' of 'normaal'); ontbreekt = nog niet gekozen.
- * - AUTO: de app heeft ze zelf aangezet omdat 3D haperde (alleen als de gebruiker niet zelf 'normaal' koos).
+ * Weergave van de poppetjes in 3D (0.38.0), alleen op dit apparaat (het gaat om de snelheid van het toestel, dus niet
+ * meegesynchroniseerd). Drie niveaus, van zwaar naar licht:
+ * - realistisch: zonlicht met schaduwen, gras met structuur, lucht, en echtere spelers (shirt, broek, kousen, schoenen, gezicht);
+ * - gewoon: de poppetjes van vóór 0.38.0;
+ * - eenvoudig: lichtere figuren en een lagere resolutie voor tragere telefoons.
+ *
+ * KEUZE = wat de gebruiker zelf koos ('realistisch', 'gewoon' of 'eenvoudig'); ontbreekt = automatisch: de app begint met
+ * realistisch en zet het niveau zelf lager als 3D niet soepel loopt (AUTO = 'gewoon' of '1' = eenvoudig).
+ * Oude waarde van vóór 0.38.0: KEUZE 'normaal' (de gebruiker zette Eenvoudige poppetjes zelf uit) = automatisch, maar nooit
+ * vanzelf eenvoudig (zoals toen: dan valt de speler zo nodig terug op 2D).
  */
 const KEUZE = 'trainersapp.poppetjes';
 const AUTO = 'trainersapp.poppetjesAuto';
 
 type Opslagplek = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
+export type PopNiveau = 'realistisch' | 'gewoon' | 'eenvoudig';
+export const POP_NIVEAUS: readonly PopNiveau[] = ['realistisch', 'gewoon', 'eenvoudig'];
+
 export interface PoppetjesStand {
+  niveau: PopNiveau;
+  /** Kort voor niveau === 'eenvoudig'. */
   eenvoudig: boolean;
-  /** Door de app aangezet (3D liep niet soepel). */
+  /** Door de app lager gezet (3D liep niet soepel). */
   automatisch: boolean;
+  /** De gebruiker koos het niveau zelf. */
+  zelf: boolean;
 }
+
+const stand = (niveau: PopNiveau, automatisch: boolean, zelf: boolean): PoppetjesStand => ({ niveau, eenvoudig: niveau === 'eenvoudig', automatisch, zelf });
 
 export class PoppetjesInstelling {
   private luisteraars = new Set<() => void>();
   private stand: PoppetjesStand;
+  /** Automatisch lager gezet, ook zonder opslag (privévenster): dan geldt het tot de app sluit. */
+  private autoGeheugen: string | null = null;
 
   constructor(private readonly opslag: Opslagplek | undefined) {
     this.stand = this.lees();
   }
 
-  private lees(): PoppetjesStand {
-    let keuze: string | null = null;
-    let auto: string | null = null;
+  private ruw(): { keuze: string | null; auto: string | null } {
     try {
-      keuze = this.opslag?.getItem(KEUZE) ?? null;
-      auto = this.opslag?.getItem(AUTO) ?? null;
+      if (!this.opslag) return { keuze: null, auto: this.autoGeheugen };
+      return { keuze: this.opslag.getItem(KEUZE), auto: this.opslag.getItem(AUTO) ?? this.autoGeheugen };
     } catch {
-      /* geen opslag */
+      return { keuze: null, auto: this.autoGeheugen };
     }
-    if (keuze === 'eenvoudig') return { eenvoudig: true, automatisch: false };
-    if (keuze === 'normaal') return { eenvoudig: false, automatisch: false };
-    return auto === '1' ? { eenvoudig: true, automatisch: true } : { eenvoudig: false, automatisch: false };
+  }
+
+  private lees(): PoppetjesStand {
+    const { keuze, auto } = this.ruw();
+    if (keuze === 'eenvoudig' || keuze === 'gewoon' || keuze === 'realistisch') return stand(keuze, false, true);
+    if (auto === '1' && keuze !== 'normaal') return stand('eenvoudig', true, false);
+    if (auto === 'gewoon') return stand('gewoon', true, false);
+    return stand('realistisch', false, false);
   }
 
   get = () => this.stand;
@@ -52,9 +72,22 @@ export class PoppetjesInstelling {
   }
 
   /** De gebruiker kiest zelf (Instellingen). */
-  kies(eenvoudig: boolean) {
+  kies(niveau: PopNiveau) {
+    this.autoGeheugen = null;
     try {
-      this.opslag?.setItem(KEUZE, eenvoudig ? 'eenvoudig' : 'normaal');
+      this.opslag?.setItem(KEUZE, niveau);
+      this.opslag?.removeItem(AUTO);
+    } catch {
+      /* niet erg */
+    }
+    this.melden();
+  }
+
+  /** Terug naar automatisch (de app kiest; begint weer met realistisch). */
+  automatischKiezen() {
+    this.autoGeheugen = null;
+    try {
+      this.opslag?.removeItem(KEUZE);
       this.opslag?.removeItem(AUTO);
     } catch {
       /* niet erg */
@@ -63,24 +96,23 @@ export class PoppetjesInstelling {
   }
 
   /**
-   * 3D haperde met de gewone poppetjes: zet ze automatisch op eenvoudig. Niet als de gebruiker zelf 'normaal'
-   * koos (dan valt de speler zo nodig terug op 2D). Geeft true als er iets veranderd is.
+   * 3D haperde: zet het niveau automatisch één stap lager (realistisch → gewoon → eenvoudig). Niet als de gebruiker het
+   * niveau zelf koos (dan valt de speler zo nodig terug op 2D). Geeft het nieuwe niveau, of null als er niets veranderd is.
    */
-  automatisch(): boolean {
-    let keuze: string | null = null;
+  verlaag(): PopNiveau | null {
+    const { keuze } = this.ruw();
+    if (this.stand.zelf) return null;
+    const nu = this.stand.niveau;
+    const volgende: PopNiveau | null = nu === 'realistisch' ? 'gewoon' : nu === 'gewoon' && keuze !== 'normaal' ? 'eenvoudig' : null;
+    if (!volgende) return null;
+    this.autoGeheugen = volgende === 'eenvoudig' ? '1' : 'gewoon';
     try {
-      keuze = this.opslag?.getItem(KEUZE) ?? null;
-    } catch {
-      /* geen opslag */
-    }
-    if (keuze || this.stand.eenvoudig) return false;
-    try {
-      this.opslag?.setItem(AUTO, '1');
+      this.opslag?.setItem(AUTO, this.autoGeheugen);
     } catch {
       /* niet erg */
     }
     this.melden();
-    return this.stand.eenvoudig;
+    return this.stand.niveau === volgende ? volgende : null;
   }
 }
 

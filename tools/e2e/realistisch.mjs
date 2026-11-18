@@ -1,6 +1,6 @@
-// Proef "Realistisch" (fase 1 van de volgende stap): vergelijkt de huidige 3D-weergave met de proef (zonlicht met schaduwen, gras met
-// structuur, luchtverloop) op drie oefeningen (loopvorm, afwerkvorm met keeper, partijvorm) en een 11 tegen 11-bord.
-// - blad-realistisch.png: per scène huidig en proef naast elkaar (telefoonformaat).
+// Realistisch (proef in fase 1, sinds 0.38.0 de standaard): vergelijkt de weergave Gewoon met Realistisch (zonlicht met schaduwen,
+// gras met structuur, luchtverloop, echtere figuur) op drie oefeningen (loopvorm, afwerkvorm met keeper, partijvorm) en een 11 tegen 11-bord.
+// - blad-realistisch.png: per scène Gewoon en Realistisch naast elkaar (telefoonformaat).
 // - realistisch-meting.json: beeldsnelheid (gewone en 4× tragere processor), tekenopdrachten/driehoeken en de tijd tot 3D in beeld is.
 // Gebruik: node tools/e2e/realistisch.mjs [basis-url] [alleen: beelden|snelheid]
 import fs from 'node:fs';
@@ -47,7 +47,6 @@ async function pagina(dpr) {
   await page.evaluateOnNewDocument(() => {
     try {
       localStorage.setItem('trainersapp.taal', 'nl');
-      localStorage.setItem('trainersapp.voorbeeld', '1');
       localStorage.setItem('trainersapp.3dAltijd', '1');
       localStorage.setItem('trainersapp.testCamera', '1');
     } catch {
@@ -68,10 +67,10 @@ async function pagina(dpr) {
   return { ctx, page };
 }
 
-/** Open een scène met de proef aan of uit; geeft de tijd (ms) tot 3D in beeld is. */
+/** Open een scène in Realistisch (aan) of Gewoon; geeft de tijd (ms) tot 3D in beeld is. */
 async function open(page, pad, aan) {
   await page.goto(`${BASIS}?r=${Math.random().toString(36).slice(2)}#/`, { waitUntil: 'domcontentloaded' });
-  await page.evaluate((aan) => (aan ? localStorage.setItem('trainersapp.realistisch', '1') : localStorage.removeItem('trainersapp.realistisch')), aan);
+  await page.evaluate((aan) => localStorage.setItem('trainersapp.poppetjes', aan ? 'realistisch' : 'gewoon'), aan);
   const t0 = Date.now();
   await page.goto(`${BASIS}?r=${Math.random().toString(36).slice(2)}${pad}`, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.speler-canvas-3d', { timeout: 30000 });
@@ -81,24 +80,23 @@ async function open(page, pad, aan) {
   return ms;
 }
 
-// ---------- beelden: huidig en proef naast elkaar ----------
+// ---------- beelden: Gewoon en Realistisch naast elkaar ----------
 if (ALLEEN === 'alles' || ALLEEN === 'beelden') {
   const { ctx, page } = await pagina(2);
   const shots = [];
   for (const [naam, pad] of SCENES) {
     for (const aan of [false, true]) {
       await open(page, pad, aan);
-      const knop = await page.$('.speler-proef');
-      if (!knop) problemen.push(`${naam}: schakelaar Realistisch (proef) ontbreekt`);
-      else if ((await page.evaluate((k) => k.getAttribute('aria-pressed'), knop)) !== String(aan)) problemen.push(`${naam}: schakelaar staat verkeerd`);
+      const info = await page.evaluate(() => window.__info3d?.() ?? null);
+      if (info?.realistisch !== aan) problemen.push(`${naam}: weergave klopt niet (${JSON.stringify(info)})`);
       const duur = Number(await page.evaluate(() => document.querySelector('.speler-balk')?.max ?? 0));
       const vak = await page.$('.speler-vak');
       for (const f of [0.3, 0.62]) {
         await zetTijd(page, duur * f);
         await slaap(200);
-        const bestand = `${MAP}real-${naam.replace(/\W+/g, '-')}-${aan ? 'proef' : 'huidig'}-${f}.png`;
+        const bestand = `${MAP}real-${naam.replace(/\W+/g, '-')}-${aan ? 'realistisch' : 'gewoon'}-${f}.png`;
         await vak.screenshot({ path: bestand });
-        shots.push([bestand, `${naam} · ${aan ? 'Realistisch (proef)' : 'huidig'} · ${Math.round(f * 100)}%`]);
+        shots.push([bestand, `${naam} · ${aan ? 'Realistisch' : 'Gewoon'} · ${Math.round(f * 100)}%`]);
       }
     }
   }
@@ -109,32 +107,10 @@ if (ALLEEN === 'alles' || ALLEEN === 'beelden') {
     await slaap(900);
     await zetTijd(page, 3.45);
     await slaap(250);
-    const bestand = `${MAP}real-dichtbij-${aan ? 'proef' : 'huidig'}.png`;
+    const bestand = `${MAP}real-dichtbij-${aan ? 'realistisch' : 'gewoon'}.png`;
     await (await page.$('.speler-vak')).screenshot({ path: bestand });
-    shots.push([bestand, `Afwerkvorm, achter het goal · ${aan ? 'Realistisch (proef)' : 'huidig'}`]);
+    shots.push([bestand, `Afwerkvorm, achter het goal · ${aan ? 'Realistisch' : 'Gewoon'}`]);
   }
-  // De schakelaar zelf werkt (aan en weer uit) en wordt onthouden.
-  await open(page, SCENES[0][1], false);
-  await page.click('.speler-proef');
-  await page.waitForSelector('.speler-proef.aan', { timeout: 10000 }).catch(() => problemen.push('schakelaar: gaat niet aan'));
-  await page.waitForSelector('.speler-canvas-3d', { timeout: 15000 });
-  if ((await page.evaluate(() => localStorage.getItem('trainersapp.realistisch'))) !== '1') problemen.push('schakelaar: keuze niet onthouden');
-  await page.click('.speler-proef');
-  await slaap(600);
-  if (await page.$('.speler-proef.aan')) problemen.push('schakelaar: gaat niet uit');
-  // Zonder de voorbeeldvlag is er geen schakelaar en staat de proef uit, ook als de sleutel nog bewaard is.
-  await page.evaluate(() => {
-    localStorage.setItem('trainersapp.realistisch', '1');
-    localStorage.removeItem('trainersapp.voorbeeld');
-  });
-  const los = await ctx.newPage();
-  await alsGeinstalleerd(los);
-  await los.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
-  await los.goto(`${BASIS}?r=${Math.random().toString(36).slice(2)}${SCENES[0][1]}`, { waitUntil: 'domcontentloaded' });
-  await los.waitForSelector('.speler-canvas-3d', { timeout: 30000 });
-  await slaap(300);
-  // (deze pagina zet de vlag niet opnieuw: evaluateOnNewDocument geldt alleen voor de eerste pagina)
-  if ((await los.evaluate(() => localStorage.getItem('trainersapp.voorbeeld'))) === null && (await los.$('.speler-proef'))) problemen.push('buiten de voorbeeldversie is de schakelaar te zien');
   await blad(browser, shots, `${MAP}blad-realistisch.png`, 4, 2400);
   await ctx.close();
   console.log(`${shots.length} screenshots → blad-realistisch.png`);
@@ -170,7 +146,7 @@ if (ALLEEN === 'alles' || ALLEEN === 'snelheid') {
     );
   for (const [naam, pad] of SCENES) {
     for (const aan of [false, true]) {
-      const sleutel = `${naam} · ${aan ? 'proef' : 'huidig'}`;
+      const sleutel = `${naam} · ${aan ? 'realistisch' : 'gewoon'}`;
       uit[sleutel] = {};
       for (const rem of [1, 4]) {
         await cdp.send('Emulation.setCPUThrottlingRate', { rate: rem });

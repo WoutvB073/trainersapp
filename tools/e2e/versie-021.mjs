@@ -1,7 +1,7 @@
 // 0.21.0 in de browser: realistischere 3D-poppetjes.
 // - Snelheidsknop 0,5× / 1× / 2× (en de animatie loopt echt zo snel)
-// - Instellingen → "Eenvoudige poppetjes": aan/uit, onthouden, 3D gebruikt ze
-// - Automatisch: op een (nagebootst) traag toestel eerst eenvoudige poppetjes, daarna zo nodig 2D
+// - Instellingen → 3D-animaties (sinds 0.38.0 Realistisch / Gewoon / Eenvoudig): Eenvoudig kiezen, onthouden, 3D gebruikt ze
+// - Automatisch: op een (nagebootst) traag toestel een stap lichter (sinds 0.38.0 eerst Gewoon, zie versie-0380.mjs), daarna zo nodig 2D
 // - Het nieuwe poppetje overal: bibliotheek, trainingsmodus, tactiekbord (11 tegen 11, met namen), spelhervatting,
 //   gedeelde link; 2D blijft werken
 // Screenshots: blad-021.png. Gebruik: node tools/e2e/versie-021.mjs [basis-url]
@@ -95,18 +95,13 @@ const foto = async (page, naam, tekst) => {
 {
   const { context, page } = await toestel(TELEFOON);
   await ga(page, '#/instellingen');
-  const vak = await page.waitForFunction(() => [...document.querySelectorAll('label')].find((l) => l.textContent.includes('Eenvoudige poppetjes')), { timeout: 8000 }).catch(() => null);
-  controle(!!vak, 'Instellingen: schakelaar Eenvoudige poppetjes ontbreekt');
-  await page.evaluate(() => [...document.querySelectorAll('label')].find((l) => l.textContent.includes('Eenvoudige poppetjes'))?.scrollIntoView({ block: 'center' }));
-  await page.evaluate(() =>
-    [...document.querySelectorAll('label')]
-      .find((l) => l.textContent.includes('Eenvoudige poppetjes'))
-      ?.querySelector('input')
-      ?.click(),
-  );
+  const vak = await page.waitForSelector('#poppetjes .keuze', { timeout: 8000 }).catch(() => null);
+  controle(!!vak, 'Instellingen: keuze Eenvoudig ontbreekt');
+  await page.evaluate(() => document.querySelector('#poppetjes')?.scrollIntoView({ block: 'center' }));
+  await page.evaluate(() => [...document.querySelectorAll('#poppetjes .keuze')].find((b) => b.textContent.trim() === 'Eenvoudig')?.click());
   await slaap(300);
   controle((await page.evaluate(() => localStorage.getItem('trainersapp.poppetjes'))) === 'eenvoudig', 'Eenvoudige poppetjes aanzetten wordt niet bewaard');
-  await foto(page, 'instelling', 'Instellingen: 3D-animaties → Eenvoudige poppetjes');
+  await foto(page, 'instelling', 'Instellingen: 3D-animaties → Eenvoudig');
   await ga(page, '#/oefening/keeper-ld-voetenwerk-lange-duik');
   const info = await drieD(page, 'eenvoudig');
   controle(info?.eenvoudig === true, `3D gebruikt geen eenvoudige poppetjes: ${JSON.stringify(info)}`);
@@ -115,12 +110,7 @@ const foto = async (page, naam, tekst) => {
   await foto(page, 'eenvoudig', `Eenvoudige poppetjes (${info?.tekenopdrachten} tekenopdrachten)`);
   await ga(page, '#/instellingen');
   await slaap(300);
-  await page.evaluate(() =>
-    [...document.querySelectorAll('label')]
-      .find((l) => l.textContent.includes('Eenvoudige poppetjes'))
-      ?.querySelector('input')
-      ?.click(),
-  );
+  await page.evaluate(() => [...document.querySelectorAll('#poppetjes .keuze')].find((b) => b.textContent.trim() === 'Gewoon')?.click());
   await ga(page, '#/oefening/keeper-ld-voetenwerk-lange-duik');
   const info2 = await drieD(page, 'gewoon');
   controle(info2?.eenvoudig === false, `Uitzetten werkt niet: ${JSON.stringify(info2)}`);
@@ -138,18 +128,18 @@ const foto = async (page, naam, tekst) => {
   await page.waitForSelector('.speler-canvas-3d', { timeout: 20000 }).catch(() => null);
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 12 });
   const melding = await page
-    .waitForFunction(() => document.querySelector('.speler-melding')?.textContent.includes('eenvoudige poppetjes'), { timeout: 60000 })
+    .waitForFunction(() => document.querySelector('.speler-melding')?.textContent.includes('poppetjes'), { timeout: 60000 })
     .then(() => page.evaluate(() => document.querySelector('.speler-melding').textContent))
     .catch(() => null);
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
-  controle(!!melding, 'Traag toestel: geen melding over eenvoudige poppetjes');
-  controle((await page.evaluate(() => localStorage.getItem('trainersapp.poppetjesAuto'))) === '1', 'Traag toestel: eenvoudige poppetjes niet automatisch aangezet');
-  await foto(page, 'automatisch', 'Traag toestel: automatisch eenvoudige poppetjes (melding)');
+  controle(!!melding, 'Traag toestel: geen melding over lichtere poppetjes');
+  controle(['gewoon', '1'].includes(await page.evaluate(() => localStorage.getItem('trainersapp.poppetjesAuto'))), 'Traag toestel: niet automatisch lichter gezet');
+  await foto(page, 'automatisch', 'Traag toestel: automatisch lichtere poppetjes (melding)');
   await ga(page, '#/instellingen');
   await slaap(300);
-  const uitleg = await page.evaluate(() => document.body.textContent.includes('Automatisch aangezet'));
-  controle(uitleg, 'Instellingen: geen uitleg dat het automatisch aanstaat');
-  await page.evaluate(() => [...document.querySelectorAll('label')].find((l) => l.textContent.includes('Eenvoudige poppetjes'))?.scrollIntoView({ block: 'center' }));
+  const uitleg = await page.evaluate(() => document.body.textContent.includes('Automatisch lager gezet'));
+  controle(uitleg, 'Instellingen: geen uitleg dat het automatisch lager staat');
+  await page.evaluate(() => document.querySelector('#poppetjes')?.scrollIntoView({ block: 'center' }));
   await foto(page, 'automatisch-instelling', 'Instellingen na automatisch aanzetten');
   await context.close();
 }

@@ -10,7 +10,7 @@ import { useOnlineStatus } from '../engine/account';
 import { ga } from '../router';
 import { SyncRegel } from './online/Account';
 import { GegevensBlok } from './GegevensBlok';
-import { poppetjes, usePoppetjes } from '../engine/poppetjes';
+import { poppetjes, usePoppetjes, type PopNiveau } from '../engine/poppetjes';
 import { abonneerTaal, kiesTaal, leesTaalKeuze, type TaalKeuze } from '../i18n/taal';
 import { useSyncExternalStore } from 'react';
 import { t as vt } from '../i18n/t';
@@ -70,21 +70,39 @@ const MODI: { modus: Modus; naam: string; icoon: IcoonNaam }[] = [
   { modus: 'auto', naam: vt('Automatisch'), icoon: 'computer' },
 ];
 
-/** 3D-animaties: eenvoudige poppetjes voor tragere telefoons (alleen op dit apparaat). */
+const NIVEAUS: { niveau: PopNiveau; naam: string; uitleg: string }[] = [
+  { niveau: 'realistisch', naam: vt('Realistisch'), uitleg: vt('Zonlicht met schaduwen, gras met structuur en echtere spelers met shirt, broek, kousen en schoenen.') },
+  { niveau: 'gewoon', naam: vt('Gewoon'), uitleg: vt('De vertrouwde poppetjes, zonder schaduwen. Lichter dan Realistisch.') },
+  { niveau: 'eenvoudig', naam: vt('Eenvoudig'), uitleg: vt('Lichtere poppetjes en een iets lagere beeldscherpte, voor oudere of tragere telefoons.') },
+];
+
+/** 3D-animaties (0.38.0): poppetjes realistisch, gewoon of eenvoudig (alleen op dit apparaat). */
 function AnimatieBlok() {
   const p = usePoppetjes();
+  const gekozen = NIVEAUS.find((n) => n.niveau === p.niveau)!;
   return (
-    <section className="blok">
+    <section className="blok" id="poppetjes">
       <h3>{vt('3D-animaties')}</h3>
-      <label className="filter-schakel">
-        <input type="checkbox" checked={p.eenvoudig} onChange={() => poppetjes.kies(!p.eenvoudig)} />
-        {vt('Eenvoudige poppetjes')}
-      </label>
+      <div className="keuze-drie" role="radiogroup" aria-label={vt('Poppetjes in 3D')}>
+        {NIVEAUS.map((n) => (
+          <button key={n.niveau} role="radio" aria-checked={p.niveau === n.niveau} className={`keuze${p.niveau === n.niveau ? ' aan' : ''}`} onClick={() => poppetjes.kies(n.niveau)}>
+            {n.naam}
+          </button>
+        ))}
+      </div>
+      <p className="klein">{gekozen.uitleg}</p>
       <p className="klein">
         {p.automatisch
-          ? vt('Automatisch aangezet, omdat 3D op dit apparaat niet soepel liep. Zet hem uit om de gewone poppetjes weer te proberen.')
-          : vt('Lichtere poppetjes en een iets lagere beeldscherpte, voor oudere of tragere telefoons. Gaat vanzelf aan als 3D niet soepel loopt.')}
+          ? vt('Automatisch lager gezet, omdat 3D op dit apparaat niet soepel liep.')
+          : p.zelf
+            ? vt('Zelf gekozen. Loopt 3D niet soepel, dan zie je de 2D-weergave.')
+            : vt('Automatisch: de app begint met Realistisch en kiest vanzelf een lichtere weergave als 3D niet soepel loopt.')}
       </p>
+      {(p.zelf || p.automatisch) && (
+        <button className="link-knop poppetjes-auto" onClick={() => poppetjes.automatischKiezen()}>
+          {vt('Weer automatisch laten kiezen')}
+        </button>
+      )}
     </section>
   );
 }

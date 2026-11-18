@@ -7,8 +7,6 @@ import { maakWeergave2D, type Weergave } from './weergave';
 import type { CameraStand, Weergave3D } from './render3d';
 import { Icoon } from '../components/Icoon';
 import { poppetjes, usePoppetjes } from '../engine/poppetjes';
-import { useRealistisch, zetRealistisch } from '../engine/realistisch';
-import { VOORBEELD_BUILD } from '../engine/voorbeeld';
 import { getal, t } from '../i18n/t';
 
 export const SNELHEDEN = [0.5, 1, 2] as const;
@@ -72,10 +70,10 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
   const [melding, setMelding] = useState<string | null>(null);
   const [uitleg, setUitleg] = useState(false);
   const [looplijnen, setLooplijnen] = useState(() => lees(LOOPLIJNEN) === '1');
-  // Eenvoudige poppetjes (Instellingen, of automatisch als 3D hapert).
-  const { eenvoudig } = usePoppetjes();
-  // Proef Realistisch (alleen in de voorbeeldversie te kiezen).
-  const realistisch = useRealistisch();
+  // Poppetjes realistisch, gewoon of eenvoudig (Instellingen, of automatisch lager als 3D hapert).
+  const { niveau } = usePoppetjes();
+  const eenvoudig = niveau === 'eenvoudig';
+  const realistisch = niveau === 'realistisch';
   const looplijnenRef = useRef(looplijnen);
 
   const teken = useCallback((sprong = false) => {
@@ -192,8 +190,11 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
           // De eerste beelden overslaan (opstarten); mediaan van de rest.
           const rest = tussenpozen.slice(15).sort((a, b) => a - b);
           const mediaan = rest[Math.floor(rest.length / 2)]!;
-          // Onder ± 28 beelden per seconde: eerst eenvoudige poppetjes; is het dan nog te traag, dan 2D.
-          if (!eenvoudig && mediaan > 36 && poppetjes.automatisch()) {
+          // Onder ± 28 beelden per seconde: een stap lichter (realistisch → gewoon → eenvoudig); is het dan nog te traag, dan 2D.
+          const lager = mediaan > 36 ? poppetjes.verlaag() : null;
+          if (lager === 'gewoon') {
+            setMelding(t('3D liep niet soepel; je ziet nu de gewone poppetjes (aan te passen bij Instellingen).'));
+          } else if (lager === 'eenvoudig') {
             setMelding(t('3D liep niet soepel; je ziet nu eenvoudige poppetjes (aan te passen bij Instellingen).'));
           } else if (mediaan > 45) {
             schrijf(TRAAG, '1');
@@ -218,7 +219,7 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
     };
     frame = requestAnimationFrame(stap);
     return () => cancelAnimationFrame(frame);
-  }, [speelt, snelheid, herhalen, totaal, tijdlijn, teken, modus, klaar3d, naar2D, eenvoudig]);
+  }, [speelt, snelheid, herhalen, totaal, tijdlijn, teken, modus, klaar3d, naar2D, niveau]);
 
   const afspelenPauze = () => {
     if (!speelt && tRef.current >= tijdlijn.duur) {
@@ -287,11 +288,6 @@ export function AnimatieSpeler({ tekening: getekend }: { tekening: Tekening }) {
             ))}
           </div>
         </div>
-        {VOORBEELD_BUILD && modus === '3d' && klaar3d && !eenvoudig && (
-          <button className={`speler-proef${realistisch ? ' aan' : ''}`} aria-pressed={realistisch} onClick={() => zetRealistisch(!realistisch)}>
-            {t('Realistisch (proef)')}
-          </button>
-        )}
         {uitleg && modus === '3d' && klaar3d && <div className="speler-uitleg">{aanraak ? t('Veeg om te draaien · knijp om te zoomen') : t('Sleep om te draaien · scroll om te zoomen')}</div>}
         {melding && (
           <div className="speler-melding" role="status">

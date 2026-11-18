@@ -19,38 +19,40 @@ class Opslag {
   }
 }
 
+// Sinds 0.38.0 met drie niveaus (realistisch, gewoon, eenvoudig); uitgebreid getest in tests/versie-0380.test.ts.
 describe('instelling Eenvoudige poppetjes', () => {
-  it('standaard uit; zelf aan- en uitzetten wordt onthouden', () => {
+  it('zelf eenvoudig kiezen en weer terug wordt onthouden', () => {
     const o = new Opslag();
     const p = new PoppetjesInstelling(o);
-    expect(p.get()).toEqual({ eenvoudig: false, automatisch: false });
-    p.kies(true);
+    expect(p.get().eenvoudig).toBe(false);
+    p.kies('eenvoudig');
     expect(p.get().eenvoudig).toBe(true);
-    expect(new PoppetjesInstelling(o).get()).toEqual({ eenvoudig: true, automatisch: false });
-    p.kies(false);
+    expect(new PoppetjesInstelling(o).get()).toMatchObject({ eenvoudig: true, automatisch: false });
+    p.kies('gewoon');
     expect(new PoppetjesInstelling(o).get().eenvoudig).toBe(false);
   });
 
-  it('automatisch aan als 3D hapert, maar niet als de gebruiker zelf "normaal" koos', () => {
+  it('automatisch lichter als 3D hapert, maar niet als de gebruiker zelf koos', () => {
     const o = new Opslag();
     const p = new PoppetjesInstelling(o);
     let gemeld = 0;
     p.abonneer(() => gemeld++);
-    expect(p.automatisch()).toBe(true);
-    expect(p.get()).toEqual({ eenvoudig: true, automatisch: true });
-    expect(gemeld).toBe(1);
-    // Al aan: niets meer te doen.
-    expect(p.automatisch()).toBe(false);
-    // Zelf uitgezet: dan niet opnieuw automatisch aan.
-    p.kies(false);
-    expect(p.automatisch()).toBe(false);
+    expect(p.verlaag()).toBe('gewoon');
+    expect(p.verlaag()).toBe('eenvoudig');
+    expect(p.get()).toMatchObject({ eenvoudig: true, automatisch: true });
+    expect(gemeld).toBe(2);
+    // Al eenvoudig: niets meer te doen.
+    expect(p.verlaag()).toBe(null);
+    // Zelf gekozen: dan niet opnieuw automatisch lager.
+    p.kies('gewoon');
+    expect(p.verlaag()).toBe(null);
     expect(p.get().eenvoudig).toBe(false);
   });
 
   it('zonder opslag (privévenster): werkt gewoon, onthoudt niets', () => {
     const p = new PoppetjesInstelling(undefined);
     expect(p.get().eenvoudig).toBe(false);
-    p.kies(true);
+    p.kies('eenvoudig');
     expect(p.get().eenvoudig).toBe(false);
   });
 });

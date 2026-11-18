@@ -7,17 +7,18 @@ import {
   Euler,
   InstancedBufferAttribute,
   InstancedMesh,
-  LatheGeometry,
   Material,
   Matrix4,
   MeshLambertMaterial,
+  MeshStandardMaterial,
   Object3D,
   Quaternion,
   SphereGeometry,
-  Vector2,
   Vector3,
 } from 'three';
 import type { Manier } from '../model/types';
+import { MAAT, rond, verloop } from './popVorm';
+import { ECHT_DELEN, echtGeometrie, type EchtDeelNaam } from './popEcht';
 import { RITME, type ObjectStand, type Stand } from './timeline';
 
 /**
@@ -32,25 +33,9 @@ import { RITME, type ObjectStand, type Stand } from './timeline';
  * Assen van een poppetje: +z = voorkant (kijkrichting), +x = zijn linkerkant, +y = omhoog. Index 0 = rechts, 1 = links.
  */
 
-// ---------- maten (meter) ----------
+// ---------- maten (meter): zie popVorm.ts ----------
 
-export const MAAT = {
-  enkel: 0.08,
-  scheen: 0.43,
-  dij: 0.44,
-  heupX: 0.09,
-  /** Heupgewricht bij gestrekte benen. */
-  heup: 0.95,
-  rompY: 0.06,
-  schouderX: 0.185,
-  schouderY: 0.43,
-  bovenarm: 0.29,
-  onderarm: 0.25,
-  nekY: 0.44,
-  hoofdY: 0.09,
-  /** Midden van het hoofd boven het hoofdgewricht. */
-  hoofdMidden: 0.1,
-} as const;
+export { MAAT };
 const BEEN = MAAT.dij + MAAT.scheen;
 /** Straal van de bal in 3D (iets groter dan echt, 0,11 m, zodat hij goed te zien is). */
 export const BAL_R = 0.14;
@@ -127,39 +112,6 @@ export function maakSkelet(): Skelet {
 }
 
 // ---------- geometrie ----------
-
-/**
- * Ronde vorm om de y-as (LatheGeometry), van boven (u = 0) naar onder (u = 1), met afgeronde uiteinden.
- * `straal(u)` geeft de dikte; zo krijgen dij, kuit en onderarm een natuurlijk verloop.
- */
-function rond(yBoven: number, yOnder: number, straal: (u: number) => number, n: number, seg: number, kap = 4): BufferGeometry {
-  const pts: Vector2[] = [];
-  const rB = straal(0);
-  const rO = straal(1);
-  for (let i = 0; i <= kap; i++) {
-    const a = ((i / kap) * Math.PI) / 2;
-    pts.push(new Vector2(Math.max(1e-4, Math.sin(a) * rO), yOnder - Math.cos(a) * rO * 0.8));
-  }
-  for (let i = n - 1; i >= 1; i--) {
-    const u = i / n;
-    pts.push(new Vector2(straal(u), yBoven + (yOnder - yBoven) * u));
-  }
-  for (let i = kap; i >= 0; i--) {
-    const a = ((i / kap) * Math.PI) / 2;
-    pts.push(new Vector2(Math.max(1e-4, Math.sin(a) * rB), yBoven + Math.cos(a) * rB * 0.8));
-  }
-  return new LatheGeometry(pts, seg);
-}
-
-/** Vloeiend tussen steunpunten [u, straal]. */
-const verloop = (punten: [number, number][]) => (u: number) => {
-  for (let i = 1; i < punten.length; i++) {
-    const [u1, r1] = punten[i]!;
-    const [u0, r0] = punten[i - 1]!;
-    if (u <= u1) return mix(r0, r1, glad((u - u0) / Math.max(1e-6, u1 - u0)));
-  }
-  return punten[punten.length - 1]![1];
-};
 
 export type DeelNaam = 'bekken' | 'romp' | 'nek' | 'hoofd' | 'haar' | 'mouw' | 'bovenarm' | 'onderarm' | 'hand' | 'pijp' | 'dij' | 'kous' | 'schoen';
 
@@ -303,14 +255,16 @@ function deelGeometrie(naam: DeelNaam, fijn: boolean): BufferGeometry {
 }
 
 /** Welke kleur een deel krijgt. */
-type KleurSoort = 'shirt' | 'broek' | 'kous' | 'huid' | 'dij' | 'haar' | 'schoen' | 'mouw' | 'hand';
+type KleurSoort = 'shirt' | 'broek' | 'kous' | 'huid' | 'dij' | 'haar' | 'schoen' | 'schoenEcht' | 'zool' | 'mouw' | 'hand';
 
 interface DeelDef {
-  naam: DeelNaam;
+  naam: DeelNaam | EchtDeelNaam;
   node: (sk: Skelet) => Object3D;
   kleur: KleurSoort;
   /** Ook bij eenvoudige poppetjes. */
   eenvoudig: boolean;
+  /** Alleen voor poppetjes waarvoor dit waar is (realistisch: kapsel, keepershandschoenen). */
+  wie?: (k: PopKleuren) => boolean;
 }
 
 const DELEN: DeelDef[] = [
@@ -336,6 +290,21 @@ const HUID = ['#f0c7a4', '#e3b08c', '#d29b74', '#b97c56', '#8c5a3c', '#e8b996'];
 const SCHOEN = '#1b1d21';
 const BROEK = '#1f2933';
 const HANDSCHOEN = '#eef2f0';
+/** Realistisch: voetbalschoenen [schoen, zool], per speler vast (uit de id). */
+const SCHOENEN: [string, string][] = [
+  ['#1b1d21', '#e9e9e9'],
+  ['#1b1d21', '#ff6a1a'],
+  ['#f2f2f2', '#1b1d21'],
+  ['#ff6a1a', '#1b1d21'],
+  ['#2456c9', '#f2f2f2'],
+  ['#1b1d21', '#c8f03c'],
+  ['#d7263d', '#f2f2f2'],
+  ['#c8f03c', '#1b1d21'],
+];
+/** Realistisch: sportschoenen van de trainer. */
+const TRAINERSCHOEN: [string, string] = ['#2c3440', '#f2f2f2'];
+/** Realistisch: kapsels (zie KAPSELS in popEcht.ts) kort, stoppel, lang en paardenstaart. */
+const KAPSEL_KANS = [0.4, 0.25, 0.2, 0.15];
 
 export interface PopKleuren {
   shirt: Color;
@@ -348,6 +317,24 @@ export interface PopKleuren {
   schoen: Color;
   mouw: Color;
   hand: Color;
+  /** Realistisch: kleur van de schoen en de zool. */
+  schoenEcht: Color;
+  zool: Color;
+  /** Realistisch: welk kapsel (index in KAPSELS). */
+  kapsel: number;
+  /** Realistisch: keepershandschoenen. */
+  handschoen: boolean;
+  /** Realistisch: lange mouwen (keeper en trainer), zonder zoom bij de bovenarm. */
+  langeMouw: boolean;
+}
+
+function kiesKapsel(u: number): number {
+  let som = 0;
+  for (let i = 0; i < KAPSEL_KANS.length; i++) {
+    som += KAPSEL_KANS[i]!;
+    if (u < som) return i;
+  }
+  return 0;
 }
 
 /** Kleuren van een poppetje: hesje, broek, kousen, huid en haar (per persoon vast, uit de id). */
@@ -358,6 +345,7 @@ export function popKleuren(soort: 'speler' | 'keeper' | 'trainer', shirt: string
   const keeper = soort === 'keeper';
   // Trainer in trainingspak (lange mouwen en broek), keeper met lange mouwen en handschoenen.
   const broek = new Color(trainer ? '#2c3440' : BROEK);
+  const [schoen, zool] = trainer ? TRAINERSCHOEN : SCHOENEN[Math.floor(zaad * 15485863) % SCHOENEN.length]!;
   return {
     shirt: s,
     broek,
@@ -368,6 +356,11 @@ export function popKleuren(soort: 'speler' | 'keeper' | 'trainer', shirt: string
     schoen: new Color(SCHOEN),
     mouw: trainer || keeper ? s.clone() : huid.clone(),
     hand: keeper ? new Color(HANDSCHOEN) : huid.clone(),
+    schoenEcht: new Color(schoen),
+    zool: new Color(zool),
+    kapsel: trainer ? (zaad * 7 % 1 < 0.6 ? 0 : 1) : kiesKapsel((zaad * 9973) % 1),
+    handschoen: keeper,
+    langeMouw: keeper || trainer,
   };
 }
 
@@ -392,29 +385,38 @@ export class Poppetjes {
   private readonly grofVan: (InstancedMesh | null)[] = [];
   private readonly teller = new Map<InstancedMesh, number>();
   readonly materiaal: Material;
+  readonly eenvoudig: boolean;
+  /** Realistische figuur (popEcht.ts). */
+  readonly echt: boolean;
+  private readonly delen: DeelDef[];
 
-  constructor(
-    aantal: number,
-    readonly eenvoudig: boolean,
-  ) {
-    // Eén materiaal voor alles; de kleur komt per instantie.
-    this.materiaal = new MeshLambertMaterial({ color: '#ffffff' });
-    const perDeel = new Map<DeelNaam, number>();
-    for (const d of DELEN) perDeel.set(d.naam, (perDeel.get(d.naam) ?? 0) + 1);
+  /** `weergave`: 'gewoon', 'eenvoudig' (minder detail) of 'echt' (weergave Realistisch); true = eenvoudig. */
+  constructor(aantal: number, weergave: 'gewoon' | 'eenvoudig' | 'echt' | boolean = 'gewoon') {
+    const eenvoudig = weergave === true || weergave === 'eenvoudig';
+    this.eenvoudig = eenvoudig;
+    this.echt = weergave === 'echt';
+    this.delen = this.echt ? ECHT_DELEN : DELEN;
+    const delen = this.delen;
+    // Eén materiaal voor alles; de kleur komt per instantie. Realistisch: licht per beeldpunt, met de tinten per hoekpunt.
+    this.materiaal = this.echt ? new MeshStandardMaterial({ color: '#ffffff', roughness: 0.82, metalness: 0, vertexColors: true }) : new MeshLambertMaterial({ color: '#ffffff' });
+    const geometrie = (naam: DeelNaam | EchtDeelNaam, fijn: boolean) => (this.echt ? echtGeometrie(naam as EchtDeelNaam, fijn) : deelGeometrie(naam as DeelNaam, fijn));
+    const perDeel = new Map<DeelNaam | EchtDeelNaam, number>();
+    for (const d of delen) perDeel.set(d.naam, (perDeel.get(d.naam) ?? 0) + 1);
     for (const [naam, keer] of perDeel) {
       for (const fijn of eenvoudig ? [false] : [true, false]) {
-        if (eenvoudig && !DELEN.find((d) => d.naam === naam)!.eenvoudig) continue;
-        const mesh = new InstancedMesh(deelGeometrie(naam, fijn), this.materiaal, Math.max(1, aantal * keer));
+        if (eenvoudig && !delen.find((d) => d.naam === naam)!.eenvoudig) continue;
+        const mesh = new InstancedMesh(geometrie(naam, fijn), this.materiaal, Math.max(1, aantal * keer));
         mesh.instanceMatrix.setUsage(DynamicDrawUsage);
         mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(Math.max(1, aantal * keer) * 3), 3);
         mesh.instanceColor.setUsage(DynamicDrawUsage);
         mesh.count = 0;
         // De poppetjes bewegen over het hele veld: niet wegknippen op de (oude) omhullende bol.
         mesh.frustumCulled = false;
+        mesh.name = `${naam}|${fijn ? 'f' : 'g'}`;
         this.meshes.set(`${naam}|${fijn ? 'f' : 'g'}`, mesh);
       }
     }
-    for (const d of DELEN) {
+    for (const d of delen) {
       const uit = eenvoudig && !d.eenvoudig;
       this.fijnVan.push(uit ? null : (this.meshes.get(`${d.naam}|${eenvoudig ? 'g' : 'f'}`) ?? null));
       this.grofVan.push(uit ? null : (this.meshes.get(`${d.naam}|g`) ?? null));
@@ -433,10 +435,11 @@ export class Poppetjes {
   /** Eén poppetje tekenen (na het poseren): fijn of grof. */
   teken(sk: Skelet, k: PopKleuren, fijn: boolean) {
     const lijst = fijn ? this.fijnVan : this.grofVan;
-    for (let j = 0; j < DELEN.length; j++) {
+    for (let j = 0; j < this.delen.length; j++) {
       const mesh = lijst[j];
       if (!mesh) continue;
-      const d = DELEN[j]!;
+      const d = this.delen[j]!;
+      if (d.wie && !d.wie(k)) continue;
       const i = this.teller.get(mesh)!;
       if (i >= mesh.instanceMatrix.count) continue;
       mesh.setMatrixAt(i, d.node(sk).matrixWorld);

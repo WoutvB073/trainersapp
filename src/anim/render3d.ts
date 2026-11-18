@@ -1122,7 +1122,8 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
 
   // Poppetjes: één InstancedMesh per lichaamsdeel voor iedereen samen (zie poppetje.ts).
   const personen = tekening.objecten.filter((o) => o.soort === 'speler' || o.soort === 'keeper' || o.soort === 'trainer');
-  const poppetjes = new Poppetjes(personen.length, !!opties.eenvoudig);
+  // Realistisch: de echtere figuur (popEcht.ts); anders de gewone of eenvoudige poppetjes.
+  const poppetjes = new Poppetjes(personen.length, opties.eenvoudig ? 'eenvoudig' : echt ? 'echt' : 'gewoon');
   for (const m of poppetjes.lijst) {
     m.castShadow = m.receiveShadow = echt;
     scene.add(m);
@@ -1252,6 +1253,8 @@ export function maakWeergave3D(tekening: Tekening, tijdlijn: Tijdlijn, opties: O
       driehoeken: renderer.info.render.triangles,
       poppetjes: figuren.size,
       eenvoudig: !!opties.eenvoudig,
+      realistisch: echt,
+      schaduwen: renderer.shadowMap.enabled,
     });
     (window as unknown as { __three3d?: unknown }).__three3d = { renderer, scene };
   }

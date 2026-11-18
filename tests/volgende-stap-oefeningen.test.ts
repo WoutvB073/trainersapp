@@ -70,13 +70,6 @@ describe('ontwerplaag', () => {
   });
 });
 
-describe('proef Realistisch', () => {
-  it('staat buiten de voorbeeldversie altijd uit', async () => {
-    const { leesRealistisch } = await import('../src/engine/realistisch');
-    expect(leesRealistisch()).toBe(false);
-  });
-});
-
 describe('ontwerp Zacht (0.36.0)', () => {
   it('index.html start meteen in ontwerp c, en de CSS kent alleen nog richting c', async () => {
     const fs = await import('node:fs');

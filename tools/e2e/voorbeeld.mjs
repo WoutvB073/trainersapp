@@ -1,10 +1,10 @@
 // Voorbeeldversie (fase 1 van de volgende stap): controleert de aparte voorbeeld-build (lokaal of op de testlink).
 // - online staat uit: geen Inloggen/Teams, en geen enkel verzoek naar Firebase of Google tijdens het gebruik (ook niet bij Delen);
 // - titel "(voorbeeld)", niet vindbaar voor zoekmachines, eigen naam in het manifest;
-// - de wisselknop voor het ontwerp en de schakelaar Realistisch (proef) zijn er zonder testvlag;
+// - de wisselknop voor het ontwerp is er zonder testvlag (de proef Realistisch is sinds 0.38.0 een gewone instelling, in beide builds);
 // - de vijf uitgewerkte oefeningen openen in 3D;
 // - een deellink wijst naar de voorbeeldversie zelf.
-// Met "gewoon" als tweede argument: de gewone build (poort 4184) heeft juist géén wisselknop of schakelaar en wél Inloggen.
+// Met "gewoon" als tweede argument: de gewone build (poort 4184) heeft juist géén wisselknop en wél Inloggen.
 // Gebruik: node tools/e2e/voorbeeld.mjs [basis-url] [gewoon]
 import { alsGeinstalleerd, slaap, start } from './hulp.mjs';
 
@@ -54,11 +54,12 @@ const inloggen = /inloggen/i.test(instellingen);
 await ga(`/oefening/${VIJF[2]}`);
 await page.waitForSelector('.speler-canvas-3d', { timeout: 30000 }).catch(() => problemen.push('3D laadt niet'));
 await slaap(400);
+// Sinds 0.38.0 geen proefschakelaar meer in het beeld (Realistisch staat bij Instellingen).
 const proef = !!(await page.$('.speler-proef'));
 
 if (GEWOON) {
   if (kop.wissel) problemen.push('gewone build: wisselknop voor het ontwerp is te zien');
-  if (proef) problemen.push('gewone build: schakelaar Realistisch (proef) is te zien');
+  if (proef) problemen.push('gewone build: oude schakelaar Realistisch (proef) is te zien');
   if (!inloggen) problemen.push('gewone build: Inloggen ontbreekt bij Instellingen');
   if (/voorbeeld/i.test(kop.titel) || /noindex/.test(kop.robots)) problemen.push(`gewone build: titel of robots van de voorbeeldversie (${kop.titel} / ${kop.robots})`);
   if (manifest !== 'TopTraining') problemen.push(`gewone build: manifestnaam is ${manifest}`);
@@ -68,7 +69,7 @@ if (GEWOON) {
   if (manifest !== 'TopTraining voorbeeld') problemen.push(`manifestnaam is ${manifest}`);
   if (!kop.wissel) problemen.push('wisselknop voor het ontwerp ontbreekt');
   if (inloggen) problemen.push('Inloggen staat bij Instellingen (online hoort uit te staan)');
-  if (!proef) problemen.push('schakelaar Realistisch (proef) ontbreekt');
+  if (proef) problemen.push('oude schakelaar Realistisch (proef) is nog te zien');
 
   // Alle richtingen kiezen: de pagina blijft werken.
   await ga('/');
@@ -79,7 +80,7 @@ if (GEWOON) {
     if (nu !== r) problemen.push(`ontwerp ${r} gekozen, maar het is ${nu}`);
   }
 
-  // De vijf uitgewerkte oefeningen openen in 3D, met de proef aan.
+  // De vijf uitgewerkte oefeningen openen in 3D (standaard Realistisch).
   for (const id of VIJF) {
     await ga(`/oefening/${id}`);
     const ok = await page.waitForSelector('.speler-canvas-3d', { timeout: 30000 }).catch(() => null);
@@ -87,9 +88,6 @@ if (GEWOON) {
     const titel = await page.evaluate(() => document.querySelector('.detail-titel')?.textContent ?? '');
     if (!titel) problemen.push(`${id}: geen titel`);
   }
-  await page.click('.speler-proef').catch(() => {});
-  await page.waitForSelector('.speler-proef.aan', { timeout: 10000 }).catch(() => problemen.push('schakelaar Realistisch gaat niet aan'));
-  await page.waitForSelector('.speler-canvas-3d', { timeout: 15000 }).catch(() => problemen.push('3D weg na de schakelaar'));
 
   // Een training maken en delen: de link wijst naar de voorbeeldversie zelf en er gaat niets naar Firebase.
   await ga('/wedstrijd');
