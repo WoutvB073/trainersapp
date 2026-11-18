@@ -1863,7 +1863,18 @@ export function poseer(sk: Skelet, st: PopStaat, inv: PoseInvoer): void {
     }
   }
   if (inv.bal && inv.balInHanden && !werpHand && !(wp && (wp.soort === 'volley' || wp.soort === 'dropkick' || wp.soort === 'trap') && wp.u > 0.3)) {
-    handen(inv.bal, 1);
+    // Bal om het lichaam (0.37.3): voor het lijf met twee handen, opzij en achter met de hand aan die kant.
+    const a = s.omLijf ? ((((s.omLijf.hoek + 180) % 360) + 360) % 360) - 180 : 0;
+    if (s.omLijf && Math.abs(a) > 70) handen(inv.bal, 1, a > 0 ? 0 : 1);
+    else handen(inv.bal, 1);
+  }
+  // Klappen (0.37.3): beide handen naar elkaar, voor de borst.
+  if (s.klap && s.klap > 0) {
+    for (const i of [0, 1] as const) {
+      if (gew[i]! >= s.klap) continue;
+      doelen[i] = sk.romp.localToWorld(new Vector3(kant(i) * 0.03, MAAT.schouderY - 0.12, 0.34));
+      gew[i] = s.klap;
+    }
   }
   if (vang > 0) {
     // Handen naar de bal (vlak voor hij er is: naar de plek waar hij aankomt).

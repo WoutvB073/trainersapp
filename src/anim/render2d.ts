@@ -143,6 +143,29 @@ export function tekenScene(
     const s = stand.objecten.get(o.id);
     if (s) tekenPersoon(b, o, s, k, meerKeepers);
   }
+  // Stootkussen (0.37.3): een balk vlak voor het poppetje, dwars op zijn kijkrichting (boven het poppetje getekend).
+  for (const o of objecten) {
+    if (o.soort !== 'stootkussen') continue;
+    const m = stand.materiaal.get(o.id);
+    const drager = o.drager ? stand.objecten.get(o.drager) : undefined;
+    if (!m || !drager) continue;
+    const h = (m.hoek * Math.PI) / 180;
+    const voor = maat(b, 0.75, 10) * 1.12;
+    const c = px(b, [drager.x, drager.y]);
+    b.ctx.save();
+    b.ctx.translate(c[0] + Math.cos(h) * voor, c[1] + Math.sin(h) * voor);
+    b.ctx.rotate(h);
+    const dik = maat(b, 0.22, 4);
+    const breed = maat(b, 0.9, 14);
+    b.ctx.fillStyle = o.kleur ?? '#1d4ed8';
+    b.ctx.strokeStyle = '#ffffff';
+    b.ctx.lineWidth = Math.max(1, dik * 0.25);
+    b.ctx.beginPath();
+    b.ctx.roundRect(-dik / 2, -breed / 2, dik, breed, dik / 2);
+    b.ctx.fill();
+    b.ctx.stroke();
+    b.ctx.restore();
+  }
   // Namen (tactiekbord) onder de poppetjes.
   if (tekening.namen) {
     for (const o of objecten) {

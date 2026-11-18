@@ -55,7 +55,9 @@ export type ObjectSoort =
   /** Doelnet/schotnet in een goal (in plaats van een keeper), met een gat in elke hoek (zie src/anim/doelnet.ts). */
   | 'doelnet'
   /** Los hesje (0.30.0): als staart achter in de broek van `drager` (staart pakken), of in de hand. */
-  | 'hesje';
+  | 'hesje'
+  /** Stootkussen (0.37.3): `drager` houdt het met twee handen voor zich, bv. om een keeper licht te duwen bij een hoge bal. */
+  | 'stootkussen';
 
 /** Personen kunnen bewegen en een bal hebben. */
 export const PERSONEN: readonly ObjectSoort[] = ['speler', 'keeper', 'trainer'];
@@ -86,7 +88,7 @@ export interface VeldObject {
   naam?: string;
   /** Doelnet: id van het goal waar het in hangt (plek, draaiing en maat volgen dat goal). */
   doel?: string;
-  /** Hesje: de speler die het als staart achter in zijn broek heeft (0.30.0). */
+  /** Hesje: de speler die het als staart achter in zijn broek heeft (0.30.0). Stootkussen: wie het voor zich houdt (0.37.3). */
   drager?: string;
   /** Pion die iemand met gestrekte arm vasthoudt, tot `losLaten` (0.32.2). */
   inHand?: { wie: string; kant: 'links' | 'rechts' };
@@ -391,6 +393,23 @@ export interface VoetOpBalActie extends ActieBasis {
   wie: string;
 }
 
+/**
+ * De bal om je lichaam draaien (0.37.3): van hand tot hand om je middel of (voorovergebogen) om je knieën, `rondes` keer
+ * (standaard 2, één seconde per ronde). Wie het doet, moet de bal in de handen hebben.
+ */
+export interface OmLijfActie extends ActieBasis {
+  type: 'omLijf';
+  wie: string;
+  om?: 'middel' | 'benen';
+  rondes?: number;
+}
+
+/** In je handen klappen (0.37.3), bv. terwijl een opgegooide bal in de lucht is. Standaard 0,3 s. */
+export interface KlapActie extends ActieBasis {
+  type: 'klap';
+  wie: string;
+}
+
 /** Wijdbeens staan (0.37.3), bv. zodat een bal tussen de benen door kan. Standaard 2 s. */
 export interface WijdbeensActie extends ActieBasis {
   type: 'wijdbeens';
@@ -508,7 +527,7 @@ export interface TeamActie extends ActieBasis {
 }
 
 export type Actie =
-  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | TrucActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie | TekenActie | WijdbeensActie;
+  BalActie | BeweegActie | PersoonActie | AansluitActie | TeamActie | SchijnActie | TrucActie | DrukActie | DekActie | VeroverActie | PannaActie | ZitActie | PlukActie | DraaiActie | AantikActie | MateriaalActie | VoetOpBalActie | TikTakActie | TekenActie | WijdbeensActie | OmLijfActie | KlapActie;
 
 export interface AnimatieStap {
   acties: Actie[];

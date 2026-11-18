@@ -196,6 +196,10 @@ export interface Tijdlijn {
   tekens: Map<string, { t0: number; t1: number; kant: 'links' | 'rechts' }[]>;
   /** Wijdbeens staan (0.37.3). */
   wijdbeens: Map<string, { t0: number; t1: number }[]>;
+  /** Bal om het lichaam (0.37.3). */
+  omLijf: Map<string, { t0: number; t1: number; om: 'middel' | 'benen'; rondes: number }[]>;
+  /** In de handen klappen (0.37.3). */
+  klappen: Map<string, { t0: number; t1: number }[]>;
   trucs: Map<string, { t0: number; t1: number; soort: TrucActie['soort']; voet: 'links' | 'rechts' }[]>;
   /** Keeper stompt de bal weg (moment van contact). */
   stompen: { wie: string; t: number; vuisten: 1 | 2 }[];
@@ -278,6 +282,10 @@ export interface ObjectStand {
   tiktak?: number;
   /** Personen: balactie op de plek (0.33.0); `u` = voortgang 0–1. */
   truc?: { soort: TrucActie['soort']; voet: 'links' | 'rechts'; u: number };
+  /** Personen: bal om het lichaam (0.37.3): hoek van de bal ten opzichte van de kijkrichting (graden, rechtsom). */
+  omLijf?: { hoek: number; om: 'middel' | 'benen' };
+  /** Personen: klappen 0–1 (0.37.3). */
+  klap?: number;
   /** Personen: arm omhoog als teken (0.37.2); `u` 0–1 (omhoog in 0,25 s, en weer omlaag). */
   teken?: { kant: 'links' | 'rechts'; u: number };
   /** Personen: pionnen die ze vasthouden (de hand gaat naar die plek). */
@@ -950,6 +958,14 @@ function balStand(tl: Tijdlijn, balId: string, t: number): Pick<ObjectStand, 'x'
     return plek([o.x, o.y]);
   }
   const vast = (houder: string) => {
+    // Bal om het lichaam (0.37.3): in een cirkel om het middel of om de knieën, voor het lijf begonnen.
+    const om = omLijfOp(tl, houder, t);
+    if (om) {
+      const q = positie(tl, houder, t);
+      const r = richting(kijkHoek(tl, houder, t) + om.hoek);
+      const straal = om.om === 'benen' ? 0.27 : 0.32;
+      return { ...plek([q[0] + r[0] * straal, q[1] + r[1] * straal], houder), hoogte: om.om === 'benen' ? 0.45 : 0.95 };
+    }
     const hoogte = handHoogte(tl, houder, balId, t);
     const p = balBijPersoon(tl, houder, t);
     // Twee ballen tegelijk in de handen (0.37.3): elke bal in zijn eigen hand, iets opzij.
@@ -1175,6 +1191,8 @@ export function maakTijdlijn(tekening: Tekening): Tijdlijn {
     tiktak: new Map(),
     tekens: new Map(),
     wijdbeens: new Map(),
+    omLijf: new Map(),
+    klappen: new Map(),
     trucs: new Map(),
     stompen: [],
     blokken: [],
@@ -1317,6 +1335,20 @@ function verwerkStap(tl: Tijdlijn, stap: AnimatieStap, T: number): number {
     if (a.type === 'voetOpBal') {
       const t1 = t0 + (a.duur ?? 1.2);
       voegToe(tl.voetOp, o.id, { t0, t1 }, (e) => e.t0);
+      eind = Math.max(eind, t1);
+      continue;
+    }
+    if (a.type === 'omLijf') {
+      if (!balVan(tl, o.id, t0)) throw new TekeningFout(`omLijf: "${o.id}" heeft geen bal`);
+      const rondes = a.rondes ?? 2;
+      const t1 = t0 + (a.duur ?? rondes);
+      voegToe(tl.omLijf, o.id, { t0, t1, om: a.om ?? 'middel', rondes }, (e) => e.t0);
+      eind = Math.max(eind, t1);
+      continue;
+    }
+    if (a.type === 'klap') {
+      const t1 = t0 + (a.duur ?? 0.3);
+      voegToe(tl.klappen, o.id, { t0, t1 }, (e) => e.t0);
       eind = Math.max(eind, t1);
       continue;
     }
@@ -2165,6 +2197,18 @@ function sprongOp(tl: Tijdlijn, id: string, t: number): number {
 }
 
 /** Voet op de bal: 0–1, met 0,2 s om de voet erop te zetten en eraf te halen. */
+/** Bal om het lichaam: hoek van de bal ten opzichte van de kijkrichting (graden, met de klok mee = naar rechts). */
+function omLijfOp(tl: Tijdlijn, id: string, t: number): { hoek: number; om: 'middel' | 'benen' } | undefined {
+  for (const e of tl.omLijf.get(id) ?? []) if (t >= e.t0 && t < e.t1) return { hoek: (360 * e.rondes * (t - e.t0)) / (e.t1 - e.t0), om: e.om };
+  return undefined;
+}
+
+/** Klappen: 0–1–0 (handen naar elkaar en weer los). */
+function klapOp(tl: Tijdlijn, id: string, t: number): number {
+  for (const e of tl.klappen.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return Math.sin((Math.PI * (t - e.t0)) / (e.t1 - e.t0));
+  return 0;
+}
+
 /** Arm omhoog (teken): omhoog in 0,25 s, vasthouden, en in 0,25 s weer omlaag. */
 function tekenOp(tl: Tijdlijn, id: string, t: number): Pick<ObjectStand, 'teken'> {
   for (const e of tl.tekens.get(id) ?? []) if (t >= e.t0 && t <= e.t1) return { teken: { kant: e.kant, u: Math.min(1, (t - e.t0) / 0.25, (e.t1 - t) / 0.25) } };
@@ -2196,9 +2240,22 @@ function handPlek(tl: Tijdlijn, h: NonNullable<VeldObject['inHand']>, t: number)
   return { x: q[0] + zij[0] * k, y: q[1] + zij[1] * k, hoek };
 }
 
-/** Pionnen die deze persoon nu vasthoudt. */
+/** Afstand van een stootkussen voor de drager (m). */
+const KUSSEN_VOOR = 0.38;
+
+/** Pionnen (en een stootkussen) die deze persoon nu vasthoudt. */
 function houdtOp(tl: Tijdlijn, id: string, t: number): ObjectStand['houdt'] {
   const uit: NonNullable<ObjectStand['houdt']> = [];
+  for (const o of tl.objecten.values()) {
+    if (o.soort !== 'stootkussen' || o.drager !== id) continue;
+    // Twee handen aan de zijkanten van het kussen, op borsthoogte.
+    const q = positie(tl, id, t);
+    const hoek = kijkHoek(tl, id, t);
+    const voor = richting(hoek);
+    const zij = richting(hoek + 90);
+    for (const [kant, k] of [['rechts', 1], ['links', -1]] as const)
+      uit.push({ kant, x: q[0] + voor[0] * (KUSSEN_VOOR - 0.08) + zij[0] * 0.24 * k, y: q[1] + voor[1] * (KUSSEN_VOOR - 0.08) + zij[1] * 0.24 * k, hoogte: 1.05 });
+  }
   for (const o of tl.objecten.values()) {
     if (o.inHand?.wie !== id || (tl.materiaal.get(o.id) ?? []).some((e) => e.soort === 'los' && e.t <= t)) continue;
     const h = handPlek(tl, o.inHand, t);
@@ -2262,6 +2319,8 @@ function materiaalStand(tl: Tijdlijn, id: string, t: number): MateriaalStand {
     const hoek = kijkHoek(tl, drager, t);
     const voor = richting(hoek);
     const zij = richting(hoek + 90);
+    // Stootkussen (0.37.3): rechtop voor de drager, de onderkant op kniehoogte.
+    if (o.soort === 'stootkussen') return { x: q[0] + voor[0] * KUSSEN_VOOR, y: q[1] + voor[1] * KUSSEN_VOOR, hoogte: 0.5, kantel, kantelHoek, kop, hoek, gedragen: true };
     if (staart) return { x: q[0] - voor[0] * 0.2, y: q[1] - voor[1] * 0.2, hoogte: 0.42, kantel, kantelHoek, kop, hoek, gedragen: true };
     return { x: q[0] + voor[0] * 0.18 + zij[0] * 0.26, y: q[1] + voor[1] * 0.18 + zij[1] * 0.26, hoogte: DRAAG_HOOGTE, kantel, kantelHoek, kop, hoek, gedragen: true };
   }
@@ -2384,6 +2443,8 @@ export function standOp(tl: Tijdlijn, t: number): Stand {
         ...(tl.materiaal.size ? { houdt: houdtOp(tl, o.id, t) } : {}),
         ...(tl.trucs.size ? { truc: trucOp(tl, o.id, t) } : {}),
         ...(tl.tekens.size ? tekenOp(tl, o.id, t) : {}),
+        ...(tl.omLijf.size && omLijfOp(tl, o.id, t) ? { omLijf: omLijfOp(tl, o.id, t) } : {}),
+        ...(tl.klappen.size && klapOp(tl, o.id, t) > 0 ? { klap: klapOp(tl, o.id, t) } : {}),
         sprong: sprongOp(tl, o.id, t),
         spreid: spreidOp(tl, o.id, t),
         zweef: zweefOp(tl, o.id, t),

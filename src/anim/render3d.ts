@@ -344,6 +344,14 @@ function materiaal(o: VeldObject, netTex: Texture, materialen: Material[]): Obje
       const h = o.hoogte ?? 0.32;
       return opGrond(new Mesh(new ConeGeometry(0.13 * Math.min(1.5, Math.max(0.75, Math.sqrt(h / 0.32))), h, 18), kleur('#ff7a1a')), h / 2);
     }
+    case 'stootkussen': {
+      // Stootkussen (0.37.3): een dik, rechtop gehouden kussen; breed opzij van de drager, dun in zijn kijkrichting.
+      const kussen = new Mesh(new BoxGeometry(0.16, 0.85, 0.55), kleur(o.kleur ?? '#1d4ed8'));
+      kussen.position.y = 0.425;
+      const g = new Group();
+      g.add(kussen);
+      return opGrond(g);
+    }
     case 'hesje': {
       const lap = new Mesh(new BoxGeometry(0.2, 0.42, 0.015), kleur('#f2b705'));
       lap.position.y = -0.1;

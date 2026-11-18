@@ -6,7 +6,7 @@ import type { ObjectSoort } from '../src/model/types';
 
 const MAP_SOORT: Record<string, string> = { veld: 'veld', keepers: 'keeper' };
 const SOORTEN: ObjectSoort[] = [
-  'hesje', 'doelnet',
+  'hesje', 'doelnet', 'stootkussen',
   'speler', 'keeper', 'trainer', 'bal', 'goal', 'klein-goal', 'pion', 'hoedje', 'paaltje', 'ladder',
   'horde', 'ring', 'zone', 'muurtje', 'rebounder', 'keepersmat', 'stok', 'tekst', 'net', 'bank', 'kooi', 'pop',
 ];
@@ -78,7 +78,8 @@ describe('oefeningen (databestanden)', () => {
 });
 
 /** Oefeningen waarin kinderen bewust dicht bij elkaar komen (0.30.0): rug tegen rug, een staart pakken. */
-const DICHTBIJ: Record<string, number> = { 'veld-mt-rug-tegen-rug': 0.55, 'veld-mt-staart-pakken': 1 };
+// Bewust contact: rug tegen rug, staart pakken, en (0.37.3) een duwtje met het stootkussen bij een hoge bal.
+const DICHTBIJ: Record<string, number> = { 'veld-mt-rug-tegen-rug': 0.55, 'veld-mt-staart-pakken': 1, 'keeper-vz-hoge-bal-stootkussen': 0.75 };
 
 describe('animaties: niet door elkaar of door materiaal heen', () => {
   const VAST = ['pion', 'paaltje', 'hoedje', 'pop'];
