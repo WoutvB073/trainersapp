@@ -177,7 +177,13 @@ for (const [taal, vp, naam] of [
 
 // ---------- automatisch: traag toestel ----------
 {
-  const { context, page } = await toestel(TELEFOON, { 'trainersapp.3dAltijd': null, 'trainersapp.3dTraag': null, 'trainersapp.poppetjes': null, 'trainersapp.poppetjesAuto': null });
+  // (de extra sleutels gelden bij elke paginalading; het niveau dus maar één keer wissen, anders vergeet de app de automatische stand)
+  const { context, page } = await toestel(TELEFOON, { 'trainersapp.3dAltijd': null, 'trainersapp.3dTraag': null });
+  await ga(page, '#/');
+  await page.evaluate(() => {
+    localStorage.removeItem('trainersapp.poppetjes');
+    localStorage.removeItem('trainersapp.poppetjesAuto');
+  });
   const cdp = await page.target().createCDPSession();
   const traag = async (stap) => {
     await ga(page, '#/oefening/veld-pv-4-4-keepers');

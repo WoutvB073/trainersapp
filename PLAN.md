@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (18-11-2026, versie 0.37.3)
+## Status (18-11-2026, versie 0.38.0)
 
 | Fase | Status |
 |---|---|
@@ -56,7 +56,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | 40. Fase 2, deel 1: opstelling slepen, vaste rugnummers, installatiescherm (0.35.0) | ✅ online – **wacht op test** |
 | 41. Fase 2, deel 2: ontwerp C (Zacht) op alle schermen (0.36.0) | ✅ online – **wacht op test** |
 | 42. Fase 2, deel 3: nieuwe oefeningen in batches (0.37.x) | ✅ Alle 157 voorstellen verwerkt, online, **wacht op test**. Batch 1 (0.37.0): 30 oefeningen in Warming-up, Loopcoördinatie, Techniek en Spelletjes. Batch 2 (0.37.1): 36 in Pass en trap, Afwerken, Positiespel, Verdedigen en omschakelen, 1 tegen 1 en Partijvormen. Batch 3 (0.37.2): 29 eerder overgeslagen voorstellen en de bouwsteen "arm omhoog". Batch 4 (0.37.3): 50 keepersoefeningen en negen bouwstenen. Samen 145 nieuwe oefeningen; 5 voorstellen (★) zaten al sinds 0.35.0 in de app en 7 zijn praktisch exact gelijk aan een bestaande oefening (zie 0.37.1). |
-| 43. Fase 2, deel 4: zo realistisch mogelijke animaties (0.38.0) | ⏳ |
+| 43. Fase 2, deel 4: zo realistisch mogelijke animaties (0.38.0) | ✅ online, **wacht op test**. 3D staat standaard op **Realistisch**: zonlicht met schaduwen, gras met structuur, lucht en een echtere figuur (shirt met kraag, broek, kousen met scheenbeschermers, voetbalschoenen, gezicht, vier kapsels, keepershandschoenen). Loopt het niet soepel, dan zet de app zichzelf een stap lichter (Gewoon, dan Eenvoudig, dan 2D). Keuze bij Instellingen → 3D-animaties. Alles in code gemaakt, geen bestanden van anderen. |
 
 ## Werkwijze
 - Bouwen in **kleine stappen**; na elke stap test de gebruiker op de telefoon en wachten we op akkoord.
@@ -1303,6 +1303,26 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Fysieke controle**: in een hoepel afremmen of stilstaan mag nu (een hoepel ligt plat; nodig voor "Hordes en afremmen in de hoepel"). Er gewoon doorheen joggen blijft een fout. `src/anim/fysiek.ts`, getest in `tests/versie-0370.test.ts`.
 - **Lettertypes en externe verzoeken** (vraag van de gebruiker): Inter en Barlow Condensed zaten al in de app, via de pakketten `@fontsource-variable/inter` en `@fontsource/barlow-condensed` (SIL Open Font License 1.1): de bestanden staan in de build (`dist/assets/*.woff2`) en in de offline-cache van de service worker. Er wordt niets van Google Fonts of een ander adres geladen. Gemeten met `tools/e2e/extern.mjs` op de echte site: op 16 schermen (niet ingelogd) en het installatiescherm in Safari, WhatsApp en Android gaat er **geen enkel verzoek** naar buiten. Pas bij inloggen, teams, synchroniseren of korte deellinks praat de app met Firebase (Google-adressen van Firebase: identitytoolkit, securetoken, firestore). In de code van de Firebase-bibliotheek staan nog adressen voor reCAPTCHA en Google-inloggen (apis.google.com, www.google.com/recaptcha), maar die worden alleen gebruikt bij telefoonnummer- of Google-inloggen, en dat heeft de app niet. Vaste test in `tests/versie-0370.test.ts` (geen externe lettertypes of links in index.html en CSS).
 
+## Besluiten versie 0.38.0 – realistische 3D-weergave (fase 2, deel 4)
+- **Wat**: de proef Realistisch uit fase 1 (R1: zon met schaduwen, gras met structuur, lucht) is de standaard, met een **echtere figuur** (R2) op hetzelfde skelet: `src/anim/popEcht.ts`. Shirt met kraag, afgeronde schouderlijn en zoom; broek met boord en pijpen met zoom; kousen met boord, kuit en scheenbeschermer; voetbalschoenen met een zool (acht kleurcombinaties, per speler vast); gezicht met kaak, oren, neus, ogen en wenkbrauwen; vier kapsels (kort, stoppel, langer met pony, paardenstaart; per speler vast); keepershandschoenen met manchet; lange mouwen zonder zoom bij keeper en trainer. Licht per beeldpunt (MeshStandardMaterial), elk deel een tint per hoekpunt × de kleur van het poppetje.
+- **Bewegingen (R3)**: blijven uitgerekend (voetdoelen, IK, armen naar de bal), zoals sinds 0.21.0 en verfijnd in elke versie daarna. Er bestaan geen vrij te gebruiken opnames van voetbalbewegingen (schot, duik, vangen, kopbal); een vaste opname past ook niet op het exacte moment en de exacte plek waar een speler de bal raakt. Alleen lopen en rennen zijn er vrij (CC0), en die bewegingen zijn hier al uitgerekend met hiel-teen, armzwaai en meedraaiend bekken. Daarom geen opnames gedownload.
+- **Licentie**: alles (figuur, kleding, gras, lucht, licht) is **zelf in code gemaakt** voor TopTraining; er is geen materiaal van anderen gebruikt (geen modellen, texturen of bewegingsopnames). Er geldt dus geen licentie van derden en er hoeft niets vermeld te worden. Three.js zelf (en `BufferGeometryUtils` uit three/addons) valt onder de **MIT-licentie** (vrij, ook commercieel), zoals sinds 0.21.0.
+- **Duidelijkheid voor de trainer gaat voor**: het shirt krijgt precies de teamkleur (tint 1, getest), kraag en zoom zijn alleen iets donkerder; keepers houden hun eigen kleur en handschoenen; rugnummers, nummers boven het hoofd, ringen bij meer keepers en looplijnen zijn ongewijzigd; de bal houdt zijn eigen schaduwvlek recht eronder (hoogte aflezen).
+- **Niveaus en terugvallen** (`src/engine/poppetjes.ts`, per toestel): Realistisch, Gewoon (de poppetjes van vóór 0.38.0) en Eenvoudig. Automatisch begint de app met Realistisch; meet hij in de eerste ± 70 beelden een mediaan boven 36 ms (onder ± 28 beelden per seconde), dan gaat hij één stap lichter (Realistisch → Gewoon → Eenvoudig, met een melding) en onthoudt dat; is het daarna nog boven 45 ms, dan 2D (zoals voorheen). Wie zelf kiest, houdt die keuze (dan alleen nog terug naar 2D). Bij Instellingen staat of het automatisch lager is gezet, met "Weer automatisch laten kiezen". Oude instellingen blijven werken (Eenvoudige poppetjes aan = Eenvoudig; automatisch eenvoudig = Eenvoudig; zelf uitgezet = automatisch, maar zoals toen nooit vanzelf Eenvoudig).
+- **Metingen** (telefoonformaat 390 × 844, schermdichtheid 3, tactiekbord 11 tegen 11, iedereen loopt; `tools/e2e/animaties.mjs voor|na`, de oude build naast de nieuwe):
+
+| 11 tegen 11 (Schuin) | 0.37.3 (gewoon) | 0.38.0 Realistisch | 0.38.0 Gewoon | 0.38.0 Eenvoudig |
+|---|---|---|---|---|
+| gewone processor | 60 beelden/s (4,4 ms werk) | 60 (5,2 ms) | 60 (4,3 ms) | – |
+| 4× tragere processor | 30–60 (19,6 ms) | 30 (25,5 ms) | 60 (17,7 ms) | 60 (13,8 ms) |
+| 6× tragere processor | 30 (20,3 ms) | 20 (30,9 ms) → **automatisch Gewoon** | 30 (21,6 ms) | 60 (17,8 ms) |
+| tekenopdrachten / driehoeken | 70 / 33.920 | 77 / 54.060 (plus de schaduwen) | 70 / 33.920 | 62 / 25.970 |
+
+  Laadtijd (eerste bezoek, geen cache, 4× tragere processor): 3D in beeld op 4G 3,9 → 4,4 s, op snel 3G 7,4 → 7,6 s (de oefening zelf: 2,8 → 3,0 s en 5,5 → 5,4 s; verschillen van ± 0,3 s zijn meetruis). Grootte: de hele app 4252 → 4267 kB (+ 14 kB), het 3D-deel 618 → 631 kB (gzip + 3 kB). Er wordt niets extra gedownload.
+  **Kanttekening**: gemeten op een laptop met een vertraagde processor; de videokaart van een telefoon (schaduwen kosten daar juist rekenkracht) kan ik zo niet nabootsen. Daarom het automatisch terugvallen, en daarom staat in het testlijstje: kijk op je eigen telefoon of het soepel loopt.
+- **Proef weg**: de schakelaar "Realistisch (proef)" in de voorbeeldversie en `src/engine/realistisch.ts` zijn weg; het is nu de gewone instelling.
+- **Tests**: `tests/versie-0380.test.ts` (niveaus, terugvallen, oude instellingen, privévenster; figuur: vertexkleuren, zool op het gras, romp achter het rugnummer, één kapsel per persoon, handschoenen en lange mouwen, shirt = teamkleur, Gewoon en Eenvoudig ongewijzigd), `tests/versie-021.test.ts` bijgewerkt. Browsertests `versie-0380.mjs` (standaard Realistisch overal, Instellingen NL/EN op iPhone SE, traag toestel: Gewoon en dan Eenvoudig), `portret.mjs` (figuur van dichtbij), `versie-021.mjs`, `realistisch.mjs` en `voorbeeld.mjs` bijgewerkt.
+
 ## Besluiten versie 0.37.3 – keepersoefeningen (fase 2, deel 3, batch 4)
 - **50 keepersoefeningen** uit VOORSTEL-OEFENINGEN.md (KW1–KW5, KL2–KL6, KH1–KH5, KB1–KB7, KV1–KV6, KP1–KP6, K11–K15, KR1–KR6, KS1–KS5); KL1 (★ Zit, sta op en duik) zat er al sinds 0.35.0 in. Geen enkel keepersvoorstel is praktisch exact gelijk aan een bestaande oefening. Bouwscripts `tools/nieuw/fase2-0373a–f.cjs`; eisen in `tests/versie-0373.test.ts`. Met `node tools/nieuw/droog.mjs <bouwscript>` controleer je een bouwscript (tijdlijn, kleinste afstand, fysiek) zonder de data te wijzigen.
 - **Nieuwe bouwstenen** (elk met tests in `tests/versie-0373.test.ts`):
@@ -1341,6 +1361,11 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.38.0 – Realistisch is meteen de standaard voor iedereen (ook bestaande gebruikers), met automatisch terugvallen; geen aparte proefperiode.
+- 0.38.0 – Drempel voor lichter: dezelfde als vroeger (onder ± 28 beelden per seconde). Een strengere drempel zou ook telefoons in energiebesparingsstand (die tekenen 30 beelden per seconde) blijvend op Gewoon zetten.
+- 0.38.0 – De oude poppetjes heten in de keuze "Gewoon" (Engels "Standard").
+- 0.38.0 – Vier kapsels, ook een paardenstaart (jeugdteams zijn vaak gemengd); schoenkleuren per speler; de trainer draagt sportschoenen en kort haar. Alleen in Realistisch.
+- 0.38.0 – Geen bewegingsopnames (ook niet de vrije CC0-bibliotheek): die hebben geen voetbalbewegingen, en lopen en rennen zijn hier al uitgerekend. Er is dus niets gedownload.
 - 0.37.3 – Handbal met keepers: de twee teams dragen een hesje over hun keeperstenue; scoren met een stuit vóór het doeltje.
 - 0.37.3 – Trefbal voor keepers: een geraakte bal kaatst van het been weg; vangen is een redding.
 - 0.37.3 – Kleur van de bal: de trainer gooit twee ballen tegelijk, één uit elke hand, en roept de kleur; in het voorbeeld "rood".
