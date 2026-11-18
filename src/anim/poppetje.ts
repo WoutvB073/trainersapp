@@ -2026,9 +2026,18 @@ function dichtste(x: number, z: number, lijst: Vector3[], max: number): Vector3 
 /** Bal-gegevens voor één persoon: zijn eigen bal (handen of voet), waar hij naar kijkt en welke bal hij moet redden. */
 export function persoonInvoer(id: string, soort: PopSoort, st: ObjectStand, s: Stand, bi: BalInvoer): Pick<PoseInvoer, 'bal' | 'balInHanden' | 'balAanVoet' | 'kijk' | 'redBal'> {
   const balId = bi.houderVan.get(id);
-  const bal = balId ? bi.plek.get(balId)! : null;
+  let bal = balId ? bi.plek.get(balId)! : null;
   const bs = balId ? s.objecten.get(balId) : undefined;
   const inHanden = !!bs && (bs.hoogte > 0.25 || !!st.worp);
+  // Twee ballen tegelijk in de handen (0.37.3): de handen gaan naar het midden ertussen, zodat elke hand bij zijn eigen bal is.
+  if (bal && inHanden) {
+    const meer = [...bi.plek].filter(([b]) => b !== balId && s.objecten.get(b)?.houder === id && (s.objecten.get(b)?.hoogte ?? 0) > 0.25);
+    if (meer.length) {
+      const m = bal.clone();
+      for (const [, p] of meer) m.add(p);
+      bal = m.multiplyScalar(1 / (meer.length + 1));
+    }
+  }
   // Kijken naar de bal die in het spel is (niet naar je eigen bal aan de voet).
   const kijk = balId ? null : dichtste(st.x, st.y, bi.actief, 45);
   // Keeper: de bal die op hem af komt (vangen, duiken, stompen).

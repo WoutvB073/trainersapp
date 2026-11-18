@@ -114,8 +114,9 @@ describe('poppetjes in alle oefeningen', { timeout: 60000 }, () => {
         const b = [...s.objecten].filter(([, x]) => x.houder === p.id && x.hoogte > 0.6 && !(st.zit > 0.5 && x.hoogte > 1.2));
         if (!b.length || st.worp || p.staat.balInHand) return;
         const midden = pols(p.sk, 0).add(pols(p.sk, 1)).multiplyScalar(0.5);
-        // (Heeft hij er twee, dan de dichtstbijzijnde.)
-        const d = Math.min(...b.map(([id]) => midden.distanceTo(bal.get(id)!)));
+        // (Heeft hij er twee, dan de dichtstbijzijnde.) Bal om het lichaam (0.37.3): opzij en achter houdt één hand hem vast.
+        const afstand = (q: Vector3) => (st.omLijf ? Math.min(pols(p.sk, 0).distanceTo(q), pols(p.sk, 1).distanceTo(q)) : midden.distanceTo(q));
+        const d = Math.min(...b.map(([id]) => afstand(bal.get(id)!)));
         if (d > 0.25) fouten.push(`${o.id} ${p.id} ${t.toFixed(2)}: handen ${d.toFixed(2)} m van de bal`);
       });
     }
