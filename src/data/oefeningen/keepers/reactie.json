@@ -3962,14 +3962,14 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 35.8,
           "y": 8.4,
-          "kijkrichting": -90
+          "kijkrichting": -105
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 34,
+          "x": 35.7,
           "y": 7.85,
           "bij": "t1"
         }
@@ -4416,15 +4416,15 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
-          "y": 6.6,
-          "kijkrichting": -90
+          "x": 35.6,
+          "y": 6.8,
+          "kijkrichting": -105
         },
         {
           "id": "rood",
           "soort": "bal",
-          "x": 33.8,
-          "y": 6.05,
+          "x": 35.3,
+          "y": 6.3,
           "bij": "t1",
           "kleur": "#e03131",
           "hand": "links"
@@ -4432,8 +4432,8 @@
         {
           "id": "geel",
           "soort": "bal",
-          "x": 34.2,
-          "y": 6.05,
+          "x": 35.7,
+          "y": 6.25,
           "bij": "t1",
           "kleur": "#ffd23f",
           "hand": "rechts"
@@ -4538,14 +4538,14 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 4.6,
+          "x": 4,
           "y": 5,
           "kijkrichting": 0
         },
         {
           "id": "ta",
           "soort": "bal",
-          "x": 5.1,
+          "x": 4.5,
           "y": 4.8,
           "bij": "t1",
           "variant": "tennisbal",
@@ -4554,7 +4554,7 @@
         {
           "id": "tb",
           "soort": "bal",
-          "x": 5.1,
+          "x": 4.5,
           "y": 5.2,
           "bij": "t1",
           "variant": "tennisbal",
@@ -4564,7 +4564,7 @@
           "id": "k1",
           "soort": "keeper",
           "nummer": 1,
-          "x": 8,
+          "x": 8.6,
           "y": 5,
           "kijkrichting": 180
         }
@@ -4583,7 +4583,7 @@
               "worp": "onderhands",
               "hoogte": 0.05,
               "stuitOp": [
-                5.5,
+                4.9,
                 4.7
               ],
               "eindHoogte": 0.4,
@@ -4596,7 +4596,7 @@
               "worp": "onderhands",
               "hoogte": 0.05,
               "stuitOp": [
-                5.5,
+                4.9,
                 5.3
               ],
               "eindHoogte": 0.4,
@@ -4606,12 +4606,12 @@
               "type": "loop",
               "wie": "k1",
               "naar": [
-                6.6,
+                6.4,
                 5
               ],
               "manier": "sprint",
-              "start": 0.1,
-              "duur": 0.45
+              "start": 0.05,
+              "duur": 0.5
             }
           ]
         },

@@ -5008,15 +5008,15 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 35.6,
           "y": 6.4,
-          "kijkrichting": -90
+          "kijkrichting": -110
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 34,
-          "y": 5.85,
+          "x": 35.4,
+          "y": 5.9,
           "bij": "t1"
         }
       ],

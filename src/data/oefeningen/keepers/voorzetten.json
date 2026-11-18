@@ -3109,6 +3109,147 @@
     }
   },
   {
+    "id": "keeper-vz-hoge-bal-stootkussen",
+    "soort": "keeper",
+    "naam": "Hoge bal met een schild",
+    "categorieen": [
+      "voorzetten"
+    ],
+    "uitleg": "Een trainer gooit een hoge bal voor het doel. Een tweede trainer staat naast de keeper met een stootkussen en duwt hem licht op het moment dat hij omhoog gaat. De keeper zet af op één been, brengt zijn andere knie omhoog (dat beschermt hem en maakt ruimte) en vangt de bal op het hoogste punt, sterk in de lucht ondanks het duwtje.",
+    "organisatie": "Keeper in het doel, de trainer met het stootkussen naast hem, een tweede trainer of keeper gooit vanaf 8 m opzij. Duw licht en alleen tegen schouder en heup, nooit tegen een keeper in de lucht van achteren. Series van vijf.",
+    "benodigdheden": [
+      "Goal",
+      "1 stootkussen",
+      "Ballen"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo16-19"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "Afzetten op één been, de andere knie omhoog",
+      "Je lichaam sterk maken: romp aanspannen, ellebogen licht naar buiten",
+      "Vangen op het hoogste punt, voor je hoofd"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Eerst zonder duwen, alleen het kussen ernaast",
+        "Lagere bal"
+      ],
+      "moeilijker": [
+        "Iets steviger duwen",
+        "Na het vangen meteen uitgooien"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "half"
+      },
+      "weergave": {
+        "x": 25,
+        "y": -3,
+        "breedte": 22,
+        "lengte": 14
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "g1",
+          "soort": "goal",
+          "x": 34,
+          "y": 0
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 34,
+          "y": 1.5,
+          "verdedigt": "g1",
+          "uitkomen": true
+        },
+        {
+          "id": "t1",
+          "soort": "trainer",
+          "x": 34.4,
+          "y": 5.8,
+          "kijkrichting": -30
+        },
+        {
+          "id": "sk",
+          "soort": "stootkussen",
+          "x": 34.7,
+          "y": 5.6,
+          "drager": "t1"
+        },
+        {
+          "id": "t2",
+          "soort": "trainer",
+          "x": 42,
+          "y": 6.4,
+          "kijkrichting": 180
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 41.45,
+          "y": 6.4,
+          "bij": "t2"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.6,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "t2",
+              "naar": [
+                34.8,
+                3.4
+              ],
+              "worp": "bovenhands",
+              "hoogte": "hoog",
+              "uitkomen": "k1"
+            },
+            {
+              "type": "loop",
+              "wie": "t1",
+              "naar": [
+                36.15,
+                4.75
+              ],
+              "start": 0.75,
+              "duur": 0.35
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "loop",
+              "wie": "t1",
+              "naar": [
+                34.4,
+                5.8
+              ],
+              "duur": 0.6
+            }
+          ]
+        },
+        {
+          "duur": 0.6,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
     "id": "keeper-vz-eerste-paal-uit-de-hand",
     "soort": "keeper",
     "naam": "Voorzet uit de hand aan de eerste paal",
@@ -3652,9 +3793,9 @@
       },
       "weergave": {
         "x": 20,
-        "y": -4,
-        "breedte": 50,
-        "lengte": 22
+        "y": -7,
+        "breedte": 51,
+        "lengte": 25
       },
       "camera": "schuin",
       "objecten": [
@@ -3801,9 +3942,9 @@
         "type": "half"
       },
       "weergave": {
-        "x": 22,
+        "x": 20,
         "y": -3,
-        "breedte": 34,
+        "breedte": 40,
         "lengte": 22
       },
       "camera": "schuin",
@@ -3924,147 +4065,6 @@
         },
         {
           "duur": 1,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
-    "id": "keeper-vz-hoge-bal-stootkussen",
-    "soort": "keeper",
-    "naam": "Hoge bal met een schild",
-    "categorieen": [
-      "voorzetten"
-    ],
-    "uitleg": "Een trainer gooit een hoge bal voor het doel. Een tweede trainer staat naast de keeper met een stootkussen en duwt hem licht op het moment dat hij omhoog gaat. De keeper zet af op één been, brengt zijn andere knie omhoog (dat beschermt hem en maakt ruimte) en vangt de bal op het hoogste punt, sterk in de lucht ondanks het duwtje.",
-    "organisatie": "Keeper in het doel, de trainer met het stootkussen naast hem, een tweede trainer of keeper gooit vanaf 8 m opzij. Duw licht en alleen tegen schouder en heup, nooit tegen een keeper in de lucht van achteren. Series van vijf.",
-    "benodigdheden": [
-      "Goal",
-      "1 stootkussen",
-      "Ballen"
-    ],
-    "spelersNodig": 0,
-    "keepersNodig": 1,
-    "leeftijden": [
-      "jo16-19"
-    ],
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "Afzetten op één been, de andere knie omhoog",
-      "Je lichaam sterk maken: romp aanspannen, ellebogen licht naar buiten",
-      "Vangen op het hoogste punt, voor je hoofd"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Eerst zonder duwen, alleen het kussen ernaast",
-        "Lagere bal"
-      ],
-      "moeilijker": [
-        "Iets steviger duwen",
-        "Na het vangen meteen uitgooien"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "half"
-      },
-      "weergave": {
-        "x": 25,
-        "y": -3,
-        "breedte": 22,
-        "lengte": 14
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "g1",
-          "soort": "goal",
-          "x": 34,
-          "y": 0
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "nummer": 1,
-          "x": 34,
-          "y": 1.5,
-          "verdedigt": "g1",
-          "uitkomen": true
-        },
-        {
-          "id": "t1",
-          "soort": "trainer",
-          "x": 34.4,
-          "y": 5.8,
-          "kijkrichting": -30
-        },
-        {
-          "id": "sk",
-          "soort": "stootkussen",
-          "x": 34.7,
-          "y": 5.6,
-          "drager": "t1"
-        },
-        {
-          "id": "t2",
-          "soort": "trainer",
-          "x": 42,
-          "y": 6.4,
-          "kijkrichting": 180
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 41.45,
-          "y": 6.4,
-          "bij": "t2"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.6,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "t2",
-              "naar": [
-                34.8,
-                3.4
-              ],
-              "worp": "bovenhands",
-              "hoogte": "hoog",
-              "uitkomen": "k1"
-            },
-            {
-              "type": "loop",
-              "wie": "t1",
-              "naar": [
-                36.15,
-                4.75
-              ],
-              "start": 0.75,
-              "duur": 0.35
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "loop",
-              "wie": "t1",
-              "naar": [
-                34.4,
-                5.8
-              ],
-              "duur": 0.6
-            }
-          ]
-        },
-        {
-          "duur": 0.6,
           "acties": []
         }
       ]

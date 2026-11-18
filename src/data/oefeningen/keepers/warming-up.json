@@ -3655,6 +3655,143 @@
     }
   },
   {
+    "id": "keeper-wu-bal-om-je-lichaam",
+    "soort": "keeper",
+    "naam": "Bal om je lichaam en vangen",
+    "categorieen": [
+      "warming-up"
+    ],
+    "uitleg": "Elke keeper heeft een eigen bal. Draai de bal van hand tot hand om je middel, twee keer rond, en daarna voorovergebogen om je knieën. Gooi de bal dan recht omhoog, klap in je handen terwijl hij in de lucht is, en vang hem op het hoogste punt, met je armen gestrekt boven je hoofd. Daarna de andere kant op draaien.",
+    "organisatie": "Iedere keeper met een bal, op een eigen plek met wat ruimte eromheen. Series van een halve minuut: om het middel, om de knieën, opgooien en vangen. Drie series, dan wisselen van draairichting.",
+    "benodigdheden": [
+      "1 bal per keeper",
+      "Hoedjes"
+    ],
+    "spelersNodig": 0,
+    "keepersNodig": 1,
+    "leeftijden": [
+      "jo8-11",
+      "jo12-15"
+    ],
+    "doorwisselbaar": true,
+    "coachpunten": [
+      "De bal steeds met je vingers, niet met je handpalmen",
+      "Kijk de bal na het klappen weer in je handen",
+      "Vangen op het hoogste punt: handen in een W, armen bijna gestrekt"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "Zonder klappen",
+        "Alleen om het middel"
+      ],
+      "moeilijker": [
+        "Twee of drie keer klappen",
+        "Om één been, in een achtje"
+      ]
+    },
+    "tekening": {
+      "veld": {
+        "type": "leeg",
+        "breedte": 8,
+        "lengte": 8
+      },
+      "camera": "schuin",
+      "objecten": [
+        {
+          "id": "h1",
+          "soort": "hoedje",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "id": "h2",
+          "soort": "hoedje",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "id": "h3",
+          "soort": "hoedje",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "id": "h4",
+          "soort": "hoedje",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "id": "k1",
+          "soort": "keeper",
+          "nummer": 1,
+          "x": 4,
+          "y": 4.2,
+          "kijkrichting": 90
+        },
+        {
+          "id": "bal",
+          "soort": "bal",
+          "x": 4,
+          "y": 4.75,
+          "bij": "k1"
+        }
+      ],
+      "animatie": [
+        {
+          "duur": 0.5,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "omLijf",
+              "wie": "k1",
+              "om": "middel",
+              "rondes": 2
+            }
+          ]
+        },
+        {
+          "acties": [
+            {
+              "type": "omLijf",
+              "wie": "k1",
+              "om": "benen",
+              "rondes": 2,
+              "duur": 2.4
+            }
+          ]
+        },
+        {
+          "duur": 0.3,
+          "acties": []
+        },
+        {
+          "acties": [
+            {
+              "type": "pass",
+              "van": "k1",
+              "naar": "k1",
+              "worp": "onderhands",
+              "hoogte": 3.2,
+              "eindHoogte": 2.1
+            },
+            {
+              "type": "klap",
+              "wie": "k1",
+              "start": 0.75
+            }
+          ]
+        },
+        {
+          "duur": 0.8,
+          "acties": []
+        }
+      ]
+    }
+  },
+  {
     "id": "keeper-wu-vangen-vier-pionnen",
     "soort": "keeper",
     "naam": "Vangen in de loop om vier pionnen",
@@ -3744,14 +3881,14 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 35.8,
           "y": 12,
-          "kijkrichting": -90
+          "kijkrichting": -100
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 34,
+          "x": 35.7,
           "y": 11.45,
           "bij": "t1"
         }
@@ -3977,14 +4114,14 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 35.8,
           "y": 9.6,
-          "kijkrichting": -90
+          "kijkrichting": -100
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 34,
+          "x": 35.7,
           "y": 9.05,
           "bij": "t1"
         }
@@ -4487,143 +4624,6 @@
                 19.4,
                 6.2
               ]
-            }
-          ]
-        },
-        {
-          "duur": 0.8,
-          "acties": []
-        }
-      ]
-    }
-  },
-  {
-    "id": "keeper-wu-bal-om-je-lichaam",
-    "soort": "keeper",
-    "naam": "Bal om je lichaam en vangen",
-    "categorieen": [
-      "warming-up"
-    ],
-    "uitleg": "Elke keeper heeft een eigen bal. Draai de bal van hand tot hand om je middel, twee keer rond, en daarna voorovergebogen om je knieën. Gooi de bal dan recht omhoog, klap in je handen terwijl hij in de lucht is, en vang hem op het hoogste punt, met je armen gestrekt boven je hoofd. Daarna de andere kant op draaien.",
-    "organisatie": "Iedere keeper met een bal, op een eigen plek met wat ruimte eromheen. Series van een halve minuut: om het middel, om de knieën, opgooien en vangen. Drie series, dan wisselen van draairichting.",
-    "benodigdheden": [
-      "1 bal per keeper",
-      "Hoedjes"
-    ],
-    "spelersNodig": 0,
-    "keepersNodig": 1,
-    "leeftijden": [
-      "jo8-11",
-      "jo12-15"
-    ],
-    "doorwisselbaar": true,
-    "coachpunten": [
-      "De bal steeds met je vingers, niet met je handpalmen",
-      "Kijk de bal na het klappen weer in je handen",
-      "Vangen op het hoogste punt: handen in een W, armen bijna gestrekt"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "Zonder klappen",
-        "Alleen om het middel"
-      ],
-      "moeilijker": [
-        "Twee of drie keer klappen",
-        "Om één been, in een achtje"
-      ]
-    },
-    "tekening": {
-      "veld": {
-        "type": "leeg",
-        "breedte": 8,
-        "lengte": 8
-      },
-      "camera": "schuin",
-      "objecten": [
-        {
-          "id": "h1",
-          "soort": "hoedje",
-          "x": 2,
-          "y": 2
-        },
-        {
-          "id": "h2",
-          "soort": "hoedje",
-          "x": 6,
-          "y": 2
-        },
-        {
-          "id": "h3",
-          "soort": "hoedje",
-          "x": 2,
-          "y": 6
-        },
-        {
-          "id": "h4",
-          "soort": "hoedje",
-          "x": 6,
-          "y": 6
-        },
-        {
-          "id": "k1",
-          "soort": "keeper",
-          "nummer": 1,
-          "x": 4,
-          "y": 4.2,
-          "kijkrichting": 90
-        },
-        {
-          "id": "bal",
-          "soort": "bal",
-          "x": 4,
-          "y": 4.75,
-          "bij": "k1"
-        }
-      ],
-      "animatie": [
-        {
-          "duur": 0.5,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "omLijf",
-              "wie": "k1",
-              "om": "middel",
-              "rondes": 2
-            }
-          ]
-        },
-        {
-          "acties": [
-            {
-              "type": "omLijf",
-              "wie": "k1",
-              "om": "benen",
-              "rondes": 2,
-              "duur": 2.4
-            }
-          ]
-        },
-        {
-          "duur": 0.3,
-          "acties": []
-        },
-        {
-          "acties": [
-            {
-              "type": "pass",
-              "van": "k1",
-              "naar": "k1",
-              "worp": "onderhands",
-              "hoogte": 3.2,
-              "eindHoogte": 2.1
-            },
-            {
-              "type": "klap",
-              "wie": "k1",
-              "start": 0.75
             }
           ]
         },

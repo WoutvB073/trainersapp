@@ -389,6 +389,31 @@
       ]
     }
   },
+  "keeper-vz-hoge-bal-stootkussen": {
+    "naam": "High ball with a tackle shield",
+    "uitleg": "A coach throws a high ball in front of the goal. A second coach stands beside the keeper with a tackle shield and gives a light push as the keeper goes up. The keeper takes off on one leg, brings the other knee up (which protects them and creates space) and catches the ball at the highest point, strong in the air despite the push.",
+    "organisatie": "Keeper in goal, the coach with the tackle shield beside them, a second coach or keeper throws from 8 m to the side. Push lightly and only against shoulder and hip, never from behind against a keeper in the air. Sets of five.",
+    "benodigdheden": [
+      "Goal",
+      "1 tackle shield",
+      "Balls"
+    ],
+    "coachpunten": [
+      "Take off on one leg, the other knee up",
+      "Make your body strong: brace your core, elbows slightly out",
+      "Catch at the highest point, in front of your head"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No pushing at first, just the shield beside you",
+        "Lower ball"
+      ],
+      "moeilijker": [
+        "Push a little harder",
+        "Distribute straight after catching"
+      ]
+    }
+  },
   "keeper-vz-eerste-paal-uit-de-hand": {
     "naam": "Thrown cross to the near post",
     "uitleg": "The coach stands beside the six-yard box and throws the ball high in front of the goal, towards the near post. The keeper starts in the middle of the goal, steps out to the ball and catches it at the highest point, in front of the near post. A throw lets you place the ball exactly, so the keeper learns to take the first steps calmly.",
@@ -510,31 +535,6 @@
       "moeilijker": [
         "The winger chooses",
         "An attacker in the box"
-      ]
-    }
-  },
-  "keeper-vz-hoge-bal-stootkussen": {
-    "naam": "High ball with a tackle shield",
-    "uitleg": "A coach throws a high ball in front of the goal. A second coach stands beside the keeper with a tackle shield and gives a light push as the keeper goes up. The keeper takes off on one leg, brings the other knee up (which protects them and creates space) and catches the ball at the highest point, strong in the air despite the push.",
-    "organisatie": "Keeper in goal, the coach with the tackle shield beside them, a second coach or keeper throws from 8 m to the side. Push lightly and only against shoulder and hip, never from behind against a keeper in the air. Sets of five.",
-    "benodigdheden": [
-      "Goal",
-      "1 tackle shield",
-      "Balls"
-    ],
-    "coachpunten": [
-      "Take off on one leg, the other knee up",
-      "Make your body strong: brace your core, elbows slightly out",
-      "Catch at the highest point, in front of your head"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "No pushing at first, just the shield beside you",
-        "Lower ball"
-      ],
-      "moeilijker": [
-        "Push a little harder",
-        "Distribute straight after catching"
       ]
     }
   }

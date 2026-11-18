@@ -383,6 +383,30 @@
       ]
     }
   },
+  "keeper-wu-bal-om-je-lichaam": {
+    "naam": "Ball round your body and catch",
+    "uitleg": "Every keeper has their own ball. Pass the ball from hand to hand round your waist, twice round, and then, bending forward, round your knees. Then throw the ball straight up, clap your hands while it is in the air and catch it at the highest point, arms stretched above your head. Then go the other way round.",
+    "organisatie": "Each keeper with a ball, in their own spot with some space around it. Sets of half a minute: round the waist, round the knees, throw up and catch. Three sets, then change direction.",
+    "benodigdheden": [
+      "1 ball per keeper",
+      "Disc cones"
+    ],
+    "coachpunten": [
+      "Handle the ball with your fingers, not your palms",
+      "After clapping, watch the ball back into your hands",
+      "Catch at the highest point: hands in a W, arms almost straight"
+    ],
+    "variaties": {
+      "makkelijker": [
+        "No clapping",
+        "Only round the waist"
+      ],
+      "moeilijker": [
+        "Clap two or three times",
+        "Round one leg, in a figure of eight"
+      ]
+    }
+  },
   "keeper-wu-vangen-vier-pionnen": {
     "naam": "Catching on the move round four cones",
     "uitleg": "Four cones in a small square in front of the goal. The keeper moves along the sides: sideways, forwards and backwards, always facing the coach. At each cone the coach throws a ball: catch it, throw it back and move straight on to the next cone. After two rounds, go the other way.",
@@ -479,30 +503,6 @@
       "moeilijker": [
         "Throw with your weaker hand only",
         "Only score after three passes"
-      ]
-    }
-  },
-  "keeper-wu-bal-om-je-lichaam": {
-    "naam": "Ball round your body and catch",
-    "uitleg": "Every keeper has their own ball. Pass the ball from hand to hand round your waist, twice round, and then, bending forward, round your knees. Then throw the ball straight up, clap your hands while it is in the air and catch it at the highest point, arms stretched above your head. Then go the other way round.",
-    "organisatie": "Each keeper with a ball, in their own spot with some space around it. Sets of half a minute: round the waist, round the knees, throw up and catch. Three sets, then change direction.",
-    "benodigdheden": [
-      "1 ball per keeper",
-      "Disc cones"
-    ],
-    "coachpunten": [
-      "Handle the ball with your fingers, not your palms",
-      "After clapping, watch the ball back into your hands",
-      "Catch at the highest point: hands in a W, arms almost straight"
-    ],
-    "variaties": {
-      "makkelijker": [
-        "No clapping",
-        "Only round the waist"
-      ],
-      "moeilijker": [
-        "Clap two or three times",
-        "Round one leg, in a figure of eight"
       ]
     }
   }

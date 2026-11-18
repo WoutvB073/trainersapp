@@ -291,7 +291,7 @@ const oefeningen = [
     },
     tekening: {
       ...keeperVeld({ x: 26, y: -3, breedte: 16, lengte: 14 }),
-      objecten: [goal, keeper('k1', 1, 34, 2.4, { kijkrichting: -90 }), trainer(34, 9.4, -90), bal('bal', 34, 8.85, 't1')],
+      objecten: [goal, keeper('k1', 1, 34, 2.4, { kijkrichting: -90 }), trainer(35.8, 9.4, -100), bal('bal', 35.7, 8.85, 't1')],
       animatie: [
         pauze(0.6),
         stap({ type: 'draai', wie: 'k1', kijk: 90, start: 0.15 }, gooi('k1', 1.4).acties[0]),
@@ -336,7 +336,7 @@ const oefeningen = [
     },
     tekening: {
       ...keeperVeld({ x: 26, y: -3, breedte: 16, lengte: 15 }),
-      objecten: [goal, keeper('k1', 1, 34, 1.6, { kijkrichting: 90 }), trainer(34, 9.6, -90), bal('bal', 34, 9.05, 't1')],
+      objecten: [goal, keeper('k1', 1, 34, 1.6, { kijkrichting: 90 }), trainer(35.8, 9.6, -100), bal('bal', 35.7, 9.05, 't1')],
       animatie: [
         pauze(0.5),
         stap({ type: 'schot', van: 't1', naar: 'k1', worp: 'volley', hoogte: 1.2, eindHoogte: 1.1 }),
@@ -380,7 +380,7 @@ const oefeningen = [
     },
     tekening: {
       ...keeperVeld({ x: 26, y: -3, breedte: 16, lengte: 12 }),
-      objecten: [goal, keeper('k1', 1, 34, 1.8, { kijkrichting: 90 }), trainer(34, 7.4, -90), bal('bal', 34, 6.85, 't1')],
+      objecten: [goal, keeper('k1', 1, 34, 1.8, { kijkrichting: 90 }), trainer(35.6, 7.4, -110), bal('bal', 35.4, 6.9, 't1')],
       animatie: [
         pauze(0.5),
         gooi('k1', 1.4, { worp: 'bovenhands', stuitOp: [34, 3], vangHoogte: 0.35 }),

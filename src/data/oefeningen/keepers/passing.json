@@ -4368,9 +4368,9 @@
         "type": "half"
       },
       "weergave": {
-        "x": 14,
+        "x": 12,
         "y": -3,
-        "breedte": 40,
+        "breedte": 46,
         "lengte": 26
       },
       "camera": "schuin",

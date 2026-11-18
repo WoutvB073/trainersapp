@@ -48,8 +48,8 @@ const oefeningen = [
         pion('p3', 36.4, 7.2),
         pion('p4', 31.6, 7.2),
         keeper('k1', 1, 32.4, 3.2, { kijkrichting: 90 }),
-        trainer(34, 12, -90),
-        bal('bal', 34, 11.45, 't1'),
+        trainer(35.8, 12, -100),
+        bal('bal', 35.7, 11.45, 't1'),
       ],
       animatie: [
         pauze(0.5),
@@ -102,7 +102,7 @@ const oefeningen = [
     },
     tekening: {
       ...keeperVeld({ x: 25, y: -3, breedte: 18, lengte: 15 }),
-      objecten: [goal, keeper('k1', 1, 33, 1.8, { kijkrichting: 90 }), trainer(34, 9.6, -90), bal('bal', 34, 9.05, 't1')],
+      objecten: [goal, keeper('k1', 1, 33, 1.8, { kijkrichting: 90 }), trainer(35.8, 9.6, -100), bal('bal', 35.7, 9.05, 't1')],
       animatie: [
         pauze(0.5),
         stap({ type: 'pass', van: 't1', naar: 'k1', hoogte: 'grond' }),
@@ -359,7 +359,7 @@ const oefeningen = [
     },
     tekening: {
       ...keeperVeld({ x: 27, y: -3, breedte: 14, lengte: 11 }),
-      objecten: [goal, keeper('k1', 1, 34, 1.8, { kijkrichting: 90 }), trainer(34, 6.4, -90), bal('bal', 34, 5.85, 't1')],
+      objecten: [goal, keeper('k1', 1, 34, 1.8, { kijkrichting: 90 }), trainer(35.6, 6.4, -110), bal('bal', 35.4, 5.9, 't1')],
       animatie: [
         pauze(0.5),
         stap({ type: 'pass', van: 't1', naar: 'k1', worp: 'onderhands', hoogte: 'grond', duikNaar: [32.8, 2.1], duikHoogte: 0.15 }),

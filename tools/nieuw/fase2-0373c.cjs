@@ -179,7 +179,7 @@ const oefeningen = [
       },
     },
     tekening: {
-      ...keeperVeld({ x: 20, y: -4, breedte: 50, lengte: 22 }),
+      ...keeperVeld({ x: 20, y: -7, breedte: 51, lengte: 25 }),
       objecten: [
         goal,
         pop('p1', 36.6, 2.6),
@@ -278,7 +278,7 @@ const oefeningen = [
       },
     },
     tekening: {
-      ...keeperVeld({ x: 14, y: -3, breedte: 40, lengte: 26 }),
+      ...keeperVeld({ x: 12, y: -3, breedte: 46, lengte: 26 }),
       objecten: [goal, pion('p1', 47.3, 18.2), pion('p2', 48.7, 17), keeper('k1', 1, 34, 2.4, { kijkrichting: 90 }), trainer(24, 13, -30), bal('bal', 24.5, 12.7, 't1')],
       animatie: [
         pauze(0.5),

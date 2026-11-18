@@ -229,9 +229,9 @@ const oefeningen = [
       objecten: [
         goal,
         keeper('k1', 1, 34, 1.6, { kijkrichting: 90, verdedigt: 'g1' }),
-        trainer(34, 6.6, -90),
-        bal('rood', 33.8, 6.05, 't1', { kleur: KLEUR.rood, hand: 'links' }),
-        bal('geel', 34.2, 6.05, 't1', { kleur: KLEUR.geel, hand: 'rechts' }),
+        trainer(35.6, 6.8, -105),
+        bal('rood', 35.3, 6.3, 't1', { kleur: KLEUR.rood, hand: 'links' }),
+        bal('geel', 35.7, 6.25, 't1', { kleur: KLEUR.geel, hand: 'rechts' }),
       ],
       animatie: [
         pauze(0.6),
@@ -277,7 +277,7 @@ const oefeningen = [
       },
     },
     tekening: {
-      ...keeperVeld({ x: 22, y: -3, breedte: 34, lengte: 22 }),
+      ...keeperVeld({ x: 20, y: -3, breedte: 40, lengte: 22 }),
       objecten: [goal, keeper('k1', 1, 34.4, 1.4, { verdedigt: 'g1', uitkomen: true }), speler('a1', 7, 52, 13, { kijkrichting: -150 }), bal('b1', 51.5, 12.75, 'a1'), bal('b2', 52.8, 14)],
       animatie: [
         pauze(0.6),
@@ -324,17 +324,17 @@ const oefeningen = [
     tekening: {
       ...leeg(12, 10),
       objecten: [
-        trainer(4.6, 5, 0),
-        bal('ta', 5.1, 4.8, 't1', { variant: 'tennisbal', hand: 'links' }),
-        bal('tb', 5.1, 5.2, 't1', { variant: 'tennisbal', hand: 'rechts' }),
-        keeper('k1', 1, 8, 5, { kijkrichting: 180 }),
+        trainer(4, 5, 0),
+        bal('ta', 4.5, 4.8, 't1', { variant: 'tennisbal', hand: 'links' }),
+        bal('tb', 4.5, 5.2, 't1', { variant: 'tennisbal', hand: 'rechts' }),
+        keeper('k1', 1, 8.6, 5, { kijkrichting: 180 }),
       ],
       animatie: [
         pauze(0.7),
         stap(
-          { type: 'pass', van: 't1', naar: 'k1', worp: 'onderhands', hoogte: 0.05, stuitOp: [5.5, 4.7], eindHoogte: 0.4, bal: 'ta' },
-          { type: 'pass', van: 't1', naar: 'k1', worp: 'onderhands', hoogte: 0.05, stuitOp: [5.5, 5.3], eindHoogte: 0.4, bal: 'tb' },
-          { type: 'loop', wie: 'k1', naar: [6.6, 5], manier: 'sprint', start: 0.1, duur: 0.45 },
+          { type: 'pass', van: 't1', naar: 'k1', worp: 'onderhands', hoogte: 0.05, stuitOp: [4.9, 4.7], eindHoogte: 0.4, bal: 'ta' },
+          { type: 'pass', van: 't1', naar: 'k1', worp: 'onderhands', hoogte: 0.05, stuitOp: [4.9, 5.3], eindHoogte: 0.4, bal: 'tb' },
+          { type: 'loop', wie: 'k1', naar: [6.4, 5], manier: 'sprint', start: 0.05, duur: 0.5 },
         ),
         pauze(1),
       ],

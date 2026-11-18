@@ -2651,14 +2651,14 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 35.8,
           "y": 9.4,
-          "kijkrichting": -90
+          "kijkrichting": -100
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 34,
+          "x": 35.7,
           "y": 8.85,
           "bij": "t1"
         }
@@ -2805,14 +2805,14 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 35.8,
           "y": 9.6,
-          "kijkrichting": -90
+          "kijkrichting": -100
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 34,
+          "x": 35.7,
           "y": 9.05,
           "bij": "t1"
         }
@@ -2931,15 +2931,15 @@
         {
           "id": "t1",
           "soort": "trainer",
-          "x": 34,
+          "x": 35.6,
           "y": 7.4,
-          "kijkrichting": -90
+          "kijkrichting": -110
         },
         {
           "id": "bal",
           "soort": "bal",
-          "x": 34,
-          "y": 6.85,
+          "x": 35.4,
+          "y": 6.9,
           "bij": "t1"
         }
       ],
