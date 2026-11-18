@@ -150,11 +150,12 @@ for (const [naam, vp] of [
 
 // De gekozen aantallen blijven bewaard na opnieuw openen.
 const p = await pagina(TELEFOON);
-await p.goto(`${BASE}?r=fw#/`, { waitUntil: 'networkidle0' });
+await p.goto(`${BASE}?r=fw#/keepers`, { waitUntil: 'networkidle0' });
+const keepersAlle = await status(p);
 await p.evaluate(() => localStorage.setItem('trainersapp.filterAantallen', JSON.stringify({ spelers: 6, keepers: 1 })));
 await p.goto(`${BASE}?r=fw2#/keepers`, { waitUntil: 'networkidle0' });
 const keepersTotaal = await status(p);
-controle(keepersTotaal > 0 && keepersTotaal < 71, `Keepers met 6 spelers/1 keeper: ${keepersTotaal}`);
+controle(keepersTotaal > 0 && keepersTotaal < keepersAlle, `Keepers met 6 spelers/1 keeper: ${keepersTotaal} van ${keepersAlle}`);
 await p.evaluate(() => localStorage.removeItem('trainersapp.filterAantallen'));
 await p.close();
 
