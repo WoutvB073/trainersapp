@@ -7,7 +7,7 @@ Alle tekst in de app is Nederlands. De app heet **TopTraining** (sinds 0.15.0; d
 staat in `src/config.ts`, het manifest in `vite.config.ts` en `index.html`. De link (/trainersapp/), de repo en de
 opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en gedeelde links blijven werken.
 
-## Status (17-11-2026, versie 0.37.2)
+## Status (18-11-2026, versie 0.37.3)
 
 | Fase | Status |
 |---|---|
@@ -55,7 +55,7 @@ opslagsleutels (`trainersapp.…`) blijven zo, zodat geïnstalleerde apps en ged
 | De volgende stap, fase 1 (onderzoek, proef en plan) | ✅ bekeken, keuzes gemaakt (ontwerp C, alle 157 oefeningen, nummers en installatiescherm zoals voorgesteld, animaties zo realistisch als mogelijk). Verslag: **PLAN-VOLGENDE-STAP.md**. |
 | 40. Fase 2, deel 1: opstelling slepen, vaste rugnummers, installatiescherm (0.35.0) | ✅ online – **wacht op test** |
 | 41. Fase 2, deel 2: ontwerp C (Zacht) op alle schermen (0.36.0) | ✅ online – **wacht op test** |
-| 42. Fase 2, deel 3: nieuwe oefeningen in batches (0.37.x) | 🔄 Batch 1 (0.37.0): 30 oefeningen in Warming-up, Loopcoördinatie, Techniek en Spelletjes – online, **wacht op test**. Batch 2 (0.37.1): 36 oefeningen in Pass en trap, Afwerken, Positiespel, Verdedigen en omschakelen, 1 tegen 1 en Partijvormen – online, **wacht op test**. Batch 3 (0.37.2): 29 eerder overgeslagen voorstellen die toch anders zijn, en de bouwsteen "arm omhoog" – online, **wacht op test**. 7 voorstellen zijn praktisch exact gelijk aan een bestaande oefening (zie 0.37.1). Nog: de 51 keepersoefeningen (0.37.3 en verder). |
+| 42. Fase 2, deel 3: nieuwe oefeningen in batches (0.37.x) | ✅ Alle 157 voorstellen verwerkt, online, **wacht op test**. Batch 1 (0.37.0): 30 oefeningen in Warming-up, Loopcoördinatie, Techniek en Spelletjes. Batch 2 (0.37.1): 36 in Pass en trap, Afwerken, Positiespel, Verdedigen en omschakelen, 1 tegen 1 en Partijvormen. Batch 3 (0.37.2): 29 eerder overgeslagen voorstellen en de bouwsteen "arm omhoog". Batch 4 (0.37.3): 50 keepersoefeningen en negen bouwstenen. Samen 145 nieuwe oefeningen; 5 voorstellen (★) zaten al sinds 0.35.0 in de app en 7 zijn praktisch exact gelijk aan een bestaande oefening (zie 0.37.1). |
 | 43. Fase 2, deel 4: zo realistisch mogelijke animaties (0.38.0) | ⏳ |
 
 ## Werkwijze
@@ -1303,6 +1303,18 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 - **Fysieke controle**: in een hoepel afremmen of stilstaan mag nu (een hoepel ligt plat; nodig voor "Hordes en afremmen in de hoepel"). Er gewoon doorheen joggen blijft een fout. `src/anim/fysiek.ts`, getest in `tests/versie-0370.test.ts`.
 - **Lettertypes en externe verzoeken** (vraag van de gebruiker): Inter en Barlow Condensed zaten al in de app, via de pakketten `@fontsource-variable/inter` en `@fontsource/barlow-condensed` (SIL Open Font License 1.1): de bestanden staan in de build (`dist/assets/*.woff2`) en in de offline-cache van de service worker. Er wordt niets van Google Fonts of een ander adres geladen. Gemeten met `tools/e2e/extern.mjs` op de echte site: op 16 schermen (niet ingelogd) en het installatiescherm in Safari, WhatsApp en Android gaat er **geen enkel verzoek** naar buiten. Pas bij inloggen, teams, synchroniseren of korte deellinks praat de app met Firebase (Google-adressen van Firebase: identitytoolkit, securetoken, firestore). In de code van de Firebase-bibliotheek staan nog adressen voor reCAPTCHA en Google-inloggen (apis.google.com, www.google.com/recaptcha), maar die worden alleen gebruikt bij telefoonnummer- of Google-inloggen, en dat heeft de app niet. Vaste test in `tests/versie-0370.test.ts` (geen externe lettertypes of links in index.html en CSS).
 
+## Besluiten versie 0.37.3 – keepersoefeningen (fase 2, deel 3, batch 4)
+- **50 keepersoefeningen** uit VOORSTEL-OEFENINGEN.md (KW1–KW5, KL2–KL6, KH1–KH5, KB1–KB7, KV1–KV6, KP1–KP6, K11–K15, KR1–KR6, KS1–KS5); KL1 (★ Zit, sta op en duik) zat er al sinds 0.35.0 in. Geen enkel keepersvoorstel is praktisch exact gelijk aan een bestaande oefening. Bouwscripts `tools/nieuw/fase2-0373a–f.cjs`; eisen in `tests/versie-0373.test.ts`. Met `node tools/nieuw/droog.mjs <bouwscript>` controleer je een bouwscript (tijdlijn, kleinste afstand, fysiek) zonder de data te wijzigen.
+- **Nieuwe bouwstenen** (elk met tests in `tests/versie-0373.test.ts`):
+  - **Keeper in een teamhesje**: een keeper met `team` krijgt de kleur van dat team, de handschoenen blijven (Handbal met keepers).
+  - **Wijdbeens** (`wijdbeens`) en een lage bal **tussen de benen door** (`onderdoor` met een persoon): de fysieke controle laat dat toe (Schot door de benen van een speler).
+  - **Gekleurde bal** (`kleur` op een bal, in 2D en 3D) en **twee ballen tegelijk vasthouden** (`hand`: links of rechts) (Kleur van de bal, Twee tennisballen).
+  - **Effect** (`effect` op een pass of schot): de bal draait in een boog, het spoor volgt de boog (Indraaiend en uitdraaiend).
+  - **Duik over iets heen** (`duikOver`): de keeper is al vroeg in de duik hoog; de afstandstest laat een duik over een liggende speler toe als de duiker dan hoog genoeg is (Over de liggende keeper).
+  - **Bal om het lichaam** (`omLijf`, om het middel of de knieën, met de handen die de bal volgen) en **klappen** (`klap`) (Bal om je lichaam en vangen).
+  - **Stootkussen** (nieuw materiaal, `drager`): met twee handen vóór de drager, in 2D een balk vóór het poppetje (Hoge bal met een schild). Het duwtje is bewust contact: in de afstandstest mag deze oefening dichterbij (0,75 m).
+- **Id-botsing**: "Tippen om de paal" kreeg eerst het id van een oude, gearchiveerde oefening; het nieuwe id is `keeper-hd-om-de-paal-tippen`. Een test controleert nu dat geen id dubbel is, ook niet tegenover het archief.
+
 ## Besluiten versie 0.37.2 – eerder overgeslagen voorstellen (fase 2, deel 3)
 - **29 oefeningen** uit de eerder overgeslagen voorstellen (correctie van de gebruiker): L2, T1, T5, T13, S6, S8, P2, P4, P11, P13, A2, A5, A6, A7, A12, PS1, PS3, PS4, PS7, V2, V3, V4, V8, V9, D6, D7, PV1, PV6, PV9. Bouwscripts `tools/nieuw/fase2-0372a–d.cjs`; eisen in `tests/versie-0372.test.ts`. Zo staan er nu 95 nieuwe spelersoefeningen uit het voorstel in de app (106 voorstellen: 95 gebouwd, 4 ★ al sinds 0.35.0, 7 exact gelijk).
 - **Bouwsteen "arm omhoog"** (`teken`): een persoon steekt de linker- of rechterarm recht omhoog (standaard 1,2 s, omhoog en omlaag in 0,25 s), in 3D met de hand boven het hoofd en in 2D als hand naast het poppetje. Nodig voor "Kiezen bij de pop", waar de trainer op het laatste moment de kant aangeeft. `src/model/types.ts` (TekenActie), `src/anim/timeline.ts`, `src/anim/poppetje.ts`, `src/anim/render2d.ts`; getest in `tests/versie-0372.test.ts`.
@@ -1329,6 +1341,13 @@ Eén renderer speelt dit af, in 2D (fase 1) en 3D (fase 2). Types: `src/model/ty
 
 ## Keuzes zonder overleg
 (Gemaakt terwijl de gebruiker weg was; graag bekijken.)
+- 0.37.3 – Handbal met keepers: de twee teams dragen een hesje over hun keeperstenue; scoren met een stuit vóór het doeltje.
+- 0.37.3 – Trefbal voor keepers: een geraakte bal kaatst van het been weg; vangen is een redding.
+- 0.37.3 – Kleur van de bal: de trainer gooit twee ballen tegelijk, één uit elke hand, en roept de kleur; in het voorbeeld "rood".
+- 0.37.3 – Twee tennisballen: de keeper pakt ze allebei laag na de eerste stuit, met elke hand een bal.
+- 0.37.3 – Kruising of hoek en Roepen "los" of "weg": wat er geroepen wordt staat in de uitleg, niet in de animatie.
+- 0.37.3 – Hoge bal met een schild: een tweede trainer (of keeper) gooit; de trainer met het stootkussen duwt van opzij, weg van de bal.
+- 0.37.3 – Wie is het eerst bij de bal? lijkt op "Steekpass: eerder bij de bal dan de aanvaller", maar is voor JO8–15 en laat ook het blijven staan zien; Vangen na een draai (vangen terwijl de bal al onderweg is) naast "Draaien en laag duiken"; Uittrap naar het doelwit (vak op 25 m met punten) naast "Doeltrap naar de flank"; Bal tegen het kaatsbord (schuin voor het doel) naast "Rebounder". Ze verschillen in opzet of regels, dus gebouwd.
 - 0.37.2 – Hoepelhinkelbaan: "kruislings" is uitgewerkt als om en om links en rechts springen (oranje hoepels in een zigzag).
 - 0.37.2 – Kiezen bij de pop: de trainer steekt zijn arm op; je gaat langs de pop aan de kant van die arm, gezien vanaf jou (zijn linkerarm is voor jou rechts).
 - 0.37.2 – Vierkant met twee ballen tegen de klok: "tegen de klok" is de stopwatch (zoveel mogelijk passes in een minuut), niet de draairichting.
