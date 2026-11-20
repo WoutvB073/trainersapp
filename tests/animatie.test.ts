@@ -54,7 +54,7 @@ describe('lijnen → animatiestappen', () => {
     const o = lijnenNaarAnimatie(t([speler('a1', 5, 10), speler('a2', 20, 10)], [lijn('bal', [5, 10], [20, 10], 1, { van: 'a1', naar: 'a2' })]));
     expect(o.meldingen).toHaveLength(1);
     expect(o.meldingen[0]).toMatchObject({ lijn: 0, soort: 'fout' });
-    expect(o.meldingen[0]!.tekst).toMatch(/Speler 1 heeft de bal niet/);
+    expect(o.meldingen[0]!.tekst).toMatch(/Speler 1 heeft de bal nog niet/);
     expect(o.tekening.animatie).toBeUndefined();
   });
 

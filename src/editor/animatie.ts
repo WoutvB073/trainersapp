@@ -26,7 +26,24 @@ export interface LijnMelding {
   tekst: string;
   /** `fout`: de lijn doet niet mee in de animatie; `let op`: hij doet mee, maar is in het echt lastig (fysieke check). */
   soort: 'fout' | 'let op';
+  /** De lijn zit niet vast aan een speler (in de editor: kies een speler). */
+  los?: true;
+  /** Knoppen die het met één tik oplossen. */
+  oplossingen?: Oplossing[];
 }
+
+/** Oplossing voor een melding (de editor voert hem uit). */
+export type Oplossing =
+  /** Kies bij welke speler de lijn hoort. */
+  | { soort: 'kies-speler' }
+  /** Dribbel zonder bal: maak er een looplijn van. */
+  | { soort: 'wordt-loop' }
+  /** De lijn naar een ander stapnummer. */
+  | { soort: 'na-stap'; stap: number }
+  /** Een bal bij deze persoon leggen (de losse bal `bal` die vlakbij ligt, of een nieuwe). */
+  | { soort: 'geef-bal'; wie: string; naam: string; bal?: string }
+  /** Eerst een andere lijn oplossen. */
+  | { soort: 'toon'; lijn: number; stap: number };
 
 export interface Omzetting {
   /** Afspeelbare tekening: objecten (keepers verdedigen hun goal), animatiestappen, eventueel een rij. */
@@ -34,6 +51,8 @@ export interface Omzetting {
   meldingen: LijnMelding[];
   /** Per animatiestap (zonder herhaling): welke lijnen erin zitten. */
   stapLijnen: number[][];
+  /** Stand na de laatste stap: waar iedereen staat, wie welke bal heeft, waar losse ballen liggen. */
+  eind: { plek: Map<string, Punt>; houder: Map<string, string | null>; los: Map<string, Punt> };
 }
 
 const isPersoon = (o: VeldObject | undefined): o is VeldObject => !!o && PERSONEN.includes(o.soort);
@@ -58,7 +77,7 @@ function goalMaat(g: VeldObject) {
 }
 
 /** Ligt dit punt in of vlak voor een goal? */
-function goalBij(goals: VeldObject[], p: Punt): VeldObject | undefined {
+export function goalBij(goals: VeldObject[], p: Punt): VeldObject | undefined {
   for (const g of goals) {
     const { B, D } = goalMaat(g);
     const q = lokaal(g, p);
@@ -130,8 +149,13 @@ function tussenpunten(pad: Punt[]): Punt[] {
   return uit;
 }
 
-const persoonNaam = (o: VeldObject, alle: VeldObject[]) =>
-  o.soort === 'keeper'
+/** Naam van een persoon in meldingen; met het team erbij als er twee teams zijn (anders zijn er twee keer "Speler 1"). */
+export const persoonNaam = (o: VeldObject, alle: VeldObject[]): string =>
+  o.naam
+    ? o.naam
+    : o.soort === 'speler' && o.nummer && o.team !== 'J' && new Set(alle.filter((x) => x.soort === 'speler' && x.team !== 'J').map((x) => x.team ?? 'A')).size > 1
+      ? vt('Speler {nummer} van team {team}', { nummer: o.nummer, team: o.team ?? 'A' })
+      : o.soort === 'keeper'
     ? alle.filter((x) => x.soort === 'keeper').length > 1 && o.nummer
       ? vt('Keeper {nummer}', { nummer: o.nummer })
       : vt('De keeper')
@@ -152,7 +176,8 @@ const hoogteVan = (l: Lijn, schot: boolean): BalHoogte => {
 export function lijnenNaarAnimatie(t: Tekening): Omzetting {
   const lijnen = t.lijnen ?? [];
   const meldingen: LijnMelding[] = [];
-  const fout = (lijn: number, tekst: string) => meldingen.push({ lijn, tekst, soort: 'fout' });
+  const fout = (lijn: number, tekst: string, los?: true) =>
+    meldingen.push(los ? { lijn, tekst, soort: 'fout', los, oplossingen: [{ soort: 'kies-speler' }] } : { lijn, tekst, soort: 'fout' });
 
   // Keepers verdedigen het goal waar ze bij staan (dan kiezen ze vanzelf positie en reageren ze op schoten).
   const goals = t.objecten.filter((o) => o.soort === 'goal' || o.soort === 'klein-goal');
@@ -193,7 +218,7 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
     }
     return beste;
   };
-  const materiaalBij = (p: Punt) => objecten.find((o) => (o.soort === 'rebounder' || o.soort === 'pop' || o.soort === 'bank' || o.soort === 'muurtje') && afstand(p, [o.x, o.y]) < 1.4);
+  const materiaalBij = (p: Punt) => kaatsDing(objecten, p);
 
   // Inworp (0.29.0): een speler op of buiten de zijlijn die de bal speelt, gooit hem in met twee handen.
   const veldBreedte = t.veld.type === 'leeg' ? undefined : veldMaten(t).breedte;
@@ -204,13 +229,63 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
   const stapLijnen: number[][] = [];
   let eersteSpeler: string | undefined;
   let uitkomen = false;
+  /** Lijnen die niet meedoen (dan leggen we bij een latere lijn uit dat die daardoor ook niet kan). */
+  const mislukt = new Set<number>();
+  const padVan = (l: Lijn) => lijnPunten(l, (id) => opId.get(id) && [opId.get(id)!.x, opId.get(id)!.y]);
 
-  for (const nr of nummers) {
-    const groep = lijnen.map((l, i) => ({ l, i })).filter((x) => x.l.stap === nr);
+  /** Ballijnen naar deze persoon (eraan vast, of eindigend waar hij in het begin staat). */
+  const passesNaar = (wie: string, behalve: number) => {
+    const o = opId.get(wie)!;
+    return lijnen
+      .map((l, i) => ({ l, i }))
+      .filter(({ l, i }) => i !== behalve && l.soort === 'bal' && (l.stap ?? 0) > 0 && (l.naar === wie || (!l.naar && afstand(padVan(l).at(-1)!, [o.x, o.y]) < BIJ)));
+  };
+  /** Melding als iemand de bal niet heeft: de echte reden, met een knop die het oplost. */
+  const geenBal = (i: number, l: Lijn, wie: string) => {
+    const o = opId.get(wie)!;
+    const w0 = persoonNaam(o, objecten);
+    const nr = l.stap ?? 0;
+    const naar = passesNaar(wie, i);
+    const eerder = naar.find((x) => (x.l.stap ?? 0) < nr && mislukt.has(x.i));
+    const later = naar.filter((x) => (x.l.stap ?? 0) > nr).sort((a, b) => (a.l.stap ?? 0) - (b.l.stap ?? 0))[0];
+    const melding = (tekst: string, oplossingen: Oplossing[]) => meldingen.push({ lijn: i, tekst, soort: 'fout', oplossingen });
+    if (eerder) {
+      const n = eerder.l.stap ?? 0;
+      return melding(vt('{w0} krijgt de bal niet, want de pass naar hem (stap {n}) doet niet mee. Los eerst stap {n} op.', { w0, n }), [{ soort: 'toon', lijn: eerder.i, stap: n }]);
+    }
+    if (later) {
+      const n = (later.l.stap ?? 0) + 1;
+      return melding(vt('{w0} krijgt de bal pas in stap {n}. Zet deze lijn erna?', { w0, n: later.l.stap ?? 0 }), [{ soort: 'na-stap', stap: n }]);
+    }
+    // Ligt er een losse bal vlakbij (op het scherm lijkt hij tegen de speler aan te liggen)?
+    const p = plek.get(wie)!;
+    const dichtbij = [...losPlek.entries()].filter(([b]) => houder.get(b) === null).sort((a, b) => afstand(a[1], p) - afstand(b[1], p))[0];
+    const geef: Oplossing = dichtbij && afstand(dichtbij[1], p) < 6 ? { soort: 'geef-bal', wie, naam: w0, bal: dichtbij[0] } : { soort: 'geef-bal', wie, naam: w0 };
+    if (l.soort === 'dribbel')
+      return melding(
+        geef.bal ? vt('{w0} heeft de bal nog niet: de bal ligt een stukje van hem af. Maak er een looplijn van?', { w0 }) : vt('{w0} heeft de bal nog niet. Maak er een looplijn van?', { w0 }),
+        [{ soort: 'wordt-loop' }, geef],
+      );
+    return melding(geef.bal ? vt('{w0} heeft de bal nog niet: de bal ligt een stukje van hem af.', { w0 }) : vt('{w0} heeft de bal nog niet.', { w0 }), [geef]);
+  };
+  const bezig = (i: number, wie: string, nr: number) =>
+    meldingen.push({
+      lijn: i,
+      tekst: vt('{w0} doet in deze stap al iets. Zet deze lijn in de volgende stap?', { w0: persoonNaam(opId.get(wie)!, objecten) }),
+      soort: 'fout',
+      oplossingen: [{ soort: 'na-stap', stap: nr + 1 }],
+    });
+
+  /**
+   * Eén deelstap van een stapnummer. Wat nog niet kan omdat dezelfde speler in deze deelstap al iets doet (of de bal pas
+   * krijgt), schuift door naar de volgende deelstap: eerst passen en dan lopen, eerst dribbelen en dan passen, eerst de
+   * bal krijgen en dan dribbelen. `streng`: niets kon meer, dus nu de meldingen.
+   */
+  const deelstap = (groep: { l: Lijn; i: number }[], nr: number, streng: boolean) => {
     const acties: Actie[] = [];
     const inStap: number[] = [];
-    const wacht = Math.max(0, ...groep.map((x) => x.l.wacht ?? 0));
-    const nu = new Map(plek); // plekken aan het begin van de stap
+    const later: { l: Lijn; i: number }[] = [];
+    const nu = new Map(plek); // plekken aan het begin van de deelstap
     const bewegers = new Set<string>();
     const ontvangt = new Set<string>();
     /** Ontvangers die de bal een stukje tegemoet lopen (mogen hem daarna wel in één keer doorspelen). */
@@ -221,19 +296,34 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
       if (l.van && isPersoon(opId.get(l.van))) return l.van;
       return persoonBij(pad[0]!, nu);
     };
+    const ballijnen = groep.filter((x) => x.l.soort === 'bal');
+    /** Spelers met een ballijn in deze deelstap die de bal nu al hebben (die passen eerst, lopen daarna). */
+    const passeertEerst = new Set(
+      ballijnen
+        .map((x) => wieBegint(x.l, padVan(x.l)))
+        .filter((w): w is string => !!w && !!(balVan(w) ?? losseBal(nu.get(w)!))),
+    );
 
     // 1. Lopen en dribbelen.
     for (const { l, i } of groep) {
       if (l.soort === 'bal') continue;
-      const pad = lijnPunten(l, (id) => opId.get(id) && [opId.get(id)!.x, opId.get(id)!.y]);
+      const pad = padVan(l);
       const wie = wieBegint(l, pad);
       if (!wie) {
-        fout(i, l.soort === 'loop' ? vt('Deze looplijn begint niet bij een speler') : vt('Deze dribbel begint niet bij een speler'));
+        // Misschien staat er na een eerdere deelstap wel iemand (tweede looplijn die begint waar de eerste eindigt).
+        if (!streng) {
+          later.push({ l, i });
+          continue;
+        }
+        fout(i, l.soort === 'loop' ? vt('Deze looplijn begint niet bij een speler') : vt('Deze dribbel begint niet bij een speler'), true);
+        mislukt.add(i);
         continue;
       }
-      const o = opId.get(wie)!;
-      if (bewegers.has(wie)) {
-        fout(i, vt('{w0} loopt in deze stap al: geef deze lijn een ander nummer', { w0: persoonNaam(o, objecten) }));
+      if (bewegers.has(wie) || (l.soort === 'loop' && passeertEerst.has(wie))) {
+        if (streng) {
+          bezig(i, wie, nr);
+          mislukt.add(i);
+        } else later.push({ l, i });
         continue;
       }
       const naar = rond(l.naar && opId.get(l.naar) ? [opId.get(l.naar)!.x, opId.get(l.naar)!.y] : pad[pad.length - 1]!);
@@ -241,7 +331,10 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
       if (l.soort === 'dribbel') {
         const bal = balVan(wie) ?? losseBal(nu.get(wie)!);
         if (!bal) {
-          fout(i, vt('{w0} heeft hier geen bal om mee te dribbelen', { w0: persoonNaam(o, objecten) }));
+          if (streng) {
+            geenBal(i, l, wie);
+            mislukt.add(i);
+          } else later.push({ l, i });
           continue;
         }
         houder.set(bal, wie);
@@ -261,31 +354,42 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
       if (l.soort === 'dribbel' && goals.some((g) => keeperVan(g) && afstand(naar, [g.x, g.y]) < 18)) uitkomen = true;
     }
 
-    // 2. Ballijnen. Eerst wie de bal al heeft, dan wie hem in deze stap krijgt (doorspelen in één keer).
-    const ballijnen = groep.filter((x) => x.l.soort === 'bal');
+    // 2. Ballijnen. Eerst wie de bal al heeft, dan wie hem in deze deelstap krijgt (doorspelen in één keer).
     const gedaan = new Set<number>();
     for (let ronde = 0; ronde < ballijnen.length + 1; ronde++) {
       for (const { l, i } of ballijnen) {
         if (gedaan.has(i)) continue;
-        const pad = lijnPunten(l, (id) => opId.get(id) && [opId.get(id)!.x, opId.get(id)!.y]);
+        const pad = padVan(l);
         const wie = wieBegint(l, pad);
         if (!wie) {
           gedaan.add(i);
-          fout(i, vt('Deze ballijn begint niet bij een speler'));
+          if (!streng) {
+            later.push({ l, i });
+            continue;
+          }
+          fout(i, vt('Deze ballijn begint niet bij een speler'), true);
+          mislukt.add(i);
           continue;
         }
         const o = opId.get(wie)!;
         let bal = balVan(wie) ?? losseBal(nu.get(wie)!);
         if (!bal) {
-          // Misschien krijgt hij hem nog in deze stap (dan in één keer doorspelen): volgende ronde opnieuw proberen.
+          // Misschien krijgt hij hem nog in deze deelstap (dan in één keer doorspelen): volgende ronde opnieuw proberen.
           if (ronde < ballijnen.length) continue;
           gedaan.add(i);
-          fout(i, vt('{w0} heeft de bal niet: eerst moet hij hem krijgen (geef deze lijn een hoger nummer dan de pass naar hem)', { w0: persoonNaam(o, objecten) }));
+          if (streng) {
+            geenBal(i, l, wie);
+            mislukt.add(i);
+          } else later.push({ l, i });
           continue;
         }
         gedaan.add(i);
         if (bewegers.has(wie)) {
-          fout(i, vt('{w0} loopt of dribbelt in deze stap ook: geef de ballijn een hoger nummer', { w0: persoonNaam(o, objecten) }));
+          // Eerst dribbelen (of lopen), daarna passen: in de volgende deelstap.
+          if (streng) {
+            bezig(i, wie, nr);
+            mislukt.add(i);
+          } else later.push({ l, i });
           continue;
         }
         const eind = pad[pad.length - 1]!;
@@ -352,11 +456,26 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
         bal = undefined;
       }
     }
+    return { acties, inStap, later };
+  };
 
-    if (!acties.length) continue;
-    if (wacht > 0) stappen.push({ duur: r2(wacht), acties: [] });
-    stappen.push({ acties });
-    stapLijnen.push(inStap);
+  for (const nr of nummers) {
+    let rest = lijnen.map((l, i) => ({ l, i })).filter((x) => x.l.stap === nr);
+    const wacht = Math.max(0, ...rest.map((x) => x.l.wacht ?? 0));
+    let eerste = true;
+    while (rest.length) {
+      const r = deelstap(rest, nr, false);
+      if (!r.acties.length) {
+        // Niets kon meer: nu de meldingen voor wat over is.
+        deelstap(r.later, nr, true);
+        break;
+      }
+      if (eerste && wacht > 0) stappen.push({ duur: r2(wacht), acties: [] });
+      eerste = false;
+      stappen.push({ acties: r.acties });
+      stapLijnen.push(r.inStap);
+      rest = r.later;
+    }
   }
 
   // Keeper mag uitkomen als er op hem af gedribbeld wordt.
@@ -386,8 +505,12 @@ export function lijnenNaarAnimatie(t: Tekening): Omzetting {
     tekening = { ...basis, animatie: undefined };
     delete tekening.animatie;
   }
-  return { tekening, meldingen, stapLijnen };
+  return { tekening, meldingen, stapLijnen, eind: { plek, houder, los: losPlek } };
 }
+
+/** Rebounder, pop, bank of muurtje vlak bij dit punt (daar kaatst een pass van terug). */
+export const kaatsDing = (objecten: VeldObject[], p: Punt) =>
+  objecten.find((o) => (o.soort === 'rebounder' || o.soort === 'pop' || o.soort === 'bank' || o.soort === 'muurtje') && afstand(p, [o.x, o.y]) < 1.4);
 
 /**
  * Herhalen voor de rij: de spelers die (van hetzelfde team, zonder eigen lijnen) achter de eerste speler staan, vormen
@@ -640,10 +763,20 @@ export function animatieNaarLijnen(t: Tekening): { tekening: Tekening } | { rede
 
 /** Plek van het stapnummer: op 30% van de lijn (het buigpunt-handvat zit in het midden). */
 export function stapPunt(l: Lijn, plek?: (id: string) => Punt | undefined): Punt {
+  return lijnPuntOp(l, 0.3, plek);
+}
+
+/** Plek van het waarschuwingsdriehoekje: op 70% van de lijn (los van het stapnummer en het buigpunt). */
+export function driehoekPunt(l: Lijn, plek?: (id: string) => Punt | undefined): Punt {
+  return lijnPuntOp(l, 0.7, plek);
+}
+
+/** Punt op een deel (0–1) van de lengte van de lijn. */
+export function lijnPuntOp(l: Lijn, deel: number, plek?: (id: string) => Punt | undefined): Punt {
   const p = lijnPunten(l, plek);
   const lengtes = [0];
   for (let i = 1; i < p.length; i++) lengtes.push(lengtes[i - 1]! + afstand(p[i - 1]!, p[i]!));
-  const doel = lengtes[lengtes.length - 1]! * 0.3;
+  const doel = lengtes[lengtes.length - 1]! * deel;
   for (let i = 1; i < p.length; i++) {
     if (lengtes[i]! >= doel) {
       const u = (doel - lengtes[i - 1]!) / Math.max(1e-6, lengtes[i]! - lengtes[i - 1]!);

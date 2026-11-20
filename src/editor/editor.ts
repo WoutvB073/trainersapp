@@ -502,9 +502,10 @@ const metObjecten = (t: Tekening, objecten: VeldObject[]): Tekening => ({
   objecten: koppelDoelnetten(objecten),
 });
 
-export function voegToe(t: Tekening, o: VeldObject): Tekening {
+/** Toevoegen. Een bal vlak bij een persoon (binnen `balMarge` meter) is meteen van die persoon. */
+export function voegToe(t: Tekening, o: VeldObject, balMarge = KOPPEL): Tekening {
   const uit = metObjecten(t, [...t.objecten, o]);
-  return o.soort === 'bal' ? koppelBal(uit, o.id) : uit;
+  return o.soort === 'bal' ? koppelBal(uit, o.id, balMarge) : uit;
 }
 
 export function zetObject(t: Tekening, id: string, w: Partial<VeldObject>): Tekening {
@@ -517,12 +518,12 @@ export function zetObject(t: Tekening, id: string, w: Partial<VeldObject>): Teke
 const KOPPEL = 0.8;
 
 /** Een bal die vlak bij een persoon ligt, is van die persoon (hij beweegt mee); ver weg weer los. */
-function koppelBal(t: Tekening, id: string): Tekening {
+function koppelBal(t: Tekening, id: string, marge = KOPPEL): Tekening {
   const bal = t.objecten.find((o) => o.id === id);
   if (!bal || bal.soort !== 'bal') return t;
   const plek = plekIn(t)(id)!;
   let dichtst: VeldObject | undefined;
-  let d = KOPPEL;
+  let d = Math.max(KOPPEL, marge);
   for (const o of t.objecten) {
     if (!isPersoon(o)) continue;
     const a = Math.hypot(o.x - plek[0], o.y - plek[1]);
@@ -578,9 +579,13 @@ export function verplaats(t: Tekening, id: string, p: Punt): Tekening {
   return uit;
 }
 
-/** Na het loslaten van een bal: koppelen aan een persoon als hij er vlakbij ligt. */
-export function lagBalNeer(t: Tekening, id: string): Tekening {
-  return koppelBal(t, id);
+/**
+ * Na het loslaten van een bal: koppelen aan een persoon als hij er vlakbij ligt. De editor geeft de marge in meters die
+ * bij de zoom hoort (0.38.1): ver uitgezoomd tekent 2D een speler veel groter dan 0,8 m, en een bal die er in beeld tegenaan
+ * ligt, moet dan ook echt van hem zijn.
+ */
+export function lagBalNeer(t: Tekening, id: string, marge = KOPPEL): Tekening {
+  return koppelBal(t, id, marge);
 }
 
 export function draai(t: Tekening, id: string, hoek: number): Tekening {

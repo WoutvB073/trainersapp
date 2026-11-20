@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import type { Lijn, LijnSoort, Punt, Tekening, Uitsnede, VeldObject } from '../../model/types';
 import { PERSONEN } from '../../model/types';
 import { maakTijdlijn, standOp, type Stand } from '../../anim/timeline';
+import { lijnPunten } from '../../model/lijn';
 import { leesKleuren, tekenScene, uitsnede } from '../../anim/render2d';
 import { AnimatieSpeler } from '../../anim/AnimatieSpeler';
 import { Icoon, type IcoonNaam } from '../../components/Icoon';
@@ -14,7 +15,7 @@ import {
   lagBalNeer,
   lijnHandvatten,
   maatNaar,
-  nieuweLijn,
+  plekIn,
   objectHandvatten,
   objectVorm,
   PALET,
@@ -36,7 +37,23 @@ import {
   type PaletItem,
 } from '../../editor/editor';
 import { eigenOefeningen, useEigenOefening } from '../../eigen/opslag';
-import { editorBegin, heeftLijnAnimatie, isSchotLijn, lijnMeldingen, stapPunt, volgendeStap, type LijnMelding } from '../../editor/animatie';
+import { driehoekPunt, editorBegin, heeftLijnAnimatie, isSchotLijn, lijnMeldingen, stapPunt, volgendeStap, type LijnMelding, type Oplossing } from '../../editor/animatie';
+import {
+  geefBal,
+  kandidaten,
+  koppelAan,
+  lijnBegin,
+  lijnEind,
+  naarStap,
+  sleepLijnVast,
+  standBijLijn,
+  standVoorStap,
+  tekenLijn,
+  VASTKLIK_PX,
+  wordtLoop,
+  type Maten,
+  type StandVoor,
+} from '../../editor/vastklikken';
 import { doelnetUitkomst, heeftKeeperBijGoal } from '../../editor/animatie';
 import { metTekening } from '../../eigen/eigen';
 import { autoUitsnede } from '../../editor/editor';
@@ -56,21 +73,27 @@ type Gebaar =
       begin: Punt;
       bewogen: boolean;
     }
-  | { soort: 'handvat'; h: Handvat; id?: string; lijn?: number }
+  | { soort: 'handvat'; h: Handvat; id?: string; lijn?: number; stand?: StandVoor }
   | { soort: 'pan'; laatste: Punt }
   | { soort: 'knijp'; afstand: number; midden: Punt }
-  | { soort: 'lijn'; van: Punt }
+  | { soort: 'lijn'; van: Punt; scherm: Punt; stand: StandVoor }
+  | { soort: 'melding'; lijn: number; begin: Punt }
   | { soort: 'plaats'; begin: Punt; p: Punt };
 
 /** Aanraakmaat in CSS-pixels: zo groot is een vinger ongeveer. */
 const VINGER = 22;
+/** Een bal die binnen zoveel CSS-pixels van een persoon neergelegd wordt, is van hem (in beeld ligt hij er dan tegenaan). */
+const BAL_PX = 24;
+/** Kleur van het waarschuwingsdriehoekje (geel, met een donker uitroepteken: lijkt op geen enkele speler). */
+const DRIEHOEK_GEEL = '#ffd43b';
+const DRIEHOEK_RAND = '#5c4100';
 /** Afstand van het draaihandvat tot het object (CSS-pixels). */
 const DRAAI_AFSTAND = 30;
 
-const LIJN_NAMEN: Record<LijnSoort, { naam: string; icoon: IcoonNaam }> = {
-  bal: { naam: vt('Pass'), icoon: 'lijnBal' },
-  loop: { naam: vt('Lopen'), icoon: 'lijnLoop' },
-  dribbel: { naam: vt('Dribbel'), icoon: 'lijnDribbel' },
+const LIJN_NAMEN: Record<LijnSoort, { naam: string; lijn: string; icoon: IcoonNaam }> = {
+  bal: { naam: vt('Pass'), lijn: vt('Passlijn'), icoon: 'lijnBal' },
+  loop: { naam: vt('Lopen'), lijn: vt('Looplijn'), icoon: 'lijnLoop' },
+  dribbel: { naam: vt('Dribbel'), lijn: vt('Dribbellijn'), icoon: 'lijnDribbel' },
 };
 
 // i18n-ok (sleutels; de naam staat in GROEP_NAAM)
@@ -113,6 +136,41 @@ function beginStand(t: Tekening): Stand {
     standen.set(t, s);
   }
   return s;
+}
+
+/** Plek van een object aan het begin (rijen, bal bij een speler). */
+const plekBegin =
+  (tk: Tekening) =>
+  (id: string): Punt | undefined => {
+    const st = beginStand(tk).objecten.get(id);
+    return st ? [st.x, st.y] : undefined;
+  };
+
+/** Geel waarschuwingsdriehoekje met een uitroepteken (schermpixels). */
+function tekenDriehoek(ctx: CanvasRenderingContext2D, [x, y]: Punt, dpr: number) {
+  const h = 22 * dpr;
+  const b = 25 * dpr;
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.45)';
+  ctx.shadowBlur = 4 * dpr;
+  ctx.beginPath();
+  ctx.moveTo(x, y - h * 0.6);
+  ctx.lineTo(x + b / 2, y + h * 0.4);
+  ctx.lineTo(x - b / 2, y + h * 0.4);
+  ctx.closePath();
+  ctx.lineJoin = 'round';
+  ctx.fillStyle = DRIEHOEK_GEEL;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.lineWidth = 2 * dpr;
+  ctx.strokeStyle = DRIEHOEK_RAND;
+  ctx.stroke();
+  ctx.fillStyle = DRIEHOEK_RAND;
+  ctx.font = `800 ${Math.round(14 * dpr)}px Inter Variable, system-ui, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('!', x, y + h * 0.08); // i18n-ok
+  ctx.restore();
 }
 
 /**
@@ -222,6 +280,9 @@ export function Editor({ bron }: { bron: EditorBron }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const beeld = useRef<Uitsnede>(uitsnede({ ...start.tekening, weergave: undefined }));
   const concept = useRef<Lijn | null>(null);
+  /** Spelers waar de lijn die je nu tekent aan vastzit (oplichtende ring). */
+  const ringen = useRef<Punt[]>([]);
+  const [koppelVraag, setKoppelVraag] = useState<number | null>(null);
   const gebaar = useRef<Gebaar | null>(null);
   const vingers = useRef(new Map<number, Punt>());
   const kleuren = useMemo(() => leesKleuren(), []);
@@ -281,6 +342,35 @@ export function Editor({ bron }: { bron: EditorBron }) {
     },
     [transform],
   );
+  /** Vastklikken: ± 40 px op het scherm (minstens 1 m vanaf de rand), en precies raken. */
+  const maten = useCallback((): Maten => ({ marge: Math.max(meter(VASTKLIK_PX), 1), klein: meter(VINGER) }), [meter]);
+  /** Afstand in CSS-pixels tussen een schermpunt en een punt op het veld. */
+  const schermAfstand = useCallback(
+    (cx: number, cy: number, p: Punt) => {
+      const c = canvasRef.current!;
+      const r = c.getBoundingClientRect();
+      const { schaal, ox, oy, dpr } = transform();
+      return Math.hypot(r.left + (ox + p[0] * schaal) / dpr - cx, r.top + (oy + p[1] * schaal) / dpr - cy);
+    },
+    [transform],
+  );
+  /** Lijn waarvan je het gele driehoekje (of met `nummer` het stapnummer) raakt, of -1. */
+  const raakTeken = (cx: number, cy: number, soort: 'driehoek' | 'nummer'): number => {
+    const tk = gesch.nu;
+    const m = meldingenRef.current;
+    let beste = -1;
+    let d = soort === 'driehoek' ? 20 : 14;
+    (tk.lijnen ?? []).forEach((l, i) => {
+      if (!l.stap) return;
+      if (soort === 'driehoek' && !m.some((x) => x.lijn === i)) return;
+      const a = schermAfstand(cx, cy, soort === 'driehoek' ? driehoekPunt(l, plekBegin(tk)) : stapPunt(l, plekBegin(tk)));
+      if (a <= d) {
+        d = a;
+        beste = i;
+      }
+    });
+    return beste;
+  };
 
   // ---------- tekenen ----------
   const teken = useCallback(() => {
@@ -299,34 +389,51 @@ export function Editor({ bron }: { bron: EditorBron }) {
     const { schaal, ox, oy, dpr } = transform();
     const px = (p: Punt): Punt => [ox + p[0] * schaal, oy + p[1] * schaal];
 
-    // Stapnummers: rondje op elke lijn (oranje = let op, rood = doet niet mee).
-    const plekBegin = (id: string): Punt | undefined => {
-      const st = beginStand(tk).objecten.get(id);
-      return st ? [st.x, st.y] : undefined;
-    };
+    // Ringen om de speler(s) waar de lijn die je nu tekent of versleept aan vastzit.
+    for (const p of ringen.current) {
+      const [x, y] = px(p);
+      const r = Math.max(0.75 * schaal, 10 * dpr) + 7 * dpr;
+      ctx.save();
+      ctx.shadowColor = 'rgba(255, 212, 59, 0.9)';
+      ctx.shadowBlur = 10 * dpr;
+      ctx.lineWidth = 3.5 * dpr;
+      ctx.strokeStyle = '#ffe066';
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 1.5 * dpr;
+      ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+      ctx.beginPath();
+      ctx.arc(x, y, r + 2.5 * dpr, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // Stapnummers: wit rondje op elke lijn. Een lijn met een melding krijgt daarnaast een geel driehoekje (geen rondje:
+    // dat leek op een speler).
     (tk.lijnen ?? []).forEach((l, i) => {
       if (!l.stap) return;
-      const [x, y] = px(stapPunt(l, plekBegin));
-      const m = meldingenRef.current.filter((x) => x.lijn === i);
-      const kleur = m.some((x) => x.soort === 'fout') ? '#c92a2a' : m.length ? '#e8590c' : '#0f6b3a';
-      const rr = 10 * dpr;
+      const [x, y] = px(stapPunt(l, plekBegin(tk)));
+      const kleur = '#0f6b3a';
       ctx.save();
       ctx.shadowColor = 'rgba(0,0,0,0.35)';
       ctx.shadowBlur = 3 * dpr;
       ctx.beginPath();
-      ctx.arc(x, y, rr, 0, Math.PI * 2);
-      ctx.fillStyle = m.length ? kleur : '#ffffff';
+      ctx.arc(x, y, 10 * dpr, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.lineWidth = 2.5 * dpr;
       ctx.strokeStyle = kleur;
       ctx.stroke();
-      ctx.fillStyle = m.length ? '#ffffff' : kleur;
+      ctx.fillStyle = kleur;
       ctx.font = `700 ${Math.round(12 * dpr)}px Inter Variable, system-ui, sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(m.length ? `${l.stap}!` : String(l.stap), x, y + 0.5 * dpr);
+      ctx.fillText(String(l.stap), x, y + 0.5 * dpr);
       ctx.restore();
+      if (meldingenRef.current.some((m) => m.lijn === i)) tekenDriehoek(ctx, px(driehoekPunt(l, plekBegin(tk))), dpr);
     });
     const handvat = (p: Punt, vorm: 'rond' | 'vierkant' | 'ruit', icoon?: boolean) => {
       const [x, y] = px(p);
@@ -399,8 +506,9 @@ export function Editor({ bron }: { bron: EditorBron }) {
       const l = tk.lijnen?.[sel.index];
       if (l) {
         const h = lijnHandvatten(tk, l);
-        handvat(h.begin, 'rond');
-        handvat(h.eind, 'rond');
+        // Een eind dat aan een speler vastzit, heeft geen handvat (je pakt dan de speler): geen wit rondje over hem heen.
+        if (!l.van) handvat(h.begin, 'rond');
+        if (!l.naar) handvat(h.eind, 'rond');
         handvat(h.midden, 'ruit');
       }
     }
@@ -457,6 +565,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
       // Tweede vinger: zoomen en schuiven; wat de eerste vinger deed, gaat niet door.
       if (gebaar.current?.soort === 'sleep' || gebaar.current?.soort === 'handvat') gesch.annuleer();
       concept.current = null;
+      ringen.current = [];
       const [a, b] = [...vingers.current.values()] as [Punt, Punt];
       gebaar.current = {
         soort: 'knijp',
@@ -470,6 +579,13 @@ export function Editor({ bron }: { bron: EditorBron }) {
     const p = naarVeld(e.clientX, e.clientY);
     const marge = meter(VINGER);
     const tk = gesch.nu;
+
+    // 0. Een geel driehoekje gaat voor alles (ook als er een speler of pion onder ligt): tik = uitleg en oplossing.
+    const dh = raakTeken(e.clientX, e.clientY, 'driehoek');
+    if (dh >= 0) {
+      gebaar.current = { soort: 'melding', lijn: dh, begin: [e.clientX, e.clientY] };
+      return;
+    }
 
     // 1. Handvatten van wat geselecteerd is.
     const sel = selectieRef.current;
@@ -492,16 +608,20 @@ export function Editor({ bron }: { bron: EditorBron }) {
       const l = tk.lijnen?.[sel.index];
       if (l) {
         const h = lijnHandvatten(tk, l);
+        // Het dichtstbijzijnde handvat (bij een korte lijn liggen ze dicht bij elkaar).
+        let beste: { k: 'midden' | 'begin' | 'eind'; d: number } | undefined;
         for (const k of ['midden', 'begin', 'eind'] as const) {
           // Een eind dat aan een speler vastzit: dan pak je de speler (de lijn gaat mee).
           if ((k === 'begin' && l.van) || (k === 'eind' && l.naar)) continue;
           // Met een lijngereedschap teken je vanaf het eind van de vorige lijn een nieuwe; alleen het buigpunt is te pakken.
           if (k !== 'midden' && gereedschap.soort !== 'kies') continue;
-          if (Math.hypot(h[k][0] - p[0], h[k][1] - p[1]) < marge) {
-            gesch.begin();
-            gebaar.current = { soort: 'handvat', h: k, lijn: sel.index };
-            return;
-          }
+          const d = Math.hypot(h[k][0] - p[0], h[k][1] - p[1]);
+          if (d < marge && (!beste || d < beste.d)) beste = { k, d };
+        }
+        if (beste) {
+          gesch.begin();
+          gebaar.current = { soort: 'handvat', h: beste.k, lijn: sel.index, stand: standBijLijn(tk, sel.index) };
+          return;
         }
       }
     }
@@ -511,11 +631,21 @@ export function Editor({ bron }: { bron: EditorBron }) {
       return;
     }
     if (gereedschap.soort === 'lijn') {
-      gebaar.current = { soort: 'lijn', van: p };
-      concept.current = nieuweLijn(tk, gereedschap.lijn, p, p, marge);
+      const stand = standVoorStap(tk, volgendeStap(tk));
+      gebaar.current = { soort: 'lijn', van: p, scherm: [e.clientX, e.clientY], stand };
+      const k = tekenLijn(tk, gereedschap.lijn, p, p, maten(), stand);
+      concept.current = k.lijn;
+      ringen.current = k.begin.wie ? [k.begin.punt] : [];
+      teken();
       return;
     }
-    // 3. Kiezen en slepen.
+    // 3. Kiezen en slepen. Een stapnummer gaat voor (anders pak je de pion of speler die eronder ligt).
+    const nr = raakTeken(e.clientX, e.clientY, 'nummer');
+    if (nr >= 0) {
+      setSelectie({ soort: 'lijn', index: nr });
+      gebaar.current = null;
+      return;
+    }
     const o = raakObject(tk, p, marge);
     if (o) {
       setSelectie({ soort: 'object', id: o.id });
@@ -595,7 +725,17 @@ export function Editor({ bron }: { bron: EditorBron }) {
       }
       case 'handvat': {
         if (g.lijn !== undefined) {
-          gesch.vervang(sleepLijn(gesch.nu, g.lijn, g.h as 'begin' | 'midden' | 'eind', p, marge));
+          const h = g.h as 'begin' | 'midden' | 'eind';
+          if (g.stand && h !== 'midden') {
+            const l = gesch.nu.lijnen?.[g.lijn];
+            const m = maten();
+            gesch.vervang(sleepLijnVast(gesch.nu, g.lijn, h, p, m, g.stand));
+            // Ring om de speler waar dit eind nu aan vastklikt.
+            const nieuw = gesch.nu.lijnen?.[g.lijn];
+            const vast = l && (h === 'begin' ? !!lijnBegin(l.soort, p, m, g.stand, false).wie : !!lijnEind(gesch.nu, l.soort, p, m, g.stand, l.van).ontvanger || !!nieuw?.naar);
+            const pts = nieuw && lijnPunten(nieuw, plekIn(gesch.nu));
+            ringen.current = vast && pts ? [h === 'begin' ? pts[0]! : pts[pts.length - 1]!] : [];
+          } else gesch.vervang(sleepLijn(gesch.nu, g.lijn, h, p, marge));
         } else if (g.id) {
           const o = gesch.nu.objecten.find((x) => x.id === g.id)!;
           if (g.h === 'draai') {
@@ -610,12 +750,17 @@ export function Editor({ bron }: { bron: EditorBron }) {
       }
       case 'lijn': {
         if (gereedschap.soort !== 'lijn') return;
-        concept.current = nieuweLijn(gesch.nu, gereedschap.lijn, g.van, p, marge);
+        const k = tekenLijn(gesch.nu, gereedschap.lijn, g.van, p, maten(), g.stand);
+        concept.current = k.lijn;
+        const pts = lijnPunten(k.lijn, plekIn(gesch.nu));
+        ringen.current = [...(k.begin.wie ? [pts[0]!] : []), ...(k.eind.ontvanger || k.lijn.naar ? [pts[pts.length - 1]!] : [])];
         teken();
         return;
       }
       case 'plaats':
         g.p = p;
+        return;
+      case 'melding':
         return;
     }
   };
@@ -630,12 +775,13 @@ export function Editor({ bron }: { bron: EditorBron }) {
       return;
     }
     gebaar.current = null;
+    ringen.current = [];
     const p = naarVeld(e.clientX, e.clientY);
     switch (g.soort) {
       case 'sleep':
         if (g.bewogen) {
           const o = gesch.nu.objecten.find((x) => x.id === g.id);
-          if (o?.soort === 'bal') gesch.vervang(lagBalNeer(gesch.nu, o.id));
+          if (o?.soort === 'bal') gesch.vervang(lagBalNeer(gesch.nu, o.id, meter(BAL_PX)));
           gesch.klaar();
         }
         break;
@@ -643,24 +789,28 @@ export function Editor({ bron }: { bron: EditorBron }) {
         gesch.klaar();
         break;
       case 'lijn': {
-        const l = concept.current;
         concept.current = null;
-        if (l) {
-          const [a, b] = [l.punten[0]!, l.punten[l.punten.length - 1]!];
-          if (Math.hypot(a[0] - b[0], a[1] - b[1]) > meter(14)) {
-            gesch.zet(voegLijnToe(gesch.nu, { ...l, stap: volgendeStap(gesch.nu) }));
-            setSelectie({
-              soort: 'lijn',
-              index: (gesch.nu.lijnen?.length ?? 1) - 1,
-            });
+        // Getekend (de vinger is echt verschoven), niet alleen getikt.
+        if (gereedschap.soort === 'lijn' && Math.hypot(e.clientX - g.scherm[0], e.clientY - g.scherm[1]) > 14) {
+          const k = tekenLijn(gesch.nu, gereedschap.lijn, g.van, p, maten(), g.stand);
+          const [a, b] = [k.lijn.punten[0]!, k.lijn.punten[k.lijn.punten.length - 1]!];
+          if (Math.hypot(a[0] - b[0], a[1] - b[1]) > meter(14) || k.lijn.naar) {
+            gesch.zet(voegLijnToe(gesch.nu, { ...k.lijn, stap: volgendeStap(gesch.nu) }));
+            const index = (gesch.nu.lijnen?.length ?? 1) - 1;
+            setSelectie({ soort: 'lijn', index });
+            // Niet bij een speler begonnen (en geen balbezitter): meteen vragen bij wie hij hoort.
+            if (!k.begin.wie) setKoppelVraag(index);
           }
         }
         break;
       }
+      case 'melding':
+        if (Math.hypot(e.clientX - g.begin[0], e.clientY - g.begin[1]) < 12) openMelding(g.lijn);
+        break;
       case 'plaats':
         if (Math.hypot(e.clientX - g.begin[0], e.clientY - g.begin[1]) < 10 && gereedschap.soort === 'plaats') {
           const o = gereedschap.item.maak(gesch.nu, p);
-          gesch.zet(voegToe(gesch.nu, o));
+          gesch.zet(voegToe(gesch.nu, o, meter(BAL_PX)));
           setSelectie({ soort: 'object', id: o.id });
         }
         break;
@@ -668,11 +818,44 @@ export function Editor({ bron }: { bron: EditorBron }) {
     ververs();
   };
 
+  /** Tik op een geel driehoekje of de waarschuwing: niet vast → kies een speler; anders de opties met de uitleg. */
+  const openMelding = (i: number) => {
+    setSelectie({ soort: 'lijn', index: i });
+    if (lijnMeldingen(gesch.nu).some((m) => m.lijn === i && m.los)) setKoppelVraag(i);
+    else setOpties(true);
+  };
+
+  /** Een oplossing uit een melding uitvoeren (één tik). */
+  const voerUit = (i: number, o: Oplossing) => {
+    switch (o.soort) {
+      case 'kies-speler':
+        setSelectie({ soort: 'lijn', index: i });
+        setOpties(false);
+        setKoppelVraag(i);
+        return;
+      case 'wordt-loop':
+        zet(wordtLoop(gesch.nu, i));
+        return;
+      case 'na-stap':
+        zet(naarStap(gesch.nu, i, o.stap));
+        return;
+      case 'geef-bal':
+        zet(geefBal(gesch.nu, o.wie, o.bal));
+        return;
+      case 'toon':
+        setOpties(false);
+        setDrieD(false);
+        openMelding(o.lijn);
+        return;
+    }
+  };
+
   const opAnnuleer = (e: React.PointerEvent<HTMLCanvasElement>) => {
     vingers.current.delete(e.pointerId);
     if (gebaar.current?.soort === 'sleep' || gebaar.current?.soort === 'handvat') gesch.annuleer();
     gebaar.current = null;
     concept.current = null;
+    ringen.current = [];
     ververs();
   };
 
@@ -710,6 +893,10 @@ export function Editor({ bron }: { bron: EditorBron }) {
       tekening: () => gesch.nu,
       beeld: () => beeld.current,
       meldingen: () => lijnMeldingen(gesch.nu),
+      driehoekPunt: (i: number) => {
+        const l = gesch.nu.lijnen?.[i];
+        return l ? driehoekPunt(l, plekBegin(gesch.nu)) : null;
+      },
       stapPunt: (i: number) => {
         const l = gesch.nu.lijnen?.[i];
         if (!l) return null;
@@ -817,7 +1004,7 @@ export function Editor({ bron }: { bron: EditorBron }) {
   };
 
   const naam = bron.naam();
-  const plaatsNaam = gereedschap.soort === 'plaats' ? gereedschap.item.naam : gereedschap.soort === 'lijn' ? `${LIJN_NAMEN[gereedschap.lijn].naam}lijn` : '';
+  const plaatsNaam = gereedschap.soort === 'plaats' ? gereedschap.item.naam : gereedschap.soort === 'lijn' ? LIJN_NAMEN[gereedschap.lijn].lijn : '';
 
   return (
     <div className="editor">
@@ -872,27 +1059,20 @@ export function Editor({ bron }: { bron: EditorBron }) {
         ) : (
           animatie && <div className="editor-melding">{vt('Met animatie. Verschuif je iets, dan wordt het een tekening zonder animatie.')}</div>
         )}
-        {meldingen.length > 0 && (
-          <div className={`editor-waarschuwing${plaatsNaam ? ' hoger' : ''}`} role="status">
-            <Icoon naam="info" maat={16} />
-            {meldingen.some((m) => m.soort === 'fout')
-              ? vt(meldingen.filter((m) => m.soort === 'fout').length === 1 ? 'Eén lijn doet niet mee: tik op het rode nummer' : '{n} lijnen doen niet mee: tik op het rode nummer', {
-                  n: meldingen.filter((m) => m.soort === 'fout').length,
-                })
-              : vt('Let op: tik op het oranje nummer')}
-          </div>
-        )}
         {hint && !animatie && t.objecten.length === 0 && <div className="editor-melding">{vt('Kies onderin wat je wilt toevoegen en tik op het veld. Twee vingers (of het muiswiel): zoomen.')}</div>}
-        {plaatsNaam && (
-          <div className="editor-plaats" role="status">
-            <span>
-              <strong>{plaatsNaam}</strong> – {gereedschap.soort === 'lijn' ? vt('sleep over het veld (vanaf een speler zit hij eraan vast)') : vt('tik op het veld')}
-            </span>
-            <button className="icoon-knop" aria-label={vt('Klaar met plaatsen')} onClick={() => kiesGereedschap({ soort: 'kies' })}>
-              <Icoon naam="kruis" maat={18} />
-            </button>
-          </div>
-        )}
+        <div className="editor-onder">
+          {meldingen.length > 0 && <Waarschuwing meldingen={meldingen} tekening={t} open={openMelding} voerUit={voerUit} />}
+          {plaatsNaam && (
+            <div className="editor-plaats" role="status">
+              <span>
+                <strong>{plaatsNaam}</strong> – {gereedschap.soort === 'lijn' ? vt('Begin bij een speler en sleep naar waar hij heen gaat.') : vt('tik op het veld')}
+              </span>
+              <button className="icoon-knop" aria-label={vt('Klaar met plaatsen')} onClick={() => kiesGereedschap({ soort: 'kies' })}>
+                <Icoon naam="kruis" maat={18} />
+              </button>
+            </div>
+          )}
+        </div>
         <button className="editor-heel" onClick={heelVeld} aria-label={vt('Heel veld in beeld')} title={vt('Heel veld in beeld')}>
           <Icoon naam="kompas" maat={20} />
         </button>
@@ -1112,7 +1292,8 @@ export function Editor({ bron }: { bron: EditorBron }) {
                         {vt('Stap')} {t.lijnen?.[m.lijn]?.stap ?? '?'}:{' '}
                       </strong>
                     ) : null}
-                    {m.tekst}
+                    {m.los ? vt('Deze lijn zit niet vast aan een speler.') : m.tekst}
+                    <OplossingKnoppen melding={m} voerUit={voerUit} />
                   </li>
                 ))}
               </ul>
@@ -1144,7 +1325,8 @@ export function Editor({ bron }: { bron: EditorBron }) {
                   .map((m, i) => (
                     <li key={i} className={m.soort === 'fout' ? 'fout' : ''}>
                       {m.soort === 'fout' ? vt('Doet niet mee: ') : vt('Let op: ')}
-                      {m.tekst}
+                      {m.los ? vt('Deze lijn zit niet vast aan een speler.') : m.tekst}
+                      <OplossingKnoppen melding={m} voerUit={voerUit} />
                     </li>
                   ))}
               </ul>
@@ -1250,6 +1432,25 @@ export function Editor({ bron }: { bron: EditorBron }) {
         </div>
       )}
 
+      {koppelVraag !== null && t.lijnen?.[koppelVraag] && (
+        <KoppelMenu
+          tekening={t}
+          lijn={koppelVraag}
+          kleuren={kleuren}
+          kies={(id) => {
+            zet(koppelAan(gesch.nu, koppelVraag, id));
+            setSelectie({ soort: 'lijn', index: koppelVraag });
+            setKoppelVraag(null);
+          }}
+          weg={() => {
+            zet(verwijderLijn(gesch.nu, koppelVraag));
+            setSelectie(null);
+            setKoppelVraag(null);
+          }}
+          sluit={() => setKoppelVraag(null)}
+        />
+      )}
+
       {vraag && (
         <div className="paneel-achter">
           <div className="paneel paneel-vraag" role="alertdialog" aria-label={vt('Animatie laten vervallen?')}>
@@ -1272,6 +1473,151 @@ export function Editor({ bron }: { bron: EditorBron }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/** Tekst op de knop van een oplossing. */
+function oplossingLabel(o: Oplossing): string {
+  switch (o.soort) {
+    case 'kies-speler':
+      return vt('Kies een speler');
+    case 'wordt-loop':
+      return vt('Maak er een looplijn van');
+    case 'na-stap':
+      return vt('Zet in stap {n}', { n: o.stap });
+    case 'geef-bal':
+      return o.bal ? vt('Leg de bal bij {w}', { w: o.naam }) : vt('Geef {w} een bal', { w: o.naam });
+    case 'toon':
+      return vt('Naar stap {n}', { n: o.stap });
+  }
+}
+
+/** Knoppen die een melding oplossen; `max` = alleen de eerste (onderin, zodat de balk klein blijft). */
+function OplossingKnoppen({ melding, voerUit, max }: { melding: LijnMelding; voerUit: (lijn: number, o: Oplossing) => void; max?: number }) {
+  if (!melding.oplossingen?.length || melding.lijn < 0) return null;
+  return (
+    <span className="editor-oplossingen">
+      {melding.oplossingen.slice(0, max).map((o) => (
+        <button key={o.soort} className="knop editor-oplossing" onClick={() => voerUit(melding.lijn, o)}>
+          {oplossingLabel(o)}
+        </button>
+      ))}
+    </span>
+  );
+}
+
+/** Geel driehoekje met uitroepteken (zoals op het veld). */
+const Driehoek = () => (
+  <svg className="editor-driehoek" width="22" height="20" viewBox="0 0 22 20" aria-hidden="true">
+    <path d="M11 1.6 L20.4 18.4 H1.6 Z" fill={DRIEHOEK_GEEL} stroke={DRIEHOEK_RAND} strokeWidth="1.8" strokeLinejoin="round" />
+    <rect x="10" y="6.6" width="2" height="6.4" rx="1" fill={DRIEHOEK_RAND} />
+    <circle cx="11" cy="15.4" r="1.25" fill={DRIEHOEK_RAND} />
+  </svg>
+);
+
+/**
+ * Waarschuwing onderin: de echte reden in gewone taal, met een knop die het oplost. Lijnen die niet aan een speler
+ * vastzitten gaan voor (tik = kies een speler).
+ */
+function Waarschuwing({ meldingen, tekening, open, voerUit }: { meldingen: LijnMelding[]; tekening: Tekening; open: (lijn: number) => void; voerUit: (lijn: number, o: Oplossing) => void }) {
+  const los = meldingen.filter((m) => m.los);
+  const klasse = 'editor-waarschuwing';
+  if (los.length) {
+    return (
+      <button className={`${klasse} editor-waarschuwing-knop`} onClick={() => open(los[0]!.lijn)}>
+        <Driehoek />
+        <span>
+          {los.length === 1
+            ? vt('Deze lijn zit niet vast aan een speler. Tik om een speler te kiezen.')
+            : vt('{n} lijnen zitten niet vast aan een speler. Tik om een speler te kiezen.', { n: los.length })}
+        </span>
+      </button>
+    );
+  }
+  const m = meldingen.find((x) => x.soort === 'fout') ?? meldingen[0]!;
+  const stap = m.lijn >= 0 ? tekening.lijnen?.[m.lijn]?.stap : undefined;
+  const lijnen = new Set(meldingen.map((x) => x.lijn)).size;
+  return (
+    <div className={klasse} role="status">
+      <Driehoek />
+      <span className="editor-waarschuwing-tekst">
+        {m.lijn >= 0 ? (
+          <button className="editor-waarschuwing-uitleg" onClick={() => open(m.lijn)}>
+            <strong>{m.soort === 'fout' ? vt('Stap {n}:', { n: stap ?? '?' }) : vt('Let op bij stap {n}:', { n: stap ?? '?' })}</strong> {m.tekst}
+          </button>
+        ) : (
+          m.tekst
+        )}
+        {lijnen > 1 && <span className="editor-waarschuwing-meer"> {vt('(en nog {n})', { n: lijnen - 1 })}</span>}
+      </span>
+      <OplossingKnoppen melding={m} voerUit={voerUit} max={1} />
+    </div>
+  );
+}
+
+/** Kleur van het poppetje in het keuzemenu (zoals op het veld). */
+function popKleur(o: VeldObject, k: ReturnType<typeof leesKleuren>): string {
+  if (o.soort === 'keeper') return k.keeper;
+  if (o.soort === 'trainer') return k.trainer;
+  return o.team === 'B' ? k.teamB : o.team === 'J' ? k.joker : k.teamA;
+}
+
+/** "Bij welke speler hoort deze lijn?": de spelers in de buurt van het begin van de lijn om op te tikken. */
+function KoppelMenu({
+  tekening,
+  lijn,
+  kleuren,
+  kies,
+  weg,
+  sluit,
+}: {
+  tekening: Tekening;
+  lijn: number;
+  kleuren: ReturnType<typeof leesKleuren>;
+  kies: (id: string) => void;
+  weg: () => void;
+  sluit: () => void;
+}) {
+  const lijst = useMemo(() => kandidaten(tekening, lijn), [tekening, lijn]);
+  return (
+    <div className="paneel-achter koppel-achter" onClick={sluit}>
+      <div className="paneel koppel-menu" role="dialog" aria-label={vt('Bij welke speler hoort deze lijn?')} onClick={(e) => e.stopPropagation()}>
+        <div className="paneel-kop">
+          <h2>{vt('Bij welke speler hoort deze lijn?')}</h2>
+          <button className="icoon-knop" aria-label={vt('Sluiten')} onClick={sluit}>
+            <Icoon naam="kruis" />
+          </button>
+        </div>
+        {lijst.length ? (
+          <div className="koppel-lijst">
+            {lijst.map((k) => {
+              const o = tekening.objecten.find((x) => x.id === k.id)!;
+              return (
+                <button key={k.id} className="koppel-keuze" onClick={() => kies(k.id)}>
+                  <span className="koppel-pop" style={{ background: popKleur(o, kleuren), color: kleuren.rugnummer }}>
+                    {o.nummer ?? ''}
+                  </span>
+                  <span className="koppel-naam">
+                    {k.naam}
+                    {k.metBal && <span className="koppel-bal">{vt('heeft de bal')}</span>}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="klein">{vt('Er staan nog geen spelers op het veld. Zet eerst spelers neer via Toevoegen.')}</p>
+        )}
+        <div className="knoppenrij">
+          <button className="knop" onClick={weg}>
+            {vt('Lijn weghalen')}
+          </button>
+          <button className="knop" onClick={sluit}>
+            {vt('Later')}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

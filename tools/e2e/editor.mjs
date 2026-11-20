@@ -433,14 +433,14 @@ async function animatieMaken(naam, viewport, modus, volledig) {
   await foto(page, `${naam}-lijnen`, `${naam}: pass (1), dribbel + lopen tegelijk (2), pass (3), schot (4) met stapnummers`);
 
   if (volledig) {
-    // Een ballijn vanaf een plek waar niemand (met bal) staat: rood nummer en melding; daarna ongedaan maken.
+    // Een ballijn vanaf speler 2, die de bal dan niet meer heeft: geel driehoekje, de reden en een knop; daarna ongedaan maken.
     await klik(page, 'Pass', '.editor-balk button');
     await veldSleep(page, modus, a2, [a2[0] - 6, a2[1]]);
     m = await page.evaluate(() => window.__editor.meldingen());
     controle(m.some((x) => x.lijn === 5 && x.soort === 'fout'), `Geen melding bij een ballijn zonder bal: ${JSON.stringify(m)}`);
     const balk = await page.evaluate(() => document.querySelector('.editor-waarschuwing')?.textContent ?? '');
-    controle(balk.includes('niet mee'), `Geen waarschuwing in beeld: "${balk}"`);
-    await foto(page, 'melding', 'Ballijn zonder bal: rood nummer en melding (opslaan blijft mogelijk)');
+    controle(balk.includes('heeft de bal nog niet'), `Geen waarschuwing met de reden in beeld: "${balk}"`);
+    await foto(page, 'melding', 'Ballijn zonder bal: geel driehoekje, de reden en een knop (opslaan blijft mogelijk)');
     await klik(page, 'Ongedaan maken');
     await klik(page, 'Kiezen', '.editor-balk button');
   }
