@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>TopTrainer is verhuisd</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0f6b3a" />
+    <link rel="canonical" href="https://app.toptrainerapp.com/" />
+    <style>
+      :root { color-scheme: light dark; --groen: #0f6b3a; --tekst: #17231c; --achter: #f4f7f5; --kaart: #ffffff; --zacht: #4f5e56; }
+      @media (prefers-color-scheme: dark) { :root { --tekst: #e8efe9; --achter: #0f1712; --kaart: #18231c; --zacht: #a9b8ae; --groen: #2f9a5e; } }
+      * { box-sizing: border-box; }
+      body { margin: 0; font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--achter); color: var(--tekst); }
+      main { max-width: 34rem; margin: 0 auto; padding: max(2rem, env(safe-area-inset-top)) 1rem max(2rem, env(safe-area-inset-bottom)); }
+      .logo { display: block; width: 64px; height: 64px; border-radius: 16px; margin: 0 0 1rem; }
+      h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 0.75rem; }
+      h2 { font-size: 1.1rem; margin: 1.75rem 0 0.5rem; }
+      p, li { overflow-wrap: anywhere; }
+      ol { padding-left: 1.3rem; margin: 0; }
+      li { margin: 0 0 0.6rem; }
+      .knop { display: block; width: 100%; text-align: center; padding: 0.9rem 1rem; margin: 1.25rem 0 0.5rem; border: 0; border-radius: 12px; background: var(--groen); color: #fff; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+      .link { display: block; text-align: center; padding: 0.5rem; color: var(--groen); font-weight: 600; }
+      .fout { background: var(--kaart); border-left: 4px solid #c0392b; padding: 0.75rem; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img class="logo" src="/trainersapp/logo.svg" alt="" width="64" height="64" />
+      <div id="inhoud">
+        <h1>TopTrainer is verhuisd</h1>
+        <p>TopTraining heet nu TopTrainer en staat op <a href="https://app.toptrainerapp.com/">app.toptrainerapp.com</a>.</p>
+        <noscript><p><a class="knop" href="https://app.toptrainerapp.com/">Open TopTrainer</a></p></noscript>
+      </div>
+    </main>
+    <script type="module" src="/trainersapp/verhuis.js"></script>
+  </body>
+</html>
